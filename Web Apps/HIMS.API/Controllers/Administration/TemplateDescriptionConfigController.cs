@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.Administration
 
         }
         [HttpPost("TemlateByCategoryList")]
-        [Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
+        //[Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
         public async Task<IActionResult> ListTemplate(GridRequestModel objGrid)
         {
             IPagedList<TemplateByCategoryListDto> TemlateByCategoryList = await _ITemplateDescriptionConfigService.GetListAsync(objGrid);
@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.Administration
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
+        //[Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MReportTemplateConfig> MReportTemplateConfigList = await _repository.GetAllPagedAsync(objGrid);

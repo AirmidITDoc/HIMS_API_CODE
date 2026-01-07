@@ -35,6 +35,14 @@ namespace HIMS.API.Controllers.Administration
             return Ok(OPBillListForPaymentModeChangeList.ToGridResponse(objGrid, "OPBillListForPaymentModeChange List"));
         }
 
+        [HttpPost("OPBillListForPaymentModeChangeListBillNoWise")]
+        //[Permission(PageCode = "Payment", Permission = PagePermission.View)]
+        public async Task<IActionResult> BillNoWiseList(GridRequestModel objGrid)
+        {
+            IPagedList<OPBillListForPaymentModeChangeListBillNoWiseDto> OPBillListForPaymentModeChangeListBillNoWise = await _IPaymentModeService.GetBillListAsync(objGrid);
+            return Ok(OPBillListForPaymentModeChangeListBillNoWise.ToGridResponse(objGrid, "OPBillListForPaymentModeChangeListBillNoWise List"));
+        }
+
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "Payment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PaymentModeModel obj)

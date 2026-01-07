@@ -8379,69 +8379,11 @@ namespace HIMS.Services.Report
                         string previousLabel = "";
                         string deptLabel = "";
                         String FinalLabel = "";
-                        double T_TotAmount = 0, ChargesTotalamt = 0, T_TotalAmount = 0, F_TotalAmount = 0.0, AdminChares = 0, Tot_paidamt = 0, TotalConcessionAmt = 0, FinalNetAmt =0,
-                            TotalGovAmount=0,aftergovbal=0, TotalPaidAmount=0;
-
-                        
-                        //foreach (DataRow dr in dt.Rows)
-                        //{
-                        //    i++; j++;
-
-                        //    if (i == 1)
-                        //    {
-
-                        //        String Label2;
-                        //        Label2 = dr["ChargesDate"].ConvertToDateString("dd/MM/yyyy");
-                        //        items.Append("<tr style=\"font-size:14px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;border: 1px;font-weight:bold;\"><td colspan=\"13\" style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:left;vertical-align:middle\">").Append(Label2).Append("</td></tr>");
-
-                        //    }
-
-                        //    if (previousLabel != "" && previousLabel != dr["ChargesDate"].ConvertToString())
-                        //    {
-                        //        j = 1;
-                        //        items.Append("<tr style='font-size:14px;border:1px solid #eee;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;'><td colspan='5' style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total</td><td style=\"border-right:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-weight:bold;\">")
-                        //      .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
-                        //        T_TotalAmount = 0;
-
-                        //        items.Append("<tr style=\"font-size:14px;border-bottom: 1px solid #eee;\"><td colspan=\"13\" style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:left;vertical-align:middle;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-weight:bold;\">").Append(dr["ChargesDate"].ConvertToDateString("dd/MM/yyyy")).Append("</td></tr>");
-
-                        //    }
+                        double T_TotAmount = 0, ChargesTotalamt = 0, T_TotalAmount = 0, F_TotalAmount = 0.0, AdminChares = 0, Tot_paidamt = 0, TotalConcessionAmt = 0, FinalNetAmt = 0,
+                            TotalGovAmount = 0, aftergovbal = 0, TotalPaidAmount = 0, TotalCompApprovedAmount = 0;
 
 
-                        //    T_TotalAmount += dr["ChargesTotalAmt"].ConvertToDouble();
-                        //    F_TotalAmount += dr["ChargesTotalAmt"].ConvertToDouble();
-                        //    ChargesTotalamt += dr["ChargesTotalAmt"].ConvertToDouble();
 
-
-                        //    previousLabel = dr["ChargesDate"].ConvertToString();
-
-
-                        //    items.Append("<tr style=\"font-family: 'Helvetica Neue','Helvetica',, Arial, sans-serif;font-size:14px;\"><td style=\"border: 1px solid #eee; text-align: center; padding: 2px;\">").Append(j).Append("</td>");
-                        //    items.Append("<td style=\"border: 1px solid #eee; text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"border: 1px solid #eee; text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"border: 1px solid #eee; text-align: center; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\">").Append(dr["Price"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"border: 1px solid #eee; text-align: center; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"border: 1px solid #eee; text-align: right; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\">").Append(dr["ChargesTotalAmt"].ConvertToDouble()).Append("</td></tr>");
-
-                        //    if (dt.Rows.Count > 0 && dt.Rows.Count == i)
-                        //    {
-
-                        //        items.Append("<tr style='font-size:17px;border:1px solid black;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;'><td colspan='5' style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Group Wise Total</td><td style=\"border-right:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-weight:bold;\">")
-                        //       .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
-
-
-                        //    }
-
-                        //    TotalNetPayAmt = dr["NetPayableAmt"].ConvertToDouble();
-                        //    Tot_Advamt = dr["AdvanceUsedAmount"].ConvertToDouble();
-                        //    Tot_paidamt = dr["PaidAmount"].ConvertToDouble();
-
-                        //    if (Tot_Advamt.ConvertToDouble() < TotalNetPayAmt.ConvertToDouble())
-                        //    {
-                        //        BalancewdudcAmt = (TotalNetPayAmt - Tot_Advamt - Tot_paidamt).ConvertToDouble();
-                        //    }
-
-                        //}
                         // Sort by Lbl and ChargesDate (like your sales example)
                         var sortedCharges = dt.AsEnumerable()
                             .OrderBy(dr => dr["Lbl"].ToString())  // Sort by Lbl
@@ -8463,7 +8405,8 @@ namespace HIMS.Services.Report
                             {
                                 TotalConcessionAmt = dr["ConcessionAmt"].ConvertToDouble();
                                 TotalGovAmount = dr["GovtApprovedAmt"].ConvertToDouble();
-                               TotalPaidAmount = dr["PaidAmount"].ConvertToDouble();
+                                TotalPaidAmount = dr["PaidAmount"].ConvertToDouble();
+                                TotalCompApprovedAmount = dr["CompanyApprovedAmt"].ConvertToDouble();
 
 
                             }
@@ -8538,21 +8481,13 @@ namespace HIMS.Services.Report
                         }
 
                         FinalNetAmt = F_TotalAmount - TotalConcessionAmt;
-
                         if (FinalNetAmt == TotalPaidAmount)
-
                         {
-
                             aftergovbal = FinalNetAmt - TotalPaidAmount;
-
                         }
-
                         else
-
                         {
-
-                            aftergovbal = FinalNetAmt - TotalGovAmount - TotalPaidAmount;
-
+                            aftergovbal = FinalNetAmt - TotalGovAmount - TotalCompApprovedAmount - TotalPaidAmount;
                         }
 
 
@@ -8626,8 +8561,13 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{DiscComments}}", dt.GetColValue("DiscComments"));
                         html = html.Replace("{{PolicyNoList}}", dt.GetColValue("PolicyNoList"));
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
+
                         html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
-                     //   html = html.Replace("{{BalanceafterGov}}", dt.GetColValue("BalanceafterGov").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{GovtApprovedName}}", dt.GetColValue("GovtApprovedName"));
+                        html = html.Replace("{{CompanyApprovedAmt}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CompanyApprovedName}}", dt.GetColValue("CompanyApprovedName"));
+
+                        //   html = html.Replace("{{BalanceafterGov}}", dt.GetColValue("BalanceafterGov").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{chkpaidflag}}", dt.GetColValue("PaidAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkAdvflag}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkdiscflag}}", dt.GetColValue("ConcessionAmt").ConvertToDouble() > 0 ? "table-row " : "none");
@@ -8643,7 +8583,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkPolicyNoflag}}", dt.GetColValue("PolicyNoList").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkApprovedAmountflag}}", dt.GetColValue("ApprovedAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
-                      ///  html = html.Replace("{{chkBalanceafterGovflag}}", dt.GetColValue("BalanceafterGov").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkCompanyApprovedAmtflag}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+                        ///  html = html.Replace("{{chkBalanceafterGovflag}}", dt.GetColValue("BalanceafterGov").ConvertToDouble() > 0 ? "table-row " : "none");
                     }
 
 

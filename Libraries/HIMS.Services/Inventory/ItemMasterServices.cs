@@ -236,13 +236,14 @@ namespace HIMS.Services.Inventory
                        });
             return await qry.Take(50).ToListAsync();
         }
-        public virtual List<ItemListForSearchDTO> GetItemListForPrescriptionretrun(int StoreId, string ItemName)
+        public virtual List<ItemListForSearchDTO> GetItemListForPrescriptionretrun(int StoreId, string ItemName,int IPAdmID)
         {
             DatabaseHelper sql = new();
-            SqlParameter[] para = new SqlParameter[2];
+            SqlParameter[] para = new SqlParameter[3];
             para[0] = new SqlParameter("@StoreId", StoreId);
             para[1] = new SqlParameter("@ItemName", ItemName);
-            return sql.FetchListBySP<ItemListForSearchDTO>("ps_Rtrv_PatientVisitedListSearch", para);
+            para[2] = new SqlParameter("@IPAdmID", IPAdmID);
+            return sql.FetchListBySP<ItemListForSearchDTO>("ps_Rtrv_IPSalesReturnDrugForNursing", para);
         }
         public virtual async Task<List<ItemListForSearchDTO>> GetItemListForGRNOrPO(int StoreId, string ItemName)
         {

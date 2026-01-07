@@ -196,11 +196,16 @@
                                                 </tr>
 
                                                 <tr style="display:{{chkGovtApprovedAmtflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Gov. Amount :</td>
+                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Gov. Amount : {{GovtApprovedName}} </td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{GovtApprovedAmt}}</td>
                                                 </tr>
 
+                                                <tr style="display:{{chkCompanyApprovedAmtflag}}">
+                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Company Approved Amount :  {{CompanyApprovedName}}</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{CompanyApprovedAmt}}</td>
+                                                </tr>
                                                 <tr style="display:{{chkBalanceafterGovflag}}">
                                                     <td style="border-bottom: 1px solid #eee; padding: 6px;">Bal Amount :</td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
@@ -268,15 +273,12 @@
                                     <td style="border: 1px solid #000; text-align: right; padding: 6px; ">
                                         {{CashPayAmount}}
                                     </td>
-
                                     <td style="border: 1px solid #000; text-align: right; padding: 6px;">
                                         {{CardPayAmount}}
                                     </td>
                                     <td style="border: 1px solid #000; text-align: right; padding: 6px;">
                                         {{ChequePayAmount}}
                                     </td>
-
-
                                     <td style="border: 1px solid #000; text-align: right; padding: 6px;">
                                         {{PayTMPayAmount}}
                                     </td>

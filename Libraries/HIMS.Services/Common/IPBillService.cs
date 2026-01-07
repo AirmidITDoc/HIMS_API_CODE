@@ -933,8 +933,22 @@ namespace HIMS.Services.Common
 
         }
 
+        public virtual async Task BillGovtUpdate(Bill ObjBill, int CurrentUserId, string CurrentUserName)
+        {
+            // -------------------- BILL Govert UPDATE ------------------------
+            DatabaseHelper odal = new();
+            string[] BEntity = { "BillNo", "GovtApprovedAmt", "GovtCompanyId", "CompanyApprovedAmt", "CompanyApprovedId" };
+            var bentity = ObjBill.ToDictionary();
 
+            foreach (var rProperty in bentity.Keys.ToList())
+            {
+                if (!BEntity.Contains(rProperty))
+                    bentity.Remove(rProperty);
+            }
 
+            odal.ExecuteNonQuery("ps_update_BillGovtAmt", CommandType.StoredProcedure, bentity);
+            await _context.LogProcedureExecution(bentity, nameof(Bill), ObjBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+        }
 
         public virtual async Task UpdateRefund(Refund OBJRefund, int CurrentUserId, string CurrentUserName)
         {

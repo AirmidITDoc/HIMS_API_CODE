@@ -181,8 +181,7 @@ namespace HIMS.Services.Common
                 case "OPBillPaymentListForPayModeChange": sp_Name = "ps_rtrv_OPBillPaymentListForPayModeChange"; break;
                 case "subQuestionList": sp_Name = "ps_Rtrv_subQuestionList"; break;
                 case "subQuestionValueList": sp_Name = "ps_Rtrv_subQuestionValueList"; break;
-
-
+                case "ClinicalQuesDetail": sp_Name = "ps_Rtrv_ClinicalQuesDetail_Test"; break;
 
 
 

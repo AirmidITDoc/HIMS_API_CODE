@@ -28,6 +28,7 @@ namespace HIMS.API.Models.IPPatient
         public string? Alentry { get; set; }
         public DateTime? DateApproved { get; set; }
         public string? Comments { get; set; }
+        public long? CompanyId { get; set; }
 
     }
 

@@ -32,6 +32,11 @@ namespace HIMS.Services.Administration
             return await DatabaseHelper.GetGridDataBySp<OPBillListForPaymentModeChangeListDto>(model, "ps_rtrv_OPBillListForPaymentModeChange");
         }
 
+        public virtual async Task<IPagedList<OPBillListForPaymentModeChangeListBillNoWiseDto>> GetBillListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPBillListForPaymentModeChangeListBillNoWiseDto>(model, "ps_rtrv_PaymentByBillNoWise");
+        }
+
         public virtual async Task UpdateAsync(Payment objPayment, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

@@ -161,5 +161,18 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records added successfully.");
         }
 
+        [HttpPut("TPaymentdatetime{id:int}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        public ApiResponse Update(PaymenntModel obj)
+        {
+            TPayment model = obj.MapTo<TPayment>();
+            if (obj.PaymentId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                _IAdministrationService.Update(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
     }
 }

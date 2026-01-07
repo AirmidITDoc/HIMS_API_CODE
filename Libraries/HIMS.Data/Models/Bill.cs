@@ -36,7 +36,6 @@ namespace HIMS.Data.Models
         public string? CompanyName { get; set; }
         public decimal? CompanyAmt { get; set; }
         public decimal? PatientAmt { get; set; }
-        public decimal? GovtApprovedAmt { get; set; }
         public long? TariffId { get; set; }
         public long? WardId { get; set; }
         public long? BedId { get; set; }
@@ -71,6 +70,10 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public long? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public decimal? GovtApprovedAmt { get; set; }
+        public long? GovtCompanyId { get; set; }
+        public decimal? CompanyApprovedAmt { get; set; }
+        public long? CompanyApprovedId { get; set; }
 
         public virtual ICollection<AddCharge> AddCharges { get; set; }
         public virtual ICollection<BillDetail> BillDetails { get; set; }
