@@ -53,33 +53,77 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
-        public virtual async Task UpdateAsync(LoginManager objLogin, int UserId, string Username)
+        //public virtual async Task UpdateAsync(LoginManager objLogin, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // Delete details table realted records
+
+        //        var lst = await _context.TLoginAccessDetails.Where(x => x.LoginId == objLogin.UserId).ToListAsync();
+        //        if (lst.Count > 0)
+        //        {
+        //            _context.TLoginAccessDetails.RemoveRange(lst);
+        //        }
+
+        //        // Delete details table realted records
+        //        var lsts = await _context.TLoginUnitDetails.Where(x => x.LoginId == objLogin.UserId).ToListAsync();
+        //        if (lst.Count > 0)
+        //        {
+        //            _context.TLoginUnitDetails.RemoveRange(lsts);
+        //        }
+        //        // Delete details table realted records
+        //        var lstd = await _context.TLoginStoreDetails.Where(x => x.LoginId == objLogin.UserId).ToListAsync();
+        //        if (lst.Count > 0)
+        //        {
+        //            _context.TLoginStoreDetails.RemoveRange(lstd);
+        //        }
+        //        // Update header & detail table records
+        //        _context.LoginManagers.Update(objLogin);
+        //        _context.Entry(objLogin).State = EntityState.Modified;
+        //        await _context.SaveChangesAsync();
+        //        scope.Complete();
+        //    }
+        //}
+        public virtual async Task UpdateAsync(LoginManager objLogin, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                // Delete details table realted records
 
-                var lst = await _context.TLoginAccessDetails.Where(x => x.LoginId == objLogin.UserId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.TLoginAccessDetails.RemoveRange(lst);
-                }
+                //  Delete related records
+                var accessList = await _context.TLoginAccessDetails
+                .Where(x => x.LoginId == objLogin.UserId)
+                .ToListAsync();
+                if (accessList.Any())
+                    _context.TLoginAccessDetails.RemoveRange(accessList);
 
-                // Delete details table realted records
-                var lsts = await _context.TLoginUnitDetails.Where(x => x.LoginId == objLogin.UserId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.TLoginUnitDetails.RemoveRange(lsts);
-                }
-                // Delete details table realted records
-                var lstd = await _context.TLoginStoreDetails.Where(x => x.LoginId == objLogin.UserId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.TLoginStoreDetails.RemoveRange(lstd);
-                }
-                // Update header & detail table records
-                _context.LoginManagers.Update(objLogin);
+                var unitList = await _context.TLoginUnitDetails
+                    .Where(x => x.LoginId == objLogin.UserId)
+                    .ToListAsync();
+                if (unitList.Any())
+                    _context.TLoginUnitDetails.RemoveRange(unitList);
+
+                var storeList = await _context.TLoginStoreDetails
+                    .Where(x => x.LoginId == objLogin.UserId)
+                    .ToListAsync();
+                if (storeList.Any())
+                    _context.TLoginStoreDetails.RemoveRange(storeList);
+
+                //  Attach entity
+                _context.Attach(objLogin);
                 _context.Entry(objLogin).State = EntityState.Modified;
+
+                //  Ignore specific columns (AFTER attach)
+                if (ignoreColumns != null && ignoreColumns.Length > 0)
+                {
+                    var entry = _context.Entry(objLogin);
+                    foreach (var column in ignoreColumns)
+                    {
+                        entry.Property(column).IsModified = false;
+                    }
+                }
+
+                objLogin.ModifiedBy = UserId;
+                objLogin.ModifiedDate = DateTime.Now;
                 await _context.SaveChangesAsync();
                 scope.Complete();
             }
