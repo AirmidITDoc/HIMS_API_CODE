@@ -86,11 +86,22 @@ namespace HIMS.API.Models.OutPatient
     public class BillUpdate
     {
         public List<IPAddChargesBillModel> IPAddChargesBill { get; set; }
-
         public BillUpdateModels BillUpdates { get; set; }
-        //public List<AddChargesModell> AddCharges { get; set; }
     }
 
 
+    public class BillGovtUpdateModels
+    {
+        public long BillNo { get; set; }
+        public decimal? GovtApprovedAmt { get; set; }
+        public long? GovtCompanyId { get; set; }
+        public decimal? CompanyApprovedAmt { get; set; }
+        public long? CompanyApprovedId { get; set; }
 
+    }
+
+    public class BillGovtUpdate
+    {
+        public BillGovtUpdateModels BillGovtUpdates { get; set; }
+    }
 }

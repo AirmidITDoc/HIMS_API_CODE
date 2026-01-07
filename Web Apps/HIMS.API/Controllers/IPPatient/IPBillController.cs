@@ -378,8 +378,6 @@ namespace HIMS.API.Controllers.IPPatient
         public ApiResponse InsertIPDPackage(IPAddChargesModel obj)
         {
             AddCharge Model = obj.MapTo<AddCharge>();
-
-
             if (obj.ChargesId == 0)
             {
 
@@ -418,6 +416,20 @@ namespace HIMS.API.Controllers.IPPatient
             }
         }
 
+        [HttpPost("BillGovtUpdate")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public ApiResponse BillGovtUpdate(BillGovtUpdate obj)
+        {
+            Bill objBill = obj.BillGovtUpdates.MapTo<Bill>();
+            if (objBill.BillNo != 0)
+            {
+                objBill.AddedBy = CurrentUserId;
+                _IPBillService.BillGovtUpdate(objBill, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
+        }
 
         [HttpPost("AddBedServiceCharges")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]

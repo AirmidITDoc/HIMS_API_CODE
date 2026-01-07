@@ -37,6 +37,7 @@ namespace HIMS.Services.Common
         Task Update(AddCharge objAddCharge, int CurrentUserId, string CurrentUserName);
         void InsertLabRequest(AddCharge objAddCharge, int UserId, string Username, long traiffId, long ReqDetId);
         Task InsertIPDPackage(AddCharge objAddCharge, int UserId, string Username);
+        Task BillGovtUpdate(Bill ObjBill, int UserId, string Username);
         Task UpdateRefund(Refund OBJRefund, int CurrentUserId, string CurrentUserName);
         Task InsertSP(AddCharge objAddCharge, int UserId, string Username);
         void InsertSPC(AddCharge objAddCharge, int UserId, string Username, long? NewClassId);
