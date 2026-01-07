@@ -30,5 +30,9 @@ namespace HIMS.Services.Pharmacy
         {
             return await DatabaseHelper.GetGridDataBySp<SalesReturnBillListDto>(model, "ps_Rtrv_SalesInPatientReturnBillList");
         }
+        public virtual async Task<IPagedList<SalesInPatientReturnDetailsListDto>> salesreturndetaillist(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesInPatientReturnDetailsListDto>(model, "ps_Rtrv_InPatientSalesReturnDetails");
+        }
     }
 }

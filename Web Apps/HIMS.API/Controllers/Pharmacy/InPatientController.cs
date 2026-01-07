@@ -43,5 +43,13 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<SalesReturnBillListDto> salesreturnlist = await _IInPatientService.salesreturnlist(objGrid);
             return Ok(salesreturnlist.ToGridResponse(objGrid, "Sales InPatient ReturnBil lList"));
         }
+        [HttpPost("salesInPatientReturnBrowseDetaillist")]
+        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
+        public async Task<IActionResult> salesInPatientReturnBrowseDetaillist(GridRequestModel objGrid)
+        {
+            IPagedList<SalesInPatientReturnDetailsListDto> salesInPatientReturnBrowseDetaillist = await _IInPatientService.salesreturndetaillist(objGrid);
+            return Ok(salesInPatientReturnBrowseDetaillist.ToGridResponse(objGrid, "salesInPatient ReturnBrowseDetail list"));
+        }
+
     }
 }
