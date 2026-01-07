@@ -391,6 +391,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TBatchAdjustment> TBatchAdjustments { get; set; } = null!;
         public virtual DbSet<TBedOccupancy> TBedOccupancies { get; set; } = null!;
         public virtual DbSet<TBedTransferDetail> TBedTransferDetails { get; set; } = null!;
+        public virtual DbSet<TBillUpdateHistory> TBillUpdateHistories { get; set; } = null!;
         public virtual DbSet<TCanteenBillDetail> TCanteenBillDetails { get; set; } = null!;
         public virtual DbSet<TCanteenBillHeader> TCanteenBillHeaders { get; set; } = null!;
         public virtual DbSet<TCanteenRequestDetail> TCanteenRequestDetails { get; set; } = null!;
@@ -1091,6 +1092,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CompanyAmt).HasColumnType("money");
 
+                entity.Property(e => e.CompanyApprovedAmt).HasColumnType("money");
+
                 entity.Property(e => e.CompanyName).HasMaxLength(500);
 
                 entity.Property(e => e.CompanyRefNo).HasMaxLength(50);
@@ -1265,6 +1268,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ResultEntry).HasMaxLength(500);
 
                 entity.Property(e => e.SubQuesName).HasMaxLength(255);
+
+                entity.HasOne(d => d.ClinicalQuesHeader)
+                    .WithMany(p => p.ClinicalQuesDetails)
+                    .HasForeignKey(d => d.ClinicalQuesHeaderId)
+                    .HasConstraintName("FK_ClinicalQuesDetail_ClinicalQuesHeader");
             });
 
             modelBuilder.Entity<ClinicalQuesHeader>(entity =>
@@ -11086,6 +11094,21 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ToDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ToTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TBillUpdateHistory>(entity =>
+            {
+                entity.HasKey(e => e.HistoryId);
+
+                entity.ToTable("T_BillUpdateHistory");
+
+                entity.Property(e => e.HistoryId).ValueGeneratedNever();
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.TranType).HasMaxLength(20);
             });
 
             modelBuilder.Entity<TCanteenBillDetail>(entity =>
