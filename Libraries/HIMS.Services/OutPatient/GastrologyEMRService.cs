@@ -26,7 +26,7 @@ namespace HIMS.Services.OutPatient
 
             {
                 ObjClinicalQuesHeader.CreatedBy = UserId;
-                ObjClinicalQuesHeader.CreatedDate = AppTime.Now;
+                //ObjClinicalQuesHeader.CreatedDate = AppTime.Now;
 
                 _context.ClinicalQuesHeaders.Add(ObjClinicalQuesHeader);
                 await _context.SaveChangesAsync();
@@ -61,7 +61,7 @@ namespace HIMS.Services.OutPatient
                 _context.Entry(ObjClinicalQuesHeader).Property(x => x.CreatedDate).IsModified = false;
 
                 ObjClinicalQuesHeader.ModifiedBy = UserId;
-                ObjClinicalQuesHeader.ModifiedDate = AppTime.Now;
+                //ObjClinicalQuesHeader.ModifiedDate = AppTime.Now;
 
                 if (ignoreColumns?.Length > 0)
                 {
