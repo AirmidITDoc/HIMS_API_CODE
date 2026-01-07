@@ -72,8 +72,10 @@ namespace HIMS.Data.Models
         public DateTime? ModifiedDate { get; set; }
         public decimal? GovtApprovedAmt { get; set; }
         public long? GovtCompanyId { get; set; }
+        public string? GovtRefNo { get; set; }
         public decimal? CompanyApprovedAmt { get; set; }
         public long? CompanyApprovedId { get; set; }
+        public string? CompRefNo { get; set; }
 
         public virtual ICollection<AddCharge> AddCharges { get; set; }
         public virtual ICollection<BillDetail> BillDetails { get; set; }
