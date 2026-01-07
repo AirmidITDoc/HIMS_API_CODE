@@ -17,7 +17,7 @@ namespace HIMS.Data.DTO.OTManagement
         public string SurgeryPart { get; set; }
         public string SurgeryFromTime { get; set; }
         public string SurgeryEndTime { get; set; }
-        public long SurgeryDuration { get; set; }
+        public double SurgeryDuration { get; set; }
         public string? IsPrimary { get; set; }
         public long SurgeonId { get; set; }
         public string SurgeonName { get; set; }
