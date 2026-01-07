@@ -8566,6 +8566,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{GovtApprovedName}}", dt.GetColValue("GovtApprovedName"));
                         html = html.Replace("{{CompanyApprovedAmt}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{CompanyApprovedName}}", dt.GetColValue("CompanyApprovedName"));
+                        html = html.Replace("{{GovtRefNo}}", dt.GetColValue("GovtRefNo"));
+                        html = html.Replace("{{CompRefNo}}", dt.GetColValue("CompRefNo"));
 
                         //   html = html.Replace("{{BalanceafterGov}}", dt.GetColValue("BalanceafterGov").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{chkpaidflag}}", dt.GetColValue("PaidAmount").ConvertToDouble() > 0 ? "table-row " : "none");
