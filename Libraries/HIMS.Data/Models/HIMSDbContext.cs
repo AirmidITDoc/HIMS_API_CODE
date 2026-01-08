@@ -7,14 +7,14 @@ namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
-        //public HIMSDbContext()
-        //{
-        //}
+        ////public HIMSDbContext()
+        ////{
+        ////}
 
-        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
-        //    : base(options)
-        //{
-        //}
+        ////public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        ////    : base(options)
+        ////{
+        ////}
 
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -1090,6 +1090,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CompDiscAmt).HasColumnType("money");
 
+                entity.Property(e => e.CompRefNo).HasMaxLength(20);
+
                 entity.Property(e => e.CompanyAmt).HasColumnType("money");
 
                 entity.Property(e => e.CompanyApprovedAmt).HasColumnType("money");
@@ -1105,6 +1107,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DoctorName).HasMaxLength(255);
 
                 entity.Property(e => e.GovtApprovedAmt).HasColumnType("money");
+
+                entity.Property(e => e.GovtRefNo).HasMaxLength(20);
 
                 entity.Property(e => e.Ipdno)
                     .HasMaxLength(50)
@@ -1278,6 +1282,10 @@ namespace HIMS.Data.Models
             modelBuilder.Entity<ClinicalQuesHeader>(entity =>
             {
                 entity.ToTable("ClinicalQuesHeader");
+
+                entity.Property(e => e.ClinicalQuesDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ClinicalQuesTime).HasColumnType("datetime");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 

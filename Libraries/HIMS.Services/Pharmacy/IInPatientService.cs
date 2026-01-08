@@ -13,6 +13,8 @@ namespace HIMS.Services.Pharmacy
         Task<IPagedList<SalesBillListDto>> salesbrowselist(GridRequestModel objGrid);
         Task<IPagedList<InPatientSalesDetailsListDto>> Getsalesdetaillist(GridRequestModel objGrid);
         Task<IPagedList<SalesReturnBillListDto>> salesreturnlist(GridRequestModel objGrid);
+        Task<IPagedList<SalesInPatientReturnDetailsListDto>> salesreturndetaillist(GridRequestModel objGrid);
+
 
 
 

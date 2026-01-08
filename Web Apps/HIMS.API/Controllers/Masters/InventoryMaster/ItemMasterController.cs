@@ -132,10 +132,10 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpGet("GetItemListForPrescriptionReturn")]
-        public ApiResponse GetItemListForPrescriptionReturn(int StoreId, string ItemName)
+        public ApiResponse GetItemListForPrescriptionReturn(int StoreId,  int IPAdmID, string ItemName)
         {
-            var resultList = _ItemMasterServices.GetItemListForPrescriptionretrun(StoreId, ItemName);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List For Prescription Return  List.", resultList);
+            var resultList = _ItemMasterServices.GetItemListForPrescriptionretrun(StoreId,  IPAdmID, ItemName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List For Prescription Return List.", resultList);
         }
 
 

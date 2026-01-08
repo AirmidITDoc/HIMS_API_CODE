@@ -8,7 +8,7 @@ namespace HIMS.Services.Inventory
     {
 
         Task InsertAsync(LoginManager objLogin, int UserId, string Username);
-        Task UpdateAsync(LoginManager objLogin, int UserId, string Username);
+        Task UpdateAsync(LoginManager objLogin, int UserId, string Username, string[]? references);
         Task CancelAsync(LoginManager objLogin, int UserId, string Username);
         Task updatepassAsync(LoginManager objLogin, int UserId, string Username);
         Task<IPagedList<LoginManagerListDto>> GetListAsync(GridRequestModel objGrid);

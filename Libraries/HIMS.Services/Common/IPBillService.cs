@@ -937,7 +937,7 @@ namespace HIMS.Services.Common
         {
             // -------------------- BILL Govert UPDATE ------------------------
             DatabaseHelper odal = new();
-            string[] BEntity = { "BillNo", "GovtApprovedAmt", "GovtCompanyId", "CompanyApprovedAmt", "CompanyApprovedId" };
+            string[] BEntity = { "BillNo", "GovtApprovedAmt", "GovtCompanyId", "CompanyApprovedAmt", "CompanyApprovedId", "GovtRefNo", "CompRefNo" };
             var bentity = ObjBill.ToDictionary();
 
             foreach (var rProperty in bentity.Keys.ToList())

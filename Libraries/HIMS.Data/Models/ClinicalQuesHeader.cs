@@ -11,6 +11,8 @@ namespace HIMS.Data.Models
         }
 
         public long ClinicalQuesHeaderId { get; set; }
+        public DateTime? ClinicalQuesDate { get; set; }
+        public DateTime? ClinicalQuesTime { get; set; }
         public long? Opipid { get; set; }
         public byte? Opiptype { get; set; }
         public long? QuestionId { get; set; }

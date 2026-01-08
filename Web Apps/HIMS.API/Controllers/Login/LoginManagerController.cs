@@ -97,6 +97,9 @@ namespace HIMS.API.Controllers.Login
                 }
                 model.AddedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
                 model.IsActive = true;
                 await _ILoginService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -153,9 +156,9 @@ namespace HIMS.API.Controllers.Login
                 p.ModifiedDate = AppTime.Now;
                 p.LoginId = 0;
             }
-
+            model.ModifiedDate = AppTime.Now;
             model.ModifiedBy = CurrentUserId;
-            await _ILoginService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            await _ILoginService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User updated successfully.");
         }
