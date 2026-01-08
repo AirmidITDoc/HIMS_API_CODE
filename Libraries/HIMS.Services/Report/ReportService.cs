@@ -4799,33 +4799,49 @@ namespace HIMS.Services.Report
                         String Label = "", Label1 = "", Label2 = "";
 
 
+                        var medicineGroups = dt.AsEnumerable()
+                            .GroupBy(r => new
+                            {
+                                DrugName = r["DrugName"].ConvertToString(),
+                                DoseName = r["DoseName"].ConvertToString(),
+                                Instruction = r["Instruction"].ConvertToString(),
+                                TotalQty = r["TotalQty"].ConvertToString(),
+                                ItemGenericName = r["ItemGenericName"].ConvertToString(),
+                                DoseNameInEnglish = r["DoseNameInEnglish"].ConvertToString(),
+                                DoseNameInMarathi = r["DoseNameInMarathi"].ConvertToString()
+                            })
+                            .ToList();
+                        
 
-                        foreach (DataRow dr in dt.Rows)
+                        foreach (var med in medicineGroups)
                         {
                             i++;
-                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size:20px;\">");
-                            items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align: center; font-size:16px; font-weight:bold;\">" + i + ")" + "</td>");
-                            items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align:left; font-weight: bold; font-size:16px; padding-left:7px;\">").Append(dr["DrugName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["DoseName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["Instruction"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"vertical-align:middle;padding: 6px;height:10px;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td></tr>");
 
-                            if (dr["ItemGenericName"].ConvertToString() != "")
-                            {
-                                items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;\">").Append("Composition :").Append(dr["ItemGenericName"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:20px;\">");
 
-                            }
+                            items.Append("<td style=\"vertical-align: top; padding: 6px; text-align: center; font-size:16px; font-weight:bold;\">").Append(i).Append(")</td>");
 
-                            items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px;border-bottom: 1px solid #d4c3c3;padding-bottom:20px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;padding-bottom:20px;\">").Append("Timing :").Append(dr["DoseNameInEnglish"].ConvertToString()).Append(dr["DoseNameInMarathi"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<td style=\"vertical-align: top; padding: 6px; text-align:left; font-weight:bold; font-size:16px; padding-left:7px;\">")
+                                 .Append(med.Key.DrugName).Append("</td>");
 
+                            items.Append("<td style=\"padding:6px; vertical-align:middle; font-size:20px; padding-left:10px;\">")
+                                 .Append(med.Key.DoseName).Append("</td>");
 
+                            items.Append("<td style=\"padding:6px; vertical-align:middle; font-size:20px; padding-left:10px;\">")
+                                 .Append(med.Key.Instruction).Append("</td>");
 
-
-
+                            items.Append("<td style=\"padding:6px; vertical-align:middle; font-size:20px; padding-left:10px;\">")
+                                 .Append(med.Key.TotalQty).Append("</td></tr>");
+                        
+                        if (!string.IsNullOrWhiteSpace(med.Key.ItemGenericName))
+                        {
+                            items.Append("<tr style=\"font-size:18px;border:1px;\">").Append("<td colspan=\"13\" style=\"padding-left:50px;\">").Append("Composition : ").Append(med.Key.ItemGenericName).Append("</td></tr>");
                         }
 
+                        items.Append("<tr style=\"font-size:18px;border-bottom:1px solid #d4c3c3;\">").Append("<td colspan=\"13\" style=\"padding-left:50px; padding-bottom:20px;\">").Append("Timing : ").Append(med.Key.DoseNameInEnglish).Append(" ").Append(med.Key.DoseNameInMarathi).Append("</td></tr>");
+                    }
 
-                        html = html.Replace("{{Items}}", items.ToString());
+                    html = html.Replace("{{Items}}", items.ToString());
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
@@ -4903,40 +4919,61 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
 
-                        string subQues = dt.GetColValue("SubQuesName").ConvertToString();
-                        StringBuilder subQuesHtml = new StringBuilder();
-
-                        if (!string.IsNullOrEmpty(subQues))
+                        var questionGroups = dt.AsEnumerable()
+                        .Where(r => !string.IsNullOrWhiteSpace(r.Field<string>("QuestionName")))
+                        .GroupBy(r => r.Field<string>("QuestionName").Trim())
+                        .Select(g => new
                         {
+                            QuestionName = g.Key,
+                            SubQuestions = g
+                                .Select(r => r.Field<string>("SubQuesName"))
+                                .Where(s => !string.IsNullOrWhiteSpace(s))
+                                .Distinct()   // 🔥 removes duplicates
+                                .ToList()
+                        })
+                        .ToList();
+
+                        StringBuilder quesHtml = new StringBuilder();
+
+                        quesHtml.Append(@"
+                        <table style='width:100%; border-collapse:collapse; font-size:20px;'>
+                        <tr style='border-bottom:1px solid #000; font-weight:bold;'>
+                            <td style='padding:8px;'>Question</td>
+                            <td style='padding:8px;'>Value</td>
+                        </tr>");
+
+
+                        foreach (var q in questionGroups)
+                        {
+                            quesHtml.Append("<tr style='border-bottom:1px solid #d4c3c3;'>");
+
+                            // Question column
+                            quesHtml.Append("<td style='padding:8px; font-weight:bold;'>")
+                                    .Append(q.QuestionName)
+                                    .Append("</td>");
+
+                            // SubQuestion column
+                            quesHtml.Append("<td style='padding:8px;'>");
+
                             bool first = true;
-
-                            foreach (var item in subQues.Split(','))
+                            foreach (var sub in q.SubQuestions)
                             {
-                                var parts = item.Split(new[] { '-' }, 2);
+                                if (!first)
+                                    quesHtml.Append("<span style='margin:0 6px;'>|</span>");
 
-                                if (parts.Length == 2 && !string.IsNullOrWhiteSpace(parts[1]))
-                                {
-                                    if (!first)
-                                    {
-                                        subQuesHtml.Append("<span style='margin-left:5px;'>|</span>");
-                                    }
-
-                                    subQuesHtml.Append("<span style='font-weight:bold; margin-left:10px;'>")
-                                                .Append(parts[0].Trim())
-                                                .Append(" : </span>")
-                                                .Append("<span style='margin-left:4px;'>")
-                                                .Append(parts[1].Trim())
-                                                .Append("</span>");
-
-                                    first = false;
-                                }
+                                quesHtml.Append("<span>").Append(sub).Append("</span>");
+                                first = false;
                             }
+
+                            quesHtml.Append("</td></tr>");
                         }
 
+                        quesHtml.Append("</table>");
 
-                        html = html.Replace("{{SubQuesName}}", subQuesHtml.ToString());
+                        html = html.Replace("{{SubQuesName}}", quesHtml.ToString());
                         html = html.Replace("{{chkSubQuesName}}",
-                            subQuesHtml.Length > 0 ? "block" : "none");
+                        questionGroups.Count > 0 ? "block" : "none");
+
 
 
 
