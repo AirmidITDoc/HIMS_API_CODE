@@ -61,18 +61,25 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
         [HttpPut("PaymentMode{id:int}")]
-        //[Permission(PageCode = "Payment", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> BilldatetimeUpdate(TpaymentUpdateModel obj)
+        [Permission(PageCode = "Payment", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> BilldatetimeUpdate(paymentUpdateModel obj)
         {
-            TPayment model = obj.MapTo<TPayment>();
-            if (obj.BillNo == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
+            if (obj == null || obj.TpaymentUpdate == null || !obj.TpaymentUpdate.Any())
             {
-
-                await _IPaymentModeService.PaymentUpdateAsync(model, CurrentUserId, CurrentUserName);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Invalid params");
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+            List<TPayment> models = obj.TpaymentUpdate.MapTo<List<TPayment>>();
+
+            foreach (var model in models)
+            {
+                if (model.BillNo == 0 || model.PaymentId == 0)
+                {
+                    return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status400BadRequest,"Invalid BillNo or PaymentId");
+                }
+
+                await _IPaymentModeService.PaymentUpdateAsync(new List<TPayment> { model },CurrentUserId, CurrentUserName);
+            }
+             return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
     }

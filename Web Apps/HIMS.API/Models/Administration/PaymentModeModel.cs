@@ -52,5 +52,13 @@
         public long PaymentId { get; set; }
         public long? BillNo { get; set; }
         public string? PayMode { get; set; }
+        public string? TranNo { get; set; }
+        public string? BankName { get; set; }
+
     }
+    public class paymentUpdateModel
+    {
+        public List<TpaymentUpdateModel> TpaymentUpdate { get; set; }
+    }
+
 }

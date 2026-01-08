@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("PathologyPatientTestList")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<IActionResult> PatientList(GridRequestModel objGrid)
         {
             IPagedList<PathPatientTestListDto> PatientList = await _IPathlogyService.GetListAsync(objGrid);
