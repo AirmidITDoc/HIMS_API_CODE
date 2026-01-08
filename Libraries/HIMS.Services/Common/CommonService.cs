@@ -182,6 +182,7 @@ namespace HIMS.Services.Common
                 case "subQuestionList": sp_Name = "ps_Rtrv_subQuestionList"; break;
                 case "subQuestionValueList": sp_Name = "ps_Rtrv_subQuestionValueList"; break;
                 case "ClinicalQuesDetail": sp_Name = "ps_Rtrv_ClinicalQuesDetail_Test"; break;
+                case "PaymentMode": sp_Name = "Rtrv_ConstantPayMode"; break;
 
 
 
