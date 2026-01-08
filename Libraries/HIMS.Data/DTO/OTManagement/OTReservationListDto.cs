@@ -61,6 +61,9 @@ namespace HIMS.Data.DTO.OTManagement
         public bool? IsMaterialReplacement { get; set; }
         public int? AnesthesiaType { get; set; }
 
+        public long ConsentId { get; set; }
+        
+
     }
 
    

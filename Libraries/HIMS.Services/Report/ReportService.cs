@@ -1127,7 +1127,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SettlementReceipt.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptIPDPaymentReceiptPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptIPDPaymentReceiptPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPPaymentReceipt", "IPPaymentReceipt", Orientation.Portrait);
@@ -8566,6 +8566,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{GovtApprovedName}}", dt.GetColValue("GovtApprovedName"));
                         html = html.Replace("{{CompanyApprovedAmt}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{CompanyApprovedName}}", dt.GetColValue("CompanyApprovedName"));
+                        html = html.Replace("{{GovtRefNo}}", dt.GetColValue("GovtRefNo"));
+                        html = html.Replace("{{CompRefNo}}", dt.GetColValue("CompRefNo"));
 
                         //   html = html.Replace("{{BalanceafterGov}}", dt.GetColValue("BalanceafterGov").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{chkpaidflag}}", dt.GetColValue("PaidAmount").ConvertToDouble() > 0 ? "table-row " : "none");
@@ -10492,7 +10494,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("ConsultantDocName").ConvertToString());
                         html = html.Replace("{{PathTime}}", dt.GetColValue("PathTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{ReportTime}}", dt.GetColValue("ReportTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                        html = html.Replace("{{SampleCollectionTime}}", dt.GetColValue("SampleCollectionTime").ConvertToString());
+                        html = html.Replace("{{SampleCollectionTime}}", dt.GetColValue("SampleCollectionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName").ConvertToString());
                         html = html.Replace("{{PathResultDr1}}", dt.GetColValue("PathResultDr1").ConvertToString());
                         html = html.Replace("{{Adm_Visit_Time}}", dt.GetColValue("Adm_Visit_Time").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
