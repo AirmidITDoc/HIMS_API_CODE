@@ -451,7 +451,28 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+             
+                #region :: OPGastrologyPrescription ::
+                case "OPGastrologyPrescription":
+                    {
 
+                        model.RepoertName = "OPGastrologyPrescription ";
+
+                        string[] colList = { };
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPGastrologyPrescription.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("ps_rpt_OPDPrecriptionGastrologyPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        html = html.Replace("{{Signature}}", "");
+                        html = SetFonts(html, PdfFontPath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPGastrologyPrescription", "OPGastrologyPrescription" + vDate, Orientation.Portrait);
+
+
+                        break;
+                    }
+                #endregion
 
                 #region :: OPPrescription ::
                 case "OPPrescription":
@@ -4785,6 +4806,196 @@ namespace HIMS.Services.Report
 
                         return html;
 
+                    }
+                    break;
+
+                case "OPGastrologyPrescription":
+                    {
+
+                        int i = 0, j = 0;
+                        string previousLabel = "";
+                        String Label = "", Label1 = "", Label2 = "";
+
+
+                        var medicineGroups = dt.AsEnumerable()
+                            .GroupBy(r => new
+                            {
+                                DrugName = r["DrugName"].ConvertToString(),
+                                DoseName = r["DoseName"].ConvertToString(),
+                                Instruction = r["Instruction"].ConvertToString(),
+                                TotalQty = r["TotalQty"].ConvertToString(),
+                                ItemGenericName = r["ItemGenericName"].ConvertToString(),
+                                DoseNameInEnglish = r["DoseNameInEnglish"].ConvertToString(),
+                                DoseNameInMarathi = r["DoseNameInMarathi"].ConvertToString()
+                            })
+                            .ToList();
+                        
+
+                        foreach (var med in medicineGroups)
+                        {
+                            i++;
+
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:20px;\">");
+
+                            items.Append("<td style=\"vertical-align: top; padding: 6px; text-align: center; font-size:16px; font-weight:bold;\">").Append(i).Append(")</td>");
+
+                            items.Append("<td style=\"vertical-align: top; padding: 6px; text-align:left; font-weight:bold; font-size:16px; padding-left:7px;\">")
+                                 .Append(med.Key.DrugName).Append("</td>");
+
+                            items.Append("<td style=\"padding:6px; vertical-align:middle; font-size:20px; padding-left:10px;\">")
+                                 .Append(med.Key.DoseName).Append("</td>");
+
+                            items.Append("<td style=\"padding:6px; vertical-align:middle; font-size:20px; padding-left:10px;\">")
+                                 .Append(med.Key.Instruction).Append("</td>");
+
+                            items.Append("<td style=\"padding:6px; vertical-align:middle; font-size:20px; padding-left:10px;\">")
+                                 .Append(med.Key.TotalQty).Append("</td></tr>");
+                        
+                        if (!string.IsNullOrWhiteSpace(med.Key.ItemGenericName))
+                        {
+                            items.Append("<tr style=\"font-size:18px;border:1px;\">").Append("<td colspan=\"13\" style=\"padding-left:50px;\">").Append("Composition : ").Append(med.Key.ItemGenericName).Append("</td></tr>");
+                        }
+
+                        items.Append("<tr style=\"font-size:18px;border-bottom:1px solid #d4c3c3;\">").Append("<td colspan=\"13\" style=\"padding-left:50px; padding-bottom:20px;\">").Append("Timing : ").Append(med.Key.DoseNameInEnglish).Append(" ").Append(med.Key.DoseNameInMarathi).Append("</td></tr>");
+                    }
+
+                    html = html.Replace("{{Items}}", items.ToString());
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("ConsultantDocName"));
+                        html = html.Replace("{{ReferDrName}}", dt.GetColValue("ReferDrName"));
+
+                        html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+                        html = html.Replace("{{PDate}}", dt.GetColValue("PTime").ConvertToDateString("dd/MM/yyyy|hh:mm tt"));
+                        html = html.Replace("{{VisitTime}}", dt.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy|hh:mm tt"));
+                        html = html.Replace("{{FollowupDate}}", dt.GetColValue("FollowupDate").ConvertToDateString("dd/MM/yyyy"));
+
+
+                        html = html.Replace("{{PrecriptionId}}", dt.GetColValue("PrecriptionId"));
+
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{WardName}}", dt.GetColValue("WardName"));
+                        html = html.Replace("{{PreparedBy}}", dt.GetColValue("PreparedBy"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                        html = html.Replace("{{ChiefComplaint}}", dt.GetColValue("ChiefComplaint"));
+                        html = html.Replace("{{Diagnosis}}", dt.GetColValue("Diagnosis"));
+                        html = html.Replace("{{Examination}}", dt.GetColValue("Examination"));
+                        html = html.Replace("{{SecondRefDoctorName}}", dt.GetColValue("SecondRefDoctorName"));
+                        html = html.Replace("{{RequestList}}", dt.GetColValue("RequestList"));
+                        html = html.Replace("{{BP}}", dt.GetColValue("BP"));
+                        html = html.Replace("{{Pulse}}", dt.GetColValue("Pulse"));
+                        html = html.Replace("{{Height}}", dt.GetColValue("Height"));
+                        html = html.Replace("{{Weight}}", dt.GetColValue("PWeight"));
+                        html = html.Replace("{{Temp}}", dt.GetColValue("Temp"));
+                        html = html.Replace("{{BP}}", dt.GetColValue("BP"));
+                        html = html.Replace("{{BSL}}", dt.GetColValue("BSL"));
+                        html = html.Replace("{{BMI}}", dt.GetColValue("BMI"));
+                        html = html.Replace("{{SpO2}}", dt.GetColValue("SpO2"));
+                        html = html.Replace("{{Allergy}}", dt.GetColValue("Allergy"));
+                        html = html.Replace("{{BloodGroup}}", dt.GetColValue("BloodGroup"));
+
+                        html = html.Replace("{{Signature}}", dt.GetColValue("Signature"));
+
+                        html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
+                        html = html.Replace("{{Education}}", dt.GetColValue("Education"));
+                        html = html.Replace("{{Advice}}", dt.GetColValue("Advice"));
+
+                        html = html.Replace("{{chkBPflag}}", dt.GetColValue("BP").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkPulseflag}}", dt.GetColValue("Pulse").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkHeightflag}}", dt.GetColValue("Height").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkWeightflag}}", dt.GetColValue("PWeight").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkTempflag}}", dt.GetColValue("Temp").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkBSLflag}}", dt.GetColValue("BSL").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkBMIflag}}", dt.GetColValue("BMI").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkSpO2flag}}", dt.GetColValue("SpO2").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkBloodGroupflag}}", dt.GetColValue("BloodGroup").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkAllergyflag}}", dt.GetColValue("Allergy").ConvertToString() != "" ? "visible" : "none");
+
+
+                        html = html.Replace("{{chkEdu}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkRegNo}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
+
+                        html = html.Replace("{{chkChiefComplaint}}", dt.GetColValue("ChiefComplaint").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkDiagnosis}}", dt.GetColValue("Diagnosis").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkRequestList}}", dt.GetColValue("RequestList").ConvertToString() != "" ? "table-row" : "none");
+
+
+                        //html = html.Replace("{{chkChiefAdvice}}", dt.GetColValue("Advice").ConvertToString() != "" ? "table-row" : "none");
+                        //html = html.Replace("{{chkReferDrName}}", dt.GetColValue("SecondRefDoctorName").ConvertToString() != "" ? "table-row" : "none");
+
+                        html = html.Replace("{{chkChiefAdvice}}", dt.GetColValue("Advice").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkReferDrName}}", dt.GetColValue("SecondRefDoctorName").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkExamination}}", dt.GetColValue("Examination").ConvertToString() != "" ? "table-row" : "none");
+
+
+                        html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
+
+                        var questionGroups = dt.AsEnumerable()
+                        .Where(r => !string.IsNullOrWhiteSpace(r.Field<string>("QuestionName")))
+                        .GroupBy(r => r.Field<string>("QuestionName").Trim())
+                        .Select(g => new
+                        {
+                            QuestionName = g.Key,
+                            SubQuestions = g
+                                .Select(r => r.Field<string>("SubQuesName"))
+                                .Where(s => !string.IsNullOrWhiteSpace(s))
+                                .Distinct()   // 🔥 removes duplicates
+                                .ToList()
+                        })
+                        .ToList();
+
+                        StringBuilder quesHtml = new StringBuilder();
+
+                        quesHtml.Append(@"
+                        <table style='width:100%; border-collapse:collapse; font-size:20px;'>
+                        <tr style='border-bottom:1px solid #000; font-weight:bold;'>
+                            <td style='padding:8px;'>Question</td>
+                            <td style='padding:8px;'>Value</td>
+                        </tr>");
+
+
+                        foreach (var q in questionGroups)
+                        {
+                            quesHtml.Append("<tr style='border-bottom:1px solid #d4c3c3;'>");
+
+                            // Question column
+                            quesHtml.Append("<td style='padding:8px; font-weight:bold;'>")
+                                    .Append(q.QuestionName)
+                                    .Append("</td>");
+
+                            // SubQuestion column
+                            quesHtml.Append("<td style='padding:8px;'>");
+
+                            bool first = true;
+                            foreach (var sub in q.SubQuestions)
+                            {
+                                if (!first)
+                                    quesHtml.Append("<span style='margin:0 6px;'>|</span>");
+
+                                quesHtml.Append("<span>").Append(sub).Append("</span>");
+                                first = false;
+                            }
+
+                            quesHtml.Append("</td></tr>");
+                        }
+
+                        quesHtml.Append("</table>");
+
+                        html = html.Replace("{{SubQuesName}}", quesHtml.ToString());
+                        html = html.Replace("{{chkSubQuesName}}",
+                        questionGroups.Count > 0 ? "block" : "none");
+
+
+
+
+                        return html;
                     }
                     break;
 
