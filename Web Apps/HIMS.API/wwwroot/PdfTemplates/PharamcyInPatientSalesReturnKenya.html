@@ -5,122 +5,60 @@
     <title></title>
 </head>
 <body>
+    <tr>
+        <td>
+            <div style="padding:px; font-size:14px;">
+                {{NewHeader}}
+            </div>
+        </td>
+    </tr>
     <div style="font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
         <div>
-
             <div style="display:flex; align-items: center; margin-bottom: 10px;">
-                <!--<span style="font-size: 12px;font-weight: 700;width:40%;">
-                    (A Unit of Shri Siddeshwar Loka Kalyana Charitable
-                    Trust)
-                </span>-->
-                <span style="text-transform: uppercase;font-weight: 500;margin-left:250px;width:50%;font-size:20px;font-weight:bold;">
-                    Tax Invoice (Return-InPatient)
+                <span style="text-transform: uppercase;font-weight: 500;margin-left:300px;width:50%;font-size:20px;font-weight:bold;">
+                    Return-In Patient Issue
                 </span>
             </div>
-
             <table class="table" style="width: 100%;border-collapse: collapse;">
                 <tbody>
                     <tr>
-                        <td colspan="4"
-                            style="vertical-align: top;border: 1px solid black;width:40%; padding:0 10px 10px;font-size:18px;">
-                            <h3 style="margin-top:0;margin-bottom:5px;text-transform: uppercase;font-size: 16px;">
-                                {{StoreName}}
-                            </h3>
-
-                            <div>{{StoreAddress}}</div>
-                            <!-- <div>GST No. 29ABCTS6874R1Z8</div>
-                            <div>
-                                <span style="margin-right: 20px;">D.L.No. 123456789456123</span>
-                                <span>D.L.No. 123456789456123</span>
-                            </div> -->
-                            <div>
-                                <a href="tel:08352259399"
-                                   style="margin-right: 20px;">{{HospitalMobileNo}}</a>
-                                <a href="mailto:info@jsshospitals.com">{{HospitalEmailId}}</a>
-                            </div>
-                        </td>
-                        <td colspan="6" style="border: 1px solid black;width: 33.33%;vertical-align: top; padding: 0;">
-                            <table style="width: 100%;border-collapse: collapse;font-size:14px;">
-
-                                <td style=" vertical-align: top; padding: 0 10px 10px">
-                                    <span style="font-weight: bold;">
-                                        Customer Id :
-                                    </span>
-                                    <span>{{RegNo}} </span>  <br>
-                                    <span style="font-weight: bold;">
-                                        Customer Name:
-                                    </span>
-                                    <span>{{PatientName}} </span>  <br>
-                                    <span style="font-weight: bold;">
-                                        Customer Address:
-                                    </span>
-                                    <span>{{Address}} </span>  <br>
-
-                                    <span style="font-weight: bold;">
-                                        Age & Gen:
-                                    </span>
-                                    <span>{{AgeYear}} | {{GenderName}} </span>  <br>
-                                    <span style="font-weight: bold;">
-
-                                        Mob:
-                                    </span>
-                                    <span>
-                                        {{ExtMobileNo}}
-                                    </span><br>
-                                    <span style="font-weight: bold;">
-                                        Doctor Name:
-                                    </span>
-                                    <span>{{DoctorName}} </span>
-
-                                </td>
-
-                            </table>
-                        </td>
-
-
-                    </tr>
-                    <tr>
-                        <td colspan="4"
-                            style=" vertical-align: top; border: 1px solid black; width: 40%; padding: 0 10px 10px; font-size: 14px;">
-                            <!-- <div>
-                                <span style="font-weight: bold;">
-                                    GST No.
-                                </span>
-                                <span>{{GSTIN}}   </span>
-                            </div>
-                            <div>
-                                <span style="font-weight: bold; margin-right: 20px;">D.L.No. </span>
-                                <span>D.L.No. {{DL_NO}}</span>
-                            </div>  -->
-                        </td>
-
-                        <td colspan="6" style="border: 1px solid black; width: 33.33%; vertical-align: top; padding: 0;">
-                            <table style="width: 100%;font-size:14px;">
-                                <!-- <tr> -->
-                                <td style="vertical-align: top;padding:0 10px 10px">
-                                    <span style="font-weight: bold; margin-left: 10px;">
-                                        Bill No:
-                                    </span>
-                                    <span>
-                                        {{SalesNo}}
-                                    </span>
-                                    <span style="font-weight: bold;">
-                                        Bill Date:
-                                    </span>
-                                    <span>
-                                        {{Date}}
-                                    </span><br>
-                                    <span style="font-weight: bold;">
-                                        Mode of Payment :
-                                    </span>
-                                    <span>
-                                        {{PayMode}}
-                                    </span><br>
-                                </td>
+                        <td colspan="12" style="border: 1px solid black; width: 100%; vertical-align: top; padding: 0;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                                <tr>
+                                    <td style="padding:0 10px 6px;">
+                                        <b>Issue No :</b> {{RegNo}}
+                                    </td>
+                                    <td style="padding:0 10px 6px;">
+                                        <b>Bill No :</b> {{SalesNo}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:0 10px 6px;">
+                                        <b> Address :</b> {{Address}}
+                                    </td>
+                                    <td style="padding:0 10px 6px;">
+                                        <b> Date :</b> {{Date}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:0 10px 6px;">
+                                        <b>Patient Name :</b> {{PatientName}}
+                                    </td>
+                                    <td style="padding:0 10px 6px;">
+                                        <b>Age &amp; Gen :</b> {{AgeYear}} | {{GenderName}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:0 10px 6px;">
+                                        <b>Doctor Name :</b> {{DoctorName}}
+                                    </td>
+                                    <td style="padding:0 10px 6px;">
+                                        <b>Mob :</b> {{ExtMobileNo}}
+                                    </td>
+                                </tr>
                             </table>
                         </td>
                     </tr>
-
                     <tr style="font-size:13px;">
                         <td style="border: 1px solid black;font-weight:bold;text-align:center;vertical-align: middle;padding:5px 5px;width:5%;">
                             Sr No.
@@ -128,9 +66,6 @@
                         <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">
                             HSN
                         </td>
-                        <!-- <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 7%;">
-                            MFR
-                        </td>-->
                         <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 30%;">
                             Product Name
                         </td>
@@ -155,88 +90,43 @@
                     </tr>
                     {{Items}}
                     <tr>
-                        <td colspan="6" style="border: 1px solid black;vertical-align: top;
-                padding: 0 10px 10px;">
-                            <div style="font-weight: 400;font-size:20px">Terms & Conditions</div>
-                            <ul style="margin: 5px 0 0 0;
-                    font-size: 12px;
-                    padding-left: 17px;
-                    font-weight: 400;">
-                                <li>
-                                    Please check the item before leaving medical.
-                                </li>
-                                <li>
-                                    Please consult your doctor before consuming the medicine
-                                </li>
-                                <li>
-                                    All disputes are subject to Vijayapura jurisdiction only
-                                </li>
-                            </ul>
-                        </td>
-                        <!-- <td colspan="5" style="border: 1px solid black;vertical-align: top;padding: 0;">
-                        </td> -->
-                        <td colspan="4" style="border: 1px solid black;vertical-align: top;
-                padding: 5px 1px 5px 0;font-size:18px;">
-                            <div style="margin-left:40px;">
+                        <td colspan="9" style="border: 1px solid black; vertical-align: top; padding: 0 10px 10px 700px; width: 300px; font-size: 14px;">
+                            <div style="display:flex;align-items: center;">
                                 <span style="width:90px;display:inline-block;">Sub Total</span>
-                                <span style="margin:0 2px">:</span>
+                                <span style="margin:0 5px">:</span>
                                 <span>{{CurrSymbol}} {{HTotalAmount}}</span>
                             </div>
-                            <div style="margin-left:40px; ">
+                            <div style="display:flex;align-items: center;">
                                 <span style="width:90px;display:inline-block;">Discount</span>
-                                <span style="margin:0 2px">:</span>
+                                <span style="margin:0 5px">:</span>
                                 <span>{{CurrSymbol}} {{DiscAmount}}</span>
                             </div>
-                            <!-- <div style="margin-left:40px; ">
-                                 <span style="width:90px;display:inline-block;">Total GST</span>
-                                 <span style="margin:0 5px">:</span>
-                                 <span>{{CurrSymbol}} {{TotalGST}}</span>
-                             </div> -->
-                            <div style="margin-left:40px; ">
+                            <div style="display:flex;align-items: center;">
                                 <span style="width:90px;display:inline-block;">Round off</span>
                                 <span style="margin:0 5px">:</span>
-                                <span>{{CurrSymbol}} 0.00</span>
+                                <span>{{CurrSymbol}} {{RoundOff}}</span>
                             </div>
-                            <div style="margin-left:40px; font-size: 18px; font-weight: bold ">
-                                <span style="width: 110px; display: inline-block;">Grand Total</span>
+                            <div style="display:flex;align-items: center;font-size: 14px;font-weight: bold">
+                                <span style="display:inline-block;">Grand Total</span>
                                 <span style="margin:0 5px">:</span>
                                 <span>{{CurrSymbol}} {{NetAmount}}</span>
                             </div>
                         </td>
                     </tr>
-                    <!-- <tr>
-                        <td colspan="9" style="border: 1px solid black;vertical-align: top;
-                        padding: 5px 10px;">
-                            <div style="font-size: 15px;font-weight: bold">
-                                Your Saved Amount: {{DiscAmount}}
-                            </div>
-                        </td>
-                        <td rowspan="2" style="border: 1px solid black;vertical-align: bottom;
-                        padding: 5px 10px;text-align: center;">
-
-                            <span style="font-size: 11px;opacity:.6;">For Shri Siddeshwar Medicals 24/7</span>
-                        </td>
-                    </tr> -->
-                    <!-- <tr>
-                        <td colspan="9" style="border: 1px solid black;vertical-align: top;
-                        padding: 5px 10px;">
-                            Total Invoice Value in words:
-                        </td>
-                    </tr> -->
                     <tr style="font-size: 14px;">
                         <td colspan="3">
-                            Billed By: {{UserName}}
+                            Issued By: {{UserName}}
                         </td>
-                        <td colspan="10" style="text-align: right;font-size:14px;">
-                            This is Computer generated invoice hence doesn’t require signature
+                        <td colspan="12" style="text-align: right;">
+                            <span style="display:inline-block; text-align:center;">
+                                {{StoreName}}<br>
+                                <span style="display:block;">PHARMACIST</span>
+                            </span>
                         </td>
                     </tr>
                 </tbody>
             </table>
-
-            <!-- <div style="font-style: italic; opacity:.6;text-align: center;font-size: 10px; margin-top: 15px;">
-                This is Computer generated invoice hence doesn’t require signature
-            </div> -->
         </div>
+    </div>
 </body>
 </html>

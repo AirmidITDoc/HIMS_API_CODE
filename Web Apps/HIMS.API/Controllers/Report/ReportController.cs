@@ -306,6 +306,8 @@ namespace HIMS.API.Controllers.Report
                 case "IPFinalBillClassWise"://Namechanges
                 case "IPFinalBillClassServiceWise"://Namechange
                 case "IPFinalBillChargesDateWise":
+                case "IPFinalBillChargesDateWisegroupwise":
+
                 case "IPFinalBillGroupwise"://Namechanges
                 case "IpCreditBill":
                 case "IPDInterimBill"://change

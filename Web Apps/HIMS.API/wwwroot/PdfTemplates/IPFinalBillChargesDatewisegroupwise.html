@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -21,7 +21,7 @@
                                 <tr style="font-size: 18px;font-weight:bold;">
                                     <td style="border-bottom: 1px solid #d4c3c3; padding: 6px;  text-align:center">
                                         <b>
-                                       INVOICE
+                                            INVOICE
                                         </b>
                                     </td>
                                     <!--<td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
@@ -146,6 +146,8 @@
                             <table style="width: 100%; border-collapse: collapse;">
 
                                 <tr style="font-weight:bold;font-size:13px;">
+                                    <td style="border: 1px solid #000; text-align: center; padding: 6px;">Date</td>
+
                                     <td style="border: 1px solid #000; text-align: center; padding: 6px;">Sr.No</td>
                                     <td style="border: 1px solid #000; text-align: left; padding: 6px;">
                                         Service Name
@@ -163,7 +165,7 @@
                                 <tbody style="font-size: 14px;">
                                     {{Items}}
                                     <tr style="margin-top: 12px;">
-                                        <td colspan="6">
+                                        <td colspan="7">
                                             <table style="width: 100%; border-collapse: collapse; font-size: 13px;font-weight:bold;">
 
                                                 <tr>
@@ -228,10 +230,10 @@
                                                     <td style="border-bottom: 1px solid #eee; padding: 6px;">Bill Refund Amount </td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;"> {{BillRefAmt}}</td>
-                                                </tr>                                           
+                                                </tr>
                                             </table>
                                         </td>
-                                    </tr>                                 
+                                    </tr>
                                 </tbody>
 
                             </table>
@@ -240,117 +242,114 @@
                     <tr></tr>
 
                     <tr>
-                    <!--<tr>
-                        <th style=" text-align: left;" colspan="5">
-                            <h4 style="margin: 12px 0px; font-size: 13px;">
-                                Payment Information
-                            </h4>
-                        </th>
-                    </tr>-->
-
-                    <!--<td colspan="2">
-                        <table style="text-align: center; border-collapse: collapse; width: 100%;">
-                            <thead style="font-size: 13px;">
-
-                                <tr>
-                                    <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
-                                        Cash Amount
-                                    </th>
-                                    <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
-                                        Card Amount
-                                    </th>
-                                    <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
-                                        Cheque Amount
-                                    </th>
-
-                                    <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
-                                        Online Amount
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody style="font-size: 15px;">
-                                <tr>
-                                    <td style="border: 1px solid #000; text-align: right; padding: 6px; ">
-                                        {{CashPayAmount}}
-                                    </td>
-                                    <td style="border: 1px solid #000; text-align: right; padding: 6px;">
-                                        {{CardPayAmount}}
-                                    </td>
-                                    <td style="border: 1px solid #000; text-align: right; padding: 6px;">
-                                        {{ChequePayAmount}}
-                                    </td>
-                                    <td style="border: 1px solid #000; text-align: right; padding: 6px;">
-                                        {{PayTMPayAmount}}
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </td>-->
-
-                   
-                    <!--<tr>
-                        <th style="text-align: left;" colspan="3">
-                            <h4 style="margin: 12px 0px; font-size: 13px;">
-                                Advance Information
-                            </h4>
-                        </th>
-                    </tr>-->
-                    <!--<tr style="margin-top:10px;">
-
-
-                        <td colspan="2">
-                            <table style="text-align: center; border-collapse: collapse; width: 100%; font-size: 22px;">
+                        <!--<tr>
+                            <th style=" text-align: left;" colspan="5">
+                                <h4 style="margin: 12px 0px; font-size: 13px;">
+                                    Payment Information
+                                </h4>
+                            </th>
+                        </tr>-->
+                        <!--<td colspan="2">
+                            <table style="text-align: center; border-collapse: collapse; width: 100%;">
                                 <thead style="font-size: 13px;">
 
                                     <tr>
                                         <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
-                                            Advance Amount
+                                            Cash Amount
                                         </th>
                                         <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
-                                            Advance Used Amount
+                                            Card Amount
+                                        </th>
+                                        <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
+                                            Cheque Amount
                                         </th>
 
                                         <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
-                                            Advance Balance Amount
+                                            Online Amount
                                         </th>
-                                        <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
-                                            Advance Refund Amount
-                                        </th>
-
-
                                     </tr>
                                 </thead>
-                                <tbody style="font-size: 13px;">
+                                <tbody style="font-size: 15px;">
                                     <tr>
-                                        <td style="border: 1px solid #000; text-align: right; padding: 6px;">
-                                            {{TotalAdvanceAmount}}
-                                        </td>
-
-                                        <td style="border: 1px solid #000; text-align: right; padding: 6px;">
-                                            {{AdvanceUsedAmount}}
+                                        <td style="border: 1px solid #000; text-align: right; padding: 6px; ">
+                                            {{CashPayAmount}}
                                         </td>
                                         <td style="border: 1px solid #000; text-align: right; padding: 6px;">
-                                            {{AdvanceBalAmount}}
+                                            {{CardPayAmount}}
                                         </td>
                                         <td style="border: 1px solid #000; text-align: right; padding: 6px;">
-                                            {{AdvanceRefundAmount}}
+                                            {{ChequePayAmount}}
+                                        </td>
+                                        <td style="border: 1px solid #000; text-align: right; padding: 6px;">
+                                            {{PayTMPayAmount}}
                                         </td>
 
                                     </tr>
 
                                 </tbody>
                             </table>
-                        </td>
-                    </tr>-->
+                        </td>-->
+                        <!--<tr>
+                            <th style="text-align: left;" colspan="3">
+                                <h4 style="margin: 12px 0px; font-size: 13px;">
+                                    Advance Information
+                                </h4>
+                            </th>
+                        </tr>-->
+                        <!--<tr style="margin-top:10px;">
+
+
+                            <td colspan="2">
+                                <table style="text-align: center; border-collapse: collapse; width: 100%; font-size: 22px;">
+                                    <thead style="font-size: 13px;">
+
+                                        <tr>
+                                            <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
+                                                Advance Amount
+                                            </th>
+                                            <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
+                                                Advance Used Amount
+                                            </th>
+
+                                            <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
+                                                Advance Balance Amount
+                                            </th>
+                                            <th style=" border: 1px solid #000; text-align: center; padding: 6px;">
+                                                Advance Refund Amount
+                                            </th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody style="font-size: 13px;">
+                                        <tr>
+                                            <td style="border: 1px solid #000; text-align: right; padding: 6px;">
+                                                {{TotalAdvanceAmount}}
+                                            </td>
+
+                                            <td style="border: 1px solid #000; text-align: right; padding: 6px;">
+                                                {{AdvanceUsedAmount}}
+                                            </td>
+                                            <td style="border: 1px solid #000; text-align: right; padding: 6px;">
+                                                {{AdvanceBalAmount}}
+                                            </td>
+                                            <td style="border: 1px solid #000; text-align: right; padding: 6px;">
+                                                {{AdvanceRefundAmount}}
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>-->
 
                     <tr>
                         <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
 
                             <!--<tr style="margin-top: 12px;">
                             <tr>
-                                <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
+                                <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn�t require signature</td>
                             </tr>-->
                             <tr></tr>
                             <tr style="padding: 6px; text-align: right;font-size:15px;">
