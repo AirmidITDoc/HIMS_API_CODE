@@ -33,14 +33,14 @@ namespace HIMS.API.Controllers.Login
             return Ok(LoginGetMobile.ToGridResponse(objGrid, "LoginGetMobile"));
         }
         [HttpPost("LoginList")]
-        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LoginManagerListDto> LoginManagerList = await _ILoginService.GetListAsync(objGrid);
             return Ok(LoginManagerList.ToGridResponse(objGrid, "User List"));
         }
         [HttpPost("loginAccessDetailsList")]
-        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> Listl(GridRequestModel objGrid)
         {
             IPagedList<LoginConfigUserWiseListDto> LoginConfigUserWiseList = await _ILoginService.GetListAsyncL(objGrid);
@@ -56,7 +56,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("LoginAccessConfigList")]
-        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> ListA(GridRequestModel objGrid)
         {
             IPagedList<LoginAccessConfigListDto> LoginAccessConfigList = await _ILoginService.GetListAsyncLA(objGrid);

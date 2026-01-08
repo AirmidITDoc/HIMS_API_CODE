@@ -38,11 +38,6 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<LoginUnitUserWiseListDto>(model, "ps_M_LoginUnitUserWise");
         }
-
-
-
-
-
         public virtual async Task InsertAsync(LoginManager objLogin, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -87,7 +82,16 @@ namespace HIMS.Services.Inventory
         public virtual async Task UpdateAsync(LoginManager objLogin, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
+            {  
+
+                var existing = await _context.LoginManagers
+                    .AsNoTracking().FirstOrDefaultAsync(x => x.UserId == objLogin.UserId);
+
+                if (existing == null)
+                    throw new Exception("Login record not found");
+
+                objLogin.AddedBy = existing.AddedBy;
+
 
                 //  Delete related records
                 var accessList = await _context.TLoginAccessDetails

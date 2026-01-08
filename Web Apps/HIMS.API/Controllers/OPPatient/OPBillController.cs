@@ -53,14 +53,14 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Refund List"));
         }
         [HttpPost("BrowseOPDBillPagiList")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> BrowseOPDBillPagList(GridRequestModel objGrid)
         {
             IPagedList<BrowseOPDBillPagiListDto> BrowseOPDBillPagList = await _IAdministrationService.BrowseOPDBillPagiList(objGrid);
             return Ok(BrowseOPDBillPagList.ToGridResponse(objGrid, "Browse OPD Bill Pagi App List"));
         }
         [HttpPost("BrowseOPPaymentList")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> OPPaymentList(GridRequestModel objGrid)
         {
             IPagedList<OPPaymentListDto> OpPaymentlist = await _IVisitDetailsService.GeOpPaymentListAsync(objGrid);
@@ -68,7 +68,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("PatientWisePaymentList")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> PatientWisePaymentList(GridRequestModel objGrid)
         {
             IPagedList<OPPaymentListDto> OpPaymentlist = await _IVisitDetailsService.GetPatientWisePaymentList(objGrid);
@@ -76,7 +76,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("OPBillListSettlementList")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<OPBillListSettlementListDto> OPBillListSettlementList = await _IOPSettlementService.OPBillListSettlementList(objGrid);
