@@ -80,7 +80,9 @@ namespace HIMS.API.Models.IPPatient
         public string? SurgeryPart { get; set; }
         public string? SurgeryFromTime { get; set; }
         public string? SurgeryEndTime { get; set; }
-        public double? SurgeryDuration { get; set; }
+        //public double? SurgeryDuration { get; set; }
+        public float? SurgeryDuration { get; set; }
+
         public string? IsPrimary { get; set; }
         public long? SurgeonId { get; set; }
         public long? AnesthetistId { get; set; }
