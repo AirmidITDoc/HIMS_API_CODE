@@ -63,24 +63,25 @@ namespace HIMS.Services.Administration
             await _context.SaveChangesAsync();
             scope.Complete();
         }
-        public virtual async Task PaymentUpdateAsync(TPayment ObjTPayment, int CurrentUserId, string CurrentUserName)
+        public virtual async Task PaymentUpdateAsync(List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
-            string[] AEntity = { "PaymentId", "BillNo", "PayMode" };
-            var Rentity = ObjTPayment.ToDictionary();
-
-            foreach (var rProperty in Rentity.Keys.ToList())
+            foreach (var item in ObjTPayment)
             {
-                if (!AEntity.Contains(rProperty))
-                    Rentity.Remove(rProperty);
+
+                string[] AEntity = { "PaymentId", "BillNo", "PayMode", "TranNo", "BankName" };
+                var Rentity = item.ToDictionary();
+
+                foreach (var rProperty in Rentity.Keys.ToList())
+                {
+                    if (!AEntity.Contains(rProperty))
+                        Rentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_Update_PaymentMode", CommandType.StoredProcedure, Rentity);
+                await _context.LogProcedureExecution(Rentity, nameof(TPayment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
             }
-
-            odal.ExecuteNonQuery("ps_Update_PaymentMode", CommandType.StoredProcedure, Rentity);
-            await _context.LogProcedureExecution(Rentity, nameof(TPayment), ObjTPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
         }
-
-
 
     }
 }
