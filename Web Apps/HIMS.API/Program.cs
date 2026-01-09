@@ -205,7 +205,7 @@ app.UseSwaggerUI(c => c.SwaggerEndpoint(Configuration["SwaggerUrl"], "API v1"));
 
 app.UseAuthentication();
 app.UseCors("CorsPolicy");
-app.UseWebSockets();
+//app.UseWebSockets();
 app.MapHub<NotificationHub>("/himshub");
 app.MapControllers();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
