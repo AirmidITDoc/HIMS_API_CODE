@@ -135,5 +135,11 @@ namespace HIMS.Services.Administration
                 odal.ExecuteNonQuery("m_Update_PhBillDiscountAfter", CommandType.StoredProcedure, entity);
             }
         }
+
+       
+        public virtual async Task<IPagedList<BrowsePharmacyTPaymentReceiptListDto>> GetTPayListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BrowsePharmacyTPaymentReceiptListDto>(model, "ps_Rtrv_BrowsePharmacyTPayReceipt1");
+        }
     }
 }

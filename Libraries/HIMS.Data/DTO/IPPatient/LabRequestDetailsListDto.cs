@@ -17,7 +17,7 @@
         public long IsPathology { get; set; }
         public long IsRadiology { get; set; }
         public long CharId { get; set; }
-        public long IsTestCompleted { get; set; }
+        public bool IsTestCompleted { get; set; }
         public long PathReportID { get; set; }
         public long IsTemplateTest { get; set; }
         public string? PBillNo { get; set; }
