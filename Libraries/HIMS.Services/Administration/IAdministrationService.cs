@@ -22,6 +22,8 @@ namespace HIMS.Services.Administration
         void Insert(List<MAutoServiceList> ObjMAutoServiceList, int currentUserId, string currentUserName);
         Task InsertListAsync(List<MAutoServiceList> ObjMAutoServiceList, int currentUserId, string currentUserName);
         Task Update(TPayment ObjPayment, int UserId, string Username);
+        Task PaymentDateTimeUpdate(TPaymentPharmacy ObjTPaymentPharmacy, int UserId, string Username);
+
 
 
 
