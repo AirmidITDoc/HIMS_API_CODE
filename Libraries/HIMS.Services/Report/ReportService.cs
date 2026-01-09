@@ -8852,8 +8852,8 @@ namespace HIMS.Services.Report
                         foreach (var group in groupedCharges)
                         {
                             // ================= GROUPNAME + LBL IN ONE ROW =================
-                            items.Append("<tr style='font-size:20px;font-weight:bold;background:#e6e6e6;'>")
-                                 .Append("<td colspan='7' style='text-align:left;padding:5px;'>")
+                            items.Append("<tr style='font-size:14px;font-weight:bold;background:#e6e6e6;'>")
+                                 .Append("<td colspan='7' style='text-align:left;padding:3px;'>")
                                  .Append(group.Key.GroupName).Append(" -- ").Append(group.Key.Lbl)
                                  .Append("</td></tr>");
 
@@ -8922,7 +8922,7 @@ namespace HIMS.Services.Report
                             // ================= TOTAL FOR THIS Lbl =================
                             if (T_TotalAmount > 0)
                             {
-                                items.Append("<tr style='font-size:16px;font-weight:bold;border:1px solid #000;'>")
+                                items.Append("<tr style='font-size:14px;font-weight:bold;border:1px solid #000;'>")
                                      .Append("<td colspan='6' style='text-align:right;padding:3px;'>Total</td>")
                                      .Append("<td style='text-align:right;padding:3px;'>")
                                      .Append(T_TotalAmount.To2DecimalPlace())

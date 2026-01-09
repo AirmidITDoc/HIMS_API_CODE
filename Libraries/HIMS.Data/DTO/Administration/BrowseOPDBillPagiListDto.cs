@@ -40,6 +40,11 @@
         public string? PatientType { get; set; }
         public string? AadharCardNo { get; set; }
         public string? EmailId { get; set; }
+        public decimal? GovtApprovedAmt { get; set; }
+        public decimal? CompanyApprovedAmt { get; set; }
+        public string? GovtCompanyName { get; set; }
+        public string? CompanyApprovedName { get; set; }
+
 
 
 
