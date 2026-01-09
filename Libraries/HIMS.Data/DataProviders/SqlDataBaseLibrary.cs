@@ -1,9 +1,13 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Reflection;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HIMS.Data.DataProviders
 {
@@ -796,6 +800,44 @@ namespace HIMS.Data.DataProviders
             }
             return lst;
         }
+
+        public async Task<Tuple<List<T>, List<T1>>> Get2ResultsFromSp<T, T1>(string Spname, SqlParameter[] para)
+            where T : new()
+            where T1 : new()
+        {
+            Tuple<List<T>, List<T1>> result = null;
+            Command.CommandType = CommandType.StoredProcedure;
+            Command.Parameters.AddRange(para);
+            Command.CommandText = Spname;
+            try
+            {
+                objConnection.Open();
+                using var reader = await Command.ExecuteReaderAsync();
+                // Table 1
+                var item1 = reader.MapToList<T>();
+
+                // Table 2
+                await reader.NextResultAsync();
+                var item2 = reader.MapToList<T1>();
+
+                result = new Tuple<List<T>, List<T1>>(item1, item2);
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, Spname);
+            }
+            finally
+            {
+                //objCommand.Parameters.Clear();
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+
+            return result;
+        }
+
 
         public List<T> FetchListByQuery<T>(string Qry, SqlParameter[] para = null)
         {

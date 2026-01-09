@@ -41,6 +41,8 @@
     <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="EPPlus" Version="7.0.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.73.0" />
+    <PackageReference Include="Google.Cloud.Speech.V1" Version="3.9.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.31" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.0" />
@@ -70,6 +72,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="google-keys\google-speech.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\PdfTemplates\SalesTaxReceipt - Copy.html">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
