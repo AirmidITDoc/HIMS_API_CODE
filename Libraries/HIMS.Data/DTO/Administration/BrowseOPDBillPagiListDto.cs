@@ -22,7 +22,7 @@
         public long OPDIPDID { get; set; }
         public long IsCancelled { get; set; }
         public byte OPD_IPD_Type { get; set; }
-        public long PaidAmt { get; set; }
+        public decimal PaidAmt { get; set; }
         public decimal BalanceAmt { get; set; }
         public decimal CashPay { get; set; }
         public decimal ChequePay { get; set; }
