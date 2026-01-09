@@ -516,59 +516,6 @@ namespace HIMS.Data.DataProviders
             return ExecuteDataSet(query, CommandType.Text);
         }
 
-        public DataSet ExecuteDataSet(string query, CommandType commandtype)
-        {
-            SqlDataAdapter adapter = new();
-            Command.CommandText = query;
-            Command.CommandType = commandtype;
-            adapter.SelectCommand = Command;
-            DataSet ds = new();
-            try
-            {
-                adapter.Fill(ds);
-            }
-            catch (Exception ex)
-            {
-                HandleExceptions(ex, query);
-            }
-            finally
-            {
-                //objCommand.Parameters.Clear();
-                if (Command.Transaction == null)
-                {
-                    objConnection.Close();
-                }
-            }
-            return ds;
-        }
-
-        public DataSet FetchDataSetBySP(string Spname, SqlParameter[] para)
-        {
-            DataSet ds = new();
-            Command.CommandType = CommandType.StoredProcedure;
-            Command.Parameters.AddRange(para);
-            Command.CommandText = Spname;
-            SqlDataAdapter da = new(Command);
-            try
-            {
-                objConnection.Open();
-                da.Fill(ds);
-                return ds;
-            }
-            catch (Exception ex)
-            {
-                HandleExceptions(ex, Spname);
-            }
-            finally
-            {
-                //objCommand.Parameters.Clear();
-                if (Command.Transaction == null)
-                {
-                    objConnection.Close();
-                }
-            }
-            return ds;
-        }
 
         #region ExecuteDataTableAsync
         private static void AttachParameters(SqlCommand command, IEnumerable<SqlParameter> commandParameters)
@@ -802,6 +749,60 @@ namespace HIMS.Data.DataProviders
         }
 
         #region :: Multiple Result Sets ::
+
+        public DataSet ExecuteDataSet(string query, CommandType commandtype)
+        {
+            SqlDataAdapter adapter = new();
+            Command.CommandText = query;
+            Command.CommandType = commandtype;
+            adapter.SelectCommand = Command;
+            DataSet ds = new();
+            try
+            {
+                adapter.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, query);
+            }
+            finally
+            {
+                //objCommand.Parameters.Clear();
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+            return ds;
+        }
+
+        public DataSet FetchDataSetBySP(string Spname, SqlParameter[] para)
+        {
+            DataSet ds = new();
+            Command.CommandType = CommandType.StoredProcedure;
+            Command.Parameters.AddRange(para);
+            Command.CommandText = Spname;
+            SqlDataAdapter da = new(Command);
+            try
+            {
+                objConnection.Open();
+                da.Fill(ds);
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, Spname);
+            }
+            finally
+            {
+                //objCommand.Parameters.Clear();
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+            return ds;
+        }
         public async Task<Tuple<List<T>, List<T1>>> Get2ResultsFromSp<T, T1>(string Spname, SqlParameter[] para) where T : new() where T1 : new()
         {
             Tuple<List<T>, List<T1>> result = null;

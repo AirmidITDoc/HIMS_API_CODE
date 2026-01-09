@@ -524,5 +524,13 @@ namespace HIMS.API.Controllers.Report
             return Ok();
 
         }
+
+        [HttpPost("new-vimal-html-pdf")]
+        public async Task<IActionResult> NewVimalHtmlPdf()
+        {
+            string StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
+            string byteFile = _reportService.GeneratePdfFromSp("ps_getMultipleTabForReport", StorageBaseUrl);
+            return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
+        }
     }
 }

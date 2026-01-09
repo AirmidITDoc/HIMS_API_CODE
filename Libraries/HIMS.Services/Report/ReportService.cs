@@ -15435,6 +15435,39 @@ namespace HIMS.Services.Report
             }
             return odal.FetchDataTableBySP(model.SPName, para, true);
         }
+
+
+        public string GeneratePdfFromSp(string sp,string StorageBaseUrl)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = Array.Empty<SqlParameter>();
+            DataSet ds = sql.FetchDataSetBySP(sp, para);
+            StringBuilder html = new("<table>");
+            foreach (DataTable dt in ds.Tables)
+            {
+                html.Append("<tr>");
+                foreach (DataColumn col in dt.Columns)
+                {
+                    html.Append("<th>").Append(col.ColumnName).Append("</th>");
+                }
+                html.Append("</tr>");
+                foreach (DataRow dr in dt.Rows)
+                {
+                    html.Append("<tr>");
+                    foreach (DataColumn col in dt.Columns)
+                    {
+                        html.Append("<td>").Append(dr[col.ColumnName].ToString()).Append("</td>");
+                    }
+                    html.Append("</tr>");
+                }
+            }
+
+
+            var tuple = _pdfUtility.GeneratePdfFromHtml(html.ToString(), StorageBaseUrl, "NewReport");
+            string byteFile = Convert.ToBase64String(tuple.Item1);
+            return byteFile;
+
+        }
     }
 }
 
