@@ -10,7 +10,7 @@
 <div>
     <body>
         <div class="main-content-wrapper">
-            <div class="invoice-box" style="font-size: 14px; line-height: 24px; font-family: Tahoma, Calibri; color: #101828;">
+            <div class="invoice-box" style="font-size: 14px; line-height: 20px; font-family: Tahoma, Calibri; color: #101828;">
                 <table style="width: 100%;line-height: inherit;text-align: left;">
                     <tr class="top-header-row">
                         {{NewHeader}}
@@ -25,11 +25,11 @@
                                         </b>
                                     </td>
                                     <!--<td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
-                                        <b>
-                                            Print
-                                            Date : {{CurrentDate}}
-                                        </b>
-                                    </td>-->
+                        <b>
+                            Print
+                            Date : {{CurrentDate}}
+                        </b>
+                    </td>-->
                                 </tr>
                             </table>
                         </td>
@@ -37,77 +37,54 @@
                     </tr>
                     <tr class="bill-info-row">
                         <td>
-                            <table style="width: 100%; border-collapse: collapse; font-size: 15px; table-layout:fixed;">
+                            <table style="width:100%; border-collapse:collapse; font-size:15px; table-layout:fixed;">
                                 <colgroup>
                                     <col style="width:40%;">
                                     <col style="width:27%;">
                                     <col style="width:33%;">
-
                                 </colgroup>
-                                <tr>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">UHID No:</span>
-                                        <span>{{RegNo}}</span>
-                                    </td>
 
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">IPD No :</span>
-                                        <span>{{IPDNo}}</span>
-                                    </td>
-                                    <!--<td style="padding: 2px;">
-                                        <span style="font-weight: bold;"> Date | Time:</span>
-                                        <span>{{BillDate}}</span>
-                                    </td>-->
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">DOA | Time:</span>
-                                        <span>{{AdmissionDate}}</span>
-                                    </td>
-                                </tr>
                                 <tr>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Patient Name:</span>
-                                        <span>{{PatientName}}</span>
+                                    <td style="padding:2px;">
+                                        <b>UHID No:</b> {{RegNo}}
                                     </td>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Age | Gender:</span>
-                                        <span> {{AgeYear}} | {{GenderName}}</span>
+                                    <td style="padding:2px;">
+                                        <b>IPD No :</b> {{IPDNo}}
                                     </td>
-                                    <!--<td style="padding: 2px;">
-                                        <span style="font-weight: bold;">DOA | Time:</span>
-                                        <span>{{AdmissionDate}}</span>
-                                    </td>-->
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Ward | Bed Name: </span>
-                                        <span>{{RoomName}} | {{BedName}}</span>
+                                    <td style="padding:2px;">
+                                        <b>DOA | Time:</b> {{AdmissionDate}}
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Department :</span>
-                                        <span>{{DepartmentName}} </span>
+                                    <td style="padding:2px;">
+                                        <b>Patient Name:</b> {{PatientName}}
                                     </td>
-
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Doctor Name:</span>
-                                        <span>{{DoctorName}}</span>
+                                    <td style="padding:2px;">
+                                        <b>Age | Gender:</b> {{AgeYear}} | {{GenderName}}
                                     </td>
-
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Ref.Doctor Name:</span>
-                                        <span>{{RefDocName}}</span>
+                                    <td style="padding:2px;">
+                                        <b>Ward | Bed Name:</b> {{RoomName}} | {{BedName}}
                                     </td>
-
                                 </tr>
 
                                 <tr>
-
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Patient Type:</span>
-                                        <span>{{PatientType}}</span>
+                                    <td style="padding:2px;">
+                                        <b>Department:</b> {{DepartmentName}}
                                     </td>
-                                    <td style="padding-left:10px; display:{{chkCompanyNameflag}}">
-                                        <b>Company Name :</b> {{CompanyName}}
+                                    <td style="padding:2px;">
+                                        <b>Doctor Name:</b> {{DoctorName}}
+                                    </td>
+                                    <td style="padding:2px;">
+                                        <b>Ref. Doctor Name:</b> {{RefDocName}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="padding:2px; width:100%;">
+                                        <b>Patient Type:</b> {{PatientType}}
+                                        <span style="display:{{chkCompanyNameflag}}; margin-left:20px;">
+                                            <b>Company Name:</b> {{CompanyName}}
+                                        </span>
                                     </td>
                                 </tr>
 
@@ -193,11 +170,11 @@
                                         </td>
                                     </tr>
                                     <!--<tr style="margin-top: 12px;">
-                                        <td colspan="6"
-                                            style=" border-bottom: 1px solid #d4c3c3; text-align: left; padding: 6px; font-size: 22px; font-weight: bold;">
-                                            Total  Amount in words :- {{finalamt}}
-                                        </td>
-                                    </tr>-->
+                        <td colspan="6"
+                            style=" border-bottom: 1px solid #d4c3c3; text-align: left; padding: 6px; font-size: 22px; font-weight: bold;">
+                            Total  Amount in words :- {{finalamt}}
+                        </td>
+                    </tr>-->
                                     <div>
                                         <div>
 
@@ -227,9 +204,9 @@
                     <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
 
                         <tr style="margin-top: 12px;">
-                        <tr>
+                        <!--<tr>
                             <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn�t require signature</td>
-                        </tr>
+                        </tr>-->
                         <tr></tr>
                         <tr style="padding: 6px; text-align: right;">
                             <td>

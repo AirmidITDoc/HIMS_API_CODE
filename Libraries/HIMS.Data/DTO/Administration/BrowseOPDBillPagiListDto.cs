@@ -22,7 +22,7 @@
         public long OPDIPDID { get; set; }
         public long IsCancelled { get; set; }
         public byte OPD_IPD_Type { get; set; }
-        public long PaidAmt { get; set; }
+        public decimal PaidAmt { get; set; }
         public decimal BalanceAmt { get; set; }
         public decimal CashPay { get; set; }
         public decimal ChequePay { get; set; }
@@ -40,6 +40,11 @@
         public string? PatientType { get; set; }
         public string? AadharCardNo { get; set; }
         public string? EmailId { get; set; }
+        public decimal? GovtApprovedAmt { get; set; }
+        public decimal? CompanyApprovedAmt { get; set; }
+        public string? GovtCompanyName { get; set; }
+        public string? CompanyApprovedName { get; set; }
+
 
 
 
