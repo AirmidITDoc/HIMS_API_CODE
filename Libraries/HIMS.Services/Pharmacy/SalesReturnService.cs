@@ -307,7 +307,7 @@ namespace HIMS.Services.Pharmacy
                 TypeId = 2
 
             };
-            odal.ExecuteNonQuery("ps_Insert_ItemMovementReport_Cursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
+            odal.ExecuteNonQuery("ps_Insert_ItemMovementReport_InpatientReturnCursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
 
         }
     }
