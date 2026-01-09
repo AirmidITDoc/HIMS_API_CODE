@@ -103,5 +103,13 @@ namespace HIMS.API.Controllers.Masters
             var MDepartmentMasterList = await _repository.GetAll(x => x.IsActive.Value);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Prefix dropdown", MDepartmentMasterList.Select(x => new { x.PrefixId, x.SexId, x.PrefixName }));
         }
+
+        [HttpGet("test-multiple-data")]
+        public async Task<ApiResponse> GetTest()
+        {
+
+            var data = await _IPrefixService.GetListMultiple();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", data);
+        }
     }
 }
