@@ -231,7 +231,7 @@ namespace HIMS.Services.Utilities
                         PagesCount = true,
                         HtmlContent = html,
                         WebSettings = { DefaultEncoding = "utf-8" },
-                        FooterSettings = { FontSize = 9, Left = "AirmidTech Innovation Pvt. Ltd | M : 9970164262", Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
+                        FooterSettings = { FontSize = 9, Left = "AirmidTech Innovation Pvt. Ltd, India | Mobile No : +91 9970164262", Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
                     }
                 }
             };
