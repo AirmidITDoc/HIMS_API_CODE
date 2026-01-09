@@ -861,7 +861,7 @@ namespace HIMS.Services.Common
                 "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled","IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
                 "IsSelfOrCompanyService", "PackageId", "ChargesTime", "IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
                 "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation","BillNo","IsCancelledBy","UnitId","TariffId",
-                "DoctorName","ServiceCode","CompanyServiceName","IsInclusionExclusion","WardId","BedId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+                "DoctorName","ServiceCode","CompanyServiceName","IsInclusionExclusion","WardId","BedId","IsApprovedByCamp","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
             var entity = ObjaddCharge.ToDictionary();
 
             foreach (var rProperty in AEntity)
