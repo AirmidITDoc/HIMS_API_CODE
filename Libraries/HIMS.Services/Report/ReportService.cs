@@ -7755,108 +7755,40 @@ namespace HIMS.Services.Report
                         double Tot_AfterAdvused = 0, Tot_Wothoutdedu = 0, Tot_Balamt = 0, Tot_Advamt = 0, Tot_Advusedamt = 0, T_TotalAmount = 0, F_TotalAmount = 0, balafteradvuseAmount = 0, BalancewdudcAmt = 0, AdminChares = 0, TotalNetPayAmt = 0;
                         double T_TotAmount = 0 ,TotalConcessionAmt=0, TotalGovAmount=0, ChargesTotalamt=0, FinalNetAmt=0;
 
-                   
-                        //foreach (DataRow dr in dt.Rows)
-                        //{
-
-                        //    i++; j++;
-
-
-                        //    if (i == 1)
-                        //    {
-                        //        String Label;
-                        //        Label = dr["ChargesDate"].ConvertToDateString("dd/MM/yyyy");
-                        //        items.Append("<tr style=\"font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:left;vertical-align:middle;font-weight:bold;\">").Append(Label).Append("</td></tr>");
-                        //    }
-                        //    if (previousLabel != "" && previousLabel != dr["ChargesDate"].ConvertToDateString("dd/MM/yyyy"))
-                        //    {
-                        //        j = 1;
-                        //        items.Append("<tr style='font-size:15px;border:1px solid #eee;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;'><td colspan='5' style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Group Wise Total</td><td style=\"border-right:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-
-                        //       .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
-                        //        T_TotalAmount = 0;
-
-                        //        items.Append("<tr style=\"font-size:15px;border-bottom: 1px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td colspan=\"13\" style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:left;vertical-align:middle;font-weight:bold;\">").Append(dr["ChargesDate"].ConvertToDateString("dd/MM/yyyy")).Append("</td></tr>");
-
-                        //    }
-
-
-                        //    T_TotalAmount += dr["TotalAmt"].ConvertToDouble();
-                        //    F_TotalAmount += dr["TotalAmt"].ConvertToDouble();
-
-                        //    previousLabel = dr["ChargesDate"].ConvertToDateString("dd/MM/yyyy");
-
-
-                        //    items.Append("<tr  style=\"font-family: 'Helvetica Neue','Helvetica', Helvetica, Arial, sans-serif;font-size:14px;\"><td style=\"border: 1px solid #eee; text-align: center; padding: 2px;\">").Append(j).Append("</td>");
-                        //    items.Append("<td style=\"border: 1px solid #eee; text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"border: 1px solid #eee; text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"border: 1px solid #eee; text-align: center; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["Price"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"border: 1px solid #eee; text-align: center; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
-                        //    items.Append("<td style=\"border: 1px solid #eee; text-align: right; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["TotalAmt"].ConvertToDouble()).Append("</td></tr>");
-
-
-                        //    TotalNetPayAmt = dr["NetPayableAmt"].ConvertToDouble();
-                        //    Tot_Advamt = dr["AdvanceAmount"].ConvertToDouble();
-
-                        //    if (Tot_Advamt.ConvertToDouble() > TotalNetPayAmt.ConvertToDouble())
-                        //    {
-                        //        balafteradvuseAmount = (Tot_Advamt - TotalNetPayAmt).ConvertToDouble();
-                        //    }
-                        //    if (Tot_Advamt.ConvertToDouble() < TotalNetPayAmt.ConvertToDouble())
-                        //    {
-                        //        BalancewdudcAmt = (TotalNetPayAmt - Tot_Advamt).ConvertToDouble();
-                        //    }
-
-
-
-                        //    if (dt.Rows.Count > 0 && dt.Rows.Count == i)
-                        //    {
-
-                        //        items.Append("<tr style='border:1px solid #eee;font-weight:bold'><td colspan='5' style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px solid #eee;border-collapse: collapse;padding:3px;border-bottom:1px solid #eee;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">Grand Total Amount</td><td style=\"border-right:1px solid #eee;border-bottom:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">")
-                        //            .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
-                        //        items.Append("<tr style='border:1px solid #eee;'><td colspan='5' style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border-right:1px solid #eee;border-top:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-center:20px;font-weight:bold;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">Total</td><td style=\"border-right:1px solid #eee;font-weight:bold;border-top:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">")
-                        //        .Append(F_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
-
-
-                        //    }
-
-                        //}
-
-
                         var sortedCharges = dt.AsEnumerable()
-    .OrderBy(dr => dr["Lbl"].ToString())  // Sort by Lbl
-    .ThenBy(dr => dr["ChargesDate"])      // Then by ChargesDate
-    .ThenBy(dr => dr["ServiceName"])      // Optional: sort within date by service
-    .ToList();
+                            .OrderBy(dr => dr["LBL"].ToString())
+                            .ThenBy(dr => dr["ChargesDate"])
+                            .ThenBy(dr => dr["ServiceName"])
+                            .ToList();
 
-
+                        //string previousLabel = "";
                         string previousChargesDate = "";
-
+                        int serviceNo = 0;
 
                         foreach (DataRow dr in sortedCharges)
                         {
-                            i++; j++;
+                            i++;
 
-                            string currentLabel = dr["Lbl"].ToString();
-                            string currentChargesDate = dr["ChargesDate"].ConvertToDateString("dd/MM/yyyy");
+                            string currentLabel = dr["LBL"].ToString();
+                            string currentChargesDate = dr["ChargesDate"]
+                                .ConvertToDateString("dd-MM-yyyy");
+
+                            // ================= FIRST ROW INIT =================
                             if (i == 1)
                             {
                                 TotalConcessionAmt = dr["ConcessionAmt"].ConvertToDouble();
                                 TotalGovAmount = dr["GovtApprovedAmt"].ConvertToDouble();
                                 TotalNetPayAmt = dr["NetPayableAmt"].ConvertToDouble();
-
                                 Tot_Advamt = dr["AdvanceAmount"].ConvertToDouble();
-
-                               
                             }
 
                             // ================= LBL CHANGE =================
                             if (previousLabel != currentLabel)
                             {
-                                // Close previous label total
+                                // Close previous LBL total
                                 if (!string.IsNullOrEmpty(previousLabel) && T_TotalAmount > 0)
                                 {
-                                    items.Append("<tr style='font-size:14px;border:1px solid #000;font-weight:bold;'>")
+                                    items.Append("<tr style='font-weight:bold;border-top:1px solid #000;'>")
                                          .Append("<td colspan='5' style='text-align:right;padding:3px;'>Total</td>")
                                          .Append("<td style='text-align:right;padding:3px;'>")
                                          .Append(T_TotalAmount.To2DecimalPlace())
@@ -7865,59 +7797,168 @@ namespace HIMS.Services.Report
                                     T_TotalAmount = 0;
                                 }
 
-                                // Print current label (Lbl)
-                                items.Append("<tr style='font-size:18px;font-weight:bold;background:#e6e6e6;'>")
-                                     .Append("<td colspan='6' style='text-align:left;padding:3px;'>")
+                                // Print LBL Header
+                                items.Append("<tr style='font-size:14px;font-weight:bold;background:#e6e6e6;'>")
+                                     .Append("<td colspan='6' style='text-align:left;padding:4px;'>")
                                      .Append(currentLabel)
                                      .Append("</td></tr>");
 
-                                j = 0;
+                                previousChargesDate = "";
+                                serviceNo = 0;
                             }
 
                             // ================= DATE CHANGE =================
-                            if (previousChargesDate != currentChargesDate || previousLabel != currentLabel)
-                            {
-                                j = 1; // reset item counter for new date
-
-                                items.Append("<tr style='font-size:16px;font-weight:bold;'>")
-                                     .Append("<td colspan='6' style='text-align:left;padding:3px;'>")
-                                     .Append(" ").Append(currentChargesDate)
-                                     .Append("</td></tr>");
-                            }
+                            bool isNewDate = previousChargesDate != currentChargesDate;
+                            serviceNo = isNewDate ? 1 : serviceNo + 1;
 
                             // ================= ITEM ROW =================
-                            items.Append("<tr style='font-size:14px;'>")
-                                 .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(j).Append("</td>")
-                                 .Append("<td style='border:1px solid #eee;text-align:left;padding:2px;'>").Append(dr["ServiceName"].ConvertToString()).Append("</td>")
-                                 .Append("<td style='border:1px solid #eee;text-align:left;padding:2px;'>").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>")
-                                 .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(dr["Price"].ConvertToString()).Append("</td>")
-                                 .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(dr["Qty"].ConvertToString()).Append("</td>")
-                                 .Append("<td style='border:1px solid #eee;text-align:right;padding:2px;'>").Append(dr["TotalAmt"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
+                            items.Append("<tr style='font-size:14px;'>");
 
-                            // ================= ACCUMULATE TOTALS =================
-                            T_TotalAmount += dr["TotalAmt"].ConvertToDouble();
-                            F_TotalAmount += dr["TotalAmt"].ConvertToDouble();
-                            ChargesTotalamt += dr["TotalAmt"].ConvertToDouble();
+                            // Date column (only first row of the date)
+                            if (isNewDate)
+                                items.Append("<td style='border:1px solid #eee;padding:2px;'>")
+                                     .Append(currentChargesDate)
+                                     .Append("</td>");
+                            else
+                                items.Append("<td style='border:1px solid #eee;padding:2px;'></td>");
 
+                            items.Append("<td style='border:1px solid #eee;text-align:left;padding:2px;'>")
+                                 .Append(serviceNo).Append(". ")
+                                 .Append(dr["ServiceName"].ConvertToString())
+                                 .Append("</td>")
+                                 .Append("<td style='border:1px solid #eee;text-align:left;padding:2px;'>")
+                                 .Append(dr["ChargesDoctorName"].ConvertToString())
+                                 .Append("</td>")
+                                 .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>")
+                                 .Append(dr["Price"].ConvertToString())
+                                 .Append("</td>")
+                                 .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>")
+                                 .Append(dr["Qty"].ConvertToString())
+                                 .Append("</td>")
+                                 .Append("<td style='border:1px solid #eee;text-align:right;padding:2px;'>")
+                                 .Append(dr["TotalAmt"].ConvertToDouble().To2DecimalPlace())
+                                 .Append("</td>")
+                                 .Append("</tr>");
 
+                            // ================= TOTALS =================
+                            double amt = dr["TotalAmt"].ConvertToDouble();
+                            T_TotalAmount += amt;
+                            F_TotalAmount += amt;
+                            ChargesTotalamt += amt;
 
                             previousLabel = currentLabel;
                             previousChargesDate = currentChargesDate;
-
-
-
-
-                            if (i == sortedCharges.Count && T_TotalAmount > 0)
-                            {
-                                items.Append("<tr style='font-size:16px;font-weight:bold;border:1px solid #000;'>")
-                                     .Append("<td colspan='5' style='text-align:right;padding:3px;'>Total</td>")
-                                     .Append("<td style='text-align:right;padding:3px;'>")
-                                     .Append(T_TotalAmount.To2DecimalPlace())
-                                     .Append("</td></tr>");
-                            }
-
-
                         }
+
+                        // ================= LAST LBL TOTAL =================
+                        if (T_TotalAmount > 0)
+                        {
+                            items.Append("<tr style='font-weight:bold;border-top:1px solid #000;'>")
+                                 .Append("<td colspan='5' style='text-align:right;padding:3px;'>Total</td>")
+                                 .Append("<td style='text-align:right;padding:3px;'>")
+                                 .Append(T_TotalAmount.To2DecimalPlace())
+                                 .Append("</td></tr>");
+                        }
+
+
+                        //----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+                        //                    var sortedCharges = dt.AsEnumerable()
+                        //.OrderBy(dr => dr["Lbl"].ToString())  // Sort by Lbl
+                        //.ThenBy(dr => dr["ChargesDate"])      // Then by ChargesDate
+                        //.ThenBy(dr => dr["ServiceName"])      // Optional: sort within date by service
+                        //.ToList();
+
+
+                        //                    string previousChargesDate = "";
+
+
+                        //                    foreach (DataRow dr in sortedCharges)
+                        //                    {
+                        //                        i++; j++;
+
+                        //                        string currentLabel = dr["Lbl"].ToString();
+                        //                        string currentChargesDate = dr["ChargesDate"].ConvertToDateString("dd/MM/yyyy");
+                        //                        if (i == 1)
+                        //                        {
+                        //                            TotalConcessionAmt = dr["ConcessionAmt"].ConvertToDouble();
+                        //                            TotalGovAmount = dr["GovtApprovedAmt"].ConvertToDouble();
+                        //                            TotalNetPayAmt = dr["NetPayableAmt"].ConvertToDouble();
+
+                        //                            Tot_Advamt = dr["AdvanceAmount"].ConvertToDouble();
+
+
+                        //                        }
+
+                        //                        // ================= LBL CHANGE =================
+                        //                        if (previousLabel != currentLabel)
+                        //                        {
+                        //                            // Close previous label total
+                        //                            if (!string.IsNullOrEmpty(previousLabel) && T_TotalAmount > 0)
+                        //                            {
+                        //                                items.Append("<tr style='font-size:14px;border:1px solid #000;font-weight:bold;'>")
+                        //                                     .Append("<td colspan='5' style='text-align:right;padding:3px;'>Total</td>")
+                        //                                     .Append("<td style='text-align:right;padding:3px;'>")
+                        //                                     .Append(T_TotalAmount.To2DecimalPlace())
+                        //                                     .Append("</td></tr>");
+
+                        //                                T_TotalAmount = 0;
+                        //                            }
+
+                        //                            // Print current label (Lbl)
+                        //                            items.Append("<tr style='font-size:18px;font-weight:bold;background:#e6e6e6;'>")
+                        //                                 .Append("<td colspan='6' style='text-align:left;padding:3px;'>")
+                        //                                 .Append(currentLabel)
+                        //                                 .Append("</td></tr>");
+
+                        //                            j = 0;
+                        //                        }
+
+                        //                        // ================= DATE CHANGE =================
+                        //                        if (previousChargesDate != currentChargesDate || previousLabel != currentLabel)
+                        //                        {
+                        //                            j = 1; // reset item counter for new date
+
+                        //                            items.Append("<tr style='font-size:16px;font-weight:bold;'>")
+                        //                                 .Append("<td colspan='6' style='text-align:left;padding:3px;'>")
+                        //                                 .Append(" ").Append(currentChargesDate)
+                        //                                 .Append("</td></tr>");
+                        //                        }
+
+                        //                        // ================= ITEM ROW =================
+                        //                        items.Append("<tr style='font-size:14px;'>")
+                        //                             .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(j).Append("</td>")
+                        //                             .Append("<td style='border:1px solid #eee;text-align:left;padding:2px;'>").Append(dr["ServiceName"].ConvertToString()).Append("</td>")
+                        //                             .Append("<td style='border:1px solid #eee;text-align:left;padding:2px;'>").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>")
+                        //                             .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(dr["Price"].ConvertToString()).Append("</td>")
+                        //                             .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(dr["Qty"].ConvertToString()).Append("</td>")
+                        //                             .Append("<td style='border:1px solid #eee;text-align:right;padding:2px;'>").Append(dr["TotalAmt"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
+
+                        //                        // ================= ACCUMULATE TOTALS =================
+                        //                        T_TotalAmount += dr["TotalAmt"].ConvertToDouble();
+                        //                        F_TotalAmount += dr["TotalAmt"].ConvertToDouble();
+                        //                        ChargesTotalamt += dr["TotalAmt"].ConvertToDouble();
+
+
+
+                        //                        previousLabel = currentLabel;
+                        //                        previousChargesDate = currentChargesDate;
+
+
+
+
+                        //                        if (i == sortedCharges.Count && T_TotalAmount > 0)
+                        //                        {
+                        //                            items.Append("<tr style='font-size:16px;font-weight:bold;border:1px solid #000;'>")
+                        //                                 .Append("<td colspan='5' style='text-align:right;padding:3px;'>Total</td>")
+                        //                                 .Append("<td style='text-align:right;padding:3px;'>")
+                        //                                 .Append(T_TotalAmount.To2DecimalPlace())
+                        //                                 .Append("</td></tr>");
+                        //                        }
+
+
+                        //                    }
 
 
                         FinalNetAmt = F_TotalAmount - TotalConcessionAmt;
