@@ -2,10 +2,14 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Nursing;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
+using HIMS.Services.Pathlogy;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using Microsoft.Data.SqlClient;
+
 
 
 namespace HIMS.Services.Nursing
@@ -21,9 +25,21 @@ namespace HIMS.Services.Nursing
         {
             return await DatabaseHelper.GetGridDataBySp<ConsentDeptListDto>(model, "m_rtrv_ConsentMasterList");
         }
+        List<ConsentListDto> INursingConsentService.GetConsentAsync(string? ConsentTypeName)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[1];
+
+            para[0] = new SqlParameter("@ConsentTypeName", ConsentTypeName);
+
+            List<ConsentListDto> lstServiceList = sql.FetchListBySP<ConsentListDto>("rtrv_consentMasterRetriveCombo", para);
+            return lstServiceList;
+        }
 
 
-        public virtual async Task<List<MConsentMaster>> GetConsent(int DeptId, string? consentType)
+
+
+    public virtual async Task<List<MConsentMaster>> GetConsent(int DeptId, string? consentType)
         {
             var qry = from s in _context.MConsentMasters
               .Where(x => (x.DepartmentId == DeptId))

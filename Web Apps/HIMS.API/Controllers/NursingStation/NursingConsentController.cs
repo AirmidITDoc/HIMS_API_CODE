@@ -29,26 +29,35 @@ namespace HIMS.API.Controllers.NursingStation
             _NursingConsentService = repository;
 
         }
-       
         [HttpGet("GetMConsentMasterList")]
-        public async Task<ApiResponse> GetMConsentMaster(int deptId, string? consentType)
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse GetMConsentMasterList(string? ConsentTypeName)
         {
-            var resultList = await _NursingConsentService.GetConsent(deptId, consentType);
-
-            var responseData = resultList.Select(x => new
-            {
-                x.ConsentId,
-                x.ConsentName,
-                x.ConsentDesc,
-                x.ConsentType
-            });
-
-            return ApiResponseHelper.GenerateResponse(
-                ApiStatusCode.Status200OK,
-                "ConsentMasterList.",
-                responseData
-            );
+            var data = _NursingConsentService.GetConsentAsync(ConsentTypeName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetMConsentMaster List.", data);
         }
+
+
+
+        //[HttpGet("GetMConsentMasterList")]
+        //public async Task<ApiResponse> GetMConsentMaster(int deptId, string? consentType)
+        //{
+        //    var resultList = await _NursingConsentService.GetConsent(deptId, consentType);
+
+        //    var responseData = resultList.Select(x => new
+        //    {
+        //        x.ConsentId,
+        //        x.ConsentName,
+        //        x.ConsentDesc,
+        //        x.ConsentType
+        //    });
+
+        //    return ApiResponseHelper.GenerateResponse(
+        //        ApiStatusCode.Status200OK,
+        //        "ConsentMasterList.",
+        //        responseData
+        //    );
+        //}
 
 
         [HttpGet("DeptConsentList")]
