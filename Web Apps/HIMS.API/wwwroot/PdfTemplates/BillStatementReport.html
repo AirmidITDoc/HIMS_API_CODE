@@ -55,18 +55,18 @@
                                 <span style="font-weight: bold;">Patient Type :</span>
                                 <span>{{PatientType}}</span>
                             </td>
-                            <td style="width:50%; padding:2px;">
+                            <!--<td style="width:50%; padding:2px;">
                                 <span style="font-weight: bold;">Company Name :</span>
                                 <span>{{CompanyName}}</span>
-                            </td>
+                            </td>-->
                         </tr>
-                        <tr>
+                        <!--<tr>
                             <td style="width:50%; padding:2px;">
                                 <span style="font-weight: bold;">Approved Amount :</span>
                                 <span>{{ApprovedAmount}}</span>
                             </td>
 
-                        </tr>
+                        </tr>-->
                         <tr>
                         </tr>
                     </table>
@@ -78,8 +78,8 @@
                                     Sr.No
                                 </td>
                                 <!--<td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
-                                    Bill Date
-                                </td>-->
+                Bill Date
+            </td>-->
                                 <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px 5px;">
                                     Service Name
                                 </td>
@@ -97,6 +97,31 @@
 
                             {{Items}}
                         </tbody>
+                        <tr style="margin-top: 12px;">
+                            <td colspan="6">
+                                <table style="width: 100%; border-collapse: collapse; font-size: 17px;font-weight:bold;">
+                                    <tr style="display:{{chkGovtApprovedAmtflag}}">
+                                        <td style="border-bottom: 1px solid #eee; padding: 6px;">Name : {{GovtApprovedName}}  {{GovtRefNo}}</td>
+                                        <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
+                                        <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{GovtApprovedAmt}}</td>
+                                    </tr>
+
+                                    <tr style="display:{{chkCompanyApprovedAmtflag}}">
+                                        <td style="border-bottom: 1px solid #eee; padding: 6px;">Name :  {{CompanyApprovedName}}  {{CompRefNo}}</td>
+                                        <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
+                                        <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{CompanyApprovedAmt}}</td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td style="border-bottom:1px solid #eee; padding: 6px;">Total  Amount</td>
+                                        <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
+                                        <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">  {{GrandTotalAmount}}</td>
+                                    </tr>
+                                    
+                                </table>
+                            </td>
+                        </tr>
                     </table>
 
                 </td>
