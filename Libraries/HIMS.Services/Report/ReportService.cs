@@ -13560,7 +13560,7 @@ namespace HIMS.Services.Report
                         }
 
                         // ================= GRAND TOTAL =================
-                        //items.Append("<tr style='font-weight:bold;font-size:23px;background-color:#f0f0f0;border-top:3px double black;'>")
+                        //items.Append("<tr style='font-weight:bold;font-size:18px;background-color:#f0f0f0;border-top:3px double black;'>")
                         //     .Append("<td colspan='4' style='text-align:right;'>GRAND TOTAL :</td>")
                         //     .Append("<td colspan='5' style='text-align:right;'>")
                         //       .Append(Math.Ceiling(GrandTotalAmount).ToString("0"))
@@ -13568,7 +13568,7 @@ namespace HIMS.Services.Report
 
 
 
-                      
+
 
 
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
@@ -13586,42 +13586,15 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{CompanyApprovedAmt}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble().ToString("F2"));
-                        html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
-                        html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
-                        html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
-                       
-                    
-
-                        html = html.Replace("{{GovtApprovedName}}", dt.GetColValue("GovtApprovedName").ToString()); 
-                        html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt").ToString());
-                        html = html.Replace("{{CompanyApprovedName}}", dt.GetColValue("CompanyApprovedName").ToString());
+                        html = html.Replace("{{GovtApprovedName}}", dt.GetColValue("GovtApprovedName").ToString());
                         html = html.Replace("{{GovtRefNo}}", dt.GetColValue("GovtRefNo").ToString());
+                        html = html.Replace("{{CompanyApprovedName}}", dt.GetColValue("CompanyApprovedName").ToString());
                         html = html.Replace("{{CompRefNo}}", dt.GetColValue("CompRefNo").ToString());
-                        html = html.Replace("{{ConcessionAmount}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().ToString("0.00"));
 
                         html = html.Replace("{{GrandTotalAmount}}", GrandTotalAmount.ToString());
                         html = html.Replace("{{FinalNetAmt}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
-
-
-                        html = html.Replace("{{chkpaidflag}}", dt.GetColValue("PaidAmt").ConvertToDouble() > 0 ? "table-row " : "none");
-                        html = html.Replace("{{chkAdvflag}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble() > 0 ? "table-row " : "none");
-                        html = html.Replace("{{chkdiscflag}}", dt.GetColValue("ConcessionAmt").ConvertToDouble() > 0 ? "table-row " : "none");
-                
-                    
-                        html = html.Replace("{{chktdsflag}}", dt.GetColValue("TDSAmount").ConvertToDouble() > 0 ? "table-row " : "none");
-                        html = html.Replace("{{chkWrfAmountflag}}", dt.GetColValue("AffilAmount").ConvertToDouble() > 0 ? "table-row " : "none");
-                        html = html.Replace("{{chkRefundflag}}", dt.GetColValue("BillRefAmt").ConvertToDouble() > 0 ? "table-row " : "none");
-                        html = html.Replace("{{chkadminflag}}", dt.GetColValue("TaxAmount").ConvertToDouble() > 0 ? "table-row " : "none");
-                        html = html.Replace("{{chkDiscCommentsflag}}", dt.GetColValue("DiscComments").ConvertToString() != "" ? "visible" : "none");
-                        html = html.Replace("{{ConcessionReason}}", dt.GetColValue("ConcessionReason").ConvertToString());
-                        html = html.Replace("{{chkPolicyNoflag}}", dt.GetColValue("PolicyNoList").ConvertToDouble() > 0 ? "table-row " : "none");
-                        html = html.Replace("{{chkApprovedAmountflag}}", dt.GetColValue("ApprovedAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCompanyApprovedAmtflag}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
-                         html = html.Replace("{{chkBalanceafterGovflag}}", dt.GetColValue("BalanceafterGov").ConvertToDouble() > 0 ? "table-row " : "none");
-
-
-
                         html = html.Replace("{{Items}}", items.ToString());
                         html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
                         html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
