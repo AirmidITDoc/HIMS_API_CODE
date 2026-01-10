@@ -2026,10 +2026,10 @@ namespace HIMS.Services.Report
                         string[] colList = { };
 
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacySalesBillDetailReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacyHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptIPSalesBill", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        html = html.Replace("{{PharmacyHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "pharmacySalesDetails", "pharmacySalesDetailsReport" + vDate, Orientation.Portrait);
                         break;
@@ -13608,7 +13608,7 @@ namespace HIMS.Services.Report
                         double salesTotal = 0, salesdisc = 0, salesnet = 0, salesbal = 0, salesrefund = 0, salesadv = 0, salesrefundTotal = 0, salesrefunddisc = 0, salesrefundnet = 0, salesrefundbal = 0, salesrefundrefund = 0, Total_Total = 0, Total_disc = 0, Total_net = 0, Total_bal = 0, Total_refund = 0, salespaid = 0, salesrefundpaid = 0;
                         double salescashTotal = 0, salescard = 0, salescheque = 0, salesneft = 0, salesonline = 0, salesreturncashTotal = 0, salesreturncard = 0, salesreturncheque = 0, salesreturnneft = 0, salesreturnonline = 0;
                         double G_NetPayableAmt = 0, G_TotalAmount = 0, G_discAmount = 0, G_balAmount = 0, G_RefundAmount = 0, G_PaidAmount = 0, G_cashAmount = 0, G_chequeAmount = 0, G_neftAmount = 0, G_cardAmount = 0, G_onlineAmount = 0, G_AdvAmount = 0;
-                        double G_BalTotalamt = 0, T_Totalamt = 0, T_Discamt = 0, T_Netamt = 0, T_paidamt = 0, T_Balamt = 0, T_Refundamt = 0, T_Creditreturnamt = 0, T_Cashreturnamt = 0, T_Advamt = 0, T_Advrefundamt = 0, T_Advusedamt = 0, T_AdvBalamt = 0, T_Cashpayamt = 0, T_Cardpayamt = 0, T_Chequepayamt = 0, T_Onlinepayamt = 0, T_Neftpayamt = 0, Net_Billamount = 0, Total_PaidAmount = 0;
+                        double G_BalTotalamt = 0, T_Totalamt = 0, T_Discamt = 0, T_Netamt = 0, T_paidamt = 0, T_Balamt = 0, T_Refundamt = 0, T_Creditreturnamt = 0, T_Cashreturnamt = 0, T_Advamt = 0, T_Advrefundamt = 0, T_Advusedamt = 0, T_AdvBalamt = 0, T_Cashpayamt = 0, T_Cardpayamt = 0, T_Chequepayamt = 0, T_Onlinepayamt = 0, T_Neftpayamt = 0, Net_Billamount = 0, Total_PaidAmount = 0,T_AdvBalanceamt=0;
                         double Total_Cash = 0, Total_card = 0, Total_cheque = 0, Total_neft = 0, Total_online = 0;
                         string Lablecount = "";
 
@@ -13666,7 +13666,15 @@ namespace HIMS.Services.Report
                             G_neftAmount += dr["NEFTPayAmount"].ConvertToDouble();
 
 
+                            if (i == 1)
+                            {
 
+                                T_Advamt = dr["AdvAmount"].ConvertToDouble();
+                                T_Advusedamt = dr["AdvUsedAmt"].ConvertToDouble();
+                                T_Advrefundamt = dr["AdvRefundAmt"].ConvertToDouble();
+
+
+                            }
                             previousLabel = dr["Label"].ConvertToString();
 
                             items.Append("<tr style=\"font-size: 20px;line-height: 24px;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\"border-left: 1px solid #ccc;border-bottom:1px solid #ccc;vertical-align: top;padding: 0;height: 20px;text-align:center\">").Append(i).Append("</td>");
@@ -13689,38 +13697,10 @@ namespace HIMS.Services.Report
 
 
 
-                            // salesTotal= salesTotal - 
-
-                            //Total_Total = salesTotal.ConvertToDouble() - salesrefundTotal.ConvertToDouble();
-                            //Total_disc = salesdisc.ConvertToDouble() - salesrefunddisc.ConvertToDouble();
-                            //Total_net = salesnet.ConvertToDouble() - salesrefundnet.ConvertToDouble();
-                            //Total_bal = salesbal.ConvertToDouble() - salesrefundbal.ConvertToDouble();
-                            //Total_refund = salesrefund.ConvertToDouble() - salesrefundrefund.ConvertToDouble();
-                            //Total_PaidAmount = salespaid.ConvertToDouble() - salesrefundpaid.ConvertToDouble();
-
-
-                            //Total_Cash = salescashTotal.ConvertToDouble() - salesreturncashTotal.ConvertToDouble();
-                            //Total_card = salescard.ConvertToDouble() - salesreturncard.ConvertToDouble();
-                            //Total_cheque = salescheque.ConvertToDouble() - salesreturncheque.ConvertToDouble();
-                            //Total_neft = salesneft.ConvertToDouble() - salesreturnneft.ConvertToDouble();
-                            //Total_online = salesonline.ConvertToDouble() - salesreturnonline.ConvertToDouble();
 
                             if (dt.Rows.Count > 0 && dt.Rows.Count == i)
                             {
-                                //items.Append("<tr style=\"border:1px solid black;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-weight:bold;font-size:22px;\"><td colspan='2' style=\"border-right:1px solid #ccc;border-left:1px solid #ccc;border-top:1px solid #ccc;padding:3px;height:15px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total</td><td style=\"border-right:1px solid #ccc;padding:3px;height:15px;text-align:right;vertical-align:middle\">")
-                                //                     .Append(G_TotalAmount.To2DecimalPlace()).Append(" </td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                //                     .Append(G_discAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                //                      .Append(G_NetPayableAmt.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                //                     .Append(G_PaidAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                //                        .Append(G_balAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                //                       .Append(G_RefundAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                //                        .Append(G_cashAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                //                    .Append(G_cardAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                //                    .Append(G_chequeAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                //                  //  .Append(G_neftAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                //                    .Append(G_onlineAmount.To2DecimalPlace()).Append("</td><td style=\"border-right:1px solid #ccc;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
-                                //                    .Append("</td></tr>");
-
+                               
                                 items.Append("<tr style=\"border:1px solid black;font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;font-size:22px;font-weight:bold;\"><td colspan='3' style=\"border-left:1px solid #ccc;border-right:1px solid #ccc;border-top:1px solid #ccc;padding:3px;height:15px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Total</td><td style=\"border-right:1px solid #000;padding:3px;height:15px;text-align:right;vertical-align:middle\">")
                                  .Append(Math.Round(G_TotalAmount.ConvertToDouble()).ToString("F2")).Append(" </td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
                                  .Append(Math.Round(G_discAmount.ConvertToDouble()).ToString("F2")).Append("</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle\">")
@@ -13780,7 +13760,7 @@ namespace HIMS.Services.Report
                                 salesreturnonline += dr1["PayTMAmount"].ConvertToDouble();
                             }
 
-
+                          
                         }
 
                         salesnet = Math.Round(salesTotal.ConvertToDouble() - salesdisc.ConvertToDouble());
@@ -13789,6 +13769,11 @@ namespace HIMS.Services.Report
                         salesdisc = Math.Round(salesdisc.ConvertToDouble());
                         salesTotal = Math.Round(salesTotal.ConvertToDouble());
                         salesreturncashTotal = Math.Round(salesreturncashTotal.ConvertToDouble());
+                        //T_AdvBalanceamt = Math.Round(T_AdvBalanceamt.ConvertToDouble());
+                        //T_Advamt = Math.Round(T_Advamt.ConvertToDouble());
+
+
+
 
                         G_BalTotalamt = salesnet.ConvertToDouble() - (T_Creditreturnamt.ConvertToDouble() + salesadv.ConvertToDouble() + salescashTotal.ConvertToDouble() + salesonline.ConvertToDouble());
 
@@ -13796,11 +13781,13 @@ namespace HIMS.Services.Report
                         //TotalCollection = T_CashPayAmount.ConvertToDouble() + T_CardPayAmount.ConvertToDouble() + T_ChequePayAmount.ConvertToDouble() + T_TotalNEFT.ConvertToDouble() + T_TotalPAYTM.ConvertToDouble();
 
 
+
+                        T_AdvBalanceamt = T_Advamt - T_Advrefundamt - salesadv;
+
+                        
+
+
                         html = html.Replace("{{Items}}", items.ToString());
-
-
-
-
 
                         html = html.Replace("{{salesreturncashTotal}}", salesreturncashTotal.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{salesonline}}", salesonline.ConvertToDouble().ToString("F2"));
@@ -13827,6 +13814,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{T_AdvBalamt}}", T_AdvBalamt.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{T_Cashpayamt}}", T_Cashpayamt.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{T_Onlinepayamt}}", T_Onlinepayamt.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{T_AdvBalanceamt}}", T_AdvBalanceamt.ConvertToDouble().ToString("F2"));
+
 
                         html = html.Replace("{{G_BalTotalamt}}", G_BalTotalamt.To2DecimalPlace());
 
