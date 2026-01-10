@@ -19,7 +19,10 @@ namespace HIMS.Services.Utilities
 
         //Tuple<byte[], string> CreateExel(string html, string FolderName, string FileName = "", Wkhtmltopdf.NetCore.Options.Orientation PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait);
         //bool CreateExel();
+      
         string GetHeader(string filePath, long HospitalId = 0);
+        string GetStoreHeader(string filePath, long StoreId = 0);
+
         string GetPatientHeader(ReportRequestModel model, string filePath);
         string GetHeaderfromtemplate(ReportRequestModel model, string filePath);
 
