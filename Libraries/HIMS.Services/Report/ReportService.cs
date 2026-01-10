@@ -2027,7 +2027,7 @@ namespace HIMS.Services.Report
 
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacySalesBillDetailReport.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacyHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptIPSalesBill", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{PharmacyHeader}}", htmlHeaderFilePath);
 
