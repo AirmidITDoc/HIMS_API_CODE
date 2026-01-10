@@ -136,9 +136,9 @@ namespace HIMS.Services.Common
 
 
                 // Pathology Dashboard  
-                case "PathologyDashboard": sp_Name = "ps_rpt_RadiologyDashboard"; break;
+                case "PathologyDashboard": sp_Name = "ps_rpt_PathologyDashboard"; break;
                 // Radiology Dashboard  
-                case "RadiologyDashboard": sp_Name = "ps_rpt_PathologyDashboard"; break;
+                case "RadiologyDashboard": sp_Name = "ps_rpt_RadiologyDashboard"; break;
 
 
                 // Admin Task for Update dates and times
