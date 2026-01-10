@@ -115,6 +115,23 @@ namespace HIMS.Services.Administration
 
 
         }
+        public virtual async Task PaymentDateTimeUpdate(TPaymentPharmacy ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] AEntity = { "PaymentId", "PaymentDate", "PaymentTime" };
+            var pentity = ObjTPaymentPharmacy.ToDictionary();
+            foreach (var rProperty in pentity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                    pentity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("PS_UpdatePaymentPharmacyDatetime", CommandType.StoredProcedure, pentity);
+            await _context.LogProcedureExecution(pentity, nameof(TPaymentPharmacy), ObjTPaymentPharmacy.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+        }
 
         public virtual async Task BilldateUpdateAsync(Bill ObjBill, int CurrentUserId, string CurrentUserName)
         {

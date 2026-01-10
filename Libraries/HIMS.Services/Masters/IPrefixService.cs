@@ -6,5 +6,6 @@ namespace HIMS.Services.Masters
     public partial interface IPrefixService
     {
         Task<IPagedList<DbPrefixMaster>> GetAllPagedAsync(GridRequestModel objGrid);
+        Task<Tuple<List<TestA>, List<TestB>>> GetListMultiple();
     }
 }

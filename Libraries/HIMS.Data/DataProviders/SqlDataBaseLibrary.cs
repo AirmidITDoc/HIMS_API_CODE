@@ -1,9 +1,13 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Reflection;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HIMS.Data.DataProviders
 {
@@ -512,59 +516,6 @@ namespace HIMS.Data.DataProviders
             return ExecuteDataSet(query, CommandType.Text);
         }
 
-        public DataSet ExecuteDataSet(string query, CommandType commandtype)
-        {
-            SqlDataAdapter adapter = new();
-            Command.CommandText = query;
-            Command.CommandType = commandtype;
-            adapter.SelectCommand = Command;
-            DataSet ds = new();
-            try
-            {
-                adapter.Fill(ds);
-            }
-            catch (Exception ex)
-            {
-                HandleExceptions(ex, query);
-            }
-            finally
-            {
-                //objCommand.Parameters.Clear();
-                if (Command.Transaction == null)
-                {
-                    objConnection.Close();
-                }
-            }
-            return ds;
-        }
-
-        public DataSet FetchDataSetBySP(string Spname, SqlParameter[] para)
-        {
-            DataSet ds = new();
-            Command.CommandType = CommandType.StoredProcedure;
-            Command.Parameters.AddRange(para);
-            Command.CommandText = Spname;
-            SqlDataAdapter da = new(Command);
-            try
-            {
-                objConnection.Open();
-                da.Fill(ds);
-                return ds;
-            }
-            catch (Exception ex)
-            {
-                HandleExceptions(ex, Spname);
-            }
-            finally
-            {
-                //objCommand.Parameters.Clear();
-                if (Command.Transaction == null)
-                {
-                    objConnection.Close();
-                }
-            }
-            return ds;
-        }
 
         #region ExecuteDataTableAsync
         private static void AttachParameters(SqlCommand command, IEnumerable<SqlParameter> commandParameters)
@@ -797,6 +748,263 @@ namespace HIMS.Data.DataProviders
             return lst;
         }
 
+        #region :: Multiple Result Sets ::
+
+        public DataSet ExecuteDataSet(string query, CommandType commandtype)
+        {
+            SqlDataAdapter adapter = new();
+            Command.CommandText = query;
+            Command.CommandType = commandtype;
+            adapter.SelectCommand = Command;
+            DataSet ds = new();
+            try
+            {
+                adapter.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, query);
+            }
+            finally
+            {
+                //objCommand.Parameters.Clear();
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+            return ds;
+        }
+
+        public DataSet FetchDataSetBySP(string Spname, SqlParameter[] para)
+        {
+            DataSet ds = new();
+            Command.CommandType = CommandType.StoredProcedure;
+            Command.Parameters.AddRange(para);
+            Command.CommandText = Spname;
+            SqlDataAdapter da = new(Command);
+            try
+            {
+                objConnection.Open();
+                da.Fill(ds);
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, Spname);
+            }
+            finally
+            {
+                //objCommand.Parameters.Clear();
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+            return ds;
+        }
+        public async Task<Tuple<List<T>, List<T1>>> Get2ResultsFromSp<T, T1>(string Spname, SqlParameter[] para) where T : new() where T1 : new()
+        {
+            Tuple<List<T>, List<T1>> result = null;
+            Command.CommandType = CommandType.StoredProcedure;
+            Command.Parameters.AddRange(para);
+            Command.CommandText = Spname;
+            try
+            {
+                objConnection.Open();
+                using var reader = await Command.ExecuteReaderAsync();
+                // Table 1
+                var item1 = reader.MapToList<T>();
+
+                // Table 2
+                await reader.NextResultAsync();
+                var item2 = reader.MapToList<T1>();
+
+                result = new Tuple<List<T>, List<T1>>(item1, item2);
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, Spname);
+            }
+            finally
+            {
+                //objCommand.Parameters.Clear();
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+
+            return result;
+        }
+        public async Task<Tuple<List<T>, List<T1>, List<T2>>> Get2ResultsFromSp<T, T1, T2>(string Spname, SqlParameter[] para) where T : new() where T1 : new() where T2 : new()
+        {
+            Tuple<List<T>, List<T1>, List<T2>> result = null;
+            Command.CommandType = CommandType.StoredProcedure;
+            Command.Parameters.AddRange(para);
+            Command.CommandText = Spname;
+            try
+            {
+                objConnection.Open();
+                using var reader = await Command.ExecuteReaderAsync();
+                // Table 1
+                var item1 = reader.MapToList<T>();
+
+                // Table 2
+                await reader.NextResultAsync();
+                var item2 = reader.MapToList<T1>();
+                // Table 3
+                await reader.NextResultAsync();
+                var item3 = reader.MapToList<T2>();
+
+                result = new Tuple<List<T>, List<T1>, List<T2>>(item1, item2, item3);
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, Spname);
+            }
+            finally
+            {
+                //objCommand.Parameters.Clear();
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+
+            return result;
+        }
+        public async Task<Tuple<List<T>, List<T1>, List<T2>, List<T3>>> Get2ResultsFromSp<T, T1, T2, T3>(string Spname, SqlParameter[] para) where T : new() where T1 : new() where T2 : new() where T3 : new()
+        {
+            Tuple<List<T>, List<T1>, List<T2>, List<T3>> result = null;
+            Command.CommandType = CommandType.StoredProcedure;
+            Command.Parameters.AddRange(para);
+            Command.CommandText = Spname;
+            try
+            {
+                objConnection.Open();
+                using var reader = await Command.ExecuteReaderAsync();
+                // Table 1
+                var item1 = reader.MapToList<T>();
+
+                // Table 2
+                await reader.NextResultAsync();
+                var item2 = reader.MapToList<T1>();
+                // Table 3
+                await reader.NextResultAsync();
+                var item3 = reader.MapToList<T2>();
+                // Table 4
+                await reader.NextResultAsync();
+                var item4 = reader.MapToList<T3>();
+
+                result = new Tuple<List<T>, List<T1>, List<T2>, List<T3>>(item1, item2, item3, item4);
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, Spname);
+            }
+            finally
+            {
+                //objCommand.Parameters.Clear();
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+
+            return result;
+        }
+        public async Task<Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>>> Get2ResultsFromSp<T, T1, T2, T3, T4>(string Spname, SqlParameter[] para) where T : new() where T1 : new() where T2 : new() where T3 : new() where T4 : new()
+        {
+            Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>> result = null;
+            Command.CommandType = CommandType.StoredProcedure;
+            Command.Parameters.AddRange(para);
+            Command.CommandText = Spname;
+            try
+            {
+                objConnection.Open();
+                using var reader = await Command.ExecuteReaderAsync();
+                // Table 1
+                var item1 = reader.MapToList<T>();
+
+                // Table 2
+                await reader.NextResultAsync();
+                var item2 = reader.MapToList<T1>();
+                // Table 3
+                await reader.NextResultAsync();
+                var item3 = reader.MapToList<T2>();
+                // Table 4
+                await reader.NextResultAsync();
+                var item4 = reader.MapToList<T3>();
+                // Table 5
+                await reader.NextResultAsync();
+                var item5 = reader.MapToList<T4>();
+
+                result = new Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>>(item1, item2, item3, item4, item5);
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, Spname);
+            }
+            finally
+            {
+                //objCommand.Parameters.Clear();
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+
+            return result;
+        }
+        public async Task<Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>>> Get2ResultsFromSp<T, T1, T2, T3, T4, T5>(string Spname, SqlParameter[] para) where T : new() where T1 : new() where T2 : new() where T3 : new() where T4 : new() where T5 : new()
+        {
+            Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>> result = null;
+            Command.CommandType = CommandType.StoredProcedure;
+            Command.Parameters.AddRange(para);
+            Command.CommandText = Spname;
+            try
+            {
+                objConnection.Open();
+                using var reader = await Command.ExecuteReaderAsync();
+                // Table 1
+                var item1 = reader.MapToList<T>();
+
+                // Table 2
+                await reader.NextResultAsync();
+                var item2 = reader.MapToList<T1>();
+                // Table 3
+                await reader.NextResultAsync();
+                var item3 = reader.MapToList<T2>();
+                // Table 4
+                await reader.NextResultAsync();
+                var item4 = reader.MapToList<T3>();
+                // Table 5
+                await reader.NextResultAsync();
+                var item5 = reader.MapToList<T4>();
+                // Table 6
+                await reader.NextResultAsync();
+                var item6 = reader.MapToList<T5>();
+
+                result = new Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>>(item1, item2, item3, item4, item5, item6);
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, Spname);
+            }
+            finally
+            {
+                //objCommand.Parameters.Clear();
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+
+            return result;
+        }
+
+        #endregion :: Multiple Result Sets ::
         public List<T> FetchListByQuery<T>(string Qry, SqlParameter[] para = null)
         {
             List<T> lst = new();

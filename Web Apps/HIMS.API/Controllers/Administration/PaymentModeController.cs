@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Administration
         }
         [HttpPut("PaymentMode{id:int}")]
         [Permission(PageCode = "Payment", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> BilldatetimeUpdate(paymentUpdateModel obj)
+        public async Task<ApiResponse> PaymentdatetimeUpdate(paymentUpdateModel obj)
         {
             if (obj == null || obj.TpaymentUpdate == null || !obj.TpaymentUpdate.Any())
             {
@@ -80,6 +80,27 @@ namespace HIMS.API.Controllers.Administration
                 await _IPaymentModeService.PaymentUpdateAsync(new List<TPayment> { model },CurrentUserId, CurrentUserName);
             }
              return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+        [HttpPut("PaymentPharmacyMode{id:int}")]
+        [Permission(PageCode = "Payment", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse>datetimeUpdate(paymentUpdateModel obj)
+        {
+            if (obj == null || obj.TpaymentUpdate == null || !obj.TpaymentUpdate.Any())
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Invalid params");
+            }
+            List<TPaymentPharmacy> models = obj.TpaymentUpdate.MapTo<List<TPaymentPharmacy>>();
+
+            foreach (var model in models)
+            {
+                if (model.BillNo == 0 || model.PaymentId == 0)
+                {
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Invalid BillNo or PaymentId");
+                }
+
+                await _IPaymentModeService.PaymentPharmacyUpdateAsync(new List<TPaymentPharmacy> { model }, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
     }

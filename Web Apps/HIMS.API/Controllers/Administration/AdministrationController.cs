@@ -174,5 +174,19 @@ namespace HIMS.API.Controllers.Administration
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+
+        [HttpPut("TPaymentPharmacydatetime{id:int}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        public ApiResponse PaymentUpdate(PaymenntModel obj)
+        {
+            TPaymentPharmacy model = obj.MapTo<TPaymentPharmacy>();
+            if (obj.PaymentId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                _IAdministrationService.PaymentDateTimeUpdate(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
     }
 }

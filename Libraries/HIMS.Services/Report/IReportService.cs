@@ -36,7 +36,7 @@ namespace HIMS.Services.Report
         DataTable GetReportDataBySp(ReportConfigDto model);
 
 
-
+        string GeneratePdfFromSp(string sp, string StorageBaseUrl);
     }
 
 }

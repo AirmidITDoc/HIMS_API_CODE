@@ -9521,8 +9521,8 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{BillDate}}", dt.GetColValue("BillDate").ConvertToDateString());
                         html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                        html = html.Replace("{{DischargeDate}}", dt.GetColValue("DischargeDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-
+                        html = html.Replace("{{DischargeDate}}", dt.GetColValue("DischargeDate").ConvertToDateString("dd/MM/yyyy"));
+                        html = html.Replace("{{DischargeTime}}", dt.GetColValue("DischargeTime").ConvertToDateString("hh:mm tt"));
 
 
                         html = html.Replace("{{TotalAmt}}", dt.GetColValue("TotalAmt").ConvertToDouble().To2DecimalPlace());
@@ -12717,70 +12717,147 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{AttendedName}}", dt.GetColValue("AttendedName"));
 
+                        //StringBuilder surgeryRows = new StringBuilder();
+                        //int surgeryIndex = 1;
+
+                        //foreach (DataRow dr in dt.Rows)
+                        //{
+
+                        //    surgeryRows.Append("<tr>");
+                        //    surgeryRows.Append("<td><b>Surgery Type</b><br>")
+                        //               .Append(dr["SurgeryCategoryName"]).Append("</td>");
+                        //    surgeryRows.Append("<td><b>Surgery Name</b><br>")
+                        //               .Append(dr["SurgeryName"]).Append("</td>");
+                        //    surgeryRows.Append("<td><b>Part</b><br>")
+                        //               .Append(dr["SurgeryPart"]).Append("</td>");
+                        //    surgeryRows.Append("<td><b>Is Primary</b><br>")
+                        //               .Append(dr["IsPrimary"]).Append("</td>");
+                        //    surgeryRows.Append("</tr>");
+
+
+                        //    surgeryRows.Append("<tr>");
+                        //    surgeryRows.Append("<td><b>From Time</b><br>")
+                        //               .Append(dr["SurgeryFromTime"]
+                        //               .ConvertToDateString("hh:mm tt"))
+                        //               .Append("</td>");
+                        //    surgeryRows.Append("<td><b>To Time</b><br>")
+                        //               .Append(dr["SurgeryEndTime"]
+                        //               .ConvertToDateString(" hh:mm tt"))
+                        //               .Append("</td>");
+                        //    surgeryRows.Append("<td><b>Duration</b><br>")
+                        //               .Append(dr["SurgeryDuration"]).Append("</td>");
+                        //    surgeryRows.Append("<td><b>Anesthesia</b><br>")
+                        //               .Append(dr["AnesthetistName"]).Append("</td>");
+                        //    surgeryRows.Append("</tr>");
+
+                        //    surgeryRows.Append("<tr>");
+                        //    surgeryRows.Append("<td colspan='4'><b>Surgeon ")
+                        //               .Append(surgeryIndex)
+                        //               .Append(" :</b> ")
+                        //               .Append(dr["SurgeonName"])
+                        //               .Append("</td>");
+                        //    surgeryRows.Append("</tr>");
+
+                        //    surgeryIndex++;
+                        //}
+
+                        //html = html.Replace("{{SurgeryRows}}", surgeryRows.ToString());
+
+                        //StringBuilder attendantRows = new StringBuilder();
+
+                        //foreach (DataRow dr in dt.Rows)
+                        //{
+                        //    attendantRows.Append("<tr>");
+                        //    attendantRows.Append("<td>Doctor</td>");
+                        //    attendantRows.Append("<td>")
+                        //                 .Append(dr["DoctorType"])
+                        //                 .Append("</td>");
+                        //    attendantRows.Append("<td>")
+                        //                 .Append(dr["AttendedName"])
+                        //                 .Append("</td>");
+                        //    attendantRows.Append("</tr>");
+                        //}
+
+                        //html = html.Replace("{{AttendantRows}}", attendantRows.ToString());
+
                         StringBuilder surgeryRows = new StringBuilder();
                         int surgeryIndex = 1;
 
-                        foreach (DataRow dr in dt.Rows)
+                        var uniqueSurgeries = dt.AsEnumerable()
+                            .GroupBy(r => new
+                            {
+                                SurgeryCategoryName = r["SurgeryCategoryName"].ToString(),
+                                SurgeryName = r["SurgeryName"].ToString(),
+                                SurgeryPart = r["SurgeryPart"].ToString(),
+                                SurgeryFromTime = r["SurgeryFromTime"].ToString(),
+                                SurgeryEndTime = r["SurgeryEndTime"].ToString(),
+                                SurgeonName = r["SurgeonName"].ToString()
+                            })
+                            .Select(g => g.First());
+
+                        foreach (var dr in uniqueSurgeries)
                         {
-                           
                             surgeryRows.Append("<tr>");
-                            surgeryRows.Append("<td><b>Surgery Type</b><br>")
-                                       .Append(dr["SurgeryCategoryName"]).Append("</td>");
-                            surgeryRows.Append("<td><b>Surgery Name</b><br>")
-                                       .Append(dr["SurgeryName"]).Append("</td>");
-                            surgeryRows.Append("<td><b>Part</b><br>")
-                                       .Append(dr["SurgeryPart"]).Append("</td>");
-                            surgeryRows.Append("<td><b>Is Primary</b><br>")
-                                       .Append(dr["IsPrimary"]).Append("</td>");
-                            surgeryRows.Append("</tr>");
-
-                    
-                            surgeryRows.Append("<tr>");
-                            surgeryRows.Append("<td><b>From Time</b><br>")
-                                       .Append(dr["SurgeryFromTime"]
-                                       .ConvertToDateString("hh:mm tt"))
-                                       .Append("</td>");
-                            surgeryRows.Append("<td><b>To Time</b><br>")
-                                       .Append(dr["SurgeryEndTime"]
-                                       .ConvertToDateString(" hh:mm tt"))
-                                       .Append("</td>");
-                            surgeryRows.Append("<td><b>Duration</b><br>")
-                                       .Append(dr["SurgeryDuration"]).Append("</td>");
-                            surgeryRows.Append("<td><b>Anesthesia</b><br>")
-                                       .Append(dr["AnesthetistName"]).Append("</td>");
+                            surgeryRows.Append("<td><b>Surgery Type</b><br>").Append(dr["SurgeryCategoryName"]).Append("</td>");
+                            surgeryRows.Append("<td><b>Surgery Name</b><br>").Append(dr["SurgeryName"]).Append("</td>");
+                            surgeryRows.Append("<td><b>Part</b><br>").Append(dr["SurgeryPart"]).Append("</td>");
+                            surgeryRows.Append("<td><b>Is Primary</b><br>").Append(dr["IsPrimary"]).Append("</td>");
                             surgeryRows.Append("</tr>");
 
                             surgeryRows.Append("<tr>");
-                            surgeryRows.Append("<td colspan='4'><b>Surgeon ")
-                                       .Append(surgeryIndex)
-                                       .Append(" :</b> ")
-                                       .Append(dr["SurgeonName"])
-                                       .Append("</td>");
+                            surgeryRows.Append("<td><b>From Time</b><br>").Append(dr["SurgeryFromTime"].ConvertToDateString("hh:mm tt")).Append("</td>");
+                            surgeryRows.Append("<td><b>To Time</b><br>").Append(dr["SurgeryEndTime"].ConvertToDateString("hh:mm tt")).Append("</td>");
+                            surgeryRows.Append("<td><b>Duration</b><br>").Append(dr["SurgeryDuration"]).Append("</td>");
+                            surgeryRows.Append("<td><b>Anesthesia</b><br>").Append(dr["AnesthetistName"]).Append("</td>");
                             surgeryRows.Append("</tr>");
 
-                            surgeryIndex++;
+                            surgeryRows.Append("<tr>");
+                            surgeryRows.Append("<td colspan='4'><b>Surgeon ").Append(surgeryIndex++).Append(" :</b> ").Append(dr["SurgeonName"]).Append("</td>");
+                            surgeryRows.Append("</tr>");
                         }
 
                         html = html.Replace("{{SurgeryRows}}", surgeryRows.ToString());
 
                         StringBuilder attendantRows = new StringBuilder();
 
-                        foreach (DataRow dr in dt.Rows)
+                        StringBuilder attendantTable = new StringBuilder();
+
+                        var uniqueAttendants = dt.AsEnumerable()
+                            .Where(r => !string.IsNullOrEmpty(r["AttendedName"]?.ToString()))
+                            .GroupBy(r => new
+                            {
+                                DoctorType = r["DoctorType"].ToString(),
+                                AttendedName = r["AttendedName"].ToString()
+                            })
+                            .Select(g => g.First())
+                            .ToList();
+
+                        if (uniqueAttendants.Count > 0)
                         {
-                            attendantRows.Append("<tr>");
-                            attendantRows.Append("<td>Doctor</td>");
-                            attendantRows.Append("<td>")
-                                         .Append(dr["DoctorType"])
-                                         .Append("</td>");
-                            attendantRows.Append("<td>")
-                                         .Append(dr["AttendedName"])
-                                         .Append("</td>");
-                            attendantRows.Append("</tr>");
+                            attendantTable.Append(@"
+                                <table width='100%' border='1' cellspacing='0' cellpadding='6' style='border-collapse:collapse;'>
+                                    <tr style='background:#e2e8f0;'>
+                                        <td colspan='3'><b>Attendant Details</b></td>
+                                    </tr>
+                                    <tr style='background:#f9fafb; font-weight:bold;'>
+                                        <td>Resource Type</td>
+                                        <td>Doctor Type</td>
+                                        <td>Doctor Name</td>
+                                    </tr>");
+
+                            foreach (var dr in uniqueAttendants)
+                            {
+                                attendantTable.Append("<tr>");
+                                attendantTable.Append("<td>Doctor</td>");
+                                attendantTable.Append("<td>").Append(dr["DoctorType"]).Append("</td>");
+                                attendantTable.Append("<td>").Append(dr["AttendedName"]).Append("</td>");
+                                attendantTable.Append("</tr>");
+                            }
+
+                            attendantTable.Append("</table><br><br>");
                         }
 
-                        html = html.Replace("{{AttendantRows}}", attendantRows.ToString());
-
-
+                        html = html.Replace("{{AttendantRows}}", attendantTable.ToString());
                         return html;
                     }
                     break;
@@ -15357,6 +15434,39 @@ namespace HIMS.Services.Report
                 sp_Para++;
             }
             return odal.FetchDataTableBySP(model.SPName, para, true);
+        }
+
+
+        public string GeneratePdfFromSp(string sp,string StorageBaseUrl)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = Array.Empty<SqlParameter>();
+            DataSet ds = sql.FetchDataSetBySP(sp, para);
+            StringBuilder html = new("<table>");
+            foreach (DataTable dt in ds.Tables)
+            {
+                html.Append("<tr>");
+                foreach (DataColumn col in dt.Columns)
+                {
+                    html.Append("<th>").Append(col.ColumnName).Append("</th>");
+                }
+                html.Append("</tr>");
+                foreach (DataRow dr in dt.Rows)
+                {
+                    html.Append("<tr>");
+                    foreach (DataColumn col in dt.Columns)
+                    {
+                        html.Append("<td>").Append(dr[col.ColumnName].ToString()).Append("</td>");
+                    }
+                    html.Append("</tr>");
+                }
+            }
+
+
+            var tuple = _pdfUtility.GeneratePdfFromHtml(html.ToString(), StorageBaseUrl, "NewReport");
+            string byteFile = Convert.ToBase64String(tuple.Item1);
+            return byteFile;
+
         }
     }
 }
