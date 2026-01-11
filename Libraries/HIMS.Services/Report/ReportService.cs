@@ -2027,7 +2027,7 @@ namespace HIMS.Services.Report
 
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacySalesBillDetailReport.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacyHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptIPSalesBill", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{PharmacyHeader}}", htmlHeaderFilePath);
 
@@ -13441,13 +13441,15 @@ namespace HIMS.Services.Report
 
                         double NetAmount = 0;
                         double totalSales = 0;
-                        double GrandTotalAmount = 0;
+                        double GrandTotalAmount = 0, TotalGovAmount = 0, aftergovbal = 0, TotalPaidAmount = 0, TotalCompApprovedAmount = 0, TotalConcessionAmt = 0, FinalNetAmt = 0;
+
 
                         int i = 0, j = 0;
 
                         string previousSalesType = "";
                         string previousSalesDate = "";
                         string previousSalesNo = "";
+
 
                         // Sort bills
                         //var sortedBills = dt.AsEnumerable()
@@ -13530,17 +13532,10 @@ namespace HIMS.Services.Report
                             // ================= ITEM ROW =================
                             items.Append("<tr style='font-size:15px;'>")
                                  .Append("<td style='border-left:1px solid black;text-align:center;'>").Append(i).Append("</td>")
-                                 //.Append("<td style='border-left:1px solid #000;text-align:center;'>")
-                                 //.Append(dr["BillDate"].ConvertToDateString("dd-MM-yyyy")).Append("</td>")
-                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>")
-                                 .Append(dr["ServiceName"].ConvertToString()).Append("</td>")
-                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>")
-                                 .Append(dr["Price"].ConvertToString()).Append("</td>")
-                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>")
-                                 .Append(dr["Qty"].ConvertToString()).Append("</td>")
-                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>")
-                                 .Append(dr["NetAmount"].ConvertToDouble().To2DecimalPlace())
-                                 .Append("</td></tr>");
+                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>").Append(dr["ServiceName"].ConvertToString()).Append("</td>")
+                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>").Append(dr["Price"].ConvertToString()).Append("</td>")
+                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>").Append(dr["Qty"].ConvertToString()).Append("</td>")
+                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>").Append(dr["NetAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
 
                             // ================= ACCUMULATE =================
                             NetAmount += dr["NetAmount"].ConvertToDouble();
@@ -13565,11 +13560,16 @@ namespace HIMS.Services.Report
                         }
 
                         // ================= GRAND TOTAL =================
-                        items.Append("<tr style='font-weight:bold;font-size:23px;background-color:#f0f0f0;border-top:3px double black;'>")
-                             .Append("<td colspan='4' style='text-align:right;'>GRAND TOTAL :</td>")
-                             .Append("<td colspan='5' style='text-align:right;'>")
-                               .Append(Math.Ceiling(GrandTotalAmount).ToString("0"))
-                             .Append("</td></tr>");
+                        //items.Append("<tr style='font-weight:bold;font-size:18px;background-color:#f0f0f0;border-top:3px double black;'>")
+                        //     .Append("<td colspan='4' style='text-align:right;'>GRAND TOTAL :</td>")
+                        //     .Append("<td colspan='5' style='text-align:right;'>")
+                        //       .Append(Math.Ceiling(GrandTotalAmount).ToString("0"))
+                        //     .Append("</td></tr>");
+
+
+
+
+
 
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
@@ -13582,9 +13582,19 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
-                        //html = html.Replace("{{ALEntry}}", dt.GetColValue("ALEntry"));
+                        html = html.Replace("{{PaidAmt}}", dt.GetColValue("PaidAmt"));
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CompanyApprovedAmt}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{GovtApprovedName}}", dt.GetColValue("GovtApprovedName").ToString());
+                        html = html.Replace("{{GovtRefNo}}", dt.GetColValue("GovtRefNo").ToString());
+                        html = html.Replace("{{CompanyApprovedName}}", dt.GetColValue("CompanyApprovedName").ToString());
+                        html = html.Replace("{{CompRefNo}}", dt.GetColValue("CompRefNo").ToString());
+
+                        html = html.Replace("{{GrandTotalAmount}}", GrandTotalAmount.ToString());
+                        html = html.Replace("{{FinalNetAmt}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkCompanyApprovedAmtflag}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{Items}}", items.ToString());
                         html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
                         html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
@@ -13989,24 +13999,29 @@ namespace HIMS.Services.Report
                          NetTotal = totalSales - totalSalesReturn;
 
                         // Grand totals
-                        items.Append("<tr style='font-weight:bold;font-size:23px;background-color:#f0f0f0;'>")
+                        items.Append("<tr style='font-weight:bold;font-size:18px;background-color:#f0f0f0;'>")
                              .Append("<td colspan='6' style='text-align:right;'>Total Sales :</td>")
                              .Append("<td colspan='6' style='text-align:right;'>").Append(totalSales.ToString("0.00")).Append("</td></tr>");
 
-                        items.Append("<tr style='font-weight:bold;font-size:23px;background-color:#f0f0f0;'>")
+                        items.Append("<tr style='font-weight:bold;font-size:18px;background-color:#f0f0f0;'>")
                              .Append("<td colspan='6' style='text-align:right;'>Total Sales Return :</td>")
                              .Append("<td colspan='6' style='text-align:right;'>").Append(totalSalesReturn.ToString("0.00")).Append("</td></tr>");
 
-                        items.Append("<tr style='font-weight:bold;font-size:24px;background-color:#f0f0f0;'>")
+                        items.Append("<tr style='font-weight:bold;font-size:18px;background-color:#f0f0f0;'>")
                              .Append("<td colspan='6' style='text-align:right;'>Net Total :</td>")
                               .Append("<td colspan='6' style='text-align:right;'>")
                               .Append(NetTotal.ToString("0.00")).Append("</td></tr>");
 
+                        html = html.Replace("{{totalSales}}", totalSales.ConvertToDouble().ToString("0.00"));
 
-                        // Update the total amounts for all doctors and patients
-                        //T_NetAmount += dr["TotalAmount"].ConvertToDouble();
-                        //    T_Amount += dr["NetAmount"].ConvertToDouble();
-                        //NetAmount += dr["NetAmount"].ConvertToDouble();
+                        double advBalanceAmount = dt.GetColValue("AdvBalanceAmount").ConvertToDouble();
+                        double paidAmt = dt.GetColValue("PaidAmt").ConvertToDouble();
+
+                        double amount = NetTotal - advBalanceAmount - paidAmt;
+
+                        html = html.Replace("{{AdvBalanceAmount}}", advBalanceAmount.ToString("F2"));
+                        html = html.Replace("{{PaidAmt}}", paidAmt.ToString("F2"));
+                        html = html.Replace("{{Amount}}", amount.ToString("F2"));
 
 
                         html = html.Replace("{{SalesType}}", dt.GetColValue("SalesType"));
@@ -14031,6 +14046,19 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
 
+   
+
+
+                        html = html.Replace("{{AdvBalanceAmount}}", dt.GetColValue("AdvBalanceAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PaidAmt}}", dt.GetColValue("PaidAmt").ConvertToDouble().ToString("F2"));
+
+
+
+                        html = html.Replace("{{totalSales}}", totalSales.ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{totalSalesReturn}}", totalSalesReturn.ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{NetTotal}}", NetTotal.ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{totalSales}}", totalSales.ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{totalSales}}", totalSales.ConvertToDouble().ToString("0.00"));
 
 
 

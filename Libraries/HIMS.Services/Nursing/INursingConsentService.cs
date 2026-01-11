@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Nursing;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 namespace HIMS.Services.Nursing
 {
@@ -13,6 +14,8 @@ namespace HIMS.Services.Nursing
         Task<IPagedList<ConsentpatientInfoListDto>> ConsentpatientInfoList(GridRequestModel objGrid);
         Task<List<MConsentMaster>> GetConsent(int deptId, string? consentType);
         Task<IPagedList<TransactionConsentMasterListDto>> GetListTranAsync(GridRequestModel objGrid);
+        List<ConsentListDto> GetConsentAsync(string? ConsentTypeName);
+
 
     }
 }
