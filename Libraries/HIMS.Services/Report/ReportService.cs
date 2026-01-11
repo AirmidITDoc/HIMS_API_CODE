@@ -8880,15 +8880,15 @@ namespace HIMS.Services.Report
                             TotalGovAmount = 0, aftergovbal = 0, TotalPaidAmount = 0, TotalCompApprovedAmount = 0;
 
                         var groupedCharges = dt.AsEnumerable()
-     .OrderBy(dr => dr["GroupName"].ToString())   // GroupName first
-     .ThenBy(dr => dr["Lbl"].ToString())
-     .ThenBy(dr => dr["ChargesDate"])
-     .ThenBy(dr => dr["ServiceName"])
-     .GroupBy(dr => new
-     {
-         GroupName = dr["GroupName"].ToString(),
-         Lbl = dr["Lbl"].ToString()
-     }); // Group by both GroupName and Lbl
+                             .OrderBy(dr => dr["GroupName"].ToString())   // GroupName first
+                             .ThenBy(dr => dr["Lbl"].ToString())
+                             .ThenBy(dr => dr["ChargesDate"])
+                             .ThenBy(dr => dr["ServiceName"])
+                             .GroupBy(dr => new
+                             {
+                                 GroupName = dr["GroupName"].ToString(),
+                                 Lbl = dr["Lbl"].ToString()
+                             }); // Group by both GroupName and Lbl
 
                         foreach (var group in groupedCharges)
                         {
@@ -13445,6 +13445,7 @@ namespace HIMS.Services.Report
                         double OverallTotal = 0;
                         double OverallDiscount = 0;
                         double OverallNet = 0;
+                        double GovtApprovedAmt = 0, CompanyApprovedAmt = 0;
 
                         string previousSalesType = "";
                         string previousSalesDate = "";
@@ -13469,6 +13470,8 @@ namespace HIMS.Services.Report
                             string currentSalesType = dr["Lbl"].ToString();
                             string currentSalesDate = dr["BillDate"].ConvertToDateString("dd-MM-yyyy");
                             string currentSalesNo = dr["PBillNo"].ToString();
+                            GovtApprovedAmt = dr["GovtApprovedAmt"].ConvertToDouble();
+                            CompanyApprovedAmt = dr["CompanyApprovedAmt"].ConvertToDouble();
 
                             // ================= BILL CHANGE =================
                             if (previousSalesNo != currentSalesNo)
@@ -13523,6 +13526,8 @@ namespace HIMS.Services.Report
                         OverallTotal += BillTotal;
                         OverallDiscount += BillDiscount;
                         OverallNet += BillNet;
+                        double BalanceAmount = 0;
+                        BalanceAmount = OverallNet - GovtApprovedAmt - CompanyApprovedAmt;
 
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
@@ -13537,6 +13542,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
                         html = html.Replace("{{PaidAmt}}", dt.GetColValue("PaidAmt"));
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
+
                         html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{CompanyApprovedAmt}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{GovtApprovedName}}", dt.GetColValue("GovtApprovedName").ToString());
@@ -13550,6 +13556,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{TotalAmount}}", OverallTotal.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{DiscAmount}}", OverallDiscount.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{NetTotalAmount}}", OverallNet.ConvertToDouble().ToString("F2"));
+
+                        html = html.Replace("{{BalanceAmount}}", BalanceAmount.ConvertToDouble().ToString("F2"));
+
 
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCompanyApprovedAmtflag}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
