@@ -61,6 +61,8 @@ namespace HIMS.API.Models.OutPatient
         public bool? IsInclusionExclusion { get; set; }
         public long ChargesId { get; set; }
         public bool? IsApprovedByCamp { get; set; }
+        public long? DoctorId { get; set; }
+        public string? DoctorName { get; set; }
 
 
     }
