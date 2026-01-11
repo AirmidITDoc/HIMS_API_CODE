@@ -18,8 +18,8 @@ namespace HIMS.Data.DTO.Administration
         public long? OP_IP_Type { get; set; }
         public string? PrintStoreName { get; set; }
         public long? SalesId { get; set; }
-        //public DateTime? Date { get; set; }
-        //public DateTime? Time { get; set; }
+        public DateTime? Date { get; set; }
+        public DateTime? Time { get; set; }
 
         public long TransactionType { get; set; }
         public long CashCounterId { get; set; }
