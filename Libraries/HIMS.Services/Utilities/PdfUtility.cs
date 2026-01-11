@@ -198,20 +198,30 @@ namespace HIMS.Services.Utilities
         //    return objTemplate.TemplateDescription;
         //}
 
-        //public string GetStoreHeader(string filePath, string basePath, long StoreId = 0)
-        //{
-        //    string htmlHeader = System.IO.File.ReadAllText(filePath);
-        //    HospitalStoreMaster objStoreHospital = _context.MStoreMasters.Find(Convert.ToInt64(2));
-        //    htmlHeader = htmlHeader.Replace("{{PrintStoreName}}", objStoreHospital?.PrintStoreName ?? "");
-        //    htmlHeader = htmlHeader.Replace("{{StoreAddress}}", objStoreHospital?.StoreAddress ?? "");
-        //    htmlHeader = htmlHeader.Replace("{{HospitalMobileNo}}", objStoreHospital?.HospitalMobileNo ?? "");
-        //    htmlHeader = htmlHeader.Replace("{{HospitalEmailId}}", objStoreHospital?.HospitalEmailId ?? "");
-        //    htmlHeader = htmlHeader.Replace("{{PrintStoreUnitName}}", objStoreHospital?.PrintStoreUnitName ?? "");
-        //    htmlHeader = htmlHeader.Replace("{{DL_NO}}", objStoreHospital?.DL_NO ?? "");
-        //    htmlHeader = htmlHeader.Replace("{{GSTIN}}", objStoreHospital?.GSTIN ?? "");
-        //    htmlHeader = htmlHeader.Replace("{{Display}}", (objStoreHospital?.StoreId ?? 0) > 0 ? "visible" : "hidden");
-        //    return htmlHeader.Replace("{{BaseUrl}}", basePath.Trim('/'));
-        //}
+        public string GetStoreHeader(string filePath, long StoreId = 0)
+        {
+            string htmlHeader = System.IO.File.ReadAllText(filePath);
+
+            HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
+            MStoreMaster objStoreHospital = _context.MStoreMasters.Find(Convert.ToInt64(3));
+
+            var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+            string logoFileName = (objStoreHospital?.Header ?? "").ConvertToString();
+
+            var HospitalLogo = GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
+
+            htmlHeader = htmlHeader.Replace("{{PrintStoreName}}", objStoreHospital?.PrintStoreName ?? "");
+            htmlHeader = htmlHeader.Replace("{{StoreAddress}}", objStoreHospital?.StoreAddress ?? "");
+            htmlHeader = htmlHeader.Replace("{{HospitalMobileNo}}", objStoreHospital?.HospitalMobileNo ?? "");
+            htmlHeader = htmlHeader.Replace("{{HospitalEmailId}}", objStoreHospital?.HospitalEmailId ?? "");
+            htmlHeader = htmlHeader.Replace("{{PrintStoreUnitName}}", objStoreHospital?.PrintStoreUnitName ?? "");
+            htmlHeader = htmlHeader.Replace("{{DL_NO}}", objStoreHospital?.DlNo ?? "");
+            htmlHeader = htmlHeader.Replace("{{GSTIN}}", objStoreHospital?.Gstin ?? "");
+           
+            htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
+            return htmlHeader.Replace("{{Display}}", (objStoreHospital?.StoreId ?? 0) > 0 ? "visible" : "hidden");
+
+        }
 
         public Tuple<byte[], string> GeneratePdfFromHtml(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
         {

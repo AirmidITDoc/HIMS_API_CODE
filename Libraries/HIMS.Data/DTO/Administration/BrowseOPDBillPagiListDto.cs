@@ -44,8 +44,10 @@
         public decimal? CompanyApprovedAmt { get; set; }
         public string? GovtCompanyName { get; set; }
         public string? CompanyApprovedName { get; set; }
-
-
+        public long? GovtCompanyId { get; set; }
+        public string? GovtRefNo { get; set; }
+        public long? CompanyApprovedId { get; set; }
+        public string? CompRefNo { get; set; }
 
 
 

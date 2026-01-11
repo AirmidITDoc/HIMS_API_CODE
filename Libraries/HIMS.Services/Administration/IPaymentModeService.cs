@@ -11,5 +11,7 @@ namespace HIMS.Services.Administration
         Task<IPagedList<OPBillListForPaymentModeChangeListDto>> GetListAsync(GridRequestModel objGrid);
         Task PaymentUpdateAsync(List<TPayment> ObjBill, int CurrentUserId, string CurrentUserName);
         Task<IPagedList<OPBillListForPaymentModeChangeListBillNoWiseDto>> GetBillListAsync(GridRequestModel objGrid);
+        Task PaymentPharmacyUpdateAsync(List<TPaymentPharmacy> ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName);
+
     }
 }

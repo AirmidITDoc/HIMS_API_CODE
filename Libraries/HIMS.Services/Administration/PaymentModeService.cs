@@ -82,7 +82,25 @@ namespace HIMS.Services.Administration
 
             }
         }
+        public virtual async Task PaymentPharmacyUpdateAsync(List<TPaymentPharmacy> ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName)
+        {
+            DatabaseHelper odal = new();
+            foreach (var item in ObjTPaymentPharmacy)
+            {
 
+                string[] AEntity = { "PaymentId", "BillNo", "PayMode", "TranNo", "BankName" };
+                var Rentity = item.ToDictionary();
+
+                foreach (var rProperty in Rentity.Keys.ToList())
+                {
+                    if (!AEntity.Contains(rProperty))
+                        Rentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_Update_PaymentPharmacyMode", CommandType.StoredProcedure, Rentity);
+                await _context.LogProcedureExecution(Rentity, nameof(TPayment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+            }
+        }
     }
 }
 

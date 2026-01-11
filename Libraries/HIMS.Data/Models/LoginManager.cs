@@ -25,7 +25,7 @@ namespace HIMS.Data.Models
         public long? DoctorId { get; set; }
         public bool? IsPoverify { get; set; }
         public bool? IsGrnverify { get; set; }
-        public bool? IsCollection { get; set; }
+        public bool? IsBillReview { get; set; }
         public bool? IsBedStatus { get; set; }
         public bool? IsCurrentStk { get; set; }
         public bool? IsPatientInfo { get; set; }

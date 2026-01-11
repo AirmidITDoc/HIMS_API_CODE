@@ -15,7 +15,8 @@ namespace HIMS.API.Models.Inventory
         public long? DoctorId { get; set; }
         public bool? IsPoverify { get; set; }
         public bool? IsGrnverify { get; set; }
-        public bool? IsCollection { get; set; }
+        //public bool? IsCollection { get; set; }
+        public bool? IsBillReview { get; set; }
         public bool? IsBedStatus { get; set; }
         public bool? IsCurrentStk { get; set; }
         public bool? IsPatientInfo { get; set; }
@@ -57,7 +58,7 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.IsDoctorType).NotNull().NotEmpty().WithMessage("IsDoctorType Type is required");
             RuleFor(x => x.DoctorId).NotNull().NotEmpty().WithMessage("DoctorId Type is required");
             RuleFor(x => x.IsPoverify).NotNull().NotEmpty().WithMessage("IsPoverify Type is required");
-            RuleFor(x => x.IsCollection).NotNull().NotEmpty().WithMessage("IsCollection Type is required");
+            //RuleFor(x => x.IsCollection).NotNull().NotEmpty().WithMessage("IsCollection Type is required");
             RuleFor(x => x.IsBedStatus).NotNull().NotEmpty().WithMessage("IsBedStatus Type is required");
             RuleFor(x => x.MailId).NotNull().NotEmpty().WithMessage("MailId Type is required");
             RuleFor(x => x.MailDomain).NotNull().NotEmpty().WithMessage("MailDomain Type is required");

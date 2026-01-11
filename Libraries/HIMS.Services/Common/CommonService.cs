@@ -136,17 +136,9 @@ namespace HIMS.Services.Common
 
 
                 // Pathology Dashboard  
-                case "PathologyTestCountDasboard": sp_Name = "ps_rpt_PathologyTestCountDasboard"; break;
-                case "PathologyTestCompletedDasboard": sp_Name = "ps_rpt_PathologyTestCompletedDasboard"; break;
-                case "PathologyTestCancelleDasboard": sp_Name = "ps_rpt_PathologyTestCancelleDasboard"; break;
-                case "PathologyTestPendingDasboard": sp_Name = "ps_rpt_PathologyTestPendingDasboard"; break;
-
-                // Radiology Dashboard 
-                case "RadiologyTestCountDasboard": sp_Name = "ps_rpt_RadiologyTestCount_Dashboard"; break;
-                case "RadiologyTestCompletedDasboard": sp_Name = "ps_rpt_RadiologyTest_Completed_Dashboard"; break;
-                case "RadiologyTestCancelleDasboard": sp_Name = "ps_rpt_RadiologyTestCancelle_Dashboard"; break;
-                case "RadiologyTestPendingDasboard": sp_Name = "ps_rpt_RadiologyTestPending_Dashboard"; break;
-
+                case "PathologyDashboard": sp_Name = "ps_rpt_PathologyDashboard"; break;
+                // Radiology Dashboard  
+                case "RadiologyDashboard": sp_Name = "ps_rpt_RadiologyDashboard"; break;
 
 
                 // Admin Task for Update dates and times
