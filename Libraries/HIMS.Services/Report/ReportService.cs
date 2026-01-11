@@ -13438,138 +13438,91 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         StringBuilder item = new StringBuilder("");
-
-                        double NetAmount = 0;
-                        double totalSales = 0;
-                        double GrandTotalAmount = 0, TotalGovAmount = 0, aftergovbal = 0, TotalPaidAmount = 0, TotalCompApprovedAmount = 0, TotalConcessionAmt = 0, FinalNetAmt = 0;
-
-
-                        int i = 0, j = 0;
+                        double BillTotal = 0;
+                        double BillDiscount = 0;
+                        double BillNet = 0;
+                        int i = 0;
+                        double OverallTotal = 0;
+                        double OverallDiscount = 0;
+                        double OverallNet = 0;
 
                         string previousSalesType = "";
                         string previousSalesDate = "";
                         string previousSalesNo = "";
 
+                        var sortedBills = dt.AsEnumerable().OrderBy(dr =>
+                                {
+                                    var lbl = dr["Lbl"].ToString().Trim();
 
-                        // Sort bills
-                        //var sortedBills = dt.AsEnumerable()
-                        //    .OrderBy(dr => dr["Lbl"].ToString() == " Bill" ? 0 : 1)
-                        //    .ThenBy(dr => dr["BillDate"])
-                        //    .ThenBy(dr => dr["PBillNo"])
-                        //    .ToList();
-                        var sortedBills = dt.AsEnumerable()
-    .OrderBy(dr =>
-    {
-        var lbl = dr["Lbl"].ToString().Trim();
-
-        if (lbl == "Bill") return 0;
-        if (lbl == "Pharmacy") return 1;
-        return 2; // all other labels
-    })
-    .ThenBy(dr => dr["BillDate"])
-    .ThenBy(dr => dr["PBillNo"])
-    .ToList();
-
+                                    if (lbl == "Bill") return 0;
+                                    if (lbl == "Pharmacy") return 1;
+                                    return 2; // all other labels
+                                })
+                                .ThenBy(dr => dr["BillDate"])
+                                .ThenBy(dr => dr["PBillNo"])
+                                .ToList();
 
                         foreach (DataRow dr in sortedBills)
                         {
-                            i++; j++;
+                            i++;
 
                             string currentSalesType = dr["Lbl"].ToString();
                             string currentSalesDate = dr["BillDate"].ConvertToDateString("dd-MM-yyyy");
                             string currentSalesNo = dr["PBillNo"].ToString();
 
-                            // ================= SALES TYPE CHANGE =================
-                            if (previousSalesType != currentSalesType)
-                            {
-                                // Close previous sales type totals
-                                if (!string.IsNullOrEmpty(previousSalesType) && NetAmount > 0)
-                                {
-                                    items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
-                                         .Append("<td colspan='4' style='text-align:right;padding:3px;font-size:18px;'>Total Amt :</td>")
-                                         .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
-                                         .Append(NetAmount.ToString("0.00"))
-                                         .Append("</td><td></td></tr>");
-
-                                    totalSales += NetAmount;
-                                    GrandTotalAmount += NetAmount;
-                                    NetAmount = 0;
-                                }
-
-                                // 🔥 PRINT SALES TYPE (LBL)
-                                items.Append("<tr style='font-size:22px;font-weight:bold;background:#e6e6e6;'>")
-                                     .Append("<td colspan='5' style='text-align:left;'>")
-                                     .Append(currentSalesType)
-                                     .Append("</td></tr>");
-                            }
-
                             // ================= BILL CHANGE =================
-                            if (previousSalesDate != currentSalesDate ||
-                                previousSalesNo != currentSalesNo ||
-                                previousSalesType != currentSalesType)
+                            if (previousSalesNo != currentSalesNo)
                             {
-                                if (i != 1 && NetAmount > 0)
+                                // Close previous bill
+                                if (!string.IsNullOrEmpty(previousSalesNo))
                                 {
-                                    items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
-                                         .Append("<td colspan='4' style='text-align:right;padding:3px;font-size:18px;'>Total Amt :</td>")
-                                         .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
-                                         .Append(NetAmount.ToString("0.00"))
-                                         .Append("</td><td></td></tr>");
+                                    AppendBillFooter(items, BillTotal, BillDiscount, BillNet);
 
-                                    totalSales += NetAmount;
-                                    GrandTotalAmount += NetAmount;
-                                    NetAmount = 0;
+                                    OverallTotal += BillTotal;
+                                    OverallDiscount += BillDiscount;
+                                    OverallNet += BillNet;
+
+                                    BillTotal = BillDiscount = BillNet = 0;
                                 }
 
-                                // Bill header
-                                items.Append("<tr style='font-size:20px;font-family: Calibri;'>")
-                                     .Append("<td colspan='5' style='border:1px solid #000;padding:3px;text-align:left;'>")
-                                     .Append("Bill Date: ").Append(currentSalesDate)
-                                     .Append(" | Bill No: ").Append(currentSalesNo)
-                                     .Append("</td></tr>");
-                            }
+                                // ✅ ASSIGN BILL VALUES ONCE
+                                BillDiscount = dr["BillDiscAmt"].ConvertToDouble();
+                                BillNet = dr["NetPayableAmt"].ConvertToDouble();
+
+                                // Print bill header
+                                items.Append($@"
+                                        <tr style='font-size:18px;font-weight:bold;'>
+                                            <td colspan='5' style='border:1px solid #000;padding:4px;'>
+                                                Bill Date: {currentSalesDate} | Bill No: {currentSalesNo}
+                                            </td>
+                                        </tr>");
+                                                            }
 
                             // ================= ITEM ROW =================
-                            items.Append("<tr style='font-size:15px;'>")
-                                 .Append("<td style='border-left:1px solid black;text-align:center;'>").Append(i).Append("</td>")
-                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>").Append(dr["ServiceName"].ConvertToString()).Append("</td>")
-                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>").Append(dr["Price"].ConvertToString()).Append("</td>")
-                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>").Append(dr["Qty"].ConvertToString()).Append("</td>")
-                                 .Append("<td style='border-left:1px solid #000;text-align:center;'>").Append(dr["NetAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
+                            double lineAmount = dr["NetAmount"].ConvertToDouble();
 
-                            // ================= ACCUMULATE =================
-                            NetAmount += dr["NetAmount"].ConvertToDouble();
+                            items.Append($@"
+                                    <tr style='font-size:15px;'>
+                                        <td style='border:1px solid #000;text-align:center;'>{i}</td>
+                                        <td style='border:1px solid #000;'>{dr["ServiceName"]}</td>
+                                        <td style='border:1px solid #000;text-align:right;'>{dr["Price"]}</td>
+                                        <td style='border:1px solid #000;text-align:center;'>{dr["Qty"]}</td>
+                                        <td style='border:1px solid #000;text-align:right;'>{lineAmount:0.00}</td>
+                                    </tr>");
 
-                            previousSalesType = currentSalesType;
-                            previousSalesDate = currentSalesDate;
+                            // ✅ ONLY TOTAL ITEMS
+                            BillTotal += lineAmount;
+
                             previousSalesNo = currentSalesNo;
-
-                            // ================= LAST BILL =================
-                            if (i == sortedBills.Count && NetAmount > 0)
-                            {
-                                items.Append("<tr style='border:1px solid black;font-weight:bold;'>")
-                                     .Append("<td colspan='4' style='text-align:right;padding:3px;font-size:18px;'>Total Amt :</td>")
-                                     .Append("<td style='text-align:right;padding:3px;font-size:18px;'>")
-                                     .Append(NetAmount.ToString("0.00"))
-                                     .Append("</td><td></td></tr>");
-
-                                totalSales += NetAmount;
-                                GrandTotalAmount += NetAmount;
-                                NetAmount = 0;
-                            }
                         }
 
-                        // ================= GRAND TOTAL =================
-                        //items.Append("<tr style='font-weight:bold;font-size:18px;background-color:#f0f0f0;border-top:3px double black;'>")
-                        //     .Append("<td colspan='4' style='text-align:right;'>GRAND TOTAL :</td>")
-                        //     .Append("<td colspan='5' style='text-align:right;'>")
-                        //       .Append(Math.Ceiling(GrandTotalAmount).ToString("0"))
-                        //     .Append("</td></tr>");
 
+                        // ================= LAST CLOSINGS =================
+                        AppendBillFooter(items, BillTotal, BillDiscount, BillNet);
 
-
-
-
+                        OverallTotal += BillTotal;
+                        OverallDiscount += BillDiscount;
+                        OverallNet += BillNet;
 
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
@@ -13591,8 +13544,13 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{CompanyApprovedName}}", dt.GetColValue("CompanyApprovedName").ToString());
                         html = html.Replace("{{CompRefNo}}", dt.GetColValue("CompRefNo").ToString());
 
-                        html = html.Replace("{{GrandTotalAmount}}", GrandTotalAmount.ToString());
-                        html = html.Replace("{{FinalNetAmt}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{GrandTotalAmount}}", OverallNet.ToString());
+                        //html = html.Replace("{{FinalNetAmt}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
+
+                        html = html.Replace("{{TotalAmount}}", OverallTotal.ToString());
+                        html = html.Replace("{{DiscAmount}}", OverallDiscount.ToString());
+                        html = html.Replace("{{NetTotalAmount}}", OverallNet.ToString());
+
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCompanyApprovedAmtflag}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{Items}}", items.ToString());
@@ -13605,6 +13563,24 @@ namespace HIMS.Services.Report
 
                     }
                     break;
+
+                    void AppendBillFooter(StringBuilder items, double total, double discount, double net)
+                    {
+                        items.Append($@"
+                                <tr style='font-weight:bold;'>
+                                    <td colspan='4' style='text-align:right;'>Total Amt :</td>
+                                    <td style='text-align:right;'>{total:0.00}</td>
+                                </tr>
+                                <tr style='font-weight:bold;'>
+                                    <td colspan='4' style='text-align:right;'>Dis Amt :</td>
+                                    <td style='text-align:right;'>{discount:0.00}</td>
+                                </tr>
+                                <tr style='font-weight:bold;'>
+                                    <td colspan='4' style='text-align:right;'>Net Amount :</td>
+                                    <td style='text-align:right;'>{net:0.00}</td>
+                                </tr>");
+                    }
+
 
                 case "PharmacyPatientStatement":
                     {
