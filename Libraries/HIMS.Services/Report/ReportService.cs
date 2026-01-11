@@ -13547,9 +13547,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{GrandTotalAmount}}", OverallNet.ToString());
                         //html = html.Replace("{{FinalNetAmt}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
 
-                        html = html.Replace("{{TotalAmount}}", OverallTotal.ToString());
-                        html = html.Replace("{{DiscAmount}}", OverallDiscount.ToString());
-                        html = html.Replace("{{NetTotalAmount}}", OverallNet.ToString());
+                        html = html.Replace("{{TotalAmount}}", OverallTotal.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{DiscAmount}}", OverallDiscount.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{NetTotalAmount}}", OverallNet.ConvertToDouble().ToString("F2"));
 
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCompanyApprovedAmtflag}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
