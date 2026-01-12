@@ -185,6 +185,16 @@ namespace HIMS.API.Controllers.Login
                     user.FirstName,
                     user.UserName,
                     user.MobileNo,
+                    user.IsBillReview,
+                    user.IsAdminMultiview,
+                    user.IsGrnverify,
+                    user.IsIndentVerify,
+                    user.WebRoleId,
+                    user.StoreId,
+                    user.UnitId,
+                    user.AddedBy,
+                    user.CreatedBy,
+                    user.DoctorId,
                     TLoginStoreDetails = user.TLoginStoreDetails.Select(x => new { x.StoreId, x.LoginId }),
                     TLoginUnitDetails=user.TLoginUnitDetails.Select(x=> new { x.UnitId,x.LoginId})
                 }
