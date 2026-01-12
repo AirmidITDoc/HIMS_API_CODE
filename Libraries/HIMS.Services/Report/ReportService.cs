@@ -12711,7 +12711,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{SurgeonName}}", dt.GetColValue("SurgeonName"));
                         html = html.Replace("{{AnesthetistName}}", dt.GetColValue("AnesthetistName"));
-                        html = html.Replace("{{DescriptionName}}", dt.GetColValue("DiagnosisNames"));
+                        html = html.Replace("{{DiagnosisNames}}", dt.GetColValue("DiagnosisNames"));
                         html = html.Replace("{{DescriptionType}}", dt.GetColValue("DescriptionType"));
                         html = html.Replace("{{DoctorType}}", dt.GetColValue("DoctorType"));
 
