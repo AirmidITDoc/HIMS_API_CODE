@@ -33,13 +33,15 @@
         public string? PharOPOpt { get; set; }
         public string? PharIPOpt { get; set; }
         public long? UnitId { get; set; }
-        public long? MobileNo { get; set; }
+        public string? MobileNo { get; set; }
         public long? WebRoleId { get; set; }
         public int? isDiscApply { get; set; }
         public int? DiscApplyPer { get; set; }
         public string? password { get; set; }
         public string WebRoleName { get; set; }
         public string HospitalName { get; set; }
+        public bool? IsAdminMultiview { get; set; }
+
 
 
 

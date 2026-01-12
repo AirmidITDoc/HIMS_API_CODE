@@ -3381,6 +3381,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.MailId).HasMaxLength(50);
 
+                entity.Property(e => e.MobileNo)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.MobileToken).HasMaxLength(250);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");

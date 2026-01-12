@@ -46,7 +46,7 @@ namespace HIMS.Data.Models
         public string? UserToken { get; set; }
         public string? MobileToken { get; set; }
         public long? UnitId { get; set; }
-        public long? MobileNo { get; set; }
+        public string? MobileNo { get; set; }
         public int? IsDiscApply { get; set; }
         public int? DiscApplyPer { get; set; }
         public bool? IsAdminMultiview { get; set; }
