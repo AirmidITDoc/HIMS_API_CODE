@@ -178,7 +178,16 @@ namespace HIMS.API.Controllers.Login
                 user.UserId,
                 RefreshToken = loginType == LoginType.Mobile ? user.MobileToken : null,
                 DeviceId = loginType == LoginType.Mobile ? EncryptionUtility.EncryptText(user.UserId.ToString(), SecurityKeys.EnDeKey) : null,
-                User = user // This includes all fields of the user object
+                //User = user, // This includes all fields of the user object
+                User = new
+                {
+                    user.LastName,
+                    user.FirstName,
+                    user.UserName,
+                    user.MobileNo,
+                    TLoginStoreDetails = user.TLoginStoreDetails.Select(x => new { x.StoreId, x.LoginId }),
+                    TLoginUnitDetails=user.TLoginUnitDetails.Select(x=> new { x.UnitId,x.LoginId})
+                }
             });
         }
         [NonAction]
