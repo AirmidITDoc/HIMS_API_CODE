@@ -266,6 +266,7 @@ namespace HIMS.API.Controllers.Report
                 case "EmergencyPrint":
                 case "EmergencyPrescription":
                 case "ConsentInformation":
+                case "ConsentInformationWithoutHeader":
                 case "LabregisterBillReceipt":
              
                 #endregion
