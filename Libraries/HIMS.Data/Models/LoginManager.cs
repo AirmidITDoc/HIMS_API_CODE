@@ -49,6 +49,7 @@ namespace HIMS.Data.Models
         public long? MobileNo { get; set; }
         public int? IsDiscApply { get; set; }
         public int? DiscApplyPer { get; set; }
+        public bool? IsAdminMultiview { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }

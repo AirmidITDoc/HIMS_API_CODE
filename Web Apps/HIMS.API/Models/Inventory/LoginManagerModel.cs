@@ -40,6 +40,8 @@ namespace HIMS.API.Models.Inventory
         public int? IsDiscApply { get; set; }
         public int? DiscApplyPer { get; set; }
         public bool? IsActive { get; set; }
+        public bool? IsAdminMultiview { get; set; }
+
         public List<LoginAccessDetailModel> TLoginAccessDetails { get; set; }
         public List<LoginUnitDetailModel> TLoginUnitDetails { get; set; }
         public List<LoginStoreDetailModel> TLoginStoreDetails { get; set; }
@@ -95,6 +97,7 @@ namespace HIMS.API.Models.Inventory
     {
         public long UserId { get; set; }
 
+
     }
     public class ChangePassword
     {
@@ -103,5 +106,6 @@ namespace HIMS.API.Models.Inventory
         public string Password { get; set; }
         public DateTime? LastPasswordChangedDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
+
     }
 }

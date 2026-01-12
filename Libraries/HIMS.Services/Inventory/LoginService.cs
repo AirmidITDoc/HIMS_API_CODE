@@ -139,6 +139,7 @@ namespace HIMS.Services.Inventory
                 // Update header table records
                 LoginManager objLog = await _context.LoginManagers.FindAsync(objLogin.UserId);
                 objLog.IsActive = false;
+                //objLog.IsAdminMultiview = true;
                 objLog.CreatedDate = objLogin.CreatedDate;
                 objLog.CreatedBy = objLogin.CreatedBy;
                 _context.LoginManagers.Update(objLog);
