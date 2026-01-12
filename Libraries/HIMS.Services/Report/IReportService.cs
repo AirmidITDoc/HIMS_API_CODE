@@ -37,6 +37,7 @@ namespace HIMS.Services.Report
 
 
         string GeneratePdfFromSp(string sp, string StorageBaseUrl);
+        Task<Tuple<string,string>> GetPatientBarcode(ReportRequestModel model);
     }
 
 }

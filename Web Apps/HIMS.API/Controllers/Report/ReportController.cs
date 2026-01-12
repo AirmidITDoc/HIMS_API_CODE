@@ -238,7 +238,7 @@ namespace HIMS.API.Controllers.Report
                 #region"OP Reports"
                 case "RegistrationForm":
                 case "OPStickerPrint":
-               
+
                 case "OPRefundReceipt":
                 case "OPPaymentReceipt":
                 case "LabPaymentReceipt":
@@ -260,7 +260,7 @@ namespace HIMS.API.Controllers.Report
 
                 case "OPPrescriptionwithoutHeader":
                 case "OPPrescriptionwithoutHeaderA5":
-                    
+
                 case "CertificateInformationReport":
                 case "Certificate":
                 case "EmergencyPrint":
@@ -268,10 +268,10 @@ namespace HIMS.API.Controllers.Report
                 case "ConsentInformation":
                 case "ConsentInformationWithoutHeader":
                 case "LabregisterBillReceipt":
-             
+
                 #endregion
 
-               
+
 
                 #region"Nursing Reports"
 
@@ -285,9 +285,9 @@ namespace HIMS.API.Controllers.Report
                 case "CanteenRequestprint":
                 case "DoctorNoteandNursingNoteReport":
 
-                    //OT
+                //OT
                 //case "OTOprativereport":
-              
+
                 #endregion
 
                 #region"IP Reports"
@@ -352,8 +352,8 @@ namespace HIMS.API.Controllers.Report
                 case "OTReservation":
 
 
-                    //PATHOLOGY   
-                    
+                //PATHOLOGY   
+
                 case "PathologyReportWithHeader":
                 case "PathologyReportWithOutHeader":
                 case "PathologyReportTemplateWithHeader":
@@ -415,7 +415,7 @@ namespace HIMS.API.Controllers.Report
                 case "NursingVitalsReport":
 
                 case "SupplierPaymentReciept":
-           
+
 
                 //Labrequest Detail
                 case "LabRegistrationListReport":
@@ -431,6 +431,13 @@ namespace HIMS.API.Controllers.Report
             model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
             var byteFile = await _reportService.GetReportSetByProc(model, _configuration["PdfFontPath"]);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = Convert.ToBase64String(byteFile.Item1) }));
+        }
+
+        [HttpPost("get-report-html")]
+        public async Task<ApiResponse> GetBarcodeHtml(ReportRequestModel model)
+        {
+            var data = await _reportService.GetPatientBarcode(model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Barcode Data.", new { html = data.Item1, title = data.Item2 });
         }
 
         [HttpPost("NewViewReport")]
