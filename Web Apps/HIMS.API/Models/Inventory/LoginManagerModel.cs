@@ -36,7 +36,7 @@ namespace HIMS.API.Models.Inventory
         public int? PharOpopt { get; set; }
         public int? PharIpopt { get; set; }
         public long? UnitId { get; set; }
-        public long? MobileNo { get; set; }
+        public string? MobileNo { get; set; }
         public int? IsDiscApply { get; set; }
         public int? DiscApplyPer { get; set; }
         public bool? IsActive { get; set; }
