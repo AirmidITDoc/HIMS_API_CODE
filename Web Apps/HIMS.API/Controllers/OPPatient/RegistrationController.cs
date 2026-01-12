@@ -79,10 +79,9 @@ namespace HIMS.API.Controllers.OPPatient
             Registration model = obj.MapTo<Registration>();
             if (obj.RegId == 0)
             {
-                //model.CreatedDate = AppTime.Now;
-                //model.CreatedBy = CurrentUserId;
+                model.CreatedDate = AppTime.Now;
+                model.CreatedBy = CurrentUserId;
                 model.AddedBy = CurrentUserId;
-                //model.IsActive = true;
                 await _IRegistrationService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
