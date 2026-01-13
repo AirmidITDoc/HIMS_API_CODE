@@ -8013,7 +8013,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
 
-                        //  html = html.Replace("{{chkAftBalflag}}", balafteradvuseAmount.ConvertToDouble() > 0 ? "table-row" : "none");
+                        html = html.Replace("{{chkAftBalflag}}", Tot_Advamt.ConvertToDouble() > 0 ? "table-row" : "none");
                         html = html.Replace("{{chkBalflag}}", BalancewdudcAmt.ConvertToDouble() > 0 ? "table-row" : "none");
 
                         html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
@@ -8936,6 +8936,8 @@ namespace HIMS.Services.Report
 
                                 previousChargesDate = currentChargesDate;
                             }
+                            F_TotalAmount = Math.Ceiling(F_TotalAmount);
+
 
                             // ================= TOTAL FOR THIS Lbl =================
                             if (T_TotalAmount > 0)
@@ -8993,7 +8995,6 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AdvanceUsedAmount}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
-                        //html = html.Replace("{{AdvBalAmount}}", dt.GetColValue("AdvBalAmount").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{TotalAmt}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{TaxAmount}}", dt.GetColValue("TaxAmount").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().ToString("0.00"));
@@ -9003,21 +9004,15 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("OnlinePayAmount").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{TotalAdvanceAmount}}", dt.GetColValue("TotalAdvanceAmount").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{AdvanceUsedAmount}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble().ToString("0.00"));
-                        //html = html.Replace("{{AdvanceBalAmount}}", dt.GetColValue("AdvanceBalAmount").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{AdvanceRefundAmount}}", dt.GetColValue("AdvanceRefundAmount").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{ConcessionAmount}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{T_NetAmount}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{FinalNetAmt}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
-
-
-
-
-                        // Value
+                         // Value
                         html = html.Replace("{{BalanceafterGov}}", aftergovbal.ConvertToDouble().ToString("0.00"));
                         // Flag
                         html = html.Replace("{{chkBalanceafterGovflag}}", aftergovbal.ConvertToDouble() > 0 ? "table-row" : "none");
-
                         //// Value
                         html = html.Replace("{{AdvBalAmount}}", AdvBalAmount.ConvertToDouble().ToString("0.00"));
                         // Flag
@@ -9030,7 +9025,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
                         html = html.Replace("{{F_TotalAmount}}", F_TotalAmount.ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{balafteradvuseAmount}}", balafteradvuseAmount.ConvertToDouble().ToString("0.00"));
-                        //html = html.Replace("{{AdvBalAmount}}", AdvBalAmount.ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{ConcessionAmount}}", TotalConcessionAmt.ConvertToDouble().ToString("0.00"));
+
 
                         html = html.Replace("{{UseName}}", dt.GetColValue("UseName"));
                         html = html.Replace("{{TDSAmount}}", dt.GetColValue("TDSAmount"));
