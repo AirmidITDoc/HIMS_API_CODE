@@ -31,6 +31,7 @@ namespace HIMS.Data.DTO.IPPatient
         public bool? IsApprovedByCamp { get; set; }
         public int? StockId { get; set; }
         public int? StoreId { get; set; }
+        public bool? IsCompleted { get; set; }
     }
 
     public class PharmacyDetailsListDto
