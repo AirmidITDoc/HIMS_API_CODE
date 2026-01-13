@@ -21,7 +21,7 @@
         public string? SampleCollectionTime { get; set; }
         public string? IsSampleCollection { get; set; }
         public long AdmissionID { get; set; }
-
+        public bool IsApprovedByCamp { get; set; }
 
     }
 }
