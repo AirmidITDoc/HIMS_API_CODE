@@ -13507,8 +13507,14 @@ namespace HIMS.Services.Report
                         OverallTotal += BillTotal;
                         OverallDiscount += BillDiscount;
                         OverallNet += BillNet;
+
+
+                        OverallNet = Math.Ceiling(OverallTotal - OverallDiscount);
+
                         double BalanceAmount = 0;
+
                         BalanceAmount = OverallNet - GovtApprovedAmt - CompanyApprovedAmt;
+
 
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
@@ -13531,10 +13537,10 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{CompanyApprovedName}}", dt.GetColValue("CompanyApprovedName").ToString());
                         html = html.Replace("{{CompRefNo}}", dt.GetColValue("CompRefNo").ToString());
 
-                        html = html.Replace("{{GrandTotalAmount}}", OverallNet.ToString());
+                        //html = html.Replace("{{GrandTotalAmount}}", OverallNet.ToString());
                         //html = html.Replace("{{FinalNetAmt}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
 
-                        html = html.Replace("{{TotalAmount}}", OverallTotal.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{TotalAmount}}", Math.Ceiling(OverallTotal).ToString("F2"));
                         html = html.Replace("{{DiscAmount}}", OverallDiscount.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{NetTotalAmount}}", OverallNet.ConvertToDouble().ToString("F2"));
 
@@ -13556,6 +13562,8 @@ namespace HIMS.Services.Report
 
                     void AppendBillFooter(StringBuilder items, double total, double discount, double net)
                     {
+                         net = total - discount;
+
                         items.Append($@"
                                 <tr style='font-weight:bold;'>
                                     <td colspan='4' style='text-align:right;'>Total Amt :</td>
