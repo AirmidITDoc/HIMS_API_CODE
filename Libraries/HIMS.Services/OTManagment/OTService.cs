@@ -5,6 +5,7 @@ using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 using HIMS.Services.OTManagment;
+using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -259,19 +260,18 @@ namespace HIMS.Services.IPPatient
             ObjTOtReservation.OtreservationId = Convert.ToInt32(VOtreservationId);
         }
 
-        public virtual void UpdateSP(TOtReservationHeader ObjTOtReservation, int UserId, string UserName)
+        public virtual async Task  UpdateSP(TOtReservationHeader ObjTOtReservation, int CurrentUserId, string CurrentUserName)
         {
             
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "OtrequestId", "Opipid", "Opiptype", "BloodGroup","OtreservationDate","OtreservationNo","OtreservationTime", "CategoryType", "Ottable", "SurgeryDate", "EstimateTime", "Diagnosis",
-                "Comments", "ReservationType", "Pacrequired", "EquipmentsRequired", "ClearanceMedical", "ClearanceFinancial", "Infective", "Reason", "Createdby",
-                "CreatedDate", "ModifiedDate", "ModifiedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDateTime", "TOtReservationAttendingDetails", "TOtReservationDiagnoses", "TOtReservationSurgeryDetails" };
+            string[] rEntity = { "OtreservationId", "IsAnaesthetistPaid", "IsMaterialReplacement" };
 
             var entity = ObjTOtReservation.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_Update_OT_ReservationHeader", CommandType.StoredProcedure, entity);
         }
