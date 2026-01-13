@@ -273,9 +273,9 @@ namespace HIMS.API.Controllers.IPPatient
             TOtReservationHeader model = obj.MapTo<TOtReservationHeader>();
             if (obj.OtreservationId != 0)
             {
-                ////model.OtreservationDate = Convert.ToDateTime(obj.OtreservationDate);
-                //model.CreatedDate = AppTime.Now;
-                //model.Createdby = CurrentUserId;
+                //model.OtreservationDate = Convert.ToDateTime(obj.OtreservationDate);
+                model.CreatedDate = AppTime.Now;
+                model.Createdby = CurrentUserId;
                 _OTService.UpdateSP(model, CurrentUserId, CurrentUserName);
             }
             else
