@@ -491,11 +491,13 @@ namespace HIMS.Services.Common
             try
             {
                 DatabaseHelper odal1 = new();
-                string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+                string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity",
+                    "ReligionId","AreaId","IsSeniorCitizen","AadharCardNo","PanCardNo","Photo","EmgContactPersonName","EmgRelationshipId","EmgMobileNo","EmgLandlineNo","EngAddress","EmgAadharCardNo","EmgDrivingLicenceNo","MedTourismPassportNo","MedTourismVisaIssueDate","MedTourismVisaValidityDate","MedTourismNationalityId","MedTourismCitizenship","MedTourismPortOfEntry","MedTourismDateOfEntry","MedTourismResidentialAddress","MedTourismOfficeWorkAddress","RegId" };
                 var entity = objRegistration.ToDictionary();
-                foreach (var rProperty in rEntity)
+                foreach (var rProperty in entity.Keys.ToList())
                 {
-                    entity.Remove(rProperty);
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
                 }
                 string RegId = odal1.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
                 objRegistration.RegId = Convert.ToInt32(RegId);
@@ -515,11 +517,11 @@ namespace HIMS.Services.Common
 
                 DatabaseHelper odal = new();
                     string[] BEntity = { "OpdIpdId", "RegNo",  "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId","PatientType", "CompanyName", "CompanyAmt",
-                    "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments"/*"CashCounterId"*/,"CreatedBy","BillNo"};
+                    "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments"/*"CashCounterId"*/,"CreatedBy","GovtApprovedAmt","BillNo"};
                     var bentity = objBill.ToDictionary();
                     
 
-                foreach (var rProperty in bentity.Keys.ToList())
+                    foreach (var rProperty in bentity.Keys.ToList())
                     {
                         if (!BEntity.Contains(rProperty))
                             bentity.Remove(rProperty);
@@ -666,11 +668,13 @@ namespace HIMS.Services.Common
             try
             {
                 DatabaseHelper odal1 = new();
-                string[] rEntity = { "RegNo", "RegPrefix", "AnnualIncome", "IsIndientOrWeaker", "RationCardNo", "IsMember", "UpdatedBy", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+                string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity",
+                    "ReligionId","AreaId","IsSeniorCitizen","AadharCardNo","PanCardNo","Photo","EmgContactPersonName","EmgRelationshipId","EmgMobileNo","EmgLandlineNo","EngAddress","EmgAadharCardNo","EmgDrivingLicenceNo","MedTourismPassportNo","MedTourismVisaIssueDate","MedTourismVisaValidityDate","MedTourismNationalityId","MedTourismCitizenship","MedTourismPortOfEntry","MedTourismDateOfEntry","MedTourismResidentialAddress","MedTourismOfficeWorkAddress","RegId" };
                 var entity = objRegistration.ToDictionary();
-                foreach (var rProperty in rEntity)
+                foreach (var rProperty in entity.Keys.ToList())
                 {
-                    entity.Remove(rProperty);
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
                 }
                 string RegId = odal1.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
                 objRegistration.RegId = Convert.ToInt32(RegId);
@@ -690,7 +694,7 @@ namespace HIMS.Services.Common
 
                 DatabaseHelper odal = new();
                 string[] BEntity = { "OpdIpdId", "RegNo",  "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId","PatientType", "CompanyName", "CompanyAmt",
-                    "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments"/*"CashCounterId"*/,"CreatedBy","BillNo"};
+                    "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments"/*"CashCounterId"*/,"CreatedBy","GovtApprovedAmt","BillNo"};
                 var bentity = objBill.ToDictionary();
 
 
