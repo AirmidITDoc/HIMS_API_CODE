@@ -31,6 +31,8 @@ namespace HIMS.Services.OutPatient
         Task ConsultantDoctorUpdate(VisitDetail objVisitDetail, int UserId, string Username);
         Task VistDateTimeUpdateAsync(VisitDetail ObjVisitDetail, int CurrentUserId, string CurrentUserName);
         List<ServiceMasterDTO> SearchGetServiceListwithTraiff(int TariffId, int ClassId, string SrvcName);
+        Task VisitUpdateAsync(VisitDetail ObjVisitDetail, int UserId, string Username);
+
 
     }
 }

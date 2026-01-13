@@ -362,5 +362,18 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
 
+        [HttpPut("VisitUpdate")]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> VisitUpdate(VisitUpdateModel obj)
+        {
+            VisitDetail model = obj.MapTo<VisitDetail>();
+            if (obj.VisitId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                await _visitDetailsService.VisitUpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
     }
 }

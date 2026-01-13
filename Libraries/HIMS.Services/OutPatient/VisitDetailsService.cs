@@ -501,7 +501,22 @@ namespace HIMS.Services.OutPatient
 
 
         }
+        public virtual async Task VisitUpdateAsync(VisitDetail ObjVisitDetail, int CurrentUserId, string CurrentUserName)
+        {
 
+            DatabaseHelper odal = new();
+            string[] AEntity = { "VisitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "ClassId", "DepartmentId" };
+            var Rentity = ObjVisitDetail.ToDictionary();
+            foreach (var rProperty in Rentity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                    Rentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_Update_VisitDetails", CommandType.StoredProcedure, Rentity);
+            await _context.LogProcedureExecution(Rentity, nameof(VisitDetail), ObjVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+        }
 
 
     }

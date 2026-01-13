@@ -17,5 +17,19 @@ namespace HIMS.API.Models.OutPatient
         
         }
     }
+    public class VisitUpdateModel
+    {
+        public long VisitId { get; set; }
+        public long? PatientTypeId { get; set; }
+        public long? ConsultantDocId { get; set; }
+        public long? RefDocId { get; set; }
+        public long? TariffId { get; set; }
+        public long? CompanyId { get; set; }
+        public long? ClassId { get; set; }
+        public long? DepartmentId { get; set; }
+
+
+
+    }
 
 }
