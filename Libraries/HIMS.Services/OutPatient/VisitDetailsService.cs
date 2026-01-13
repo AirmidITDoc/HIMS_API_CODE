@@ -505,7 +505,7 @@ namespace HIMS.Services.OutPatient
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = { "VisitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "ClassId" };
+            string[] AEntity = { "VisitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "ClassId", "DepartmentId" };
             var Rentity = ObjVisitDetail.ToDictionary();
             foreach (var rProperty in Rentity.Keys.ToList())
             {

@@ -26,6 +26,8 @@ namespace HIMS.API.Models.OutPatient
         public long? TariffId { get; set; }
         public long? CompanyId { get; set; }
         public long? ClassId { get; set; }
+        public long? DepartmentId { get; set; }
+
 
 
     }
