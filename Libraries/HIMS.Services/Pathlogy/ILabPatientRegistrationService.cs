@@ -15,6 +15,10 @@ namespace HIMS.Services.Pathlogy
     {
         Task<IPagedList<LabPatientRegistrationListDto>> GetListAsync(GridRequestModel objGrid);
 
+        Task<IPagedList<LabSampleCollectionListDto>> GetSamColListAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<LabSampleCollectionDetailListDto>> GetSamColListDetailAsync(GridRequestModel objGrid);
+
         Task<IPagedList<LabregBilldetailListDto>> GetBillDetailListAsync(GridRequestModel objGrid);
 
         Task InsertAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username);
