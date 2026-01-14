@@ -63,6 +63,16 @@ namespace HIMS.API.Models.OutPatient
         public bool? IsApprovedByCamp { get; set; }
         public long? DoctorId { get; set; }
         public string? DoctorName { get; set; }
+        public long? OpdIpdId { get; set; }
+        public byte? OpdIpdType { get; set; }
+        public long? ServiceId { get; set; }
+        public string? ServiceName { get; set; }
+        public long? UnitId { get; set; }
+
+
+
+
+
 
 
     }

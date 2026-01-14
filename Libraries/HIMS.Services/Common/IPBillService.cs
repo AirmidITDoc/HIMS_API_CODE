@@ -902,7 +902,7 @@ namespace HIMS.Services.Common
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = { "BillNo", "ChargesDate", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "AddedBy", "ChargesTime", "IsInclusionExclusion","ChargesId", "IsApprovedByCamp", "DoctorId", "DoctorName" };
+            string[] AEntity = { "BillNo", "ChargesDate","Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "AddedBy", "ChargesTime", "IsInclusionExclusion","ChargesId", "IsApprovedByCamp", "DoctorId", "DoctorName", "OpdIpdId", "OpdIpdType", "ServiceId", "ServiceName", "UnitId" };
             foreach (var item in ObjaddCharge)
             {
 
@@ -916,7 +916,6 @@ namespace HIMS.Services.Common
 
                 odal.ExecuteNonQuery("ps_UpdateIPAddCharges_1", CommandType.StoredProcedure, entity);
             }
-            // -------------------- BILL UPDATE ------------------------
 
             string[] BEntity = { "BillNo", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "CompanyAmt", "PatientAmt", "SpeTaxPer", "SpeTaxAmt", "ConcessionReasonId", "DiscComments", "ModifiedBy" };
             var bentity = ObjBill.ToDictionary();
