@@ -8654,7 +8654,7 @@ namespace HIMS.Services.Report
                                 TotalGovAmount = dr["GovtApprovedAmt"].ConvertToDouble();
                                 TotalPaidAmount = dr["PaidAmount"].ConvertToDouble();
                                 TotalCompApprovedAmount = dr["CompanyApprovedAmt"].ConvertToDouble();
-                                AdvBalAmount = dr["AdvanceBalAmount"].ConvertToDouble();
+                                AdvBalAmount = dr["AdvanceUsedAmount"].ConvertToDouble();
 
 
                             }
@@ -8714,7 +8714,6 @@ namespace HIMS.Services.Report
                             previousChargesDate = currentChargesDate;
 
 
-                            F_TotalAmount = Math.Ceiling(F_TotalAmount);
 
 
                             if (i == sortedCharges.Count && T_TotalAmount > 0)
@@ -8801,9 +8800,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AdvBalAmount}}", AdvBalAmount.ConvertToDouble().ToString("0.00"));
                         // Flag
                         html = html.Replace("{{chkAdvflag}}", AdvBalAmount.ConvertToDouble() > 0 ? "table-row" : "none");
-
-                        html = html.Replace("{{chkAdvflag}}", AdvBalAmount.ConvertToDouble() > 0 ? "table-row" : "none");
-                        html = html.Replace("{{chkBalanceafterGovflag}}", aftergovbal.ConvertToDouble() > 0 ? "table-row" : "none");
+                        
                         html = html.Replace("{{ChargesTotalamt}}", ChargesTotalamt.ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{BalancewdudcAmt}}", BalancewdudcAmt.ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{Qty}}", dt.GetColValue("Qty"));
@@ -8900,7 +8897,7 @@ namespace HIMS.Services.Report
                                     TotalGovAmount = dr["GovtApprovedAmt"].ConvertToDouble();
                                     TotalPaidAmount = dr["PaidAmount"].ConvertToDouble();
                                     TotalCompApprovedAmount = dr["CompanyApprovedAmt"].ConvertToDouble();
-                                    AdvBalAmount = dr["AdvanceBalAmount"].ConvertToDouble();
+                                    AdvBalAmount = dr["AdvanceUsedAmount"].ConvertToDouble();
 
 
                                 }
@@ -8974,7 +8971,7 @@ namespace HIMS.Services.Report
                             aftergovbal = FinalNetAmt - TotalGovAmount - TotalCompApprovedAmount - TotalPaidAmount - AdvBalAmount;
                         }
 
-
+                        
 
                         string htmlHeader = "";
                         html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
