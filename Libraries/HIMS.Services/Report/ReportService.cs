@@ -7960,12 +7960,10 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo").ToString());
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo").ToString());
-
+                        html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName").ToString());
                         html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear").ToString());
-
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName").ToString());
-
                         html = html.Replace("{{AdmissionDate}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName").ToString());
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDoctorName"));
@@ -7981,6 +7979,11 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AdvanceUsedAmount}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{AdvanceBalAmount}}", dt.GetColValue("AdvanceBalAmount").ConvertToDouble().ToString("0.00"));
                         //html = html.Replace("{{balafteradvuseAmount}}", balafteradvuseAmount.ConvertToDouble().ToString("0.00"));
+
+                        //html = html.Replace("{{BalancewdudcAmt}}", Math.Round(BalancewdudcAmt.ConvertToDouble(), 0, MidpointRounding.AwayFromZero).ToString("0.00"));
+                        //html = html.Replace("{{TotalBillAmount}}", Math.Round(FinalNetAmt.ConvertToDouble(), 0, MidpointRounding.AwayFromZero).ToString("0.00"));
+                        //html = html.Replace("{{T_NetAmount}}", Math.Round(FinalNetAmt.ConvertToDouble(), 0, MidpointRounding.AwayFromZero).ToString("0.00"));
+                        //html = html.Replace("{{balafteradvuseAmount}}", Math.Round(Tot_Advamt.ConvertToDouble(), 0, MidpointRounding.AwayFromZero).ToString("0.00"));
 
                         html = html.Replace("{{BalancewdudcAmt}}", BalancewdudcAmt.ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{TotalBillAmount}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
@@ -8624,7 +8627,7 @@ namespace HIMS.Services.Report
                         string deptLabel = "";
                         String FinalLabel = "";
                         double T_TotAmount = 0, ChargesTotalamt = 0, T_TotalAmount = 0, F_TotalAmount = 0.0, AdminChares = 0, Tot_paidamt = 0, TotalConcessionAmt = 0, FinalNetAmt = 0,
-                            TotalGovAmount = 0, aftergovbal = 0, TotalPaidAmount = 0, TotalCompApprovedAmount = 0;
+                            TotalGovAmount = 0, aftergovbal = 0, TotalPaidAmount = 0, TotalCompApprovedAmount = 0, AdvBalAmount = 0;
 
 
 
@@ -8651,6 +8654,7 @@ namespace HIMS.Services.Report
                                 TotalGovAmount = dr["GovtApprovedAmt"].ConvertToDouble();
                                 TotalPaidAmount = dr["PaidAmount"].ConvertToDouble();
                                 TotalCompApprovedAmount = dr["CompanyApprovedAmt"].ConvertToDouble();
+                                AdvBalAmount = dr["AdvanceBalAmount"].ConvertToDouble();
 
 
                             }
@@ -8710,6 +8714,7 @@ namespace HIMS.Services.Report
                             previousChargesDate = currentChargesDate;
 
 
+                            F_TotalAmount = Math.Ceiling(F_TotalAmount);
 
 
                             if (i == sortedCharges.Count && T_TotalAmount > 0)
@@ -8728,11 +8733,11 @@ namespace HIMS.Services.Report
                         FinalNetAmt = F_TotalAmount - TotalConcessionAmt;
                         if (FinalNetAmt == TotalPaidAmount)
                         {
-                            aftergovbal = FinalNetAmt - TotalPaidAmount;
+                            aftergovbal = FinalNetAmt - TotalPaidAmount- AdvBalAmount;
                         }
                         else
                         {
-                            aftergovbal = FinalNetAmt - TotalGovAmount - TotalCompApprovedAmount - TotalPaidAmount;
+                            aftergovbal = FinalNetAmt - TotalGovAmount - TotalCompApprovedAmount - TotalPaidAmount- AdvBalAmount;
                         }
 
 
@@ -8761,6 +8766,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
+                        html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
                         html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkRefDocNameflag}}", dt.GetColValue("RefDocName").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{DischargeDate}}", dt.GetColValue("DischargeTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
@@ -8788,9 +8794,15 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{T_NetAmount}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{FinalNetAmt}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
-                        // Value
                         html = html.Replace("{{BalanceafterGov}}", aftergovbal.ConvertToDouble().ToString("0.00"));
                         // Flag
+                        html = html.Replace("{{chkBalanceafterGovflag}}", aftergovbal.ConvertToDouble() > 0 ? "table-row" : "none");
+
+                        html = html.Replace("{{AdvBalAmount}}", AdvBalAmount.ConvertToDouble().ToString("0.00"));
+                        // Flag
+                        html = html.Replace("{{chkAdvflag}}", AdvBalAmount.ConvertToDouble() > 0 ? "table-row" : "none");
+
+                        html = html.Replace("{{chkAdvflag}}", AdvBalAmount.ConvertToDouble() > 0 ? "table-row" : "none");
                         html = html.Replace("{{chkBalanceafterGovflag}}", aftergovbal.ConvertToDouble() > 0 ? "table-row" : "none");
                         html = html.Replace("{{ChargesTotalamt}}", ChargesTotalamt.ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{BalancewdudcAmt}}", BalancewdudcAmt.ConvertToDouble().ToString("0.00"));
@@ -8986,6 +8998,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
+                        html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
                         html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkRefDocNameflag}}", dt.GetColValue("RefDocName").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{DischargeDate}}", dt.GetColValue("DischargeTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
@@ -14343,6 +14356,8 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{ExtMobileNo}}", dt.GetColValue("ExtMobileNo"));
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                      
+
 
                         html = html.Replace("{{HTotalAmount}}", T_HTotalAmount.To2DecimalPlace());
 
@@ -14421,10 +14436,14 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
                         html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{SalesReturnNo}}", dt.GetColValue("SalesReturnNo"));
+
+                        html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
 
                         html = html.Replace("{{ExtMobileNo}}", dt.GetColValue("ExtMobileNo"));
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
-
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{HTotalAmount}}", T_HTotalAmount.To2DecimalPlace());
 
                         html = html.Replace("{{DiscAmount}}", dt.GetColValue("DiscAmount").ConvertToDouble().ToString("F2"));
@@ -14505,10 +14524,11 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
 
-
-
+                        html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
                         html = html.Replace("{{ExtMobileNo}}", dt.GetColValue("ExtMobileNo"));
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
 
                         html = html.Replace("{{HTotalAmount}}", T_HTotalAmount.To2DecimalPlace());
                         html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount").ConvertToDouble().ToString("F2"));
