@@ -77,6 +77,21 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(LabPatientBillList.ToGridResponse(objGrid, "Lab Patient Bill Detail List"));
         }
 
+        [HttpPost("LabResultList")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabResultList(GridRequestModel objGrid)
+        {
+            IPagedList<LabResultListDto> LabResultList = await _ILabPatientRegistrationService.LabResultListAsync(objGrid);
+            return Ok(LabResultList.ToGridResponse(objGrid, " Lab Result List "));
+        }
+        [HttpPost("LabResultDetailsList")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabResultDetailsList(GridRequestModel objGrid)
+        {
+            IPagedList<LabResultDetailsListDto> LabResultDetailsList = await _ILabPatientRegistrationService.LabResultDetailsListAsynch(objGrid);
+            return Ok(LabResultDetailsList.ToGridResponse(objGrid, " Lab ResultDetails List "));
+        }
+
         [HttpPost("Insert")]
         [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LabPatientRegistrationModels obj)

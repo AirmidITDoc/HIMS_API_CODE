@@ -31,7 +31,14 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<LabregBilldetailListDto>(model, "ps_Rtrv_LabRegisterBillDetail");
         }
-
+        public virtual async Task<IPagedList<LabResultListDto>> LabResultListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabResultListDto>(model, "ps_Rtrv_LabResultList");
+        }
+        public virtual async Task<IPagedList<LabResultDetailsListDto>> LabResultDetailsListAsynch(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabResultDetailsListDto>(model, "ps_Rtrv_LabResult_Detail_List");
+        }
         public virtual async Task<IPagedList<LabPatientRegistrationListDto>> GetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<LabPatientRegistrationListDto>(model, "ps_LabPatientRegistrationList");
