@@ -159,6 +159,8 @@ namespace HIMS.Services.Common
                 case "Mobile_OPIPBillingList": sp_Name = "ps_APP_BILL_OP_IP_LIST"; break;
                 case "Mobile_OPIPBillDetails": sp_Name = "ps_APP_VIEW_BILL_DET"; break;
                 case "Mobile_ViewPathologytestDet": sp_Name = "ps_APP_VIEW_PathologyTest_DET"; break;
+                case "Mobile_ViewIPInvestigationlist": sp_Name = "ps_Rtrv_IPInvestigation_List"; break;
+                    
 
 
                 // Marketing Mobile App API

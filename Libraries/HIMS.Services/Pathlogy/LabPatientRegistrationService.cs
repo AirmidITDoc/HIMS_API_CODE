@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using WkHtmlToPdfDotNet;
 
 namespace HIMS.Services.Pathlogy
 {
@@ -468,13 +469,28 @@ namespace HIMS.Services.Pathlogy
             }
         }
 
-        public List<LabVisitDetailsListSearchDto> SearchlabRegistration(string Keyword)
+        //public List<LabVisitDetailsListSearchDto> SearchlabRegistration(long UnitId ,string Keyword)
+        //{
+        //    DatabaseHelper sql = new();
+
+        //    SqlParameter[] para = new SqlParameter[2];
+        //    para[0] = new SqlParameter("@UnitId", UnitId);
+        //    para[1] = new SqlParameter("@Keyword", Keyword);
+
+        //    return sql.FetchListBySP<LabVisitDetailsListSearchDto>("ps_Rtrv_PatientLabRegisteredListSearch", para);
+        //}
+        public List<LabVisitDetailsListSearchDto> SearchlabRegistration(long UnitId, string Keyword)
         {
             DatabaseHelper sql = new();
-            SqlParameter[] para = new SqlParameter[1];
-            para[0] = new SqlParameter("@Keyword", Keyword);
-            return sql.FetchListBySP<LabVisitDetailsListSearchDto>("ps_Rtrv_PatientLabRegisteredListSearch", para);
+
+            SqlParameter[] para = new SqlParameter[2];
+            para[0] = new SqlParameter("@UnitId", UnitId);
+            para[1] = new SqlParameter("@Keyword", Keyword);
+
+            return sql.FetchListBySP<LabVisitDetailsListSearchDto>( "ps_Rtrv_PatientLabRegisteredListSearch", para);
         }
+
+
 
         public virtual async Task<List<TLabPatientRegistration>> SearchLabRegistration(string str)
         {

@@ -43,34 +43,8 @@ namespace HIMS.Services.IPPatient
         }
 
 
-        //public virtual void InsertAsyncSP(Admission objAdmission, int CurrentUserId, string CurrentUserName)
-        //{
-
-        //    // OLD CODE With SP
-        //    DatabaseHelper odal = new();
-        //    string[] rVisitEntity = { "Ipdno", "IsCancelled", "IsProcessing", "Ischarity", "IsMarkForDisNur", "IsMarkForDisNurId", "IsMarkForDisNurDateTime", "IsCovidFlag", "IsCovidUserId", "IsCovidUpdateDate",
-        //    "IsUpdatedBy","IsPharClearance","Ipnumber","EstimatedAmount","HosApreAmt","ApprovedAmount","PathApreAmt","PharApreAmt","RadiApreAmt","PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate",
-        //    "CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient","HChargeAmt","HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt",
-        //    "HBalAmt","MedicalApreAmt","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
-        //    var admientity = objAdmission.ToDictionary();
-        //    foreach (var rProperty in rVisitEntity)
-        //    {
-        //        admientity.Remove(rProperty);
-        //    }
-        //    string VAdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", admientity);
-        //    objAdmission.AdmissionId = Convert.ToInt32(VAdmissionId);
-
-        //    var tokenObj = new
-        //    {
-        //        BedId = Convert.ToInt32(objAdmission.BedId),
-        //        RoomId = Convert.ToInt32(objAdmission.WardId)
-
-
-        //    };
-        //    odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
-        //}
-
-        public virtual void InsertSP(Admission objAdmission, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
+      
+        public virtual async Task InsertSP(Admission objAdmission, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
         {
 
             // OLD CODE With SP
@@ -99,7 +73,7 @@ namespace HIMS.Services.IPPatient
             }
             string PatientPolicyId = odal.ExecuteNonQuery("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
             ObjTPatientPolicyInformation.PatientPolicyId = Convert.ToInt32(PatientPolicyId);
-
+            //await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             var tokenObj = new
             {
@@ -107,14 +81,14 @@ namespace HIMS.Services.IPPatient
                 RoomId = Convert.ToInt32(objAdmission.WardId)
             };
             odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
-            //await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
         }
 
-        
+
 
         //UPDATE SHILPA 09-08-2025//
-        public virtual void InsertRegSP(Registration ObjRegistration, Admission objAdmission, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertRegSP(Registration ObjRegistration, Admission objAdmission, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
             string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear",
@@ -167,7 +141,7 @@ namespace HIMS.Services.IPPatient
             }
             string PatientPolicyId = odal.ExecuteNonQuery("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
             ObjTPatientPolicyInformation.PatientPolicyId = Convert.ToInt32(PatientPolicyId);
-            //await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
 
             //var Bedentity = ObjBedmaster.ToDictionary();
