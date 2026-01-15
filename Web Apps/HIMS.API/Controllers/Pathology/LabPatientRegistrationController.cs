@@ -192,12 +192,12 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpGet("search-patient-1")]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
-        public ApiResponse SearchPatientNew(string Keyword,long UnitId)
+        public ApiResponse SearchPatientNew( [FromQuery] long UnitId,  [FromQuery] string Keyword)
         {
-            var data = _ILabPatientRegistrationService.SearchlabRegistration(Keyword, UnitId);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient Visit data", data);
+            var data = _ILabPatientRegistrationService .SearchlabRegistration(UnitId, Keyword);
+
+            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "Patient Visit data", data  );
         }
-      
 
 
         [HttpGet("Labauto-complete")]
