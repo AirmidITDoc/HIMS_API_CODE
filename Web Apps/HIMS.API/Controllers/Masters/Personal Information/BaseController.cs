@@ -1,5 +1,6 @@
 ﻿using HIMS.Api.Models.Login;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Common;
 using HIMS.Core.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -76,5 +77,8 @@ namespace HIMS.Api.Controllers
                 }
             }
         }
+        protected RequestContext Context =>
+       HttpContext.Items["RequestContext"] as RequestContext
+       ?? throw new UnauthorizedAccessException("Session/Unit missing");
     }
 }
