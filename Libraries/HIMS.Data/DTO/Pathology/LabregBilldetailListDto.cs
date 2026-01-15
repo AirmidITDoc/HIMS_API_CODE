@@ -47,6 +47,13 @@ namespace HIMS.Data.DTO.Pathology
         public long? Adm_Visit_docId { get; set; }
         public string? PathDate { get; set; }
         public string? MobileNo { get; set; }
+        public string? HospitalName { get; set; }
+        public string? DepartmentName { get; set; }
+        public long? LabPatientId { get; set; }
+        public DateTime? DateofBirth { get; set; }
+
+
+
 
     }
     public class LabResultDetailsListDto
