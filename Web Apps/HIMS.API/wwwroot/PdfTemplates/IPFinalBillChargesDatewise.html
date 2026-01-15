@@ -122,9 +122,14 @@
                                 </tr>
 
                                 <tr>
+                                    <td style="padding: 2px;">
+                                        <span style="font-weight: bold;">POL/MEB :</span>
+                                        <span>{{PolicyNo}}</span>
+                                    </td>
                                     <td style="padding:2px; display:{{chkRefDocNameflag}}">
                                         <b>Ref.Doctor Name  :</b> {{RefDocName}}
                                     </td>
+
                                 </tr>
                                 <!--<tr>
                                     <td style="padding-left:10px; display:{{chkRefDocNameflag}};">
@@ -196,20 +201,27 @@
                                                 </tr>
 
                                                 <tr style="display:{{chkGovtApprovedAmtflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Name : {{GovtApprovedName}}  {{GovtRefNo}}</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{GovtApprovedAmt}}</td>
+                                                    <td style="width:45%; border-bottom:1px solid #eee; padding: 6px; text-align: left;">
+                                                        Name : {{GovtApprovedName}}
+                                                    </td>
+                                                    <td style="width:20%; border-bottom:1px solid #eee; padding: 6px 6px 6px 30px; text-align: center;">
+                                                        {{GovtRefNo}}
+                                                    </td>
+                                                    <td style="width:35%; border-bottom:1px solid #eee; padding: 6px; text-align: right;">
+                                                        {{GovtApprovedAmt}}
+                                                    </td>
                                                 </tr>
 
                                                 <tr style="display:{{chkCompanyApprovedAmtflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Name :  {{CompanyApprovedName}}  {{CompRefNo}}</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{CompanyApprovedAmt}}</td>
-                                                </tr>
-                                                <tr style="display:{{chkBalanceafterGovflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Bal Amount :</td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
-                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{BalanceafterGov}}</td>
+                                                    <td style="width:45%; border-bottom:1px solid #eee; padding: 6px; text-align: left;">
+                                                        Name : {{CompanyApprovedName}}
+                                                    </td>
+                                                    <td style="width:20%; border-bottom:1px solid #eee; padding: 6px 6px 6px 30px; text-align: center;">
+                                                        {{CompRefNo}}
+                                                    </td>
+                                                    <td style="width:35%; border-bottom:1px solid #eee; padding: 6px; text-align: right;">
+                                                        {{CompanyApprovedAmt}}
+                                                    </td>
                                                 </tr>
 
                                                 <tr style="display:{{chkAdvflag}}">
@@ -218,17 +230,24 @@
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">  {{AdvBalAmount}}</td>
                                                 </tr>
 
+
                                                 <tr style="display:{{chkpaidflag}}">
                                                     <td style="border-bottom: 1px solid #eee; padding: 6px;">Paid Amount </td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;"> {{PaidAmount}}</td>
                                                 </tr>
 
+                                                <tr style="display:{{chkBalanceafterGovflag}}">
+                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Bal Amount :</td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
+                                                    <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">{{BalanceafterGov}}</td>
+                                                </tr>
+
                                                 <tr style="display:{{chkRefundflag}}">
                                                     <td style="border-bottom: 1px solid #eee; padding: 6px;">Bill Refund Amount </td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;"> {{BillRefAmt}}</td>
-                                                </tr>                                           
+                                                </tr>
                                             </table>
                                         </td>
                                     </tr>                                 

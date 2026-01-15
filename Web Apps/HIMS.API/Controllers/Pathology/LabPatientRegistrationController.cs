@@ -69,12 +69,43 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(LabPatientRegistrationList.ToGridResponse(objGrid, "Lab Patient Registration List"));
         }
 
+        [HttpPost("LabSampleCollectionList")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabSamColList(GridRequestModel objGrid)
+        {
+            IPagedList<LabSampleCollectionListDto> LabSampleCollectionList = await _ILabPatientRegistrationService.GetSamColListAsync(objGrid);
+            return Ok(LabSampleCollectionList.ToGridResponse(objGrid, "Lab sample Collection List"));
+        }
+
+        [HttpPost("LabSampleCollectionDetailList")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabSamColDetailList(GridRequestModel objGrid)
+        {
+            IPagedList<LabSampleCollectionDetailListDto> LabSampleCollectionDetailList = await _ILabPatientRegistrationService.GetSamColListDetailAsync(objGrid);
+            return Ok(LabSampleCollectionDetailList.ToGridResponse(objGrid, "Lab sample Collection Detail List"));
+        }
+
         [HttpPost("LabBillDetailList")]
         [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> BillDetailList(GridRequestModel objGrid)
         {
             IPagedList<LabregBilldetailListDto> LabPatientBillList = await _ILabPatientRegistrationService.GetBillDetailListAsync(objGrid);
             return Ok(LabPatientBillList.ToGridResponse(objGrid, "Lab Patient Bill Detail List"));
+        }
+
+        [HttpPost("LabResultList")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabResultList(GridRequestModel objGrid)
+        {
+            IPagedList<LabResultListDto> LabResultList = await _ILabPatientRegistrationService.LabResultListAsync(objGrid);
+            return Ok(LabResultList.ToGridResponse(objGrid, " Lab Result List "));
+        }
+        [HttpPost("LabResultDetailsList")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabResultDetailsList(GridRequestModel objGrid)
+        {
+            IPagedList<LabResultDetailsListDto> LabResultDetailsList = await _ILabPatientRegistrationService.LabResultDetailsListAsynch(objGrid);
+            return Ok(LabResultDetailsList.ToGridResponse(objGrid, " Lab ResultDetails List "));
         }
 
         [HttpPost("Insert")]

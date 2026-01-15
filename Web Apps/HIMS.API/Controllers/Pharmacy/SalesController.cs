@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("SalesSummaryList")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> SalesSummaryList(GridRequestModel objGrid)
         {
             IPagedList<PharSalesCurrentSumryListDto> PharSalesList = await _ISalesService.GetList(objGrid);
@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("SalesDetailsList")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> SalesDetailsList(GridRequestModel objGrid)
         {
             IPagedList<PharCurrentDetListDto> SalesDetailsList = await _ISalesService.SalesDetailsList(objGrid);
@@ -68,7 +68,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         // Changes done by Subhash Date : 17-May-2025
         [HttpPost("SalesBrowseDetailList")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> salesdetaillist(GridRequestModel objGrid)
         {
             IPagedList<SalesDetailsListDto> SalesDetailsList = await _ISalesService.Getsalesdetaillist(objGrid);
@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         // Changes done by Subhash Date : 17-May-2025
         [HttpPost("salesbrowselist")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> salesbrowselist(GridRequestModel objGrid)
         {
             IPagedList<SalesBillListDto> SalesDetailsList = await _ISalesService.salesbrowselist(objGrid);
@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         // done by Ashu Date : 20-May-2025
         [HttpPost("salesDraftlist")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> SalesDraftBillList(GridRequestModel objGrid)
         {
             IPagedList<SalesDraftBillListDto> SalesDraftBillList = await _ISalesService.SalesDraftBillList(objGrid);
@@ -94,7 +94,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("StockavailableList")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> BalAvaStoreList(GridRequestModel objGrid)
         {
             IPagedList<BalAvaStoreListDto> BalAvaStoreList = await _ISalesService.BalAvaStoreList(objGrid);
@@ -102,7 +102,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Prescriptionheaderlist")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PrescriptionList(GridRequestModel objGrid)
         {
             IPagedList<PrescriptionListforSalesDto> PrescriptionList = await _ISalesService.PrescriptionList(objGrid);
