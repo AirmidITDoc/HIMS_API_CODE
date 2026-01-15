@@ -1097,7 +1097,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IpDraftBillDateWise.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_IPDDraftBillChargesWisePrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_IPDDraftBillChargesWithpharmacyPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillDateWise" + vDate, Orientation.Portrait);
                         break;
@@ -1149,7 +1149,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPFinalBillChargesDatewise.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_IPDFinalBillWithDateWise", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_IPDFinalBillpharmacyWithDateWise", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBillChargesDatewise", "IPFinalBillChargesDatewise" + vDate, Orientation.Portrait);
@@ -1167,7 +1167,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPFinalBillChargesDatewisegroupwise.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_IPDFinalBillWithDateWise", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_IPDFinalBillpharmacyWithDateWise", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBillChargesDateWisegroupwise", "IPFinalBillChargesDateWisegroupwise" + vDate, Orientation.Portrait);
@@ -7826,7 +7826,7 @@ namespace HIMS.Services.Report
                         int rowlength = 0;
                         rowlength = dt.Rows.Count;
                         double Tot_AfterAdvused = 0, Tot_Wothoutdedu = 0, Tot_Balamt = 0, Tot_Advamt = 0, Tot_Advusedamt = 0, T_TotalAmount = 0, F_TotalAmount = 0, balafteradvuseAmount = 0, BalancewdudcAmt = 0, AdminChares = 0, TotalNetPayAmt = 0;
-                        double T_TotAmount = 0, TotalConcessionAmt = 0, TotalGovAmount = 0, ChargesTotalamt = 0, FinalNetAmt = 0;
+                        double T_TotAmount = 0, TotalConcessionAmt = 0, TotalGovAmount = 0, ChargesTotalamt = 0, FinalNetAmt = 0, MedicineReturnamt=0, TotalBillAmount=0;
 
                         var sortedCharges = dt.AsEnumerable()
                             .OrderBy(dr => dr["LBL"].ToString())
@@ -7846,13 +7846,23 @@ namespace HIMS.Services.Report
                             string currentChargesDate = dr["ChargesDate"]
                                 .ConvertToDateString("dd-MM-yyyy");
 
+
+
                             // ================= FIRST ROW INIT =================
+
+                            if (currentLabel== "Medicine Sales Return")
+                            {
+                                MedicineReturnamt += dr["TotalAmt"].ConvertToDouble();
+
+                            }
+
                             if (i == 1)
                             {
                                 TotalConcessionAmt = dr["ConcessionAmt"].ConvertToDouble();
                                 TotalGovAmount = dr["GovtApprovedAmt"].ConvertToDouble();
                                 TotalNetPayAmt = dr["NetPayableAmt"].ConvertToDouble();
                                 Tot_Advamt = dr["AdvanceAmount"].ConvertToDouble();
+
                             }
 
                             // ================= LBL CHANGE =================
@@ -7933,9 +7943,10 @@ namespace HIMS.Services.Report
                                  .Append("</td></tr>");
                         }
 
+                        TotalBillAmount = F_TotalAmount- MedicineReturnamt;
 
+                        FinalNetAmt = Math.Round(F_TotalAmount - TotalConcessionAmt - MedicineReturnamt, 0,MidpointRounding.AwayFromZero);
 
-                        FinalNetAmt = F_TotalAmount - TotalConcessionAmt;
                         //   aftergovbal = FinalNetAmt - TotalGovAmount - TotalPaidAmount;
 
 
@@ -7986,7 +7997,7 @@ namespace HIMS.Services.Report
                         //html = html.Replace("{{balafteradvuseAmount}}", Math.Round(Tot_Advamt.ConvertToDouble(), 0, MidpointRounding.AwayFromZero).ToString("0.00"));
 
                         html = html.Replace("{{BalancewdudcAmt}}", BalancewdudcAmt.ConvertToDouble().ToString("0.00"));
-                        html = html.Replace("{{TotalBillAmount}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{TotalBillAmount}}", TotalBillAmount.ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{T_NetAmount}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{balafteradvuseAmount}}", Tot_Advamt.ConvertToDouble().ToString("0.00"));
 
@@ -8627,7 +8638,7 @@ namespace HIMS.Services.Report
                         string deptLabel = "";
                         String FinalLabel = "";
                         double T_TotAmount = 0, ChargesTotalamt = 0, T_TotalAmount = 0, F_TotalAmount = 0.0, AdminChares = 0, Tot_paidamt = 0, TotalConcessionAmt = 0, FinalNetAmt = 0,
-                            TotalGovAmount = 0, aftergovbal = 0, TotalPaidAmount = 0, TotalCompApprovedAmount = 0, AdvBalAmount = 0;
+                            TotalGovAmount = 0, aftergovbal = 0, TotalPaidAmount = 0, TotalCompApprovedAmount = 0, AdvBalAmount = 0, TotalBillAmount=0, MedicineReturnamt =0;
 
 
 
@@ -8657,6 +8668,12 @@ namespace HIMS.Services.Report
                                 AdvBalAmount = dr["AdvanceUsedAmount"].ConvertToDouble();
 
 
+                            }
+
+
+                            if (currentLabel == "Medicine Sales Return")
+                            {
+                                MedicineReturnamt += dr["ChargesTotalAmt"].ConvertToDouble();
                             }
 
                             // ================= LBL CHANGE =================
@@ -8728,8 +8745,10 @@ namespace HIMS.Services.Report
 
                         }
 
+                        TotalBillAmount = F_TotalAmount - MedicineReturnamt;
 
-                        FinalNetAmt = F_TotalAmount - TotalConcessionAmt;
+                        FinalNetAmt = F_TotalAmount - TotalConcessionAmt- MedicineReturnamt;
+
                         if (FinalNetAmt == TotalPaidAmount)
                         {
                             aftergovbal = FinalNetAmt - TotalPaidAmount- AdvBalAmount;
@@ -8771,11 +8790,11 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{DischargeDate}}", dt.GetColValue("DischargeTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{PayMode}}", dt.GetColValue("PayMode"));
-                        html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
+              //          html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
                         //html = html.Replace("{{FinalNetAmt}}", dt.GetColValue("FinalNetAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{AdvanceUsedAmount}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().ToString("0.00"));
-                        html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
+                     //   html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{TotalAmt}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{TaxAmount}}", dt.GetColValue("TaxAmount").ConvertToDouble().ToString("0.00"));
@@ -8794,7 +8813,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{T_NetAmount}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{FinalNetAmt}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{BalanceafterGov}}", aftergovbal.ConvertToDouble().ToString("0.00"));
-                        // Flag
+                        // Flag 
                         html = html.Replace("{{chkBalanceafterGovflag}}", aftergovbal.ConvertToDouble() > 0 ? "table-row" : "none");
 
                         html = html.Replace("{{AdvBalAmount}}", AdvBalAmount.ConvertToDouble().ToString("0.00"));
@@ -8806,7 +8825,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Qty}}", dt.GetColValue("Qty"));
                         html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                        html = html.Replace("{{F_TotalAmount}}", F_TotalAmount.ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{TotalBillAmount}}", TotalBillAmount.ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{balafteradvuseAmount}}", balafteradvuseAmount.ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{UseName}}", dt.GetColValue("UseName"));
                         html = html.Replace("{{TDSAmount}}", dt.GetColValue("TDSAmount"));
@@ -8860,7 +8879,7 @@ namespace HIMS.Services.Report
                         string deptLabel = "";
                         String FinalLabel = "";
                         double T_TotAmount = 0, ChargesTotalamt = 0, T_TotalAmount = 0, F_TotalAmount = 0.0, AdminChares = 0, Tot_paidamt = 0, TotalConcessionAmt = 0, FinalNetAmt = 0,
-                            TotalGovAmount = 0, aftergovbal = 0, TotalPaidAmount = 0, TotalCompApprovedAmount = 0, AdvBalAmount = 0;
+                            TotalGovAmount = 0, aftergovbal = 0, TotalPaidAmount = 0, TotalCompApprovedAmount = 0, AdvBalAmount = 0, MedicineReturnamt=0, TotalBillAmount=0;
 
                         var groupedCharges = dt.AsEnumerable()
                              .OrderBy(dr => dr["GroupName"].ToString())   // GroupName first
@@ -8886,9 +8905,17 @@ namespace HIMS.Services.Report
                             string previousChargesDate = "";
                             int serviceCounter = 0;
 
+                          
+
                             foreach (DataRow dr in group)
                             {
+
+                                if (group.Key.Lbl == "Medicine Sales Return")
+                                {
+                                    MedicineReturnamt += dr["ChargesTotalAmt"].ConvertToDouble();
+                                }
                                 string currentChargesDate = dr["ChargesDate"].ConvertToDateString("dd/MM/yyyy");
+
 
                                 // ================= FIRST ROW TOTAL INIT =================
                                 if (serviceCounter == 0)
@@ -8902,6 +8929,7 @@ namespace HIMS.Services.Report
 
                                 }
 
+                            
                                 // ================= RESET SERVICE COUNTER FOR NEW DATE =================
                                 if (previousChargesDate != currentChargesDate)
                                 {
@@ -8911,6 +8939,7 @@ namespace HIMS.Services.Report
                                 {
                                     serviceCounter++; // increment for same date
                                 }
+
 
                                 // ================= ITEM ROW WITH DATE ONLY FOR FIRST SERVICE OF THE DATE =================
                                 items.Append("<tr style='font-size:14px;'>");
@@ -8959,7 +8988,9 @@ namespace HIMS.Services.Report
                             }
                         }
 
-                        FinalNetAmt = F_TotalAmount - TotalConcessionAmt;
+                        TotalBillAmount = F_TotalAmount - MedicineReturnamt;
+
+                        FinalNetAmt = F_TotalAmount - TotalConcessionAmt- MedicineReturnamt;
 
                         if (FinalNetAmt == TotalPaidAmount)
                         {
@@ -9001,10 +9032,10 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{DischargeDate}}", dt.GetColValue("DischargeTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{PayMode}}", dt.GetColValue("PayMode"));
-                        html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
+                     //   html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{AdvanceUsedAmount}}", dt.GetColValue("AdvanceUsedAmount").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().ToString("0.00"));
-                        html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
+                    //    html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{TotalAmt}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{TaxAmount}}", dt.GetColValue("TaxAmount").ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().ToString("0.00"));
@@ -9033,7 +9064,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Qty}}", dt.GetColValue("Qty"));
                         html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                        html = html.Replace("{{F_TotalAmount}}", F_TotalAmount.ConvertToDouble().ToString("0.00"));
+                        html = html.Replace("{{TotalBillAmount}}", TotalBillAmount.ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{balafteradvuseAmount}}", balafteradvuseAmount.ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{ConcessionAmount}}", TotalConcessionAmt.ConvertToDouble().ToString("0.00"));
 
