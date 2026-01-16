@@ -26,6 +26,12 @@ namespace HIMS.Services.Inventory
             return await DatabaseHelper.GetGridDataBySp<ItemMasterListDto>(model, "m_Rtrv_ItemMaster_by_Name_Pagi");
         }
 
+        
+       public virtual async Task<IPagedList<ItemListForGRNOrPO>> GetItemMasterBySpListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ItemListForGRNOrPO>(model, "ps_rtrv_GetItemListForGRNOrPO");
+        }
+
 
         public virtual async Task<MItemMaster> GetById(int Id)
         {

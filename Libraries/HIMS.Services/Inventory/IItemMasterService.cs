@@ -12,6 +12,8 @@ namespace HIMS.Services.Inventory
         Task UpdateAsync(MItemMaster objItemMaster, int UserId, string Username, string[]? references);
         Task CancelAsync(MItemMaster objItemMaster, int UserId, string Username);
         Task<IPagedList<ItemMasterListDto>> GetItemMasterListAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<ItemListForGRNOrPO>> GetItemMasterBySpListAsync(GridRequestModel objGrid);
         Task<MItemMaster> GetById(int Id);
         Task<List<ItemListForSearchDTO>> GetItemListForPrescription(int StoreId, string ItemName);
         Task<List<ItemListForSearchDTO>> GetItemListForGRNOrPO(int StoreId, string ItemName);
