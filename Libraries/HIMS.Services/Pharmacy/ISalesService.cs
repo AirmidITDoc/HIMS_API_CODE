@@ -21,6 +21,8 @@ namespace HIMS.Services.Users
         Task<IPagedList<PhAdvRefundReceiptListDto>> PhAdvRefundReceiptList(GridRequestModel objGrid);
         Task<IPagedList<PhARefundOfAdvanceListDto>> PhARefundOfAdvanceList(GridRequestModel objGrid);
         Task<IPagedList<ItemNameBalanceQtyListDto>> BalqtysalesDraftlist(GridRequestModel objGrid);
+        Task<IPagedList<ItemNameBalanceQtyListDtoKenya>> BalqtysalesDraftlistKenya(GridRequestModel objGrid);
+
         Task<IPagedList<GetRefundByAdvanceIdListDto>> GetRefundByAdvanceId(GridRequestModel objGrid);
         Task<IPagedList<SalesDraftBillItemListDto>> SalesDraftBillItemDet(GridRequestModel objGrid);
         Task<IPagedList<PrescriptionItemDetListDto>> PrescriptionItemDetList(GridRequestModel objGrid);

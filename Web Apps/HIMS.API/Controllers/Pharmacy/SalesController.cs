@@ -163,6 +163,15 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<ItemNameBalanceQtyListDto> BalqtysalesDraftlist = await _ISalesService.BalqtysalesDraftlist(objGrid);
             return Ok(BalqtysalesDraftlist.ToGridResponse(objGrid, "BalqtysalesDraft List"));
         }
+
+        [HttpPost("BalqtysalesDraftlistKenya")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> BalqtysalesDraftlistKenya(GridRequestModel objGrid)
+        {
+            IPagedList<ItemNameBalanceQtyListDtoKenya> BalqtysalesDraftlist = await _ISalesService.BalqtysalesDraftlistKenya(objGrid);
+            return Ok(BalqtysalesDraftlist.ToGridResponse(objGrid, "BalqtysalesDraft List"));
+        }
+
         //Create By Ashu 28 jun 2025
         [HttpPost("GetRefundByAdvanceList")]
         [Permission(PageCode = "Sales", Permission = PagePermission.View)]

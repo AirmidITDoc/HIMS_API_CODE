@@ -72,6 +72,9 @@ namespace HIMS.Data.DTO.Inventory
         public float? IGSTPer { get; set; }
         public string? U0M { get; set; }
         public long? ItemGenericNameId { get; set; }
+        public string? DoseName { get; set; }
+        public int? DoseDay { get; set; }
+
         public bool? IsH1Drug { get; set; }
         public bool? IsHighRisk { get; set; }
         public bool? isEmgerency { get; set; }
@@ -186,5 +189,30 @@ namespace HIMS.Data.DTO.Inventory
         public string DrugTypeName { get; set; }
         public string UOM { get; set; }
         public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty + " | " + this.UnitMRP + " | " + this.PurchaseRate; } }
+    }
+
+    public class ItemListForGRNOrPO
+    {
+        public long ItemId { get; set; }                 
+        public string? ItemName { get; set; }            
+
+        public long? UMOId { get; set; }                 
+        public string? UMOName { get; set; }             
+
+        public string? ConverFactor { get; set; }        
+
+        public long? StoreId { get; set; }               
+
+       public double? BalanceQty { get; set; }           
+
+        public double? CGSTPer { get; set; }             
+        public double? SGSTPer { get; set; }             
+        public double? IGSTPer { get; set; }             
+
+        public string? HSNcode { get; set; }             
+
+        public string? ItemCompanyName { get; set; }     
+
+        public double? TaxPer { get; set; }
     }
 }

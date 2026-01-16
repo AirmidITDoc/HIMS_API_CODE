@@ -12261,6 +12261,7 @@ namespace HIMS.Services.Report
 
 
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+                        html = html.Replace("{{ReqNo}}", dt.GetColValue("ReqNo"));
 
 
                     }
@@ -12347,7 +12348,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{IPMedID}}", dt.GetColValue("IPMedID"));
                         html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
                         html = html.Replace("{{PDate}}", dt.GetColValue("PTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                        html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{AdmTime}}", dt.GetColValue("AdmTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
 
 
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
@@ -12358,13 +12359,17 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                       
                         html = html.Replace("{{PreparedBy}}", dt.GetColValue("PreparedBy"));
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
                         html = html.Replace("{{BP}}", dt.GetColValue("BP"));
                         html = html.Replace("{{Pulse}}", dt.GetColValue("Pulse"));
                         html = html.Replace("{{PWeight}}", dt.GetColValue("PWeight"));
                         html = html.Replace("{{Diagnosis}}", dt.GetColValue("Diagnosis"));
+                        html = html.Replace("{{PresNo}}", dt.GetColValue("PresNo"));
+
+                        html = html.Replace("{{chkCompanyNameFlag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
 
 
                     }
