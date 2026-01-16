@@ -203,7 +203,7 @@ namespace HIMS.Data.DTO.Inventory
 
         public long? StoreId { get; set; }               
 
-        public float? BalanceQty { get; set; }           
+       public double? BalanceQty { get; set; }           
 
         public double? CGSTPer { get; set; }             
         public double? SGSTPer { get; set; }             
@@ -213,6 +213,6 @@ namespace HIMS.Data.DTO.Inventory
 
         public string? ItemCompanyName { get; set; }     
 
-        public long? TaxPer { get; set; }
+        public double? TaxPer { get; set; }
     }
 }
