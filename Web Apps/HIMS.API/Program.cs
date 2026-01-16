@@ -209,6 +209,7 @@ app.UseCors("CorsPolicy");
 app.MapHub<NotificationHub>("/himshub");
 app.MapControllers();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<RequestContextMiddleware>();
 app.UseRouting();
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
