@@ -461,13 +461,13 @@ namespace HIMS.Services.Users
                 odal.ExecuteNonQueryNew("ps_Update_T_SalDraHeader_IsClosed_1", CommandType.StoredProcedure, "", Hentity);
                 await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
-                var SalesReturnObj = new
-                {
-                    Id = Convert.ToInt32(ObjSalesHeader.SalesId),
-                    TypeId = 1
+                //var SalesReturnObj = new
+                //{
+                //    Id = Convert.ToInt32(ObjSalesHeader.SalesId),
+                //    TypeId = 1
 
-                };
-                odal.ExecuteNonQuery("ps_Insert_ItemMovementReport_InpatientIssueCursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
+                //};
+                //odal.ExecuteNonQuery("ps_Insert_ItemMovementReport_InpatientIssueCursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
 
                 //Commit if all good
                 await transaction.CommitAsync();
