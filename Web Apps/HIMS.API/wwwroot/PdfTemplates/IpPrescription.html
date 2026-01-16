@@ -41,6 +41,8 @@
                 </tr>-->
                             <tr>
                                 <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Pres No :</span>
+                                    <span>{{PresNo}}</span>
                                     <span style="font-weight:bold;">UHID No :</span>
                                     <span>{{RegNo}}</span>
                                 </td>
@@ -51,7 +53,7 @@
                                
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">DOA | Time :</span>
-                                    <span>{{AdmissionTime}}</span>
+                                    <span>{{AdmTime}}</span>
                                 </td>
                             </tr>
 
@@ -93,8 +95,13 @@
                                     <span>{{RefDocName}}</span>
                                 </td>-->
 
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Company Name :</span>
+                                <!--<td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Prescription No :</span>
+                                    <span>{{PresNo}}</span>
+                                </td>-->
+
+                                <td style="padding:2px; display:{{chkCompanyNameFlag}};">
+                                    <span style="font-weight:bold;">Company Name : </span>
                                     <span>{{CompanyName}}</span>
                                 </td>
                             </tr>
@@ -103,7 +110,7 @@
                     </td>
                 </tr>
                 <hr />
-                <tr><td colspan="3" style= "font-size: 18px;"><strong>Diagnosed With :</strong> {{Diagnosis}}</td></tr>
+                <!--<tr><td colspan="3" style= "font-size: 18px;"><strong>Diagnosed With :</strong> {{Diagnosis}}</td></tr>
                 <hr />
                 <tr>
                     <td style="padding: 2px;">
@@ -120,7 +127,7 @@
                         <span>{{PWeight}}</span>
                     </td>
                 </tr>
-                <hr />
+                <hr />-->
                 <tr class="bill-table-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">

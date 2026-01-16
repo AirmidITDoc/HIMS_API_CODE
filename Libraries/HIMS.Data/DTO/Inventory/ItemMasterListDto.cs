@@ -190,4 +190,29 @@ namespace HIMS.Data.DTO.Inventory
         public string UOM { get; set; }
         public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty + " | " + this.UnitMRP + " | " + this.PurchaseRate; } }
     }
+
+    public class ItemListForGRNOrPO
+    {
+        public long ItemId { get; set; }                 
+        public string? ItemName { get; set; }            
+
+        public long? UMOId { get; set; }                 
+        public string? UMOName { get; set; }             
+
+        public string? ConverFactor { get; set; }        
+
+        public long? StoreId { get; set; }               
+
+       public double? BalanceQty { get; set; }           
+
+        public double? CGSTPer { get; set; }             
+        public double? SGSTPer { get; set; }             
+        public double? IGSTPer { get; set; }             
+
+        public string? HSNcode { get; set; }             
+
+        public string? ItemCompanyName { get; set; }     
+
+        public double? TaxPer { get; set; }
+    }
 }
