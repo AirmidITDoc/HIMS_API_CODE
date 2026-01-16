@@ -7,9 +7,9 @@ namespace HIMS.Services.Pharmacy
     public partial interface IWorkOrderService
     {
         Task<IPagedList<WorkOrderListDto>> GetWorkorderList(GridRequestModel objGrid);
-        void WorkOrderSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int UserId, string Username);
+        Task WorkOrderSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int CurrentUserId, string CurrentUserName);
 
-        void UpdateSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int UserId, string Username);
+        Task UpdateSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int CurrentUserId, string CurrentUserName);
 
         Task<IPagedList<WorkorderIteListDto>> GetOldworkeorderAsync(GridRequestModel objGrid);
 

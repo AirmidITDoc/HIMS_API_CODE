@@ -14,7 +14,7 @@ namespace HIMS.Services.Pharmacy
         public string ItemName { get; set; }
         public float? BalanceQty { get; set; }
         public decimal? LandedRate { get; set; }
-        public decimal? UnitMRP { get; set; }
+        public decimal? unitMrp { get; set; }
         public decimal? PurchaseRate { get; set; }
         public decimal? VatPercentage { get; set; }
         public bool? IsBatchRequired { get; set; }

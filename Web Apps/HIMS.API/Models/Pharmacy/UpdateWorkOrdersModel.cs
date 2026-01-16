@@ -6,11 +6,10 @@ namespace HIMS.API.Models.Pharmacy
     {
         public long Woid { get; set; }
         public long? StoreId { get; set; }
-        public long? SupplierID { get; set; }
+        public long? SupplierId { get; set; }
         public decimal? TotalAmount { get; set; }
         public double? DiscAmount { get; set; }
         public double? VatAmount { get; set; }
-
         public double? NetAmount { get; set; }
         public bool? Isclosed { get; set; }
         public string? Remark { get; set; }
@@ -22,7 +21,7 @@ namespace HIMS.API.Models.Pharmacy
         public UpdateWorkOrdersModelValidator()
         {
             RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId is required");
-            RuleFor(x => x.SupplierID).NotNull().NotEmpty().WithMessage("SupplierID is required");
+            RuleFor(x => x.SupplierId).NotNull().NotEmpty().WithMessage("SupplierID is required");
 
         }
     }
@@ -58,12 +57,6 @@ namespace HIMS.API.Models.Pharmacy
 
         public UpdateWorkOrdersModel? WorkOrders { get; set; }
         public List<WorkOrderDetailModel>? WorkOrderDetails { get; set; }
-        //public List<BillingDetailsModel>? BillingDetails { get; set; }
-        //public paymentsModel? payments { get; set; }
-        //public paymentModel? payment { get; set; }
-        //public BillMModel? Bills { get; set; }
-        //public List<AdvancesDetailModel?> Advancesupdate { get; set; }
-        //public AdvancesHeaderModel? advancesHeaderupdate { get; set; }
-        //public AddChargessModel? AddChargessupdate { get; set; }
+     
     }
 }
