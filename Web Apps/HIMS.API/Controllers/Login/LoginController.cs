@@ -195,8 +195,9 @@ namespace HIMS.API.Controllers.Login
                     user.AddedBy,
                     user.CreatedBy,
                     user.DoctorId,
-                    TLoginStoreDetails = user.TLoginStoreDetails.Select(x => new { x.StoreId, x.LoginId }),
-                    TLoginUnitDetails=user.TLoginUnitDetails.Select(x=> new { x.UnitId,x.LoginId})
+                    user.IsPoverify,
+                    TLoginStoreDetails = user.TLoginStoreDetails.Select(x => new { x.StoreId, x.LoginId, x.StoreName }),
+                    TLoginUnitDetails = user.TLoginUnitDetails.Select(x => new { x.UnitId, x.LoginId, x.UnitName })
                 }
             });
         }
