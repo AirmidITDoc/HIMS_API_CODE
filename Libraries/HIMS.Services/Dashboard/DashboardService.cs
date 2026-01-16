@@ -1,8 +1,12 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Dashboard;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DataProviders;
 using HIMS.Data.DTO;
 using HIMS.Data.Models;
+using HIMS.Services.Masters;
 using LinqToDB;
+using Microsoft.Data.SqlClient;
 using System.Data;
 
 namespace HIMS.Services.Dashboard
@@ -123,7 +127,7 @@ namespace HIMS.Services.Dashboard
                              DischargeCount = 0
                          });
             }
-            else if (model.DateRange == "Last Weeks")
+            else if (model.DateRange == "Last Months")
             {
                 query = (from M in _context.VisitDetails
                          join F in _context.MDepartmentMasters on M.DepartmentId equals F.DepartmentId
@@ -167,6 +171,26 @@ namespace HIMS.Services.Dashboard
             };
             res.TotalVisitCount = res.NewPatientCount + res.OldPatientCount + res.CompanyPatientCount + res.CrossConsultantPatCount;
             return res;
+        }
+
+        public async Task<PathologyDashboard> GetPathologyDashboard(int UnitId, DateTime FromDate, DateTime ToDate)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[3];
+            para[0] = new SqlParameter("@UnitId", SqlDbType.Int) { Value = UnitId };
+            para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
+            para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+
+            var data = await sql.Get2ResultsFromSp<PathologyCountSummary, PathologyValume, DailyTestCount, PathologyReport, PathologyOrderedTest, PathologyWorkload>("ps_rtrv_PathologyDashBoard", para);
+            return new PathologyDashboard()
+            {
+                CountSummary = data.Item1.FirstOrDefault() ?? new PathologyCountSummary(),
+                PathologyValumes = data.Item2 ?? new List<PathologyValume>(),
+                DailyTestCounts = data.Item3 ?? new List<DailyTestCount>(),
+                RecentPathologyReports = data.Item4 ?? new List<PathologyReport>(),
+                MostOrderedTests = data.Item5 ?? new List<PathologyOrderedTest>(),
+                PathologyWorkloads = data.Item6 ?? new List<PathologyWorkload>()
+            };
         }
 
     }

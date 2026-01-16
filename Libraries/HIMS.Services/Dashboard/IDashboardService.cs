@@ -1,4 +1,5 @@
-﻿using HIMS.Data.DTO;
+﻿using HIMS.Core.Domain.Dashboard;
+using HIMS.Data.DTO;
 
 namespace HIMS.Services.Dashboard
 {
@@ -8,5 +9,6 @@ namespace HIMS.Services.Dashboard
         Task<List<OPDepartmentRangeChartModel>> GetOPDepartmentRangeChart(OPDepartmentRangeChartRequestModel model);
         IPAdemissionDischargeCountModel GetIPAdemissionDischargeCount();
         OPVisitCountList GetOPVisitCount(OPVisitCountRequestModel model);
+        Task<PathologyDashboard> GetPathologyDashboard(int UnitId,DateTime FromDate,DateTime ToDate);
     }
 }
