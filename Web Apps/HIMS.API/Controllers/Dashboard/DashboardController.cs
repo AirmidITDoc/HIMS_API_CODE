@@ -53,8 +53,9 @@ namespace HIMS.API.Controllers.Dashboard
 
         [HttpGet("pathology-dashboard")]
         //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
-        public async Task<ApiResponse> Pathology(int UnitId, DateTime FromDate, DateTime ToDate)
+        public async Task<ApiResponse> Pathology(DateTime FromDate, DateTime ToDate)
         {
+            int UnitId = Context.UnitId;
             var data = await _IDashboardService.GetPathologyDashboard(UnitId, FromDate, ToDate);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pathologist Doctor List", data);
         }
