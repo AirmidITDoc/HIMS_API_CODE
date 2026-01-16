@@ -24,16 +24,17 @@ namespace HIMS.Services.Pharmacy
         {
             return await DatabaseHelper.GetGridDataBySp<WorkorderIteListDto>(model, "Rtrv_ItemDetailsForWorkOrderUpdate");
         }
-        public virtual void WorkOrderSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int UserId, string UserName)
+        public virtual async Task WorkOrderSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
 
-            string[] AEntity = { "Woid", "Wono", "IsCancelDate", "UpdatedBy" };
+            string[] AEntity = { "Woid", "Date", "Time", "StoreId", "SupplierId", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "IsClosed", "Remark", "AddedBy", "IsCancelled", "IsCancelledBy" };
 
             var yentity = ObjTWorkOrderHeader.ToDictionary();
-            foreach (var rProperty in AEntity)
+            foreach (var rProperty in yentity.Keys.ToList())
             {
-                yentity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    yentity.Remove(rProperty);
             }
             string AWOId = odal.ExecuteNonQuery("insert_T_WorkOrderHeader_1", CommandType.StoredProcedure, "Woid", yentity);
             ObjTWorkOrderHeader.Woid = Convert.ToInt32(AWOId);
@@ -42,25 +43,29 @@ namespace HIMS.Services.Pharmacy
             {
                 item.Woid = Convert.ToInt32(AWOId);
 
-                string[] rEntity = { "WodetId", "PendQty" };
+                string[] rEntity = { "Woid", "ItemName", "Qty", "Rate", "TotalAmount", "DiscPer", "DiscAmount", "Vatper", "Vatamount", "NetAmount", "Remark" };
                 var entity = item.ToDictionary();
-                foreach (var rProperty in rEntity)
+                foreach (var rProperty in entity.Keys.ToList())
                 {
-                    entity.Remove(rProperty);
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_T_WorkOrderDetail_1", CommandType.StoredProcedure, entity);
+                await _context.LogProcedureExecution(entity, nameof(TWorkOrderHeader), ObjTWorkOrderHeader.Woid.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
             }
         }
 
 
-        public virtual void UpdateSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int UserId, string Username)
+        public virtual async Task UpdateSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "Wono", "Date", "Time", "IsCancelled", "IsCancelledBy", "IsCancelDate", "AddedBy" };
+            string[] rEntity = { "Woid", "StoreId", "SupplierId", "TotalAmount", "DiscAmount", "VatAmount", "NetAmount", "Isclosed", "Remark", "UpdatedBy" };
             var Sentity = ObjTWorkOrderHeader.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in Sentity.Keys.ToList())
             {
-                Sentity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    Sentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("Update_WorkorderHeader", CommandType.StoredProcedure, Sentity);
 
@@ -73,19 +78,20 @@ namespace HIMS.Services.Pharmacy
             foreach (var item in ObjTWorkOrderDetail)
 
             {
-                string[] DEntity = { "WodetId", "PendQty" };
+                string[] DEntity = { "Woid", "ItemName", "Qty", "Rate", "TotalAmount", "DiscPer", "DiscAmount", "VatPer", "VatAmount", "NetAmount", "Remark" };
                 var pentity = item.ToDictionary();
-                foreach (var Property in DEntity)
+                foreach (var rProperty in pentity.Keys.ToList())
                 {
-                    pentity.Remove(Property);
+                    if (!DEntity.Contains(rProperty))
+                        pentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_T_WorkOrderDetail_1", CommandType.StoredProcedure, pentity);
+                await _context.LogProcedureExecution(pentity, nameof(TWorkOrderHeader), ObjTWorkOrderHeader.Woid.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
 
 
             }
         }
-
-
     }
 }
 
