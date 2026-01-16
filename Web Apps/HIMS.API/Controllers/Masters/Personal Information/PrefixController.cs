@@ -30,6 +30,8 @@ namespace HIMS.API.Controllers.Masters
         [Permission(PageCode = "Prefix", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
+            //var sessionId = Context.StoreId;
+            //var unitId = Context.UnitId;
             IPagedList<DbPrefixMaster> DocList = await _IPrefixService.GetAllPagedAsync(objGrid);
             return Ok(DocList.ToGridResponse(objGrid, "Prefix List"));
         }
