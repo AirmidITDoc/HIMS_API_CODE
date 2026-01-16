@@ -22,6 +22,7 @@ namespace HIMS.Data.Models
         public DateTime? IsCancelledTime { get; set; }
         public byte? IsType { get; set; }
         public bool? IsOnFileTest { get; set; }
+        public string? ReqNo { get; set; }
 
         public virtual ICollection<TDlabRequest> TDlabRequests { get; set; }
     }

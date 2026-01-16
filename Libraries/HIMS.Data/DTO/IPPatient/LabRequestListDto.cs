@@ -20,6 +20,8 @@
         public string CompanyName { get; set; }
         public string PatientType { get; set; }
         public long CompanyId { get; set; }
+        public string? ReqNo { get; set; }
+
 
 
     }

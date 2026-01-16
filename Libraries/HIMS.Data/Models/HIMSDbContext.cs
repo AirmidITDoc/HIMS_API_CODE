@@ -28,6 +28,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<AppSetting> AppSettings { get; set; } = null!;
         public virtual DbSet<AuditLog> AuditLogs { get; set; } = null!;
         public virtual DbSet<BarcodeConfigMaster> BarcodeConfigMasters { get; set; } = null!;
+        public virtual DbSet<BarcodeConfigMasterHtmlCode> BarcodeConfigMasterHtmlCodes { get; set; } = null!;
         public virtual DbSet<Bedmaster> Bedmasters { get; set; } = null!;
         public virtual DbSet<Bill> Bills { get; set; } = null!;
         public virtual DbSet<BillDetail> BillDetails { get; set; } = null!;
@@ -1027,6 +1028,27 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.BarcodeData).HasMaxLength(500);
 
                 entity.Property(e => e.Height).HasMaxLength(50);
+
+                entity.Property(e => e.Margin).HasMaxLength(100);
+
+                entity.Property(e => e.Padding).HasMaxLength(100);
+
+                entity.Property(e => e.TemplateCode).HasMaxLength(50);
+
+                entity.Property(e => e.Width).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<BarcodeConfigMasterHtmlCode>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("BarcodeConfigMaster_HtmlCode");
+
+                entity.Property(e => e.BarcodeData).HasMaxLength(500);
+
+                entity.Property(e => e.Height).HasMaxLength(50);
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Margin).HasMaxLength(100);
 
@@ -12832,6 +12854,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ReqDate).HasColumnType("datetime");
 
+                entity.Property(e => e.ReqNo).HasMaxLength(50);
+
                 entity.Property(e => e.ReqTime).HasColumnType("datetime");
             });
 
@@ -12975,6 +12999,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PresNo).HasMaxLength(50);
 
                 entity.Property(e => e.RoundVisitDate).HasColumnType("datetime");
 
