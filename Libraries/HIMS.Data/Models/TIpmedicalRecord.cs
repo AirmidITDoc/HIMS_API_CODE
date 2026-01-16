@@ -15,6 +15,7 @@ namespace HIMS.Data.Models
         public DateTime? RoundVisitDate { get; set; }
         public DateTime? RoundVisitTime { get; set; }
         public bool? InHouseFlag { get; set; }
+        public string? PresNo { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }

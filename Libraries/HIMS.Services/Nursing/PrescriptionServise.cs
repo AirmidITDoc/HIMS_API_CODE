@@ -16,6 +16,18 @@ namespace HIMS.Services.Nursing
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
+                var lastSeqNoStr = await _context.TIpmedicalRecords
+                   .OrderByDescending(x => x.PresNo)
+                   .Select(x => x.PresNo)
+                   .FirstOrDefaultAsync();
+
+                int lastSeqNo = 0;
+                if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
+                    lastSeqNo = parsed;
+
+                // Increment the sequence number
+                int newSeqNo = lastSeqNo + 1;
+                objmedicalRecord.PresNo = newSeqNo.ToString();
                 _context.TIpmedicalRecords.Add(objmedicalRecord);
                 await _context.SaveChangesAsync();
 

@@ -15,7 +15,9 @@ namespace HIMS.Services.Inventory
 
         Task<IPagedList<ItemListForGRNOrPO>> GetItemMasterBySpListAsync(GridRequestModel objGrid);
         Task<MItemMaster> GetById(int Id);
-        Task<List<ItemListForSearchDTO>> GetItemListForPrescription(int StoreId, string ItemName);
+       Task<List<ItemListForSearchDTO>> GetItemListForPrescription(int StoreId, string ItemName);
+       List<ItemListForSearch> GetItemListForPrescriptionSearch( string ItemName, int StoreId);
+
         Task<List<ItemListForSearchDTO>> GetItemListForGRNOrPO(int StoreId, string ItemName);
         Task<List<ItemListForBatchPopDTO>> GetItemListForSalesBatchPop(int StoreId, int ItemId);
         Task<List<ItemListForSalesPageDTO>> GetItemListForSalesPage(int StoreId, String ItemName);

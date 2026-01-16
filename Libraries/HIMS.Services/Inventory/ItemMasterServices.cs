@@ -11,6 +11,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Transactions;
+using static LinqToDB.Common.Configuration;
 
 namespace HIMS.Services.Inventory
 {
@@ -241,6 +242,17 @@ namespace HIMS.Services.Inventory
                            Instruction = itemMaster.Instruction ?? string.Empty
                        });
             return await qry.Take(50).ToListAsync();
+        }
+        public virtual  List<ItemListForSearch> GetItemListForPrescriptionSearch( string ItemName, int StoreId)
+        {
+
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[2];
+            
+            para[0] = new SqlParameter("@ItemName", ItemName);
+            para[1] = new SqlParameter("@StoreId", StoreId);
+
+            return sql.FetchListBySP<ItemListForSearch>("Ps_Retrieve_ItemName_BalanceQty", para);
         }
         public virtual List<ItemListForSearchDTO> GetItemListForPrescriptionretrun(int StoreId, int IPAdmID, string ItemName)
         {

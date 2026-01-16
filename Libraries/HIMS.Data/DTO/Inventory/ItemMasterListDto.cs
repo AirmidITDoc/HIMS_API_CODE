@@ -55,6 +55,33 @@ namespace HIMS.Data.DTO.Inventory
 
 
     }
+    public class ItemListForSearch
+    {
+        public long ItemId { get; set; }
+        public string ItemName { get; set; }
+         public double? BalanceQty { get; set; }
+        public decimal? LandedRate { get; set; }
+        public decimal? UnitMRP { get; set; }
+        public decimal? PurchaseRate { get; set; }
+        public decimal? VatPercentage { get; set; }
+        public bool? IsBatchRequired { get; set; }
+        public float? ReOrder { get; set; }
+        public bool? IsNarcotic { get; set; }
+        public float CGSTPer { get; set; }
+        public float SGSTPer { get; set; }
+        public float? IGSTPer { get; set; }
+        public string? U0M { get; set; }
+        public long? ItemGenericNameId { get; set; }
+        public string? DoseName { get; set; }
+        public int? DoseDay { get; set; }
+
+        public bool? IsH1Drug { get; set; }
+        public bool? IsHighRisk { get; set; }
+        public bool? isEmgerency { get; set; }
+        public bool? IsLASA { get; set; }
+        public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty; } }
+
+    }
 
 
     public class ItemListForSearchDTO
