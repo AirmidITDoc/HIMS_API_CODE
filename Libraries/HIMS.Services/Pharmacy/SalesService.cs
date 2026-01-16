@@ -908,6 +908,10 @@ namespace HIMS.Services.Users
         {
             return await DatabaseHelper.GetGridDataBySp<ItemNameBalanceQtyListDto>(model, "Retrieve_ItemName_BatchPOP_BalanceQty");
         }
+        public virtual async Task<IPagedList<ItemNameBalanceQtyListDtoKenya>> BalqtysalesDraftlistKenya(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ItemNameBalanceQtyListDtoKenya>(model, "ps_rtrv_ItemName_BatchPOP_BalanceQty_kenya");
+        }
         public virtual async Task<IPagedList<GetRefundByAdvanceIdListDto>> GetRefundByAdvanceId(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<GetRefundByAdvanceIdListDto>(model, "sp_GetRefundByAdvanceId");
