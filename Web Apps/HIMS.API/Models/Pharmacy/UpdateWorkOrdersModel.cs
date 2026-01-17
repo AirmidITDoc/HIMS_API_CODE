@@ -11,7 +11,7 @@ namespace HIMS.API.Models.Pharmacy
         public double? DiscAmount { get; set; }
         public double? VatAmount { get; set; }
         public double? NetAmount { get; set; }
-        public bool? Isclosed { get; set; }
+        public bool IsClosed { get; set; }
         public string? Remark { get; set; }
         public long? UpdatedBy { get; set; }
 
@@ -36,7 +36,7 @@ namespace HIMS.API.Models.Pharmacy
         public double? DiscPer { get; set; }
         public double? DiscAmount { get; set; }
         public double? VatPer { get; set; }
-        public double? VatAmount { get; set; }
+        public decimal? Vatamount { get; set; }
         public double? NetAmount { get; set; }
         public string? Remark { get; set; }
 

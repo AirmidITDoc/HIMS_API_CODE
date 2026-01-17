@@ -226,7 +226,7 @@ namespace HIMS.Services.Common
                     TPathologyReportHeader objPatho = new()
                     {
                         PathDate = objAddCharge.ChargesDate,
-                        PathTime = objAddCharge?.ChargesDate,
+                        PathTime = objAddCharge?.ChargesTime,
                         OpdIpdType = objAddCharge?.OpdIpdType,
                         OpdIpdId = objAddCharge?.OpdIpdId,
                         PathTestId = objAddCharge?.ServiceId,
@@ -235,7 +235,8 @@ namespace HIMS.Services.Common
                         IsCompleted = false,
                         IsPrinted = false,
                         IsSampleCollection = false,
-                        TestType = false
+                        TestType = false,
+
                     };
 
                     _context.TPathologyReportHeaders.Add(objPatho);
@@ -247,7 +248,7 @@ namespace HIMS.Services.Common
                     TRadiologyReportHeader objRadio = new()
                     {
                         RadDate = objAddCharge.ChargesDate,
-                        RadTime = objAddCharge?.ChargesDate,
+                        RadTime = objAddCharge?.ChargesTime,
                         OpdIpdType = objAddCharge?.OpdIpdType,
                         OpdIpdId = objAddCharge?.OpdIpdId,
                         RadTestId = objAddCharge?.ServiceId,

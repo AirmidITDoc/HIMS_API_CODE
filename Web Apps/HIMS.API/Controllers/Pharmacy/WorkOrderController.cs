@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("WorkOrderSave")]
-        //[Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
+        [Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
         public ApiResponse WorkOrderAsyncSp(WorksOrderModel obj)
         {
 
@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPut("WorkOrderUpdate")]
-        //[Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
+        [Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
         public ApiResponse WorkOrderUpdate(UpdateWorkOrderModel obj)
         {
             TWorkOrderHeader Model = obj.WorkOrders.MapTo<TWorkOrderHeader>();
