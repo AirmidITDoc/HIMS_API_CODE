@@ -35,7 +35,7 @@ namespace HIMS.API.Models.Pharmacy
         public double? TotalAmount { get; set; }
         public double? DiscPer { get; set; }
         public double? DiscAmount { get; set; }
-        public double? VatPer { get; set; }
+        public double? Vatper { get; set; }
         public decimal? Vatamount { get; set; }
         public double? NetAmount { get; set; }
         public string? Remark { get; set; }

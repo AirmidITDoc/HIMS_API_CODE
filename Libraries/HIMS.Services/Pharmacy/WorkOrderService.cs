@@ -80,7 +80,7 @@ namespace HIMS.Services.Pharmacy
             foreach (var item in ObjTWorkOrderDetail)
 
             {
-                string[] DEntity = { "Woid", "ItemName", "Qty", "Rate", "TotalAmount", "DiscPer", "DiscAmount", "VatPer", "Vatamount", "NetAmount", "Remark" };
+                string[] DEntity = { "Woid", "ItemName", "Qty", "Rate", "TotalAmount", "DiscPer", "DiscAmount", "Vatper", "Vatamount", "NetAmount", "Remark" };
                 var pentity = item.ToDictionary();
                 foreach (var rProperty in pentity.Keys.ToList())
                 {

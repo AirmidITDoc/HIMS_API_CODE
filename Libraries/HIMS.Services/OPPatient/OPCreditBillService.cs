@@ -63,7 +63,7 @@ namespace HIMS.Services.OPPatient
                         TPathologyReportHeader objPatho = new()
                         {
                             PathDate = objItem1.ChargesDate,
-                            PathTime = objItem1?.ChargesDate,
+                            PathTime = objItem1?.ChargesTime,
                             OpdIpdType = objItem1?.OpdIpdType,
                             OpdIpdId = objItem1?.OpdIpdId,
                             PathTestId = objItem1?.ServiceId,
@@ -72,7 +72,11 @@ namespace HIMS.Services.OPPatient
                             IsCompleted = false,
                             IsPrinted = false,
                             IsSampleCollection = false,
-                            TestType = false
+                            TestType = false,
+                            PatientName = objBill.PatientName,
+                            RegNo = objBill.RegNo.ToString(),
+                            Opipnumber = objBill.Ipdno,
+                            DoctorName = objBill.DoctorName,
                         };
 
                         _context.TPathologyReportHeaders.Add(objPatho);
@@ -84,7 +88,7 @@ namespace HIMS.Services.OPPatient
                         TRadiologyReportHeader objRadio = new()
                         {
                             RadDate = objItem1.ChargesDate,
-                            RadTime = objItem1?.ChargesDate,
+                            RadTime = objItem1?.ChargesTime,
                             OpdIpdType = objItem1?.OpdIpdType,
                             OpdIpdId = objItem1?.OpdIpdId,
                             RadTestId = objItem1?.ServiceId,
@@ -93,7 +97,9 @@ namespace HIMS.Services.OPPatient
                             IsCompleted = false,
                             IsCancelled = 0,
                             IsPrinted = false,
-                            TestType = false
+                            TestType = false,
+                            PatientName = objBill.PatientName,
+
                         };
 
                         _context.TRadiologyReportHeaders.Add(objRadio);
