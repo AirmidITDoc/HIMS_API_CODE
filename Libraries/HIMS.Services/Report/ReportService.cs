@@ -16060,25 +16060,18 @@ namespace HIMS.Services.Report
             if (model.Mode == "LabStickerPrint")
             {
 
-                //title = "Patient Detail Sticker";
-                //var dt = GetDataBySp(model, "rptAppointmentPrint1");
-                //var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PatientDetailSticker");
-                //html = objTemplate?.TemplateBody ?? "";
-                //html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("RegNo")));
-
                 title = "Lab Sticker Print";
                 var dt = GetDataBySp(model, "ps_Rtrv_LabSamcollectionListStickerPrint");
-                var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode");
+                var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode_V2");
                 html = objTemplate?.TemplateBody ?? "";
 
                 html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")));
-               // html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                 html = html.Replace("{{ServiceName}}", dt.GetColValue("ServiceName"));
                 html = html.Replace("{{PathReportID}}", dt.GetColValue("LabRequestNo"));
             }
+
             return new Tuple<string,string>( html,title);
-
-
 
         }
     }
