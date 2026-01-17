@@ -405,6 +405,27 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+
+
+                #region :: LabStickerPrint ::
+                case "LabStickerPrint":
+                    {
+                        string[] colList = Array.Empty<string>();
+
+                        var dt = GetDataBySp(model, "ps_Rtrv_LabSamcollectionListStickerPrint");               
+                        var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode");
+                        string html = objTemplate?.TemplateBody ?? "";
+                   
+                        int i = 0;                
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")));
+                       // html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{ServiceName}}", dt.GetColValue("ServiceName"));
+                        html = html.Replace("{{PathReportID}}", dt.GetColValue("LabRequestNo"));
+
+                        tuple = _pdfUtility.GeneratePdfFromHtmlBarCode(html, model.StorageBaseUrl, "LabStickerPrint", "Sticker" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
                 #region :: PathologySampleBarcode ::
                 case "PathologySampleBarcode":
                     {
@@ -15794,6 +15815,26 @@ namespace HIMS.Services.Report
                 html = html.Replace("{{chkBSLflag}}", dt.GetColValue("BSL").ConvertToString() != "" ? "visible" : "none");
                 html = html.Replace("{{chkBMIflag}}", dt.GetColValue("BMI").ConvertToString() != "" ? "visible" : "none");
                 html = html.Replace("{{chkSpO2flag}}", dt.GetColValue("SpO2").ConvertToString() != "" ? "visible" : "none");
+            }
+
+            if (model.Mode == "LabStickerPrint")
+            {
+
+                //title = "Patient Detail Sticker";
+                //var dt = GetDataBySp(model, "rptAppointmentPrint1");
+                //var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PatientDetailSticker");
+                //html = objTemplate?.TemplateBody ?? "";
+                //html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("RegNo")));
+
+                title = "Lab Sticker Print";
+                var dt = GetDataBySp(model, "ps_Rtrv_LabSamcollectionListStickerPrint");
+                var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode");
+                html = objTemplate?.TemplateBody ?? "";
+
+                html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")));
+               // html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                html = html.Replace("{{ServiceName}}", dt.GetColValue("ServiceName"));
+                html = html.Replace("{{PathReportID}}", dt.GetColValue("LabRequestNo"));
             }
             return new Tuple<string,string>( html,title);
 
