@@ -38,6 +38,8 @@ namespace HIMS.Services.Pharmacy
             }
             string AWOId = odal.ExecuteNonQuery("insert_T_WorkOrderHeader_1", CommandType.StoredProcedure, "Woid", yentity);
             ObjTWorkOrderHeader.Woid = Convert.ToInt32(AWOId);
+            //await _context.LogProcedureExecution(yentity, nameof(TWorkOrderHeader), ObjTWorkOrderHeader.Woid.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
             foreach (var item in ObjTWorkOrderDetail)
             {
@@ -51,7 +53,7 @@ namespace HIMS.Services.Pharmacy
                         entity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_T_WorkOrderDetail_1", CommandType.StoredProcedure, entity);
-                await _context.LogProcedureExecution(entity, nameof(TWorkOrderHeader), ObjTWorkOrderHeader.Woid.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                await _context.LogProcedureExecution(entity, nameof(TWorkOrderDetail), item.Woid.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             }
         }
@@ -60,7 +62,7 @@ namespace HIMS.Services.Pharmacy
         public virtual async Task UpdateSp(TWorkOrderHeader ObjTWorkOrderHeader, List<TWorkOrderDetail> ObjTWorkOrderDetail, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
-            string[] rEntity = { "Woid", "StoreId", "SupplierId", "TotalAmount", "DiscAmount", "VatAmount", "NetAmount", "Isclosed", "Remark", "UpdatedBy" };
+            string[] rEntity = { "Woid", "StoreId", "SupplierId", "TotalAmount", "DiscAmount", "VatAmount", "NetAmount", "IsClosed", "Remark", "UpdatedBy" };
             var Sentity = ObjTWorkOrderHeader.ToDictionary();
             foreach (var rProperty in Sentity.Keys.ToList())
             {
@@ -78,7 +80,7 @@ namespace HIMS.Services.Pharmacy
             foreach (var item in ObjTWorkOrderDetail)
 
             {
-                string[] DEntity = { "Woid", "ItemName", "Qty", "Rate", "TotalAmount", "DiscPer", "DiscAmount", "VatPer", "VatAmount", "NetAmount", "Remark" };
+                string[] DEntity = { "Woid", "ItemName", "Qty", "Rate", "TotalAmount", "DiscPer", "DiscAmount", "VatPer", "Vatamount", "NetAmount", "Remark" };
                 var pentity = item.ToDictionary();
                 foreach (var rProperty in pentity.Keys.ToList())
                 {
