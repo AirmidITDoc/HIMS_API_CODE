@@ -121,7 +121,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("InsertPO")]
-        //[Permission(PageCode = "GRN", Permission = PagePermission.Add)]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertPO(GRNPOReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
@@ -142,7 +142,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("EditPO/{id:int}")]
-        //[Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> EditPO(GRNPOReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
