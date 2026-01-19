@@ -29,6 +29,8 @@ namespace HIMS.API.Models.Masters
         public string? LoginWebsiteUser { get; set; }
         public string? LoginWebsitePassword { get; set; }
         public bool? IsSubCompany { get; set; }
+        public decimal DayWiseCredit { get; set; }
+
 
     }
     public class CompanyMasterModelValidator : AbstractValidator<CompanyMasterModel>

@@ -90,6 +90,8 @@ namespace HIMS.API.Controllers.Masters.Billing
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else

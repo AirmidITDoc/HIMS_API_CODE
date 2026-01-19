@@ -341,6 +341,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<PsLvwRtrvPathologyResultIpwithAge> PsLvwRtrvPathologyResultIpwithAges { get; set; } = null!;
         public virtual DbSet<PsLvwRtrvPathologyResultLabwithAge> PsLvwRtrvPathologyResultLabwithAges { get; set; } = null!;
         public virtual DbSet<PsLvwRtrvPathologyResultOpwithAge> PsLvwRtrvPathologyResultOpwithAges { get; set; } = null!;
+        public virtual DbSet<PsViewLvwRtrvPathologyResultIpwithAgeMachineUpload> PsViewLvwRtrvPathologyResultIpwithAgeMachineUploads { get; set; } = null!;
+        public virtual DbSet<PsViewLvwRtrvPathologyResultOpwithAgeMachineUpload> PsViewLvwRtrvPathologyResultOpwithAgeMachineUploads { get; set; } = null!;
         public virtual DbSet<Refund> Refunds { get; set; } = null!;
         public virtual DbSet<Registration> Registrations { get; set; } = null!;
         public virtual DbSet<RegistrationSmsquery> RegistrationSmsqueries { get; set; } = null!;
@@ -429,6 +431,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TDoctorShareGenerationLog> TDoctorShareGenerationLogs { get; set; } = null!;
         public virtual DbSet<TDoctorShareHeader> TDoctorShareHeaders { get; set; } = null!;
         public virtual DbSet<TDoctorsNote> TDoctorsNotes { get; set; } = null!;
+        public virtual DbSet<TDraddCharge> TDraddCharges { get; set; } = null!;
         public virtual DbSet<TDrbill> TDrbills { get; set; } = null!;
         public virtual DbSet<TDrbillDet> TDrbillDets { get; set; } = null!;
         public virtual DbSet<TEmergencyAdm> TEmergencyAdms { get; set; } = null!;
@@ -1337,6 +1340,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ContactPerson).HasMaxLength(50);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DayWiseCredit).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.EmailId).HasMaxLength(200);
 
@@ -9790,6 +9795,116 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UnitName).HasMaxLength(50);
             });
 
+            modelBuilder.Entity<PsViewLvwRtrvPathologyResultIpwithAgeMachineUpload>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ps_View_lvwRtrv_PathologyResultIPWithAge_MachineUpload");
+
+                entity.Property(e => e.AgeType).HasMaxLength(10);
+
+                entity.Property(e => e.Formula).HasMaxLength(100);
+
+                entity.Property(e => e.MaxValue).HasMaxLength(50);
+
+                entity.Property(e => e.MinValue).HasMaxLength(50);
+
+                entity.Property(e => e.NormalRange).HasMaxLength(155);
+
+                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.ParaBoldFlag)
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ParameterName).HasMaxLength(100);
+
+                entity.Property(e => e.PathTestId).HasColumnName("PathTestID");
+
+                entity.Property(e => e.RegNo)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ResultValue)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Rundate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("RUNDATE");
+
+                entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
+
+                entity.Property(e => e.SubTestId).HasColumnName("SubTestID");
+
+                entity.Property(e => e.SubTestName).HasMaxLength(200);
+
+                entity.Property(e => e.TestName).HasMaxLength(200);
+
+                entity.Property(e => e.Tmpvalue)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("TMPVALUE");
+
+                entity.Property(e => e.UnitName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<PsViewLvwRtrvPathologyResultOpwithAgeMachineUpload>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("ps_View_lvwRtrv_PathologyResultOPWithAge_MachineUpload");
+
+                entity.Property(e => e.AgeType).HasMaxLength(10);
+
+                entity.Property(e => e.Formula).HasMaxLength(100);
+
+                entity.Property(e => e.MaxValue).HasMaxLength(50);
+
+                entity.Property(e => e.MinValue).HasMaxLength(50);
+
+                entity.Property(e => e.NormalRange).HasMaxLength(155);
+
+                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.ParaBoldFlag)
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ParameterName).HasMaxLength(100);
+
+                entity.Property(e => e.PathTestId).HasColumnName("PathTestID");
+
+                entity.Property(e => e.RegNo)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ResultValue)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Rundate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("RUNDATE");
+
+                entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
+
+                entity.Property(e => e.SubTestName).HasMaxLength(200);
+
+                entity.Property(e => e.TestName).HasMaxLength(200);
+
+                entity.Property(e => e.Tmpvalue)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("TMPVALUE");
+
+                entity.Property(e => e.UnitName).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<Refund>(entity =>
             {
                 entity.ToTable("Refund");
@@ -12086,6 +12201,69 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Ttime)
                     .HasColumnType("datetime")
                     .HasColumnName("TTime");
+            });
+
+            modelBuilder.Entity<TDraddCharge>(entity =>
+            {
+                entity.HasKey(e => e.ChargesId);
+
+                entity.ToTable("T_DRAddCharges");
+
+                entity.Property(e => e.CPrice)
+                    .HasColumnType("money")
+                    .HasColumnName("C_Price");
+
+                entity.Property(e => e.CQty).HasColumnName("C_Qty");
+
+                entity.Property(e => e.CTotalAmount)
+                    .HasColumnType("money")
+                    .HasColumnName("C_TotalAmount");
+
+                entity.Property(e => e.ChPrice)
+                    .HasColumnType("money")
+                    .HasColumnName("Ch_Price");
+
+                entity.Property(e => e.ChQty).HasColumnName("Ch_Qty");
+
+                entity.Property(e => e.ChTotalAmount)
+                    .HasColumnType("money")
+                    .HasColumnName("Ch_TotalAmount");
+
+                entity.Property(e => e.ChargesDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ChargesTime).HasColumnType("datetime");
+
+                entity.Property(e => e.CompanyServiceName).HasMaxLength(255);
+
+                entity.Property(e => e.ConcessionAmount).HasColumnType("money");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DoctorName).HasMaxLength(500);
+
+                entity.Property(e => e.IsBillableCharity).HasColumnName("IsBillable_Charity");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsDoctorShareGenerated).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsInterimBillFlag).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.NetAmount).HasColumnType("money");
+
+                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_Id");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.PackageMainChargeId).HasColumnName("PackageMainChargeID");
+
+                entity.Property(e => e.RefundAmount).HasColumnType("money");
+
+                entity.Property(e => e.ServiceCode).HasMaxLength(50);
+
+                entity.Property(e => e.ServiceName).HasMaxLength(255);
             });
 
             modelBuilder.Entity<TDrbill>(entity =>
