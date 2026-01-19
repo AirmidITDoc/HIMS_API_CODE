@@ -12,6 +12,7 @@ using HIMS.Services.Users;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace HIMS.API.Controllers.Login
@@ -196,8 +197,10 @@ namespace HIMS.API.Controllers.Login
                     user.CreatedBy,
                     user.DoctorId,
                     user.IsPoverify,
-                    TLoginStoreDetails = user.TLoginStoreDetails.Select(x => new { x.StoreId, x.LoginId, x.StoreName }),
-                    TLoginUnitDetails = user.TLoginUnitDetails.Select(x => new { x.UnitId, x.LoginId, x.UnitName })
+                    TLoginStoreDetails = user.TLoginStoreDetails.Select(x => new { x.StoreId, x.LoginId,StoreName = ""}),
+                    TLoginUnitDetails = user.TLoginUnitDetails.Select(x => new { x.UnitId, x.LoginId, StoreName = "" })
+                    //TLoginStoreDetails = user.TLoginStoreDetails.Select(x => new { x.StoreId, x.LoginId, x.StoreName }),
+                    //TLoginUnitDetails = user.TLoginUnitDetails.Select(x => new { x.UnitId, x.LoginId, x.UnitName })
                 }
             });
         }
