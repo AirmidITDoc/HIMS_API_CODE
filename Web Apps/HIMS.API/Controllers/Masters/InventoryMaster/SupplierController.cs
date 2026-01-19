@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             return Ok(SupplierList.ToGridResponse(objGrid, "Supplier List"));
         }
         [HttpGet("{id?}")]
-        [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
