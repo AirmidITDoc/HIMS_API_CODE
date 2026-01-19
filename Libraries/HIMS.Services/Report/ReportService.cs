@@ -408,21 +408,42 @@ namespace HIMS.Services.Report
 
 
                 #region :: LabStickerPrint ::
+                //case "LabStickerPrint":
+                //    {
+                //        string[] colList = Array.Empty<string>();
+
+                //        var dt = GetDataBySp(model, "ps_Rtrv_LabSamcollectionListStickerPrint");               
+                //        var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode_V2");
+                //        string html = objTemplate?.TemplateBody ?? "";
+
+                //        int i = 0;                
+                //        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")));
+                //        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                //        html = html.Replace("{{ServiceName}}", dt.GetColValue("ServiceName"));
+                //        html = html.Replace("{{PathReportID}}", dt.GetColValue("LabRequestNo"));
+
+                //        tuple = _pdfUtility.GeneratePdfFromHtmlBarCode(html, model.StorageBaseUrl, "LabStickerPrint", "Sticker" + vDate, Orientation.Portrait);
+                //        break;
+                //    }
                 case "LabStickerPrint":
                     {
-                        string[] colList = Array.Empty<string>();
+                        var dt = GetDataBySp(model, "ps_Rtrv_LabSamcollectionListStickerPrint");
+                        var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode_V2");
 
-                        var dt = GetDataBySp(model, "ps_Rtrv_LabSamcollectionListStickerPrint");               
-                        var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode");
-                        string html = objTemplate?.TemplateBody ?? "";
-                   
-                        int i = 0;                
-                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")));
-                       // html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
-                        html = html.Replace("{{ServiceName}}", dt.GetColValue("ServiceName"));
-                        html = html.Replace("{{PathReportID}}", dt.GetColValue("LabRequestNo"));
+                        string html = "";
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            string tempHtml = objTemplate?.TemplateBody ?? "";
+                            tempHtml = tempHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["LabRequestNo"]?.ToString()));
+                            tempHtml = tempHtml.Replace("{{PatientName}}", row["PatientName"]?.ToString());
+                            tempHtml = tempHtml.Replace("{{ServiceName}}", row["ServiceName"]?.ToString());
+                            tempHtml = tempHtml.Replace("{{PathReportID}}", row["LabRequestNo"]?.ToString());
+
+                            html += tempHtml;//+ "<div style='page-break-after:always'></div>";
+    }
 
                         tuple = _pdfUtility.GeneratePdfFromHtmlBarCode(html, model.StorageBaseUrl, "LabStickerPrint", "Sticker" + vDate, Orientation.Portrait);
+
                         break;
                     }
                 #endregion
@@ -5575,6 +5596,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkbalflag}}", dt.GetColValue("BalanceAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkdiscflag}}", dt.GetColValue("ConcessionAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         //html = html.Replace("{{chkRefundflag}}", dt.GetColValue("RefundAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                        html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
 
                         string finalamt = conversion(T_NetAmount.ToString());
                         html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());

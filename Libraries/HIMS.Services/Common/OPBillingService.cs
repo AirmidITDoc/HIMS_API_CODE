@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
@@ -23,6 +24,16 @@ namespace HIMS.Services.Common
         public virtual async Task<IPagedList<CertificateInformationListDto>> GetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<CertificateInformationListDto>(model, "m_Rtrv_T_CertificateInformation_List");
+        }
+
+        public virtual async Task<IPagedList<OPDRBillListDto>> GeOPBillListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPDRBillListDto>(model, "ps_rtrv_DRBill");
+        }
+
+        public virtual async Task<IPagedList<OPDRChargesDto>> OPDRChargeslListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPDRChargesDto>(model, "ps_rtrv_DRAddCharges");
         }
         public virtual async Task InsertAsync(TCertificateInformation ObjCertificateInformation, int UserId, string Username)
         {

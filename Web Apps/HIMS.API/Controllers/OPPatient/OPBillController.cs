@@ -11,6 +11,7 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
@@ -20,6 +21,7 @@ using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using static HIMS.API.Models.OutPatient.AppointmentBillModel;
+//using OPBillListDto = HIMS.Data.DTO.Administration.OPDRBillListDto;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -81,6 +83,23 @@ namespace HIMS.API.Controllers.OPPatient
         {
             IPagedList<OPBillListSettlementListDto> OPBillListSettlementList = await _IOPSettlementService.OPBillListSettlementList(objGrid);
             return Ok(OPBillListSettlementList.ToGridResponse(objGrid, "OP Patient Bill List "));
+        }
+
+        [HttpPost("OPDraftBillList")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> OPBillList(GridRequestModel objGrid)
+        {
+            IPagedList<OPDRBillListDto> OPBillList = await _oPBillingService.GeOPBillListAsync(objGrid);
+            return Ok(OPBillList.ToGridResponse(objGrid, "OP Draft Bill List"));
+        }
+
+
+        [HttpPost("OPDraftAddChargeslList")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> OPDRChargeslList(GridRequestModel objGrid)
+        {
+            IPagedList<OPDRChargesDto> OPDRChargeslList = await _oPBillingService.OPDRChargeslListAsync(objGrid);
+            return Ok(OPDRChargeslList.ToGridResponse(objGrid, "OP Draft AddCharges lList"));
         }
 
         [HttpPost("OPBillingInsert")]
