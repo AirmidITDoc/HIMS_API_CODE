@@ -30,7 +30,8 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AdmissionList")]
-        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<AdmissionListDto> AdmissionListList = await _IAdmissionService.GetAdmissionListAsync(objGrid);
@@ -46,7 +47,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("AdmissionDischargeList")]
-        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> AdmDiscList(GridRequestModel objGrid)
         {
             IPagedList<AdmissionListDto> AdmissionDischargeList = await _IAdmissionService.GetAdmissionDischargeListAsync(objGrid);
