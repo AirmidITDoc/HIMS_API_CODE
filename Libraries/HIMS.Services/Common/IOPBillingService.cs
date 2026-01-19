@@ -8,7 +8,6 @@ namespace HIMS.Services.Common
     public partial interface IOPBillingService
     {
         Task InsertAsyncSP(Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment,int CurrentUserId, string CurrentUserName);
-        //Task InsertAsyncSP1(Bill objBill,int CurrentUserId, string CurrentUserName);
 
         Task AppBillInsert(Registration objRegistration, VisitDetail objVisitDetail, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName);
 
@@ -27,5 +26,7 @@ namespace HIMS.Services.Common
         Task InsertAsync(TCertificateInformation TCertificateInformation, int UserId, string Username);
 
         Task UpdateAsync(TCertificateInformation TCertificateInformation, int UserId, string Username);
+        Task InsertAsyncTDrbill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDet, List<TDraddCharge> ObjTDraddCharge, int currentUserId, string currentUserName);
+
     }
 }

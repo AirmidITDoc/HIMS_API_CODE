@@ -251,7 +251,27 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
 
-       
+        [HttpPost("OPDraftBillInsert")]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> OPDraftBillInsert(DraftBillModel obj)
+        {
+            TDrbill model = obj.DRBill.MapTo<TDrbill>();
+            List<TDrbillDet> model1 = obj.TDrbillDet.MapTo<List<TDrbillDet>>();
+            List<TDraddCharge> model2 = obj.TDraddCharge.MapTo<List<TDraddCharge>>();
+
+            if (obj.DRBill.Drbno == 0)
+            {
+                model.BillDate = Convert.ToDateTime(model.BillDate);
+                model.BillTime = Convert.ToDateTime(model.BillTime);
+                model.AddedBy = CurrentUserId;
+               
+                await _oPBillingService.InsertAsyncTDrbill(model, model1, model2 ,CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", model.Drbno);
+        }
+
 
 
     }
