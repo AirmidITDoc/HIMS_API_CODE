@@ -4,6 +4,6 @@ namespace HIMS.Services.OPPatient
 {
     public partial interface IOPCreditBillService
     {
-        Task InsertAsyncSP(Bill objBill, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName);
+        Task InsertAsyncSP(Bill objBill, List<AddCharge> ObjaddCharge, TDrbill ObjTDrbill, int CurrentUserId, string CurrentUserName);
     }
 }

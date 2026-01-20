@@ -546,10 +546,12 @@ namespace HIMS.API.Infrastructure
             CreateMap<TDraddCharge, TDraddChargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TDrbillDet, TDrbillDetUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TDraddCharge, TDraddChargeUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TDrbill, TdrBillModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
-            
+
+
 
 
 

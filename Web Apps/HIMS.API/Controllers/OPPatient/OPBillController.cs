@@ -110,6 +110,8 @@ namespace HIMS.API.Controllers.OPPatient
             Payment objPayment = obj.Payments.MapTo<Payment>();
             List<AddCharge> ObjPackagecharge = obj.Packcagecharges.MapTo<List<AddCharge>>();
             List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
+            TDrbill ObjTdrBill = obj.TdrBill.MapTo<TDrbill>();
+
 
 
             if (obj.BillNo == 0)
@@ -121,7 +123,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
-                await _oPBillingService.InsertAsyncSP(model, objPayment, ObjPackagecharge, ObjTPayment, CurrentUserId, CurrentUserName);
+                await _oPBillingService.InsertAsyncSP(model, objPayment, ObjPackagecharge, ObjTPayment, ObjTdrBill, CurrentUserId, CurrentUserName);
                 /// set condition based on payment type=mpesa.
                 //string phone = "254723939232";
                 //var result = await _stkService.StkPushAsync(phone, obj.NetPayableAmt.Value.ToDecimal(), _config["MPesa:ConfirmationUrl"], model.BillNo.ToString());
@@ -139,6 +141,8 @@ namespace HIMS.API.Controllers.OPPatient
         {
             Bill model = obj.MapTo<Bill>();
             List<AddCharge> ObjPackagecharge = obj.Packcagecharges.MapTo<List<AddCharge>>();
+            TDrbill ObjTdrBill = obj.TdrBill.MapTo<TDrbill>();
+
 
             if (obj.BillNo == 0)
             {
@@ -149,7 +153,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
-                await _IOPCreditBillService.InsertAsyncSP(model, ObjPackagecharge, CurrentUserId, CurrentUserName);
+                await _IOPCreditBillService.InsertAsyncSP(model, ObjPackagecharge, ObjTdrBill, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

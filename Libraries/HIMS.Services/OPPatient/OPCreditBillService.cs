@@ -17,7 +17,7 @@ namespace HIMS.Services.OPPatient
         }
       
       
-         public virtual async Task InsertAsyncSP(Bill objBill, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName)
+         public virtual async Task InsertAsyncSP(Bill objBill, List<AddCharge> ObjaddCharge, TDrbill ObjTDrbill, int CurrentUserId, string CurrentUserName)
          {
          try
          {
@@ -131,13 +131,23 @@ namespace HIMS.Services.OPPatient
 
                             odal.ExecuteNonQuery("m_insert_BillDetails_1", CommandType.StoredProcedure, OPBillDet2);
                         }
+                            
 
                     }
-
+                      
                 }
+                    if (ObjTDrbill != null && ObjTDrbill.Drbno > 0)
+                    {
+                        Dictionary<string, object> tentity = new()
+                        {
+                            ["DRBNo"] = ObjTDrbill.Drbno
+                        };
+
+                        odal.ExecuteNonQuery("PS_UpdateDraft", CommandType.StoredProcedure, tentity);
+                    }
 
 
-                scope.Complete();
+                    scope.Complete();
             }
          }
 

@@ -58,7 +58,7 @@ namespace HIMS.Services.Common
             //scope.Complete();
         }
 
-        public virtual async Task InsertAsyncSP(Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSP(Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, TDrbill ObjTDrbill ,int CurrentUserId, string CurrentUserName)
         {
 
             try
@@ -216,7 +216,19 @@ namespace HIMS.Services.Common
                         string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
                         item.PaymentId = Convert.ToInt32(VPaymentId);
                     }
+
+                    
+                    if (ObjTDrbill != null && ObjTDrbill.Drbno > 0)
+                    {
+                        Dictionary<string, object> tentity = new()
+                        {
+                            ["DRBNo"] = ObjTDrbill.Drbno
+                        };
+
+                        odal.ExecuteNonQuery("PS_UpdateDraft", CommandType.StoredProcedure, tentity);
+                    }
                     scope.Complete();
+
                 }
 
             }
@@ -229,9 +241,7 @@ namespace HIMS.Services.Common
             }
         }
 
-
-
-
+       
 
         public virtual async Task InsertCreditBillAsyncSP(Bill objBill, int currentUserId, string currentUserName)
         {

@@ -56,6 +56,9 @@ namespace HIMS.API.Models.OPPatient
         public List<Packcagechargesmodel?> Packcagecharges { get; set; }
         public OPPaymentModel? Payments { get; set; }
         public List<TPaymentModel> TPayments { get; set; }
+        public TdrBillModel TdrBill { get; set; }
+
+
 
     }
     public class BillModelValidator : AbstractValidator<OPBillIngModel>
@@ -272,6 +275,13 @@ namespace HIMS.API.Models.OPPatient
         public string? TranMode { get; set; }
         public long? CreatedBy { get; set; }
         public string? TransactionLabel { get; set; }
+
+
+    }
+    public class TdrBillModel
+    {
+        public long Drbno { get; set; }
+        public long? IsCancelled { get; set; }
 
 
     }
