@@ -892,13 +892,16 @@ namespace HIMS.Services.Common
                 item.ChargesId = Convert.ToInt32(VChargId);
                 Dictionary<string, object> tokenObj = new()
                 {
-                    ["DRNo"] = ObjTDrbill.Drbno,  
-                    ["ChargesID"] = VChargId      
+                    ["DRNo"] = VDrbno,
+                    ["ChargesID"] = VChargId
                 };
+                //var tokenObj = new
+                //{
+                //    //Drbno = Convert.ToInt32(Drbno)
+                //    ChargesId = Convert.ToInt32(VChargId)
 
+                //};
                 odal.ExecuteNonQuery("PS_Insert_T_DRBillDet", CommandType.StoredProcedure, tokenObj);
-
-                
 
             }
 
