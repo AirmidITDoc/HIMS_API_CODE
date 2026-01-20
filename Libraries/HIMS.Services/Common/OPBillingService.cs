@@ -9,6 +9,7 @@ using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Security.Principal;
 using System.Transactions;
 
 namespace HIMS.Services.Common
@@ -872,23 +873,10 @@ namespace HIMS.Services.Common
             string VDrbno = odal.ExecuteNonQuery("PS_Insert_T_DRBill", CommandType.StoredProcedure, "Drbno", bentity);
             ObjTDrbill.Drbno = Convert.ToInt32(VDrbno);
 
-            foreach (var item in ObjTDrbillDet)
-            {
-                item.Drno = Convert.ToInt32(VDrbno);
-                string[] DREntity = { "Drno", "ChargesId" };
-                var dentity = item.ToDictionary();
-                foreach (var rProperty in dentity.Keys.ToList())
-                {
-                    if (!DREntity.Contains(rProperty))
-                        dentity.Remove(rProperty);
-                }
-                odal.ExecuteNonQuery("PS_Insert_T_DRBillDet", CommandType.StoredProcedure, dentity);
 
-            }
             foreach (var item in ObjTDraddCharge)
             {
-                item.BillNo = Convert.ToInt32(VDrbno);
-                string[] CREntity = { "ChargesId", "ChargesDate", "ChargesTime", "OpdIpdType", "OpdIpdId", "UnitId", "ServiceId", "ClassId", "TariffId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", "DocPercentage", "DocAmt", "HospitalAmt", "RefundAmount", "IsPathology", "IsRadiology", "IsDoctorShareGenerated", "IsInterimBillFlag", "IsPackage", "PackageId", "PackageMainChargeId", "IsSelfOrCompanyService" ,
+                 string[] CREntity = { "ChargesId", "ChargesDate", "ChargesTime", "OpdIpdType", "OpdIpdId", "UnitId", "ServiceId", "ClassId", "TariffId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", "DocPercentage", "DocAmt", "HospitalAmt", "RefundAmount", "IsPathology", "IsRadiology", "IsDoctorShareGenerated", "IsInterimBillFlag", "IsPackage", "PackageId", "PackageMainChargeId", "IsSelfOrCompanyService" ,
                         "CPrice", "CQty","CTotalAmount","IsComServ","IsPrintCompSer","ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsGenerated","IsApprovedByCamp","WardId","BedId","ServiceCode","ServiceName","CompanyServiceName","IsInclusionExclusion","IsHospMrk","BillNo","IsCancelled","IsCancelledBy","IsCancelledDate","AddedBy","CreatedBy" };
                 var centity = item.ToDictionary();
                 foreach (var rProperty in centity.Keys.ToList())
@@ -896,9 +884,43 @@ namespace HIMS.Services.Common
                     if (!CREntity.Contains(rProperty))
                         centity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("PS_Insert_T_DRAddCharges", CommandType.StoredProcedure, centity);
+                //centity["PackageMainChargeId"] = objItem1.ChargesId;
+                //centity["BillNo"] = objBill.BillNo;
+                //centity["Drno"] = ObjTDrbill.Drno;
+                string VChargId = odal.ExecuteNonQuery("PS_Insert_T_DRAddCharges", CommandType.StoredProcedure, "ChargesId", centity);
+                item.ChargesId = Convert.ToInt32(VChargId);
+                Dictionary<string, object> tokenObj = new()
+                {
+                    //["Drno"] = ObjTDrbill.Drno,
+                    ["ChargesId"] = VChargId
+                };
+                 //var tokenObj = new
+                //{
+                //    Drbno = Convert.ToInt32(Drbno)
+                //    ChargesId = Convert.ToInt32(ChargesId)
+
+                //};
+                odal.ExecuteNonQuery("PS_Insert_T_DRBillDet", CommandType.StoredProcedure, tokenObj);
 
             }
+
+
+            
+            //foreach (var item in ObjTDrbillDet)
+            //{
+            //    item.Drno = Convert.ToInt32(VDrbno);
+
+            //    string[] DREntity = { "Drno", "ChargesId" };
+            //    var dentity = item.ToDictionary();
+            //    foreach (var rProperty in dentity.Keys.ToList())
+            //    {
+            //        if (!DREntity.Contains(rProperty))
+            //            dentity.Remove(rProperty);
+            //    }
+               
+            //    odal.ExecuteNonQuery("PS_Insert_T_DRBillDet", CommandType.StoredProcedure, dentity);
+
+            //}
 
         }
         public virtual async Task UpdateAsyncTDrbill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDet, List<TDraddCharge> ObjTDraddCharge, int CurrentUserId, string CurrentUserName)
