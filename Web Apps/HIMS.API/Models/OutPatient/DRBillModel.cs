@@ -35,7 +35,7 @@ namespace HIMS.API.Models.OutPatient
     }
     public  class TDrbillDetModel
     {
-        public long DrbillDetId { get; set; }
+        //public long DrbillDetId { get; set; }
         public long? Drno { get; set; }
         public long? ChargesId { get; set; }
     }

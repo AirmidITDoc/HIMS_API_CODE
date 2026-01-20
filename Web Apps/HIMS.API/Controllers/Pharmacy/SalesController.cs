@@ -443,13 +443,13 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpPost("PhBillDiscountAfter")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Edit)]
-        public ApiResponse InsertSP1(PhBillDiscountAfterModel obj)
+        public ApiResponse InsertSP(PhBillDiscountAfterModel obj)
         {
 
             TSalesHeader Model = obj.MapTo<TSalesHeader>();
             if (obj.SalesId != 0)
             {
-                _ISalesService.InsertSP1(Model, CurrentUserId, CurrentUserName);
+                _ISalesService.InsertPhBillDiscount(Model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
