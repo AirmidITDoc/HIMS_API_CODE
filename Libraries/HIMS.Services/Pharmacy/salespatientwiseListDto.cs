@@ -4,5 +4,7 @@
     {
 
         public decimal? CreditAmount { get; set; }
+        public decimal? CompnayCreditAmount { get; set; }
+
     }
 }
