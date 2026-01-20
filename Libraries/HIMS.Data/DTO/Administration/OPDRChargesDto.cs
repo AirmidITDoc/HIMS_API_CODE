@@ -65,5 +65,7 @@ namespace HIMS.Data.DTO.Administration
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+
+        public string? classname { get; set; }
     }
 }

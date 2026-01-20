@@ -13,5 +13,11 @@ namespace HIMS.Services.Administration
 
         Task<IPagedList<TallyListDto>> OPBillCashCounterListAsync(GridRequestModel objGrid);
 
+        Task<IPagedList<OPRefundBillListCashCounterDto>> OPRefundBillListAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<IPAdvRefundPatientWisePaymentDto>> IPAdvRefundPatientWisePaymentlistAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<IPBillListPatientWisePaymentDto>> IPBillListPatientWisePaymentListAsync(GridRequestModel objGrid);
+
     }
 }
