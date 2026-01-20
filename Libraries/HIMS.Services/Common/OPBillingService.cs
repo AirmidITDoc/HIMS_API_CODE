@@ -886,7 +886,9 @@ namespace HIMS.Services.Common
 
             foreach (var item in ObjTDraddCharge)
             {
-                 string[] CREntity = { "ChargesId", "ChargesDate", "ChargesTime", "OpdIpdType", "OpdIpdId", "UnitId", "ServiceId", "ClassId", "TariffId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", "DocPercentage", "DocAmt", "HospitalAmt", "RefundAmount", "IsPathology", "IsRadiology", "IsDoctorShareGenerated", "IsInterimBillFlag", "IsPackage", "PackageId", "PackageMainChargeId", "IsSelfOrCompanyService" ,
+                item.BillNo = Convert.ToInt32(VDrbno);
+
+                string[] CREntity = { "ChargesId", "ChargesDate", "ChargesTime", "OpdIpdType", "OpdIpdId", "UnitId", "ServiceId", "ClassId", "TariffId", "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", "DocPercentage", "DocAmt", "HospitalAmt", "RefundAmount", "IsPathology", "IsRadiology", "IsDoctorShareGenerated", "IsInterimBillFlag", "IsPackage", "PackageId", "PackageMainChargeId", "IsSelfOrCompanyService" ,
                         "CPrice", "CQty","CTotalAmount","IsComServ","IsPrintCompSer","ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsGenerated","IsApprovedByCamp","WardId","BedId","ServiceCode","ServiceName","CompanyServiceName","IsInclusionExclusion","IsHospMrk","BillNo","IsCancelled","IsCancelledBy","IsCancelledDate","AddedBy","CreatedBy" };
                 var centity = item.ToDictionary();
                 foreach (var rProperty in centity.Keys.ToList())
@@ -894,18 +896,22 @@ namespace HIMS.Services.Common
                     if (!CREntity.Contains(rProperty))
                         centity.Remove(rProperty);
                 }
-               
+        
+
                 string VChargId = odal.ExecuteNonQuery("PS_Insert_T_DRAddCharges", CommandType.StoredProcedure, "ChargesId", centity);
                 item.ChargesId = Convert.ToInt32(VChargId);
                 Dictionary<string, object> tokenObj = new()
                 {
-                    ["DRNo"] = ObjTDrbill.Drbno,  
-                    ["ChargesID"] = VChargId      
+                    ["DRNo"] = VDrbno,
+                    ["ChargesID"] = VChargId
                 };
+                //var tokenObj = new
+                //{
+                //    //Drbno = Convert.ToInt32(Drbno)
+                //    ChargesId = Convert.ToInt32(VChargId)
 
+                //};
                 odal.ExecuteNonQuery("PS_Insert_T_DRBillDet", CommandType.StoredProcedure, tokenObj);
-
-                
 
             }
 
