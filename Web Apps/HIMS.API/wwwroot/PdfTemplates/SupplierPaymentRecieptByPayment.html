@@ -1,0 +1,177 @@
+﻿<div>
+    <div>
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        </head>
+
+        <body>
+            <div class="main-content-wrapper">
+                <div class="invoice-box" style="font-size: 22px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+                    <table style="width: 100%;line-height: inherit;text-align: left;">
+                        {{NewHeader}}
+                        <tr class="title-date-row">
+                            <td style="padding: 6px;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr style="font-size: 22px">
+                                        <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>Supplier Payment Receipt  </b></td>
+                                        <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr class="bill-info-row">
+                            <td style="padding: 6px;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr style="font-size: 18px">
+                                        <td style="padding: 2px;">
+                                            <span><b>Supplier Name :</b> </span>
+                                            <span>{{SupplierName}}</span>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <span><b>SupPayDate:</b> </span>
+                                            <span>{{SupPayDate}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr style="font-size: 18px">
+                                        <td style="padding: 2px;">
+                                            <span><b>Supplier Address :</b> </span>
+                                            <span>{{Address}}</span>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <span><b>Supplier E-mail :</b> </span>
+                                            <span>{{Email}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <span><b> Mobile No :</b> </span>
+                                            <span>{{Mobile}}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <hr />
+
+                        <tr>
+                            <th style=" text-align: left;">
+                                <h4 style="margin: 1px 0px;font-size: 22px;">
+                                    Bill Information
+                                </h4>
+                            </th>
+                        </tr>
+                        <table style="width:100%; border-collapse:collapse; font-size:18px; margin-top:6px;">
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span>Total Amount:</span><br>
+                                                              <span>{{CurrSymbol}} {{PaidAmount}}</span>
+                                <!--<td style="padding: 2px;">
+                                    <span>Disc Amount:</span><br>
+                                    <span>{{CurrSymbol}} {{ConcessionAmt}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Net Amount:</span><br>
+                                    <span>{{CurrSymbol}} {{NetPayableAmt}}</span>
+                                </td>-->
+                                <td style="padding: 2px;">
+                                    <span>Paid Amount:</span><br>
+                                    <span>{{CurrSymbol}} {{PaidAmount}}</span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div style="border-top: 1px solid #d4c3c3; margin-top: 6px;"></div>
+
+                        <tr>
+                            <th style=" text-align: left;">
+                                <h4 style="margin: 1px 0px;font-size: 22px;">
+                                    Payment Information
+                                </h4>
+                            </th>
+                        </tr>
+                        <table style="width:100%; border-collapse:collapse; font-size:18px; margin-top:6px;">
+                            <tr style="display: {{chkcashflag}};">
+                                <td style="padding: 2px;">
+                                    <span>Cash Pay:</span>
+                                    <span>{{CurrSymbol}} {{CashPayAmount}}</span>
+                                </td>
+                            </tr>
+
+                            <tr style="display: {{chkcardflag}};">
+                                <td style="padding: 2px;">
+                                    <span>Card Pay:</span>
+                                    <span>{{CurrSymbol}} {{CardPayAmount}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Card No:</span>
+                                    <span>{{CardNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Card Bank Name :</span>
+                                    <span>{{CardBankName}}</span>
+                                </td>
+                            </tr>
+
+                            <tr style="display: {{chkchequeflag}};">
+                                <td style="padding: 2px;">
+                                    <span>Cheque Pay:</span>
+                                    <span>{{CurrSymbol}} {{ChequePayAmount}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span>Cheque No:</span>
+                                    <span>{{ChequeNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span> Bank Name :</span>
+                                    <span>{{BankName}}</span>
+                                </td>
+                            </tr>
+
+                            <tr style="display: {{chkOnlineAmountflag}};">
+                                <td style="padding: 2px;">
+                                    <span>Online Pay:</span>
+                                    <span>{{CurrSymbol}} {{OnlineAmount}}</span>
+                                </td>
+                                <td style="padding: 2px;" colspan="3">
+                                    <div style="display: {{chkPayTMTxnFlag}};">Tran No: {{PayTMTranNo}}</div>
+                                    <div style="display: {{chkNeftTxnFlag}};">NEFT No: {{NEFTNo}}</div>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <div style="display: {{chkNEFTBankFlag}};">Bank Name: {{NEFTBankMaster}}</div>
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+
+                        <tr>
+                            <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
+                                
+
+                                <tr>
+                                    <td style="padding: 6px;font-size: 22px;">This is Computer generated invoice hence doesn’t require signature</td>
+                                </tr>
+
+                                <tr style="padding: 6px; text-align: right; margin-top: 20px; font-size: 22px;">
+                                    <td>
+                                        <span>{{UserName}}</span>
+                                    </td>
+                                </tr>
+                                <tr style="padding: 6px; text-align: right; font-size: 22px;">
+                                    <td>
+                                        <span>Authorized Signature</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </body>
+    </html>
+</div>
+</div>
