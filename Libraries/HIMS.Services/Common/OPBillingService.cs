@@ -884,23 +884,18 @@ namespace HIMS.Services.Common
                     if (!CREntity.Contains(rProperty))
                         centity.Remove(rProperty);
                 }
-                //centity["PackageMainChargeId"] = objItem1.ChargesId;
-                //centity["BillNo"] = objBill.BillNo;
-                //centity["Drno"] = ObjTDrbill.Drno;
+               
                 string VChargId = odal.ExecuteNonQuery("PS_Insert_T_DRAddCharges", CommandType.StoredProcedure, "ChargesId", centity);
                 item.ChargesId = Convert.ToInt32(VChargId);
                 Dictionary<string, object> tokenObj = new()
                 {
-                    //["Drno"] = ObjTDrbill.Drno,
-                    ["ChargesId"] = VChargId
+                    ["DRNo"] = ObjTDrbill.Drbno,  
+                    ["ChargesID"] = VChargId      
                 };
-                 //var tokenObj = new
-                //{
-                //    Drbno = Convert.ToInt32(Drbno)
-                //    ChargesId = Convert.ToInt32(ChargesId)
 
-                //};
                 odal.ExecuteNonQuery("PS_Insert_T_DRBillDet", CommandType.StoredProcedure, tokenObj);
+
+                
 
             }
 

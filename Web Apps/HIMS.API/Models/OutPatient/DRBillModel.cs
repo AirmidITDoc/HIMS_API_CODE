@@ -161,9 +161,9 @@ namespace HIMS.API.Models.OutPatient
     }
     public class DraftBillModel
         {
-            public DRBillModel DRBill { get; set; }
-            public List<TDrbillDetModel> TDrbillDet { get; set; }
-            public List<TDraddChargeModel> TDraddCharge { get; set; }
+        public DRBillModel DRBill { get; set; }
+        public List<TDrbillDetModel> TDrbillDet { get; set; }
+        public List<TDraddChargeModel> TDraddCharge { get; set; }
 
         }
     public class DraftBillUpdateModel
