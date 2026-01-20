@@ -37,5 +37,30 @@ namespace HIMS.Services.Administration
         {
             return await DatabaseHelper.GetGridDataBySp<IPBillListPatientWisePaymentDto>(model, "PS_tally_IP_BillList_PatientWise_Payment");
         }
+
+        public virtual async Task<IPagedList<IPAdvPatientWisePaymentDto>> IPAdvPatientWisePaymentListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPAdvPatientWisePaymentDto>(model, "ps_tally_IPAdv_PatientWise_Payment");
+        }
+
+        public virtual async Task<IPagedList<IPBillListPatientWiseDto>> IPBillListPatientWiseListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPBillListPatientWiseDto>(model, "ps_tally_IP_BillList_PatientWise");
+        }
+
+        public virtual async Task<IPagedList<IPBillListCashCounterDto>> IPBillCashCounterListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPBillListCashCounterDto>(model, "PS_tally_IP_BillList_CashCounter");
+        }
+
+        public virtual async Task<IPagedList<IPBillRefundBillListPatientWisePaymentDto>> IPBillRefundBillPatientWisePaymentListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPBillRefundBillListPatientWisePaymentDto>(model, "ps_tally_IPBillRefund_BillList_PatientWise_Payment");
+        }
+
+        public virtual async Task<IPagedList<PurchaseWiseSupplierDto>> PurchaseWiseSupplierListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PurchaseWiseSupplierDto>(model, "ps_Tally_PurchaseWiseSupplier");
+        }
     }
 }

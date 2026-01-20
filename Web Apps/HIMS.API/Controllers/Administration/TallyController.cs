@@ -56,6 +56,54 @@ namespace HIMS.API.Controllers.Administration
         }
 
 
+        [HttpPost("IPAdvPatientWisePaymentList")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> IPAdvPatientWisePaymentList(GridRequestModel objGrid)
+        {
+            IPagedList<IPAdvPatientWisePaymentDto> IPAdvPatientWisePaymentList = await _ITallyService.IPAdvPatientWisePaymentListAsync(objGrid);
+            return Ok(IPAdvPatientWisePaymentList.ToGridResponse(objGrid, "IP Adv PatientWise Payment List"));
+        }
+
+
+
+        [HttpPost("IPBillListPatientWiseList")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> IPBillListPatientWiseList(GridRequestModel objGrid)
+        {
+            IPagedList<IPBillListPatientWiseDto> IPBillListPatientWiseList = await _ITallyService.IPBillListPatientWiseListAsync(objGrid);
+            return Ok(IPBillListPatientWiseList.ToGridResponse(objGrid, "IP Bill List Patient Wise List"));
+        }
+
+
+
+        [HttpPost("IPBillCashCounterList")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> IPBillCashCounterList(GridRequestModel objGrid)
+        {
+            IPagedList<IPBillListCashCounterDto> IPBillCashCounterList = await _ITallyService.IPBillCashCounterListAsync(objGrid);
+            return Ok(IPBillCashCounterList.ToGridResponse(objGrid, "IP Bill Cash Counter List"));
+        }
+
+        [HttpPost("IPBillRefundBillPatientWisePaymentList")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> IPBillRefundBillPatientWisePaymentList(GridRequestModel objGrid)
+        {
+            IPagedList<IPBillRefundBillListPatientWisePaymentDto> IPBillRefundBillPatientWisePaymentList = await _ITallyService.IPBillRefundBillPatientWisePaymentListAsync(objGrid);
+            return Ok(IPBillRefundBillPatientWisePaymentList.ToGridResponse(objGrid, "IP Bill Refund Bill Patient Wise Payment List"));
+        }
+
+
+        [HttpPost("PurchaseWiseSupplierList")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> PurchaseWiseSupplierList(GridRequestModel objGrid)
+        {
+            IPagedList<PurchaseWiseSupplierDto> PurchaseWiseSupplierList = await _ITallyService.PurchaseWiseSupplierListAsync(objGrid);
+            return Ok(PurchaseWiseSupplierList.ToGridResponse(objGrid, "Purchase Wise Supplier List"));
+        }
+
+
+
+
     }
 
 }

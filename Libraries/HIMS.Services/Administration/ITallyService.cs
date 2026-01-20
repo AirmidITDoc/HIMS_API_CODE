@@ -19,5 +19,15 @@ namespace HIMS.Services.Administration
 
         Task<IPagedList<IPBillListPatientWisePaymentDto>> IPBillListPatientWisePaymentListAsync(GridRequestModel objGrid);
 
+        Task<IPagedList<IPAdvPatientWisePaymentDto>> IPAdvPatientWisePaymentListAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<IPBillListPatientWiseDto>> IPBillListPatientWiseListAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<IPBillListCashCounterDto>> IPBillCashCounterListAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<IPBillRefundBillListPatientWisePaymentDto>> IPBillRefundBillPatientWisePaymentListAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<PurchaseWiseSupplierDto>> PurchaseWiseSupplierListAsync(GridRequestModel objGrid);
+
     }
 }

@@ -50,6 +50,9 @@ namespace HIMS.Data.DTO.Pathology
         public double? ConcessionAmt { get; set; }
         public long? CompanyId { get; set; }
 
+        public decimal? CardPayAmount { get; set; }
+        public decimal? PayTMAmount { get; set; }
+
     }
 
     public class LabVisitDetailsListSearchDto
