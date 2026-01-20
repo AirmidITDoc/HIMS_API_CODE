@@ -34,8 +34,9 @@
         public string? ExtMobileNo { get; set; }
         public string? DoctorName { get; set; }
         public string? ExtAddress { get; set; }
+        public string? EmailId { get; set; }
 
-
+        
 
     }
 
