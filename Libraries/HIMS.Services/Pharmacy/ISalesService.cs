@@ -39,7 +39,7 @@ namespace HIMS.Services.Users
         void InsertSPD(TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int UserId, string Username);
         void Delete(TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
         void Insert(List<PaymentPharmacy> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, List<TPaymentPharmacy> ObjTPaymentPharmacy ,int UserId, string Username);
-        void InsertSP1(TSalesHeader ObjTSalesHeader, int UserId, string Username);
+        Task InsertPhBillDiscount(TSalesHeader ObjTSalesHeader, int UserId, string Username);
         void InsertSP(TSalesHeader ObjTSalesHeader, int UserId, string Username);
 
         Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str);

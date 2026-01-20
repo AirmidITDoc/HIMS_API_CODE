@@ -2286,6 +2286,22 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+                #region :: SupplierPaymentRecieptByPayment ::
+                case "SupplierPaymentRecieptByPayment":
+                    {
+                        string[] colList = { };
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SupplierPaymentRecieptByPayment.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("ps_rpt_SupplierPaymentReceipt", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "SupplierPaymentRecieptByPayment", "SupplierPaymentRecieptByPayment" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
                 #region :: ExpenseVoucharPrint ::
                 case "ExpenseVoucharPrint":
                     {
@@ -15808,6 +15824,46 @@ namespace HIMS.Services.Report
                         return html;
                     }
                     break;
+
+                case "SupplierPaymentRecieptByPayment":
+                    {
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{SupPayDate}}", dt.GetColValue("SupPayTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{SupplierName}}", dt.GetColValue("SupplierName"));
+                        html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                        html = html.Replace("{{Email}}", dt.GetColValue("Email"));
+                        html = html.Replace("{{Mobile}}", dt.GetColValue("Mobile"));
+                        html = html.Replace("{{TotalAmt}}", dt.GetColValue("NetAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ConcessionAmt}}", "0.00");
+                        html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CardPayAmount}}", dt.GetColValue("cardpayamt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{OnlineAmount}}", dt.GetColValue("OnlineAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PayTMAmount}}", dt.GetColValue("PayTMAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ChequeNo}}", dt.GetColValue("ChequeNo"));
+                        html = html.Replace("{{BankName}}", dt.GetColValue("ChequeBankName"));
+                        html = html.Replace("{{ChequePayDate}}", dt.GetColValue("ChequePayDate").ConvertToDateString("dd/MM/yyyy"));
+                        html = html.Replace("{{CardNo}}", dt.GetColValue("cardno"));
+                        html = html.Replace("{{CardBankName}}", dt.GetColValue("cardbankname"));
+                        html = html.Replace("{{NEFTNo}}", dt.GetColValue("NEFTNo"));
+                        html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo"));
+                        html = html.Replace("{{NEFTBankMaster}}", dt.GetColValue("ChequeBankName"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+                        html = html.Replace("{{Remarks}}", dt.GetColValue("Remarks"));
+                        html = html.Replace("{{PartyReceiptNo}}", dt.GetColValue("PartyReceiptNo"));
+                        html = html.Replace("{{chkcashflag}}", dt.GetColValue("CashPayAmt").ConvertToDouble() > 0 ? "table-row" : "none");
+                        html = html.Replace("{{chkcardflag}}", dt.GetColValue("cardpayamt").ConvertToDouble() > 0 ? "table-row" : "none");
+                        html = html.Replace("{{chkchequeflag}}", dt.GetColValue("ChequePayAmt").ConvertToDouble() > 0 ? "table-row" : "none");
+                        html = html.Replace("{{chkOnlineAmountflag}}", dt.GetColValue("OnlineAmount").ConvertToDouble() > 0 ? "table-row" : "none");
+                        html = html.Replace("{{chkPayTMTxnFlag}}", dt.GetColValue("PayTMTranNo").ConvertToString() != "" ? "block" : "none");
+                        html = html.Replace("{{chkNeftTxnFlag}}", dt.GetColValue("NEFTNo").ConvertToString() != "" ? "block" : "none");
+                        html = html.Replace("{{chkNEFTBankFlag}}", dt.GetColValue("ChequeBankName").ConvertToString() != "" ? "block" : "none");
+                        return html;
+                    }
+
 
 
 
