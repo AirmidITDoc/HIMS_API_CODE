@@ -8,6 +8,8 @@
         public string SalesReturnNo { get; set; }
         public string RegNo { get; set; }
         public string? MobileNo { get; set; }
+
+        public string? EmailId { get; set; }
         public string? AadharCardNo { get; set; }
         public string PatientName { get; set; }
         public decimal TotalAmount { get; set; }

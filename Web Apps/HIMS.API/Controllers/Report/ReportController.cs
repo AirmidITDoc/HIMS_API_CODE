@@ -417,6 +417,7 @@ namespace HIMS.API.Controllers.Report
                 case "NursingVitalsReport":
 
                 case "SupplierPaymentReciept":
+                case "SupplierPaymentRecieptByPayment":
 
 
                 //Labrequest Detail
