@@ -21,7 +21,94 @@ namespace HIMS.Services.Users
         {
             _context = HIMSDbContext;
         }
-      
+        public virtual async Task<IPagedList<PharSalesCurrentSumryListDto>> GetList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PharSalesCurrentSumryListDto>(model, "m_rtrv_Phar_SalesList_CurrentSumry");
+        }
+        public virtual async Task<IPagedList<PharCurrentDetListDto>> SalesDetailsList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PharCurrentDetListDto>(model, "m_rtrv_Phar_SalesList_CurrentDet");
+        }
+
+        public virtual async Task<IPagedList<SalesDetailsListDto>> Getsalesdetaillist(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesDetailsListDto>(model, "ps_Rtrv_SalesDetails");
+        }
+
+        public virtual async Task<IPagedList<SalesBillListDto>> salesbrowselist(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesBillListDto>(model, "ps_Rtrv_SalesBillList");
+        }
+        public virtual async Task<IPagedList<SalesDraftBillListDto>> SalesDraftBillList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesDraftBillListDto>(model, "ps_m_Rtrv_SalesDraftBillList");
+        }
+        public virtual async Task<IPagedList<BalAvaStoreListDto>> BalAvaStoreList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BalAvaStoreListDto>(model, "m_getBalAvaListStore");
+        }
+
+        public virtual async Task<IPagedList<PrescriptionListforSalesDto>> PrescriptionList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrescriptionListforSalesDto>(model, "m_Retrieve_PrescriptionListforSales");
+        }
+
+        public virtual async Task<IPagedList<PrescriptionDetListDto>> PrescriptionDetList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrescriptionDetListDto>(model, "Ret_PrescriptionDet");
+        }
+
+        public virtual async Task<IPagedList<Pharbillsettlementlist>> PharIPBillSettlement(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<Pharbillsettlementlist>(model, "m_Rtrv_Phar_Bill_List_Settlement");
+        }
+        public virtual async Task<IPagedList<BrowseIPPharAdvanceReceiptListDto>> BrowseIPPharAdvanceReceiptList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BrowseIPPharAdvanceReceiptListDto>(model, "ps_Rtrv_BrowseIPPharAdvanceReceipt");
+        }
+        public virtual async Task<IPagedList<PharAdvanceListDto>> PharAdvanceList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PharAdvanceListDto>(model, "ps_Rtrv_Phar_AdvanceList");
+        }
+        public virtual async Task<IPagedList<PhAdvRefundReceiptListDto>> PhAdvRefundReceiptList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PhAdvRefundReceiptListDto>(model, "Rtrv_BrowseT_PhAdvRefundReceipt");
+        }
+        public virtual async Task<IPagedList<PhARefundOfAdvanceListDto>> PhARefundOfAdvanceList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PhARefundOfAdvanceListDto>(model, "m_Rtrv_Phar_RefundOfAdvance");
+        }
+        public virtual async Task<IPagedList<ItemNameBalanceQtyListDto>> BalqtysalesDraftlist(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ItemNameBalanceQtyListDto>(model, "Retrieve_ItemName_BatchPOP_BalanceQty");
+        }
+        public virtual async Task<IPagedList<ItemNameBalanceQtyListDtoKenya>> BalqtysalesDraftlistKenya(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ItemNameBalanceQtyListDtoKenya>(model, "ps_rtrv_ItemName_BatchPOP_BalanceQty_kenya");
+        }
+        public virtual async Task<IPagedList<GetRefundByAdvanceIdListDto>> GetRefundByAdvanceId(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<GetRefundByAdvanceIdListDto>(model, "sp_GetRefundByAdvanceId");
+        }
+        public virtual async Task<IPagedList<SalesDraftBillItemListDto>> SalesDraftBillItemDet(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesDraftBillItemListDto>(model, "ps_SalesDraftBillItemDet");
+        }
+        public virtual async Task<IPagedList<PrescriptionItemDetListDto>> PrescriptionItemDetList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrescriptionItemDetListDto>(model, "ps_PrescriptionItemDet");
+        }
+        public virtual async Task<IPagedList<salespatientwiseListDto>> salespatientwiseList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<salespatientwiseListDto>(model, "ps_rptget_CreditAmount");
+        }
+
+        public virtual async Task<IPagedList<ItemGenericByNameListDto>> ItemGenericByNameList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ItemGenericByNameListDto>(model, "Retrieve_Item_Generic_ByName");
+        }
+
+
 
         // Added by vimal on 05/09/2025
         public virtual async Task InsertAsyncSP(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, PaymentPharmacy ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username)
@@ -226,73 +313,7 @@ namespace HIMS.Services.Users
         }
 
 
-        // done by Ashu Date : 20-May-2025
-        //public virtual async Task InsertAsyncSPC(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username)
-        //{
-
-        //    // //Add header table records
-        //    DatabaseHelper odal = new();
-        //    string[] rEntity = { "SalesNo", "CashCounterId", "ExtRegNo", "RefundAmt", "IsRefundFlag", "RegId", "PatientName", "RegNo", "UpdatedBy", "IsCancelled", "TSalesDetails" };
-        //    var entity = ObjSalesHeader.ToDictionary();
-        //    foreach (var rProperty in rEntity)
-        //    {
-        //        entity.Remove(rProperty);
-        //    }
-        //    string SalesId = odal.ExecuteNonQuery("m_insert_Sales_1", CommandType.StoredProcedure, "SalesId", entity);
-        //    ObjSalesHeader.SalesId = Convert.ToInt32(SalesId);
-
-        //    // Add details table records
-        //    foreach (var item in ObjSalesHeader.TSalesDetails)
-        //    {
-        //        item.SalesId = ObjSalesHeader.SalesId;
-        //    }
-        //    _context.TSalesDetails.AddRange(ObjSalesHeader.TSalesDetails);
-        //    await _context.SaveChangesAsync(UserId, Username);
-
-        //    foreach (var item in ObjTCurrentStock)
-        //    {
-
-        //        string[] Entity = { "StockId", "OpeningBalance", "ReceivedQty", "BalanceQty", "UnitMrp", "PurchaseRate", "LandedRate", "VatPercentage", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "GrnRetQty", "IssDeptQty" };
-        //        var Ientity = item.ToDictionary();
-        //        foreach (var rProperty in Entity)
-        //        {
-        //            Ientity.Remove(rProperty);
-        //        }
-        //        odal.ExecuteNonQuery("m_Update_T_CurStk_Sales_Id_1", CommandType.StoredProcedure, Ientity);
-        //    }
-        //    var SalesIdObj = new
-        //    {
-        //        SalesId = Convert.ToInt32(SalesId)
-        //    };
-        //    odal.ExecuteNonQuery("m_Cal_DiscAmount_Sales", CommandType.StoredProcedure, SalesIdObj.ToDictionary());
-
-        //    var SalessIdObj = new
-        //    {
-        //        SalesId = Convert.ToInt32(SalesId)
-        //    };
-        //    odal.ExecuteNonQuery("m_Cal_GSTAmount_Sales", CommandType.StoredProcedure, SalesIdObj.ToDictionary());
-
-        //    string[] TEntity = { "IppreId","IpmedId", "IPMedID", "OpdIpdType", "Pdate", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "QtyPerDay", "TotalQty", "Remark",
-        //        "IsAddBy", "StoreId", "WardId", "GrnRetQty", "IssDeptQty" ,"Ipmed"};
-        //    var Nentity = ObjPrescription.ToDictionary();
-        //    foreach (var rProperty in TEntity)
-        //    {
-        //        Nentity.Remove(rProperty);
-        //    }
-        //    odal.ExecuteNonQuery("m_Update_T_IPPrescription_Isclosed_Status_1", CommandType.StoredProcedure, Nentity);
-
-        //    string[] DEntity = { "Date","Time", "SalesNo", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount",
-        //        "ConcessionReasonId", "ConcessionAuthorizationId", "CashCounterId",
-        //        "IsSellted", "IsPrint", "UnitId", "AddedBy", "UpdatedBy" ,"ExternalPatientName","DoctorName","StoreId","CreditReason","CreditReasonId",
-        //        "IsCancelled","IsPrescription","WardId","BedId","ExtMobileNo","ExtAddress"};
-        //    var Hentity = ObjDraftHeader.ToDictionary();
-        //    foreach (var rProperty in DEntity)
-        //    {
-        //        Hentity.Remove(rProperty);
-        //    }
-        //    odal.ExecuteNonQuery("m_Update_T_SalDraHeader_IsClosed_1", CommandType.StoredProcedure, Hentity);
-        //}
-
+        
         public virtual async Task InsertAsyncSPC(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int CurrentUserId, string CurrentUserName)
         {
             // Open transaction
@@ -810,22 +831,22 @@ namespace HIMS.Services.Users
 
         }
 
-        public virtual void InsertSP1(TSalesHeader ObjTSalesHeader, int UserId, string UserName)
+        public virtual async Task  InsertPhBillDiscount(TSalesHeader ObjTSalesHeader, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = { "SalesNo", "CashCounterId", "ExtRegNo", "RefundAmt", "IsRefundFlag", "RegId", "PatientName", "RegNo", "UpdatedBy", "IsCancelled", "TSalesDetails",
-            "AddedBy","BedId","ConcessionAuthorizationId","CreditReason","CreditReasonId","Date","DiscperH","DoctorName","ExtAddress","ExternalPatientName","ExtMobileNo","IsBillCheck",
-                "IsFree","IsPrescription","IsPrint","IsPurBill","NetPayableAmt","IsSellted","OpIpId","OpIpType","PaidAmount","RoundOff","SalesHeadName","SalesTypeId","StoreId","Time","TotalAmount",
-                "UnitId","VatAmount","WardId"};
+            string[] AEntity = { "SalesId", "NetAmount", "DiscAmount", "BalanceAmount", "ConcessionReasonId" };
             var entity = ObjTSalesHeader.ToDictionary();
 
-            foreach (var rProperty in AEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
 
             odal.ExecuteNonQuery("m_Update_PhBillDiscountAfter", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjTSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
         }
 
@@ -847,113 +868,8 @@ namespace HIMS.Services.Users
             odal.ExecuteNonQuery("ps_SalesExtpatientDetUpdate", CommandType.StoredProcedure, entity);
 
         }
-        public virtual async Task<IPagedList<PharSalesCurrentSumryListDto>> GetList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PharSalesCurrentSumryListDto>(model, "m_rtrv_Phar_SalesList_CurrentSumry");
-        }
-        public virtual async Task<IPagedList<PharCurrentDetListDto>> SalesDetailsList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PharCurrentDetListDto>(model, "m_rtrv_Phar_SalesList_CurrentDet");
-        }
-
-        public virtual async Task<IPagedList<SalesDetailsListDto>> Getsalesdetaillist(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<SalesDetailsListDto>(model, "ps_Rtrv_SalesDetails");
-        }
-
-        public virtual async Task<IPagedList<SalesBillListDto>> salesbrowselist(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<SalesBillListDto>(model, "ps_Rtrv_SalesBillList");
-        }
-        public virtual async Task<IPagedList<SalesDraftBillListDto>> SalesDraftBillList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<SalesDraftBillListDto>(model, "ps_m_Rtrv_SalesDraftBillList");
-        }
-        public virtual async Task<IPagedList<BalAvaStoreListDto>> BalAvaStoreList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<BalAvaStoreListDto>(model, "m_getBalAvaListStore");
-        }
-
-        public virtual async Task<IPagedList<PrescriptionListforSalesDto>> PrescriptionList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PrescriptionListforSalesDto>(model, "m_Retrieve_PrescriptionListforSales");
-        }
-
-        public virtual async Task<IPagedList<PrescriptionDetListDto>> PrescriptionDetList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PrescriptionDetListDto>(model, "Ret_PrescriptionDet");
-        }
-
-        public virtual async Task<IPagedList<Pharbillsettlementlist>> PharIPBillSettlement(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<Pharbillsettlementlist>(model, "m_Rtrv_Phar_Bill_List_Settlement");
-        }
-        public virtual async Task<IPagedList<BrowseIPPharAdvanceReceiptListDto>> BrowseIPPharAdvanceReceiptList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<BrowseIPPharAdvanceReceiptListDto>(model, "ps_Rtrv_BrowseIPPharAdvanceReceipt");
-        }
-        public virtual async Task<IPagedList<PharAdvanceListDto>> PharAdvanceList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PharAdvanceListDto>(model, "ps_Rtrv_Phar_AdvanceList");
-        }
-        public virtual async Task<IPagedList<PhAdvRefundReceiptListDto>> PhAdvRefundReceiptList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PhAdvRefundReceiptListDto>(model, "Rtrv_BrowseT_PhAdvRefundReceipt");
-        }
-        public virtual async Task<IPagedList<PhARefundOfAdvanceListDto>> PhARefundOfAdvanceList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PhARefundOfAdvanceListDto>(model, "m_Rtrv_Phar_RefundOfAdvance");
-        }
-        public virtual async Task<IPagedList<ItemNameBalanceQtyListDto>> BalqtysalesDraftlist(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<ItemNameBalanceQtyListDto>(model, "Retrieve_ItemName_BatchPOP_BalanceQty");
-        }
-        public virtual async Task<IPagedList<ItemNameBalanceQtyListDtoKenya>> BalqtysalesDraftlistKenya(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<ItemNameBalanceQtyListDtoKenya>(model, "ps_rtrv_ItemName_BatchPOP_BalanceQty_kenya");
-        }
-        public virtual async Task<IPagedList<GetRefundByAdvanceIdListDto>> GetRefundByAdvanceId(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<GetRefundByAdvanceIdListDto>(model, "sp_GetRefundByAdvanceId");
-        }
-        public virtual async Task<IPagedList<SalesDraftBillItemListDto>> SalesDraftBillItemDet(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<SalesDraftBillItemListDto>(model, "ps_SalesDraftBillItemDet");
-        }
-        public virtual async Task<IPagedList<PrescriptionItemDetListDto>> PrescriptionItemDetList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<PrescriptionItemDetListDto>(model, "ps_PrescriptionItemDet");
-        }
-        public virtual async Task<IPagedList<salespatientwiseListDto>> salespatientwiseList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<salespatientwiseListDto>(model, "ps_rptget_CreditAmount");
-        }
-
-        public virtual async Task<IPagedList<ItemGenericByNameListDto>> ItemGenericByNameList(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<ItemGenericByNameListDto>(model, "Retrieve_Item_Generic_ByName");
-        }
-
-        //public virtual async Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str)
-        //{
-
-        //    return await this._context.TSalesHeaders
-        //        .Where(x =>
-        //            (x.ExternalPatientName).ToLower().StartsWith(str) || // Optional: if you want full name search
-        //            x.ExtMobileNo.ToLower().StartsWith(str)                    // Match first name starting with str
-        //        )
-        //        .Take(25)
-        //        .Select(x => new SalesPatientAutoCompleteDto
-        //        {
-        //            ExternalPatientName = x.ExternalPatientName,
-        //            ExtMobileNo = x.ExtMobileNo,
-        //            DoctorName = x.DoctorName,
-        //        })
-        //       .Distinct()  // ✅ remove duplicates
-        //       .OrderByDescending(x => x.ExtMobileNo == str ? 3 : x.ExtMobileNo == str ? 2 : (x.ExternalPatientName) == str ? 1 : 0)
-        //       .ThenBy(x => x.ExternalPatientName).ToListAsync();
-
-        //}
+        
+      
 
 
         public virtual async Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str)
@@ -992,23 +908,6 @@ namespace HIMS.Services.Users
 
         }
 
-        //public virtual async Task<List<SalesPatientAutoCompleteDto>> SearchExtDoctor(string str)
-        //{
-
-        //    return await this._context.TSalesHeaders
-        //        .Where(x =>
-        //            (x.DoctorName).ToLower().StartsWith(str) // Optional: if you want full name search
-        //        )
-        //        .Take(25)
-        //        .Select(x => new SalesPatientAutoCompleteDto
-        //        {
-        //            DoctorName = x.DoctorName,
-        //        })
-        //       .Distinct()  // ✅ remove duplicates
-        //       .OrderByDescending(x => x.DoctorName == str ? 3 : x.DoctorName == str ? 2 : (x.DoctorName) == str ? 1 : 0)
-        //       .ThenBy(x => x.DoctorName).ToListAsync();
-
-        //}
 
 
         public virtual async Task<List<SalesPatientAutoCompleteDto>> SearchExtDoctor(string str)
