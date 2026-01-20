@@ -252,7 +252,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("OPDraftBillInsert")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OPDraftBillInsert(DraftBillModel obj)
         {
             TDrbill model = obj.DRBill.MapTo<TDrbill>();
