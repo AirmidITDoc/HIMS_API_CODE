@@ -25,6 +25,8 @@ namespace HIMS.Services.Inventory
         //List<ItemListForBatchPopDTO> SearchGetItemListForSalesBatchPop(int StoreId, int ItemId, int PatientTypeId);
         List<ItemListForBatchDTO> ItemListForBatch(int StoreId, int ItemId, int PatientTypeId);
 
+        List<ItemListForGRNOrPO> ItemListForIndent(int StoreId, string ItemName);
+
 
     }
 }
