@@ -33,5 +33,9 @@ namespace HIMS.Services.Administration
 
         Task<IPagedList<TallyPhar2PaymentDto>> TallyPhar2PaymentAsync(GridRequestModel objGrid);
 
+        Task<IPagedList<TallyPhar2SalesReturnDto>> TallyPhar2SalesReturnListAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<TallyPhar2ReceiptDto>> TallyPhar2ReceiptListAsync(GridRequestModel objGrid);
+
     }
 }

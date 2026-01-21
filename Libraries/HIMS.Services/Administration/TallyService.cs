@@ -72,5 +72,14 @@ namespace HIMS.Services.Administration
         {
             return await DatabaseHelper.GetGridDataBySp<TallyPhar2PaymentDto>(model, "ps_Tally_Phar2_Payment");
         }
+
+        public virtual async Task<IPagedList<TallyPhar2SalesReturnDto>> TallyPhar2SalesReturnListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TallyPhar2SalesReturnDto>(model, "ps_Tally_Phar2_SalesReturn");
+        }
+        public virtual async Task<IPagedList<TallyPhar2ReceiptDto>> TallyPhar2ReceiptListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TallyPhar2ReceiptDto>(model, "ps_Tally_Phar2_Receipt");
+        }
     }
 }

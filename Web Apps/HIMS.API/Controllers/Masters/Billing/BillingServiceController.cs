@@ -102,6 +102,16 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList with Group Wise List.", resultList);
         }
 
+        [HttpGet("GetServicewithGroupWiseList")]
+        public ApiResponse GetServicewithGroupWiseList(int TariffId, int ClassId,string SrvcName)
+        {
+            var resultList = _BillingService.GetServicewithGroupWiseList(TariffId, ClassId, SrvcName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList with Group Wise List.", resultList);
+        }
+
+
+
+
 
 
         [HttpPut("UpdateDifferTariff")]
