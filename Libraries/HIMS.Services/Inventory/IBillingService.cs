@@ -16,7 +16,7 @@ namespace HIMS.Services.Inventory
         Task<List<BillingServiceListDto>> GetServiceListwithGroupWise(int TariffId, int ClassId, string IsPathRad, string ServiceName);
 
 
-        List<BillingServiceDtoList> GetItemListForPrescriptionSearch(int TariffId, int ClassId, string SrvcName);
+        List<BillingServiceDtoList> GetServicewithGroupWiseList(int TariffId, int ClassId, string SrvcName);
 
         Task<List<ServiceMaster>> GetAllRadiologyTest();
         void UpdateDifferTariff(ServiceDetail serviceDetail, long OldTariffId, long NewTariffId, int userId, string userName);

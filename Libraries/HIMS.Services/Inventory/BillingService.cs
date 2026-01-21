@@ -152,7 +152,7 @@ namespace HIMS.Services.Inventory
 
 
 
-        public virtual List<BillingServiceDtoList> GetItemListForPrescriptionSearch(int TariffId, int ClassId, string SrvcName)
+        public virtual List<BillingServiceDtoList> GetServicewithGroupWiseList(int TariffId, int ClassId, string SrvcName)
         {
 
             DatabaseHelper sql = new();

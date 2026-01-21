@@ -103,9 +103,9 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpGet("GetServicewithGroupWiseList")]
-        public ApiResponse GetItemListForPrescriptionSearch(int TariffId, int ClassId,string SrvcName)
+        public ApiResponse GetServicewithGroupWiseList(int TariffId, int ClassId,string SrvcName)
         {
-            var resultList = _BillingService.GetItemListForPrescriptionSearch(TariffId, ClassId, SrvcName);
+            var resultList = _BillingService.GetServicewithGroupWiseList(TariffId, ClassId, SrvcName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList with Group Wise List.", resultList);
         }
 
