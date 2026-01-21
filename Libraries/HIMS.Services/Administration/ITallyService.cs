@@ -29,5 +29,9 @@ namespace HIMS.Services.Administration
 
         Task<IPagedList<PurchaseWiseSupplierDto>> PurchaseWiseSupplierListAsync(GridRequestModel objGrid);
 
+        Task<IPagedList<TallyPhar2SalesDto>> TallyPhar2SalesListAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<TallyPhar2PaymentDto>> TallyPhar2PaymentAsync(GridRequestModel objGrid);
+
     }
 }

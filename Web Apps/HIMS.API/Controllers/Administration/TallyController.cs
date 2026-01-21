@@ -102,6 +102,23 @@ namespace HIMS.API.Controllers.Administration
         }
 
 
+        [HttpPost("TallyPhar2SalesList")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> TallyPhar2SalesList(GridRequestModel objGrid)
+        {
+            IPagedList<TallyPhar2SalesDto> TallyPhar2SalesList = await _ITallyService.TallyPhar2SalesListAsync(objGrid);
+            return Ok(TallyPhar2SalesList.ToGridResponse(objGrid, "Tally Phar 2 Sales List"));
+        }
+
+
+        [HttpPost("TallyPhar2PaymentList")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> TallyPhar2PaymentList(GridRequestModel objGrid)
+        {
+            IPagedList<TallyPhar2PaymentDto> TallyPhar2PaymentList = await _ITallyService.TallyPhar2PaymentAsync(objGrid);
+            return Ok(TallyPhar2PaymentList.ToGridResponse(objGrid, "Tally Phar 2 Payment List"));
+        }
+
 
 
     }

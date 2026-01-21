@@ -203,4 +203,22 @@ namespace HIMS.Data.DTO.Administration
 
         public decimal TotalBillAmount { get; set; }
     }
+
+    public class TallyPhar2SalesDto
+    {
+        public DateTime MDate { get; set; }
+        public decimal CashPay { get; set; }
+        public string DEBIT { get; set; }
+        public string CREDIT { get; set; }
+        public string SrNo { get; set; }
+    }
+
+    public class TallyPhar2PaymentDto
+    {
+        public DateTime MDate { get; set; }
+        public decimal CashPay { get; set; }
+        public string DEBIT { get; set; }
+        public string CREDIT { get; set; }
+        public string SrNo { get; set; }
+    }
 }
