@@ -105,6 +105,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MQuestionMaster> _MQuestionMaster;
         private readonly IGenericService<MSubQuestionMaster> _MSubQuestionMaster;
         private readonly IGenericService<MSubQuestionValuesMaster> _MSubQuestionValuesMaster;
+        private readonly IGenericService<MPathSpecimenMaster> _MPathSpecimenMaster;
 
 
 
@@ -156,10 +157,8 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MExpensesCategoryMaster> MExpensesCategoryMaster,
                               IGenericService<MQuestionMaster> MQuestionMaster,
                               IGenericService<MSubQuestionMaster> MSubQuestionMaster,
-                              IGenericService<MSubQuestionValuesMaster> MSubQuestionValuesMaster
-
-
-
+                              IGenericService<MSubQuestionValuesMaster> MSubQuestionValuesMaster,
+                              IGenericService<MPathSpecimenMaster> MPathSpecimenMaster
 
                              )
         {
@@ -251,10 +250,7 @@ namespace HIMS.API.Controllers.Common
             _MQuestionMaster = MQuestionMaster;
             _MSubQuestionMaster = MSubQuestionMaster;
             _MSubQuestionValuesMaster = MSubQuestionValuesMaster;
-
-
-            
-
+            _MPathSpecimenMaster = MPathSpecimenMaster;
 
         }
 
@@ -392,15 +388,14 @@ namespace HIMS.API.Controllers.Common
                 "ConsentType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ConsentType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
 
-
-
-
                 "LeaveType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "LeaveType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "DoctorSignPage" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DoctorSignPage")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "GSTTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_TYPES")).ToList().ToDropDown(nameof(MConstant.Name), nameof(MConstant.Name)),
                 "TemplateDescCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TemplateDesCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
-               
 
+                "SampleCollectionType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "SampleCollectionType")).ToList().ToDropDown(nameof(MConstant.Name), nameof(MConstant.Name)),
+                "LabPatientType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "LabPatientType")).ToList().ToDropDown(nameof(MConstant.Name), nameof(MConstant.Name)),
+                "SpecimenList" => (await _MPathSpecimenMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenMaster.SpecimenId), nameof(MPathSpecimenMaster.SpecimenName)),
 
 
                 "ExpensesCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ExpensesCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),

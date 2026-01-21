@@ -29,27 +29,49 @@ namespace HIMS.Services.Nursing
 
 
 
+        //public virtual async Task InsertAsync(THlabRequest objTHlabRequest, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        var lastSeqNoStr = await _context.THlabRequests
+        //           .OrderByDescending(x => x.ReqNo)
+        //           .Select(x => x.ReqNo)
+        //           .FirstOrDefaultAsync();
+
+        //        int lastSeqNo = 0;
+        //        if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
+        //            lastSeqNo = parsed;
+
+        //        // Increment the sequence number
+        //        int newSeqNo = lastSeqNo + 1;
+        //        objTHlabRequest.ReqNo = newSeqNo.ToString();
+        //        _context.THlabRequests.Add(objTHlabRequest);
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
         public virtual async Task InsertAsync(THlabRequest objTHlabRequest, int UserId, string Username)
+
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                var lastSeqNoStr = await _context.THlabRequests
-                   .OrderByDescending(x => x.ReqNo)
-                   .Select(x => x.ReqNo)
-                   .FirstOrDefaultAsync();
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.Serializable }, TransactionScopeAsyncFlowOption.Enabled);
 
-                int lastSeqNo = 0;
-                if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
-                    lastSeqNo = parsed;
+            var presNoList = await _context.THlabRequests
+                .Where(x => x.ReqNo != null && x.ReqNo != "")
+                .Select(x => x.ReqNo)
+                .ToListAsync();
 
-                // Increment the sequence number
-                int newSeqNo = lastSeqNo + 1;
-                objTHlabRequest.ReqNo = newSeqNo.ToString();
-                _context.THlabRequests.Add(objTHlabRequest);
-                await _context.SaveChangesAsync();
+            int lastPresNo = presNoList
+                .Select(p => int.TryParse(p, out var n) ? n : 0)
+                .DefaultIfEmpty(0)
+                .Max();
 
-                scope.Complete();
-            }
+            //  Increment & assign
+            objTHlabRequest.ReqNo = (lastPresNo + 1).ToString();
+            _context.THlabRequests.Add(objTHlabRequest);
+            await _context.SaveChangesAsync();
+
+            scope.Complete();
         }
         public virtual async Task CancelAsync(THlabRequest objTHlabRequest, int CurrentUserId, string CurrentUserName)
         {

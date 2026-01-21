@@ -1,4 +1,5 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Infrastructure;
+using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using System.Transactions;
@@ -12,48 +13,35 @@ namespace HIMS.Services.Nursing
         {
             _context = HIMSDbContext;
         }
+       
         public virtual async Task InsertAsync(TIpmedicalRecord objmedicalRecord, int UserId, string Username)
+
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                var lastSeqNoStr = await _context.TIpmedicalRecords
-                   .OrderByDescending(x => x.PresNo)
-                   .Select(x => x.PresNo)
-                   .FirstOrDefaultAsync();
+            using var scope = new TransactionScope( TransactionScopeOption.Required, new TransactionOptions {IsolationLevel = System.Transactions.IsolationLevel.Serializable }, TransactionScopeAsyncFlowOption.Enabled);
 
-                int lastSeqNo = 0;
-                if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
-                    lastSeqNo = parsed;
+            var presNoList = await _context.TIpmedicalRecords
+                .Where(x => x.PresNo != null && x.PresNo != "")
+                .Select(x => x.PresNo)
+                .ToListAsync();
 
-                // Increment the sequence number
-                int newSeqNo = lastSeqNo + 1;
-                objmedicalRecord.PresNo = newSeqNo.ToString();
-                _context.TIpmedicalRecords.Add(objmedicalRecord);
-                await _context.SaveChangesAsync();
+            int lastPresNo = presNoList
+                .Select(p => int.TryParse(p, out var n) ? n : 0)
+                .DefaultIfEmpty(0)
+                .Max();
 
-                scope.Complete();
-            }
+            //  Increment & assign
+            objmedicalRecord.PresNo = (lastPresNo + 1).ToString();
+
+            objmedicalRecord.CreatedBy = UserId;
+            objmedicalRecord.CreatedDate = AppTime.Now;
+
+            _context.TIpmedicalRecords.Add(objmedicalRecord);
+            await _context.SaveChangesAsync();
+
+            scope.Complete();
         }
-        //public virtual async Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        var last = await _context.TIpprescriptionReturnHs.OrderByDescending(x => x.PresNo).FirstOrDefaultAsync();
 
-        //        int lastNo = 0;
-        //        if (last?.PresNo != null)
-        //        {
-        //            var match = Regex.Match(last.PresNo, @"\d+");
-        //            if (match.Success) lastNo = int.Parse(match.Value);
-        //        }
-        //        objIpprescriptionReturnH.PresNo = (lastNo + 1).ToString();
 
-        //        _context.TIpprescriptionReturnHs.Add(objIpprescriptionReturnH);
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
         public virtual async Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username)
         {
             using var scope = new TransactionScope(

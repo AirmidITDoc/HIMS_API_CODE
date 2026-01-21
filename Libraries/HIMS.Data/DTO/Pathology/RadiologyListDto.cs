@@ -49,6 +49,14 @@
         public long? OutSourceModifiedby { get; set; }
         public DateTime? OutSourceModifiedDateTime { get; set; }
         public string VerifiedUserName { get; set; }
+        public string RefDoctor { get; set; }
+        public string TariffName { get; set; }
+        public string CompanyName { get; set; }
+        public string DepartmentName { get; set; }
+        public string RoomName { get; set; }
+        public string BedName { get; set; }
+
+
 
 
     }

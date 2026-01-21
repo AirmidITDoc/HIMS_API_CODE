@@ -8986,10 +8986,11 @@ namespace HIMS.Services.Report
 
 
                         }
-
                         TotalBillAmount = F_TotalAmount - MedicineReturnamt;
 
-                        FinalNetAmt = F_TotalAmount - TotalConcessionAmt- MedicineReturnamt;
+                        TotalBillAmount = TotalBillAmount - MedicineReturnamt;
+
+                        FinalNetAmt = TotalBillAmount - TotalConcessionAmt;
 
                         if (FinalNetAmt == TotalPaidAmount)
                         {
@@ -9448,9 +9449,12 @@ namespace HIMS.Services.Report
 
                         F_TotalAmount = Math.Ceiling(F_TotalAmount);
 
+
                         TotalBillAmount = F_TotalAmount - MedicineReturnamt;
 
-                        FinalNetAmt = F_TotalAmount - TotalConcessionAmt - MedicineReturnamt;
+                        TotalBillAmount = TotalBillAmount - MedicineReturnamt;
+
+                        FinalNetAmt = TotalBillAmount - TotalConcessionAmt ;
 
                         if (FinalNetAmt == TotalPaidAmount)
                         {
@@ -9672,7 +9676,9 @@ namespace HIMS.Services.Report
 
                         TotalBillAmount = F_TotalAmount - MedicineReturnamt;
 
-                        FinalNetAmt = F_TotalAmount - TotalConcessionAmt - MedicineReturnamt;
+                        TotalBillAmount = TotalBillAmount - MedicineReturnamt;
+
+                        FinalNetAmt = TotalBillAmount - TotalConcessionAmt;
 
                         if (FinalNetAmt == TotalPaidAmount)
                         {
