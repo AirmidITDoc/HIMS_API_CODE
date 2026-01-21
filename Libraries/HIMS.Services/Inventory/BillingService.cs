@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
@@ -146,7 +147,24 @@ namespace HIMS.Services.Inventory
             // Return the results
             return await query.ToListAsync();
         }
-       
+
+
+
+
+
+        public virtual List<BillingServiceDtoList> GetItemListForPrescriptionSearch(int TariffId, int ClassId, string SrvcName)
+        {
+
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[3];
+
+            para[0] = new SqlParameter("@TariffId", TariffId);
+            para[1] = new SqlParameter("@ClassId", ClassId);
+            para[2] = new SqlParameter("@SrvcName", SrvcName);
+
+
+            return sql.FetchListBySP<BillingServiceDtoList>("m_Rtrv_ServicesList", para);
+        }
 
         public virtual void UpdateDifferTariff(ServiceDetail ObjServiceDetail, long OldTariffId, long NewTariffId, int UserId, string UserName)
         {

@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 
@@ -13,6 +14,10 @@ namespace HIMS.Services.Inventory
         Task<IPagedList<BillingServiceDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<PackageServiceInfoListDto>> GetListAsync1(GridRequestModel objGrid);
         Task<List<BillingServiceListDto>> GetServiceListwithGroupWise(int TariffId, int ClassId, string IsPathRad, string ServiceName);
+
+
+        List<BillingServiceDtoList> GetItemListForPrescriptionSearch(int TariffId, int ClassId, string SrvcName);
+
         Task<List<ServiceMaster>> GetAllRadiologyTest();
         void UpdateDifferTariff(ServiceDetail serviceDetail, long OldTariffId, long NewTariffId, int userId, string userName);
         Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, string ServiceName);
