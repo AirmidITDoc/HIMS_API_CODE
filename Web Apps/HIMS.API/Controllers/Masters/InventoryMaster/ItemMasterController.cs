@@ -155,12 +155,20 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List For GRN or PO List.", resultList);
         }
 
-        [HttpPost("GetItemListForGRNOrPOBySp")]
-        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
-        public async Task<IActionResult> GetItemListForGRNOrPOBySp(GridRequestModel objGrid)
+        //[HttpPost("GetItemListForGRNOrPOBySp")]
+        ////[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        //public async Task<IActionResult> GetItemListForGRNOrPOBySp(GridRequestModel objGrid)
+        //{
+        //    IPagedList<ItemListForGRNOrPO> ItemMasterList = await _ItemMasterServices.GetItemMasterBySpListAsync(objGrid);
+        //    return Ok(ItemMasterList.ToGridResponse(objGrid, "Get Item List For GRN or PO List. "));
+        //}
+
+
+        [HttpGet("search-GetItemListForIndent")]
+        public ApiResponse ItemListForIndent(int StoreId, string ItemName)
         {
-            IPagedList<ItemListForGRNOrPO> ItemMasterList = await _ItemMasterServices.GetItemMasterBySpListAsync(objGrid);
-            return Ok(ItemMasterList.ToGridResponse(objGrid, "Get Item List For GRN or PO List. "));
+            var data = _ItemMasterServices.ItemListForIndent(StoreId, ItemName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Item List For Indent", data);
         }
 
         [HttpGet("GetItemListForSalesBatchPop")]

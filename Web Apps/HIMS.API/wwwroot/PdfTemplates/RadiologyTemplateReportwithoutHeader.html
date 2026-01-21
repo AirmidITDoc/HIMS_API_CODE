@@ -6,8 +6,8 @@
     <title>Laboratory Report</title>
 </head>
 
-<body style="margin:0; height:100%; font-family:Verdana, Arial, sans-serif; color:#000; display:flex; flex-direction:column; min-height:100vh;">
-    <div style="flex:1; padding:10px; box-sizing:border-box;">
+<body style="margin: 0; height: 100%; font-family: Verdana, Arial, sans-serif; color: #000; display: flex; flex-direction: column; min-height: 100vh; margin-left: 12px;">
+    <div style="flex: 1; padding: 10px; box-sizing: border-box; margin-left: 12px;">
         <table style="width:100%; border-collapse:collapse; font-size:12px;">
             <tr>
              
@@ -17,7 +17,7 @@
                     <table style="width:100%; border-collapse:collapse;">
                         <tr>
                             <td style="font-weight:bold; font-size:12px; text-align:left; padding-top:135px;">
-                                Laboratory Report
+                                Radiology Lab report
                             </td>
                             <td style="font-weight: bold; font-size: 12px; text-align: right; padding-top: 135px;">
                                 Print Date : {{CurrentDate}}
@@ -37,31 +37,31 @@
                                         <td style="font-size:12px; font-weight:normal;">UHID</td>
                                         <td style="font-size:12px; font-weight:normal;">: <strong>{{RegNo}}</strong></td>
                                         <td style="font-size:12px; font-weight:normal;">REGISTERED ON</td>
-                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{ReportTime}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{RadTime}}</strong></td>
                                     </tr>
                                     <tr>
                                         <td style="font-size:12px; font-weight:normal;">PATIENT NAME</td>
                                         <td style="font-size:12px; font-weight:normal;">: <strong>{{PatientName}}</strong></td>
-                                        <td style="font-size:12px; font-weight:normal;">COLLECTED ON</td>
-                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{RadTime}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal;">REPORTED ON</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{ReportTime}}</strong></td>
+                                        <!--<td style="font-size:12px; font-weight:normal;">COLLECTED ON</td>
+                <td style="font-size:12px; font-weight:normal;">: <strong>{{RadTime}}</strong></td>-->
                                     </tr>
                                     <tr>
                                         <td style="font-size:12px; font-weight:normal;">AGE</td>
                                         <td style="font-size:12px; font-weight:normal;">: {{AgeYear}} Years</td>
-                                        <td style="font-size:12px; font-weight:normal;">REPORTED ON</td>
-                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{ReportTime}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal;">REFERRED BY</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{ConsultantName}}</strong></td>
+
                                     </tr>
                                     <tr>
                                         <td style="font-size:12px; font-weight:normal;">SEX</td>
                                         <td style="font-size:12px; font-weight:normal;">: {{GenderName}}</td>
-                                        <td style="font-size:12px; font-weight:normal;">SAMPLE NO</td>
-                                        <td style="font-size:12px; font-weight:normal;">: {{SampleNo}}</td>
-                                    </tr>
-                                    <tr>
                                         <td style="font-size:12px; font-weight:normal;">NATIONAL ID NO</td>
-                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{ID}}</strong></td>
-                                        <td style="font-size:12px; font-weight:normal;">REFERRED BY</td>
-                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{ConsultantName}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{AadharCardNo}}</strong></td>
+                                        <!--<td style="font-size:12px; font-weight:normal;">SAMPLE NO</td>
+                <td style="font-size:12px; font-weight:normal;">: {{SampleNo}}</td>-->
+
                                     </tr>
                                     <tr>
                                         <td style="font-size:12px; font-weight:normal;">REPORT STATUS</td>
@@ -134,24 +134,24 @@
 
         <table style="width: 100%; margin-top: 20px; border-top: 1px solid #000;">
             <tr>
-                <td style="text-align:center; font-size:12px; font-weight:bold;">
-                    **END OF REPORT**
+                <td style="text-align:center; font-size:12px;">
+                    **End Of Report**
                 </td>
             </tr>
         </table>
 
 
-        <table style="width:100%; margin-top:20px;">
+        <table style="width:30%; margin-top:15px;">
             <tr>
-                <td style="text-align:right;">
-                    <img src="{{Signature}}" width="200" height="100" style="display:{{chkSignature}};" />
+                <td style="text-align:left;">
+                    <img src="{{Signature}}" width="150" height="70" style="display:{{chkSignature}};" />
                     <div style="font-size:12px; font-weight:bold;">{{RadiologyDocName}}</div>
                     <div style="font-size:12px; font-weight:bold;">{{Education}}</div>
                     <div style="font-size:12px; font-weight:bold;">{{MahRegNo}}</div>
                 </td>
             </tr>
         </table>
-        <div style="font-family:Verdana, Arial, sans-serif; font-size:9px; text-align:center;">
+        <div style="font-family:Verdana, Arial, sans-serif; font-size:12px; text-align:center;">
             Test Performed At MEDITEST DIAGNOSTIC SERVICE Ltd. Reproduction of Reports is not Permitted<br>
             For any query related KENAS scope, Kindly contact to us: qualityassurance@meditestdiagnostic.com
         </div>
@@ -159,12 +159,12 @@
     </div>
 
     <!-- FOOTER -->
-    <div style="border-top:1px solid #000; text-align:center; font-size:10px; font-weight:bold; padding:6px 10px; background:#fff;">
+    <!--<div style="border-top:1px solid #000; text-align:center; font-size:10px; font-weight:bold; padding:6px 10px; background:#fff;">
         Meditest Diagnostic Services Ltd | Sclaters House | Parklands Road<br />
         P. O. Box 66341 - 00800 | Nairobi | Kenya<br />
         Tel: +254 734 205 430, +254 730 795 000, +254 786 434 046<br />
         Email: info@meditestdiagnostic.com | Web: www.meditestdiagnostic.com
-    </div>
+    </div>-->
 
 </body>
 </html>

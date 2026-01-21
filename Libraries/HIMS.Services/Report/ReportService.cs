@@ -4782,7 +4782,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{UserName}}", dt.GetColValue("AddedByName").ConvertToString());
                         html = html.Replace("{{HospitalName}}", dt.GetColValue("HospitalName").ConvertToString());
-                        html = html.Replace("{{DiscComments}}", dt.GetColValue("DiscComments").ConvertToString());
+                        html = html.Replace("{{ConcessionReason}}", dt.GetColValue("ConcessionReason").ConvertToString());
                         html = html.Replace("{{CashPay}}", dt.GetColValue("CashPay").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{ChequePay}}", dt.GetColValue("ChequePay").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{CardPay}}", dt.GetColValue("CardPay").ConvertToDouble().ToString("F2"));
@@ -4800,7 +4800,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkBalanceafterGovflag}}", dt.GetColValue("BalanceafterGov").ConvertToDouble() > 0 ? "table-row " : "none");
 
 
-
+                        
 
                         string finalamt = conversion(T_NetAmount.ToString());
                         html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
@@ -8184,8 +8184,10 @@ namespace HIMS.Services.Report
                         }
 
                         TotalBillAmount = F_TotalAmount- MedicineReturnamt;
+                        TotalBillAmount = TotalBillAmount - MedicineReturnamt;
 
-                        FinalNetAmt = Math.Round(F_TotalAmount - TotalConcessionAmt - MedicineReturnamt, 0,MidpointRounding.AwayFromZero);
+
+                        FinalNetAmt = Math.Round(TotalBillAmount - TotalConcessionAmt , 0,MidpointRounding.AwayFromZero);
 
                         //   aftergovbal = FinalNetAmt - TotalGovAmount - TotalPaidAmount;
 
@@ -12524,8 +12526,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ResultEntry}}", dt.GetColValue("ResultEntry").ConvertToString());
                         html = html.Replace("{{PrintTestName}}", dt.GetColValue("PrintTestName"));
                         html = html.Replace("{{SuggestionNotes}}", dt.GetColValue("SuggestionNotes"));
+                        html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
 
-
+                        
                         html = html.Replace("{{PathResultDr1}}", dt.GetColValue("PathResultDr1"));
                         html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
                         html = html.Replace("{{Education}}", dt.GetColValue("Education"));
@@ -12572,7 +12575,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ResultEntry}}", dt.GetColValue("ResultEntry").ConvertToString());
                         html = html.Replace("{{PrintTestName}}", dt.GetColValue("PrintTestName"));
                         html = html.Replace("{{SuggestionNotes}}", dt.GetColValue("SuggestionNotes"));
-
+                        html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
 
                         html = html.Replace("{{PathResultDr1}}", dt.GetColValue("PathResultDr1"));
                         html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
@@ -14335,7 +14338,7 @@ namespace HIMS.Services.Report
                             return 2; // all other labels
                         })
                                 .ThenBy(dr => dr["BillDate"])
-                                .ThenBy(dr => dr["PBillNo"])
+                                .ThenBy(dr => dr["DRBNo"])
                                 .ToList();
 
                         foreach (DataRow dr in sortedBills)
@@ -14344,9 +14347,9 @@ namespace HIMS.Services.Report
 
                             string currentSalesType = dr["Lbl"].ToString();
                             string currentSalesDate = dr["BillDate"].ConvertToDateString("dd-MM-yyyy");
-                            string currentSalesNo = dr["PBillNo"].ToString();
-                            GovtApprovedAmt = dr["GovtApprovedAmt"].ConvertToDouble();
-                            CompanyApprovedAmt = dr["CompanyApprovedAmt"].ConvertToDouble();
+                            string currentSalesNo = dr["DRBNo"].ToString();
+                            //GovtApprovedAmt = dr["GovtApprovedAmt"].ConvertToDouble();
+                            //CompanyApprovedAmt = dr["CompanyApprovedAmt"].ConvertToDouble();
 
                             // ================= BILL CHANGE =================
                             if (previousSalesNo != currentSalesNo)
