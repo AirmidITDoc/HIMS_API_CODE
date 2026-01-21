@@ -13,7 +13,7 @@ namespace HIMS.Services.Inventory
         Task CancelAsync(MItemMaster objItemMaster, int UserId, string Username);
         Task<IPagedList<ItemMasterListDto>> GetItemMasterListAsync(GridRequestModel objGrid);
 
-        Task<IPagedList<ItemListForGRNOrPO>> GetItemMasterBySpListAsync(GridRequestModel objGrid);
+       // Task<IPagedList<ItemListForGRNOrPO>> GetItemMasterBySpListAsync(GridRequestModel objGrid);
         Task<MItemMaster> GetById(int Id);
        Task<List<ItemListForSearchDTO>> GetItemListForPrescription(int StoreId, string ItemName);
        List<ItemListForSearch> GetItemListForPrescriptionSearch( string ItemName, int StoreId);
@@ -24,6 +24,8 @@ namespace HIMS.Services.Inventory
         List<ItemListForSearchDTO> GetItemListForPrescriptionretrun(int StoreId,  int IPAdmID, String ItemName);
         //List<ItemListForBatchPopDTO> SearchGetItemListForSalesBatchPop(int StoreId, int ItemId, int PatientTypeId);
         List<ItemListForBatchDTO> ItemListForBatch(int StoreId, int ItemId, int PatientTypeId);
+
+        List<ItemListForGRNOrPO> ItemListForIndent(int StoreId, string ItemName);
 
 
     }

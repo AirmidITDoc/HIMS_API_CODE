@@ -28,9 +28,20 @@ namespace HIMS.Services.Inventory
         }
 
         
-       public virtual async Task<IPagedList<ItemListForGRNOrPO>> GetItemMasterBySpListAsync(GridRequestModel model)
+       //public virtual async Task<IPagedList<ItemListForGRNOrPO>> GetItemMasterBySpListAsync(GridRequestModel model)
+       // {
+       //     return await DatabaseHelper.GetGridDataBySp<ItemListForGRNOrPO>(model, "ps_rtrv_GetItemListForGRNOrPO");
+       // }
+
+        public List<ItemListForGRNOrPO> ItemListForIndent(int StoreId, string ItemName)
         {
-            return await DatabaseHelper.GetGridDataBySp<ItemListForGRNOrPO>(model, "ps_rtrv_GetItemListForGRNOrPO");
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[2];
+            para[0] = new SqlParameter("@StoreId", StoreId);
+            para[1] = new SqlParameter("@ItemName", ItemName);
+           
+            List<ItemListForGRNOrPO> lstServiceList = sql.FetchListBySP<ItemListForGRNOrPO>("ps_rtrv_GetItemListForGRNOrPO", para);
+            return lstServiceList;
         }
 
 
