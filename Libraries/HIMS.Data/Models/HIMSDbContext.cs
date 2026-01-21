@@ -13404,6 +13404,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AgeYear).HasMaxLength(5);
 
+                entity.Property(e => e.Comments).HasMaxLength(255);
+
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.DateofBirth).HasColumnType("datetime");
@@ -13419,6 +13421,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MobileNo).HasMaxLength(11);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ReferByName).HasMaxLength(255);
 
                 entity.Property(e => e.RegDate).HasColumnType("datetime");
 
