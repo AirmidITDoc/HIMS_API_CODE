@@ -268,6 +268,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MPathParaRangeMaster> MPathParaRangeMasters { get; set; } = null!;
         public virtual DbSet<MPathParaRangeWithAgeMaster> MPathParaRangeWithAgeMasters { get; set; } = null!;
         public virtual DbSet<MPathParameterMaster> MPathParameterMasters { get; set; } = null!;
+        public virtual DbSet<MPathSpecimenMaster> MPathSpecimenMasters { get; set; } = null!;
         public virtual DbSet<MPathTemplateDetail> MPathTemplateDetails { get; set; } = null!;
         public virtual DbSet<MPathTemplateDetail1> MPathTemplateDetails1 { get; set; } = null!;
         public virtual DbSet<MPathTestDetailMaster> MPathTestDetailMasters { get; set; } = null!;
@@ -600,7 +601,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -8090,6 +8091,19 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ParameterShortName).HasMaxLength(100);
 
                 entity.Property(e => e.PrintParameterName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<MPathSpecimenMaster>(entity =>
+            {
+                entity.HasKey(e => e.SpecimenId);
+
+                entity.ToTable("M_PathSpecimenMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SpecimenName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<MPathTemplateDetail>(entity =>
