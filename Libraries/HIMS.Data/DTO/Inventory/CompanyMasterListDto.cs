@@ -35,6 +35,8 @@
         public string? CityName { get; set; }
         public string? TariffName { get; set; }
         public string? TypeName { get; set; }
+        public decimal DayWiseCredit { get; set; }
+
 
     }
     public class ServiceTariffWiseListDto
