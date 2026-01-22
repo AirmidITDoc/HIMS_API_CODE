@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
@@ -31,6 +32,15 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             return Ok(CompanyEmployeInfo.ToGridResponse(objGrid, "Company Employe Info  List"));
         }
 
+        //List API
+        [HttpGet]
+        [Route("get-employe")]
+        // [Permission(PageCode = "CompanyEmployeInfo", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown()
+        {
+            var CompanyEmployeInfoList = await _repository.GetAll(x => x.IsActive.Value);         
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Company Employee dropdown", CompanyEmployeInfoList.Select(x => new { FullName = x.FirstName + " " + x.LastName , x.ExecutiveId }));
+        }
 
         //List API Get By Id
         [HttpGet("{id?}")]
