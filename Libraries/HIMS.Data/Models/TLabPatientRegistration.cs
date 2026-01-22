@@ -35,12 +35,13 @@ namespace HIMS.Data.Models
         public long? CompanyId { get; set; }
         public long? SubCompanyId { get; set; }
         public long? CampId { get; set; }
+        public long? PatientType { get; set; }
+        public string? Comments { get; set; }
+        public string? ReferByName { get; set; }
+        public long? CompanyExecutiveId { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public long? PatientType { get; set; }
-        public string? Comments { get; set; }
-        public string? ReferByName { get; set; }
     }
 }
