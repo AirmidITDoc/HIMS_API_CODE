@@ -190,6 +190,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<MCertificateTemplateMaster> MCertificateTemplateMasters { get; set; } = null!;
         public virtual DbSet<MCityMaster> MCityMasters { get; set; } = null!;
         public virtual DbSet<MClassMaster> MClassMasters { get; set; } = null!;
+        public virtual DbSet<MCompanyEmployeInfo> MCompanyEmployeInfos { get; set; } = null!;
+        public virtual DbSet<MCompanyExecutiveInfo> MCompanyExecutiveInfos { get; set; } = null!;
         public virtual DbSet<MCompanyServiceAssignMaster> MCompanyServiceAssignMasters { get; set; } = null!;
         public virtual DbSet<MCompanyWiseServiceDiscount> MCompanyWiseServiceDiscounts { get; set; } = null!;
         public virtual DbSet<MComplaintMaster> MComplaintMasters { get; set; } = null!;
@@ -6509,6 +6511,36 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.TemplateDescName).HasColumnType("text");
+            });
+
+            modelBuilder.Entity<MCompanyEmployeInfo>(entity =>
+            {
+                entity.HasKey(e => e.ExecutiveId);
+
+                entity.ToTable("M_CompanyEmployeInfo");
+
+                entity.Property(e => e.Address).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EmailId).HasMaxLength(255);
+
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+
+                entity.Property(e => e.LastName).HasMaxLength(50);
+
+                entity.Property(e => e.MiddleName).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MCompanyExecutiveInfo>(entity =>
+            {
+                entity.ToTable("M_CompanyExecutiveInfo");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MCompanyServiceAssignMaster>(entity =>

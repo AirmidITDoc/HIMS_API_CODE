@@ -111,8 +111,7 @@ namespace HIMS.API.Models.Pathology
         public long? PatientType { get; set; }
         public string? Comments { get; set; }
         public string? ReferByName { get; set; }
-
-
+        public long? CompanyExecutiveId { get; set; }
 
     }
     public class OPBillIngLabModel

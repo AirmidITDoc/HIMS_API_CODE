@@ -194,7 +194,7 @@ namespace HIMS.API.Controllers.Pathology
         [Permission]
         public ApiResponse SearchPatientNew( [FromQuery] long UnitId,  [FromQuery] string Keyword)
         {
-            var data = _ILabPatientRegistrationService .SearchlabRegistration(UnitId, Keyword);
+            var data = _ILabPatientRegistrationService.SearchlabRegistration(UnitId, Keyword);
 
             return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "Patient Visit data", data  );
         }
