@@ -16,7 +16,7 @@ namespace HIMS.Data.DTO.Administration
         public decimal ChequePayAmount { get; set; }
         public decimal CardPayAmount { get; set; }
         public decimal AdvanceUsedAmount { get; set; }
-        public decimal NEFTPayAmount { get; set; }
+       // public decimal NEFTPayAmount { get; set; }
         public decimal PayTMAmount { get; set; }
     }
 
@@ -30,7 +30,7 @@ namespace HIMS.Data.DTO.Administration
         public decimal ChequePayAmount { get; set; }
         public decimal CardPayAmount { get; set; }
         public decimal AdvanceUsedAmount { get; set; }
-        public decimal NEFTPayAmount { get; set; }
+        //public decimal NEFTPayAmount { get; set; }
         public decimal PayTMAmount { get; set; }
     }
 
@@ -42,7 +42,7 @@ namespace HIMS.Data.DTO.Administration
         public decimal ChequePayAmount { get; set; }
         public decimal CardPayAmount { get; set; }
         public decimal AdvanceUsedAmount { get; set; }
-        public decimal NEFTPayAmount { get; set; }
+        //public decimal NEFTPayAmount { get; set; }
         public decimal PayTMAmount { get; set; }
     }
 
@@ -64,7 +64,7 @@ namespace HIMS.Data.DTO.Administration
 
         public decimal CardPayAmount { get; set; }
 
-        public decimal NEFTPayAmount { get; set; }
+        //public decimal NEFTPayAmount { get; set; }
 
         public decimal PayTMAmount { get; set; }
 
@@ -91,7 +91,7 @@ namespace HIMS.Data.DTO.Administration
 
         public decimal CardPayAmount { get; set; }
 
-        public decimal NEFTPayAmount { get; set; }
+       // public decimal NEFTPayAmount { get; set; }
 
         public decimal PayTMAmount { get; set; }
     }
@@ -136,7 +136,7 @@ namespace HIMS.Data.DTO.Administration
 
         public decimal CardPayAmount { get; set; }
 
-        public decimal NEFTPayAmount { get; set; }
+       // public decimal NEFTPayAmount { get; set; }
 
         public decimal PayTMAmount { get; set; }
 
@@ -162,7 +162,7 @@ namespace HIMS.Data.DTO.Administration
 
         public decimal CardPayAmount { get; set; }
 
-        public decimal NEFTPayAmount { get; set; }
+       // public decimal NEFTPayAmount { get; set; }
 
         public decimal PayTMAmount { get; set; }
 
