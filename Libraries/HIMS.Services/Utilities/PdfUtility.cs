@@ -75,7 +75,7 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
             htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
 
-
+                
             var HospitalLogo = GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
             htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
             //RS
@@ -88,6 +88,41 @@ namespace HIMS.Services.Utilities
 
             return htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden");
         }
+
+
+
+        //public string GetHeader(string filePath, long HospitalId = 0)
+        //{
+        //    string htmlHeader = System.IO.File.ReadAllText(filePath);
+        //    HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
+        //    var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+        //    var logo2 = _context.FileMasters.FirstOrDefault(x =>  x.RefType == 10 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+
+        //    htmlHeader = htmlHeader.Replace("{{HospitalName}}", objHospital?.HospitalName ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{Address}}", objHospital?.HospitalAddress ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{City}}", objHospital?.City ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{Pin}}", objHospital?.Pin ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{Phone}}", objHospital?.Phone ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
+        //    htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
+
+        //    var HospitalLogo = logo != null
+        //        ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName)
+        //        : "";
+
+        //    var HospitalLogo2 = logo2 != null
+        //        ? GetBase64FromFolder("Hospital\\Logo", logo2.DocSavedName)
+        //        : "";
+
+        //    htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
+        //    htmlHeader = htmlHeader.Replace("{{logo2}}", HospitalLogo2);
+
+        //    // Visibility control
+        //    return htmlHeader.Replace( "{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden"
+        //    );
+        //}
+
 
         public string GetPatientHeader(ReportRequestModel model,string filePath)
         {
