@@ -1,17 +1,19 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
-using HIMS.API.Models.Pathology;
-using HIMS.Core.Domain.Grid;
-using HIMS.Core.Infrastructure;
-using HIMS.Data.Models;
-using HIMS.Data;
-using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
+using HIMS.API.Models.Pathology;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Pathology;
+using HIMS.Data.Models;
 using HIMS.Services.OTManagment;
 using HIMS.Services.Pathlogy;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -29,6 +31,22 @@ namespace HIMS.API.Controllers.Pathology
             _IEstimasteService = repository;
             _repository = repository1;
 
+        }
+
+        [HttpPost("EstimateList")]
+        //[Permission(PageCode = "EstimateList", Permission = PagePermission.View)]
+        public async Task<IActionResult> EstimateList(GridRequestModel objGrid)
+        {
+            IPagedList<EstimateListDto> EstimateList = await _IEstimasteService.EstimateListAsync(objGrid);
+            return Ok(EstimateList.ToGridResponse(objGrid, "Estimate List "));
+        }
+
+        [HttpPost("EstimateDetailsList")]
+        //[Permission(PageCode = "EstimateDetailsList", Permission = PagePermission.View)]
+        public async Task<IActionResult> EstimateDetailsList(GridRequestModel objGrid)
+        {
+            IPagedList<EstimateDetailsListDto> EstimateDetailsList = await _IEstimasteService.EstimateDetailsListAsync(objGrid);
+            return Ok(EstimateDetailsList.ToGridResponse(objGrid, "Estimate Details List "));
         }
 
         ////List API Get By Id

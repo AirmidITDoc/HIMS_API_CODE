@@ -1,12 +1,16 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace HIMS.Services.Pathlogy
@@ -18,7 +22,15 @@ namespace HIMS.Services.Pathlogy
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<IPagedList<EstimateListDto>> EstimateListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<EstimateListDto>(model, "ps_rpt_EstimateList");
+        }
 
+        public virtual async Task<IPagedList<EstimateDetailsListDto>> EstimateDetailsListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<EstimateDetailsListDto>(model, "ps_rpt_EstimateDetailsList");
+        }
         public virtual async Task InsertAsync(TEstimateHeader ObjTEstimateHeader, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
