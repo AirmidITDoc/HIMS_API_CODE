@@ -108,8 +108,10 @@ namespace HIMS.API.Models.Pathology
         public long? CompanyId { get; set; }
         public long? SubCompanyId { get; set; }
         public long? CampId { get; set; }
-
-
+        public long? PatientType { get; set; }
+        public string? Comments { get; set; }
+        public string? ReferByName { get; set; }
+        public long? CompanyExecutiveId { get; set; }
 
     }
     public class OPBillIngLabModel

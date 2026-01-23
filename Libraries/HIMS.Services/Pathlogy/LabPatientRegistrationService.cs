@@ -86,7 +86,8 @@ namespace HIMS.Services.Pathlogy
 
                 DatabaseHelper odal = new();
                 string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId", 
-                    "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId", "AdharCardNo", "CompanyId", "SubCompanyId", "CampId"};
+                    "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId", "AdharCardNo", "CompanyId", "SubCompanyId", "CampId",
+                    "PatientType","Comments","ReferByName","CompanyExecutiveId"};
 
                 var lentity = ObjTLabPatientRegistration.ToDictionary();
                 foreach (var rProperty in lentity.Keys.ToList())
@@ -281,7 +282,8 @@ namespace HIMS.Services.Pathlogy
 
                 DatabaseHelper odal = new();
                 string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", 
-                    "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId","AdharCardNo", "CompanyId", "SubCompanyId", "CampId" };
+                    "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId","AdharCardNo", "CompanyId", "SubCompanyId", "CampId",
+                    "PatientType","Comments","ReferByName","CompanyExecutiveId"};
 
                 var lentity = ObjTLabPatientRegistration.ToDictionary();
                 foreach (var rProperty in lentity.Keys.ToList())

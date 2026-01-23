@@ -6548,6 +6548,36 @@ namespace HIMS.Data.Models
                     .HasConstraintName("FK_M_CompanyExecutiveInfo_CompanyMaster");
             });
 
+            modelBuilder.Entity<MCompanyEmployeInfo>(entity =>
+            {
+                entity.HasKey(e => e.ExecutiveId);
+
+                entity.ToTable("M_CompanyEmployeInfo");
+
+                entity.Property(e => e.Address).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EmailId).HasMaxLength(255);
+
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+
+                entity.Property(e => e.LastName).HasMaxLength(50);
+
+                entity.Property(e => e.MiddleName).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MCompanyExecutiveInfo>(entity =>
+            {
+                entity.ToTable("M_CompanyExecutiveInfo");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<MCompanyServiceAssignMaster>(entity =>
             {
                 entity.HasKey(e => e.CompanyAssignId);
