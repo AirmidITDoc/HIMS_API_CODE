@@ -238,7 +238,7 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<TCompanyApprovalDetail, CompanyApprovalDetModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-
+            CreateMap<MCompanyExecutiveInfo, CompanyExecutiveInfoModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

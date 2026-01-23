@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -80,41 +81,84 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
 
-        [HttpPost]
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(CompanyMasterModel obj)
+        //[HttpPost]
+        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> Post(CompanyMasterModel obj)
+        //{
+        //    CompanyMaster model = obj.MapTo<CompanyMaster>();
+        //    model.IsActive = true;
+        //    if (obj.CompanyId == 0)
+        //    {
+        //        model.CreatedBy = CurrentUserId;
+        //        model.CreatedDate = AppTime.Now;
+        //        model.ModifiedBy = CurrentUserId;
+        //        model.ModifiedDate = AppTime.Now;
+        //        await _repository.Add(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        //}
+
+        [HttpPost("InsertEDMX")]
+        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertEDMX(CompanyMasterModel obj)
         {
             CompanyMaster model = obj.MapTo<CompanyMaster>();
-            model.IsActive = true;
             if (obj.CompanyId == 0)
             {
-                model.CreatedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
-                model.ModifiedBy = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
+                model.ModifiedBy = CurrentUserId;
+               // model.AddedBy = CurrentUserId;
+                model.IsActive = true;
+                await _CompanyMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
-        //Edit API
-        [HttpPut("{id:int}")]
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
+
+        [HttpPut("Edit/{id:int}")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(CompanyMasterModel obj)
         {
             CompanyMaster model = obj.MapTo<CompanyMaster>();
-            model.IsActive = true;
             if (obj.CompanyId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+                model.ModifiedBy = CurrentUserId;
+               // model.AddedBy = CurrentUserId;
+               // model.UpdatedBy = CurrentUserId;
+                model.IsActive = true;
+                await _CompanyMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+
+        ////Edit API
+        //[HttpPut("{id:int}")]
+        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
+        //public async Task<ApiResponse> Edit(CompanyMasterModel obj)
+        //{
+        //    CompanyMaster model = obj.MapTo<CompanyMaster>();
+        //    model.IsActive = true;
+        //    if (obj.CompanyId == 0)
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    else
+        //    {
+        //        model.ModifiedBy = CurrentUserId;
+        //        model.ModifiedDate = AppTime.Now;
+        //        await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+        //    }
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        //}
+
+
         //Delete API
         [HttpDelete]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Delete)]

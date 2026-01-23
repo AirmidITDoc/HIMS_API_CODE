@@ -13,6 +13,10 @@ namespace HIMS.Services.Inventory
         void Inserts(List<MCompanyWiseServiceDiscount> objCompanyWiseServiceDiscount, int UserId, string UserName, long? userId);
         Task UpdateAsync(ServiceDetail objServiceDetail, int UserId, string Username);
 
+        Task InsertAsync(CompanyMaster objCompanyMaster, int UserId, string Username);
+
+        Task UpdateAsync(CompanyMaster objCompanyMaster, int UserId, string Username, string[]? references);
+
 
     }
 }
