@@ -148,6 +148,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IInPatientService, InPatientService>();
             services.AddScoped<IGastrologyEMRService, GastrologyEMRService>();
             services.AddScoped<ITallyService, TallyService>();
+            services.AddScoped<IEstimasteService, EstimateSerive>();
+
 
 
 

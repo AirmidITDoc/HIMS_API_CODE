@@ -469,6 +469,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TLabPatientRegisteredMaster> TLabPatientRegisteredMasters { get; set; } = null!;
         public virtual DbSet<TLabPatientRegistration> TLabPatientRegistrations { get; set; } = null!;
         public virtual DbSet<TLabTestRequest> TLabTestRequests { get; set; } = null!;
+        public virtual DbSet<TLabTransactionHistory> TLabTransactionHistories { get; set; } = null!;
         public virtual DbSet<TLoginAccessDetail> TLoginAccessDetails { get; set; } = null!;
         public virtual DbSet<TLoginStoreDetail> TLoginStoreDetails { get; set; } = null!;
         public virtual DbSet<TLoginUnitDetail> TLoginUnitDetails { get; set; } = null!;
@@ -12583,7 +12584,7 @@ namespace HIMS.Data.Models
                 entity.HasOne(d => d.Estimate)
                     .WithMany(p => p.TEstimateDetails)
                     .HasForeignKey(d => d.EstimateId)
-                    .HasConstraintName("FK_T_EstimateDetails_T_EstimateHeader");
+                    .HasConstraintName("FK_T_EstimateDetails_Header");
             });
 
             modelBuilder.Entity<TEstimateHeader>(entity =>
@@ -13451,8 +13452,6 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_LabPatientPersonInfo");
 
-                entity.Property(e => e.PatientInfoId).ValueGeneratedNever();
-
                 entity.Property(e => e.Comments).HasMaxLength(255);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -13555,6 +13554,21 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Price).HasColumnType("money");
 
                 entity.Property(e => e.TotalAmount).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<TLabTransactionHistory>(entity =>
+            {
+                entity.HasKey(e => e.TranHistoryId);
+
+                entity.ToTable("T_LabTransactionHistory");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.HistoryNo).HasMaxLength(20);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.TranLabel).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TLoginAccessDetail>(entity =>
