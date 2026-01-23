@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class CompanyMaster
     {
+        public CompanyMaster()
+        {
+            MCompanyExecutiveInfos = new HashSet<MCompanyExecutiveInfo>();
+        }
+
         public long CompanyId { get; set; }
         public long? CompTypeId { get; set; }
         public string? CompanyName { get; set; }
@@ -36,5 +41,7 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public decimal DayWiseCredit { get; set; }
+
+        public virtual ICollection<MCompanyExecutiveInfo> MCompanyExecutiveInfos { get; set; }
     }
 }
