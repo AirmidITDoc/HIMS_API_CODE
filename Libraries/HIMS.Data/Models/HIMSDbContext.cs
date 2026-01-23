@@ -190,6 +190,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<MCertificateTemplateMaster> MCertificateTemplateMasters { get; set; } = null!;
         public virtual DbSet<MCityMaster> MCityMasters { get; set; } = null!;
         public virtual DbSet<MClassMaster> MClassMasters { get; set; } = null!;
+        public virtual DbSet<MCompanyEmployeInfo> MCompanyEmployeInfos { get; set; } = null!;
+        public virtual DbSet<MCompanyExecutiveInfo> MCompanyExecutiveInfos { get; set; } = null!;
         public virtual DbSet<MCompanyServiceAssignMaster> MCompanyServiceAssignMasters { get; set; } = null!;
         public virtual DbSet<MCompanyWiseServiceDiscount> MCompanyWiseServiceDiscounts { get; set; } = null!;
         public virtual DbSet<MComplaintMaster> MComplaintMasters { get; set; } = null!;
@@ -601,7 +603,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -6509,6 +6511,41 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.TemplateDescName).HasColumnType("text");
+            });
+
+            modelBuilder.Entity<MCompanyEmployeInfo>(entity =>
+            {
+                entity.HasKey(e => e.ExecutiveId);
+
+                entity.ToTable("M_CompanyEmployeInfo");
+
+                entity.Property(e => e.Address).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EmailId).HasMaxLength(255);
+
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+
+                entity.Property(e => e.LastName).HasMaxLength(50);
+
+                entity.Property(e => e.MiddleName).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MCompanyExecutiveInfo>(entity =>
+            {
+                entity.ToTable("M_CompanyExecutiveInfo");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.MCompanyExecutiveInfos)
+                    .HasForeignKey(d => d.CompanyId)
+                    .HasConstraintName("FK_M_CompanyExecutiveInfo_CompanyMaster");
             });
 
             modelBuilder.Entity<MCompanyServiceAssignMaster>(entity =>
@@ -13404,6 +13441,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AgeYear).HasMaxLength(5);
 
+                entity.Property(e => e.Comments).HasMaxLength(255);
+
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.DateofBirth).HasColumnType("datetime");
@@ -13419,6 +13458,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MobileNo).HasMaxLength(11);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ReferByName).HasMaxLength(255);
 
                 entity.Property(e => e.RegDate).HasColumnType("datetime");
 
