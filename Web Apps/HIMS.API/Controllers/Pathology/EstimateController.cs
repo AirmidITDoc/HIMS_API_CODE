@@ -1,0 +1,75 @@
+﻿using Asp.Versioning;
+using HIMS.Api.Controllers;
+using HIMS.Api.Models.Common;
+using HIMS.API.Models.Pathology;
+using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.Models;
+using HIMS.Data;
+using Microsoft.AspNetCore.Mvc;
+using HIMS.API.Extensions;
+using HIMS.API.Models.Masters;
+using HIMS.Core;
+using HIMS.Services.OTManagment;
+using HIMS.Services.Pathlogy;
+
+namespace HIMS.API.Controllers.Pathology
+{
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    [ApiVersion("1")]
+    public class EstimateController : BaseController
+    {
+        private readonly IEstimasteService _IEstimasteService;
+
+        private readonly IGenericService<TEstimateHeader> _repository;
+
+        public EstimateController(IEstimasteService repository, IGenericService<TEstimateHeader> repository1)
+        {
+            _IEstimasteService = repository;
+            _repository = repository1;
+
+        }
+
+        ////List API Get By Id
+        //[HttpGet("{id?}")]
+        ////[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> Get(int id)
+        //{
+        //    if (id == 0)
+        //    {
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+        //    }
+        //    var data = await _repository.GetById(x => x.DispatchId == id);
+        //    return data.ToSingleResponse<TPathDispatchReportHistory, PathDispatchReportHistoryModel>("PathDispatchReportHistory");
+        //}
+        //Add API
+        [HttpPost("Insert")]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(EstimateModel obj)
+        {
+            TEstimateHeader model = obj.MapTo<TEstimateHeader>();
+            if (obj.EstimateId == 0)
+            {
+                foreach (var q in model.TEstimateDetails)
+                {
+                    q.CreatedBy = CurrentUserId;
+                    q.CreatedDate = AppTime.Now;
+
+                }
+               
+
+                model.CreatedDate = AppTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                await _IEstimasteService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.EstimateId);
+        }
+       
+
+    }
+}

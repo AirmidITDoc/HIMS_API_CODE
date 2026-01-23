@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-    /*body {
+ /*   body {
         margin-top: 4cm;
         margin-bottom: 3cm;
     }*/
@@ -20,14 +20,11 @@
     <div class="main-content-wrapper">
         <div class="invoice-box" style="font-size: 22px;line-height: 24px; color: #101828;">
             <table style="width: 100%;line-height: inherit;text-align: left;">
-
                 <tr class="title-date-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
-                            <tr>
-                            </tr>
                             <tr style="font-size: 20px">
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; padding-top: 135px; "><b>OP PRESCRIPTION</b></td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; padding-top: 135px; "><b>OP GASTROLOGY PRESCRIPTION</b></td>
                                 <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right; padding-top: 135px;"><b>Print Date : {{CurrentDate}}</b></td>
                             </tr>
                         </table>
@@ -36,25 +33,18 @@
                 <tr class="bill-info-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;font-size:20px;">
-                         
                             <tr>
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">OPD | Time : </span>
                                     <span>{{PDate}}</span>
-                                    <!--<span>{{VisitTime}}</span>-->
                                 </td>
-
                             </tr>
-
                             <tr>
-
                                 <td style="padding: 2px;">
                                     <span style="font-weight:bold;">Patient Name : </span>
                                     <span>{{PatientName}}(<span>{{AgeYear}} Y |{{AgeMonth}} M|{{AgeDay}} D / {{GenderName}}</span>)</span>
                                 </td>
-
                             </tr>
-
                         </table>
                     </td>
                 </tr>
@@ -65,6 +55,17 @@
                                 <thead style="font-size: 14px;">
                                     <tr style="border-bottom: 1px solid #d4c3c3;">
                                         <td style="text-align: left; padding-top: 10px; padding-bottom: 10px; font-size: 20px; padding-left: 2px; " colspan="5"><span style="font-weight: bold; margin-left: 4px; display:{{chkHeightflag}}">Height : </span>{{Height}} <span style="margin-left: 4px; display:{{chkHeightflag}}">|</span> <span style="font-weight: bold; margin-left: 10px;display:{{chkWeightflag}}">Weight : </span> {{Weight}} <span style="margin-left: 5px;display:{{chkWeightflag}}">|</span> <span style="font-weight:bold;margin-left:10px;display:{{chkBMIflag}}">BMI : </span>{{BMI}} <span style="margin-left:5px;display:{{chkBMIflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkBSLflag}}">BSL : </span>{{BSL}}  <span style="margin-left: 5px; display:{{chkBSLflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkSpO2flag}}">SPO2 : </span> {{SpO2}} <span style="margin-left: 5px; display:{{chkSpO2flag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkBMIflag}}">BP : </span> {{BP}} <span style="margin-left: 5px; display:{{chkSpO2flag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkPulseflag}}">Pulse : </span> {{Pulse}} <span style="margin-left: 5px; display:{{chkPulseflag}}">|</span> <span style="font-weight: bold; margin-left: 10px; display:{{chkTempflag}}">Temp : </span> {{Temp}} | <span style="font-weight: bold; margin-left: 10px; display:{{chkAllergyflag}}">Allergy : </span> {{Allergy}} |<span style="font-weight: bold; margin-left: 10px; display:{{chkBloodGroupflag}}">BloodGroup : </span> {{BloodGroup}} </td>
+                                    </tr>
+                                    <tr style="border-bottom:1px solid #d4c3c3; display:{{chkSubQuesName}}">
+                                        <td style="text-align:left;padding-top:10px;padding-bottom:10px;font-size:20px;padding-left:2px;line-height:1.4;"
+                                            colspan="5">
+                                            <div style="font-weight:bold; margin-bottom:6px;">
+                                                Question Summary :
+                                            </div>
+                                            <div>
+                                                {{SubQuesName}}
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr style="display:{{chkChiefComplaint}}">
                                         <td style="border-bottom: 1px solid #eee; padding: 6px;  font-size: 20px;">
@@ -84,6 +85,7 @@
                                             <span>{{Examination}}</span>
                                         </td>
                                     </tr>
+                                </thead>
                                 <td style="padding: 6px; font-size: 20px;">
                                     <span style="font-size: 42px; font-style: italic; vertical-align: middle; padding-right: 10px;">
                                         ℞
@@ -91,8 +93,6 @@
                                 </td>
                                 <tr>
                                     <table style="width: 100%; border-collapse: collapse;">
-                                        <tbody>
-                                        <td style="padding: 6px;">
                                         <tr style="font-weight:bold;border-top: 1px solid #000;">
                                             <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">
                                             </td>
@@ -104,10 +104,10 @@
                                             </td>
                                             <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">Instruction</td>
                                             <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 20px;">Qty</td>
-
                                         </tr>
                                         {{Items}}
-                                        </tbody>
+
+
                                     </table>
                                 </tr>
                                 <tr>
@@ -118,6 +118,7 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <br />
                                 <tr>
                                     <td style="padding: 6px; font-size: 20px;">
                                         <div style="display:{{chkReferDrName}};">
@@ -126,6 +127,7 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <br />
                                 <tr>
                                     <td style="padding: 6px; font-size: 20px;">
                                         <div style="display:{{chkChiefAdvice}};">
@@ -134,12 +136,14 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <br />
                                 <tr style="margin-bottom: 20px;">
                                     <td style="padding: 6px; font-size: 20px; margin-bottom: 40px;">
                                         <span style="font-weight: bold;">Follow-up Date:</span>
                                         <span>{{FollowupDate}}</span>
                                     </td>
                                 </tr>
+
                                 <tr>
                                     <table style="width: 100%;text-align: left;">
                                         <td>
