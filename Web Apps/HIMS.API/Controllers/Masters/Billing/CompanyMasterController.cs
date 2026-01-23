@@ -37,6 +37,13 @@ namespace HIMS.API.Controllers.Masters.Billing
             _temprepository = repository3;
 
         }
+        //[HttpGet("CompanyRepresentativeList")]
+        //public async Task<ApiResponse> CompanyRepresentativeList(int CompanyId)
+        //{
+        //    var resultList = await _CompanyMasterService.CompanyRepresentativeList(CompanyId);
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyRepresentative List.", resultList.Select(x => new { value = x.CompanyId, text = x.FirstName + " " + x.MiddleName + " " + x.LastName }));
+        //}
+      
 
         [HttpPost("CompanyMasterList")]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
@@ -68,6 +75,13 @@ namespace HIMS.API.Controllers.Masters.Billing
         {
             IPagedList<CompanyExecutiveInfoListDto> CompanyExecutiveInfoList = await _CompanyMasterService.CompanyExecutiveInfoListAsync(objGrid);
             return Ok(CompanyExecutiveInfoList.ToGridResponse(objGrid, "Company Executive Info List Dto "));
+        }
+
+        [HttpGet("CompanyRepresentativeList")]
+        public async Task<ApiResponse> CompanyRepresentativeList(int CompanyId)
+        {
+            var resultList = await _CompanyMasterService.CompanyRepresentativeList(CompanyId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyRepresentative List.", resultList.Select(x => new { value = x.CompanyId, }));
         }
 
         [HttpGet("{id?}")]

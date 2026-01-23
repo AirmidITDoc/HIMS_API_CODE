@@ -12,6 +12,7 @@ using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Services.OTManagment;
 using HIMS.Services.Pathlogy;
+using HIMS.Services.IPPatient;
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -31,18 +32,7 @@ namespace HIMS.API.Controllers.Pathology
 
         }
 
-        ////List API Get By Id
-        //[HttpGet("{id?}")]
-        ////[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
-        //public async Task<ApiResponse> Get(int id)
-        //{
-        //    if (id == 0)
-        //    {
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
-        //    }
-        //    var data = await _repository.GetById(x => x.DispatchId == id);
-        //    return data.ToSingleResponse<TPathDispatchReportHistory, PathDispatchReportHistoryModel>("PathDispatchReportHistory");
-        //}
+       
         //Add API
         [HttpPost("Insert")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
@@ -57,8 +47,6 @@ namespace HIMS.API.Controllers.Pathology
                     q.CreatedDate = AppTime.Now;
 
                 }
-               
-
                 model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
@@ -69,7 +57,35 @@ namespace HIMS.API.Controllers.Pathology
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.EstimateId);
         }
-       
+        [HttpPut("Edit/{id:int}")]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(EstimateModel obj)
+        {
+            TEstimateHeader model = obj.MapTo<TEstimateHeader>();
+            if (obj.EstimateId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                foreach (var q in model.TEstimateDetails)
+                {
+                    if (q.EstimateDetId == 0)
+                    {
+                        q.CreatedBy = CurrentUserId;
+                        q.CreatedDate = AppTime.Now;
+                    }
+                    q.ModifiedBy = CurrentUserId;
+                    q.ModifiedDate = AppTime.Now;
+                    q.EstimateDetId = 0;
+                }
+
+                model.ModifiedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                await _IEstimasteService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.EstimateId);
+        }
+
 
     }
 }

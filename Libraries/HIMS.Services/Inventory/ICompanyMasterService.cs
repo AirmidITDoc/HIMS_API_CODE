@@ -17,6 +17,8 @@ namespace HIMS.Services.Inventory
         Task InsertAsync(CompanyMaster objCompanyMaster, int UserId, string Username);
 
         Task UpdateAsync(CompanyMaster objCompanyMaster, int UserId, string Username, string[]? references);
+        Task<List<CompanyMaster>> CompanyRepresentativeList(int companyId);
+
 
 
     }

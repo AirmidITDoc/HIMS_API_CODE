@@ -35,6 +35,17 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<CompanyExecutiveInfoListDto>(model, "ps_Rtrv_getCompanyExecutives");
         }
+        //public async Task<List<CompanyMaster>> CompanyRepresentativeList(int CompanyId)
+        //{
+        //    return await _context.CompanyMasters.Include(x => x.MCompanyExecutiveInfos).Where(y => y.EmployeId.Value && y.MCompanyExecutiveInfos.Any(z => z.Id == CompanyId)).ToListAsync();
+        //}
+        public async Task<List<CompanyMaster>> CompanyRepresentativeList(int companyId)
+        {
+            return await _context.CompanyMasters .Include(x => x.MCompanyExecutiveInfos) .Where(c => c.MCompanyExecutiveInfos.Any(e =>  e.CompanyId == companyId )) .ToListAsync();
+        }
+
+
+
         public virtual void Insertsp(List<ServiceWiseCompanyCode> ObjServiceWiseCompanyCode, int UserId, string UserName, long? userId)
         {
             DatabaseHelper odal = new();
