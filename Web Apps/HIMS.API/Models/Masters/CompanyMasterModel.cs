@@ -1,4 +1,6 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.Nursing;
+using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Masters
 {
@@ -30,6 +32,8 @@ namespace HIMS.API.Models.Masters
         public string? LoginWebsitePassword { get; set; }
         public bool? IsSubCompany { get; set; }
         public decimal DayWiseCredit { get; set; }
+
+        public List<CompanyExecutiveInfoModel> MCompanyExecutiveInfos { get; set; }
 
 
     }

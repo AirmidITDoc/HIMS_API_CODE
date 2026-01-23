@@ -238,7 +238,7 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<TCompanyApprovalDetail, CompanyApprovalDetModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-
+            CreateMap<MCompanyExecutiveInfo, CompanyExecutiveInfoModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
@@ -552,6 +552,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TDrbillDet, TDrbillDetUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TDraddCharge, TDraddChargeUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TDrbill, TdrBillModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPathDispatchReportHistory, PathDispatchReportHistoryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 

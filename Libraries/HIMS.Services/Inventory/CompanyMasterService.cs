@@ -82,6 +82,48 @@ namespace HIMS.Services.Inventory
             }
         }
 
+        public virtual async Task InsertAsync(CompanyMaster objCompanyMaster, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.CompanyMasters.Add(objCompanyMaster);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+
+        public virtual async Task UpdateAsync(CompanyMaster objCompanyMaster, int UserId, string Username, string[]? ignoreColumns = null)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // 1. Attach the entity without marking everything as modified
+                _context.Attach(objCompanyMaster);
+                _context.Entry(objCompanyMaster).State = EntityState.Modified;
+
+                // 2. Ignore specific columns
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                    {
+                        _context.Entry(objCompanyMaster).Property(column).IsModified = false;
+                    }
+                }
+                // Delete details table realted records
+                var lst = await _context.MCompanyExecutiveInfos.Where(x => x.CompanyId == objCompanyMaster.CompanyId).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    _context.MCompanyExecutiveInfos.RemoveRange(lst);
+                }
+
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
+
 
     }
 }
