@@ -9,7 +9,7 @@ using HIMS.Data;
 using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.Masters.PathologyMaster
+namespace HIMS.API.Controllers.Masters.Billing
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -31,8 +31,6 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             return Ok(CompanyExecutiveInfo.ToGridResponse(objGrid, "Company Executive Info List"));
         }
 
-
-        //List API Get By Id
         [HttpGet("{id?}")]
         //[Permission(PageCode = "CompanyExecutiveInfo", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
@@ -41,8 +39,15 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.CompanyId == id);
-            return data.ToSingleResponse<MCompanyExecutiveInfo, CompanyExecutiveInfoModel>("CompanyExecutiveInfo");
+            var data = await _repository.GetAll(x => x.CompanyId == id);
+            var result = data.Select(x => new CompanyExecutiveInfoModel
+            {
+                Id = x.Id,
+                CompanyId = x.CompanyId,
+                EmployeId = x.EmployeId
+            }).ToList();
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyExecutiveInfo List", result);
         }
 
         //Add API
