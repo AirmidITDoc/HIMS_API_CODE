@@ -8,6 +8,7 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
@@ -61,7 +62,13 @@ namespace HIMS.API.Controllers.Masters.Billing
             return Ok(ServiceCompanyTariffWiseList.ToGridResponse(objGrid, "ServiceCompanyTariffWiseList"));
         }
 
-
+        [HttpPost("CompanyExecutiveInfoList")]
+        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> CompanyExecutiveInfoList(GridRequestModel objGrid)
+        {
+            IPagedList<CompanyExecutiveInfoListDto> CompanyExecutiveInfoList = await _CompanyMasterService.CompanyExecutiveInfoListAsync(objGrid);
+            return Ok(CompanyExecutiveInfoList.ToGridResponse(objGrid, "Company Executive Info List Dto "));
+        }
 
         [HttpGet("{id?}")]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]

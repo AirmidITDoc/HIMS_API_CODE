@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
@@ -29,8 +30,11 @@ namespace HIMS.Services.Inventory
         public virtual async Task<IPagedList<ServiceCompanyTariffWiseListDto>> CGetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<ServiceCompanyTariffWiseListDto>(model, "ps_Rtrv_ServiceList_CompanyTariffWise");
+        }     
+        public virtual async Task<IPagedList<CompanyExecutiveInfoListDto>> CompanyExecutiveInfoListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<CompanyExecutiveInfoListDto>(model, "ps_Rtrv_getCompanyExecutives");
         }
-
         public virtual void Insertsp(List<ServiceWiseCompanyCode> ObjServiceWiseCompanyCode, int UserId, string UserName, long? userId)
         {
             DatabaseHelper odal = new();

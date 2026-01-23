@@ -70,9 +70,15 @@
         public string? CompanyServicePrint { get; set; }
         public bool? IsInclusionOrExclusion { get; set; }
 
+    }
 
-
-
+    public class CompanyExecutiveInfoListDto
+    {
+        public long Id { get; set; }
+        public long? executiveId { get; set; }
+        public long? CompanyId { get; set; }
+        public string? fullName { get; set; }
+    
     }
 
 }
