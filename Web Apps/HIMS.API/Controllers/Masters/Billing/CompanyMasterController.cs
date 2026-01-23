@@ -111,8 +111,19 @@ namespace HIMS.API.Controllers.Masters.Billing
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-               // model.AddedBy = CurrentUserId;
                 model.IsActive = true;
+
+                if (model.MCompanyExecutiveInfos != null)
+                {
+                    foreach (var exec in model.MCompanyExecutiveInfos)
+                    {
+                        exec.CreatedDate = AppTime.Now;
+                        exec.CreatedBy = CurrentUserId;
+                        exec.ModifiedDate = AppTime.Now;
+                        exec.ModifiedBy = CurrentUserId;
+                    }
+                }
+
                 await _CompanyMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -131,9 +142,17 @@ namespace HIMS.API.Controllers.Masters.Billing
             {
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-               // model.AddedBy = CurrentUserId;
-               // model.UpdatedBy = CurrentUserId;
                 model.IsActive = true;
+
+                if (model.MCompanyExecutiveInfos != null)
+                {
+                    foreach (var exec in model.MCompanyExecutiveInfos)
+                    {
+                        exec.ModifiedDate = AppTime.Now;
+                        exec.ModifiedBy = CurrentUserId;
+                    }
+                }
+
                 await _CompanyMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
 
             }
