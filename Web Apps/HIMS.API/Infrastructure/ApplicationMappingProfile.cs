@@ -382,6 +382,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<MPathUnitMaster, PathUnitMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MPathSpecimenMaster, PathSpecimenMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<TLabPatientPersonInfo, LabPatientPersonInfoModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MCompanyEmployeInfo, CompanyEmployeInfoModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MCompanyExecutiveInfo, CompanyExecutiveInfoModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 

@@ -263,6 +263,8 @@ namespace HIMS.API.Controllers.Report
                 case "OPPrescription":
                 case "OPPrescriptionA5":
                 case "OPGastrologyPrescription":
+                case "OPGastrologyPrescriptionWithoutHeader":
+
 
                 case "OPPrescriptionwithoutHeader":
                 case "OPPrescriptionwithoutHeaderA5":
