@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.Id == id);
+            var data = await _repository.GetById(x => x.CompanyId == id);
             return data.ToSingleResponse<MCompanyExecutiveInfo, CompanyExecutiveInfoModel>("CompanyExecutiveInfo");
         }
 
