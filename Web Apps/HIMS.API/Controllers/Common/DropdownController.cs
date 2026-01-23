@@ -392,10 +392,10 @@ namespace HIMS.API.Controllers.Common
                 "GSTTypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GST_TYPES")).ToList().ToDropDown(nameof(MConstant.Name), nameof(MConstant.Name)),
                 "TemplateDescCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TemplateDesCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
-                "SampleCollectionType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "SampleCollectionType")).ToList().ToDropDown(nameof(MConstant.Name), nameof(MConstant.Name)),
-                "LabPatientType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "LabPatientType")).ToList().ToDropDown(nameof(MConstant.Name), nameof(MConstant.Name)),
+                "SampleCollectionType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "SampleCollectionType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "LabPatientType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "LabPatientType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "SpecimenList" => (await _MPathSpecimenMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenMaster.SpecimenId), nameof(MPathSpecimenMaster.SpecimenName)),
-                "LabDispatchModeList" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "LabDispatchMode")).ToList().ToDropDown(nameof(MConstant.Name), nameof(MConstant.Name)),
+                "LabDispatchModeList" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "LabDispatchMode")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
 
                 "ExpensesCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ExpensesCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
