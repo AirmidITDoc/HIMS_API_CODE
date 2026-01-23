@@ -10654,6 +10654,9 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{OPD_IPD_ID}}", dt.GetColValue("OPD_IPD_ID"));
                         html = html.Replace("{{BillingUserName}}", dt.GetColValue("BillingUserName"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+
+
 
                     }
 
@@ -14269,7 +14272,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
                         html = html.Replace("{{PaidAmt}}", dt.GetColValue("PaidAmt"));
                         html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
+                        html = html.Replace("{{invoiceNo}}", dt.GetColValue("invoiceNo"));
 
+                        
 
 
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));

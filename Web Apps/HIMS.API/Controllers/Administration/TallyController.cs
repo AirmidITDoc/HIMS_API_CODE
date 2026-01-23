@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
 using HIMS.Services.Administration;
@@ -23,7 +24,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("TallyOPBillCashCounterList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> OPBillCashCounterList(GridRequestModel objGrid)
         {
             IPagedList<TallyListDto> OPBillCashCounterList = await _ITallyService.OPBillCashCounterListAsync(objGrid);
@@ -31,7 +32,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("TallyOPRefundBillCounterList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> OPRefundBillList(GridRequestModel objGrid)
         {
             IPagedList<OPRefundBillListCashCounterDto> OPRefundBillList = await _ITallyService.OPRefundBillListAsync(objGrid);
@@ -40,7 +41,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("IPAdvRefundPatientWisePaymentlist")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> IPAdvRefundPatientWisePaymentlist(GridRequestModel objGrid)
         {
             IPagedList<IPAdvRefundPatientWisePaymentDto> OPRefundBillList = await _ITallyService.IPAdvRefundPatientWisePaymentlistAsync(objGrid);
@@ -48,7 +49,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("IPBillListPatientWisePaymentList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> IPBillListPatientWisePaymentList(GridRequestModel objGrid)
         {
             IPagedList<IPBillListPatientWisePaymentDto> OPRefundBillList = await _ITallyService.IPBillListPatientWisePaymentListAsync(objGrid);
@@ -57,7 +58,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("IPAdvPatientWisePaymentList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> IPAdvPatientWisePaymentList(GridRequestModel objGrid)
         {
             IPagedList<IPAdvPatientWisePaymentDto> IPAdvPatientWisePaymentList = await _ITallyService.IPAdvPatientWisePaymentListAsync(objGrid);
@@ -67,7 +68,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("IPBillListPatientWiseList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> IPBillListPatientWiseList(GridRequestModel objGrid)
         {
             IPagedList<IPBillListPatientWiseDto> IPBillListPatientWiseList = await _ITallyService.IPBillListPatientWiseListAsync(objGrid);
@@ -77,7 +78,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("IPBillCashCounterList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> IPBillCashCounterList(GridRequestModel objGrid)
         {
             IPagedList<IPBillListCashCounterDto> IPBillCashCounterList = await _ITallyService.IPBillCashCounterListAsync(objGrid);
@@ -85,7 +86,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("IPBillRefundBillPatientWisePaymentList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> IPBillRefundBillPatientWisePaymentList(GridRequestModel objGrid)
         {
             IPagedList<IPBillRefundBillListPatientWisePaymentDto> IPBillRefundBillPatientWisePaymentList = await _ITallyService.IPBillRefundBillPatientWisePaymentListAsync(objGrid);
@@ -94,7 +95,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("PurchaseWiseSupplierList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> PurchaseWiseSupplierList(GridRequestModel objGrid)
         {
             IPagedList<PurchaseWiseSupplierDto> PurchaseWiseSupplierList = await _ITallyService.PurchaseWiseSupplierListAsync(objGrid);
@@ -103,7 +104,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("TallyPhar2SalesList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> TallyPhar2SalesList(GridRequestModel objGrid)
         {
             IPagedList<TallyPhar2SalesDto> TallyPhar2SalesList = await _ITallyService.TallyPhar2SalesListAsync(objGrid);
@@ -112,7 +113,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("TallyPhar2PaymentList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> TallyPhar2PaymentList(GridRequestModel objGrid)
         {
             IPagedList<TallyPhar2PaymentDto> TallyPhar2PaymentList = await _ITallyService.TallyPhar2PaymentAsync(objGrid);
@@ -120,7 +121,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("TallyPhar2SalesReturnList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> TallyPhar2SalesReturnList(GridRequestModel objGrid)
         {
             IPagedList<TallyPhar2SalesReturnDto> TallyPhar2SalesReturnList = await _ITallyService.TallyPhar2SalesReturnListAsync(objGrid);
@@ -128,14 +129,13 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("TallyPhar2ReceiptList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+
         public async Task<IActionResult> TallyPhar2ReceiptList(GridRequestModel objGrid)
         {
             IPagedList<TallyPhar2ReceiptDto> TallyPhar2ReceiptList = await _ITallyService.TallyPhar2ReceiptListAsync(objGrid);
             return Ok(TallyPhar2ReceiptList.ToGridResponse(objGrid, "Tally Phar 2 Receipt List"));
         }
-
-
 
     }
 
