@@ -37,5 +37,13 @@ namespace HIMS.Services.Administration
 
         Task<IPagedList<TallyPhar2ReceiptDto>> TallyPhar2ReceiptListAsync(GridRequestModel objGrid);
 
+        Task<IPagedList<TallyIPBillListMediforteDto>> TallyIPBillListMediforteAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<TallyIPBillDetailListMediforteDto>> TallyIPBillDetailListMediforteAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<TallyOPBillListMediforteDto>> TallyOPBillListMediforteAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<TallyOPBillDetailListMediforteDto>> TallyOPBillDetailListMediforteAsync(GridRequestModel objGrid);
+
     }
 }

@@ -552,5 +552,14 @@ namespace HIMS.API.Controllers.Report
             string byteFile = _reportService.GeneratePdfFromSp("ps_getMultipleTabForReport", StorageBaseUrl);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
+
+        [HttpPost("NewMultiReport")]
+        public async Task<IActionResult> NewMultiReport(long OPIPID,long ReservationId, long OPIPType)
+        {
+            string StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
+            string byteFile = _reportService.GeneratePdfFromSpV1("ps_rpt_OTMultiTabReport_V1", StorageBaseUrl, OPIPID, ReservationId, OPIPType);
+
+            return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
+        }
     }
 }
