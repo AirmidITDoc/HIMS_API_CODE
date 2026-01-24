@@ -60,5 +60,6 @@ namespace HIMS.API.Models.Masters
 
 
         }
+      
     }
 }

@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 
@@ -17,7 +18,10 @@ namespace HIMS.Services.Inventory
         Task InsertAsync(CompanyMaster objCompanyMaster, int UserId, string Username);
 
         Task UpdateAsync(CompanyMaster objCompanyMaster, int UserId, string Username, string[]? references);
-        Task<List<CompanyMaster>> CompanyRepresentativeList(int companyId);
+        //List<CompanyMasterDto> CompanyRepresentativeList();
+        List<CompanyMasterDto> CompanyRepresentativeList(long CompanyId);
+
+
 
 
 
