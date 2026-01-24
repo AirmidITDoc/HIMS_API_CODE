@@ -29,9 +29,9 @@ namespace HIMS.API.Controllers.Pathology
             _IPathDispatchReportHistoryService = repository1;
 
         }
-        [Permission]
+        [HttpPost("PathDispatchReportHistoryList")]
         //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
-        public async Task<IActionResult> PathResultEntryList(GridRequestModel objGrid)
+        public async Task<IActionResult> PathDispatchReportHistoryList(GridRequestModel objGrid)
         {
             IPagedList<PathDispatchReportHistoryListDto> PathDispatchReportHistoryList = await _IPathDispatchReportHistoryService.GetListAsync(objGrid);
             return Ok(PathDispatchReportHistoryList.ToGridResponse(objGrid, "PathDispatchReportHistory List"));
