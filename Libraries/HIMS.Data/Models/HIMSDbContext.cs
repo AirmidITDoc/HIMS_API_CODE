@@ -12599,6 +12599,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.DiscAmount).HasColumnType("money");
 
+                entity.Property(e => e.EmailId).HasMaxLength(50);
+
                 entity.Property(e => e.EstimateNo).HasMaxLength(20);
 
                 entity.Property(e => e.MobileNo).HasMaxLength(15);
@@ -13515,6 +13517,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.DateofBirth).HasColumnType("datetime");
+
+                entity.Property(e => e.EmailId).HasMaxLength(255);
 
                 entity.Property(e => e.FirstName).HasMaxLength(100);
 

@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.Pathology
        
         //Add API
         [HttpPost("Insert")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(EstimateModel obj)
         {
             TEstimateHeader model = obj.MapTo<TEstimateHeader>();
@@ -76,7 +76,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.EstimateId);
         }
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(EstimateModel obj)
         {
             TEstimateHeader model = obj.MapTo<TEstimateHeader>();

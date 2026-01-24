@@ -16,7 +16,7 @@ namespace HIMS.Data.Models
         public long? PatientId { get; set; }
         public string? PatientName { get; set; }
         public string? MobileNo { get; set; }
-        public long? EmailId { get; set; }
+        public string? EmailId { get; set; }
         public long? AgeYear { get; set; }
         public long? CityId { get; set; }
         public long? DoctorId { get; set; }

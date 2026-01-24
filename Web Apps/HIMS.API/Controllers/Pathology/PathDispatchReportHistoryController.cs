@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Pathology
             _IPathDispatchReportHistoryService = repository1;
 
         }
-        [HttpPost("PathDispatchReportHistoryList")]
+        [Permission]
         //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<IActionResult> PathResultEntryList(GridRequestModel objGrid)
         {
@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(PathDispatchReportHistoryModel obj)
         {
             TPathDispatchReportHistory model = obj.MapTo<TPathDispatchReportHistory>();
@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(PathDispatchReportHistoryModel obj)
         {
             TPathDispatchReportHistory model = obj.MapTo<TPathDispatchReportHistory>();
