@@ -49,6 +49,23 @@ namespace HIMS.Data.DTO.Pathology
         public decimal? CardPayAmount { get; set; }
         public decimal? PayTMAmount { get; set; }
         public string? PatientType { get; set; }
+        public string? PatientType1 { get; set; }
+        public long? TariffId { get; set; }
+        public string? Comments { get; set; }
+        public string? ReferByName { get; set; }
+        public long? CompanyExecutiveId { get; set; }
+        public string? ExecutiveName { get; set; }
+        public long? PatientTypeId { get; set; }
+        public long? PatientTypeId1 { get; set; }
+
+
+
+
+
+
+
+
+
 
     }
 

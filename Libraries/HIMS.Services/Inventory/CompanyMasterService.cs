@@ -8,6 +8,9 @@ using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Transactions;
+using Microsoft.Data.SqlClient;
+using HIMS.Data.DTO.OPPatient;
+
 
 
 namespace HIMS.Services.Inventory
@@ -35,15 +38,21 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<CompanyExecutiveInfoListDto>(model, "ps_Rtrv_getCompanyExecutives");
         }
-        //public async Task<List<CompanyMaster>> CompanyRepresentativeList(int CompanyId)
-        //{
-        //    return await _context.CompanyMasters.Include(x => x.MCompanyExecutiveInfos).Where(y => y.EmployeId.Value && y.MCompanyExecutiveInfos.Any(z => z.Id == CompanyId)).ToListAsync();
-        //}
-        public async Task<List<CompanyMaster>> CompanyRepresentativeList(int companyId)
-        {
-            return await _context.CompanyMasters .Include(x => x.MCompanyExecutiveInfos) .Where(c => c.MCompanyExecutiveInfos.Any(e =>  e.CompanyId == companyId )) .ToListAsync();
-        }
+        
+    public List<CompanyMasterDto> CompanyRepresentativeList(long CompanyId)
+    {
+        DatabaseHelper sql = new();
 
+        SqlParameter[] para =
+        {
+        new SqlParameter("@CompanyId", CompanyId)
+        };
+
+        var data = sql.FetchListBySP<CompanyMasterDto>("Retrieve_companyExecuativeCombo", para);
+
+        return data;
+    }
+       
 
 
         public virtual void Insertsp(List<ServiceWiseCompanyCode> ObjServiceWiseCompanyCode, int UserId, string UserName, long? userId)

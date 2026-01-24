@@ -80,5 +80,13 @@
         public string? fullName { get; set; }
     
     }
+    public class CompanyMasterDto
+    {
+        public long CompanyId { get; set; }
+        public long? executiveId { get; set; }
+        public string? ExecutiveName {  get; set; }
+        
+
+    }
 
 }
