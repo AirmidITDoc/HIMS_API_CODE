@@ -37,13 +37,15 @@ namespace HIMS.API.Controllers.Masters.Billing
             _temprepository = repository3;
 
         }
-        //[HttpGet("CompanyRepresentativeList")]
-        //public async Task<ApiResponse> CompanyRepresentativeList(int CompanyId)
-        //{
-        //    var resultList = await _CompanyMasterService.CompanyRepresentativeList(CompanyId);
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyRepresentative List.", resultList.Select(x => new { value = x.CompanyId, text = x.FirstName + " " + x.MiddleName + " " + x.LastName }));
-        //}
-      
+       
+        [HttpGet("CompanyRepresentativeList")]
+        public ApiResponse CompanyRepresentativeList(long CompanyId)
+        {
+            var data = _CompanyMasterService.CompanyRepresentativeList(CompanyId);
+
+            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "CompanyRepresentative List", data );
+        }
+
 
         [HttpPost("CompanyMasterList")]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
@@ -77,12 +79,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             return Ok(CompanyExecutiveInfoList.ToGridResponse(objGrid, "Company Executive Info List Dto "));
         }
 
-        [HttpGet("CompanyRepresentativeList")]
-        public async Task<ApiResponse> CompanyRepresentativeList(int CompanyId)
-        {
-            var resultList = await _CompanyMasterService.CompanyRepresentativeList(CompanyId);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyRepresentative List.", resultList.Select(x => new { value = x.CompanyId, }));
-        }
+        
 
         [HttpGet("{id?}")]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
@@ -102,27 +99,9 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
 
-        //[HttpPost]
-        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Post(CompanyMasterModel obj)
-        //{
-        //    CompanyMaster model = obj.MapTo<CompanyMaster>();
-        //    model.IsActive = true;
-        //    if (obj.CompanyId == 0)
-        //    {
-        //        model.CreatedBy = CurrentUserId;
-        //        model.CreatedDate = AppTime.Now;
-        //        model.ModifiedBy = CurrentUserId;
-        //        model.ModifiedDate = AppTime.Now;
-        //        await _repository.Add(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
-        //}
-
+        
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(CompanyMasterModel obj)
         {
             CompanyMaster model = obj.MapTo<CompanyMaster>();
@@ -153,7 +132,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(CompanyMasterModel obj)
         {
             CompanyMaster model = obj.MapTo<CompanyMaster>();
@@ -180,24 +159,7 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
-        ////Edit API
-        //[HttpPut("{id:int}")]
-        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
-        //public async Task<ApiResponse> Edit(CompanyMasterModel obj)
-        //{
-        //    CompanyMaster model = obj.MapTo<CompanyMaster>();
-        //    model.IsActive = true;
-        //    if (obj.CompanyId == 0)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    else
-        //    {
-        //        model.ModifiedBy = CurrentUserId;
-        //        model.ModifiedDate = AppTime.Now;
-        //        await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-        //    }
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
-        //}
-
+        
 
         //Delete API
         [HttpDelete]
