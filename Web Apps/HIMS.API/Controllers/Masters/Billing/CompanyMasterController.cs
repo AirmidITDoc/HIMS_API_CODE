@@ -234,8 +234,6 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
-
-
         [HttpPut("updatecompanywiseservicerate")]
         //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Editc(List<updatecompanywiseservicerate> objs)
@@ -248,14 +246,11 @@ namespace HIMS.API.Controllers.Masters.Billing
                 if (obj.ServiceId == 0) ;
 
                 ServiceDetail model = obj.MapTo<ServiceDetail>();
-
                 await _CompanyMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records updated successfully.");
         }
-
-
 
         [HttpPost("CompanyWiseServiceDiscount")]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
