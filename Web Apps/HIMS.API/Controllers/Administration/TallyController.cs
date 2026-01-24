@@ -137,6 +137,47 @@ namespace HIMS.API.Controllers.Administration
             return Ok(TallyPhar2ReceiptList.ToGridResponse(objGrid, "Tally Phar 2 Receipt List"));
         }
 
+        [HttpPost("TallyIPBillListMediforte")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+
+        public async Task<IActionResult> TallyIPBillListMediforte(GridRequestModel objGrid)
+        {
+            IPagedList<TallyIPBillListMediforteDto> TallyIPBillListMediforte = await _ITallyService.TallyIPBillListMediforteAsync(objGrid);
+            return Ok(TallyIPBillListMediforte.ToGridResponse(objGrid, "Tally IPBill List Mediforte"));
+        }
+
+        [HttpPost("TallyIPBillDetailListMediforte")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+
+        public async Task<IActionResult> TallyIPBillDetailListMediforte(GridRequestModel objGrid)
+        {
+            IPagedList<TallyIPBillDetailListMediforteDto> TallyIPBillDetailListMediforte = await _ITallyService.TallyIPBillDetailListMediforteAsync(objGrid);
+            return Ok(TallyIPBillDetailListMediforte.ToGridResponse(objGrid, "Tally IPBill Detail List Mediforte"));
+        }
+
+        [HttpPost("TallyOPBillListMediforte")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+
+        public async Task<IActionResult> TallyOPBillListMediforte(GridRequestModel objGrid)
+        {
+            IPagedList<TallyOPBillListMediforteDto> TallyOPBillListMediforte = await _ITallyService.TallyOPBillListMediforteAsync(objGrid);
+            return Ok(TallyOPBillListMediforte.ToGridResponse(objGrid, "Tally OPBill List Mediforte"));
+        }
+
+        [HttpPost("TallyOPBillDetailListMediforte")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+
+        public async Task<IActionResult> TallyOPBillDetailListMediforte(GridRequestModel objGrid)
+        {
+            IPagedList<TallyOPBillDetailListMediforteDto> TallyOPBillDetailListMediforte = await _ITallyService.TallyOPBillDetailListMediforteAsync(objGrid);
+            return Ok(TallyOPBillDetailListMediforte.ToGridResponse(objGrid, "Tally OPBill Detail List Mediforte"));
+        }
+
+
+
+
+
+
     }
 
 }

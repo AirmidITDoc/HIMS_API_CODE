@@ -240,4 +240,93 @@ namespace HIMS.Data.DTO.Administration
         public string CREDIT { get; set; }
         public string SrNo { get; set; }
     }
+
+    public class TallyIPBillListMediforteDto
+    {
+        public long BillNo { get; set; }
+        public DateTime? BillDate { get; set; }
+
+        public long? RegNo { get; set; }
+        public string? PatientName { get; set; }
+
+        public decimal? TotalAmt { get; set; }
+        public double? ConcessionAmt { get; set; }
+        public decimal? NetPayableAmt { get; set; }
+        public decimal? PaidAmt { get; set; }
+        public decimal? BalanceAmt { get; set; }
+        public decimal? AdvanceUsedAmount { get; set; }
+
+        public string? PbillNo { get; set; }
+        public string? PrintBillNo { get; set; }
+
+        public long? GovtCompanyId { get; set; }
+
+        public string? GovtCompanyName { get; set; }
+        public string? GovtRefNo { get; set; }
+        public decimal? GovtApprovedAmt { get; set; }
+
+        public string? CompnayCompanyName { get; set; }
+        public string? CompRefNo { get; set; }
+        public decimal? CompanyApprovedAmt { get; set; }
+
+        public long? InterimOrFinal { get; set; }
+    }
+
+    public class TallyIPBillDetailListMediforteDto
+    {
+        public string Lbl { get; set; }
+        public long AdmissionId { get; set; }
+        public DateTime BillDate { get; set; }
+        public string PBillNo { get; set; }
+        public DateTime ChargesDate { get; set; }
+        public string ServiceName { get; set; }
+        public double Price { get; set; }
+        public double Qty { get; set; }
+        public double ChargesTotalAmt { get; set; }
+    }
+
+    public class TallyOPBillListMediforteDto
+    {
+        public long BillNo { get; set; }
+        public DateTime BillDate { get; set; }
+
+        public long RegNo { get; set; }
+        public string PatientName { get; set; }
+
+        public decimal TotalAmt { get; set; }
+        public double ConcessionAmt { get; set; }
+        public decimal NetPayableAmt { get; set; }
+        public decimal PaidAmt { get; set; }
+        public decimal BalanceAmt { get; set; }
+        public decimal AdvanceUsedAmount { get; set; }
+
+        public string PbillNo { get; set; }
+        public string PrintBillNo { get; set; }
+
+        public long GovtCompanyId { get; set; }
+
+        public string GovtCompanyName { get; set; }
+        public string GovtRefNo { get; set; }
+        public decimal GovtApprovedAmt { get; set; }
+
+        public string CompnayCompanyName { get; set; }
+        public string CompRefNo { get; set; }
+        public decimal CompanyApprovedAmt { get; set; }
+
+        public long? InterimOrFinal { get; set; }
+    }
+
+    public class TallyOPBillDetailListMediforteDto
+    {
+        public string Lbl { get; set; }
+        public long AdmissionId { get; set; }
+        public DateTime BillDate { get; set; }
+        public string PBillNo { get; set; }
+        public DateTime ChargesDate { get; set; }
+        public string ServiceName { get; set; }
+        public double Price { get; set; }
+        public double Qty { get; set; }
+        public double ChargesTotalAmt { get; set; }
+        public string DoctorName { get; set; }
+    }
 }

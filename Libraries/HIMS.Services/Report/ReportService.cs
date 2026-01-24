@@ -16723,6 +16723,120 @@ namespace HIMS.Services.Report
             return byteFile;
 
         }
+
+        public string GeneratePdfFromSpV1(string sp, string StorageBaseUrl, long OPIPID, long ReservationId, long OPIPType)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[]
+            {
+        new SqlParameter("@OPIPID", OPIPID),
+        new SqlParameter("@ReservationId", ReservationId),
+        new SqlParameter("@OPIPType", OPIPType)
+            };
+
+            DataSet ds = sql.FetchDataSetBySP(sp, para);
+
+            string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTMultiTabReport.html");
+            string html = System.IO.File.ReadAllText(htmlFilePath);
+            string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+            htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+            html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+            string[] sectionNames = new string[]
+            {
+                "Patient Information",
+                "OT Request Information",
+                "OT Reservation / Surgery Details",
+                "OT Check In / Check Out",
+                "OT Pre Operation",
+                "OT In Operation",
+                "Anesthesia Record"
+            };
+
+            StringBuilder allTablesHtml = new StringBuilder();
+
+            int maxColumnsPerRow = 6;   
+
+            for (int t = 0; t < ds.Tables.Count; t++)
+            {
+                DataTable dt = ds.Tables[t];
+                if (dt.Rows.Count == 0) continue;
+
+                string title = (t < sectionNames.Length) ? sectionNames[t] : $"Section {t + 1}";
+
+                allTablesHtml.Append(
+                    "<table style='width:100%; border-collapse:collapse; margin-top:25px;'>" +
+                    "<tr style='font-size:18px;'>" +
+                    "<td style='padding:8px 4px;'>" +
+                        "<table style='width:98%; border-collapse:collapse;'>" +
+                            "<tr>" +
+                                "<td style='background-color:#e7f0ff; border-bottom:2px solid #000; padding:10px; font-weight:bold; color:#101828;'>" +
+                                    title +
+                                "</td>" +
+                            "</tr>" +
+                        "</table>" +
+                    "</td>" +
+                    "</tr>" +
+                    "</table>"
+                );
+
+                allTablesHtml.Append(
+                    "<table style='width:100%; border-collapse:collapse; font-size:20px; margin-top:10px;'>"
+                );
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    int colCount = 0;
+                    int maxCols = 5;
+
+                    allTablesHtml.Append("<tr>");
+
+                    for (int c = 0; c < dt.Columns.Count; c++)
+                    {
+                        string label = dt.Columns[c].ColumnName;
+                        string value = string.IsNullOrWhiteSpace(dr[c]?.ToString()) ? "" : dr[c].ToString();
+
+                        allTablesHtml.Append(
+                            "<td style='border:1px solid #d4c3c3; padding:6px; vertical-align:top; width:20%;'>" +
+                                "<div style='font-weight:bold; color:#000; margin-bottom:4px;'>" +
+                                    label +
+                                "</div>" +
+                                "<div style='color:#101828;'>" +
+                                    value +
+                                "</div>" +
+                            "</td>"
+                        );
+
+                        colCount++;
+                        if (colCount == maxCols)
+                        {
+                            allTablesHtml.Append("</tr><tr>");
+                            colCount = 0;
+                        }
+                    }
+                    if (colCount > 0 && colCount < maxCols)
+                    {
+                        int remaining = maxCols - colCount;
+
+                        allTablesHtml.Append(
+                            $"<td colspan='{remaining}' style='border:1px solid #d4c3c3;'></td>"
+                        );
+                    }
+
+                    allTablesHtml.Append("</tr>");
+                }
+
+                allTablesHtml.Append("</table>");
+                allTablesHtml = allTablesHtml.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            }
+
+            html = html.Replace("{{AllTables}}", allTablesHtml.ToString());
+
+            var tuple = _pdfUtility.GeneratePdfFromHtml(html, StorageBaseUrl, "OTMultiTabReport");
+
+            return Convert.ToBase64String(tuple.Item1);
+        }
+
         public async Task<Tuple<string,string>> GetPatientBarcode(ReportRequestModel model)
         {
             string[] colList = Array.Empty<string>();
