@@ -10,6 +10,8 @@ using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Models.Pathology;
 using Asp.Versioning;
+using HIMS.Services.Pathlogy;
+using HIMS.Data.DTO.Administration;
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -19,19 +21,23 @@ namespace HIMS.API.Controllers.Pathology
     public class PathDispatchReportHistoryController : BaseController
     {
         private readonly IGenericService<TPathDispatchReportHistory> _repository;
-        public PathDispatchReportHistoryController(IGenericService<TPathDispatchReportHistory> repository)
+        private readonly IPathDispatchReportHistoryService _IPathDispatchReportHistoryService;
+
+        public PathDispatchReportHistoryController(IGenericService<TPathDispatchReportHistory> repository, IPathDispatchReportHistoryService repository1)
         {
             _repository = repository;
+            _IPathDispatchReportHistoryService = repository1;
+
         }
-        //List API
-        [HttpPost]
-        [Route("[action]")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
+        [HttpPost("PathDispatchReportHistoryList")]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        public async Task<IActionResult> PathResultEntryList(GridRequestModel objGrid)
         {
-            IPagedList<TPathDispatchReportHistory> TPathDispatchReportHistoryList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(TPathDispatchReportHistoryList.ToGridResponse(objGrid, "PathDispatchReportHistory List"));
+            IPagedList<PathDispatchReportHistoryListDto> PathDispatchReportHistoryList = await _IPathDispatchReportHistoryService.GetListAsync(objGrid);
+            return Ok(PathDispatchReportHistoryList.ToGridResponse(objGrid, "PathDispatchReportHistory List"));
+
         }
+        
         //List API Get By Id
         [HttpGet("{id?}")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]

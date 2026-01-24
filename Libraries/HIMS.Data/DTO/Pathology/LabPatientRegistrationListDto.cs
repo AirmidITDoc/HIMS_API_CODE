@@ -55,6 +55,11 @@ namespace HIMS.Data.DTO.Pathology
         public string? ReferByName { get; set; }
         public long? CompanyExecutiveId { get; set; }
         public string? ExecutiveName { get; set; }
+        public long? PatientTypeId { get; set; }
+        public long? PatientTypeId1 { get; set; }
+
+
+
 
 
 

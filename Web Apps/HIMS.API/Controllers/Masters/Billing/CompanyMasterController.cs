@@ -100,29 +100,25 @@ namespace HIMS.API.Controllers.Masters.Billing
 
 
         
-        [HttpPost("InsertEDMX")]
+        [HttpPost("Insert")]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(CompanyMasterModel obj)
         {
             CompanyMaster model = obj.MapTo<CompanyMaster>();
+            model.IsActive = true;
+
             if (obj.CompanyId == 0)
             {
+                foreach (var q in model.MCompanyExecutiveInfos)
+                {
+                    q.CreatedBy = CurrentUserId;
+                    q.CreatedDate = AppTime.Now;
+
+                }
                 model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.IsActive = true;
-
-                if (model.MCompanyExecutiveInfos != null)
-                {
-                    foreach (var exec in model.MCompanyExecutiveInfos)
-                    {
-                        exec.CreatedDate = AppTime.Now;
-                        exec.CreatedBy = CurrentUserId;
-                        exec.ModifiedDate = AppTime.Now;
-                        exec.ModifiedBy = CurrentUserId;
-                    }
-                }
 
                 await _CompanyMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -136,23 +132,28 @@ namespace HIMS.API.Controllers.Masters.Billing
         public async Task<ApiResponse> Edit(CompanyMasterModel obj)
         {
             CompanyMaster model = obj.MapTo<CompanyMaster>();
+            model.IsActive = true;
             if (obj.CompanyId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
+                foreach (var q in model.MCompanyExecutiveInfos)
+                {
+                    if (q.Id == 0)
+                    {
+                        q.CreatedBy = CurrentUserId;
+                        q.CreatedDate = AppTime.Now;
+                    }
+                    q.ModifiedBy = CurrentUserId;
+                    q.ModifiedDate = AppTime.Now;
+                    q.Id = 0;
+                }
+
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.IsActive = true;
 
-                if (model.MCompanyExecutiveInfos != null)
-                {
-                    foreach (var exec in model.MCompanyExecutiveInfos)
-                    {
-                        exec.ModifiedDate = AppTime.Now;
-                        exec.ModifiedBy = CurrentUserId;
-                    }
-                }
-
+               
                 await _CompanyMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
 
             }
