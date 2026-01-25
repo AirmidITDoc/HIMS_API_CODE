@@ -56,6 +56,8 @@ namespace HIMS.API.Extensions
                 }
                 var msg = ex == null ? "{Params:" + param + "}" : "{ Params: " + param + ",DetailError: " + (ex.InnerException != null ? (ex.InnerException.ToString().ToLower() == "undefined" ? ex.Message : ex.InnerException) : ex?.Message ?? "") + "}";
 
+                
+                
                 string errorJson = JsonSerializer.Serialize(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Error. Please try again after some time.", new { ApiUrl = context.Request.Path.Value }));
 
                 await response.WriteAsync(errorJson);
