@@ -39,6 +39,7 @@ namespace HIMS.Data.Models
         public string? Comments { get; set; }
         public string? ReferByName { get; set; }
         public long? CompanyExecutiveId { get; set; }
+        public string? EmailId { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
