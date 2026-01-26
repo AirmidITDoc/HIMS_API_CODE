@@ -263,20 +263,22 @@ namespace HIMS.Services.Common
                     _context.TRadiologyReportHeaders.Add(objRadio);
                     await _context.SaveChangesAsync();
                 }
+                //"ClassId","TariffId","UnitId",?
                 if (objAddCharge.IsPackage == 1)
                 {
                     foreach (var item in objAddCharges)
                     {
                         DatabaseHelper odal = new();
-                        string[] AEntity = { "ClassId", "RefundAmount", "CPrice", "CQty", "CTotalAmount", "IsComServ","IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo", "IsHospMrk","ChargesId",
-                                              "BillNoNavigation","IsDoctorShareGenerated","IsInterimBillFlag","TariffId","UnitId","CompanyServiceName","DoctorName","CreatedDate","ModifiedBy","ModifiedDate"};
-                        var Packagescharge = item.ToDictionary();
 
+                        string[] AEntity = {  "RefundAmount", "CPrice", "CQty", "CTotalAmount", "IsComServ","IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo", "IsHospMrk","ChargesId",
+                                              "BillNoNavigation","IsDoctorShareGenerated","IsInterimBillFlag","CompanyServiceName","DoctorName","CreatedDate","ModifiedBy","ModifiedDate","IsApprovedByCamp"};
+                        var Packagescharge = item.ToDictionary();
+                        Packagescharge["PackageMainChargeId"] = objAddCharge.ChargesId;
                         foreach (var rProperty in AEntity)
                         {
                             Packagescharge.Remove(rProperty);
                         }
-                        Packagescharge["PackageMainChargeId"] = objAddCharge.ChargesId;
+                       
                         odal.ExecuteNonQuery("m_insert_IPChargesPackages_1", CommandType.StoredProcedure, Packagescharge);
                         await _context.LogProcedureExecution(Packagescharge, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
