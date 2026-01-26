@@ -16900,9 +16900,10 @@ namespace HIMS.Services.Report
                     string rowHtml = template;
 
                     rowHtml = rowHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["LabRequestNo"]?.ToString()));
+                    rowHtml = rowHtml.Replace("{{UHID}}", row["UHID"]?.ToString());
                     rowHtml = rowHtml.Replace("{{PatientName}}", row["PatientName"]?.ToString());
                     rowHtml = rowHtml.Replace("{{ServiceName}}", row["ServiceName"]?.ToString());
-                    rowHtml = rowHtml.Replace("{{PathReportID}}", row["LabRequestNo"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{TestBarCodeName}}", row["TestBarCodeName"]?.ToString());
 
                     html += rowHtml + "<div style='page-break-after:always'></div>";
                 }
