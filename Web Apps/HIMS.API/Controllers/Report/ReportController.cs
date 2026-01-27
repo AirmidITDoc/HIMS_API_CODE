@@ -253,6 +253,8 @@ namespace HIMS.API.Controllers.Report
                 case "OpDraftBillReceipt":
                 case "OpDraftPharmacyReceipt":
                 case "OpDraftPatientStatement":
+                case "EstimatePrint":
+
 
                 case "PatientBillStatement":
 
