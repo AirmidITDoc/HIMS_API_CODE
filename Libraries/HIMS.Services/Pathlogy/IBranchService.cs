@@ -1,4 +1,7 @@
-﻿using System;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Pathology;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +11,8 @@ namespace HIMS.Services.Pathlogy
 {
     public partial interface IBranchService
     {
+        Task<IPagedList<UnitBranchWiseRevenueSummaryDto>> UnitBranchWiseRevenueSummaryListAsync(GridRequestModel objGrid);
+        Task<IPagedList<UnitBranchWiseTestSummaryDto>> UnitBranchWiseTestSummaryListAsync(GridRequestModel objGrid);
 
     }
 }
