@@ -4,19 +4,20 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.DoctorPayout;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pathology;
-using HIMS.Core.Domain.Grid;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.DoctorPayout;
 using HIMS.Services.Pathlogy;
 using Microsoft.AspNetCore.Mvc;
-using HIMS.Data.DTO.Pathology;
-using HIMS.API.Models.OutPatient;
-using HIMS.Data;
-using HIMS.Data.DTO.OPPatient;
-using HIMS.Core.Infrastructure;
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -215,6 +216,32 @@ namespace HIMS.API.Controllers.Pathology
                 AgeDay = x.AgeDay,
                 PatientName = x.FirstName + " " + x.MiddleName + " " + x.LastName
             }));
+        }
+
+
+
+        [HttpPost("LabPatientWhatsappSendoutList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabPaienWhatsappList(GridRequestModel objGrid)
+        {
+            IPagedList<WhatsAppsendOutListDto> List = await _ILabPatientRegistrationService.GetLabPatientWhatsAppconfig(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "Whatsapp Send List"));
+        }
+
+        [HttpPost("LabPatientEmailOutgoingList")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabPatientemailList(GridRequestModel objGrid)
+        {
+            IPagedList<EmailSendoutListDto> List = await _ILabPatientRegistrationService.GetLabPatientEmailSconfig(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "Email Send List"));
+        }
+
+        [HttpPost("LabApprovaltList")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabApprovalResultList(GridRequestModel objGrid)
+        {
+            IPagedList<LabResultDetailsListDto> LabResultList = await _ILabPatientRegistrationService.LabApprovalResultListAsync(objGrid);
+            return Ok(LabResultList.ToGridResponse(objGrid, " Lab Result List "));
         }
 
     }

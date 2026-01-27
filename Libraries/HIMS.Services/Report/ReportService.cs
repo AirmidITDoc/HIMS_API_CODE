@@ -6045,7 +6045,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | H:mm tt"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
-                        //html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
                         html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
                         html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
@@ -6053,14 +6053,11 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{VisitDate}}", dt.GetColValue("RegTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{PhoneNo}}", dt.GetColValue("MobileNo"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
-                        //html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
-
                         html = html.Replace("{{T_NetAmount}}", T_NetAmount.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{Price}}", dt.GetColValue("Price").ConvertToDouble().ToString("F2"));
-                        //html = html.Replace("{{TotalGst}}", dt.GetColValue("TotalGst").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{UserName}}", dt.GetColValue("AddedByName").ConvertToString());
                         //html = html.Replace("{{HospitalName}}", dt.GetColValue("HospitalName").ConvertToString());
@@ -16949,63 +16946,55 @@ namespace HIMS.Services.Report
                 html = html.Replace("{{VisitDate}}", dt.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                 html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
                 html = html.Replace("{{ConsultantDoctorName}}", dt.GetColValue("ConsultantDoctorName"));
-
                 html = html.Replace("{{Address}}", dt.GetColValue("Address"));
                 html = html.Replace("{{Expr1}}", dt.GetColValue("Expr1"));
                 html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
                 html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                 html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
-
-
                 html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName"));
                 html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
-
                 html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                 html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
-
-                html = html.Replace("{{RelativeName}}", dt.GetColValue("RelativeName"));
-                html = html.Replace("{{RelativePhoneNo}}", dt.GetColValue("RelativePhoneNo"));
-
-                html = html.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName"));
                 html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
                 html = html.Replace("{{IsMLC}}", dt.GetColValue("IsMLC"));
-
                 html = html.Replace("{{AdmittedDoctor2}}", dt.GetColValue("AdmittedDoctor2"));
                 html = html.Replace("{{LoginUserSurname}}", dt.GetColValue("LoginUserSurname"));
-                html = html.Replace("{{BP}}", dt.GetColValue("BP"));
-                html = html.Replace("{{Pulse}}", dt.GetColValue("Pulse"));
-                html = html.Replace("{{Height}}", dt.GetColValue("Height"));
-                html = html.Replace("{{Weight}}", dt.GetColValue("PWeight"));
-                html = html.Replace("{{Temp}}", dt.GetColValue("Temp"));
-                html = html.Replace("{{BP}}", dt.GetColValue("BP"));
-                html = html.Replace("{{BSL}}", dt.GetColValue("BSL"));
-                html = html.Replace("{{BMI}}", dt.GetColValue("BMI"));
-                html = html.Replace("{{SpO2}}", dt.GetColValue("SpO2"));
-
-
-
-                html = html.Replace("{{chkBPflag}}", dt.GetColValue("BP").ConvertToString() != "" ? "visible" : "none");
-                html = html.Replace("{{chkPulseflag}}", dt.GetColValue("Pulse").ConvertToString() != "" ? "visible" : "none");
-                html = html.Replace("{{chkHeightflag}}", dt.GetColValue("Height").ConvertToString() != "" ? "visible" : "none");
-                html = html.Replace("{{chkWeightflag}}", dt.GetColValue("PWeight").ConvertToString() != "" ? "visible" : "none");
-                html = html.Replace("{{chkTempflag}}", dt.GetColValue("Temp").ConvertToString() != "" ? "visible" : "none");
-                html = html.Replace("{{chkBSLflag}}", dt.GetColValue("BSL").ConvertToString() != "" ? "visible" : "none");
-                html = html.Replace("{{chkBMIflag}}", dt.GetColValue("BMI").ConvertToString() != "" ? "visible" : "none");
-                html = html.Replace("{{chkSpO2flag}}", dt.GetColValue("SpO2").ConvertToString() != "" ? "visible" : "none");
             }
+
+            //if (model.Mode == "LabStickerPrint")
+            //{
+
+            //    title = "Lab Sticker Print";
+            //    var dt = GetDataBySp(model, "ps_Rtrv_LabSamcollectionListStickerPrint");
+            //    var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode_V2");
+            //    html = objTemplate?.TemplateBody ?? "";
+
+            //    html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")));
+            //    html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+            //    html = html.Replace("{{ServiceName}}", dt.GetColValue("ServiceName"));
+            //    html = html.Replace("{{PathReportID}}", dt.GetColValue("LabRequestNo"));
+            //}
 
             if (model.Mode == "LabStickerPrint")
             {
-
                 title = "Lab Sticker Print";
+
                 var dt = GetDataBySp(model, "ps_Rtrv_LabSamcollectionListStickerPrint");
                 var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode_V2");
-                html = objTemplate?.TemplateBody ?? "";
+                string template = objTemplate?.TemplateBody ?? "";
 
-                html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")));
-                html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
-                html = html.Replace("{{ServiceName}}", dt.GetColValue("ServiceName"));
-                html = html.Replace("{{PathReportID}}", dt.GetColValue("LabRequestNo"));
+                foreach (DataRow row in dt.Rows)
+                {
+                    string rowHtml = template;
+
+                    rowHtml = rowHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["LabRequestNo"]?.ToString()));
+                    rowHtml = rowHtml.Replace("{{UHID}}", row["UHID"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{PatientName}}", row["PatientName"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{ServiceName}}", row["ServiceName"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{TestBarCodeName}}", row["TestBarCodeName"]?.ToString());
+
+                    html += rowHtml + "<div style='page-break-after:always'></div>";
+                }
             }
 
             return new Tuple<string,string>( html,title);

@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.Pathology;
@@ -545,5 +546,22 @@ namespace HIMS.Services.Pathlogy
                 scope.Complete();
             }
         }
+
+        public virtual async Task<IPagedList<WhatsAppsendOutListDto>> GetLabPatientWhatsAppconfig(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<WhatsAppsendOutListDto>(model, "ps_Rtrv_LabPatienSMShistory");
+        }
+
+        public virtual async Task<IPagedList<EmailSendoutListDto>> GetLabPatientEmailSconfig(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<EmailSendoutListDto>(model, "ps_Rtrv_T_LabPatientEmailOutgoinglist");
+        }
+
+        public virtual async Task<IPagedList<LabResultDetailsListDto>> LabApprovalResultListAsync(GridRequestModel model)
+        {
+            
+            return await DatabaseHelper.GetGridDataBySp<LabResultDetailsListDto>(model, "ps_Rtrv_LabLabApprovalList");
+        }
+
     }
 }

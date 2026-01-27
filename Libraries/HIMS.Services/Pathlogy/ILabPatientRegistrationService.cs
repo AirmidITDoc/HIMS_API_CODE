@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.Pathology;
@@ -14,7 +15,9 @@ namespace HIMS.Services.Pathlogy
     public partial interface ILabPatientRegistrationService
     {
         Task<IPagedList<LabPatientRegistrationListDto>> GetListAsync(GridRequestModel objGrid);
-        Task<IPagedList<LabResultListDto>> LabResultListAsync(GridRequestModel objGrid);
+       
+
+
         Task<IPagedList<LabResultDetailsListDto>> LabResultDetailsListAsynch(GridRequestModel objGrid);
 
         Task<IPagedList<LabSampleCollectionListDto>> GetSamColListAsync(GridRequestModel objGrid);
@@ -34,6 +37,15 @@ namespace HIMS.Services.Pathlogy
         Task<IPagedList<PrevDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel objGrid);
         Task<List<TLabPatientRegistration>> SearchLabRegistration(string str);
 
+        Task<IPagedList<WhatsAppsendOutListDto>> GetLabPatientWhatsAppconfig(GridRequestModel objGrid);
+
+        Task<IPagedList<EmailSendoutListDto>> GetLabPatientEmailSconfig(GridRequestModel objGrid);
+
+        Task<IPagedList<LabResultListDto>> LabResultListAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<LabResultDetailsListDto>> LabApprovalResultListAsync(GridRequestModel objGrid);
 
     }
+
 }
+

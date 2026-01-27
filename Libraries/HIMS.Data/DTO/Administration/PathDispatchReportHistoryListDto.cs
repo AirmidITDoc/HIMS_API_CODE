@@ -20,6 +20,8 @@ namespace HIMS.Data.DTO.Administration
         public DateTime? DispatchOn { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
         public long LabPatientId { get; set; }
         public long OPD_IPD_Type { get; set; }
         public string? PatientName { get; set; }
@@ -31,6 +33,10 @@ namespace HIMS.Data.DTO.Administration
         public bool? IsCompleted { get; set; }
         public long PathTestID { get; set; }
         public string? ServiceName { get; set; }
+
+        public string? CreatedUser { get; set; }
+
+        public string? Modifieduser { get; set; }
 
 
 
