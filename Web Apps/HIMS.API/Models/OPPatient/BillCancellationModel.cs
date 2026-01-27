@@ -5,6 +5,8 @@ namespace HIMS.API.Models.OPPatient
     public class OpBillCancellationModel
     {
         public long BillNo { get; set; }
+        public string? DiscComments { get; set; }
+
 
 
     }

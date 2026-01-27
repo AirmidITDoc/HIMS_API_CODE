@@ -17,7 +17,7 @@ namespace HIMS.Services.OPPatient
         public virtual async Task UpdateAsyncOp(Bill objOpBillCancellation, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
-            string[] AEntity = { "BillNo" };
+            string[] AEntity = { "BillNo", "DiscComments" };
             var entity = objOpBillCancellation.ToDictionary();
 
             foreach (var rProperty in entity.Keys.ToList())
@@ -47,7 +47,7 @@ namespace HIMS.Services.OPPatient
         public virtual async Task UpdateAsyncIp(Bill objIPBillCancellation, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
-            string[] AEntity = { "BillNo" };
+            string[] AEntity = { "BillNo", "DiscComments" };
             var bentity = objIPBillCancellation.ToDictionary();
 
             foreach (var rProperty in bentity.Keys.ToList())
