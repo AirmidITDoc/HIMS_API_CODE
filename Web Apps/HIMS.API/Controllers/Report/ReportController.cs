@@ -254,6 +254,7 @@ namespace HIMS.API.Controllers.Report
                 case "OpDraftPharmacyReceipt":
                 case "OpDraftPatientStatement":
 
+                case "PatientBillStatement":
 
 
 
@@ -411,7 +412,6 @@ namespace HIMS.API.Controllers.Report
                 case "SalesReturnBill":
                 case "ExpenseVoucharPrint":
 
-                case "PatientBillStatement":
 
 
                 //PharmacyKenya
