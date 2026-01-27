@@ -196,7 +196,7 @@ namespace HIMS.Services.Pathlogy
                         {
                             foreach (var item in ObjaddCharge)
                             {
-                                string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType", "ServiceId", "Price", "Qty", "UnitId", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", 
+                                string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType","OpdIpdId", "ServiceId", "Price", "Qty", "UnitId", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", 
                                     "DocPercentage", "DocAmt", "HospitalAmt", "RefundAmount", "IsGenerated", "IsComServ", "IsPrintCompSer", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", 
                                     "IsPackage", "WardId", "BedId", "ServiceCode", "ServiceName", "CompanyServiceName", "IsInclusionExclusion", "IsHospMrk", "PackageMainChargeID", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId", "TariffId", "BillNo", "CreatedBy" };
                                 var Packagescharge = item.ToDictionary();
@@ -393,7 +393,7 @@ namespace HIMS.Services.Pathlogy
                         {
                             foreach (var item in ObjaddCharge)
                             {
-                                string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType", "ServiceId", "Price", "Qty", "UnitId", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", "DocPercentage", 
+                                string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType","OpdIpdId", "ServiceId", "Price", "Qty", "UnitId", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", "DocPercentage", 
                                     "DocAmt", "HospitalAmt", "RefundAmount", "IsGenerated", "IsComServ", "IsPrintCompSer", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "WardId", "BedId", 
                                     "ServiceCode", "ServiceName", "CompanyServiceName", "IsInclusionExclusion", "IsHospMrk", "PackageMainChargeID", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId", "TariffId", "BillNo", "CreatedBy" };
                                 var Packagescharge = item.ToDictionary();
