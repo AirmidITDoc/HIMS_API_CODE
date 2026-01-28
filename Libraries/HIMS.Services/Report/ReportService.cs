@@ -9291,6 +9291,8 @@ namespace HIMS.Services.Report
 
 
                         }
+                        F_TotalAmount = Math.Ceiling(F_TotalAmount);
+
                         TotalBillAmount = F_TotalAmount - MedicineReturnamt;
 
                         TotalBillAmount = TotalBillAmount - MedicineReturnamt;
