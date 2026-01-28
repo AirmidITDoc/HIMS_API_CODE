@@ -7,6 +7,7 @@ using HIMS.Data;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
+using HIMS.Services.Audit;
 using HIMS.Services.Common;
 using HIMS.Services.Dashboard;
 using HIMS.Services.DoctorPayout;
@@ -208,6 +209,7 @@ namespace HIMS.API.Infrastructure
             services.AddHttpClient<MpesaStkService>();
 
             services.AddScoped<DinkToPdfService>();
+            services.AddScoped<IAuditService, AuditService>();
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
         }
