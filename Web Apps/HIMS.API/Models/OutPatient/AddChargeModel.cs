@@ -107,6 +107,10 @@ namespace HIMS.API.Models.OutPatient
         public long? UnitId { get; set; }
         public long? ClassId { get; set; }
         public long? TariffId { get; set; }
+        public string? ServiceName { get; set; }
+
+        public long ChargesId { get; set; }
+
 
     }
     public class PackcagechargemodelValidator : AbstractValidator<Packcagechargemodel>

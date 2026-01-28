@@ -17,4 +17,11 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.EmployeId).NotNull().NotEmpty().WithMessage("EmployeId is required");
         }
     }
+    public class DoctorExecutiveUpdateModel
+    {
+        public long Id { get; set; }
+        public long? DoctorId { get; set; }
+        public long? EmployeId { get; set; }
+        public int? ModifiedBy { get; set; }
+    }
 }

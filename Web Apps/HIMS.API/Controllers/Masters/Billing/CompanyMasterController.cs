@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Masters.Billing
 
 
         [HttpPost("CompanyMasterList")]
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> GetList(GridRequestModel objGrid)
         {
             IPagedList<CompanyMasterListDto> CompanyMasterList = await _CompanyMasterService.GetListAsync(objGrid);
