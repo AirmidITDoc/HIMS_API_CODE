@@ -198,7 +198,8 @@ namespace HIMS.API.Controllers.Login
                     user.DoctorId,
                     user.IsPoverify,
                     TLoginStoreDetails = user.TLoginStoreDetails.Select(x => new { x.StoreId, x.LoginId, x.StoreName }),
-                    TLoginUnitDetails = user.TLoginUnitDetails.Select(x => new { x.UnitId, x.LoginId, x.UnitName })
+                    TLoginUnitDetails = user.TLoginUnitDetails.Select(x => new { x.UnitId, x.LoginId, x.UnitName }),
+                    //TLoginAccessDetails = user.TLoginAccessDetails.Select(x => new { x.AccessValueId, x.AccessValue, x.AccessInputValue })
                     //TLoginStoreDetails = user.TLoginStoreDetails.Select(x => new { x.StoreId, x.LoginId, x.StoreName }),
                     //TLoginUnitDetails = user.TLoginUnitDetails.Select(x => new { x.UnitId, x.LoginId, x.UnitName })
                 }
