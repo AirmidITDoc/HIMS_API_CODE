@@ -25,15 +25,18 @@ namespace HIMS.API.Controllers.Masters.Billing
     {
         private readonly IGenericService<CompanyMaster> _repository;
         private readonly IGenericService<MCompanyWiseServiceDiscount> _repository1;
+        private readonly IGenericService<MCompanyExecutiveInfo> _repository2;
 
         private readonly IGenericService<ServiceWiseCompanyCode> _temprepository;
         private readonly ICompanyMasterService _CompanyMasterService;
 
-        public CompanyMasterController(ICompanyMasterService repository, IGenericService<CompanyMaster> repository1, IGenericService<MCompanyWiseServiceDiscount> repository2, IGenericService<ServiceWiseCompanyCode> repository3)
+        public CompanyMasterController(ICompanyMasterService repository, IGenericService<CompanyMaster> repository1, IGenericService<MCompanyWiseServiceDiscount> repository2,
+            IGenericService<ServiceWiseCompanyCode> repository3, IGenericService<MCompanyExecutiveInfo> repository4)
         {
             _CompanyMasterService = repository;
             _repository = repository1;
             _repository1 = repository2;
+            _repository2 = repository4;
             _temprepository = repository3;
 
         }
@@ -109,12 +112,7 @@ namespace HIMS.API.Controllers.Masters.Billing
 
             if (obj.CompanyId == 0)
             {
-                foreach (var q in model.MCompanyExecutiveInfos)
-                {
-                    q.CreatedBy = CurrentUserId;
-                    q.CreatedDate = AppTime.Now;
-
-                }
+                
                 model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
@@ -127,7 +125,9 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
-        [HttpPut("Edit/{id:int}")]
+
+        //Edit API
+        [HttpPut("{id:int}")]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(CompanyMasterModel obj)
         {
@@ -137,30 +137,12 @@ namespace HIMS.API.Controllers.Masters.Billing
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                foreach (var q in model.MCompanyExecutiveInfos)
-                {
-                    if (q.Id == 0)
-                    {
-                        q.CreatedBy = CurrentUserId;
-                        q.CreatedDate = AppTime.Now;
-                    }
-                    q.ModifiedBy = CurrentUserId;
-                    q.ModifiedDate = AppTime.Now;
-                    q.Id = 0;
-                }
-
-                model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.IsActive = true;
-
-               
-                await _CompanyMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-
+                model.ModifiedDate = AppTime.Now;
+                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
-
-        
 
         //Delete API
         [HttpDelete]
@@ -231,7 +213,41 @@ namespace HIMS.API.Controllers.Masters.Billing
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
+        //Add API
+        [HttpPost("CompanyExecutiveInfo")]
 
+        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(CompanyExecutiveInfoModel obj)
+        {
+            MCompanyExecutiveInfo model = obj.MapTo<MCompanyExecutiveInfo>();
+            //model.IsActive = true;
+            if (obj.Id == 0)
+            {
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = AppTime.Now;
+                await _repository2.Add(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
+        }
+        //Edit API
+        [HttpPut("CompanyExecutiveInfo/{id:int}")]
+        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(CompanyExecutiveInfoModel obj)
+        {
+            MCompanyExecutiveInfo model = obj.MapTo<MCompanyExecutiveInfo>();
+            //model.IsActive = true;
+            if (obj.Id == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+                await _repository2.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
+        }
 
     }
 }

@@ -33,7 +33,6 @@ namespace HIMS.API.Models.Masters
         public bool? IsSubCompany { get; set; }
         public decimal DayWiseCredit { get; set; }
 
-        public List<CompanyExecutiveInfoModel> MCompanyExecutiveInfos { get; set; }
 
 
     }
@@ -48,6 +47,7 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.FaxNo).NotNull().NotEmpty().WithMessage("FaxNo is required");
             RuleFor(x => x.TraiffId).NotNull().NotEmpty().WithMessage("TraiffId is required");
         }
+    }
         public class updatecompanywiseservicerate
 
         {
@@ -60,6 +60,5 @@ namespace HIMS.API.Models.Masters
 
 
         }
-      
-    }
 }
+

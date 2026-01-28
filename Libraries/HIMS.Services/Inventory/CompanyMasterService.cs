@@ -118,34 +118,21 @@ namespace HIMS.Services.Inventory
         }
 
 
-        public virtual async Task UpdateAsync(CompanyMaster objCompanyMaster, int UserId, string Username, string[]? ignoreColumns = null)
+        public virtual async Task UpdateAsync(CompanyMaster objCompanyMaster, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
-                _context.Attach(objCompanyMaster);
-                _context.Entry(objCompanyMaster).State = EntityState.Modified;
+                objCompanyMaster.ModifiedBy = UserId;
+                objCompanyMaster.ModifiedDate = DateTime.Now;
 
-                if (ignoreColumns?.Length > 0)
-                {
-                    foreach (var column in ignoreColumns)
-                    {
-                        _context.Entry(objCompanyMaster).Property(column).IsModified = false;
-                    }
-                }
-                var lst = await _context.MCompanyExecutiveInfos.Where(x => x.CompanyId == objCompanyMaster.CompanyId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.MCompanyExecutiveInfos.RemoveRange(lst);
-                }
+                _context.CompanyMasters.Attach(objCompanyMaster);
+                _context.Entry(objCompanyMaster).State = EntityState.Modified;
 
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
             }
         }
-
-
-
     }
 }
 

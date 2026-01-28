@@ -207,6 +207,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MDietChartMaster> MDietChartMasters { get; set; } = null!;
         public virtual DbSet<MDoctorChargesDetail> MDoctorChargesDetails { get; set; } = null!;
         public virtual DbSet<MDoctorDepartmentDet> MDoctorDepartmentDets { get; set; } = null!;
+        public virtual DbSet<MDoctorExecutiveLinkInfo> MDoctorExecutiveLinkInfos { get; set; } = null!;
         public virtual DbSet<MDoctorExperienceDetail> MDoctorExperienceDetails { get; set; } = null!;
         public virtual DbSet<MDoctorHouseManMaster> MDoctorHouseManMasters { get; set; } = null!;
         public virtual DbSet<MDoctorLeaveDetail> MDoctorLeaveDetails { get; set; } = null!;
@@ -598,6 +599,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<VAdmissionMsg> VAdmissionMsgs { get; set; } = null!;
         public virtual DbSet<VCheckingBalQty> VCheckingBalQties { get; set; } = null!;
         public virtual DbSet<VPaymentBillwisesumAmount> VPaymentBillwisesumAmounts { get; set; } = null!;
+        public virtual DbSet<VTPaymentBillwisesumAmount> VTPaymentBillwisesumAmounts { get; set; } = null!;
         public virtual DbSet<VVisitMsg> VVisitMsgs { get; set; } = null!;
         public virtual DbSet<ViewDoctorshare> ViewDoctorshares { get; set; } = null!;
         public virtual DbSet<ViewTallyPharSalesReceiptNewOld> ViewTallyPharSalesReceiptNewOlds { get; set; } = null!;
@@ -6757,6 +6759,15 @@ namespace HIMS.Data.Models
                     .HasForeignKey(d => d.DoctorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_M_DoctorDepartmentDet_DoctorMaster");
+            });
+
+            modelBuilder.Entity<MDoctorExecutiveLinkInfo>(entity =>
+            {
+                entity.ToTable("M_DoctorExecutiveLinkInfo");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MDoctorExperienceDetail>(entity =>
@@ -17641,6 +17652,25 @@ namespace HIMS.Data.Models
                     .HasColumnName("PayTMPay");
 
                 entity.Property(e => e.Tdsamount).HasColumnName("TDSAmount");
+            });
+
+            modelBuilder.Entity<VTPaymentBillwisesumAmount>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_T_PAYMENT_BILLWISESUM_AMOUNT");
+
+                entity.Property(e => e.CardAmount).HasColumnType("money");
+
+                entity.Property(e => e.CashAmount).HasColumnType("money");
+
+                entity.Property(e => e.ChequeAmount).HasColumnType("money");
+
+                entity.Property(e => e.OnlineAmount).HasColumnType("money");
+
+                entity.Property(e => e.UpitranNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("UPITranNo");
             });
 
             modelBuilder.Entity<VVisitMsg>(entity =>

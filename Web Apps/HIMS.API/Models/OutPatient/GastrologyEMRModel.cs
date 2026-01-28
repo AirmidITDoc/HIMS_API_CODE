@@ -44,4 +44,10 @@ namespace HIMS.API.Models.OutPatient
 
         }
     }
+    public class ClinicalQuesHeaderCancel
+    {
+        public long? Opipid { get; set; }
+        public long ClinicalQuesHeaderId { get; set; }
+
+    }
 }
