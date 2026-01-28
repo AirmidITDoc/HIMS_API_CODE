@@ -86,6 +86,8 @@ namespace HIMS.Services.Common
                 case "PathologyResultEntryIPMachine": sp_Name = "ps_Rtrv_PathologyResultList_ForIPAgeMachine"; break;
                 case "PathologyResultEntryLabMachine": sp_Name = "ps_Rtrv_PathologyResultList_ForLABAgeMachine"; break;
 
+                case "LabCreditBillList": sp_Name = "ps_Lab_CreditBillList"; break;
+                case "LabBillHistoryList": sp_Name = "ps_Lab_BillDetailsList"; break;
 
                 //
                 case "OPBillPrint": sp_Name = "ps_rptBillPrint"; break;
