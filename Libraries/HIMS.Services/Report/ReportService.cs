@@ -16996,7 +16996,7 @@ namespace HIMS.Services.Report
                     rowHtml = rowHtml.Replace("{{ServiceName}}", row["ServiceName"]?.ToString());
                     rowHtml = rowHtml.Replace("{{TestBarCodeName}}", row["TestBarCodeName"]?.ToString());
 
-                    html += rowHtml + "<div style='page-break-after:always'></div>";
+                    html += rowHtml;// + "<div style='page-break-after:always'></div>";
                 }
             }
 
