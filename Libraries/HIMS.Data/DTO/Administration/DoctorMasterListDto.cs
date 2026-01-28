@@ -37,6 +37,8 @@
         public string? Signature { get; set; }
         public string? AgeYear { get; set; }
         public string? RefDocHospitalName { get; set; }
+        public long? EmployeId { get; set; }
+
 
     }
 }

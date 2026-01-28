@@ -15,6 +15,7 @@ using HIMS.API.Models.Masters;
 using HIMS.Core.Infrastructure;
 using HIMS.Core;
 using HIMS.API.Models.OutPatient;
+using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -88,6 +89,20 @@ namespace HIMS.API.Controllers.OPPatient
 
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.Opipid);
+        }
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "ClinicalQuesHeader", Permission = PagePermission.Delete)]
+        public ApiResponse Cancel(ClinicalQuesHeaderCancel obj)
+        {
+            ClinicalQuesHeader model = obj.MapTo<ClinicalQuesHeader>();
+            if (obj.ClinicalQuesHeaderId != 0)
+            {
+                model.ClinicalQuesHeaderId = obj.ClinicalQuesHeaderId;
+                _IGastrologyEMRService.Cancel(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
     }
 }
