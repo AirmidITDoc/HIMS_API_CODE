@@ -15,6 +15,8 @@ namespace HIMS.Services.OutPatient
         Task<IPagedList<ClinicalQuesListDto>> GetListAsync(GridRequestModel objGrid);
         Task InsertAsync(ClinicalQuesHeader ObjClinicalQuesHeader, int UserId, string Username);
         Task UpdateAsync(ClinicalQuesHeader ObjClinicalQuesHeader, int UserId, string Username, string[]? references);
+        Task Cancel(ClinicalQuesHeader ObjClinicalQuesHeader, int UserId, string Username);
+
 
 
     }

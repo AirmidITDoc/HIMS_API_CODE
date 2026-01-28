@@ -131,21 +131,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
 
-        //[HttpPost("DoctorshareBillList")]
-        ////[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
-        //public async Task<IActionResult> DotorshrebillList(GridRequestModel objGrid)
-        //{
-        //    IPagedList<DoctorShareListDto> DoctorList = await _IDoctorMasterService.GetList(objGrid);
-        //    return Ok(DoctorList.ToGridResponse(objGrid, "DoctorShareList"));
-        //}
-        //[HttpPost("DoctorshareListByName")]
-        ////[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
-        //public async Task<IActionResult> DotorshreListbyname(GridRequestModel objGrid)
-        //{
-        //    IPagedList<DoctorShareLbyNameListDto> DoctorList = await _IDoctorMasterService.GetList1(objGrid);
-        //    return Ok(DoctorList.ToGridResponse(objGrid, "DoctorShareByName"));
-        //}
-
+       
 
 
         //List API
@@ -187,7 +173,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Name  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
         //[HttpPost("InsertEDMX")]
         ////   [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
@@ -413,6 +399,25 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         {
             var data = _FileUtility.GetBase64FromFolder("Doctors\\Signature", FileName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "File", data.Result);
+        }
+
+        [HttpPost("DoctorExecutiveLinkInfo")]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertSP(DoctorExecutiveModel obj)
+        {
+            MDoctorExecutiveLinkInfo model = obj.MapTo<MDoctorExecutiveLinkInfo>();
+            if (obj.Id == 0)
+            {
+               
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+                await _IDoctorMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
     }

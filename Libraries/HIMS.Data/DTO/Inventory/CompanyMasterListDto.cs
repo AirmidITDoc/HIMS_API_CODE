@@ -36,6 +36,7 @@
         public string? TariffName { get; set; }
         public string? TypeName { get; set; }
         public decimal DayWiseCredit { get; set; }
+        public long? EmployeId { get; set; }
 
 
     }

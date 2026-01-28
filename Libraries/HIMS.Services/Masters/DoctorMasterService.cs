@@ -290,6 +290,22 @@ namespace HIMS.Services.Masters
         {
             return await this._context.DoctorMasters.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(25).ToListAsync();
         }
+        public virtual async Task InsertAsync(MDoctorExecutiveLinkInfo ObjMDoctorExecutiveLinkInfo, int CurrentUserId, string CurrentUserName)
+        {
+            DatabaseHelper odal = new();
+            string[] DEntity = { "Id", "DoctorId", "EmployeId", "CreatedBy" };
+            var entity = ObjMDoctorExecutiveLinkInfo.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!DEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+            string VID = odal.ExecuteNonQuery("ps_Insert_DoctorExecutiveLinkInfo", CommandType.StoredProcedure, "Id", entity);
+            ObjMDoctorExecutiveLinkInfo.Id = Convert.ToInt32(VID);
+            await _context.LogProcedureExecution(entity, nameof(MDoctorExecutiveLinkInfo), (int)ObjMDoctorExecutiveLinkInfo.Id, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+
+        }
 
     }
 }
