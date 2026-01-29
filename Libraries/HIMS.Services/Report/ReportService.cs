@@ -479,7 +479,7 @@ namespace HIMS.Services.Report
                 //    }
                 case "LabStickerPrint":
                     {
-                        var dt = GetDataBySp(model, "ps_Rtrv_LabSamcollectionListStickerPrint");
+                        var dt = GetDataBySp(model, "ps_Rtrv_LabStickerPrintDemo");
                         var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode_V2");
 
                         string html = "";
@@ -16997,7 +16997,7 @@ namespace HIMS.Services.Report
             {
                 title = "Lab Sticker Print";
 
-                var dt = GetDataBySp(model, "ps_Rtrv_LabSamcollectionListStickerPrint");
+                var dt = GetDataBySp(model, "ps_Rtrv_LabStickerPrintDemo");
                 var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode_V2");
                 string template = objTemplate?.TemplateBody ?? "";
 
@@ -17005,7 +17005,7 @@ namespace HIMS.Services.Report
                 {
                     string rowHtml = template;
 
-                    rowHtml = rowHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["LabRequestNo"]?.ToString()));
+                    rowHtml = rowHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["UHID"]?.ToString()));
                     rowHtml = rowHtml.Replace("{{UHID}}", row["UHID"]?.ToString());
                     rowHtml = rowHtml.Replace("{{PatientName}}", row["PatientName"]?.ToString());
                     rowHtml = rowHtml.Replace("{{ServiceName}}", row["ServiceName"]?.ToString());
