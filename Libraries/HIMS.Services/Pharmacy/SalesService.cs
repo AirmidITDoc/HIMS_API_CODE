@@ -788,7 +788,7 @@ namespace HIMS.Services.Users
             foreach (var item in ObjAdvanceDetail)
             {
 
-                string[] Entity = { "AdvanceDetailID", "UsedAmount", "BalanceAmount"};
+                string[] Entity = { "AdvanceDetailId", "UsedAmount", "BalanceAmount"};
                 var Ientity = item.ToDictionary();
                 foreach (var rProperty in Ientity.Keys.ToList())
                 {

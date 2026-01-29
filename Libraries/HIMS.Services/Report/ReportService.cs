@@ -494,37 +494,22 @@ namespace HIMS.Services.Report
                 #endregion
 
 
-                #region :: LabStickerPrint ::
-                //case "LabStickerPrint":
-                //    {
-                //        string[] colList = Array.Empty<string>();
-
-                //        var dt = GetDataBySp(model, "ps_Rtrv_LabSamcollectionListStickerPrint");               
-                //        var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode_V2");
-                //        string html = objTemplate?.TemplateBody ?? "";
-
-                //        int i = 0;                
-                //        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")));
-                //        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
-                //        html = html.Replace("{{ServiceName}}", dt.GetColValue("ServiceName"));
-                //        html = html.Replace("{{PathReportID}}", dt.GetColValue("LabRequestNo"));
-
-                //        tuple = _pdfUtility.GeneratePdfFromHtmlBarCode(html, model.StorageBaseUrl, "LabStickerPrint", "Sticker" + vDate, Orientation.Portrait);
-                //        break;
-                //    }
+                #region :: LabStickerPrint :
                 case "LabStickerPrint":
                     {
-                        var dt = GetDataBySp(model, "ps_Rtrv_LabSamcollectionListStickerPrint");
+                        var dt = GetDataBySp(model, "ps_Rtrv_LabStickerPrintDemo");
                         var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode_V2");
 
                         string html = "";
                         foreach (DataRow row in dt.Rows)
                         {
+                            int i = 0;
                             string tempHtml = objTemplate?.TemplateBody ?? "";
-                            tempHtml = tempHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["LabRequestNo"]?.ToString()));
+                            tempHtml = tempHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["UHID"]?.ToString()));
+                            tempHtml = tempHtml.Replace("{{UHID}}", row["UHID"]?.ToString());
                             tempHtml = tempHtml.Replace("{{PatientName}}", row["PatientName"]?.ToString());
                             tempHtml = tempHtml.Replace("{{ServiceName}}", row["ServiceName"]?.ToString());
-                            tempHtml = tempHtml.Replace("{{PathReportID}}", row["LabRequestNo"]?.ToString());
+                            tempHtml = tempHtml.Replace("{{TestBarCodeName}}", row["TestBarCodeName"]?.ToString());
 
                             html += tempHtml;//+ "<div style='page-break-after:always'></div>";
     }
@@ -1882,9 +1867,6 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
-
-
-
 
 
 
@@ -6966,7 +6948,7 @@ namespace HIMS.Services.Report
                             i++;
 
                             //      items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
-                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["ConsentText"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<td style=\" text-align: left; padding: 6px;\">").Append(dr["ConsentText"].ConvertToString()).Append("</td></tr>");
 
 
                         }
@@ -7021,7 +7003,7 @@ namespace HIMS.Services.Report
                             i++;
 
                             //      items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
-                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["ConsentText"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<td style=\"  text-align: left; padding: 6px;\">").Append(dr["ConsentText"].ConvertToString()).Append("</td></tr>");
 
 
                         }
@@ -15225,7 +15207,7 @@ namespace HIMS.Services.Report
                         T_AdvBalanceamt = T_Advamt - T_Advrefundamt - salesadv;
 
 
-
+                        salespaid = salespaid.ConvertToDouble() - salesonline.ConvertToDouble();
 
                         html = html.Replace("{{Items}}", items.ToString());
 
@@ -15238,6 +15220,13 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{salesTotal}}", salesTotal.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{salesbal}}", salesbal.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{salesadv}}", salesadv.ConvertToDouble().ToString("F2"));
+
+
+
+                        html = html.Replace("{{salespaid}}", salespaid.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesrefundpaid}}", salesrefundpaid.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesadv}}", salesadv.ConvertToDouble().ToString("F2"));
+
 
 
 
@@ -15446,12 +15435,21 @@ namespace HIMS.Services.Report
 
                         double advBalanceAmount = dt.GetColValue("AdvBalanceAmount").ConvertToDouble();
                         double paidAmt = dt.GetColValue("PaidAmt").ConvertToDouble();
+                        double AdvanceAmt = dt.GetColValue("AdvanceAmt").ConvertToDouble();
+                        double AdvanceusedAmt = dt.GetColValue("AdvanceusedAmt").ConvertToDouble();
+                        double AdvanceRefundAmt = dt.GetColValue("AdvanceRefundAmt").ConvertToDouble();
+
 
                         double amount = NetTotal - advBalanceAmount - paidAmt;
 
                         html = html.Replace("{{AdvBalanceAmount}}", advBalanceAmount.ToString("F2"));
                         html = html.Replace("{{PaidAmt}}", paidAmt.ToString("F2"));
                         html = html.Replace("{{Amount}}", amount.ToString("F2"));
+                        html = html.Replace("{{AdvanceAmt}}", AdvanceAmt.ToString("F2"));
+                        html = html.Replace("{{AdvanceusedAmt}}", AdvanceusedAmt.ToString("F2"));
+                        html = html.Replace("{{AdvanceRefundAmt}}", AdvanceRefundAmt.ToString("F2"));
+
+
 
 
                         html = html.Replace("{{SalesType}}", dt.GetColValue("SalesType"));
@@ -15515,7 +15513,7 @@ namespace HIMS.Services.Report
                             i++;
 
                             items.Append("<tr style=\"font-size:15px;\"><td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center\">").Append(i).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;text-align:center;vertical-align:middle\">").Append(dr["HSNcode"].ConvertToString()).Append("</td>");
+                        //    items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;text-align:center;vertical-align:middle\">").Append(dr["HSNcode"].ConvertToString()).Append("</td>");
                             //   items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;text-align:center;vertical-align:middle\">").Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: left;padding-left:10px;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: left;padding-left:10px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
@@ -17215,7 +17213,7 @@ namespace HIMS.Services.Report
             {
                 title = "Lab Sticker Print";
 
-                var dt = GetDataBySp(model, "ps_Rtrv_LabSamcollectionListStickerPrint");
+                var dt = GetDataBySp(model, "ps_Rtrv_LabStickerPrintDemo");
                 var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode_V2");
                 string template = objTemplate?.TemplateBody ?? "";
 
@@ -17223,7 +17221,7 @@ namespace HIMS.Services.Report
                 {
                     string rowHtml = template;
 
-                    rowHtml = rowHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["LabRequestNo"]?.ToString()));
+                    rowHtml = rowHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["UHID"]?.ToString()));
                     rowHtml = rowHtml.Replace("{{UHID}}", row["UHID"]?.ToString());
                     rowHtml = rowHtml.Replace("{{PatientName}}", row["PatientName"]?.ToString());
                     rowHtml = rowHtml.Replace("{{ServiceName}}", row["ServiceName"]?.ToString());

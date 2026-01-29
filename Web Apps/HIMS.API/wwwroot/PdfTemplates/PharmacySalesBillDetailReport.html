@@ -5,6 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            font-size: 14px;
+            font-family: Calibri,'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+    </style>
 </head>
 
 <body>
@@ -149,6 +165,24 @@
                             <!-- BELOW LINES -->
                             <tr>
                                 <td style="padding:6px; font-weight:bold; border-bottom:1px solid #000;">
+                                    Advance  Amount
+                                    <span style="float:right;">{{AdvanceAmt}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:6px; font-weight:bold; border-bottom:1px solid #000;">
+                                    Advance Used Amount
+                                    <span style="float:right;">{{AdvanceusedAmt}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:6px; font-weight:bold; border-bottom:1px solid #000;">
+                                    Advance Refund Amount
+                                    <span style="float:right;">{{AdvanceRefundAmt}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:6px; font-weight:bold; border-bottom:1px solid #000;">
                                     Advance Bal Amount
                                     <span style="float:right;">{{AdvBalanceAmount}}</span>
                                 </td>
@@ -174,7 +208,6 @@
                 </td>
             </tr>
         </table>
-    </div>
     </div>
 </body>
 </html>
