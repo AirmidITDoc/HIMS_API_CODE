@@ -1,4 +1,5 @@
 ﻿using HIMS.Data.DataProviders;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -14,15 +15,35 @@ namespace HIMS.Services.Administration
         {
             _context = HIMSDbContext;
         }
+        //public virtual void DoctorShareInsert(AddCharge ObjAddCharges, int UserId, string Username, DateTime FromDate, DateTime ToDate)
+        //{
+        //    DatabaseHelper odal = new();
+        //    string[] AEntity = {  "ChargesId","ChargesDate","OpdIpdType","OpdIpdId","ServiceId","Price","Qty","TotalAmt","ConcessionPercentage","ConcessionAmount","NetAmount","DoctorId", "DocPercentage","DocAmt","HospitalAmt","IsGenerated","AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology",
+        //    "IsDoctorShareGenerated","IsInterimBillFlag","IsPackage","IsSelfOrCompanyService","PackageId","ChargesTime","PackageMainChargeId","ClassId","RefundAmount","CPrice","CQty","CTotalAmount","IsComServ","IsPrintCompSer","ServiceName","ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","BillNo","IsHospMrk",
+        //        "BillNoNavigation","UnitId","TariffId","DoctorName","WardId","BedId","ServiceCode","CompanyServiceName","IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","IsApprovedByCamp"};
+        //    var Rentity = ObjAddCharges.ToDictionary();
+        //    foreach (var rProperty in AEntity)
+        //    {
+        //        Rentity.Remove(rProperty);
+        //    }
+        //    Rentity["FromDate"] = FromDate;
+        //    Rentity["ToDate"] = ToDate;
+
+        //    odal.ExecuteNonQuery("OP_DoctorSharePerCalculation_1", CommandType.StoredProcedure, Rentity);
+        //    odal.ExecuteNonQuery("IP_DoctorSharePerCalculation_1", CommandType.StoredProcedure, Rentity);
+
+        //}
+
+
         public virtual void DoctorShareInsert(AddCharge ObjAddCharges, int UserId, string Username, DateTime FromDate, DateTime ToDate)
         {
             DatabaseHelper odal = new();
-            string[] AEntity = {  "ChargesId","ChargesDate","OpdIpdType","OpdIpdId","ServiceId","Price","Qty","TotalAmt","ConcessionPercentage","ConcessionAmount","NetAmount","DoctorId", "DocPercentage","DocAmt","HospitalAmt","IsGenerated","AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology",
-            "IsDoctorShareGenerated","IsInterimBillFlag","IsPackage","IsSelfOrCompanyService","PackageId","ChargesTime","PackageMainChargeId","ClassId","RefundAmount","CPrice","CQty","CTotalAmount","IsComServ","IsPrintCompSer","ServiceName","ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","BillNo","IsHospMrk","BillNoNavigation","UnitId","TariffId","DoctorName","WardId","BedId","ServiceCode","CompanyServiceName","IsInclusionExclusion","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+            string[] AEntity = { "FromDate", "ToDate" };
             var Rentity = ObjAddCharges.ToDictionary();
-            foreach (var rProperty in AEntity)
+            foreach (var rProperty in Rentity.Keys.ToList())
             {
-                Rentity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    Rentity.Remove(rProperty);
             }
             Rentity["FromDate"] = FromDate;
             Rentity["ToDate"] = ToDate;
@@ -31,6 +52,9 @@ namespace HIMS.Services.Administration
             odal.ExecuteNonQuery("IP_DoctorSharePerCalculation_1", CommandType.StoredProcedure, Rentity);
 
         }
+      
+
+
         public virtual async Task InsertAsync(MDoctorPerMaster ObjMDoctorPerMaster, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
