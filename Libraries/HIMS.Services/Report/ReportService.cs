@@ -459,24 +459,7 @@ namespace HIMS.Services.Report
                 #endregion
 
 
-                #region :: LabStickerPrint ::
-                //case "LabStickerPrint":
-                //    {
-                //        string[] colList = Array.Empty<string>();
-
-                //        var dt = GetDataBySp(model, "ps_Rtrv_LabSamcollectionListStickerPrint");               
-                //        var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode_V2");
-                //        string html = objTemplate?.TemplateBody ?? "";
-
-                //        int i = 0;                
-                //        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")));
-                //        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
-                //        html = html.Replace("{{ServiceName}}", dt.GetColValue("ServiceName"));
-                //        html = html.Replace("{{PathReportID}}", dt.GetColValue("LabRequestNo"));
-
-                //        tuple = _pdfUtility.GeneratePdfFromHtmlBarCode(html, model.StorageBaseUrl, "LabStickerPrint", "Sticker" + vDate, Orientation.Portrait);
-                //        break;
-                //    }
+                #region :: LabStickerPrint :
                 case "LabStickerPrint":
                     {
                         var dt = GetDataBySp(model, "ps_Rtrv_LabStickerPrintDemo");
@@ -485,11 +468,13 @@ namespace HIMS.Services.Report
                         string html = "";
                         foreach (DataRow row in dt.Rows)
                         {
+                            int i = 0;
                             string tempHtml = objTemplate?.TemplateBody ?? "";
-                            tempHtml = tempHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["LabRequestNo"]?.ToString()));
+                            tempHtml = tempHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["UHID"]?.ToString()));
+                            tempHtml = tempHtml.Replace("{{UHID}}", row["UHID"]?.ToString());
                             tempHtml = tempHtml.Replace("{{PatientName}}", row["PatientName"]?.ToString());
                             tempHtml = tempHtml.Replace("{{ServiceName}}", row["ServiceName"]?.ToString());
-                            tempHtml = tempHtml.Replace("{{PathReportID}}", row["LabRequestNo"]?.ToString());
+                            tempHtml = tempHtml.Replace("{{TestBarCodeName}}", row["TestBarCodeName"]?.ToString());
 
                             html += tempHtml;//+ "<div style='page-break-after:always'></div>";
     }
@@ -1847,9 +1832,6 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
-
-
-
 
 
 
@@ -15228,12 +15210,21 @@ namespace HIMS.Services.Report
 
                         double advBalanceAmount = dt.GetColValue("AdvBalanceAmount").ConvertToDouble();
                         double paidAmt = dt.GetColValue("PaidAmt").ConvertToDouble();
+                        double AdvanceAmt = dt.GetColValue("AdvanceAmt").ConvertToDouble();
+                        double AdvanceusedAmt = dt.GetColValue("AdvanceusedAmt").ConvertToDouble();
+                        double AdvanceRefundAmt = dt.GetColValue("AdvanceRefundAmt").ConvertToDouble();
+
 
                         double amount = NetTotal - advBalanceAmount - paidAmt;
 
                         html = html.Replace("{{AdvBalanceAmount}}", advBalanceAmount.ToString("F2"));
                         html = html.Replace("{{PaidAmt}}", paidAmt.ToString("F2"));
                         html = html.Replace("{{Amount}}", amount.ToString("F2"));
+                        html = html.Replace("{{AdvanceAmt}}", AdvanceAmt.ToString("F2"));
+                        html = html.Replace("{{AdvanceusedAmt}}", AdvanceusedAmt.ToString("F2"));
+                        html = html.Replace("{{AdvanceRefundAmt}}", AdvanceRefundAmt.ToString("F2"));
+
+
 
 
                         html = html.Replace("{{SalesType}}", dt.GetColValue("SalesType"));
