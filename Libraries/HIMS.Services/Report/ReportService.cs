@@ -6741,7 +6741,7 @@ namespace HIMS.Services.Report
                             i++;
 
                             //      items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
-                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["ConsentText"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<td style=\" text-align: left; padding: 6px;\">").Append(dr["ConsentText"].ConvertToString()).Append("</td></tr>");
 
 
                         }
@@ -6796,7 +6796,7 @@ namespace HIMS.Services.Report
                             i++;
 
                             //      items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
-                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;\">").Append(dr["ConsentText"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<td style=\"  text-align: left; padding: 6px;\">").Append(dr["ConsentText"].ConvertToString()).Append("</td></tr>");
 
 
                         }
@@ -15000,7 +15000,7 @@ namespace HIMS.Services.Report
                         T_AdvBalanceamt = T_Advamt - T_Advrefundamt - salesadv;
 
 
-
+                        salespaid = salespaid.ConvertToDouble() - salesonline.ConvertToDouble();
 
                         html = html.Replace("{{Items}}", items.ToString());
 
@@ -15013,6 +15013,13 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{salesTotal}}", salesTotal.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{salesbal}}", salesbal.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{salesadv}}", salesadv.ConvertToDouble().ToString("F2"));
+
+
+
+                        html = html.Replace("{{salespaid}}", salespaid.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesrefundpaid}}", salesrefundpaid.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{salesadv}}", salesadv.ConvertToDouble().ToString("F2"));
+
 
 
 
