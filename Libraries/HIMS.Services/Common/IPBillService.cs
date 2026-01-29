@@ -3,6 +3,7 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
 using System.Data;
 using System.Security.Principal;
@@ -270,16 +271,18 @@ namespace HIMS.Services.Common
                     {
                         DatabaseHelper odal = new();
 
-                        string[] AEntity = {  "RefundAmount", "CPrice", "CQty", "CTotalAmount", "IsComServ","IsPrintCompSer", "ServiceName", "ChPrice", "ChQty", "ChTotalAmount", "IsBillableCharity", "SalesId", "BillNo", "IsHospMrk","ChargesId",
-                                              "BillNoNavigation","IsDoctorShareGenerated","IsInterimBillFlag","CompanyServiceName","DoctorName","CreatedDate","ModifiedBy","ModifiedDate","IsApprovedByCamp"};
+                        string[] AEntity = {  "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price","Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DocPercentage", "DocAmt", "HospitalAmt","IsGenerated",
+                                              "AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","ServiceCode","IsInclusionExclusion","IsSelfOrCompanyService","PackageId","WardId","BedId","PackageMainChargeId","CreatedBy","ChargesTime","UnitId","ClassId","TariffId","ServiceName","ChargesId"};
                         var Packagescharge = item.ToDictionary();
                         Packagescharge["PackageMainChargeId"] = objAddCharge.ChargesId;
-                        foreach (var rProperty in AEntity)
+                        foreach (var rProperty in Packagescharge.Keys.ToList())
                         {
-                            Packagescharge.Remove(rProperty);
+                            if (!AEntity.Contains(rProperty))
+                                Packagescharge.Remove(rProperty);
                         }
-                       
-                        odal.ExecuteNonQuery("m_insert_IPChargesPackages_1", CommandType.StoredProcedure, Packagescharge);
+
+                        string VPackagescharge = odal.ExecuteNonQuery("m_insert_IPChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
+                        item.ChargesId = Convert.ToInt32(VPackagescharge);
                         await _context.LogProcedureExecution(Packagescharge, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                     }

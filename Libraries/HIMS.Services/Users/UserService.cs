@@ -30,10 +30,10 @@ namespace HIMS.Services.Users
                        select new TLoginUnitDetail() { LoginId = d.LoginId, UnitId = d.UnitId, UnitName = s.HospitalName, LoginUnitDetId = d.LoginUnitDetId };
             objUser.TLoginUnitDetails = await qry1.ToListAsync();
 
-            var qry2 = from d in _context.TLoginAccessDetails
-                       where d.LoginId == objUser.UserId
-                       select new TLoginAccessDetail() { LoginId = d.LoginId , AccessValueId = d.AccessValueId, AccessInputValue =d.AccessInputValue, AccessValue=d.AccessValue};
-            objUser.TLoginAccessDetails = await qry2.ToListAsync();
+            //var qry2 = from d in _context.TLoginAccessDetails
+            //           where d.LoginId == objUser.UserId
+            //           select new TLoginAccessDetail() { LoginId = d.LoginId , AccessValueId = d.AccessValueId, AccessInputValue =d.AccessInputValue, AccessValue=d.AccessValue};
+            //objUser.TLoginAccessDetails = await qry2.ToListAsync();
 
             //objUser.TLoginStoreDetails = await _context.TLoginStoreDetails.Where(x => x.LoginId == objUser.UserId).ToListAsync();
             //objUser.TLoginUnitDetails = await _context.TLoginUnitDetails.Where(x => x.LoginId == objUser.UserId).ToListAsync();

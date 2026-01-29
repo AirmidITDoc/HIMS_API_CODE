@@ -306,6 +306,21 @@ namespace HIMS.Services.Masters
 
 
         }
+        public virtual async Task UpdateAsync(MDoctorExecutiveLinkInfo ObjMDoctorExecutiveLinkInfo, int CurrentUserId, string CurrentUserName)
+        {
+            DatabaseHelper odal = new();
+            string[] DEntity = { "Id", "DoctorId", "EmployeId", "ModifiedBy" };
+            var entity = ObjMDoctorExecutiveLinkInfo.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!DEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_Update_DoctorExecutiveLinkInfo", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, nameof(MDoctorExecutiveLinkInfo), (int)ObjMDoctorExecutiveLinkInfo.Id, Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+        }
 
     }
 }

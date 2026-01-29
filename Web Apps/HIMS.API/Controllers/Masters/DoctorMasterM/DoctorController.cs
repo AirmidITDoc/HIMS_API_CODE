@@ -106,7 +106,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpPost("DoctorList")]
-        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<DoctorMasterListDto> DoctorList = await _IDoctorMasterService.GetListAsync(objGrid);
@@ -419,6 +419,27 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
+
+        [HttpPut("DoctorExecutiveLinkInfo/{id:int}")]
+
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> UpdateSP(DoctorExecutiveUpdateModel obj)
+        {
+            MDoctorExecutiveLinkInfo model = obj.MapTo<MDoctorExecutiveLinkInfo>();
+            if (obj.Id != 0)
+            {
+
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+                await _IDoctorMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update  successfully.");
+        }
+
 
     }
 }

@@ -565,6 +565,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TNursingMedicationChartModel, TNursingMedicationChart>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<AddChargeModell, AddCharge>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MDoctorExecutiveLinkInfo, DoctorExecutiveModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MDoctorExecutiveLinkInfo, DoctorExecutiveUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

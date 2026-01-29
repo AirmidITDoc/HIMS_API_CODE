@@ -38,6 +38,8 @@
         public string? AgeYear { get; set; }
         public string? RefDocHospitalName { get; set; }
         public long? EmployeId { get; set; }
+        public long Id { get; set; }
+
 
 
     }

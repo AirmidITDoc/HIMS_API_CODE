@@ -37,6 +37,8 @@
         public string? TypeName { get; set; }
         public decimal DayWiseCredit { get; set; }
         public long? EmployeId { get; set; }
+        public long Id { get; set; }
+
 
 
     }

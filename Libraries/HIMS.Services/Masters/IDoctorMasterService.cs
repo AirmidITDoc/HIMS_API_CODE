@@ -26,6 +26,8 @@ namespace HIMS.Services.Masters
         Task<List<DoctorMaster>> GetDoctorWithDepartment();
         Task<List<ContantListDto>> ConstantListAsync(string ConstantType);
         Task InsertAsync(MDoctorExecutiveLinkInfo ObjMDoctorExecutiveLinkInfo, int UserId, string Username);
+        Task UpdateAsync(MDoctorExecutiveLinkInfo ObjMDoctorExecutiveLinkInfo, int UserId, string Username);
+
 
 
 
