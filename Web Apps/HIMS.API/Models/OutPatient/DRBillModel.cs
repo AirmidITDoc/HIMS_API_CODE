@@ -174,5 +174,12 @@ namespace HIMS.API.Models.OutPatient
 
 
     }
+    public class DRBillCancel
+    {
+        public long Drbno { get; set; }
+        public bool? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDate { get; set; }
+    }
 }
 

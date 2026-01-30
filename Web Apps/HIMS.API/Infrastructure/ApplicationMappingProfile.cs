@@ -567,6 +567,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<MDoctorExecutiveLinkInfo, DoctorExecutiveModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MDoctorExecutiveLinkInfo, DoctorExecutiveUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<TDrbill, DRBillCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             CreateMap<GRNReturnVerifyModel, TGrnreturnHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
