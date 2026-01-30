@@ -20,6 +20,7 @@ using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 using static HIMS.API.Models.OutPatient.AppointmentBillModel;
 //using OPBillListDto = HIMS.Data.DTO.Administration.OPDRBillListDto;
 
@@ -296,6 +297,19 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  Update successfully.", model.Drbno);
         }
 
-
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Delete)]
+        public ApiResponse Cancel(DRBillCancel obj)
+        {
+            TDrbill model = obj.MapTo<TDrbill>();
+            if (obj.Drbno != 0)
+            {
+                model.Drbno = obj.Drbno;
+                _oPBillingService.Cancel(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
     }
 }

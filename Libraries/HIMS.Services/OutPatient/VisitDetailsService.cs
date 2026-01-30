@@ -403,7 +403,7 @@ namespace HIMS.Services.OutPatient
                         entity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_update_vitalInformation", CommandType.StoredProcedure, entity);
-                await _context.LogProcedureExecution(entity, nameof(VisitDetail), objPara.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                //await _context.LogProcedureExecution(entity, nameof(VisitDetail), objPara.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
 
                 scope.Complete();

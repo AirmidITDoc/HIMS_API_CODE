@@ -15,6 +15,7 @@ namespace HIMS.Services.Common
 
         Task InsertAppointmentCreditBillAsyncSP(Registration objRegistration, VisitDetail objVisitDetail,  Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, int CurrentUserId, string CurrentUserName);
 
+        Task Cancel(TDrbill ObjTDrbill, int UserId, string Username);
 
         Task InsertCreditBillAsyncSP(Bill objBill, int currentUserId, string currentUserName);
 

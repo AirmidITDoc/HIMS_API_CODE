@@ -963,5 +963,22 @@ namespace HIMS.Services.Common
 
             }
         }
+        public virtual async Task Cancel(TDrbill ObjTDrbill, int UserId, string Username)
+        {
+            DatabaseHelper odal = new();
+            string[] DEntity = { "Drbno", "IsCancelled", "IsCancelledBy", "IsCancelledDate" };
+            var dentity = ObjTDrbill.ToDictionary();
+            foreach (var rProperty in dentity.Keys.ToList())
+            {
+                if (!DEntity.Contains(rProperty))
+                    dentity.Remove(rProperty);
+        
+            }
+            dentity["IsCancelledBy"] = UserId;
+            dentity["IsCancelledDate"] = DateTime.Now;
+            odal.ExecuteNonQuery("ps_opDraftBillCancel", CommandType.StoredProcedure, dentity);
+        }
+        
+
     }
 }
