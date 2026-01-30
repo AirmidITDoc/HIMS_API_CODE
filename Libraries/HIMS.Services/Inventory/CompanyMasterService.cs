@@ -2,14 +2,15 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Transactions;
-using Microsoft.Data.SqlClient;
-using HIMS.Data.DTO.OPPatient;
 
 
 
@@ -52,9 +53,14 @@ namespace HIMS.Services.Inventory
 
         return data;
     }
-       
+        public List<CompanyComboDto> CompanyComboList()
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para =Array.Empty<SqlParameter>();
+            var data = sql.FetchListBySP<CompanyComboDto>("Retrieve_companyCombo", para);
 
-
+            return data;
+        }
         public virtual void Insertsp(List<ServiceWiseCompanyCode> ObjServiceWiseCompanyCode, int UserId, string UserName, long? userId)
         {
             DatabaseHelper odal = new();
