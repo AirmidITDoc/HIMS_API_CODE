@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
         public async Task<ApiResponse> GetDropdown()
         {
             var MOttableMasterList = await _repository.GetAll(x => x.IsActive.Value);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "getlocationByOttable dropdown", MOttableMasterList.Select(x => new { x.SurgeryId, x.SiteDescId, x.SurgeryName }));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "getlocationByOttable dropdown", MOttableMasterList.Select(x => new { x.SurgeryId, x.SiteDescId, x.SurgeryName,x.TotalDuration}));
         }
         //[HttpGet("GetSurgeryTypeByOTSurgery/{id?}")]
         //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]

@@ -9,7 +9,7 @@
         public long OPIPID { get; set; }
         public byte OPDIPDType { get; set; }
         public string StoreName { get; set; }
-        public long IPMedID { get; set; }
+        public long MedicalRecoredId { get; set; }
         public string CompanyName { get; set; }
         public long CompanyId { get; set; }
         public long IppreId { get; set; }

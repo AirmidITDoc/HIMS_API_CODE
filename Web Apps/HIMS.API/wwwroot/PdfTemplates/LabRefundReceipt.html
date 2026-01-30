@@ -32,8 +32,8 @@
                                     <span>{{RefundNo}}</span>
                                 </td>
                                 <td style="padding: 2px;">
-                                    <span><b>OPD No:</b> </span>
-                                    <span>{{OPDNo}}</span>
+                                    <span><b>UHID :</b> </span>
+                                    <span>{{RegNo}}</span>
                                 </td>
                                 <td style="padding: 2px;">
                                     <span><b>Refund Date :</b>  </span>
@@ -42,8 +42,8 @@
                             </tr>
                             <tr>
                                 <td style="padding: 2px;">
-                                    <span><b>UHID :</b> </span>
-                                    <span>{{RegNo}}</span>
+                                    <span><b>Patient Name :</b> </span>
+                                    <span>{{PatientName}}</span>
                                 </td>
                                 <td style="padding: 2px;">
                                     <span><b>Age | Gender:</b> </span>
@@ -56,41 +56,37 @@
 
                             </tr>
                             <tr>
-
-                                <td style="padding: 2px;">
-                                    <span><b>Patient Name :</b> </span>
-                                    <span>{{PatientName}}</span>
-                                </td>
-
                                 <td style="padding: 2px;">
                                     <span><b>Patient Type :</b> </span>
                                     <span>{{PatientType}}</span>
                                 </td>
                                 <td style="padding: 2px;">
+                                    <span><b>Doctor Name :</b> </span>
+                                    <span>{{ConsultantDocName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span><b>Ref Doc Name :</b> </span>
+                                    <span>{{RefDocName}}</span>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 2px;display: {{chkCompanyNameflag}};">
+                                    <span><b>Department :</b></span>
+                                    <span>{{DepartmentName}}</span>
+                                </td>
+                           
+                                <td style="padding: 2px; display: {{chkCompanyNameflag}};">
                                     <span><b>Company Name :</b> </span>
                                     <span>{{CompanyName}}</span>
                                 </td>
                             </tr>
-
-                            <tr>
-
-                                <td style="padding: 2px;">
-                                    <span><b>Department :</b></span>
-                                    <span>{{DepartmentName}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span><b>Doctor Name :</b> </span>
-                                    <span>{{ConsultantDocName}}</span>
-                                </td>
-                                <!--<td style="padding: 2px;">
-                                    <span><b>Ref Doc Name :</b> </span>
-                                    <span>{{RefDocName}}</span>
-                                </td>-->
-                            </tr>
                         </table>
                     </td>
                 </tr>
-
+                <br />
+                <br />
 
                 <tr class="payment-info-row">
                     <td style="padding: 6px;">
@@ -117,9 +113,6 @@
                                                     Bill Date : {{BillDate}} |
                                                     Bill Amount : {{NetPayableAmt}}
                                                 </td>
-                                                <!--<td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold;">
-                                                    Bill Amount :   {{NetPayableAmt}}
-                                                </td>-->
                                             </tr>
 
 
@@ -131,14 +124,14 @@
                                                     {{RefundAmount}}
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <!--<tr>
                                                 <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold;">
                                                     Payment Mode:
                                                 </td>
                                                 <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px; ">
                                                     {{PaymentMode}}
                                                 </td>
-                                            </tr>
+                                            </tr>-->
                                             <tr>
                                                 <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold;">
                                                     Total Amount in words :

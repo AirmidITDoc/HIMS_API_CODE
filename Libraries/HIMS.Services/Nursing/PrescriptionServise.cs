@@ -41,6 +41,48 @@ namespace HIMS.Services.Nursing
             scope.Complete();
         }
 
+        public virtual async Task UpdateAsync(TIpmedicalRecord objmedicalRecord, int UserId, string Username)
+
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.Serializable }, TransactionScopeAsyncFlowOption.Enabled);
+
+            TIpmedicalRecord objPresNo = _context.TIpmedicalRecords.Where(x => x.MedicalRecoredId == objmedicalRecord.MedicalRecoredId).FirstOrDefault();
+            if (objPresNo != null)
+                _context.Entry(objPresNo).State = EntityState.Detached;
+
+            objmedicalRecord.PresNo = objPresNo.PresNo;
+
+            {
+                long reservationId = objmedicalRecord.MedicalRecoredId;
+
+                // ✅ Delete related details first
+                var lstAttend = await _context.TIpPrescriptions
+                    .Where(x => x.IpmedId == reservationId)
+                    .ToListAsync();
+                if (lstAttend.Any())
+                    _context.TIpPrescriptions.RemoveRange(lstAttend);
+
+            
+
+                // ✅ Save deletion first
+                await _context.SaveChangesAsync();
+
+                // ✅ Then attach and update header
+                _context.Attach(objmedicalRecord);
+                _context.Entry(objmedicalRecord).State = EntityState.Modified;
+
+                _context.Entry(objmedicalRecord).Property(x => x.CreatedBy).IsModified = false;
+                _context.Entry(objmedicalRecord).Property(x => x.CreatedDate).IsModified = false;
+                _context.Entry(objmedicalRecord).Property(x => x.MedicalRecoredId).IsModified = false;
+
+                objmedicalRecord.ModifiedBy = UserId;
+                objmedicalRecord.ModifiedDate = AppTime.Now;
+
+                await _context.SaveChangesAsync();
+                scope.Complete();
+            }
+        }
+
 
         public virtual async Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username)
         {
