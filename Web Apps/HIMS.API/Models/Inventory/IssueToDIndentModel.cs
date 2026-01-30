@@ -88,10 +88,27 @@ namespace HIMS.API.Models.Inventory
         public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
 
     }
+    public class CurrentStockMaterialModel
+    {
+        public int ItemId { get; set; }
+        public float? IssueQty { get; set; }
+        public long? IstkId { get; set; }
+        public long? StoreId { get; set; }
+    }
+    public class CurrentStockMaterialModelValidator : AbstractValidator<CurrentStockMaterialModel>
+    {
+        public CurrentStockMaterialModelValidator()
+        {
+            RuleFor(x => x.IssueQty).NotNull().NotEmpty().WithMessage("IssueQty  is required");
+            RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreID  is required");
+            RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreID  is required");
+
+        }
+    }
     public class IssuetoDeptWihMaterialAcceptModel
     {
         public IssuetoDeptMaterialAcceptModel IssuetoDeptWihMaterialAccept { get; set; }
-        public List<CurrentStockModel> TCurrentStock { get; set; }
+        public List<CurrentStockMaterialModel> TCurrentStock { get; set; }
         public UpdateMaterialAcceptance materialAcceptIssueHeader { get; set; }
         public List<AcceptMaterialIssueDet> materialAcceptIssueDetails { get; set; }
         public materialAcceptStockUpdate materialAcceptStockUpdate { get; set; }

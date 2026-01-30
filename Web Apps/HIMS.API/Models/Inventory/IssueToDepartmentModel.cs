@@ -57,20 +57,21 @@ namespace HIMS.API.Models.Inventory
 
         }
     }
+    
     public class CurrentStockModel
     {
         public int ItemId { get; set; }
-        public float? IssueQty { get; set; }
-        public long? IstkId { get; set; }
-        public long? StoreId { get; set; }
+        public int IssueQty { get; set; }
+        public int IStkId { get; set; }
+        public int StoreID { get; set; }
     }
     public class CurrentStockModelValidator : AbstractValidator<CurrentStockModel>
     {
         public CurrentStockModelValidator()
         {
             RuleFor(x => x.IssueQty).NotNull().NotEmpty().WithMessage("IssueQty  is required");
-            RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreID  is required");
-            RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreID  is required");
+            RuleFor(x => x.IStkId).NotNull().NotEmpty().WithMessage("IStkId  is required");
+            RuleFor(x => x.StoreID).NotNull().NotEmpty().WithMessage("StoreID  is required");
 
         }
     }

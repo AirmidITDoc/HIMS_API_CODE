@@ -436,11 +436,12 @@ namespace HIMS.API.Infrastructure
             CreateMap<SmspdfConfig, SmspdfConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
+            CreateMap<TCurrentStock, CurrentStockMaterialModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
 
-            
+
 
 
 
