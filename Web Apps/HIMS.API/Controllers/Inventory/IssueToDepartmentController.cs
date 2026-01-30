@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
@@ -163,6 +164,49 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "UpdateMaterialAcceptance  successfully.");
         }
 
+        [HttpPost("Verify")]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Verify(IssueToDepVerifyModel obj)
+        {
+            TIssueToDepartmentHeader model = obj.MapTo<TIssueToDepartmentHeader>();
+            if (obj.IssueId != 0)
+            {
+                model.IsVerified = true;
+                model.ModifiedDate = AppTime.Now;
+
+
+                await _IIssueToDepService.VerifyAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record verify successfully.");
+        }
+       
+
+        [HttpPost("IssuetoDeptWithMaterialAccept")]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+
+        public async Task<ApiResponse> InsertM(IssuetoDeptWihMaterialAcceptModel obj)
+        {
+            TIssueToDepartmentHeader model = obj.IssuetoDeptWihMaterialAccept.MapTo<TIssueToDepartmentHeader>();
+            List<TIssueToDepartmentDetail> model1 = obj.materialAcceptIssueDetails.MapTo<List<TIssueToDepartmentDetail>>();
+            List<TCurrentStock> model2 = obj.TCurrentStock.MapTo<List<TCurrentStock>>();
+
+            if (obj.IssuetoDeptWihMaterialAccept.IssueId == 0)
+            {
+                model.IssueDate = Convert.ToDateTime(obj.IssuetoDeptWihMaterialAccept.IssueDate);
+                model.IssueTime = Convert.ToDateTime(obj.IssuetoDeptWihMaterialAccept.IssueTime);
+                model.Addedby = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
+                model.Addedby = CurrentUserId;
+
+                await _IIssueToDepService.InsertMaterialAsync(model, model1, model2, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.IssueId);
+        }
+       
 
     }
 }

@@ -61,4 +61,40 @@ namespace HIMS.API.Models.Inventory
 
         }
     }
+    public class IssueToDepVerifyModel
+    {
+        public long IssueId { get; set; }
+
+    }
+    public class IssuetoDeptMaterialAcceptModel
+    {
+        public long IssueId { get; set; }
+        public DateTime? IssueDate { get; set; }
+        public string? IssueTime { get; set; }
+        public long? FromStoreId { get; set; }
+        public long? ToStoreId { get; set; }
+        public double? TotalAmount { get; set; }
+        public double? TotalVatAmount { get; set; }
+        public double? NetAmount { get; set; }
+        public string? Remark { get; set; }
+        public long? Addedby { get; set; }
+        public bool? IsVerified { get; set; }
+        public bool? IsClosed { get; set; }
+        public long? IndentId { get; set; }
+        public long? UnitId { get; set; }
+        public long? CreatedBy { get; set; }
+
+
+        public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
+
+    }
+    public class IssuetoDeptWihMaterialAcceptModel
+    {
+        public IssuetoDeptMaterialAcceptModel IssuetoDeptWihMaterialAccept { get; set; }
+        public List<CurrentStockModel> TCurrentStock { get; set; }
+        public UpdateMaterialAcceptance materialAcceptIssueHeader { get; set; }
+        public List<AcceptMaterialIssueDet> materialAcceptIssueDetails { get; set; }
+        public materialAcceptStockUpdate materialAcceptStockUpdate { get; set; }
+
+    }
 }
