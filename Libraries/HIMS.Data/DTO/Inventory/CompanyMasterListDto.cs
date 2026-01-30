@@ -89,6 +89,11 @@
         public long? executiveId { get; set; }
         public string? ExecutiveName {  get; set; }
         
+    }
+    public class CompanyComboDto
+    {
+        public long CompanyId { get; set; }
+        public string? CompanyName { get; set; }
 
     }
 

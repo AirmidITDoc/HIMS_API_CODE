@@ -130,9 +130,13 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorContant dropdown", DoctorConstantsList.Select(x => new { x.ConstantType, x.ConstantId }));
         }
 
+        [HttpGet("RefdoctorComboList")]
+        public ApiResponse RefdoctorComboList()
+        {
+            var data = _IDoctorMasterService.RefdoctorComboList();
 
-       
-
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refdoctor Combo List", data);
+        }
 
         //List API
         [HttpPost]

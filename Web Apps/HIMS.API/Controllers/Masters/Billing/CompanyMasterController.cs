@@ -49,6 +49,13 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "CompanyRepresentative List", data );
         }
 
+        [HttpGet("CompanyComboList")]
+        public ApiResponse CompanyComboList()
+        {
+            var data = _CompanyMasterService.CompanyComboList();
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyCombo List", data);
+        }
 
         [HttpPost("CompanyMasterList")]
         //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
