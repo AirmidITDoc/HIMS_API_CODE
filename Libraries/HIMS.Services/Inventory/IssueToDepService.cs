@@ -261,7 +261,9 @@ namespace HIMS.Services.Inventory
                 odal.ExecuteNonQuery("m_upd_T_Curstk_issdpt_1", CommandType.StoredProcedure, Ientity);
 
                 string[] SEntity = { "IssueId", "AcceptedBy", "IsAccepted" };
+                
                 var Sntity = objIssueToDepartment.ToDictionary();
+                Sntity["IssueId"] = IssueId;
                 foreach (var rProperty in Sntity.Keys.ToList())
                 {
                     if (!SEntity.Contains(rProperty))
@@ -274,6 +276,7 @@ namespace HIMS.Services.Inventory
 
                     string[] IEntity = { "IssueId", "IssueDepId", "Status" };
                     var Centity = items.ToDictionary();
+                    Centity["IssueId"] = IssueId;
                     foreach (var rProperty in Centity.Keys.ToList())
                     {
                         if (!IEntity.Contains(rProperty))
@@ -284,6 +287,7 @@ namespace HIMS.Services.Inventory
 
                 string[] DEntity = { "IssueId"};
                 var Tentity = objIssueToDepartment.ToDictionary();
+                Tentity["IssueId"] = IssueId;
                 foreach (var rProperty in Tentity.Keys.ToList())
                 {
                     if (!DEntity.Contains(rProperty))

@@ -35,5 +35,9 @@
         public string? Pin { get; set; }
         public string? Phone { get; set; }
         public bool? IsCancelled { get; set; }
+
+        public string? MobileNo { get; set; }
+
+        public string? EmailId { get; set; }
     }
 }

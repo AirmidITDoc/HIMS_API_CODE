@@ -184,7 +184,7 @@ namespace HIMS.API.Controllers.Inventory
        
 
         [HttpPost("IssuetoDeptWithMaterialAccept")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
 
         public async Task<ApiResponse> InsertM(IssuetoDeptWihMaterialAcceptModel obj)
         {
