@@ -8,6 +8,16 @@
         public long IPMedID { get; set; }
         public long OP_IP_ID { get; set; }
         public bool IsClosed { get; set; }
+        public long DoseId { get; set; }
+        public long ItemID { get; set; }
+        public long Days { get; set; }
+        public long Remark { get; set; }
+
+
+
+
+
+      
 
     }
 }

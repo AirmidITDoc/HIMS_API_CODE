@@ -185,17 +185,27 @@ namespace HIMS.Services.OutPatient
         //    return await qry.Take(50).ToListAsync();
         //}
 
-        public virtual async Task<List<OPrtrvDignosisListDto>> GetDignosisListAsync(string descriptionType)
+        public async Task<List<OPrtrvDignosisListDto>> GetDignosisListAsync(string descriptionType)
         {
             var query = _context.MOpcasepaperDignosisMasters.AsQueryable();
 
-            if (!string.IsNullOrEmpty(descriptionType))
+            if (!string.IsNullOrWhiteSpace(descriptionType))
             {
-                string lowered = descriptionType.ToLower();
-                query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
+                var lowered = descriptionType.ToLower();
+                query = query.Where(d =>
+                    d.DescriptionType != null &&
+                    d.DescriptionType.ToLower().Contains(lowered));
             }
 
             var data = await query
+                .Where(d => d.DescriptionName != null)
+                .Select(d => new
+                {
+                    d.Id,
+                    d.DescriptionType,
+                    d.DescriptionName
+                })
+                .Distinct()
                 .OrderBy(d => d.Id)
                 .Select(d => new OPrtrvDignosisListDto
                 {
@@ -203,11 +213,36 @@ namespace HIMS.Services.OutPatient
                     DescriptionType = d.DescriptionType,
                     DescriptionName = d.DescriptionName
                 })
-                .Take(50)
                 .ToListAsync();
 
             return data;
         }
+
+        //public virtual async Task<List<OPrtrvDignosisListDto>> GetDignosisListAsync(string descriptionType)
+        //{
+        //    var query = _context.MOpcasepaperDignosisMasters.AsQueryable();
+
+        //    if (!string.IsNullOrEmpty(descriptionType))
+        //    {
+        //        string lowered = descriptionType.ToLower();
+        //        query = query.Where(d => d.DescriptionType != null && d.DescriptionType.ToLower().Contains(lowered));
+        //    }
+
+        //    var data = await query
+        //        .OrderBy(d => d.Id)
+        //        .Select(d => new OPrtrvDignosisListDto
+        //        {
+        //            Id = d.Id,
+        //            DescriptionType = d.DescriptionType,
+        //            DescriptionName = d.DescriptionName
+        //        })
+        //        .Take(50)
+        //        .ToListAsync();
+
+        //    return data;
+        //}
+
+
         public virtual async Task<List<PrescriptionDignosisListDto>> GetPrescriptionDignosisListAsync(string TemplateCategory)
         {
             var query = _context.MPresTemplateHs.AsQueryable();

@@ -12,6 +12,7 @@ namespace HIMS.API.Models.Masters
         public long? SiteDescId { get; set; }
         public long? OttemplateId { get; set; }
         public long? ServiceId { get; set; }
+        public long? TotalDuration { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
