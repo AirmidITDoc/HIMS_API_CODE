@@ -43,4 +43,10 @@
 
 
     }
+
+    public class RefdoctorComboDto
+    {
+        public long DoctorId { get; set; }
+        public string DoctorName { get; set; }
+    }
 }

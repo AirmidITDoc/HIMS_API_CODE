@@ -58,6 +58,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? LastName { get; set; }
 
         public string? HospitalName { get; set; }
+        public string ServiceNames { get; set; } 
     }
 
     public class LabSampleCollectionDetailListDto
