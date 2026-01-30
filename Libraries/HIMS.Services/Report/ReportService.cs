@@ -14791,6 +14791,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PaidAmt}}", dt.GetColValue("PaidAmt"));
                         html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
                         html = html.Replace("{{invoiceNo}}", dt.GetColValue("invoiceNo"));
+                        html = html.Replace("{{PBillNo}}", dt.GetColValue("PBillNo"));
+
 
                         
 
@@ -14964,9 +14966,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
                         html = html.Replace("{{PaidAmt}}", dt.GetColValue("PaidAmt"));
                         html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
-                  
-
-
+                        html = html.Replace("{{DRBNo}}", dt.GetColValue("DRBNo"));
+     
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
 
                         html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
