@@ -2,11 +2,13 @@
 using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Transactions;
@@ -128,6 +130,14 @@ namespace HIMS.Services.Masters
         public virtual async Task<DoctorMaster> GetById(int Id)
         {
             return await this._context.DoctorMasters.Include(x => x.MDoctorDepartmentDets).FirstOrDefaultAsync(x => x.DoctorId == Id);
+        }
+        public List<RefdoctorComboDto> RefdoctorComboList()
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = Array.Empty<SqlParameter>();
+            var data = sql.FetchListBySP<RefdoctorComboDto>("Retrieve_RefdoctorCombo", para);
+
+            return data;
         }
         public virtual async Task InsertAsyncSP(DoctorMaster objDoctorMaster, int UserId, string Username)
         {
