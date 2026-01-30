@@ -87,6 +87,53 @@ namespace HIMS.API.Controllers.NursingStation
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", new { model.AdmissionId, model.MedicalRecoredId });
         }
+
+        [HttpPut("updatePrescription/{id:int}")]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Update(MedicalPrescriptionModel obj)
+        {
+            TIpmedicalRecord model = obj.MapTo<TIpmedicalRecord>();
+            if (obj.MedicalRecoredId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                foreach (var q in model.TIpPrescriptions)
+                {
+                    if (q.IppreId == 0)
+                    {
+                        q.CreatedBy = CurrentUserId;
+                        q.CreatedDate = AppTime.Now;
+                    }
+                    q.ModifiedBy = CurrentUserId;
+                    q.ModifiedDate = AppTime.Now;
+                    q.IppreId = 0;
+                }
+                model.ModifiedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+
+                await _IPrescriptionService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+
+             //   var objPatient = await _admissionService.PatientByAdmissionId(model.AdmissionId.Value);
+
+                // Get all UserIds for StoreId = 2
+                var userIds = await _context.LoginManagers
+                    .Where(x => x.StoreId == 2 && x.IsActive == true)
+                    .Select(x => x.UserId)
+                    .Distinct()
+                    .ToListAsync();
+
+
+                //foreach (var userId in userIds)
+                //{
+                //    // Added by vimal on 06/05/25 for testing - binding notification on bell icon of layout... later team can change..
+                //    await _notificationUtility.SendNotificationAsync("IP | Prescription Request for Pharmacy", $"{objPatient.RegNo} | {objPatient.FirstName} {objPatient.LastName}", $"opd/appointment?Mode=Bill&Id={model.AdmissionId}", userId);
+                //}
+
+            }
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated successfully.", new { model.AdmissionId, model.MedicalRecoredId });
+        }
+
         [HttpPost("PrescriptionCancel")]
         [Permission(PageCode = "Prescription", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> PrescCancel(PrescriptionCancel obj)

@@ -13,6 +13,7 @@ namespace HIMS.Data.Models
         public long? SiteDescId { get; set; }
         public long? OttemplateId { get; set; }
         public long? ServiceId { get; set; }
+        public long? TotalDuration { get; set; }
         public bool? IsActive { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
