@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CT Scan Money Receipt</title>
+</head>
+
+<body style="font-family: Arial, sans-serif; font-size: 13px; margin: 20px;">
+
+    <!-- ===================== RECEIPT CONTAINER ===================== -->
+    <!-- ===================== PATIENT COPY ===================== -->
+    <div style="
+    width:100%;
+    height:50vh;
+    box-sizing:border-box;
+    page-break-inside: avoid;
+">
+
+        <!-- ===== COPY TITLE ===== -->
+        <div style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 5px;">
+            Office Copy
+        </div>
+        {{ExternalLabHeader}}
+
+        <hr>
+        <!-- ===== PATIENT INFO ===== -->
+        <table style="width:100%; line-height:22px;">
+            <tr>
+                <td><b>Name :</b>{{PatientName}} </td>
+                <td><b>Receipt Date :</b>{{BillDate}} </td>
+            </tr>
+            <tr>
+                <td><b>Age/Sex :</b> {{AgeYear}}/{{GenderName}}</td>
+                <td><b>Receipt No :</b>{{LabRequestNo}} </td>
+            </tr>
+            <tr>
+                <td><b>Patient ID : </b>{{LabPatientId}} </td>
+                <td><b>Referring Dr. :</b>{{ConsultantDocName}} </td>
+            </tr>
+            <tr>
+                <td><b>Bill To :</b> </td>
+                <td><b>Patient Class : </b>{{PatientType}} </td>
+            </tr>
+            <tr>
+                <td><b>Patient Category :</b> </td>
+                <td><b>Reference No : </b>  </td>
+            </tr>
+        </table>
+        <br>
+        <!-- ===== PROCEDURE TABLE ===== -->
+        <table style="width:100%; border-collapse: collapse; border-top: 1px solid #000; border-bottom: 1px solid #000;">
+            <tr style="font-weight: bold; text-align: center; border-bottom: 1px solid #000;">
+                <td>Sr.No</td>
+                <td>Procedure Name</td>
+                <td>Procedure Charge</td>
+                <td>Discount</td>
+                <td>Net Amount</td>
+            </tr>
+            {{Items}}
+        </table>
+
+
+        <br>
+
+        <!-- ===== AMOUNT DETAILS ===== -->
+        <table style="width:100%; line-height:22px;">
+            <tr>
+                <td><b>Grand Total :</b>{{TotalBillAmount}} </td>
+                <td><b>Total Discount :</b>{{ConcessionAmt}} </td>
+            </tr>
+            <tr>
+                <td><b>Mode of Pay : </b> </td>
+                <td><b>Receipt Amount :</b>{{NetPayableAmt}} </td>
+            </tr>
+            <tr>
+                <td><b>Refund Amount :</b> </td>
+                <td><b>Balance Due : </b></td>
+            </tr>
+        </table>
+
+        <br><br>
+
+        <!-- ===== SIGNATURE ===== -->
+        <table style="width:100%;">
+            <tr>
+                <td style="text-align:left;">Cashier Signature</td>
+                <td style="text-align:right;">Patient Signature</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding-top:15px;">
+                    Printed By :
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    <hr style="border:1px dashed #000; margin:10px 0;">
+
+    <br><br>
+
+    <!-- ===================== PATIENT COPY ===================== -->
+    <div style="width:100%; margin: auto;">
+
+        <div style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 5px;">
+            Patient Copy
+        </div>
+        <!-- ===================== OFFICE COPY ===================== -->
+        <div style="
+    width:100%;
+    height:50vh;
+    box-sizing:border-box;
+    page-break-inside: avoid;
+">
+
+            {{ExternalLabHeader}}
+            <hr>
+            <!-- ===== PATIENT INFO ===== -->
+            <table style="width:100%; line-height:22px;">
+                <tr>
+                    <td><b>Name :</b>{{PatientName}} </td>
+                    <td><b>Receipt Date :</b>{{BillDate}} </td>
+                </tr>
+                <tr>
+                    <td><b>Age/Sex :</b> {{AgeYear}}/{{GenderName}}</td>
+                    <td><b>Receipt No :</b>{{LabRequestNo}} </td>
+                </tr>
+                <tr>
+                    <td><b>Patient ID : </b>{{LabPatientId}} </td>
+                    <td><b>Referring Dr. :</b>{{ConsultantDocName}} </td>
+                </tr>
+                <tr>
+                    <td><b>Bill To :</b> </td>
+                    <td><b>Patient Class : </b>{{PatientType}} </td>
+                </tr>
+                <tr>
+                    <td><b>Patient Category :</b> </td>
+                    <td><b>Reference No : </b>  </td>
+                </tr>
+            </table>
+            <br>
+            <!-- ===== PROCEDURE TABLE ===== -->
+            <table style="width:100%; border-collapse: collapse; border-top: 1px solid #000; border-bottom: 1px solid #000;">
+                <tr style="font-weight: bold; text-align: center; border-bottom: 1px solid #000;">
+                    <td>Sr.No</td>
+                    <td>Procedure Name</td>
+                    <td>Procedure Charge</td>
+                    <td>Discount</td>
+                    <td>Net Amount</td>
+                </tr>
+                {{Items}}
+            </table>
+
+            <br>
+
+            <!-- ===== AMOUNT DETAILS ===== -->
+            <table style="width:100%; line-height:22px;">
+                <tr>
+                    <td><b>Grand Total :</b>{{TotalBillAmount}} </td>
+                    <td><b>Total Discount :</b>{{ConcessionAmt}} </td>
+                </tr>
+                <tr>
+                    <td><b>Mode of Pay : </b> </td>
+                    <td><b>Receipt Amount :</b>{{NetPayableAmt}} </td>
+                </tr>
+                <tr>
+                    <td><b>Refund Amount :</b> </td>
+                    <td><b>Balance Due : </b></td>
+                </tr>
+            </table>
+            <br><br>
+
+            <!-- ===== SIGNATURE ===== -->
+            <table style="width:100%;">
+                <tr>
+                    <td style="text-align:left;">Cashier Signature</td>
+                    <td style="text-align:right;">Patient Signature</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="padding-top:15px;">
+                        Printed By :
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+</body>
+</html>
