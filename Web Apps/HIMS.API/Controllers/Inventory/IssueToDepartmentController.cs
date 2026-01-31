@@ -189,8 +189,11 @@ namespace HIMS.API.Controllers.Inventory
         public async Task<ApiResponse> InsertM(IssuetoDeptWihMaterialAcceptModel obj)
         {
             TIssueToDepartmentHeader model = obj.IssuetoDeptWihMaterialAccept.MapTo<TIssueToDepartmentHeader>();
-            List<TIssueToDepartmentDetail> model1 = obj.materialAcceptIssueDetails.MapTo<List<TIssueToDepartmentDetail>>();
-            List<TCurrentStock> model2 = obj.TCurrentStock.MapTo<List<TCurrentStock>>();
+            List<TIssueToDepartmentDetail> model1 = obj.TIssueToDepartmentDetails.MapTo<List<TIssueToDepartmentDetail>>();
+            List<TIssueToDepartmentDetail> model2 = obj.materialAcceptIssueDetails.MapTo<List<TIssueToDepartmentDetail>>();
+            List<TCurrentStock> model3 = obj.TCurrentStock.MapTo<List<TCurrentStock>>();
+            TIssueToDepartmentHeader models = obj.materialAcceptIssueHeader.MapTo<TIssueToDepartmentHeader>();
+
 
             if (obj.IssuetoDeptWihMaterialAccept.IssueId == 0)
             {
@@ -200,7 +203,7 @@ namespace HIMS.API.Controllers.Inventory
                 model.CreatedBy = CurrentUserId;
                 model.Addedby = CurrentUserId;
 
-                await _IIssueToDepService.InsertMaterialAsync(model, model1, model2, CurrentUserId, CurrentUserName);
+                await _IIssueToDepService.InsertMaterialAsync(model, model1, model2, model3, models, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

@@ -19,7 +19,7 @@ namespace HIMS.Services.Inventory
         Task UpdateSP(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, List<TCurrentStock> OBjCurrentStock, TIndentHeader ObjTIndentHeader, List<TIndentDetail> ObjTIndentDetail, int UserId, string Username);
         void Update(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, List<TIssueToDepartmentDetail> ObjTIssueToDepartmentDetail, TCurrentStock ObjTCurrentStock, int UserId, string Username);
         Task VerifyAsync(TIssueToDepartmentHeader ObjTIssueToDepartmentHeader, int UserId, string Username);
-        Task InsertMaterialAsync(TIssueToDepartmentHeader objIssueToDeptIndent, List<TIssueToDepartmentDetail> ObjTIssueToDepartmentDetail, List<TCurrentStock> OBjTCurrentStock, int UserId, string Username);
+        Task InsertMaterialAsync(TIssueToDepartmentHeader objIssueToDeptIndent,  List<TIssueToDepartmentDetail> ObjTIssueToDepDetail, List<TIssueToDepartmentDetail> ObjTIssueToDepartmentDetail, List<TCurrentStock> OBjTCurrentStock, TIssueToDepartmentHeader ObjIssueDepartment, int UserId, string Username);
 
 
 

@@ -83,9 +83,7 @@ namespace HIMS.API.Models.Inventory
         public long? IndentId { get; set; }
         public long? UnitId { get; set; }
         public long? CreatedBy { get; set; }
-
-
-        public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
+        //public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
 
     }
     public class CurrentStockMaterialModel
@@ -108,7 +106,10 @@ namespace HIMS.API.Models.Inventory
     public class IssuetoDeptWihMaterialAcceptModel
     {
         public IssuetoDeptMaterialAcceptModel IssuetoDeptWihMaterialAccept { get; set; }
+        public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
         public List<CurrentStockMaterialModel> TCurrentStock { get; set; }
+        //public List<TCurrentStockModel> TCurStockModel { get; set; }
+
         public UpdateMaterialAcceptance materialAcceptIssueHeader { get; set; }
         public List<AcceptMaterialIssueDet> materialAcceptIssueDetails { get; set; }
         public materialAcceptStockUpdate materialAcceptStockUpdate { get; set; }
