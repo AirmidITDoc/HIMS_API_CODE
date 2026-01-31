@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("MaterialRecvedByDeptList")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
         public async Task<IActionResult> MaterialreceivedList(GridRequestModel objGrid)
         {
             IPagedList<MateralreceivedbyDeptLstDto> AppVisitList = await _IIssueToDepService.GetMaterialrecivedbydeptList(objGrid);
