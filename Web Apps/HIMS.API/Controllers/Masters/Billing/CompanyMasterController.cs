@@ -50,9 +50,9 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpGet("CompanyComboList")]
-        public ApiResponse CompanyComboList()
+        public ApiResponse CompanyComboList(string? keywoard)
         {
-            var data = _CompanyMasterService.CompanyComboList();
+            var data = _CompanyMasterService.CompanyComboList(keywoard);
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyCombo List", data);
         }

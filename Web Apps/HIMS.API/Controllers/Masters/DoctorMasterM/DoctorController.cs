@@ -131,9 +131,9 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpGet("RefdoctorComboList")]
-        public ApiResponse RefdoctorComboList()
+        public ApiResponse RefdoctorComboList(string? keywoard)
         {
-            var data = _IDoctorMasterService.RefdoctorComboList();
+            var data = _IDoctorMasterService.RefdoctorComboList(keywoard);
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refdoctor Combo List", data);
         }

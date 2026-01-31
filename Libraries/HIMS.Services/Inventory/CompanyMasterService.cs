@@ -53,11 +53,14 @@ namespace HIMS.Services.Inventory
 
         return data;
     }
-        public List<CompanyComboDto> CompanyComboList()
+        public List<CompanyComboDto> CompanyComboList(string keywoard)
         {
             DatabaseHelper sql = new();
-            SqlParameter[] para =Array.Empty<SqlParameter>();
-            var data = sql.FetchListBySP<CompanyComboDto>("Retrieve_companyCombo", para);
+            SqlParameter[] para =
+             {
+             new SqlParameter("@keywoard",string.IsNullOrWhiteSpace(keywoard) ? DBNull.Value : keywoard)
+             };
+            var data = sql.FetchListBySP<CompanyComboDto>("ps_Rtrv_CompanyMasterCombo", para);
 
             return data;
         }
