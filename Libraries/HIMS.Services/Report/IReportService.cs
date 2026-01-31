@@ -39,7 +39,9 @@ namespace HIMS.Services.Report
         string GeneratePdfFromSp(string sp, string StorageBaseUrl);
         Task<Tuple<string,string>> GetPatientBarcode(ReportRequestModel model);
 
-        string GeneratePdfFromSpV1(string sp, string StorageBaseUrl, long OPIPID, long ReservationId, long OPIPType);
+        //string GeneratePdfFromSpV1(string sp, string StorageBaseUrl, long OPIPID, long ReservationId, long OPIPType);
+
+        string GeneratePdfFromSpV1(ReportRequestModel model, string PdfFontPath = "");
     }
 
 }

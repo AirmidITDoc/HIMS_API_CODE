@@ -17107,118 +17107,487 @@ namespace HIMS.Services.Report
 
         }
 
-        public string GeneratePdfFromSpV1(string sp, string StorageBaseUrl, long OPIPID, long ReservationId, long OPIPType)
+        //public string GeneratePdfFromSpV1(string sp, string StorageBaseUrl, long OPIPID, long ReservationId, long OPIPType)
+        //{
+        //    DatabaseHelper sql = new();
+        //    SqlParameter[] para = new SqlParameter[]
+        //    {
+        //new SqlParameter("@OPIPID", OPIPID),
+        //new SqlParameter("@ReservationId", ReservationId),
+        //new SqlParameter("@OPIPType", OPIPType)
+        //    };
+
+        //    DataSet ds = sql.FetchDataSetBySP(sp, para);
+
+        //    string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTMultiTabReport.html");
+        //    string html = System.IO.File.ReadAllText(htmlFilePath);
+        //    string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+        //    htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+        //    html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+        //    string[] sectionNames = new string[]
+        //    {
+        //        "Patient Information",
+        //        "OT Request Information",
+        //        "OT Reservation / Surgery Details",
+        //        "OT Check In / Check Out",
+        //        "OT Pre Operation",
+        //        "OT In Operation",
+        //        "Anesthesia Record"
+        //    };
+
+        //    StringBuilder allTablesHtml = new StringBuilder();
+
+        //    int maxColumnsPerRow = 6;   
+
+        //    for (int t = 0; t < ds.Tables.Count; t++)
+        //    {
+        //        DataTable dt = ds.Tables[t];
+        //        if (dt.Rows.Count == 0) continue;
+
+        //        string title = (t < sectionNames.Length) ? sectionNames[t] : $"Section {t + 1}";
+
+        //        allTablesHtml.Append(
+        //            "<table style='width:100%; border-collapse:collapse; margin-top:25px;'>" +
+        //            "<tr style='font-size:18px;'>" +
+        //            "<td style='padding:8px 4px;'>" +
+        //                "<table style='width:98%; border-collapse:collapse;'>" +
+        //                    "<tr>" +
+        //                        "<td style='background-color:#e7f0ff; border-bottom:2px solid #000; padding:10px; font-weight:bold; color:#101828;'>" +
+        //                            title +
+        //                        "</td>" +
+        //                    "</tr>" +
+        //                "</table>" +
+        //            "</td>" +
+        //            "</tr>" +
+        //            "</table>"
+        //        );
+
+        //        allTablesHtml.Append(
+        //            "<table style='width:100%; border-collapse:collapse; font-size:20px; margin-top:10px;'>"
+        //        );
+
+        //        foreach (DataRow dr in dt.Rows)
+        //        {
+        //            int colCount = 0;
+        //            int maxCols = 5;
+
+        //            allTablesHtml.Append("<tr>");
+
+        //            for (int c = 0; c < dt.Columns.Count; c++)
+        //            {
+        //                string label = dt.Columns[c].ColumnName;
+        //                string value = string.IsNullOrWhiteSpace(dr[c]?.ToString()) ? "" : dr[c].ToString();
+
+        //                allTablesHtml.Append(
+        //                    "<td style='border:1px solid #d4c3c3; padding:6px; vertical-align:top; width:20%;'>" +
+        //                        "<div style='font-weight:bold; color:#000; margin-bottom:4px;'>" +
+        //                            label +
+        //                        "</div>" +
+        //                        "<div style='color:#101828;'>" +
+        //                            value +
+        //                        "</div>" +
+        //                    "</td>"
+        //                );
+
+        //                colCount++;
+        //                if (colCount == maxCols)
+        //                {
+        //                    allTablesHtml.Append("</tr><tr>");
+        //                    colCount = 0;
+        //                }
+        //            }
+        //            if (colCount > 0 && colCount < maxCols)
+        //            {
+        //                int remaining = maxCols - colCount;
+
+        //                allTablesHtml.Append(
+        //                    $"<td colspan='{remaining}' style='border:1px solid #d4c3c3;'></td>"
+        //                );
+        //            }
+
+        //            allTablesHtml.Append("</tr>");
+        //        }
+
+        //        allTablesHtml.Append("</table>");
+        //        allTablesHtml = allTablesHtml.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+        //    }
+
+        //    html = html.Replace("{{AllTables}}", allTablesHtml.ToString());
+
+        //    var tuple = _pdfUtility.GeneratePdfFromHtml(html, StorageBaseUrl, "OTMultiTabReport");
+
+        //    return Convert.ToBase64String(tuple.Item1);
+        //}
+
+        public string GeneratePdfFromSpV1(ReportRequestModel model, string PdfFontPath = "")
         {
-            DatabaseHelper sql = new();
-            SqlParameter[] para = new SqlParameter[]
+            byte[] pdfBytes = null;
+
+            switch (model.Mode)
             {
-        new SqlParameter("@OPIPID", OPIPID),
-        new SqlParameter("@ReservationId", ReservationId),
-        new SqlParameter("@OPIPType", OPIPType)
-            };
-
-            DataSet ds = sql.FetchDataSetBySP(sp, para);
-
-            string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTMultiTabReport.html");
-            string html = System.IO.File.ReadAllText(htmlFilePath);
-            string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-            htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-            html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
-            string[] sectionNames = new string[]
-            {
-                "Patient Information",
-                "OT Request Information",
-                "OT Reservation / Surgery Details",
-                "OT Check In / Check Out",
-                "OT Pre Operation",
-                "OT In Operation",
-                "Anesthesia Record"
-            };
-
-            StringBuilder allTablesHtml = new StringBuilder();
-
-            int maxColumnsPerRow = 6;   
-
-            for (int t = 0; t < ds.Tables.Count; t++)
-            {
-                DataTable dt = ds.Tables[t];
-                if (dt.Rows.Count == 0) continue;
-
-                string title = (t < sectionNames.Length) ? sectionNames[t] : $"Section {t + 1}";
-
-                allTablesHtml.Append(
-                    "<table style='width:100%; border-collapse:collapse; margin-top:25px;'>" +
-                    "<tr style='font-size:18px;'>" +
-                    "<td style='padding:8px 4px;'>" +
-                        "<table style='width:98%; border-collapse:collapse;'>" +
-                            "<tr>" +
-                                "<td style='background-color:#e7f0ff; border-bottom:2px solid #000; padding:10px; font-weight:bold; color:#101828;'>" +
-                                    title +
-                                "</td>" +
-                            "</tr>" +
-                        "</table>" +
-                    "</td>" +
-                    "</tr>" +
-                    "</table>"
-                );
-
-                allTablesHtml.Append(
-                    "<table style='width:100%; border-collapse:collapse; font-size:20px; margin-top:10px;'>"
-                );
-
-                foreach (DataRow dr in dt.Rows)
-                {
-                    int colCount = 0;
-                    int maxCols = 5;
-
-                    allTablesHtml.Append("<tr>");
-
-                    for (int c = 0; c < dt.Columns.Count; c++)
+                case "OTMultiTabReport":
                     {
-                        string label = dt.Columns[c].ColumnName;
-                        string value = string.IsNullOrWhiteSpace(dr[c]?.ToString()) ? "" : dr[c].ToString();
-
-                        allTablesHtml.Append(
-                            "<td style='border:1px solid #d4c3c3; padding:6px; vertical-align:top; width:20%;'>" +
-                                "<div style='font-weight:bold; color:#000; margin-bottom:4px;'>" +
-                                    label +
-                                "</div>" +
-                                "<div style='color:#101828;'>" +
-                                    value +
-                                "</div>" +
-                            "</td>"
-                        );
-
-                        colCount++;
-                        if (colCount == maxCols)
+                        DatabaseHelper sql = new();
+                        Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+                        DatabaseHelper odal = new();
+                        int sp_Para = 0;
+                        SqlParameter[] para = new SqlParameter[fields.Count];
+                        foreach (var property in fields)
                         {
-                            allTablesHtml.Append("</tr><tr>");
-                            colCount = 0;
+                            var param = new SqlParameter
+                            {
+                                ParameterName = "@" + property.Key,
+                                Value = property.Value.ToString()
+                            };
+
+                            para[sp_Para] = param;
+                            sp_Para++;
                         }
-                    }
-                    if (colCount > 0 && colCount < maxCols)
-                    {
-                        int remaining = maxCols - colCount;
 
-                        allTablesHtml.Append(
-                            $"<td colspan='{remaining}' style='border:1px solid #d4c3c3;'></td>"
+                        string sp = "ps_rpt_OTMultiTabReport";
+                        DataSet ds = sql.FetchDataSetBySP(sp, para);
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTMultiTabReport.html");
+                        string html = System.IO.File.ReadAllText(htmlFilePath);
+
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        string[] sectionNames = new string[]
+                        {
+                              "Patient Information",
+                              "OT Request Information",
+                              "OT Reservation / Surgery Details",
+                              "OT Check In / Check Out",
+                              "OT Pre Operation",
+                              "OT In Operation",
+                              "Anesthesia Record"
+                        };
+
+                        StringBuilder allTablesHtml = new StringBuilder();
+
+                        for (int t = 0; t < ds.Tables.Count; t++)
+                        {
+                            DataTable dt = ds.Tables[t];
+                            if (dt.Rows.Count == 0) continue;
+
+                            string title = (t < sectionNames.Length) ? sectionNames[t] : $"Section {t + 1}";
+
+                            allTablesHtml.Append(
+                                "<table style='width:100%; border-collapse:collapse; margin-top:25px;'>" +
+                                "<tr><td style='background-color:#e7f0ff; border-bottom:2px solid #000; padding:10px; font-weight:bold;'>" +
+                                title +
+                                "</td></tr></table>"
+                            );
+
+                            allTablesHtml.Append("<table style='width:100%; border-collapse:collapse; font-size:20px; margin-top:10px;'>");
+
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                allTablesHtml.Append("<tr>");
+
+                                for (int c = 0; c < dt.Columns.Count; c++)
+                                {
+                                    string label = dt.Columns[c].ColumnName;
+                                    string value = dr[c]?.ToString() ?? "";
+
+                                    allTablesHtml.Append(
+                                        "<td style='border:1px solid #d4c3c3; padding:6px; width:20%;'>" +
+                                        "<div style='font-weight:bold;'>" + label + "</div>" +
+                                        "<div>" + value + "</div>" +
+                                        "</td>"
+                                    );
+                                }
+
+                                allTablesHtml.Append("</tr>");
+                            }
+
+                            allTablesHtml.Append("</table>");
+                        }
+
+                        allTablesHtml.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+
+                        html = html.Replace("{{AllTables}}", allTablesHtml.ToString());
+
+                        var tuple = _pdfUtility.GeneratePdfFromHtml(
+                            html,
+                            model.StorageBaseUrl,
+                            "OTMultiTabReport"
                         );
+
+                        pdfBytes = tuple.Item1;
+                        break;
                     }
 
-                    allTablesHtml.Append("</tr>");
-                }
+                case "OTMultiTabReport_V1":
+                    {
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTMultiTabReportV1.html");
+                        string html = System.IO.File.ReadAllText(htmlFilePath);
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                allTablesHtml.Append("</table>");
-                allTablesHtml = allTablesHtml.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        string sp = "ps_rpt_OTMultiTabReport_V1";
+                        DatabaseHelper sql = new();
+                        Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+                        DatabaseHelper odal = new();
+                        int sp_Para = 0;
+                        SqlParameter[] para = new SqlParameter[fields.Count];
+                        foreach (var property in fields)
+                        {
+                            var param = new SqlParameter
+                            {
+                                ParameterName = "@" + property.Key,
+                                Value = property.Value.ToString()
+                            };
+
+                            para[sp_Para] = param;
+                            sp_Para++;
+                        }
+
+                        DataSet ds = sql.FetchDataSetBySP(sp, para);
+
+                        foreach (DataTable dt in ds.Tables)
+                        {
+                            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                            {
+                                html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+
+                                var dt0 = ds.Tables[0];
+
+                                html = html.Replace("{{RegNo}}", dt0.GetColValue("RegNo"));
+                                html = html.Replace("{{FirstName}}", dt0.GetColValue("FirstName"));
+                                html = html.Replace("{{LastName}}", dt0.GetColValue("LastName"));
+                                html = html.Replace("{{AdmissionDate}}", dt0.GetColValue("AdmissionDate").ConvertToDateString("dd-MM-yyyy"));
+                                html = html.Replace("{{AdmissionTime}}", dt0.GetColValue("AdmissionTime").ConvertToDateString("hh:mm tt"));
+                                html = html.Replace("{{IPDNo}}", dt0.GetColValue("IPDNo"));
+                                html = html.Replace("{{RoomName}}", dt0.GetColValue("RoomName"));
+                                html = html.Replace("{{BedName}}", dt0.GetColValue("BedName"));
+                                html = html.Replace("{{Age}}", dt0.GetColValue("Age"));
+                                html = html.Replace("{{GenderName}}", dt0.GetColValue("GenderName"));
+                                html = html.Replace("{{DoctorName}}", dt0.GetColValue("DoctorName"));
+                                html = html.Replace("{{DepartmentName}}", dt0.GetColValue("DepartmentName"));
+                                html = html.Replace("{{MobileNo}}", dt0.GetColValue("MobileNo"));
+                                html = html.Replace("{{PatientType}}", dt0.GetColValue("PatientType"));
+                                html = html.Replace("{{CompanyName}}", dt0.GetColValue("CompanyName"));
+                                html = html.Replace("{{TariffName}}", dt0.GetColValue("TariffName"));
+                            }
+
+
+                            if (ds.Tables.Count > 0 && ds.Tables[1].Rows.Count > 0)
+                            {
+                                var dt1 = ds.Tables[1];
+
+                                html = html.Replace("{{OTRequestDate}}", dt1.GetColValue("OTRequestDate").ConvertToDateString("dd-MM-yyyy"));
+                                html = html.Replace("{{OTRequestTime}}", dt1.GetColValue("OTRequestTime").ConvertToDateString("hh:mm tt"));
+                                html = html.Replace("{{OTRequestNo}}", dt1.GetColValue("OTRequestNo"));
+                                html = html.Replace("{{SurgeryDate}}", dt1.GetColValue("SurgeryDate").ConvertToDateString("dd-MM-yyyy"));
+                                html = html.Replace("{{EstimateTime}}", dt1.GetColValue("EstimateTime").ConvertToDateString("hh:mm tt"));
+                                html = html.Replace("{{OTTableName}}", dt1.GetColValue("OTTableName"));
+                                html = html.Replace("{{TypeName}}", dt1.GetColValue("TypeName"));
+                                html = html.Replace("{{EquipmentsRequired}}", dt1.GetColValue("EquipmentsRequired"));
+                                html = html.Replace("{{ClearanceMedical}}", dt1.GetColValue("ClearanceMedical"));
+                                html = html.Replace("{{ClearanceFinancial}}", dt1.GetColValue("ClearanceFinancial"));
+                                html = html.Replace("{{PACRequired}}", dt1.GetColValue("PACRequired"));
+                                html = html.Replace("{{Infective}}", dt1.GetColValue("Infective"));
+                                html = html.Replace("{{RequestType}}", dt1.GetColValue("RequestType"));
+
+                            }
+
+                            if (ds.Tables.Count > 0 && ds.Tables[2].Rows.Count > 0)
+                            {
+                                var dt2 = ds.Tables[2];
+
+                                StringBuilder surgeryRows = new StringBuilder();
+                                int surgeryIndex = 1;
+
+                                var uniqueSurgeries = dt2.AsEnumerable()
+                                    .GroupBy(r => new
+                                    {
+                                        SurgeryCategoryName = r["SurgeryCategoryName"].ToString(),
+                                        SurgeryName = r["SurgeryName"].ToString(),
+                                        SurgeryPart = r["SurgeryPart"].ToString(),
+                                        SurgeryFromTime = r["SurgeryFromTime"].ToString(),
+                                        SurgeryEndTime = r["SurgeryEndTime"].ToString(),
+                                        SurgeonName = r["SurgeonName"].ToString()
+                                    })
+                                    .Select(g => g.First());
+
+                                foreach (var dr in uniqueSurgeries)
+                                {
+                                    surgeryRows.Append("<tr>");
+                                    surgeryRows.Append("<td><b>Surgery Type</b><br>").Append(dr["SurgeryCategoryName"]).Append("</td>");
+                                    surgeryRows.Append("<td><b>Surgery Name</b><br>").Append(dr["SurgeryName"]).Append("</td>");
+                                    surgeryRows.Append("<td><b>Part</b><br>").Append(dr["SurgeryPart"]).Append("</td>");
+                                    surgeryRows.Append("<td><b>Is Primary</b><br>").Append(dr["IsPrimary"]).Append("</td>");
+                                    surgeryRows.Append("</tr>");
+
+                                    surgeryRows.Append("<tr>");
+                                    surgeryRows.Append("<td><b>From Time</b><br>").Append(dr["SurgeryFromTime"].ConvertToDateString("hh:mm tt")).Append("</td>");
+                                    surgeryRows.Append("<td><b>To Time</b><br>").Append(dr["SurgeryEndTime"].ConvertToDateString("hh:mm tt")).Append("</td>");
+                                    surgeryRows.Append("<td><b>Duration</b><br>").Append(dr["SurgeryDuration"]).Append("</td>");
+                                    surgeryRows.Append("<td><b>Anesthesia</b><br>").Append(dr["AnesthetistName"]).Append("</td>");
+                                    surgeryRows.Append("</tr>");
+
+                                    surgeryRows.Append("<tr>");
+                                    surgeryRows.Append("<td colspan='4'><b>Surgeon ").Append(surgeryIndex++).Append(" :</b> ").Append(dr["SurgeonName"]).Append("</td>");
+                                    surgeryRows.Append("</tr>");
+                                }
+
+                                html = html.Replace("{{SurgeryRows}}", surgeryRows.ToString());
+
+                                StringBuilder attendantRows = new StringBuilder();
+
+                                StringBuilder attendantTable = new StringBuilder();
+
+                                var uniqueAttendants = dt2.AsEnumerable()
+                                    .Where(r => !string.IsNullOrEmpty(r["AttendedName"]?.ToString()))
+                                    .GroupBy(r => new
+                                    {
+                                        DoctorType = r["DoctorType"].ToString(),
+                                        AttendedName = r["AttendedName"].ToString()
+                                    })
+                                    .Select(g => g.First())
+                                    .ToList();
+
+                                if (uniqueAttendants.Count > 0)
+                                {
+                                    attendantTable.Append(@"
+                                     <table width='100%' border='1' cellspacing='0' cellpadding='6' style='border-collapse:collapse;'>
+                                         <tr style='background:#e2e8f0;'>
+                                             <td colspan='3'><b>Attendant Details</b></td>
+                                         </tr>
+                                         <tr style='background:#f9fafb; font-weight:bold;'>
+                                             <td>Resource Type</td>
+                                             <td>Doctor Type</td>
+                                             <td>Doctor Name</td>
+                                         </tr>");
+
+                                    foreach (var dr in uniqueAttendants)
+                                    {
+                                        attendantTable.Append("<tr>");
+                                        attendantTable.Append("<td>Doctor</td>");
+                                        attendantTable.Append("<td>").Append(dr["DoctorType"]).Append("</td>");
+                                        attendantTable.Append("<td>").Append(dr["AttendedName"]).Append("</td>");
+                                        attendantTable.Append("</tr>");
+                                    }
+
+                                    attendantTable.Append("</table><br><br>");
+                                }
+
+                                html = html.Replace("{{AttendantRows}}", attendantTable.ToString());
+
+                                html = html.Replace("{{SurgeryCategoryName}}", dt2.GetColValue("SurgeryCategoryName"));
+                                html = html.Replace("{{BloodGroup}}", dt2.GetColValue("Name"));
+                                html = html.Replace("{{OTType}}", dt2.GetColValue("TypeName"));
+                                html = html.Replace("{{OTTable}}", dt2.GetColValue("OTTableName"));
+                                html = html.Replace("{{LocationName}}", dt2.GetColValue("LocationName"));
+                                html = html.Replace("{{EstimateTime2}}", dt2.GetColValue("EstimateTime").ConvertToDateString("hh:mm tt"));
+                                html = html.Replace("{{SurgeryDate2}}", dt2.GetColValue("SurgeryDate").ConvertToDateString("dd-MM-yyyy"));
+                                html = html.Replace("{{Diagnosis}}", dt2.GetColValue("Diagnosis"));
+                                html = html.Replace("{{Comments}}", dt2.GetColValue("Comments"));
+                                html = html.Replace("{{DiagnosisNames}}", dt2.GetColValue("DiagnosisNames"));
+                                html = html.Replace("{{AnaesthesiaType}}", dt2.GetColValue("AnaesthesiaType"));
+                            }
+
+                            if (ds.Tables.Count > 0 && ds.Tables[3].Rows.Count > 0)
+                            {
+                                var dt3 = ds.Tables[3];
+
+                                html = html.Replace("{{OTCheckInDate}}", dt3.GetColValue("OTCheckInDate").ConvertToDateString("dd-MM-yyyy"));
+                                html = html.Replace("{{OTCheckInTime}}", dt3.GetColValue("OTCheckInTime").ConvertToDateString("hh:mm tt"));
+                                html = html.Replace("{{CheckOutDate}}", dt3.GetColValue("CheckOutTime").ConvertToDateString("dd-MM-yyyy"));
+                                html = html.Replace("{{CheckOutTime}}", dt3.GetColValue("CheckOutTime").ConvertToDateString("hh:mm tt"));
+                                html = html.Replace("{{OTCheckInNo}}", dt3.GetColValue("OTCheckInNo"));
+                                html = html.Replace("{{MovingType}}", dt3.GetColValue("MovingType"));
+                                html = html.Replace("{{EquipmentCarried}}", dt3.GetColValue("EquipmentCarried"));
+                                html = html.Replace("{{Remark}}", dt3.GetColValue("Remark"));
+                                html = html.Replace("{{AuthorisedBy}}", dt3.GetColValue("AuthorisedBy"));
+                                html = html.Replace("{{Accompanied}}", dt3.GetColValue("Accompanied"));
+                                html = html.Replace("{{PurPoseOfMovement}}", dt3.GetColValue("PurPoseOfMovement"));
+                                html = html.Replace("{{ModeofMovement}}", dt3.GetColValue("ModeofMovement"));
+                                html = html.Replace("{{FromDepartment}}", dt3.GetColValue("FromDepartment"));
+                                html = html.Replace("{{ToDepartment}}", dt3.GetColValue("ToDepartment"));
+                                html = html.Replace("{{CheckOutToDepartment}}", dt3.GetColValue("CheckOutToDepartment"));
+                                html = html.Replace("{{CheckOutFromDepartment}}", dt3.GetColValue("CheckOutFromDepartment"));
+
+                            }
+
+                            if (ds.Tables.Count > 0 && ds.Tables[4].Rows.Count > 0)
+                            {
+                                var dt4 = ds.Tables[4];
+
+                                html = html.Replace("{{PreSurgeryNames}}", dt4.GetColValue("SurgeryNames"));
+                                html = html.Replace("{{PreSurgeryCategoryNames}}", dt4.GetColValue("SurgeryCategoryNames"));
+                                html = html.Replace("{{PreOTTableName}}", dt4.GetColValue("OTTableName"));
+                                html = html.Replace("{{PreLocationName}}", dt4.GetColValue("LocationName"));
+                                html = html.Replace("{{PreSurgeryDate}}", dt4.GetColValue("SurgeryDate"));
+                                html = html.Replace("{{BloodArranged}}", dt4.GetColValue("BloodArranged"));
+                                html = html.Replace("{{PrePACRequired}}", dt4.GetColValue("PACRequired"));
+                                html = html.Replace("{{PreEquipmentsRequired}}", dt4.GetColValue("EquipmentsRequired"));
+                                html = html.Replace("{{PreInfective}}", dt4.GetColValue("Infective"));
+                                html = html.Replace("{{PreClearanceMedical}}", dt4.GetColValue("ClearanceMedical"));
+                                html = html.Replace("{{PreDiagnosisNames}}", string.Join(", ", dt4.GetColValue("DiagnosisNames").Split(',').Select(x => x.Trim()).Distinct()));
+                                html = html.Replace("{{CathLabDiagnosisNames}}", dt4.GetColValue("CathLabDiagnosisNames"));
+
+                            }
+
+                            if (ds.Tables.Count > 0 && ds.Tables[5].Rows.Count > 0)
+                            {
+                                var dt5 = ds.Tables[5];
+
+                                html = html.Replace("{{InSurgeryNames}}", dt5.GetColValue("SurgeryNames"));
+                                html = html.Replace("{{ToTime}}", dt5.GetColValue("ToTime").ConvertToDateString("hh:mm tt"));
+                                html = html.Replace("{{BloodLoss}}", dt5.GetColValue("BloodLoss"));
+                                html = html.Replace("{{TheaterInDate}}", dt5.GetColValue("TheaterInDate").ConvertToDateString("dd-MM-yyyy"));
+                                html = html.Replace("{{TheaterInTime}}", dt5.GetColValue("TheaterInTime").ConvertToDateString("hh:mm tt"));
+                                html = html.Replace("{{TheaterOutData}}", dt5.GetColValue("TheaterOutData").ConvertToDateString("dd-MM-yyyy"));
+                                html = html.Replace("{{TheaterOutTime}}", dt5.GetColValue("TheaterOutTime").ConvertToDateString("hh:mm tt"));
+                                html = html.Replace("{{InBloodArranged}}", dt5.GetColValue("BloodArranged"));
+                                html = html.Replace("{{InPACRequired}}", dt5.GetColValue("PACRequired"));
+                                html = html.Replace("{{InEquipmentsRequired}}", dt5.GetColValue("EquipmentsRequired"));
+                                html = html.Replace("{{InInfective}}", dt5.GetColValue("Infective"));
+                                html = html.Replace("{{InClearanceMedical}}", dt5.GetColValue("ClearanceMedical"));
+                                html = html.Replace("{{InDiagnosisNames}}", string.Join(", ", dt5.GetColValue("DiagnosisNames").Split(',').Select(x => x.Trim()).Distinct()));
+                                html = html.Replace("{{PostOperDiagnosis}}", dt5.GetColValue("PostOperDiagnosis"));
+                                html = html.Replace("{{AnaesthesiaType2}}", dt5.GetColValue("AnaesthesiaType"));
+                            }
+
+                            if (ds.Tables.Count > 0 && ds.Tables[6].Rows.Count > 0)
+                            {
+                                var dt6 = ds.Tables[6];
+
+                                html = html.Replace("{{AnesthesiaDate}}", dt6.GetColValue("AnesthesiaDate").ConvertToDateString("dd-MM-yyyy"));
+                                html = html.Replace("{{AnesthesiaStartDate}}", dt6.GetColValue("AnesthesiaStartDate").ConvertToDateString("dd-MM-yyyy"));
+                                html = html.Replace("{{AnesthesiaStartTime}}", dt6.GetColValue("AnesthesiaStartTime").ConvertToDateString("hh:mm tt"));
+                                html = html.Replace("{{AnesthesiaEndDate}}", dt6.GetColValue("AnesthesiaEndDate").ConvertToDateString("dd-MM-yyyy"));
+                                html = html.Replace("{{AnesthesiaEndTime}}", dt6.GetColValue("AnesthesiaEndTime").ConvertToDateString("hh:mm tt"));
+                                html = html.Replace("{{RecoveryStartDate}}", dt6.GetColValue("RecoveryStartDate").ConvertToDateString("dd-MM-yyyy"));
+                                html = html.Replace("{{RecoveryStartTime}}", dt6.GetColValue("RecoveryStartTime").ConvertToDateString("hh:mm tt"));
+                                html = html.Replace("{{RecoveryEndDate}}", dt6.GetColValue("RecoveryEndDate").ConvertToDateString("dd-MM-yyyy"));
+                                html = html.Replace("{{RecoveryEndTime}}", dt6.GetColValue("RecoveryEndTime").ConvertToDateString("hh:mm tt"));
+                                html = html.Replace("{{AnesthesiaNotes}}", dt6.GetColValue("AnesthesiaNotes"));
+                                html = html.Replace("{{FinalAnaesthesiaType}}", dt6.GetColValue("AnaesthesiaType"));
+
+                            }
+
+                        }
+
+                        var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTMultiTabReport");
+                        pdfBytes = tuple.Item1;
+                        break;
+                    }
+
+                default:
+                    break;
             }
 
-            html = html.Replace("{{AllTables}}", allTablesHtml.ToString());
-
-            var tuple = _pdfUtility.GeneratePdfFromHtml(html, StorageBaseUrl, "OTMultiTabReport");
-
-            return Convert.ToBase64String(tuple.Item1);
+            return Convert.ToBase64String(pdfBytes);
         }
+
 
         public async Task<Tuple<string,string>> GetPatientBarcode(ReportRequestModel model)
         {
