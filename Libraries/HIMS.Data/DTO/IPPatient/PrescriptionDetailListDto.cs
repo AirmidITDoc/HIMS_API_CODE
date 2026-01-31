@@ -11,7 +11,7 @@
         public long DoseId { get; set; }
         public long ItemID { get; set; }
         public long Days { get; set; }
-        public long Remark { get; set; }
+        public string Remark { get; set; }
 
 
 
