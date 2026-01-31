@@ -131,11 +131,14 @@ namespace HIMS.Services.Masters
         {
             return await this._context.DoctorMasters.Include(x => x.MDoctorDepartmentDets).FirstOrDefaultAsync(x => x.DoctorId == Id);
         }
-        public List<RefdoctorComboDto> RefdoctorComboList()
+        public List<RefdoctorComboDto> RefdoctorComboList(string keywoard)
         {
             DatabaseHelper sql = new();
-            SqlParameter[] para = Array.Empty<SqlParameter>();
-            var data = sql.FetchListBySP<RefdoctorComboDto>("Retrieve_RefdoctorCombo", para);
+            SqlParameter[] para =
+             {
+             new SqlParameter("@keywoard",string.IsNullOrWhiteSpace(keywoard) ? DBNull.Value : keywoard)
+             };
+            var data = sql.FetchListBySP<RefdoctorComboDto>("ps_Rtrv_RefDoctorCombo", para);
 
             return data;
         }

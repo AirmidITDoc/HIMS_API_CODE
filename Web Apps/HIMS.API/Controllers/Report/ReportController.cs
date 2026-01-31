@@ -560,13 +560,34 @@ namespace HIMS.API.Controllers.Report
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
 
-        [HttpPost("NewMultiReport")]
-        public async Task<IActionResult> NewMultiReport(long OPIPID,long ReservationId, long OPIPType)
-        {
-            string StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
-            string byteFile = _reportService.GeneratePdfFromSpV1("ps_rpt_OTMultiTabReport_V1", StorageBaseUrl, OPIPID, ReservationId, OPIPType);
+        //[HttpPost("NewMultiReport")]
+        //public async Task<IActionResult> NewMultiReport(long OPIPID,long ReservationId, long OPIPType)
+        //{
+        //    string StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
+        //    string byteFile = _reportService.GeneratePdfFromSpV1("ps_rpt_OTMultiTabReport_V1", StorageBaseUrl, OPIPID, ReservationId, OPIPType);
 
+        //    return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
+        //}
+
+        [HttpPost("NewMultiReport")]
+        public async Task<IActionResult> NewMultiReport(ReportRequestModel model)
+        {
+            switch (model.Mode)
+            {
+                case "OTMultiTabReport":
+                    break;
+
+                case "OTMultiTabReport_V1":
+                    break;
+
+                default:
+                    break;
+            }
+            model.BaseUrl = Convert.ToString(_configuration["BaseUrl"]);
+            model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
+            var byteFile = _reportService.GeneratePdfFromSpV1(model, _configuration["PdfFontPath"]);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
+
     }
 }

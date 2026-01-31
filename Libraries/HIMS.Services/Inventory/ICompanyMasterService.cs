@@ -20,7 +20,7 @@ namespace HIMS.Services.Inventory
         Task UpdateAsync(CompanyMaster objCompanyMaster, int UserId, string Username);
         //List<CompanyMasterDto> CompanyRepresentativeList();
         List<CompanyMasterDto> CompanyRepresentativeList(long CompanyId);
-        List<CompanyComboDto> CompanyComboList();
+        List<CompanyComboDto> CompanyComboList(string keywoard);
 
 
 
