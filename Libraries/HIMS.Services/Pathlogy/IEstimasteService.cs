@@ -16,9 +16,9 @@ namespace HIMS.Services.Pathlogy
         Task InsertAsync(TEstimateHeader ObjTEstimateHeader, int UserId, string Username);
         //Task UpdateAsync(TOtReservationHeader ObjTOtReservationHeader, int UserId, string Username, string[]? references);
 
-        Task<IPagedList<EstimateListDto>> EstimateListAsync(GridRequestModel objGrid);
+        Task<IPagedList<PatientEstimateListDto>> EstimateListAsync(GridRequestModel objGrid);
 
-        Task<IPagedList<EstimateDetailsListDto>> EstimateDetailsListAsync(GridRequestModel objGrid);
+        Task<IPagedList<PatientEstimateDetailsListDto>> EstimateDetailsListAsync(GridRequestModel objGrid);
 
 
         Task UpdateAsync(TEstimateHeader ObjTEstimateHeader, int UserId, string Username, string[]? references);

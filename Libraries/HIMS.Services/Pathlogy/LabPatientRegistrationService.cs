@@ -563,5 +563,17 @@ namespace HIMS.Services.Pathlogy
             return await DatabaseHelper.GetGridDataBySp<LabResultDetailsListDto>(model, "ps_Rtrv_LabLabApprovalList");
         }
 
+
+
+
+        //public virtual async Task<IPagedList<PatientEstimateListDto>> GetPatientEstimate(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<PatientEstimateListDto>(model, "ps_Rtrv_T_EstimatePatietwise");
+        //}
+
+        //public Task<IPagedList<PatientEstimateDetailsListDto>> GetPatientEstimateDetail(GridRequestModel objGrid)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

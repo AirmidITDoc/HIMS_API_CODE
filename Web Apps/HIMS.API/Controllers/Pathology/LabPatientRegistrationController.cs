@@ -243,5 +243,6 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(LabResultList.ToGridResponse(objGrid, " Lab Result List "));
         }
 
+       
     }
 }

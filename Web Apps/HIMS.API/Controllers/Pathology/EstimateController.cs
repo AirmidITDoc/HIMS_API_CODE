@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.Pathology
         //[Permission(PageCode = "EstimateList", Permission = PagePermission.View)]
         public async Task<IActionResult> EstimateList(GridRequestModel objGrid)
         {
-            IPagedList<EstimateListDto> EstimateList = await _IEstimasteService.EstimateListAsync(objGrid);
+            IPagedList<PatientEstimateListDto> EstimateList = await _IEstimasteService.EstimateListAsync(objGrid);
             return Ok(EstimateList.ToGridResponse(objGrid, "Estimate List "));
         }
 
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Pathology
         //[Permission(PageCode = "EstimateDetailsList", Permission = PagePermission.View)]
         public async Task<IActionResult> EstimateDetailsList(GridRequestModel objGrid)
         {
-            IPagedList<EstimateDetailsListDto> EstimateDetailsList = await _IEstimasteService.EstimateDetailsListAsync(objGrid);
+            IPagedList<PatientEstimateDetailsListDto> EstimateDetailsList = await _IEstimasteService.EstimateDetailsListAsync(objGrid);
             return Ok(EstimateDetailsList.ToGridResponse(objGrid, "Estimate Details List "));
         }
 

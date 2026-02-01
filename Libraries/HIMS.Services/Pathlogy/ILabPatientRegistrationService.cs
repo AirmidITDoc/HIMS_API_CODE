@@ -41,9 +41,17 @@ namespace HIMS.Services.Pathlogy
 
         Task<IPagedList<EmailSendoutListDto>> GetLabPatientEmailSconfig(GridRequestModel objGrid);
 
+
+      
         Task<IPagedList<LabResultListDto>> LabResultListAsync(GridRequestModel objGrid);
 
         Task<IPagedList<LabResultDetailsListDto>> LabApprovalResultListAsync(GridRequestModel objGrid);
+
+              
+        //Task<IPagedList<PatientEstimateListDto>> GetPatientEstimate(GridRequestModel objGrid);
+        //Task<IPagedList<PatientEstimateDetailsListDto>> GetPatientEstimateDetail(GridRequestModel objGrid);
+
+
 
     }
 
