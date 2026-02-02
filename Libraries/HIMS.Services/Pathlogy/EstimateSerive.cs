@@ -22,14 +22,14 @@ namespace HIMS.Services.Pathlogy
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<EstimateListDto>> EstimateListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<PatientEstimateListDto>> EstimateListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<EstimateListDto>(model, "ps_rpt_EstimateList");
+            return await DatabaseHelper.GetGridDataBySp<PatientEstimateListDto>(model, "ps_Rtrv_T_EstimatePatietwise");
         }
 
-        public virtual async Task<IPagedList<EstimateDetailsListDto>> EstimateDetailsListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<PatientEstimateDetailsListDto>> EstimateDetailsListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<EstimateDetailsListDto>(model, "ps_rpt_EstimateDetailsList");
+            return await DatabaseHelper.GetGridDataBySp<PatientEstimateDetailsListDto>(model, "ps_Rtrv_T_EstimateDetailsPatietwise");
         }
         public virtual async Task InsertAsync(TEstimateHeader ObjTEstimateHeader, int UserId, string Username)
         {
