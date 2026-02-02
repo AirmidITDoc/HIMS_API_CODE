@@ -119,6 +119,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IOTAnesthesiaService, OTAnesthesiaService>();
             services.AddScoped<IOTInOperationService, OTInOperationService>();
             services.AddScoped<IOTOperativeNotes, OTOperativeNotesService>();
+            services.AddScoped<IConsentMasterService, ConsentMasterService>();
 
 
             services.AddScoped<IPaymentModeService, PaymentModeService>();
