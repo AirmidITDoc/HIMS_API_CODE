@@ -211,7 +211,7 @@ namespace HIMS.Services.Dashboard
                 FinancialIPPayment = data.Item5 ?? new List<FinancialIPPayment>(),
                 FinancialVisit = data.Item6 ?? new List<FinancialVisit>(),
                 FinancialCollectionPayMode = data.Item7 ?? new List<FinancialCollectionPayMode>(),
-                FinancialAdvance = data.Item8 ?? new List<FinancialAdvance>(),
+                //FinancialAdvance = data.Item8 ?? new List<FinancialAdvance>(),
                 //FinancialPharmacyReturn = data.Item9 ?? new List<FinancialPharmacyReturn>(),
                 //FinancialRefund = data.Item10 ?? new List<FinancialRefund>(),
                 //FinancialDoctorWisePatientCountSummary = data.Item11 ?? new List<FinancialDoctorWisePatientCountSummary>(),
