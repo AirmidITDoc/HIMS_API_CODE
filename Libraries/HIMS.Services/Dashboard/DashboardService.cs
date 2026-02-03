@@ -193,13 +193,13 @@ namespace HIMS.Services.Dashboard
                 PathologyWorkloads = data.Item6 ?? new List<PathologyWorkload>()
             };
         }
-        public async Task<FinancialDashboard> GetFinancialDashBoard(int UnitId, DateTime FromDate, DateTime ToDate)
-        {
-            DatabaseHelper sql = new();
-            SqlParameter[] para = new SqlParameter[3];
-            para[0] = new SqlParameter("@UnitId", SqlDbType.Int) { Value = UnitId };
-            para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
-            para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+        //public async Task<FinancialDashboard> GetFinancialDashBoard(int UnitId, DateTime FromDate, DateTime ToDate)
+        //{
+        //    DatabaseHelper sql = new();
+        //    SqlParameter[] para = new SqlParameter[3];
+        //    para[0] = new SqlParameter("@UnitId", SqlDbType.Int) { Value = UnitId };
+        //    para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
+        //    para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
 
             var data = await sql.Get7ResultsFromSp<PatientcountWardWiseCountSummary, FinancialCount, FinancialTestCount, FinancialOPPayment, FinancialIPPayment, FinancialVisit, FinancialCollectionPayMode/*, FinancialAdvance, FinancialPharmacyReturn, FinancialRefund, FinancialDoctorWisePatientCountSummary, FinancialModeWiseCollection, FinancialOPExistingPatientCount, FinancialIPExistingPatientCount, FinancialOPDPatientSale, FinancialIPDPatientSale, FinancialAdvanceBalance, FinancialOutStandingOPIP, FinancialInsuranceCaverageAdequacy*/>("ps_rtrv_FinancialDashBoard", para);
             return new FinancialDashboard()
