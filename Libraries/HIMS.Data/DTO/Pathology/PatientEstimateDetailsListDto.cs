@@ -12,14 +12,14 @@ namespace HIMS.Data.DTO.Pathology
         //public DateTime BillTime { get; set; }
         public long EstimateId { get; set; }
         public string EstimateNo { get; set; }
-        //public DateTime ChargesTime { get; set; }
-        public double TotalAmount { get; set; }
 
-        public double DiscAmount { get; set; }
-        public double NetAmount { get; set; }
+        public decimal TotalAmount { get; set; }
+
+        public decimal DiscAmount { get; set; }
+        public decimal NetAmount { get; set; }
 
         public string? Comments { get; set; }
-        public double? Price { get; set; }
+        public decimal Price { get; set; }
         public long? Qty { get; set; }
         public string? ServiceName { get; set; }
     }
