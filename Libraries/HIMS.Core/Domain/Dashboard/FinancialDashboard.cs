@@ -16,17 +16,17 @@ namespace HIMS.Core.Domain.Dashboard
         public List<FinancialVisit> FinancialVisit { get; set; }
         public List<FinancialCollectionPayMode> FinancialCollectionPayMode { get; set; }
         public List<FinancialAdvance> FinancialAdvance { get; set; }
-        public List<FinancialPharmacyReturn> FinancialPharmacyReturn { get; set; }
-        public List<FinancialRefund> FinancialRefund { get; set; }
-        public List<FinancialDoctorWisePatientCountSummary> FinancialDoctorWisePatientCountSummary { get; set; }
-        public List<FinancialModeWiseCollection> FinancialModeWiseCollection { get; set; }
-        public List<FinancialOPExistingPatientCount> FinancialOPExistingPatientCount { get; set; }
-        public List<FinancialIPExistingPatientCount> FinancialIPExistingPatientCount { get; set; }
-        public List<FinancialOPDPatientSale> FinancialOPDPatientSale { get; set; }
-        public List<FinancialIPDPatientSale> FinancialIPDPatientSale { get; set; }
-        public List<FinancialAdvanceBalance> FinancialAdvanceBalance { get; set; }
-        public List<FinancialOutStandingOPIP> FinancialOutStandingOPIP { get; set; }
-        public List<FinancialInsuranceCaverageAdequacy> FinancialInsuranceCaverageAdequacy { get; set; }
+        //public List<FinancialPharmacyReturn> FinancialPharmacyReturn { get; set; }
+        //public List<FinancialRefund> FinancialRefund { get; set; }
+        //public List<FinancialDoctorWisePatientCountSummary> FinancialDoctorWisePatientCountSummary { get; set; }
+        //public List<FinancialModeWiseCollection> FinancialModeWiseCollection { get; set; }
+        //public List<FinancialOPExistingPatientCount> FinancialOPExistingPatientCount { get; set; }
+        //public List<FinancialIPExistingPatientCount> FinancialIPExistingPatientCount { get; set; }
+        //public List<FinancialOPDPatientSale> FinancialOPDPatientSale { get; set; }
+        //public List<FinancialIPDPatientSale> FinancialIPDPatientSale { get; set; }
+        //public List<FinancialAdvanceBalance> FinancialAdvanceBalance { get; set; }
+        //public List<FinancialOutStandingOPIP> FinancialOutStandingOPIP { get; set; }
+        //public List<FinancialInsuranceCaverageAdequacy> FinancialInsuranceCaverageAdequacy { get; set; }
 
     }
     public class PatientcountWardWiseCountSummary

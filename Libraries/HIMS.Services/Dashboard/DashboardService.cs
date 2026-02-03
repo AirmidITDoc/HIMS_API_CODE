@@ -201,7 +201,7 @@ namespace HIMS.Services.Dashboard
             para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
             para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
 
-            var data = await sql.Get7ResultsFromSp<PatientcountWardWiseCountSummary, FinancialCount, FinancialTestCount, FinancialOPPayment, FinancialIPPayment, FinancialVisit, FinancialCollectionPayMode/*, FinancialAdvance, FinancialPharmacyReturn, FinancialRefund, FinancialDoctorWisePatientCountSummary, FinancialModeWiseCollection, FinancialOPExistingPatientCount, FinancialIPExistingPatientCount, FinancialOPDPatientSale, FinancialIPDPatientSale, FinancialAdvanceBalance, FinancialOutStandingOPIP, FinancialInsuranceCaverageAdequacy*/>("ps_rtrv_FinancialDashBoard", para);
+            var data = await sql.Get7ResultsFromSp<PatientcountWardWiseCountSummary, FinancialCount, FinancialTestCount, FinancialOPPayment, FinancialIPPayment, FinancialVisit, FinancialCollectionPayMode, FinancialAdvance>("ps_rtrv_FinancialDashBoard", para);
             return new FinancialDashboard()
             {
                 CountSummary = data.Item1.FirstOrDefault() ?? new PatientcountWardWiseCountSummary(),
@@ -211,7 +211,7 @@ namespace HIMS.Services.Dashboard
                 FinancialIPPayment = data.Item5 ?? new List<FinancialIPPayment>(),
                 FinancialVisit = data.Item6 ?? new List<FinancialVisit>(),
                 FinancialCollectionPayMode = data.Item7 ?? new List<FinancialCollectionPayMode>(),
-                //FinancialAdvance = data.Item8 ?? new List<FinancialAdvance>(),
+                FinancialAdvance = data.Item8 ?? new List<FinancialAdvance>(),
                 //FinancialPharmacyReturn = data.Item9 ?? new List<FinancialPharmacyReturn>(),
                 //FinancialRefund = data.Item10 ?? new List<FinancialRefund>(),
                 //FinancialDoctorWisePatientCountSummary = data.Item11 ?? new List<FinancialDoctorWisePatientCountSummary>(),
