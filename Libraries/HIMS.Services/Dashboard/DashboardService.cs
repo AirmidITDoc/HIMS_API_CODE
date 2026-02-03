@@ -193,27 +193,27 @@ namespace HIMS.Services.Dashboard
                 PathologyWorkloads = data.Item6 ?? new List<PathologyWorkload>()
             };
         }
-        //public async Task<FinancialDashboard> GetFinancialDashBoard(int UnitId, DateTime FromDate, DateTime ToDate)
-        //{
-        //    DatabaseHelper sql = new();
-        //    SqlParameter[] para = new SqlParameter[3];
-        //    para[0] = new SqlParameter("@UnitId", SqlDbType.Int) { Value = UnitId };
-        //    para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
-        //    para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+        public async Task<FinancialDashboard> GetFinancialDashBoard(int UnitId, DateTime FromDate, DateTime ToDate)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[3];
+            para[0] = new SqlParameter("@UnitId", SqlDbType.Int) { Value = UnitId };
+            para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
+            para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
 
-        //    var data = await sql.Get7ResultsFromSp<PatientcountWardWiseCountSummary, FinancialCount, FinancialTestCount, FinancialOPPayment, FinancialIPPayment, FinancialVisit,FinancialCollectionPayMode>("ps_rtrv_FinancialDashBoard", para);
-        //    return new FinancialDashboard()
-        //    {
-        //        CountSummary = data.Item1.FirstOrDefault() ?? new PatientcountWardWiseCountSummary(),
-        //        FinancialCount = data.Item2 ?? new List<FinancialCount>(),
-        //        FinancialTestCount = data.Item3 ?? new List<FinancialTestCount>(),
-        //        FinancialOPPayment = data.Item4 ?? new List<FinancialOPPayment>(),
-        //        FinancialIPPayment = data.Item5 ?? new List<FinancialIPPayment>(),
-        //        FinancialVisit = data.Item6 ?? new List<FinancialVisit>(),
-        //        FinancialCollectionPayMode = data.Item7 ?? new List<FinancialCollectionPayMode>()
+            var data = await sql.Get7ResultsFromSp<PatientcountWardWiseCountSummary, FinancialCount, FinancialTestCount, FinancialOPPayment, FinancialIPPayment, FinancialVisit, FinancialCollectionPayMode>("ps_rtrv_FinancialDashBoard", para);
+            return new FinancialDashboard()
+            {
+                CountSummary = data.Item1.FirstOrDefault() ?? new PatientcountWardWiseCountSummary(),
+                FinancialCount = data.Item2 ?? new List<FinancialCount>(),
+                FinancialTestCount = data.Item3 ?? new List<FinancialTestCount>(),
+                FinancialOPPayment = data.Item4 ?? new List<FinancialOPPayment>(),
+                FinancialIPPayment = data.Item5 ?? new List<FinancialIPPayment>(),
+                FinancialVisit = data.Item6 ?? new List<FinancialVisit>(),
+                FinancialCollectionPayMode = data.Item7 ?? new List<FinancialCollectionPayMode>()
 
-        //    };
-        //}
+            };
+        }
         public async Task<FinancialDashboard> GetFinancialDashBoard( int UnitId, DateTime FromDate, DateTime ToDate)
         {
             DatabaseHelper sql = new();
@@ -241,7 +241,13 @@ namespace HIMS.Services.Dashboard
 
             return new FinancialDashboard
             {
-                CountSummary = data.Item1?.FirstOrDefault() ?? new PatientcountWardWiseCountSummary(),FinancialCount = data.Item2 ?? new List<FinancialCount>(),FinancialTestCount = data.Item3 ?? new List<FinancialTestCount>(),  FinancialOPPayment = data.Item4 ?? new List<FinancialOPPayment>(), FinancialIPPayment = data.Item5 ?? new List<FinancialIPPayment>(),  FinancialVisit = data.Item6 ?? new List<FinancialVisit>(),FinancialCollectionPayMode = data.Item7 ?? new List<FinancialCollectionPayMode>()
+                CountSummary = data.Item1?.FirstOrDefault() ?? new PatientcountWardWiseCountSummary(),
+                FinancialCount = data.Item2 ?? new List<FinancialCount>(),
+                FinancialTestCount = data.Item3 ?? new List<FinancialTestCount>(), 
+                FinancialOPPayment = data.Item4 ?? new List<FinancialOPPayment>(),
+                FinancialIPPayment = data.Item5 ?? new List<FinancialIPPayment>(), 
+                FinancialVisit = data.Item6 ?? new List<FinancialVisit>(),
+                FinancialCollectionPayMode = data.Item7 ?? new List<FinancialCollectionPayMode>()
             };
         }
 
