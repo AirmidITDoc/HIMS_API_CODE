@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MRI No Fee Receipt</title>
+</head>
+
+<body style="margin:0; padding:20px; font-family:Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif; color:#000;">
+
+    <div style="width:800px; margin:0 auto;">
+
+        <!-- ================= OFFICE COPY ================= -->
+        <div style="border-bottom:1px dashed #000; padding-bottom:30px;">
+
+            <div style="text-align:center; font-size:13px; margin-bottom:5px;">
+                <b>Office Copy</b>
+            </div>
+            {{ExternalLabHeader}}
+
+            <div style="text-align:center; margin-top:10px;">
+                <div style="font-size:16px; font-weight:bold;">{{}}</div>
+                <div style="font-size:15px; font-weight:bold; text-decoration:underline;">
+                    NO FEE RECEIPT
+                </div>
+            </div>
+
+            <table style="width:100%; margin-top:15px; font-size:14px;">
+                <tr>
+                    <td style="width:60%;">
+                        <b>Patient UIN :</b>{{}}<br>
+                        <b>Regd. Type :</b> {{}}<br>
+                        <b>Name :</b> {{PatientName}}<br>
+                        <b>Address :</b> {{}}<br>
+                        <b>Mobile No :</b> {{}}<br>
+                        <b>Scan/Test Name :</b> {{}}<br>
+                        <b>Reff. Doctor :</b>{{}}
+                    </td>
+                    <td style="width:40%;">
+                        <b>Regd. Date & Time :</b> {{}} &nbsp; {{}}<br>
+                        <b>Age / Sex :</b> {}} / {{}}
+                    </td>
+                </tr>
+            </table>
+
+            <div style="margin-top:40px; text-align:right; font-size:13px;">
+                <b>Patient Signature</b>
+            </div>
+        </div>
+
+        <!-- ================= PATIENT COPY ================= -->
+        <div style="margin-top:30px;">
+
+            <div style="text-align:center; font-size:13px; margin-bottom:5px;">
+                <b>Patient Copy</b>
+            </div>
+            {{ExternalLabHeader}}
+            <div style="text-align:center; margin-top:10px;">
+                <div style="font-size:16px; font-weight:bold;">{{}}</div>
+                <div style="font-size:15px; font-weight:bold; text-decoration:underline;">
+                    NO FEE RECEIPT
+                </div>
+            </div>
+
+            <table style="width:100%; margin-top:15px; font-size:14px;">
+                <tr>
+                    <td style="width:60%;">
+                        <b>Patient UIN :</b> {{}}<br>
+                        <b>Regd. Type :</b> {{}}<br>
+                        <b>Name :</b> {{PatientName}}<br>
+                        <b>Address :</b>{{}}<br>
+                        <b>Mobile No :</b> {{}}<br>
+                        <b>Scan/Test Name :</b> {{}}<br>
+                        <b>Reff. Doctor :</b> {{}}
+                    </td>
+                    <td style="width:40%;">
+                        <b>Regd. Date & Time :</b> {{}} &nbsp; {{}}<br>
+                        <b>Age / Sex :</b> {{}} / {{}}
+                    </td>
+                </tr>
+            </table>
+
+            <div style="margin-top:40px; text-align:right; font-size:13px;">
+                <b>Center In-Charge Signature</b>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

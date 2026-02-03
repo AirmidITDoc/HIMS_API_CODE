@@ -46,6 +46,8 @@ namespace HIMS.API.Models.Common
         [Description("LabPatient\\Files")]
         LabPatient_Files = 9,
         [Description("NABHLogo\\NABH")]
-        NABH = 10
+        NABH = 10,
+        [Description("Upload\\Img_Upload")]
+        Img_Upload = 11
     }
 }

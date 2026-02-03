@@ -59,5 +59,14 @@ namespace HIMS.API.Controllers.Dashboard
             var data = await _IDashboardService.GetPathologyDashboard(UnitId, FromDate, ToDate);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pathologist Doctor List", data);
         }
+
+        [HttpGet("Financial-dashboard")]
+        //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        public async Task<ApiResponse> FinancialDashBoard(int UnitId, DateTime FromDate, DateTime ToDate)
+        {
+            //int UnitId = Context.UnitId;
+            var data = await _IDashboardService.GetFinancialDashBoard(UnitId, FromDate, ToDate);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Financial DashBoard", data);
+        }
     }
 }

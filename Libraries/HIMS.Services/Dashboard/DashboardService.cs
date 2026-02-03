@@ -8,6 +8,7 @@ using HIMS.Services.Masters;
 using LinqToDB;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using static LinqToDB.Common.Configuration;
 
 namespace HIMS.Services.Dashboard
 {
@@ -190,6 +191,40 @@ namespace HIMS.Services.Dashboard
                 RecentPathologyReports = data.Item4 ?? new List<PathologyReport>(),
                 MostOrderedTests = data.Item5 ?? new List<PathologyOrderedTest>(),
                 PathologyWorkloads = data.Item6 ?? new List<PathologyWorkload>()
+            };
+        }
+        public async Task<FinancialDashboard> GetFinancialDashBoard(int UnitId, DateTime FromDate, DateTime ToDate)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[3];
+            para[0] = new SqlParameter("@UnitId", SqlDbType.Int) { Value = UnitId };
+            para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
+            para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+
+            var data = await sql.Get7ResultsFromSp<PatientcountWardWiseCountSummary, FinancialCount, FinancialTestCount, FinancialOPPayment, FinancialIPPayment, FinancialVisit, FinancialCollectionPayMode, FinancialAdvance>("ps_rtrv_FinancialDashBoard", para);
+            return new FinancialDashboard()
+            {
+                CountSummary = data.Item1.FirstOrDefault() ?? new PatientcountWardWiseCountSummary(),
+                FinancialCount = data.Item2 ?? new List<FinancialCount>(),
+                FinancialTestCount = data.Item3 ?? new List<FinancialTestCount>(),
+                FinancialOPPayment = data.Item4 ?? new List<FinancialOPPayment>(),
+                FinancialIPPayment = data.Item5 ?? new List<FinancialIPPayment>(),
+                FinancialVisit = data.Item6 ?? new List<FinancialVisit>(),
+                FinancialCollectionPayMode = data.Item7 ?? new List<FinancialCollectionPayMode>(),
+                //FinancialAdvance = data.Item8 ?? new List<FinancialAdvance>(),
+                //FinancialPharmacyReturn = data.Item9 ?? new List<FinancialPharmacyReturn>(),
+                //FinancialRefund = data.Item10 ?? new List<FinancialRefund>(),
+                //FinancialDoctorWisePatientCountSummary = data.Item11 ?? new List<FinancialDoctorWisePatientCountSummary>(),
+                //FinancialModeWiseCollection = data.Item12 ?? new List<FinancialModeWiseCollection>(),
+                //FinancialOPExistingPatientCount = data.Item13 ?? new List<FinancialOPExistingPatientCount>(),
+                //FinancialIPExistingPatientCount = data.Item14 ?? new List<FinancialIPExistingPatientCount>(),
+                //FinancialOPDPatientSale = data.Item15 ?? new List<FinancialOPDPatientSale>(),
+                //FinancialIPDPatientSale = data.Item16 ?? new List<FinancialIPDPatientSale>(),
+                //FinancialAdvanceBalance = data.Item17 ?? new List<FinancialAdvanceBalance>(),
+                //FinancialOutStandingOPIP = data.Item18 ?? new List<FinancialOutStandingOPIP>(),
+                //FinancialInsuranceCaverageAdequacy = data.Item19 ?? new List<FinancialInsuranceCaverageAdequacy>()
+
+
             };
         }
 

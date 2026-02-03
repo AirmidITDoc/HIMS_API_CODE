@@ -14,7 +14,7 @@
                     <table width="100%">
                         <tr>
                             <td style="font-size:18px;">
-                                <b>OT Summary Report</b>
+                                <b>OT Patient Summary Report</b>
                             </td>
                             <td style="text-align:right; font-size:13px;">
                                 <b>Print Date :</b> {{CurrentDate}}
@@ -27,102 +27,100 @@
 
         <br>
 
-        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
-
-            <tr style="background:#f9fafb;">
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; background:#ffffff;">
+            <tr style="background:#e2e8f0;">
+                <td colspan="3"><b>Patient Information</b></td>
+            </tr>
+            <tr>
                 <td><b>UHIDNo :</b> {{RegNo}}</td>
                 <td><b>OPD/IPD No :</b> {{IPDNo}}</td>
-                <td><b>DOA | Time :</b> {{AdmissionDate}} {{AdmissionTime}}</td>
+                <td><b>DOA | Time :</b> {{AdmissionDate}} | {{AdmissionTime}}</td>
             </tr>
 
-            <tr style="background:#f2f4f7;">
+            <tr>
                 <td><b>Patient Name :</b> {{FirstName}} {{LastName}}</td>
-                <td><b>Patient Type :</b> {{PatientType}}</td>
                 <td><b>Age | Gender :</b> {{Age}} | {{GenderName}}</td>
+                <td><b>Patient Type :</b> {{PatientType}}</td>
             </tr>
 
-            <tr style="background:#f9fafb;">
+            <tr>
                 <td><b>Doctor Name :</b> {{DoctorName}}</td>
                 <td><b>Department :</b> {{DepartmentName}}</td>
+                <td><b>Room | Bed :</b> {{RoomName}} | {{BedName}}</td>
+            </tr>
+
+            <tr>
                 <td><b>Mobile No :</b> {{MobileNo}}</td>
-            </tr>
-
-            <tr style="background:#f2f4f7;">
-                <td><b>Room :</b> {{RoomName}}</td>
-                <td><b>Bed :</b> {{BedName}}</td>
                 <td><b>Tariff :</b> {{TariffName}}</td>
+                <td><b>Company :</b> {{CompanyName}}</td>
             </tr>
-
-            <tr style="background:#f9fafb;">
-                <td colspan="3"><b>Company :</b> {{CompanyName}}</td>
-            </tr>
-
         </table>
 
         <br><br>
 
-        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; background:#ffffff;">
             <tr style="background:#e2e8f0;">
-                <td colspan="4"><b>OT Request Details</b></td>
+                <td colspan="3"><b>OT Request Details</b></td>
             </tr>
 
-            <tr style="background:#f9fafb;">
-                <td><b>Request No</b><br>{{OTRequestNo}}</td>
-                <td><b>Request Date</b><br>{{OTRequestDate}}</td>
-                <td><b>Request Time</b><br>{{OTRequestTime}}</td>
-                <td><b>Request Type</b><br>{{RequestType}}</td>
+            <tr>
+                <td><b>Request No :</b> {{OTRequestNo}}</td>
+                <td><b>Request Date | Time :</b> {{OTRequestDate}} | {{OTRequestTime}}</td>
+                <td><b>Request Type :</b> {{RequestType}}</td>
             </tr>
 
-            <tr style="background:#f2f4f7;">
-                <td><b>Surgery Date</b><br>{{SurgeryDate}}</td>
-                <td><b>Estimate Time</b><br>{{EstimateTime}}</td>
-                <td><b>OT Table</b><br>{{OTTableName}}</td>
-                <td><b>Category Type</b><br>{{TypeName}}</td>
+            <tr>
+                <td><b>Surgery Date :</b> {{SurgeryDate}}</td>
+                <td><b>Estimate Time :</b> {{EstimateTime}}</td>
+                <td><b>Category Type :</b> {{TypeName}}</td>
             </tr>
 
-            <tr style="background:#f9fafb;">
-                <td><b>Equipments Required</b><br>{{EquipmentsRequired}}</td>
-                <td><b>PAC Required</b><br>{{PACRequired}}</td>
-                <td><b>Infective</b><br>{{Infective}}</td>
-                <td><b>Medical Clearance</b><br>{{ClearanceMedical}}</td>
+            <tr>
+                <td><b>OT Table :</b> {{OTTableName}}</td>
+                <td><b>PAC Required :</b> {{PACRequired}}</td>
+                <td><b>Equipments Required :</b> {{EquipmentsRequired}}</td>
             </tr>
 
-            <tr style="background:#f2f4f7;">
-                <td colspan="2"><b>Financial Clearance</b><br>{{ClearanceFinancial}}</td>
-                <td colspan="2"><b>Remarks</b><br>{{Comments}}</td>
+            <tr>
+                <td><b>Infective :</b> {{Infective}}</td>
+                <td><b>Medical Clearance :</b> {{ClearanceMedical}}</td>
+                <td><b>Financial Clearance :</b> {{ClearanceFinancial}}</td>
             </tr>
 
+            <tr>
+                <td colspan="3"><b>Remarks :</b> {{Comments}}</td>
+            </tr>
         </table>
 
         <br><br>
 
-        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; background:#ffffff;">
             <tr style="background:#e2e8f0;">
-                <td colspan="4"><b>OT Reservation Details</b></td>
+                <td colspan="3"><b>OT Reservation Details</b></td>
             </tr>
 
-            <tr style="background:#f9fafb;">
-                <td><b>Blood Group</b><br>{{BloodGroup}}</td>
-                <td><b>OT Type</b><br>{{OTType}}</td>
-                <td><b>Theater</b><br>{{OTTable}}</td>
-                <td><b>Location</b><br>{{LocationName}}</td>
+            <tr>
+                <td><b>Theater :</b> {{OTTable}}</td>
+                <td><b>OT Type :</b> {{OTType}}</td>
+                <td><b>Location :</b> {{LocationName}}</td>
             </tr>
 
-            <tr style="background:#f2f4f7;">
-                <td><b>Surgery Date</b><br>{{SurgeryDate2}}</td>
-                <td><b>Estimate Time</b><br>{{EstimateTime2}}</td>
-                <td><b>Anaesthesia Type</b><br>{{AnaesthesiaType}}</td>
-                <td><b>Diagnosis</b><br>{{DiagnosisNames}}</td>
+            <tr>
+                <td><b>Surgery Date :</b> {{SurgeryDate2}}</td>
+                <td><b>Estimate Time :</b> {{EstimateTime2}}</td>
+                <td><b>Diagnosis :</b> {{DiagnosisNames}}</td>
             </tr>
 
-            <tr style="background:#f2f4f7;">
-                <td colspan="4"><b>Comments :</b> {{Comments}}</td>
+            <tr>
+                <td><b>Blood Group :</b> {{BloodGroup}}</td>
+                <td><b>Anaesthesia Type :</b> {{AnaesthesiaType}}</td>
+                <td><b>Comments :</b> {{Comments}}</td>
             </tr>
         </table>
 
         <br><br>
 
-        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; background:#ffffff;">
             <tr style="background:#e2e8f0;">
                 <td colspan="4"><b>Surgery Details</b></td>
             </tr>
@@ -133,137 +131,139 @@
         {{AttendantRows}}
         <br><br>
 
-        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; background:#ffffff;">
             <tr style="background:#e2e8f0;">
-                <td colspan="4"><b>OT Check-In Details</b></td>
+                <td colspan="3"><b>OT Check-In Details</b></td>
             </tr>
 
-            <tr style="background:#f9fafb;">
-                <td><b>Check-In No</b><br>{{OTCheckInNo}}</td>
-                <td><b>Check-In Date</b><br>{{OTCheckInDate}}</td>
-                <td><b>Check-In Time</b><br>{{OTCheckInTime}}</td>
-                <td><b>Moving Type</b><br>{{MovingType}}</td>
+            <tr>
+                <td><b>Check-In No :</b> {{OTCheckInNo}}</td>
+                <td><b>Moving Type :</b> {{MovingType}}</td>
+                <td><b>Mode of Movement :</b> {{ModeofMovement}}</td>
             </tr>
 
-            <tr style="background:#f2f4f7;">
-                <td><b>From Department</b><br>{{FromDepartment}}</td>
-                <td><b>To Department</b><br>{{ToDepartment}}</td>
-                <td><b>Mode of Movement</b><br>{{ModeofMovement}}</td>
-                <td><b>Purpose of Movement</b><br>{{PurPoseOfMovement}}</td>
+            <tr>
+                <td><b>Check-In Date | Time :</b> {{OTCheckInDate}} | {{OTCheckInTime}}</td>
+                <td colspan="2"><b>From --> To Dept :</b> {{FromDepartment}} --> {{ToDepartment}}</td>
             </tr>
 
-            <tr style="background:#f9fafb;">
-                <td><b>Equipment Carried</b><br>{{EquipmentCarried}}</td>
-                <td><b>Accompanied</b><br>{{Accompanied}}</td>
-                <td><b>Authorised By</b><br>{{AuthorisedBy}}</td>
-                <td><b>Remark</b><br>{{Remark}}</td>
+            <tr>
+                <td><b>Purpose :</b> {{PurPoseOfMovement}}</td>
+                <td><b>Equipment Carried :</b> {{EquipmentCarried}}</td>
+                <td><b>Accompanied :</b> {{Accompanied}}</td>
             </tr>
 
-            <tr style="background:#f2f4f7;">
-                <td><b>CheckOut From Dept</b><br>{{CheckOutFromDepartment}}</td>
-                <td><b>CheckOut To Dept</b><br>{{CheckOutToDepartment}}</td>
-                <td><b>CheckOut Date</b><br>{{CheckOutDate}}</td>
-                <td><b>CheckOut Time</b><br>{{CheckOutTime}}</td>
-                <td colspan="2"></td>
+            <tr>
+                <td><b>Authorised By :</b> {{AuthorisedBy}}</td>
+                <td colspan="2"><b>Remark :</b> {{Remark}}</td>
+            </tr>
+        </table>
+
+        <br><br>
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; background:#ffffff;">
+            <tr style="background:#e2e8f0;">
+                <td colspan="3"><b>OT Check-Out Details</b></td>
+            </tr>
+
+            <tr>
+                <td><b>CheckOut Date | Time :</b> {{CheckOutDate}} | {{CheckOutTime}}</td>
+                <td colspan="2"><b>CheckOut From --> To:</b> {{CheckOutFromDepartment}} --> {{CheckOutToDepartment}}</td>
             </tr>
         </table>
 
         <br><br>
 
-        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; background:#ffffff;">
             <tr style="background:#e2e8f0;">
-                <td colspan="4"><b>Pre-Operation Details</b></td>
+                <td colspan="3"><b>Pre-Operation Details</b></td>
             </tr>
 
-            <tr style="background:#f9fafb;">
-                <td><b>Surgery Name</b><br>{{PreSurgeryNames}}</td>
-                <td><b>Surgery Category</b><br>{{PreSurgeryCategoryNames}}</td>
-                <td><b>OT Table</b><br>{{PreOTTableName}}</td>
-                <td><b>Location</b><br>{{PreLocationName}}</td>
+            <tr>
+                <td><b>Surgery Name :</b> {{PreSurgeryNames}}</td>
+                <td><b>Surgery Category :</b> {{PreSurgeryCategoryNames}}</td>
+                <td><b>Surgery Date :</b> {{PreSurgeryDate}}</td>
             </tr>
 
-            <tr style="background:#f2f4f7;">
-                <td><b>Surgery Date</b><br>{{PreSurgeryDate}}</td>
-                <td><b>Blood Arranged</b><br>{{BloodArranged}}</td>
-                <td><b>PAC Required</b><br>{{PrePACRequired}}</td>
-                <td><b>Equipments Required</b><br>{{PreEquipmentsRequired}}</td>
+            <tr>
+                <td><b>OT Table :</b> {{PreOTTableName}}</td>
+                <td><b>Location :</b> {{PreLocationName}}</td>
+                <td><b>Blood Arranged :</b> {{BloodArranged}}</td>
             </tr>
 
-            <tr style="background:#f9fafb;">
-                <td><b>Infective</b><br>{{PreInfective}}</td>
-                <td><b>Medical Clearance</b><br>{{PreClearanceMedical}}</td>
-                <td colspan="2"><b>Diagnosis</b><br>{{PreDiagnosisNames}}</td>
+            <tr>
+                <td><b>PAC Required :</b> {{PrePACRequired}}</td>
+                <td><b>Equipments Required :</b> {{PreEquipmentsRequired}}</td>
+                <td><b>Infective :</b> {{PreInfective}}</td>
             </tr>
 
-            <tr style="background:#f2f4f7;">
-                <td colspan="4"><b>CathLab Diagnosis</b><br>{{CathLabDiagnosisNames}}</td>
+            <tr>
+                <td><b>Medical Clearance :</b> {{PreClearanceMedical}}</td>
+                <td colspan="2"><b>Diagnosis :</b> {{PreDiagnosisNames}}</td>
+            </tr>
+
+            <tr>
+                <td colspan="3"><b>CathLab Diagnosis :</b> {{CathLabDiagnosisNames}}</td>
+            </tr>
+        </table>
+
+        <br><br>
+
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; background:#ffffff;">
+            <tr style="background:#e2e8f0;">
+                <td colspan="3"><b>In-Operation Details</b></td>
+            </tr>
+
+            <tr>
+                <td><b>Surgery Name :</b> {{InSurgeryNames}}</td>
+                <td><b>Blood Loss :</b> {{BloodLoss}}</td>
+                <td><b>Blood Arranged :</b> {{InBloodArranged}}</td>
+            </tr>
+
+            <tr>
+                <td><b>PAC Required :</b> {{InPACRequired}}</td>
+                <td><b>Equipments Required :</b> {{InEquipmentsRequired}}</td>
+                <td><b>Infective :</b> {{InInfective}}</td>
+            </tr>
+
+            <tr>
+                <td><b>Medical Clearance :</b> {{InClearanceMedical}}</td>
+                <td><b>Diagnosis :</b> {{InDiagnosisNames}}</td>
+                <td><b>Post Oper Diagnosis :</b> {{PostOperDiagnosis}}</td>
+            </tr>
+
+            <tr>
+                <td><b>Theater In :</b> {{TheaterInDate}} | {{TheaterInTime}}</td>
+                <td><b>Theater Out :</b> {{TheaterOutData}} | {{TheaterOutTime}}</td>
+                <td><b>Anaesthesia Type :</b> {{AnaesthesiaType2}}</td>
+            </tr>
+
+            <tr>
+                <td colspan="3"><b>To Time :</b> {{ToTime}}</td>
             </tr>
         </table>
 
         <br><br>
 
 
-        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
+        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; background:#ffffff;">
             <tr style="background:#e2e8f0;">
-                <td colspan="4"><b>In-Operation Details</b></td>
+                <td colspan="3"><b>Anesthesia & Recovery Details</b></td>
             </tr>
 
-            <tr style="background:#f9fafb;">
-                <td><b>Surgery Name</b><br>{{InSurgeryNames}}</td>
-                <td><b>Blood Loss</b><br>{{BloodLoss}}</td>
-                <td><b>Blood Arranged</b><br>{{InBloodArranged}}</td>
-                <td><b>PAC Required</b><br>{{InPACRequired}}</td>
+            <tr>
+                <td><b>Anesthesia Date :</b> {{AnesthesiaDate}}</td>
+                <td><b>Anesthesia Start :</b> {{AnesthesiaStartDate}} | {{AnesthesiaStartTime}}</td>
+                <td><b>Anesthesia End :</b> {{AnesthesiaEndDate}} | {{AnesthesiaEndTime}}</td>
             </tr>
 
-            <tr style="background:#f2f4f7;">
-                <td><b>Equipments Required</b><br>{{InEquipmentsRequired}}</td>
-                <td><b>Infective</b><br>{{InInfective}}</td>
-                <td><b>Medical Clearance</b><br>{{InClearanceMedical}}</td>
-                <td><b>Diagnosis</b><br>{{InDiagnosisNames}}</td>
-            </tr>
-
-            <tr style="background:#f9fafb;">
-                <td><b>Theater In Date</b><br>{{TheaterInDate}}</td>
-                <td><b>Theater In Time</b><br>{{TheaterInTime}}</td>
-                <td><b>Theater Out Date</b><br>{{TheaterOutData}}</td>
-                <td><b>Theater Out Time</b><br>{{TheaterOutTime}}</td>
-            </tr>
-
-            <tr style="background:#f2f4f7;">
-                <td><b>To Time</b><br>{{ToTime}}</td>
-                <td colspan="2"><b>Post Oper Diagnosis</b><br>{{PostOperDiagnosis}}</td>
-                <td><b>Anaesthesia Type</b><br>{{AnaesthesiaType2}}</td>
-            </tr>
-        </table>
-
-        <br><br>
-
-        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;">
-            <tr style="background:#e2e8f0;">
-                <td colspan="4"><b>Anesthesia & Recovery Details</b></td>
-            </tr>
-
-            <tr style="background:#f9fafb;">
-                <td><b>Anesthesia Date</b><br>{{AnesthesiaDate}}</td>
-                <td><b>Anesthesia Start Date</b><br>{{AnesthesiaStartDate}}</td>
-                <td><b>Anesthesia Start Time</b><br>{{AnesthesiaStartTime}}</td>
-                <td><b>Anesthesia End Date</b><br>{{AnesthesiaEndDate}}</td>
-            </tr>
-
-            <tr style="background:#f2f4f7;">
-                <td><b>Anesthesia End Time</b><br>{{AnesthesiaEndTime}}</td>
-                <td><b>Recovery Start Date</b><br>{{RecoveryStartDate}}</td>
-                <td><b>Recovery Start Time</b><br>{{RecoveryStartTime}}</td>
-                <td><b>Recovery End Date</b><br>{{RecoveryEndDate}}</td>
-            </tr>
-
-            <tr style="background:#f9fafb;">
-                <td><b>Recovery End Time</b><br>{{RecoveryEndTime}}</td>
+            <tr>
+                <td><b>Recovery Start :</b> {{RecoveryStartDate}} | {{RecoveryStartTime}}</td>
+                <td><b>Recovery End :</b> {{RecoveryEndDate}} | {{RecoveryEndTime}}</td>
                 <td><b>Anaesthesia Type :</b> {{FinalAnaesthesiaType}}</td>
-                <td colspan="2"><b>Anesthesia Notes</b><br>{{AnesthesiaNotes}}</td>
             </tr>
 
-            <tr style="background:#f2f4f7;">
+            <tr>
+                <td colspan="3"><b>Anesthesia Notes :</b> {{AnesthesiaNotes}}</td>
             </tr>
         </table>
 

@@ -17540,22 +17540,25 @@ namespace HIMS.Services.Report
                                 foreach (var dr in uniqueSurgeries)
                                 {
                                     surgeryRows.Append("<tr>");
-                                    surgeryRows.Append("<td><b>Surgery Type</b><br>").Append(dr["SurgeryCategoryName"]).Append("</td>");
-                                    surgeryRows.Append("<td><b>Surgery Name</b><br>").Append(dr["SurgeryName"]).Append("</td>");
-                                    surgeryRows.Append("<td><b>Part</b><br>").Append(dr["SurgeryPart"]).Append("</td>");
-                                    surgeryRows.Append("<td><b>Is Primary</b><br>").Append(dr["IsPrimary"]).Append("</td>");
+                                    surgeryRows.Append("<td><b>Surgery Type :</b> ").Append(dr["SurgeryCategoryName"]).Append("</td>");
+                                    surgeryRows.Append("<td><b>Surgery Name :</b> ").Append(dr["SurgeryName"]).Append("</td>");
+                                    surgeryRows.Append("<td><b>Surgeon ").Append(surgeryIndex++).Append(" :</b> ").Append(dr["SurgeonName"]).Append("</td>");
                                     surgeryRows.Append("</tr>");
 
                                     surgeryRows.Append("<tr>");
-                                    surgeryRows.Append("<td><b>From Time</b><br>").Append(dr["SurgeryFromTime"].ConvertToDateString("hh:mm tt")).Append("</td>");
-                                    surgeryRows.Append("<td><b>To Time</b><br>").Append(dr["SurgeryEndTime"].ConvertToDateString("hh:mm tt")).Append("</td>");
-                                    surgeryRows.Append("<td><b>Duration</b><br>").Append(dr["SurgeryDuration"]).Append("</td>");
-                                    surgeryRows.Append("<td><b>Anesthesia</b><br>").Append(dr["AnesthetistName"]).Append("</td>");
+                                    surgeryRows.Append("<td><b>Is Primary :</b> ").Append(dr["IsPrimary"]).Append("</td>");
+                                    surgeryRows.Append("<td><b>From Time :</b> ").Append(dr["SurgeryFromTime"].ConvertToDateString("hh:mm tt")).Append("</td>");
+                                    surgeryRows.Append("<td><b>To Time :</b> ").Append(dr["SurgeryEndTime"].ConvertToDateString("hh:mm tt")).Append("</td>");
                                     surgeryRows.Append("</tr>");
 
-                                    surgeryRows.Append("<tr>");
-                                    surgeryRows.Append("<td colspan='4'><b>Surgeon ").Append(surgeryIndex++).Append(" :</b> ").Append(dr["SurgeonName"]).Append("</td>");
+                                    surgeryRows.Append("<tr>");                                
+                                    surgeryRows.Append("<td><b>Anesthesia :</b> ").Append(dr["AnesthetistName"]).Append("</td>");
+                                    surgeryRows.Append("<td><b>Part :</b> ").Append(dr["SurgeryPart"]).Append("</td>");
+                                    surgeryRows.Append("<td><b>Duration :</b> ").Append(dr["SurgeryDuration"]).Append("</td>");
                                     surgeryRows.Append("</tr>");
+                                    surgeryRows.Append("<tr><td colspan='3' style='height:10px;'></td></tr>");
+
+
                                 }
 
                                 html = html.Replace("{{SurgeryRows}}", surgeryRows.ToString());
@@ -17620,9 +17623,9 @@ namespace HIMS.Services.Report
 
                                 html = html.Replace("{{OTCheckInDate}}", dt3.GetColValue("OTCheckInDate").ConvertToDateString("dd-MM-yyyy"));
                                 html = html.Replace("{{OTCheckInTime}}", dt3.GetColValue("OTCheckInTime").ConvertToDateString("hh:mm tt"));
-                                html = html.Replace("{{CheckOutDate}}", dt3.GetColValue("CheckOutTime").ConvertToDateString("dd-MM-yyyy"));
-                                html = html.Replace("{{CheckOutTime}}", dt3.GetColValue("CheckOutTime").ConvertToDateString("hh:mm tt"));
                                 html = html.Replace("{{OTCheckInNo}}", dt3.GetColValue("OTCheckInNo"));
+                                var checkInOut = dt3.GetColValue("CheckInOut");   
+                                bool isCheckout = checkInOut == "0";
                                 html = html.Replace("{{MovingType}}", dt3.GetColValue("MovingType"));
                                 html = html.Replace("{{EquipmentCarried}}", dt3.GetColValue("EquipmentCarried"));
                                 html = html.Replace("{{Remark}}", dt3.GetColValue("Remark"));
@@ -17632,8 +17635,10 @@ namespace HIMS.Services.Report
                                 html = html.Replace("{{ModeofMovement}}", dt3.GetColValue("ModeofMovement"));
                                 html = html.Replace("{{FromDepartment}}", dt3.GetColValue("FromDepartment"));
                                 html = html.Replace("{{ToDepartment}}", dt3.GetColValue("ToDepartment"));
-                                html = html.Replace("{{CheckOutToDepartment}}", dt3.GetColValue("CheckOutToDepartment"));
-                                html = html.Replace("{{CheckOutFromDepartment}}", dt3.GetColValue("CheckOutFromDepartment"));
+                                html = html.Replace("{{CheckOutToDepartment}}", isCheckout ? dt3.GetColValue("CheckOutToDepartment") : "");
+                                html = html.Replace("{{CheckOutFromDepartment}}", isCheckout ? dt3.GetColValue("CheckOutFromDepartment") : "");
+                                html = html.Replace("{{CheckOutDate}}", isCheckout ? dt3.GetColValue("CheckOutTime").ConvertToDateString("dd-MM-yyyy") : "");
+                                html = html.Replace("{{CheckOutTime}}", isCheckout ? dt3.GetColValue("CheckOutTime").ConvertToDateString("hh:mm tt") : "");
 
                             }
 
@@ -17696,6 +17701,7 @@ namespace HIMS.Services.Report
                             }
 
                         }
+                        html = System.Text.RegularExpressions.Regex.Replace(html, @"\{\{[^}]+\}\}", "");
 
                         var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTMultiTabReport");
                         pdfBytes = tuple.Item1;

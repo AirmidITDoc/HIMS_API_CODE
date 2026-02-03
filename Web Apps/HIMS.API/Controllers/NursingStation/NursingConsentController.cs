@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
@@ -30,7 +31,7 @@ namespace HIMS.API.Controllers.NursingStation
 
         }
         [HttpGet("GetMConsentMasterList")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission]
         public ApiResponse GetMConsentMasterList(string? ConsentTypeName)
         {
             var data = _NursingConsentService.GetConsentAsync(ConsentTypeName);
@@ -61,7 +62,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpGet("DeptConsentList")]
-        //  [Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ConsentDeptListDto> SupplierList = await _NursingConsentService.GetListAsync(objGrid);
@@ -70,7 +71,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("InsertConsent")]
-        //   [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingConsent", Permission = PagePermission.Add)]
         public ApiResponse insert(ConsentInformationModel obj)
         {
             TConsentInformation Model = obj.MapTo<TConsentInformation>();
@@ -88,7 +89,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPut("UpdateConsent")]
-        //   [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingConsent", Permission = PagePermission.Add)]
         public ApiResponse Update(UpdateConsentInformationModel obj)
         {
             TConsentInformation Model = obj.MapTo<TConsentInformation>();
@@ -105,7 +106,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("ConsentpatientInfoList")]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "NursingConsent", Permission = PagePermission.View)]
+
         public async Task<IActionResult> ConsentpatientInfoList(GridRequestModel objGrid)
         {
             IPagedList<ConsentpatientInfoListDto> ConsentpatientInfoList = await _NursingConsentService.ConsentpatientInfoList(objGrid);

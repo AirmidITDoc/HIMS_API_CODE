@@ -7,7 +7,12 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
+using HIMS.Services.Administration;
+using HIMS.Services.Inventory;
+using HIMS.Services.OTManagment;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.OTMaster
@@ -19,18 +24,20 @@ namespace HIMS.API.Controllers.Masters.OTMaster
     {
         private readonly IGenericService<MConsentMaster> _repository;
 
-        public ConsentMasterController(IGenericService<MConsentMaster> repository)
+        private readonly IConsentMasterService _IConsentMasterService;
+        public ConsentMasterController(IConsentMasterService repository1, IGenericService<MConsentMaster> repository)
         {
             _repository = repository;
+            _IConsentMasterService = repository1;
         }
+
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
-
+        //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MConsentMaster> MOttableMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MOttableMasterList.ToGridResponse(objGrid, "MConsentMaster List"));
+            IPagedList<ConsentMasterDto> ConsentMasterList = await _IConsentMasterService.ConsentMasterListAsync(objGrid);
+            return Ok(ConsentMasterList.ToGridResponse(objGrid, "ConsentMaster List"));
         }
 
         [HttpGet("{id?}")]

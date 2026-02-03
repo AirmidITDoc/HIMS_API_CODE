@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
@@ -25,7 +26,8 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "UnitOfMeasurement", Permission = PagePermission.View)]
+
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MUnitofMeasurementMaster> UnitofMeasurementMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -33,7 +35,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission(PageCode = "UnitOfMeasurement", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -46,7 +48,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        [Permission(PageCode = "UnitOfMeasurement", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(UnitOfMeasurementModel obj)
         {
             MUnitofMeasurementMaster model = obj.MapTo<MUnitofMeasurementMaster>();
@@ -64,7 +66,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "UnitOfMeasurement", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(UnitOfMeasurementModel obj)
         {
             MUnitofMeasurementMaster model = obj.MapTo<MUnitofMeasurementMaster>();
@@ -81,7 +83,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "UnitOfMeasurement", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MUnitofMeasurementMaster model = await _repository.GetById(x => x.UnitofMeasurementId == Id);
@@ -96,7 +98,6 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
 
     }
 }

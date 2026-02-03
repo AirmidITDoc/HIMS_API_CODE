@@ -1003,6 +1003,58 @@ namespace HIMS.Data.DataProviders
 
             return result;
         }
+        public async Task<Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>>> Get7ResultsFromSp<T, T1, T2, T3, T4, T5,T6,T7>(string Spname, SqlParameter[] para) where T : new() where T1 : new() where T2 : new() where T3 : new() where T4 : new() where T5 : new() where T6 : new() where T7 : new()
+        {
+            Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>> result = null;
+            Command.CommandType = CommandType.StoredProcedure;
+            Command.Parameters.AddRange(para);
+            Command.CommandText = Spname;
+            try
+            {
+                objConnection.Open();
+                using var reader = await Command.ExecuteReaderAsync();
+                // Table 1
+                var item1 = reader.MapToList<T>();
+
+                // Table 2
+                await reader.NextResultAsync();
+                var item2 = reader.MapToList<T1>();
+                // Table 3
+                await reader.NextResultAsync();
+                var item3 = reader.MapToList<T2>();
+                // Table 4
+                await reader.NextResultAsync();
+                var item4 = reader.MapToList<T3>();
+                // Table 5
+                await reader.NextResultAsync();
+                var item5 = reader.MapToList<T4>();
+                // Table 6
+                await reader.NextResultAsync();
+                var item6 = reader.MapToList<T5>();
+                // Table 6
+                await reader.NextResultAsync();
+                var item7 = reader.MapToList<T6>();
+
+                await reader.NextResultAsync();
+                var item8 = reader.MapToList<T7>();
+
+                result = new Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>>(item1, item2, item3, item4, item5, item6, item7,item8);
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, Spname);
+            }
+            finally
+            {
+                //objCommand.Parameters.Clear();
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+
+            return result;
+        }
 
         #endregion :: Multiple Result Sets ::
         public List<T> FetchListByQuery<T>(string Qry, SqlParameter[] para = null)
