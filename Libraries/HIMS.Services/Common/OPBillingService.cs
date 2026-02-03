@@ -963,7 +963,7 @@ namespace HIMS.Services.Common
 
             }
         }
-        public virtual async Task Cancel(TDrbill ObjTDrbill, int UserId, string Username)
+        public virtual async Task Cancel(TDrbill ObjTDrbill, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
             string[] DEntity = { "Drbno", "IsCancelled", "IsCancelledBy", "IsCancelledDate" };
@@ -974,11 +974,13 @@ namespace HIMS.Services.Common
                     dentity.Remove(rProperty);
         
             }
-            dentity["IsCancelledBy"] = UserId;
+            dentity["IsCancelledBy"] = CurrentUserId;
             dentity["IsCancelledDate"] = DateTime.Now;
             odal.ExecuteNonQuery("ps_opDraftBillCancel", CommandType.StoredProcedure, dentity);
+            await _context.LogProcedureExecution(dentity, nameof(TDrbill), ObjTDrbill.Drbno.ToInt(), Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
+
         }
-        
+
 
     }
 }
