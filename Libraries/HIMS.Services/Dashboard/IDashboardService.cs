@@ -10,5 +10,7 @@ namespace HIMS.Services.Dashboard
         IPAdemissionDischargeCountModel GetIPAdemissionDischargeCount();
         OPVisitCountList GetOPVisitCount(OPVisitCountRequestModel model);
         Task<PathologyDashboard> GetPathologyDashboard(int UnitId,DateTime FromDate,DateTime ToDate);
+        Task<FinancialDashboard> GetFinancialDashBoard(int UnitId, DateTime FromDate, DateTime ToDate);
+
     }
 }
