@@ -15,59 +15,59 @@ namespace HIMS.Core.Domain.Dashboard
         public List<FinancialIPPayment> FinancialIPPayment { get; set; }
         public List<FinancialVisit> FinancialVisit { get; set; }
         public List<FinancialCollectionPayMode> FinancialCollectionPayMode { get; set; }
-        //public List<FinancialAdvance> FinancialAdvance { get; set; }
-        //public List<FinancialPharmacyReturn> FinancialPharmacyReturn { get; set; }
-        //public List<FinancialRefund> FinancialRefund { get; set; }
-        //public List<FinancialDoctorWisePatientCountSummary> FinancialDoctorWisePatientCountSummary { get; set; }
-        //public List<FinancialModeWiseCollection> FinancialModeWiseCollection { get; set; }
-        //public List<FinancialOPExistingPatientCount> FinancialOPExistingPatientCount { get; set; }
-        //public List<FinancialIPExistingPatientCount> FinancialIPExistingPatientCount { get; set; }
-        //public List<FinancialOPDPatientSale> FinancialOPDPatientSale { get; set; }
-        //public List<FinancialIPDPatientSale> FinancialIPDPatientSale { get; set; }
-        //public List<FinancialAdvanceBalance> FinancialAdvanceBalance { get; set; }
-        //public List<FinancialOutStandingOPIP> FinancialOutStandingOPIP { get; set; }
-        //public List<FinancialInsuranceCaverageAdequacy> FinancialInsuranceCaverageAdequacy { get; set; }
+        public List<FinancialAdvance> FinancialAdvance { get; set; }
+        public List<FinancialPharmacyReturn> FinancialPharmacyReturn { get; set; }
+        public List<FinancialRefund> FinancialRefund { get; set; }
+        public List<FinancialDoctorWisePatientCountSummary> FinancialDoctorWisePatientCountSummary { get; set; }
+        public List<FinancialModeWiseCollection> FinancialModeWiseCollection { get; set; }
+        public List<FinancialOPExistingPatientCount> FinancialOPExistingPatientCount { get; set; }
+        public List<FinancialIPExistingPatientCount> FinancialIPExistingPatientCount { get; set; }
+        public List<FinancialOPDPatientSale> FinancialOPDPatientSale { get; set; }
+        public List<FinancialIPDPatientSale> FinancialIPDPatientSale { get; set; }
+        public List<FinancialAdvanceBalance> FinancialAdvanceBalance { get; set; }
+        public List<FinancialOutStandingOPIP> FinancialOutStandingOPIP { get; set; }
+        public List<FinancialInsuranceCaverageAdequacy> FinancialInsuranceCaverageAdequacy { get; set; }
 
     }
     public class PatientcountWardWiseCountSummary
     {
         public string? WardName { get; set; }
-        public int PatientCountt { get; set; }
-        public int PatientOccupancy { get; set; }
+        public long PatientCountt { get; set; }
+        public long PatientOccupancy { get; set; }
     }
     public class FinancialCount
     {
         public string GroupName { get; set; }
-        public int Discount { get; set; }
-        public int OPCollection { get; set; }
+        public decimal Discount { get; set; }
+        public decimal OPCollection { get; set; }
 
     }
     public class FinancialTestCount
     {
         public string GroupName { get; set; }
-        public int Discount { get; set; }
-        public int IPCollection { get; set; }
+        public decimal Discount { get; set; }
+        public decimal IPCollection { get; set; }
     }
     public class FinancialOPPayment
     {
         public string GroupName { get; set; }
-        public int Discount { get; set; }
-        public int OPCollection { get; set; }
+        public decimal Discount { get; set; }
+        public decimal OPCollection { get; set; }
 
 
     }
     public class FinancialIPPayment
     {
         public string GroupName { get; set; }
-        public int Discount { get; set; }
-        public int IPCollection { get; set; }
+        public decimal Discount { get; set; }
+        public decimal IPCollection { get; set; }
 
 
     }
     public class FinancialVisit 
     {
         public string? TypeOFVisit { get; set; }
-        public int PatientCount { get; set; }
+        public long PatientCount { get; set; }
     }
     public class FinancialCollectionPayMode
     {
@@ -93,7 +93,7 @@ namespace HIMS.Core.Domain.Dashboard
     {
         public string? DoctorName { get; set; }
         public decimal? PatientCount { get; set; }
-        public int? OPCollection { get; set; }
+        public decimal? OPCollection { get; set; }
 
     }
     public class FinancialModeWiseCollection

@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.Dashboard
         {
             //int UnitId = Context.UnitId;
             var data = await _IDashboardService.GetFinancialDashBoard(UnitId, FromDate, ToDate);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Financial DashBoard  ", data);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Financial DashBoard", data);
         }
     }
 }
