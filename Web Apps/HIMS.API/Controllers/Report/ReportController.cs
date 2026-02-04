@@ -412,6 +412,7 @@ namespace HIMS.API.Controllers.Report
                 case "OpeningBalance":
                 case "WorkOrder":
                 case "MaterialReceivedByDept":
+                case "GRNStickerPrint":
 
                 //Pharmacy
                 case "PharmacyPatientStatement":
@@ -444,6 +445,9 @@ namespace HIMS.API.Controllers.Report
                 case "LabRegistrationListReport":
                 case "CommonTemplateReport":
                 case "LabStickerPrint":
+                case "IPStickerPrintV1":
+
+
 
                 #endregion
 

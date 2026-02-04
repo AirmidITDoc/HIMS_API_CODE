@@ -584,6 +584,49 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+
+                #region :: GRNStickerPrint :
+                case "GRNStickerPrint":
+                    {
+                            var dt = GetDataBySp(model, "ps_GrnItemQRPrint");
+                            var objTemplate = await _IBarcodeConfigService.GetConfigByCode("GrnItemSticker");
+                            string template = objTemplate?.TemplateBody ?? "";
+                             string html = "";
+                        foreach (DataRow row in dt.Rows)
+                            {
+                                string rowHtml = template;
+
+                                rowHtml = rowHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["GRNID"]?.ToString()));
+                                rowHtml = rowHtml.Replace("{{PrintStoreName}}", row["PrintStoreName"]?.ToString());
+                                rowHtml = rowHtml.Replace("{{MRP}}", row["MRP"]?.ToString());
+                                rowHtml = rowHtml.Replace("{{BatchNo}}", row["BatchNo"]?.ToString());
+                                rowHtml = rowHtml.Replace("{{BatchExpDate}}", row["BatchExpDate"]?.ToString());
+                                rowHtml = rowHtml.Replace("{{ItemName}}", row["ItemName"]?.ToString());
+
+                                html += rowHtml;// + "<div style='page-break-after:always'></div>";
+                            }
+                        //var dt = GetDataBySp(model, "ps_Rtrv_LabStickerPrintDemo");
+                        //var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode_V2");
+
+                        //string html = "";
+                        //foreach (DataRow row in dt.Rows)
+                        //{
+                        //    int i = 0;
+                        //    string tempHtml = objTemplate?.TemplateBody ?? "";
+                        //    tempHtml = tempHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["UHID"]?.ToString()));
+                        //    tempHtml = tempHtml.Replace("{{UHID}}", row["UHID"]?.ToString());
+                        //    tempHtml = tempHtml.Replace("{{PatientName}}", row["PatientName"]?.ToString());
+                        //    tempHtml = tempHtml.Replace("{{ServiceName}}", row["ServiceName"]?.ToString());
+                        //    tempHtml = tempHtml.Replace("{{TestBarCodeName}}", row["TestBarCodeName"]?.ToString());
+
+                        //    html += tempHtml;//+ "<div style='page-break-after:always'></div>";
+                        //}
+
+                        tuple = _pdfUtility.GeneratePdfFromHtmlBarCode(html, model.StorageBaseUrl, "GRNStickerPrint", "Sticker" + vDate, Orientation.Portrait);
+
+                        break;
+                    }
+                #endregion
                 #region :: PathologySampleBarcode ::
                 case "PathologySampleBarcode":
                     {
@@ -17946,6 +17989,59 @@ namespace HIMS.Services.Report
                 }
             }
 
+            if (model.Mode == "IPStickerPrintV1")
+            {
+                title = "Patient Detail Sticker";
+                var dt = GetDataBySp(model, "ps_rptAppointmentIPPrint");
+                var objTemplate = await _IBarcodeConfigService.GetConfigByCode("IPPatientSticker");
+                html = objTemplate?.TemplateBody ?? "";
+                html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("RegNo")));
+                html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                html = html.Replace("{{AdmissionDate}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                //html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+                html = html.Replace("{{ConsultantDoctorName}}", dt.GetColValue("ConsultantDoctorName"));
+                html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                html = html.Replace("{{Expr1}}", dt.GetColValue("Expr1"));
+                html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+                html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName"));
+                html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
+                html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+                html = html.Replace("{{IsMLC}}", dt.GetColValue("IsMLC"));
+                html = html.Replace("{{AdmittedDoctor2}}", dt.GetColValue("AdmittedDoctor2"));
+                html = html.Replace("{{LoginUserSurname}}", dt.GetColValue("LoginUserSurname"));
+            }
+
+            if (model.Mode == "GRNStickerPrint")
+            {
+                title = "GRN Sticker Print";
+
+                var dt = GetDataBySp(model, "ps_GrnItemQRPrint");
+                var objTemplate = await _IBarcodeConfigService.GetConfigByCode("GrnItemSticker");
+                string template = objTemplate?.TemplateBody ?? "";
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    string rowHtml = template;
+
+                    rowHtml = rowHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["GRNID"]?.ToString()));
+                    rowHtml = rowHtml.Replace("{{PrintStoreName}}", row["PrintStoreName"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{MRP}}", row["MRP"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{BatchNo}}", row["BatchNo"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{BatchExpDate}}", row["BatchExpDate"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{ItemName}}", row["ItemName"]?.ToString());
+
+                    html += rowHtml;// + "<div style='page-break-after:always'></div>";
+                }
+            }
             return new Tuple<string,string>( html,title);
 
         }
