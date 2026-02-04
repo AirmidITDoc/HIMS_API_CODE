@@ -233,7 +233,7 @@ namespace HIMS.Services.Utilities
             string htmlHeader = System.IO.File.ReadAllText(filePath);
 
             HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
-            MStoreMaster objStoreHospital = _context.MStoreMasters.Find(Convert.ToInt64(2));
+            MStoreMaster objStoreHospital = _context.MStoreMasters.Find(StoreId);
 
             var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
             string logoFileName = (objStoreHospital?.Header ?? "").ConvertToString();
