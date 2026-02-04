@@ -441,6 +441,9 @@ namespace HIMS.API.Controllers.Report
                 case "LabRegistrationListReport":
                 case "CommonTemplateReport":
                 case "LabStickerPrint":
+                case "IPStickerPrintV1":
+
+
 
                 #endregion
 
