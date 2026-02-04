@@ -259,6 +259,9 @@ namespace HIMS.API.Controllers.Report
                 case "OPLabPaymentReceipt":
                 case "LabRefundReceipt":
                 case "LabMoneyReceipt":
+                case "LabMoneyReceiptWithoutHeader":
+
+                    
 
 
 
