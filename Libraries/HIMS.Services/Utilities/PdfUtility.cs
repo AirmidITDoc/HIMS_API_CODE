@@ -108,7 +108,7 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
 
             var HospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
-            var HospitalLogo2 = logo2 != null ? GetBase64FromFolder("Hospital\\Logo", logo2.DocSavedName) : "";
+            var HospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
 
             htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
             htmlHeader = htmlHeader.Replace("{{logo2}}", HospitalLogo2);
@@ -127,8 +127,8 @@ namespace HIMS.Services.Utilities
             var infoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
 
             var HospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
-            var HospitalLogo2 = logo2 != null ? GetBase64FromFolder("Hospital\\Logo", logo2.DocSavedName) : "";
-            var hospitalInfo = infoImg != null ? GetBase64FromFolder("Hospital\\Logo", infoImg.DocSavedName) : "";
+            var HospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
+            var hospitalInfo = infoImg != null ? GetBase64FromFolder("Upload\\Img_Upload", infoImg.DocSavedName) : "";
 
             htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
             htmlHeader = htmlHeader.Replace("{{logo2}}", HospitalLogo2);
