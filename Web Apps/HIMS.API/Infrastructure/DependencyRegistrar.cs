@@ -87,6 +87,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<INursingConsentService, NursingConsentService>();
             services.AddScoped<ICampMasterService, CampMasterService>();
             services.AddScoped<IBranchService, BranchService>();
+            services.AddScoped<ILabApprovalService, LabApprovalService>();
+
 
 
 

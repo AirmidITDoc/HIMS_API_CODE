@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Security.Principal;
 using System.Transactions;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace HIMS.Services.Inventory
 {
@@ -302,7 +303,110 @@ namespace HIMS.Services.Inventory
             odal.ExecuteNonQuery("m_update_AcceptMaterialStock_1", CommandType.StoredProcedure, Tentity);
         }
 
-        
+        public virtual async Task UpdateIndentMaterialAccept(TIssueToDepartmentHeader objIssueToDepartment, List<TIssueToDepartmentDetail> ObjTIssueToDepDetail, List<TIssueToDepartmentDetail> ObjTIssueToDepartmentDetail, List<TCurrentStock> OBjTCurrentStock, TIssueToDepartmentHeader ObjIssueDepartment, TIndentHeader ObjTIndentHeader, List<TIndentDetail> ObjTIndentDetail, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+            // //Add header table records
+            DatabaseHelper odal = new();
+            string[] rEntity = { "IssueId", "IssueDate", "IssueTime", "FromStoreId", "ToStoreId", "TotalAmount", "TotalVatAmount", "NetAmount", "Remark", "Addedby", "IsVerified", "IsClosed", "IndentId", "UnitId", "CreatedBy" };
+            var entity = objIssueToDepartment.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+            string IssueId = odal.ExecuteNonQuery("v_Insert_IssueToDepartmentHeader_1_New", CommandType.StoredProcedure, "IssueId", entity);
+            objIssueToDepartment.IssueId = Convert.ToInt32(IssueId);
+
+            foreach (var item in ObjTIssueToDepDetail)
+            {
+                item.IssueId = Convert.ToInt32(IssueId);
+                string[] DetailsEntity = { "IssueId", "ItemId", "BatchNo", "BatchExpDate", "IssueQty", "PerUnitLandedRate", "VatPercentage", "VatAmount", "LandedTotalAmount", "UnitMrp", "MrptotalAmount", "UnitPurRate", "PurTotalAmount", "StkId", "Status" };
+                var dentity = item.ToDictionary();
+                foreach (var rProperty in dentity.Keys.ToList())
+                {
+                    if (!DetailsEntity.Contains(rProperty))
+                        dentity.Remove(rProperty);
+                }
+                string VIssueDepId = odal.ExecuteNonQuery("ps_InsertIssueToDepartmentDetail", CommandType.StoredProcedure, "IssueDepId", dentity);
+                item.IssueDepId = Convert.ToInt32(VIssueDepId);
+            }
+
+            foreach (var item in OBjTCurrentStock)
+            {
+
+                string[] Entity = { "ItemId", "IssueQty", "IstkId", "StoreId" };
+                var Ientity = item.ToDictionary();
+                foreach (var rProperty in Ientity.Keys.ToList())
+                {
+                    if (!Entity.Contains(rProperty))
+                        Ientity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("m_upd_T_Curstk_issdpt_1", CommandType.StoredProcedure, Ientity);
+            }
+
+            string[] SEntity = { "IssueId", "AcceptedBy", "IsAccepted" };
+            var Sntity = ObjIssueDepartment.ToDictionary();
+            Sntity["IssueId"] = IssueId;
+            foreach (var rProperty in Sntity.Keys.ToList())
+            {
+                if (!SEntity.Contains(rProperty))
+                    Sntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_update_AcceptMaterial_Store_1", CommandType.StoredProcedure, Sntity);
+
+            foreach (var items in ObjTIssueToDepartmentDetail)
+            {
+
+                string[] IEntity = { "IssueId", "IssueDepId", "Status" };
+                var Centity = items.ToDictionary();
+                Centity["IssueId"] = IssueId;
+                foreach (var rProperty in Centity.Keys.ToList())
+                {
+                    if (!IEntity.Contains(rProperty))
+                        Centity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_update_AcceptMaterialIssueDet_Direct_1", CommandType.StoredProcedure, Centity);
+            }
+
+            string[] DEntity = { "IssueId" };
+            var Tentity = objIssueToDepartment.ToDictionary();
+            Tentity["IssueId"] = IssueId;
+            foreach (var rProperty in Tentity.Keys.ToList())
+            {
+                if (!DEntity.Contains(rProperty))
+                    Tentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("m_update_AcceptMaterialStock_1", CommandType.StoredProcedure, Tentity);
+
+            string[] NEntity = { "IndentId", "Isclosed"};
+            var nentity = ObjTIndentHeader.ToDictionary();
+            foreach (var rProperty in nentity.Keys.ToList())
+            {
+                if (!NEntity.Contains(rProperty))
+                    nentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("Update_IndentHeader_Status_AganistIssue", CommandType.StoredProcedure, nentity);
+
+            foreach (var item in ObjTIndentDetail)
+            {
+                string[] IEntity = { "IndentId", "IndentDetailsId", "IsClosed", "IndQty" };
+                var ientity = item.ToDictionary();
+                foreach (var rProperty in ientity.Keys.ToList())
+                {
+                    if (!IEntity.Contains(rProperty))
+                        ientity.Remove(rProperty);
+                }
+
+                odal.ExecuteNonQuery("PS_Update_Indent_Status_AganistIss", CommandType.StoredProcedure, ientity);
+
+            }
+            scope.Complete();
+
+        }
+       
+
     }
 
 }

@@ -184,7 +184,7 @@ namespace HIMS.API.Controllers.Inventory
        
 
         [HttpPost("IssuetoDeptWithMaterialAccept")]
-        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
 
         public async Task<ApiResponse> InsertM(IssuetoDeptWihMaterialAcceptModel obj)
         {
@@ -209,7 +209,35 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.IssueId);
         }
-       
 
+        [HttpPost("UpdateIndentStatusAganistMaterialAccept")]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> UpdateIndentMaterialAccept(IssuetoDeptWihMaterialAcceptModel obj)
+        {
+            TIssueToDepartmentHeader model = obj.IssuetoDeptWihMaterialAccept.MapTo<TIssueToDepartmentHeader>();
+            List<TIssueToDepartmentDetail> model1 = obj.TIssueToDepartmentDetails.MapTo<List<TIssueToDepartmentDetail>>();
+            List<TIssueToDepartmentDetail> model2 = obj.materialAcceptIssueDetails.MapTo<List<TIssueToDepartmentDetail>>();
+            List<TCurrentStock> model3 = obj.TCurrentStock.MapTo<List<TCurrentStock>>();
+            TIssueToDepartmentHeader model4 = obj.materialAcceptIssueHeader.MapTo<TIssueToDepartmentHeader>();
+            TIndentHeader model5 = obj.IndentHeader.MapTo<TIndentHeader>();
+            List<TIndentDetail> model6 = obj.TIndentDetails.MapTo<List<TIndentDetail>>();
+
+
+            if (obj.IssuetoDeptWihMaterialAccept.IssueId == 0)
+            {
+                model.IssueDate = Convert.ToDateTime(obj.IssuetoDeptWihMaterialAccept.IssueDate);
+                model.IssueTime = Convert.ToDateTime(obj.IssuetoDeptWihMaterialAccept.IssueTime);
+                model.Addedby = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
+                model.Addedby = CurrentUserId;
+
+                await _IIssueToDepService.UpdateIndentMaterialAccept(model, model1, model2, model3, model4, model5, model6 ,CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.IssueId);
+        }
+
+       
     }
 }
