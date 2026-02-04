@@ -409,6 +409,7 @@ namespace HIMS.API.Controllers.Report
                 case "OpeningBalance":
                 case "WorkOrder":
                 case "MaterialReceivedByDept":
+                case "GRNStickerPrint":
 
                 //Pharmacy
                 case "PharmacyPatientStatement":
