@@ -353,8 +353,8 @@ namespace HIMS.Services.Report
                         string[] colList = { };
 
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabMoneyReciept.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeaderWithImage.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeaderWithImage(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 
@@ -362,6 +362,22 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+
+                //#region :: LabHeaderWithImage ::
+                //case "LabHeaderWithImage":
+                //    {
+                //        string[] colList = { };
+
+                //        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabHeaderWithImage.html");
+                //        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeaderWithImage.html");
+                //        htmlHeaderFilePath = _pdfUtility.GetHeaderWithImage(htmlHeaderFilePath);
+                //        var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                //        html = html.Replace("{{ExternalLabHeaderWithImage}}", htmlHeaderFilePath);
+
+                //        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabHeaderWithImage", "LabHeaderWithImage" + vDate, Orientation.Portrait);
+                //        break;
+                //    }
+                //#endregion
                 #region :: OpBillReceiptT ::
                 case "OpBillReceiptT":
                     {
@@ -551,36 +567,49 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
-                #region :: IPStickerPrintV1 :
-                case "IPStickerPrintV1":
+
+                #region :: GRNStickerPrint :
+                case "GRNStickerPrint":
                     {
-                        var dt = GetDataBySp(model, "ps_rptAppointmentIPPrint");
-                        var objTemplate = await _IBarcodeConfigService.GetConfigByCode("IPPatientSticker");
-
-                        string html = "";
+                            var dt = GetDataBySp(model, "ps_GrnItemQRPrint");
+                            var objTemplate = await _IBarcodeConfigService.GetConfigByCode("GrnItemSticker");
+                            string template = objTemplate?.TemplateBody ?? "";
+                             string html = "";
                         foreach (DataRow row in dt.Rows)
-                        {
-                            int i = 0;
-                            string tempHtml = objTemplate?.TemplateBody ?? "";
-                            tempHtml = tempHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["RegNo"]?.ToString()));
-                            tempHtml = tempHtml.Replace("{{RegNo}}", row["RegNo"]?.ToString());
-                            tempHtml = tempHtml.Replace("{{PatientName}}", row["PatientName"]?.ToString());
-                            tempHtml = tempHtml.Replace("{{AdmissionDate}}", row["AdmissionDate"]?.ToString());
-                            tempHtml = tempHtml.Replace("{{ConsultantDoctorName}}", row["ConsultantDoctorName"]?.ToString());
-                            tempHtml = tempHtml.Replace("{{ConsultantDoctorName}}", row["ConsultantDoctorName"]?.ToString());
+                            {
+                                string rowHtml = template;
 
+                                rowHtml = rowHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["GRNID"]?.ToString()));
+                                rowHtml = rowHtml.Replace("{{PrintStoreName}}", row["PrintStoreName"]?.ToString());
+                                rowHtml = rowHtml.Replace("{{MRP}}", row["MRP"]?.ToString());
+                                rowHtml = rowHtml.Replace("{{BatchNo}}", row["BatchNo"]?.ToString());
+                                rowHtml = rowHtml.Replace("{{BatchExpDate}}", row["BatchExpDate"]?.ToString());
+                                rowHtml = rowHtml.Replace("{{ItemName}}", row["ItemName"]?.ToString());
 
+                                html += rowHtml;// + "<div style='page-break-after:always'></div>";
+                            }
+                        //var dt = GetDataBySp(model, "ps_Rtrv_LabStickerPrintDemo");
+                        //var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologySampleBarcode_V2");
 
-                            
-                            html += tempHtml;//+ "<div style='page-break-after:always'></div>";
-                        }
+                        //string html = "";
+                        //foreach (DataRow row in dt.Rows)
+                        //{
+                        //    int i = 0;
+                        //    string tempHtml = objTemplate?.TemplateBody ?? "";
+                        //    tempHtml = tempHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["UHID"]?.ToString()));
+                        //    tempHtml = tempHtml.Replace("{{UHID}}", row["UHID"]?.ToString());
+                        //    tempHtml = tempHtml.Replace("{{PatientName}}", row["PatientName"]?.ToString());
+                        //    tempHtml = tempHtml.Replace("{{ServiceName}}", row["ServiceName"]?.ToString());
+                        //    tempHtml = tempHtml.Replace("{{TestBarCodeName}}", row["TestBarCodeName"]?.ToString());
 
-                        tuple = _pdfUtility.GeneratePdfFromHtmlBarCode(html, model.StorageBaseUrl, "IPStickerPrintV1", "Sticker" + vDate, Orientation.Portrait);
+                        //    html += tempHtml;//+ "<div style='page-break-after:always'></div>";
+                        //}
+
+                        tuple = _pdfUtility.GeneratePdfFromHtmlBarCode(html, model.StorageBaseUrl, "GRNStickerPrint", "Sticker" + vDate, Orientation.Portrait);
 
                         break;
                     }
                 #endregion
-
                 #region :: PathologySampleBarcode ::
                 case "PathologySampleBarcode":
                     {
@@ -2239,10 +2268,14 @@ namespace HIMS.Services.Report
                 case "PharmacyPatientStatement":
                     {
                         string[] colList = { };
+                        int storeId = 0;
+                        var fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(x => x.FieldName, x => x.FieldValueString);
+                        if (fields.TryGetValue("StoreId", out var s)) storeId = Convert.ToInt32(s);
+
 
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacySalesStatementReport.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacyHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath);
+                        htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath,storeId);
                         var html = GetHTMLView("ps_rptIPPatientSalesSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{PharmacyHeader}}", htmlHeaderFilePath);
 
@@ -5026,6 +5059,14 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
 
+                        return html;
+
+                    }
+                    break;
+
+                case "LabHeaderWithImage":
+                    {
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         return html;
 
                     }
@@ -17852,6 +17893,28 @@ namespace HIMS.Services.Report
                 html = html.Replace("{{LoginUserSurname}}", dt.GetColValue("LoginUserSurname"));
             }
 
+            if (model.Mode == "GRNStickerPrint")
+            {
+                title = "GRN Sticker Print";
+
+                var dt = GetDataBySp(model, "ps_GrnItemQRPrint");
+                var objTemplate = await _IBarcodeConfigService.GetConfigByCode("GrnItemSticker");
+                string template = objTemplate?.TemplateBody ?? "";
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    string rowHtml = template;
+
+                    rowHtml = rowHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["GRNID"]?.ToString()));
+                    rowHtml = rowHtml.Replace("{{PrintStoreName}}", row["PrintStoreName"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{MRP}}", row["MRP"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{BatchNo}}", row["BatchNo"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{BatchExpDate}}", row["BatchExpDate"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{ItemName}}", row["ItemName"]?.ToString());
+
+                    html += rowHtml;// + "<div style='page-break-after:always'></div>";
+                }
+            }
             return new Tuple<string,string>( html,title);
 
         }
