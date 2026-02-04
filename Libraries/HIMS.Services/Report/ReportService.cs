@@ -2225,10 +2225,14 @@ namespace HIMS.Services.Report
                 case "PharmacyPatientStatement":
                     {
                         string[] colList = { };
+                        int storeId = 0;
+                        var fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(x => x.FieldName, x => x.FieldValueString);
+                        if (fields.TryGetValue("StoreId", out var s)) storeId = Convert.ToInt32(s);
+
 
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacySalesStatementReport.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacyHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath);
+                        htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath,storeId);
                         var html = GetHTMLView("ps_rptIPPatientSalesSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{PharmacyHeader}}", htmlHeaderFilePath);
 
