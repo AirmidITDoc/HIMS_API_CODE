@@ -353,8 +353,8 @@ namespace HIMS.Services.Report
                         string[] colList = { };
 
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabMoneyReciept.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeaderWithImage.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeaderWithImage(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 
@@ -362,6 +362,22 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+
+                //#region :: LabHeaderWithImage ::
+                //case "LabHeaderWithImage":
+                //    {
+                //        string[] colList = { };
+
+                //        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabHeaderWithImage.html");
+                //        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeaderWithImage.html");
+                //        htmlHeaderFilePath = _pdfUtility.GetHeaderWithImage(htmlHeaderFilePath);
+                //        var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                //        html = html.Replace("{{ExternalLabHeaderWithImage}}", htmlHeaderFilePath);
+
+                //        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabHeaderWithImage", "LabHeaderWithImage" + vDate, Orientation.Portrait);
+                //        break;
+                //    }
+                //#endregion
                 #region :: OpBillReceiptT ::
                 case "OpBillReceiptT":
                     {
@@ -5000,6 +5016,14 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
 
+                        return html;
+
+                    }
+                    break;
+
+                case "LabHeaderWithImage":
+                    {
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         return html;
 
                     }

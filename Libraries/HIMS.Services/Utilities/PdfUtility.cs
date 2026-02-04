@@ -118,7 +118,25 @@ namespace HIMS.Services.Utilities
             );
         }
 
+        public string GetHeaderWithImage(string filePath, long HospitalId = 0)
+        {
+            string htmlHeader = System.IO.File.ReadAllText(filePath);
+            HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
+            var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+            var logo2 = _context.FileMasters.FirstOrDefault(x => x.RefType == 10 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+            var infoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
 
+            var HospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
+            var HospitalLogo2 = logo2 != null ? GetBase64FromFolder("Hospital\\Logo", logo2.DocSavedName) : "";
+            var hospitalInfo = infoImg != null ? GetBase64FromFolder("Hospital\\Logo", infoImg.DocSavedName) : "";
+
+            htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
+            htmlHeader = htmlHeader.Replace("{{logo2}}", HospitalLogo2);
+            htmlHeader = htmlHeader.Replace("{{hospitalinfo}}", hospitalInfo);
+
+            return htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden"
+            );
+        }
         public string GetPatientHeader(ReportRequestModel model,string filePath)
         {
             string htmlHeader = System.IO.File.ReadAllText(filePath);

@@ -30,5 +30,6 @@ namespace HIMS.Services.Utilities
         //string GetStoreHeader(string filePath, long StoreId = 0);
         //string GetHeader(int Id, int Type = 1);
         //string GetTemplateHeader(int Id);
+        string GetHeaderWithImage(string filePath, long HospitalId = 0);
     }
 }
