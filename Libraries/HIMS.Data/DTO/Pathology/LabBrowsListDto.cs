@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,4 +53,42 @@ namespace HIMS.Data.DTO.Pathology
         public string? AadharCardNo { get; set; }
         public string? EmailId { get; set; }
     }
+    public class LabResultCompletedListDto
+    {
+        public long? PathTestID { get; set; }
+        public string? ServiceName { get; set; }
+        public bool? IsPathOutSource { get; set; }
+        public bool? IsRadOutSource { get; set; }
+        public long? PathReportID { get; set; }
+        public long? ServiceId { get; set; }
+        public long? OPDIPDId { get; set; }
+        public long? OpdIpdType { get; set; }
+        public string? PatientType { get; set; }
+        public long? OutSourceId { get; set; }
+        public long? AddedBy { get; set; }
+        public long? ReportCompletedUser { get; set; }
+        public string? CategoryName { get; set; }
+        public string? OutSourceLabName { get; set; }
+        public string? UserName { get; set; }
+        public string? VerifiedUserName { get; set; }
+        public bool? IsCompleted { get; set; }
+        public bool? IsPrinted { get; set; }
+        public bool? IsTemplateTest { get; set; }
+        public bool? IsSampleCollection { get; set; }
+        public bool? IsVerifySign { get; set; }
+        public string? SampleNo { get; set; }
+        public string? OutSourceStatus { get; set; }
+        public DateTime? DOA { get; set; }   
+        public DateTime? DOT { get; set; }   
+        public string? SampleCollectionTime { get; set; }
+        public DateTime? VerifiedDate { get; set; }
+        public string? OutSourceSampleSentDateTime { get; set; }
+        public string? OutSourceReportCollectedDateTime { get; set; }
+        public string? OutSourceCreatedDateTime { get; set; }
+        public string? OutSourceModifiedDateTime { get; set; }
+        public long? OutSourceCreatedBy { get; set; }
+        public long? OutSourceModifiedBy { get; set; }
+    }
 }
+    
+
