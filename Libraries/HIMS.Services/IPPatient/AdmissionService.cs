@@ -62,6 +62,8 @@ namespace HIMS.Services.IPPatient
             string VAdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", admientity);
             objAdmission.AdmissionId = Convert.ToInt32(VAdmissionId);
             //await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            _ = Task.Run(() => _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
             string[] PatientPolicyEntity = { "PatientPolicyId", "Opipid", "Opiptype", "PolicyNo", "PolicyValidateDate", "ApprovedAmount", "CreatedBy", "IsActive" };
             ObjTPatientPolicyInformation.Opipid = Convert.ToInt32(VAdmissionId);
 
@@ -74,6 +76,7 @@ namespace HIMS.Services.IPPatient
             string PatientPolicyId = odal.ExecuteNonQuery("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
             ObjTPatientPolicyInformation.PatientPolicyId = Convert.ToInt32(PatientPolicyId);
             //await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            _ = Task.Run(() => _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
 
             var tokenObj = new
             {
@@ -81,7 +84,7 @@ namespace HIMS.Services.IPPatient
                 RoomId = Convert.ToInt32(objAdmission.WardId)
             };
             odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
-            await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            _ = Task.Run(() => _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
 
         }
 
@@ -144,12 +147,7 @@ namespace HIMS.Services.IPPatient
             await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
 
-            //var Bedentity = ObjBedmaster.ToDictionary();
-            //foreach (var rProperty in BEntity)
-            //{
-            //    Bedentity.Remove(rProperty);
-            //}
-            //odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, Bedentity);
+            
         }
 
         public virtual async Task UpdateAdmissionAsyncSP(Admission objAdmission, int CurrentUserId, string CurrentUserName)

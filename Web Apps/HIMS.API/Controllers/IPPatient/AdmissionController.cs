@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
 
@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("AdmissionInsertSP")]
-        [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.Add)]
         public ApiResponse InsertSP(AdmissionRegistered obj)
         {
             Admission model = obj.Admission.MapTo<Admission>();
