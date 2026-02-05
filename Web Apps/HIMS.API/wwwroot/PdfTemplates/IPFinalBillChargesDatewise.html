@@ -193,7 +193,7 @@
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">  {{TDSAmount}}</td>
                                                 </tr>
                                                 <tr style="display:{{chkdiscflag}}">
-                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Concession Amount/Reason:-  {{DiscComments}}</td>
+                                                    <td style="border-bottom: 1px solid #eee; padding: 6px;">Concession Amount/Reason:-  {{ConcessionReason}}</td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;">  {{ConcessionAmount}}</td>
                                                 </tr>
@@ -239,7 +239,6 @@
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;"> {{PaidAmount}}</td>
                                                 </tr>
-
                                                 <tr>
                                                     <td style="border-bottom: 1px solid #eee; padding: 6px;">Bal Amount :</td>
                                                     <td style="border-bottom:1px solid #eee; padding: 6px;"></td>
@@ -252,6 +251,17 @@
                                                     <td style="border-bottom:1px solid #eee; padding: 6px; text-align: right;"> {{BillRefAmt}}</td>
                                                 </tr>
                                             </table>
+                                            <table style="width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px;">
+                                                <tr class="payment-info-row">
+                                                    <td style="padding: 6px;">
+                                                        <table style="width: 100%; border-collapse: collapse; font-weight: bold;">
+                                                            <tr>
+                                                                <td> Amount in words :-{{finalamt1}}</td>
+                                                            </tr>
+
+                                                        </table>
+                                                    </td>
+                                                </tr>
                                         </td>
                                     </tr>                                 
                                 </tbody>
