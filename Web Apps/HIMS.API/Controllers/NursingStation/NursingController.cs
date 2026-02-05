@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("DoctorPatientHandoverList")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "DoctorNote", Permission = PagePermission.View)]
         public async Task<IActionResult> DoctorPatientHandoverList(GridRequestModel objGrid)
         {
             IPagedList<TDoctorPatientHandoverListDto> DoctorPatientHandoverList = await _INursingNoteService.SGetListAsync(objGrid);
