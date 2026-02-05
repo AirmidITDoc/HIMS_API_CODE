@@ -140,6 +140,57 @@ namespace HIMS.Services.Utilities
             return htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden"
             );
         }
+
+        public string GetHeaderByType(string filePath,HeaderType headerType, long hospitalId = 0)
+        {
+            string htmlHeader = System.IO.File.ReadAllText(filePath);
+            HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
+
+            htmlHeader = htmlHeader
+                .Replace("{{HospitalName}}", "")
+                .Replace("{{Address}}", "")
+                .Replace("{{City}}", "")
+                .Replace("{{Pin}}", "")
+                .Replace("{{Phone}}", "")
+                .Replace("{{HospitalHeaderLine}}", "")
+                .Replace("{{EmailID}}", "")
+                .Replace("{{WebSiteInfo}}", "")
+                .Replace("{{logo}}", "")
+                .Replace("{{logo2}}", "")
+                .Replace("{{hospitalinfo}}", "");
+
+            if (headerType == HeaderType.TextWithLogo)
+            {
+                var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+                var logo2 = _context.FileMasters.FirstOrDefault(x => x.RefType == 10 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+
+                htmlHeader = htmlHeader.Replace("{{HospitalName}}", objHospital?.HospitalName ?? "");
+                htmlHeader = htmlHeader.Replace("{{Address}}", objHospital?.HospitalAddress ?? "");
+                htmlHeader = htmlHeader.Replace("{{City}}", objHospital?.City ?? "");
+                htmlHeader = htmlHeader.Replace("{{Pin}}", objHospital?.Pin ?? "");
+                htmlHeader = htmlHeader.Replace("{{Phone}}", objHospital?.Phone ?? "");
+                htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
+                htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
+                htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
+
+                var HospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
+                var HospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
+
+                htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
+                htmlHeader = htmlHeader.Replace("{{logo2}}", HospitalLogo2);
+            }
+            if (headerType == HeaderType.ImageOnly)
+            {
+                var infoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+                var hospitalInfo = infoImg != null ? GetBase64FromFolder("Upload\\Img_Upload", infoImg.DocSavedName) : "";
+                htmlHeader = htmlHeader.Replace("{{hospitalinfo}}", hospitalInfo);
+            }
+
+            htmlHeader = htmlHeader.Replace("{{Display}}",headerType == HeaderType.None ? "none" : "block");
+
+            return htmlHeader;
+        }
+
         public string GetPatientHeader(ReportRequestModel model,string filePath)
         {
             string htmlHeader = System.IO.File.ReadAllText(filePath);
@@ -566,6 +617,13 @@ namespace HIMS.Services.Utilities
             return "data:image/png;base64," + Convert.ToBase64String(imageArray);
         }
 
+
+        public enum HeaderType
+        {
+            None = 0,          
+            TextWithLogo = 1,  
+            ImageOnly = 2      
+        }
 
 
         //public Tuple<byte[], string> CreateExel(string html, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait)

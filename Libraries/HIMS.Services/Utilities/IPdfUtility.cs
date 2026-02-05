@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using WkHtmlToPdfDotNet;
+using static HIMS.Services.Utilities.PdfUtility;
 
 namespace HIMS.Services.Utilities
 {
@@ -31,5 +32,6 @@ namespace HIMS.Services.Utilities
         //string GetHeader(int Id, int Type = 1);
         //string GetTemplateHeader(int Id);
         string GetHeaderWithImage(string filePath, long HospitalId = 0);
+        string GetHeaderByType(string filePath, HeaderType headerType, long hospitalId = 0);
     }
 }
