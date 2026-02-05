@@ -5,6 +5,63 @@
     <title></title>
 </head>
 <body>
+    <table style="width:100%; border-collapse: collapse;">
+        <tr class="top-header-row">
+            <td style="padding: 6px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
+                <table style="width: 100%; border-collapse: collapse; border-bottom: 1px solid #d4c3c3;">
+                    <tr style="font-size: 16px;">
+                        <td style="width: 20%; padding: 6px; text-align: left;">
+                            <img src="{{logo}}" alt="logo" width="120">
+                        </td>
+                        <td style="width: 60%; padding: 0; text-align: center;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tbody>
+                                    <tr>
+                                        <td style="font-size: 15px;">
+                                            {{HospitalHeaderLine}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 20px; font-weight: 600;">
+                                            {{HospitalName}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 13px;">
+                                            {{Address}} {{City}} - {{Pin}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 13px;">
+                                            {{Phone}} | {{EmailID}} | {{WebSiteInfo}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td style="width:20%; padding:6px; text-align:right;">
+                            <div style="display:{{chklogo2flag}};">
+                                <img src="{{logo2}}" alt="logo2" width="120">
+                            </div>
+                        </td>
+
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+
+<!--OldNewHeader-->
+<!--<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
     <table style="width:100%">
         <tr class="top-header-row">
             <td style="padding: 6px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
@@ -12,13 +69,12 @@
                     <tr style="font-size: 16px">
                         <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
                             <span>
-                               
-                                <img src={{logo}} alt="logo" width="120">
-                                
+                                <img src={{logo}} alt="logo" width="120">-->
+
 
                                 <!--<img src="{{BaseUrl}}/PdfTemplates/KenyaHospital_Logo.png" alt="logo" width="180">-->
-    <!--<img src="E:/Airmid Angular Project/HIMS_API_CODE/Web Apps/HIMS.API/wwwroot/PdfTemplates/Hospital_logo.png" alt="logo" width="180">-->
-                            </span>
+                                <!--<img src="E:/Airmid Angular Project/HIMS_API_CODE/Web Apps/HIMS.API/wwwroot/PdfTemplates/Hospital_logo.png" alt="logo" width="180">-->
+                            <!--</span>
                         </td>
                         <div>
                         <td style=" padding: 0px; text-align: left;">
@@ -26,11 +82,13 @@
                                 <tbody style="text-align: center;">
                                     <tr>
                                         <td style="font-size: 15px; padding: 0px;">
+
                                             {{HospitalHeaderLine}}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="font-size: 20px; padding: 0px; font-weight: 600; padding: 0px;">
+
                                             {{HospitalName}}
                                         </td>
                                     </tr>
@@ -38,6 +96,7 @@
                                     <tr>
                                         <td style="font-size: 13px; padding: 0px; ">
                                             <span>
+
                                                 {{Address}} {{City}} - {{Pin}}
                                             </span>
                                         </td>
@@ -45,6 +104,7 @@
                                     <tr>
                                         <td style="font-size: 13px; padding: 0px;">
                                             <span>
+
                                                 {{Phone}} | {{EmailID}} | {{WebSiteInfo}}
                                             </span>
                                         </td>
@@ -58,4 +118,5 @@
         </tr>
     </table>
 </body>
-</html>
+</html>-->
+

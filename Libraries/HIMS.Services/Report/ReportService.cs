@@ -353,8 +353,8 @@ namespace HIMS.Services.Report
                         string[] colList = { };
 
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabMoneyReciept.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeaderWithImage.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeaderWithImage(htmlHeaderFilePath);
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 
@@ -370,8 +370,8 @@ namespace HIMS.Services.Report
                         string[] colList = { };
 
                         string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabMoneyReceiptWithoutHeader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeaderWithImage.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeaderWithImage(htmlHeaderFilePath);
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 
@@ -8706,6 +8706,8 @@ namespace HIMS.Services.Report
                         String finalLabel = "";
                         int rowlength = 0;
                         rowlength = dt.Rows.Count;
+                        var dynamicVariable = new Dictionary<string, double>();
+
                         double Tot_AfterAdvused = 0, Tot_Wothoutdedu = 0, Tot_Balamt = 0, Tot_Advamt = 0, Tot_Advusedamt = 0, T_TotalAmount = 0, F_TotalAmount = 0, balafteradvuseAmount = 0, BalancewdudcAmt = 0, AdminChares = 0, TotalNetPayAmt = 0;
                         double T_TotAmount = 0;
 
@@ -8782,8 +8784,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
-                        string finalamt = conversion(dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("0.00"));
-                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                        ////string finalamt = conversion(dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("0.00"));
+                        //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
                         html = html.Replace("{{balafteradvuseAmount}}", balafteradvuseAmount.ToString());
                         html = html.Replace("{{BalancewdudcAmt}}", BalancewdudcAmt.ToString());
 
@@ -8813,8 +8815,10 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkadminchargeflag}}", AdminChares.ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
 
+                        string finalamt = conversion(TotalNetPayAmt.ToString());
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
-
+                        return html;
                     }
 
 
@@ -8906,8 +8910,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
-                        string finalamt = conversion(dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("0.00"));
-                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                        //string finalamt = conversion(dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("0.00"));
+                        //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
                         html = html.Replace("{{balafteradvuseAmount}}", balafteradvuseAmount.ToString());
                         html = html.Replace("{{BalancewdudcAmt}}", BalancewdudcAmt.ToString());
 
@@ -8937,7 +8941,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkadminchargeflag}}", AdminChares.ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
 
-
+                        string finalamt = conversion(TotalNetPayAmt.ToString());
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                        
 
                     }
 
@@ -9964,6 +9970,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
                         html = html.Replace("{{TotalBillAmount}}", TotalBillAmount.ConvertToDouble().ToString("0.00"));
                         html = html.Replace("{{balafteradvuseAmount}}", balafteradvuseAmount.ConvertToDouble().ToString("0.00"));
+                        
                         html = html.Replace("{{UseName}}", dt.GetColValue("UseName"));
                         html = html.Replace("{{TDSAmount}}", dt.GetColValue("TDSAmount"));
                         html = html.Replace("{{AffilAmount}}", dt.GetColValue("AffilAmount"));
@@ -9998,6 +10005,10 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCompanyApprovedAmtflag}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         ///  html = html.Replace("{{chkBalanceafterGovflag}}", dt.GetColValue("BalanceafterGov").ConvertToDouble() > 0 ? "table-row " : "none");
+                        ///  
+
+                        string finalamt1 = conversion(FinalNetAmt.ToString());
+                        html = html.Replace("{{finalamt1}}", finalamt1.ToString().ToUpper());
                     }
 
 

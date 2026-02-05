@@ -111,7 +111,10 @@ namespace HIMS.Services.Utilities
             var HospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
 
             htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
-            htmlHeader = htmlHeader.Replace("{{logo2}}", HospitalLogo2);
+            //htmlHeader = htmlHeader.Replace("{{logo2}}", HospitalLogo2);
+
+            htmlHeader = htmlHeader.Replace("{{chklogo2flag}}", HospitalLogo2 != null ? "visible" : "none");
+
 
 
             return htmlHeader.Replace("{{Display}}", (objHospital?.HospitalId ?? 0) > 0 ? "visible" : "hidden"
