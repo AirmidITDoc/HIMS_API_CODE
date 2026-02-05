@@ -260,8 +260,8 @@ namespace HIMS.API.Controllers.Report
                 case "LabRefundReceipt":
                 case "LabMoneyReceipt":
                 case "LabMoneyReceiptWithoutHeader":
+                case "LabMoneyReceiptWithImage":
 
-                    
 
 
 
