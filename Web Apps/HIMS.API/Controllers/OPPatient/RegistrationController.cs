@@ -108,7 +108,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model);
         }
         [HttpGet("auto-complete")]
-        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
             var data = await _IRegistrationService.SearchRegistration(Keyword);
