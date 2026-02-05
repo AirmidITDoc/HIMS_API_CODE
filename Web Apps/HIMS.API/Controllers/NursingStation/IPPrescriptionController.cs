@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("LabRequestInsert")]
-        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingPrescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(IPLabRequestModel obj)
         {
             THlabRequest model = obj.MapTo<THlabRequest>();
@@ -121,7 +121,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("LabRequestCancel")]
-        [Permission(PageCode = "Prescription", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "NursingPrescription", Permission = PagePermission.Delete)]
 
         public async Task<ApiResponse> Cancel(LabRequestCancel obj)
         {

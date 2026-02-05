@@ -66,22 +66,22 @@ namespace HIMS.Data.DTO.Pathology
         public string? PatientType { get; set; }
         public long? OutSourceId { get; set; }
         public long? AddedBy { get; set; }
-        public long? ReportCompletedUser { get; set; }
+        public string? ReportCompletedUser { get; set; }
         public string? CategoryName { get; set; }
         public string? OutSourceLabName { get; set; }
         public string? UserName { get; set; }
         public string? VerifiedUserName { get; set; }
         public bool? IsCompleted { get; set; }
         public bool? IsPrinted { get; set; }
-        public bool? IsTemplateTest { get; set; }
+        public long? IsTemplateTest { get; set; }
         public bool? IsSampleCollection { get; set; }
         public bool? IsVerifySign { get; set; }
         public string? SampleNo { get; set; }
         public string? OutSourceStatus { get; set; }
-        public DateTime? DOA { get; set; }   
-        public DateTime? DOT { get; set; }   
+        public string? DOA { get; set; }
+        public string? DOT { get; set; }
         public string? SampleCollectionTime { get; set; }
-        public DateTime? VerifiedDate { get; set; }
+        public string? VerifiedDate { get; set; }
         public string? OutSourceSampleSentDateTime { get; set; }
         public string? OutSourceReportCollectedDateTime { get; set; }
         public string? OutSourceCreatedDateTime { get; set; }

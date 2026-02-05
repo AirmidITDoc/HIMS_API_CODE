@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("InsertPrescription")]
-        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingPrescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(MedicalPrescriptionModel obj)
         {
             TIpmedicalRecord model = obj.MapTo<TIpmedicalRecord>();
@@ -89,7 +89,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPut("updatePrescription/{id:int}")]
-        [Permission(PageCode = "Prescription", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "NursingPrescription", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(MedicalPrescriptionModel obj)
         {
             TIpmedicalRecord model = obj.MapTo<TIpmedicalRecord>();
@@ -135,7 +135,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("PrescriptionCancel")]
-        [Permission(PageCode = "Prescription", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "NursingPrescription", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> PrescCancel(PrescriptionCancel obj)
         {
             TIpPrescription model = new();
@@ -152,7 +152,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("PrescriptionReturnInsert")]
-        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingPrescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PriscriptionReturnModel obj)
         {
             TIpprescriptionReturnH model = obj.MapTo<TIpprescriptionReturnH>();
@@ -169,7 +169,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("PrescriptionReturnCancel")]
-        [Permission(PageCode = "Prescription", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "NursingPrescription", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> PrescReturnCancel(PrescreturnCancelAsync obj)
         {
             TIpprescriptionReturnH model = new();
