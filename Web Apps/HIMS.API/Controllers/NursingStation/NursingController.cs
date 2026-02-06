@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("LabRequestDetailsList")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
         public async Task<IActionResult> LabRequestDetailsList(GridRequestModel objGrid)
         {
             IPagedList<LabRequestDetailsListDto> LabRequestDetailsListDto = await _ILabRequestService.SPGetListAsync(objGrid);
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("DoctorPatientHandoverList")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
         public async Task<IActionResult> DoctorPatientHandoverList(GridRequestModel objGrid)
         {
             IPagedList<TDoctorPatientHandoverListDto> DoctorPatientHandoverList = await _INursingNoteService.SGetListAsync(objGrid);
@@ -107,28 +107,7 @@ namespace HIMS.API.Controllers.NursingStation
             return Ok(MNursingTemplateList.ToGridResponse(objGrid, "MNursingTemplate List"));
         }
 
-
-
-        //[HttpPost("CanteenInsert")]
-
-        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Insert(CanteenRequestModel obj)
-        //{
-        //    TCanteenRequestHeader model = obj.MapTo<TCanteenRequestHeader>();
-        //    if (obj.ReqId == 0)
-        //    {
-        //        model.Date = Convert.ToDateTime(obj.Date);
-        //        model.Time = Convert.ToDateTime(obj.Time);
-
-        //        await _ICanteenRequestService.InsertAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
-        //}
-
-
-        //List API Get By Id
+         //List API Get By Id
         [HttpGet("{id?}")]
         [Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
