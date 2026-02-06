@@ -5,8 +5,11 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Nursing;
 using HIMS.API.Utility;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
 using HIMS.Services.Nursing;
@@ -37,6 +40,13 @@ namespace HIMS.API.Controllers.NursingStation
             _context = HIMSDbContext;
             _repository1 = repository1;
 
+        }
+        [HttpPost("ItemNameBatchPOP_IPPresReturn")]
+        //[Permission(PageCode = "NursingPrescription", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<ItemNameBatchPOPIPPresReturnDto> ItemNameBatchPOPIPPresReturnList = await _IPrescriptionService.ItemNameBatchPOP(objGrid);
+            return Ok(ItemNameBatchPOPIPPresReturnList.ToGridResponse(objGrid, "ItemNameBatchPOPIPPresReturn List "));
         }
 
 

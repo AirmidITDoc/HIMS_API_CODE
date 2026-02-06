@@ -103,12 +103,10 @@ namespace HIMS.API.Models.OutPatient
         public long? PackageMainChargeId { get; set; }
         public long? CreatedBy { get; set; }
         public string? ChargesTime { get; set; }
-
         public long? UnitId { get; set; }
         public long? ClassId { get; set; }
         public long? TariffId { get; set; }
         public string? ServiceName { get; set; }
-
         public long ChargesId { get; set; }
 
 

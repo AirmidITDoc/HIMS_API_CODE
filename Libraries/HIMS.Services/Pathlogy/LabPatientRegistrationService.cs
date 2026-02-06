@@ -342,7 +342,7 @@ namespace HIMS.Services.Pathlogy
                             TPathologyReportHeader objPatho = new()
                             {
                                 PathDate = objItem1.ChargesDate,
-                                PathTime = objItem1?.ChargesDate,
+                                PathTime = objItem1?.ChargesTime,
                                 OpdIpdType = objItem1?.OpdIpdType,
                                 OpdIpdId = objItem1?.OpdIpdId,
                                 PathTestId = objItem1?.ServiceId,
@@ -369,7 +369,7 @@ namespace HIMS.Services.Pathlogy
                             TRadiologyReportHeader objRadio = new()
                             {
                                 RadDate = objItem1.ChargesDate,
-                                RadTime = objItem1?.ChargesDate,
+                                RadTime = objItem1?.ChargesTime,
                                 OpdIpdType = objItem1?.OpdIpdType,
                                 OpdIpdId = objItem1?.OpdIpdId,
                                 RadTestId = objItem1?.ServiceId,

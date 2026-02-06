@@ -1,4 +1,8 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
@@ -13,7 +17,12 @@ namespace HIMS.Services.Nursing
         {
             _context = HIMSDbContext;
         }
-       
+        public virtual async Task<IPagedList<ItemNameBatchPOPIPPresReturnDto>> ItemNameBatchPOP(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ItemNameBatchPOPIPPresReturnDto>(model, "ps_Rtrv_ItemNameBatchPOP_IPPresReturn");
+        }
+
+
         public virtual async Task InsertAsync(TIpmedicalRecord objmedicalRecord, int UserId, string Username)
 
         {
@@ -154,5 +163,7 @@ namespace HIMS.Services.Nursing
 
             }
         }
+       
+
     }
 }
