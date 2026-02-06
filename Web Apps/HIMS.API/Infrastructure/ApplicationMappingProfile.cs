@@ -434,6 +434,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TMailOutgoing, TMailOutgoingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TWhatsAppSmsOutgoing, TWhatsAppSmsOutgoingModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<SmspdfConfig, SmspdfConfigModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MAdmissionType, AdmissionTypeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
             CreateMap<TCurrentStock, CurrentStockMaterialModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

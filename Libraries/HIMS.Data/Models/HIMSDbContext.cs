@@ -177,6 +177,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<LvwVisitDetailsList> LvwVisitDetailsLists { get; set; } = null!;
         public virtual DbSet<LvwVisitRefDocForSmsquery> LvwVisitRefDocForSmsqueries { get; set; } = null!;
         public virtual DbSet<LvwWardDetail> LvwWardDetails { get; set; } = null!;
+        public virtual DbSet<MAdmissionType> MAdmissionTypes { get; set; } = null!;
         public virtual DbSet<MAnaesthesiaTypeMaster> MAnaesthesiaTypeMasters { get; set; } = null!;
         public virtual DbSet<MAppWhatsAppDly> MAppWhatsAppDlies { get; set; } = null!;
         public virtual DbSet<MAreaMaster> MAreaMasters { get; set; } = null!;
@@ -599,6 +600,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<VAdmissionMsg> VAdmissionMsgs { get; set; } = null!;
         public virtual DbSet<VCheckingBalQty> VCheckingBalQties { get; set; } = null!;
         public virtual DbSet<VPaymentBillwisesumAmount> VPaymentBillwisesumAmounts { get; set; } = null!;
+        public virtual DbSet<VTPayment> VTPayments { get; set; } = null!;
         public virtual DbSet<VTPaymentBillwisesumAmount> VTPaymentBillwisesumAmounts { get; set; } = null!;
         public virtual DbSet<VVisitMsg> VVisitMsgs { get; set; } = null!;
         public virtual DbSet<ViewDoctorshare> ViewDoctorshares { get; set; } = null!;
@@ -6296,6 +6298,25 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RoomName).HasMaxLength(100);
             });
 
+            modelBuilder.Entity<MAdmissionType>(entity =>
+            {
+                entity.HasKey(e => e.AdmissiontypeId);
+
+                entity.ToTable("M_AdmissionType");
+
+                entity.Property(e => e.AdmissiontypeName)
+                    .HasMaxLength(100)
+                    .HasColumnName("[AdmissiontypeName");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<MAnaesthesiaTypeMaster>(entity =>
             {
                 entity.HasKey(e => e.AnestTypeId);
@@ -7347,11 +7368,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ConsultantDocName).HasMaxLength(101);
 
-                entity.Property(e => e.FootNote).HasMaxLength(400);
-
                 entity.Property(e => e.Formula).HasMaxLength(100);
 
-                entity.Property(e => e.MachineName).HasMaxLength(200);
+                entity.Property(e => e.MachineName).HasMaxLength(2000);
 
                 entity.Property(e => e.NormalRange).HasMaxLength(50);
 
@@ -7390,7 +7409,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.SubTestNamePrint).HasMaxLength(200);
 
-                entity.Property(e => e.TechniqueName).HasMaxLength(200);
+                entity.Property(e => e.TechniqueName).HasMaxLength(2000);
 
                 entity.Property(e => e.TestName).HasMaxLength(200);
 
@@ -8762,8 +8781,6 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_SupplierMaster");
 
-                entity.Property(e => e.Address).HasMaxLength(250);
-
                 entity.Property(e => e.Bankname).HasMaxLength(100);
 
                 entity.Property(e => e.Branch).HasMaxLength(100);
@@ -8777,10 +8794,10 @@ namespace HIMS.Data.Models
                     .IsUnicode(false)
                     .IsFixedLength();
 
-                entity.Property(e => e.DlNo).HasMaxLength(20);
+                entity.Property(e => e.DlNo).HasMaxLength(50);
 
                 entity.Property(e => e.Email)
-                    .HasMaxLength(20)
+                    .HasMaxLength(255)
                     .IsFixedLength();
 
                 entity.Property(e => e.ExpDate).HasColumnType("datetime");
@@ -17654,6 +17671,41 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Tdsamount).HasColumnName("TDSAmount");
             });
 
+            modelBuilder.Entity<VTPayment>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_T_PAYMENT");
+
+                entity.Property(e => e.CardAmount).HasColumnType("money");
+
+                entity.Property(e => e.CashAmount).HasColumnType("money");
+
+                entity.Property(e => e.ChequeAmount).HasColumnType("money");
+
+                entity.Property(e => e.IsSelfOrcompany).HasColumnName("IsSelfORCompany");
+
+                entity.Property(e => e.OnlineAmount).HasColumnType("money");
+
+                entity.Property(e => e.Opdipdtype).HasColumnName("OPDIPDType");
+
+                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PaymentId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.PaymentTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ReceiptNo).HasMaxLength(50);
+
+                entity.Property(e => e.TranMode).HasMaxLength(55);
+
+                entity.Property(e => e.TransactionLabel).HasMaxLength(55);
+
+                entity.Property(e => e.UpitranNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("UPITranNo");
+            });
+
             modelBuilder.Entity<VTPaymentBillwisesumAmount>(entity =>
             {
                 entity.HasNoKey();
@@ -17667,6 +17719,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ChequeAmount).HasColumnType("money");
 
                 entity.Property(e => e.OnlineAmount).HasColumnType("money");
+
+                entity.Property(e => e.TransactionLabel).HasMaxLength(55);
 
                 entity.Property(e => e.UpitranNo)
                     .HasMaxLength(50)
