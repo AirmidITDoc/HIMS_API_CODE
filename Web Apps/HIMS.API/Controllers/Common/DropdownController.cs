@@ -107,9 +107,10 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MSubQuestionValuesMaster> _MSubQuestionValuesMaster;
         private readonly IGenericService<MPathSpecimenMaster> _MPathSpecimenMaster;
         private readonly IGenericService<MInstructionMaster> _MInstructionMaster;
+        private readonly IGenericService<MAdmissionType> _AdmissionType;
 
 
-        
+
 
 
 
@@ -161,8 +162,8 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MSubQuestionMaster> MSubQuestionMaster,
                               IGenericService<MSubQuestionValuesMaster> MSubQuestionValuesMaster,
                               IGenericService<MPathSpecimenMaster> MPathSpecimenMaster,
-                              IGenericService<MInstructionMaster> MInstructionMaster
-
+                              IGenericService<MInstructionMaster> MInstructionMaster,
+                                IGenericService<MAdmissionType> MAdmissionType
 
                              )
         {
@@ -256,6 +257,7 @@ namespace HIMS.API.Controllers.Common
             _MSubQuestionValuesMaster = MSubQuestionValuesMaster;
             _MPathSpecimenMaster = MPathSpecimenMaster;
             _MInstructionMaster = MInstructionMaster;
+            _AdmissionType = MAdmissionType;
 
 
         }
@@ -451,7 +453,7 @@ namespace HIMS.API.Controllers.Common
                 "SubQuestionMaster" => (await _MSubQuestionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubQuestionMaster.SubQuestionId), nameof(MSubQuestionMaster.SubQuestionName)),
                 "SubQuestionValuesMaster" => (await _MSubQuestionValuesMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubQuestionValuesMaster.SubQuestionValId), nameof(MSubQuestionValuesMaster.SubQuestionValName)),
                 "InstructionMaster" => (await _MInstructionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MInstructionMaster.InstructionId), nameof(MInstructionMaster.InstructionDescription)),
-
+                "AdmissionType" => (await _AdmissionType.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MAdmissionType.AdmissiontypeId), nameof(MAdmissionType.AdmissiontypeName)),
 
 
 
