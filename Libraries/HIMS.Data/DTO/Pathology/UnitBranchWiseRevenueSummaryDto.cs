@@ -26,7 +26,26 @@ namespace HIMS.Data.DTO.Pathology
         public double Qty { get; set; }
         public double TotalAmount { get; set; }
     }
-
-
+    public class UnitCategoryTestSummaryDto
+    {
+        public string UnitBranchName { get; set; }
+        public string CategoryName { get; set; }
+        public long TestCount { get; set; }
+        public double TotalAmount { get; set; }
+    }
+    public class UnitDoctorTestSummaryDto
+    {
+        public string? UnitBranchName { get; set; }
+        public string? DoctorName { get; set; }
+        public int TestCount { get; set; }
+        public double TotalAmount { get; set; }
+    }
+    public class UnitCompanyTestSummaryDto
+    {
+        public string? UnitBranchName { get; set; }
+        public string? CompanyName { get; set; }
+        public int TestCount { get; set; }
+        public double TotalAmount { get; set; }
+    }
 
 }

@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("UnitBranchWiseRevenueSummary")]
-       // [Permission(PageCode = "Branch", Permission = PagePermission.View)]
+        //[Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
         public async Task<IActionResult> UnitBranchWiseRevenueSummaryList(GridRequestModel objGrid)
         {
             IPagedList<UnitBranchWiseRevenueSummaryDto> UnitBranchWiseRevenueSummaryList = await _IBranchService.UnitBranchWiseRevenueSummaryListAsync(objGrid);
@@ -34,11 +34,32 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("UnitBranchWiseTestSummary")]
-       // [Permission(PageCode = "Branch", Permission = PagePermission.View)]
+        //[Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
         public async Task<IActionResult> UnitBranchWiseTestSummaryList(GridRequestModel objGrid)
         {
             IPagedList<UnitBranchWiseTestSummaryDto> UnitBranchWiseTestSummaryList = await _IBranchService.UnitBranchWiseTestSummaryListAsync(objGrid);
             return Ok(UnitBranchWiseTestSummaryList.ToGridResponse(objGrid, "Unit Branch Wise Test Summary List"));
+        }
+        [HttpPost("UnitBranchWiseCategorySummary")]
+        // [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
+        public async Task<IActionResult> UnitBranchWiseCategorySummaryList(GridRequestModel objGrid)
+        {
+            IPagedList<UnitCategoryTestSummaryDto> UnitBranchWiseCategorySummaryList = await _IBranchService.UnitBranchWiseCateGorySummaryListAsync(objGrid);
+            return Ok(UnitBranchWiseCategorySummaryList.ToGridResponse(objGrid, "UnitBranchWiseCategorySummary List"));
+        }
+        [HttpPost("UnitBranchWiseDoctorSummary")]
+        // [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
+        public async Task<IActionResult> UnitBranchWiseDoctorSummaryList(GridRequestModel objGrid)
+        {
+            IPagedList<UnitDoctorTestSummaryDto> UnitBranchWiseCategorySummaryList = await _IBranchService.UnitBranchWiseDoctorSummaryListAsync(objGrid);
+            return Ok(UnitBranchWiseCategorySummaryList.ToGridResponse(objGrid, "UnitBranchWiseDoctorSummary List"));
+        }
+        [HttpPost("UnitBranchWiseCompanySummary")]
+        // [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
+        public async Task<IActionResult> UnitBranchWiseCompanySummaryList(GridRequestModel objGrid)
+        {
+            IPagedList<UnitCompanyTestSummaryDto> UnitBranchWiseCompanySummaryList = await _IBranchService.UnitBranchWiseCompanySummaryListAsync(objGrid);
+            return Ok(UnitBranchWiseCompanySummaryList.ToGridResponse(objGrid, "UnitBranchWiseDoctorSummary List"));
         }
     }
 }

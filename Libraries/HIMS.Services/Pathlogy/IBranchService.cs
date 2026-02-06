@@ -13,6 +13,11 @@ namespace HIMS.Services.Pathlogy
     {
         Task<IPagedList<UnitBranchWiseRevenueSummaryDto>> UnitBranchWiseRevenueSummaryListAsync(GridRequestModel objGrid);
         Task<IPagedList<UnitBranchWiseTestSummaryDto>> UnitBranchWiseTestSummaryListAsync(GridRequestModel objGrid);
+        Task<IPagedList<UnitCategoryTestSummaryDto>> UnitBranchWiseCateGorySummaryListAsync(GridRequestModel objGrid);
+        Task<IPagedList<UnitDoctorTestSummaryDto>> UnitBranchWiseDoctorSummaryListAsync(GridRequestModel objGrid);
+        Task<IPagedList<UnitCompanyTestSummaryDto>> UnitBranchWiseCompanySummaryListAsync(GridRequestModel objGrid);
+
+
 
     }
 }
