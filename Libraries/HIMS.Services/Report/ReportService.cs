@@ -1305,7 +1305,7 @@ namespace HIMS.Services.Report
                     {
 
                         string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IpDraftBillClassWise.html");
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IpDraftBillClassWisee.html");
                         string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptIPD_DraftBillSummary_Print", model, htmlFilePath, htmlHeaderFilePath, colList);
@@ -4620,8 +4620,16 @@ namespace HIMS.Services.Report
 
 
 
-                            string finalamt = conversion(dt.GetColValue("PaidAmt").ConvertToDouble().To2DecimalPlace().ToString());
-                            html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                            double paidAmount = dt.GetColValue("PaidAmt").ConvertToDouble();
+
+                            string finalamt = paidAmount > 0
+                                ? conversion(Convert.ToInt64(Math.Round(paidAmount)).ToString()).ToUpper()
+                                : "ZERO ONLY";
+
+                            html = html.Replace("{{finalamt}}", finalamt);
+
+
+
 
                         }
 
@@ -8811,6 +8819,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkadminchargeflag}}", AdminChares.ConvertToDouble() > 0 ? "table-row " : "none");
 
 
+                        //string finalamt = conversion(Convert.ToInt64(TotalNetPayAmt).ToString()).Replace("₹", "");
+                        //html = html.Replace("{{finalamt}}", finalamt.ToUpper());
+
 
                     }
 
@@ -8936,8 +8947,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkadminchargeflag}}", AdminChares.ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
 
-                        string finalamt = conversion(TotalNetPayAmt.ToString());
-                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                        string Netfinalamt = conversion(Convert.ToInt64(TotalNetPayAmt).ToString()).Replace("₹", "");
+                        html = html.Replace("{{Netfinalamt}}", Netfinalamt.ToUpper());
 
                         return html;
                     }
@@ -9062,9 +9073,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkadminchargeflag}}", AdminChares.ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
 
-                        string finalamt = conversion(TotalNetPayAmt.ToString());
-                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
-                        
+
+                        string Netfinalamt = conversion(Convert.ToInt64(TotalNetPayAmt).ToString()).Replace("₹", "");
+                        html = html.Replace("{{Netfinalamt}}", Netfinalamt.ToUpper());
 
                     }
 
@@ -9481,6 +9492,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkBalanceafterGovflag}}", dt.GetColValue("BalanceafterGov").ConvertToDouble() > 0 ? "table-row " : "none");
 
+                        string Netfinalamt = conversion(Convert.ToInt64(TotalNetPayAmt).ToString()).Replace("₹", "");
+                        html = html.Replace("{{Netfinalamt}}", Netfinalamt.ToUpper());
+
 
                     }
 
@@ -9677,6 +9691,12 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkBalanceafterGovflag}}", dt.GetColValue("BalanceafterGov").ConvertToDouble() > 0 ? "table-row " : "none");
 
+                        //string Netfinalamt = conversion(TotalNetPayAmt.ToString());
+                        //html = html.Replace("{{Netfinalamt}}", Netfinalamt.ToString().ToUpper());
+
+                        string Netfinalamt = conversion(Convert.ToInt64(TotalNetPayAmt).ToString()).Replace("₹", "");
+                        html = html.Replace("{{Netfinalamt}}", Netfinalamt.ToUpper());
+
                     }
 
 
@@ -9692,6 +9712,7 @@ namespace HIMS.Services.Report
                         object GroupName1 = "";
                         Boolean chkcommflag = false, chkpaidflag = false, chkbalflag = false, chkdiscflag = false, chkAdvflag = false, chkadminchargeflag = false, chkRefundflag = false;
                         double T_NetAmount = 0, TotalNetPayAmt = 0, Tot_Advamt = 0, balafteradvuseAmount = 0, BalancewdudcAmt = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
 
                         string previousLabel = "";
                         string deptLabel = "";
@@ -9877,6 +9898,12 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkBalanceafterGovflag}}", dt.GetColValue("BalanceafterGov").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                        //string Netfinalamt = conversion(TotalNetPayAmt.ToString());
+                        //html = html.Replace("{{Netfinalamt}}", Netfinalamt.ToString().ToUpper());
+
+                        string Netfinalamt = conversion(Convert.ToInt64(TotalNetPayAmt).ToString()).Replace("₹", "");
+                        html = html.Replace("{{Netfinalamt}}", Netfinalamt.ToUpper());
 
                     }
 
@@ -10128,8 +10155,11 @@ namespace HIMS.Services.Report
                         ///  html = html.Replace("{{chkBalanceafterGovflag}}", dt.GetColValue("BalanceafterGov").ConvertToDouble() > 0 ? "table-row " : "none");
                         ///  
 
-                        string finalamt1 = conversion(FinalNetAmt.ToString());
-                        html = html.Replace("{{finalamt1}}", finalamt1.ToString().ToUpper());
+                        //string finalamt1 = conversion(FinalNetAmt.ToString());
+                        //html = html.Replace("{{finalamt1}}", finalamt1.ToString().ToUpper());
+
+                        string finalamt1 = conversion(Convert.ToInt64(FinalNetAmt).ToString()).Replace("₹", "");
+                        html = html.Replace("{{finalamt1}}", finalamt1.ToUpper());
                     }
 
 
@@ -11247,7 +11277,7 @@ namespace HIMS.Services.Report
 
                 case "IpPaymentReceipt":
                     {
-
+                        var dynamicVariable = new Dictionary<string, double>();
 
                         html = html.Replace("{{PBillNo}}", dt.GetColValue("PBillNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
@@ -11316,7 +11346,13 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
 
 
+                        double paidAmount = dt.GetColValue("PaidAmount").ConvertToDouble();
 
+                        string finalamt = paidAmount > 0
+                            ? conversion(Convert.ToInt64(Math.Round(paidAmount)).ToString()).ToUpper()
+                            : "ZERO ONLY";
+
+                        html = html.Replace("{{finalamt}}", finalamt);
 
                     }
 
@@ -12630,6 +12666,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
 
+                        html = html.Replace("{{FooterComment}}", dt.GetColValue("FooterComment").ConvertToString());
+
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++;
@@ -12775,6 +12813,8 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
+
+                        html = html.Replace("{{FooterComment}}", dt.GetColValue("FooterComment").ConvertToString());
 
                         //foreach (DataRow dr in dt.Rows)
                         //{
@@ -13345,6 +13385,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
+                        html = html.Replace("{{FooterComment}}", dt.GetColValue("FooterComment").ConvertToString());
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
@@ -13472,7 +13513,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
-
+                        html = html.Replace("{{FooterComment}}", dt.GetColValue("FooterComment").ConvertToString());
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
