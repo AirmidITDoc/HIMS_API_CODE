@@ -184,7 +184,8 @@ namespace HIMS.Services.Utilities
                 var hospitalInfo = infoImg != null ? GetBase64FromFolder("Upload\\Img_Upload", infoImg.DocSavedName) : "";
                 htmlHeader = htmlHeader.Replace("{{hospitalinfo}}", hospitalInfo);
             }
-
+            htmlHeader = htmlHeader.Replace("{{TextHeaderDisplay}}", headerType == HeaderType.TextWithLogo ? "block" : "none");
+            htmlHeader = htmlHeader.Replace("{{ImageHeaderDisplay}}",headerType == HeaderType.ImageOnly ? "block" : "none");
             htmlHeader = htmlHeader.Replace("{{Display}}",headerType == HeaderType.None ? "none" : "block");
 
             return htmlHeader;

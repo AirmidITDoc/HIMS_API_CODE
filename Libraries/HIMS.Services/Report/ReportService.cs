@@ -12666,6 +12666,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
 
+                        html = html.Replace("{{FooterComment}}", dt.GetColValue("FooterComment").ConvertToString());
+
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++;
@@ -12811,6 +12813,8 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
+
+                        html = html.Replace("{{FooterComment}}", dt.GetColValue("FooterComment").ConvertToString());
 
                         //foreach (DataRow dr in dt.Rows)
                         //{
@@ -13381,6 +13385,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
+                        html = html.Replace("{{FooterComment}}", dt.GetColValue("FooterComment").ConvertToString());
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
@@ -13508,7 +13513,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
-
+                        html = html.Replace("{{FooterComment}}", dt.GetColValue("FooterComment").ConvertToString());
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));

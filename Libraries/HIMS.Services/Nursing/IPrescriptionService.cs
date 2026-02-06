@@ -1,4 +1,7 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.Models;
 
 namespace HIMS.Services.Nursing
 {
@@ -11,6 +14,9 @@ namespace HIMS.Services.Nursing
 
         Task PrescCancelAsync(TIpPrescription objTIpPrescription, int CurrentUserId, string CurrentUserName);
         Task PrescreturnCancelAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int CurrentUserId, string CurrentUserName);
+        Task<IPagedList<ItemNameBatchPOPIPPresReturnDto>> ItemNameBatchPOP(GridRequestModel objGrid);
+
+
 
     }
 }

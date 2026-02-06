@@ -106,8 +106,10 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MSubQuestionMaster> _MSubQuestionMaster;
         private readonly IGenericService<MSubQuestionValuesMaster> _MSubQuestionValuesMaster;
         private readonly IGenericService<MPathSpecimenMaster> _MPathSpecimenMaster;
+        private readonly IGenericService<MInstructionMaster> _MInstructionMaster;
 
 
+        
 
 
 
@@ -158,7 +160,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MQuestionMaster> MQuestionMaster,
                               IGenericService<MSubQuestionMaster> MSubQuestionMaster,
                               IGenericService<MSubQuestionValuesMaster> MSubQuestionValuesMaster,
-                              IGenericService<MPathSpecimenMaster> MPathSpecimenMaster
+                              IGenericService<MPathSpecimenMaster> MPathSpecimenMaster,
+                              IGenericService<MInstructionMaster> MInstructionMaster
+
 
                              )
         {
@@ -251,6 +255,8 @@ namespace HIMS.API.Controllers.Common
             _MSubQuestionMaster = MSubQuestionMaster;
             _MSubQuestionValuesMaster = MSubQuestionValuesMaster;
             _MPathSpecimenMaster = MPathSpecimenMaster;
+            _MInstructionMaster = MInstructionMaster;
+
 
         }
 
@@ -444,6 +450,8 @@ namespace HIMS.API.Controllers.Common
                 "QuestionMaster" => (await _MQuestionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MQuestionMaster.QuestionId), nameof(MQuestionMaster.QuestionName)),
                 "SubQuestionMaster" => (await _MSubQuestionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubQuestionMaster.SubQuestionId), nameof(MSubQuestionMaster.SubQuestionName)),
                 "SubQuestionValuesMaster" => (await _MSubQuestionValuesMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubQuestionValuesMaster.SubQuestionValId), nameof(MSubQuestionValuesMaster.SubQuestionValName)),
+                "InstructionMaster" => (await _MInstructionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MInstructionMaster.InstructionId), nameof(MInstructionMaster.InstructionDescription)),
+
 
 
 

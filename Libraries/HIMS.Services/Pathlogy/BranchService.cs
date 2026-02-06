@@ -27,5 +27,17 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<UnitBranchWiseTestSummaryDto>(model, "ps_UnitBranchWise_TestSummary");
         }
+        public virtual async Task<IPagedList<UnitCategoryTestSummaryDto>> UnitBranchWiseCateGorySummaryListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<UnitCategoryTestSummaryDto>(model, "ps_UnitBranchWise_CategorySummary");
+        }
+        public virtual async Task<IPagedList<UnitDoctorTestSummaryDto>> UnitBranchWiseDoctorSummaryListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<UnitDoctorTestSummaryDto>(model, "ps_UnitBranchWise_CategorySummary");
+        }
+        public virtual async Task<IPagedList<UnitCompanyTestSummaryDto>> UnitBranchWiseCompanySummaryListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<UnitCompanyTestSummaryDto>(model, "ps_UnitBranchWise_CompanySummary");
+        }
     }
 }
