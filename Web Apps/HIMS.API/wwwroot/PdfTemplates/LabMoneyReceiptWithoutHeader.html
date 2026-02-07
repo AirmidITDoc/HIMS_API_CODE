@@ -2,41 +2,41 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>CT Scan Money Receipt</title>
+    <title> Money Receipt</title>
     
 
 </head>
 
-<body style="font-family: Arial, sans-serif; font-size: 13px; margin: 20px;">
-
+<body style="font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif; font-size: 18px; line-height: 24px; margin: 20px;">
 
     <div style="width:100%;height:50vh;box-sizing:border-box;page-break-inside: avoid;">
 
         <div style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 5px; padding-top: 135px ">
             Office Copy
         </div>
-
-        <table style="width: 100%; line-height: 22px;">
+        <table style="width:100%; line-height:22px;">
             <tr>
                 <td><b>Name :</b>{{PatientName}} </td>
+                <td><b>Receipt No :</b>{{BillNo}} </td>
                 <td><b>Receipt Date :</b>{{BillDate}} </td>
+
             </tr>
             <tr>
                 <td><b>Age/Sex :</b> {{AgeYear}}/{{GenderName}}</td>
-                <td><b>Receipt No :</b>{{LabRequestNo}} </td>
+                <td><b>Patient Type : </b>{{PatientType}} </td>
+                <td><b>Referring Dr. :</b>{{RefDocName}} </td>
             </tr>
-            <tr>
-                <td><b>Patient ID : </b>{{LabPatientId}} </td>
-                <td><b>Referring Dr. :</b>{{ConsultantDocName}} </td>
-            </tr>
-            <tr>
-                <td><b>Bill To :</b> </td>
-                <td><b>Patient Class : </b>{{PatientType}} </td>
-            </tr>
-            <tr>
-                <td><b>Patient Category :</b> </td>
-                <td><b>Reference No : </b>  </td>
-            </tr>
+            <!--<tr>
+            <td><b>Referring Dr. :</b>{{ConsultantDocName}} </td>
+        </tr>-->
+            <!--<tr>
+                   <td><b>Bill To :</b> </td>
+        <td><b>Patient ID : </b>{{LabPatientId}} </td>
+               </tr>-->
+            <!--<tr>
+            <td><b>Patient Category :</b> </td>
+            <td><b>Reference No : </b>  </td>
+        </tr>-->
         </table>
         <br>
         <table style="width:100%; border-collapse: collapse; border-top: 1px solid #000; border-bottom: 1px solid #000;">
@@ -59,13 +59,14 @@
                 <td><b>Total Discount :</b>{{ConcessionAmt}} </td>
             </tr>
             <tr>
-                <td><b>Mode of Pay : </b> </td>
+                <!--<td><b>Mode of Pay : </b> </td>-->
                 <td><b>Receipt Amount :</b>{{NetPayableAmt}} </td>
+                <td><b>Balance Due :</b> {{BalanceAmt}}</td>
             </tr>
-            <tr>
-                <td><b>Refund Amount :</b> </td>
-                <td><b>Balance Due : </b></td>
-            </tr>
+            <!--<tr>
+        <td><b>Refund Amount :</b> </td>
+        <td><b>Balance Due : </b></td>
+    </tr>-->
         </table>
 
         <br><br>
@@ -75,17 +76,15 @@
                 <td style="text-align:left;">Cashier Signature</td>
                 <td style="text-align:right;">Patient Signature</td>
             </tr>
-            <tr>
+            <!--<tr>
                 <td colspan="2" style="padding-top:15px;">
                     Printed By :
                 </td>
-            </tr>
+            </tr>-->
         </table>
 
     </div>
     <hr style="border:1px dashed #000; margin:10px 0;">
-
-    <br><br>
 
     <div style="width: 100%; margin: auto;">
 
@@ -94,27 +93,29 @@
         </div>
         <div style="width:100%;height:50vh;box-sizing:border-box;page-break-inside: avoid;">
 
-            <table style="width:100%; line-height:22px;" >
+            <table style="width:100%; line-height:22px;">
                 <tr>
                     <td><b>Name :</b>{{PatientName}} </td>
+                    <td><b>Receipt No :</b>{{BillNo}} </td>
                     <td><b>Receipt Date :</b>{{BillDate}} </td>
+
                 </tr>
                 <tr>
                     <td><b>Age/Sex :</b> {{AgeYear}}/{{GenderName}}</td>
-                    <td><b>Receipt No :</b>{{LabRequestNo}} </td>
+                    <td><b>Patient Type : </b>{{PatientType}} </td>
+                    <td><b>Referring Dr. :</b>{{RefDocName}} </td>
                 </tr>
-                <tr>
-                    <td><b>Patient ID : </b>{{LabPatientId}} </td>
-                    <td><b>Referring Dr. :</b>{{ConsultantDocName}} </td>
-                </tr>
-                <tr>
-                    <td><b>Bill To :</b> </td>
-                    <td><b>Patient Class : </b>{{PatientType}} </td>
-                </tr>
-                <tr>
-                    <td><b>Patient Category :</b> </td>
-                    <td><b>Reference No : </b>  </td>
-                </tr>
+                <!--<tr>
+            <td><b>Referring Dr. :</b>{{ConsultantDocName}} </td>
+        </tr>-->
+                <!--<tr>
+                   <td><b>Bill To :</b> </td>
+        <td><b>Patient ID : </b>{{LabPatientId}} </td>
+               </tr>-->
+                <!--<tr>
+            <td><b>Patient Category :</b> </td>
+            <td><b>Reference No : </b>  </td>
+        </tr>-->
             </table>
             <br>
             <table style="width:100%; border-collapse: collapse; border-top: 1px solid #000; border-bottom: 1px solid #000;">
@@ -134,13 +135,14 @@
                     <td><b>Total Discount :</b>{{ConcessionAmt}} </td>
                 </tr>
                 <tr>
-                    <td><b>Mode of Pay : </b> </td>
+                    <!--<td><b>Mode of Pay : </b> </td>-->
                     <td><b>Receipt Amount :</b>{{NetPayableAmt}} </td>
+                    <td><b>Balance Due :</b> {{BalanceAmt}}</td>
                 </tr>
-                <tr>
-                    <td><b>Refund Amount :</b> </td>
-                    <td><b>Balance Due : </b></td>
-                </tr>
+                <!--<tr>
+        <td><b>Refund Amount :</b> </td>
+        <td><b>Balance Due : </b></td>
+    </tr>-->
             </table>
             <br><br>
             <table style="width:100%;">
@@ -148,11 +150,11 @@
                     <td style="text-align:left;">Cashier Signature</td>
                     <td style="text-align:right;">Patient Signature</td>
                 </tr>
-                <tr>
+                <!--<tr>
                     <td colspan="2" style="padding-top:15px;">
                         Printed By :
                     </td>
-                </tr>
+                </tr>-->
             </table>
 
         </div>
