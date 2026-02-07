@@ -88,7 +88,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? OutSourceModifiedDateTime { get; set; }
         public long? OutSourceCreatedBy { get; set; }
         public long? OutSourceModifiedBy { get; set; }
-        public decimal? PaymentCompleted { get; set; }
+        public int? PaymentCompleted { get; set; }
         public string? PatientName { get; set; }
         public string? DoctorName { get; set; }
 

@@ -33,7 +33,7 @@ namespace HIMS.Services.Pathlogy
         }
         public virtual async Task<IPagedList<UnitDoctorTestSummaryDto>> UnitBranchWiseDoctorSummaryListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<UnitDoctorTestSummaryDto>(model, "ps_UnitBranchWise_CategorySummary");
+            return await DatabaseHelper.GetGridDataBySp<UnitDoctorTestSummaryDto>(model, "ps_UnitBranchWise_DoctorSummary ");
         }
         public virtual async Task<IPagedList<UnitCompanyTestSummaryDto>> UnitBranchWiseCompanySummaryListAsync(GridRequestModel model)
         {
