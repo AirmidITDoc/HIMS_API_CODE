@@ -184,7 +184,7 @@ namespace HIMS.API.Controllers.Inventory
        
 
         [HttpPost("IssuetoDeptWithMaterialAccept")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
 
         public async Task<ApiResponse> InsertM(IssuetoDeptWihMaterialAcceptModel obj)
         {
@@ -212,7 +212,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("UpdateIndentStatusAganistMaterialAccept")]
         //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> UpdateIndentMaterialAccept(IssuetoDeptWihMaterialAcceptModel obj)
+        public async Task<ApiResponse> UpdateIndentMaterialAccept(IssuetoDeptWihMaterialAcceptagainstIndentModel obj)
         {
             TIssueToDepartmentHeader model = obj.IssuetoDeptWihMaterialAccept.MapTo<TIssueToDepartmentHeader>();
             List<TIssueToDepartmentDetail> model1 = obj.TIssueToDepartmentDetails.MapTo<List<TIssueToDepartmentDetail>>();

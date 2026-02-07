@@ -103,7 +103,7 @@ namespace HIMS.API.Models.Inventory
 
         }
     }
-    public class IssuetoDeptWihMaterialAcceptModel
+    public class IssuetoDeptWihMaterialAcceptagainstIndentModel
     {
         public IssuetoDeptMaterialAcceptModel IssuetoDeptWihMaterialAccept { get; set; }
         public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
@@ -113,6 +113,20 @@ namespace HIMS.API.Models.Inventory
         public materialAcceptStockUpdate materialAcceptStockUpdate { get; set; }
         public IndentHeaderModel IndentHeader { get; set; }
         public List<IndentDetailsModel> TIndentDetails { get; set; }
+
+    }
+
+
+    public class IssuetoDeptWihMaterialAcceptModel
+    {
+        public IssuetoDeptMaterialAcceptModel IssuetoDeptWihMaterialAccept { get; set; }
+        public List<IssueToDepartmentDetailModel> TIssueToDepartmentDetails { get; set; }
+        public List<CurrentStockMaterialModel> TCurrentStock { get; set; }
+        public UpdateMaterialAcceptance materialAcceptIssueHeader { get; set; }
+        public List<AcceptMaterialIssueDet> materialAcceptIssueDetails { get; set; }
+        public materialAcceptStockUpdate materialAcceptStockUpdate { get; set; }
+        //public IndentHeaderModel IndentHeader { get; set; }
+        //public List<IndentDetailsModel> TIndentDetails { get; set; }
 
     }
 }

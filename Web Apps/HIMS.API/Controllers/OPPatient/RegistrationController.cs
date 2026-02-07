@@ -90,7 +90,8 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RegistrationUpdate")]
-        [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
+        [Permission]
+        //[Permission(PageCode = "Registration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(RegistrationModel obj)
         {
             Registration model = obj.MapTo<Registration>();
