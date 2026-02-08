@@ -171,7 +171,8 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.PaymentId);
         }
         [HttpPost("PaymentMultipleSettelment")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertMultiple(ModelPaymentMultiple obj)
         {
             List<Payment> model = obj.Payment.MapTo<List<Payment>>();
@@ -250,7 +251,8 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("IPInterimBillInsertWithCashCounter")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public ApiResponse IPInterimBillCashCounterAsyncSp(IPBillModel obj)
         {
             AddCharge AddChargeModel = obj.AddChargeM.MapTo<AddCharge>();
@@ -278,7 +280,8 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record added successfully.", paymentModel.BillNo);
         }
         [HttpPost("InsertIPDraftBill")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public ApiResponse InsertIP(TDrbillingModel obj)
         {
 
@@ -490,7 +493,8 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("BillDiscountAfter")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public ApiResponse InsertCreditsSP(BillDiscountAfterModel obj)
         {
 

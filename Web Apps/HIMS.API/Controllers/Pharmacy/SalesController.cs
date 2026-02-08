@@ -61,7 +61,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         // done by Ashu Date : 20-May-2025
         [HttpPost("salesDraftlist")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> SalesDraftBillList(GridRequestModel objGrid)
         {
             IPagedList<SalesDraftBillListDto> SalesDraftBillList = await _ISalesService.SalesDraftBillList(objGrid);

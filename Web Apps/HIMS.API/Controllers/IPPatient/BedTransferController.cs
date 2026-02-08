@@ -31,7 +31,8 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("InsertSP")]
-        [Permission(PageCode = "BedTransfer", Permission = PagePermission.Add)]
+        [Permission]
+        //[Permission(PageCode = "BedTransfer", Permission = PagePermission.Add)]
         public ApiResponse Insert(BTransferModel obj)
         {
             TBedTransferDetail model = obj.BedTransfer.MapTo<TBedTransferDetail>();
