@@ -5,6 +5,7 @@ using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 
 namespace HIMS.Services.IPPatient
@@ -46,18 +47,14 @@ namespace HIMS.Services.IPPatient
         public virtual async Task UpdateAsyncSP(List<TPathologyReportHeader> objTPathologyReportHeader, int UserId, string Username)
         {
             DatabaseHelper odal = new();
+            int nextSampleNo =(await _context.TPathologyReportHeaders.Where(x => x.SampleNo != null && x.SampleNo != "").Select(x => (int?)Convert.ToInt32(x.SampleNo)).MaxAsync() ?? 0) + 1;
+            int nextOrderNo =(await _context.TPathologyReportHeaders.Where(x => x.OrderNo != null).MaxAsync(x => (int?)x.OrderNo) ?? 0) + 1;
 
             foreach (var item in objTPathologyReportHeader)
             {
-                //string[] rEntity = { "PathDate","PathTime","OpdIpdType", "OpdIpdId", "PathTestId", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "AddedBy", "UpdatedBy", "ChargeId",  "IsCompleted", "IsPrinted", "ReportDate", "ReportTime", "IsTemplateTest", "TestType",
-                //                     "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "IsVerifySign", "IsVerifyid", "IsVerifyedDate", "TPathologyReportDetails",  "TPathologyReportTemplateDetails", "OutSourceId","OutSourceLabName","OutSourceSampleSentDateTime","OutSourceStatus","OutSourceReportCollectedDateTime","OutSourceCreatedBy","OutSourceCreatedDateTime","OutSourceModifiedby","OutSourceModifiedDateTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
-                //var entity = item.ToDictionary();
-                //foreach (var rProperty in rEntity)
-                //{
-                //    entity.Remove(rProperty);
-                //}
-
-                string[] AEntity = { "PathReportId", "SampleCollectionTime", "IsSampleCollection", "SampleNo", "SampleCollectedBy" };
+                item.SampleNo = nextSampleNo.ToString();
+                item.OrderNo = nextOrderNo;
+                string[] AEntity = { "PathReportId", "SampleCollectionTime", "IsSampleCollection", "SampleNo", "SampleCollectedBy", "OrderNo" };
                 var entity = item.ToDictionary();
 
                 foreach (var rProperty in entity.Keys.ToList())
