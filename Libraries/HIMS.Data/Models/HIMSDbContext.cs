@@ -7,14 +7,14 @@ namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
-        //public HIMSDbContext()
-        //{
-        //}
+        ////public HIMSDbContext()
+        ////{
+        ////}
 
-        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
-        //    : base(options)
-        //{
-        //}
+        ////public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        ////    : base(options)
+        ////{
+        ////}
 
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -295,6 +295,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MReportConfig> MReportConfigs { get; set; } = null!;
         public virtual DbSet<MReportConfigDetail> MReportConfigDetails { get; set; } = null!;
         public virtual DbSet<MReportConfiguration> MReportConfigurations { get; set; } = null!;
+        public virtual DbSet<MReportSetupOperational> MReportSetupOperationals { get; set; } = null!;
         public virtual DbSet<MReportTemplateConfig> MReportTemplateConfigs { get; set; } = null!;
         public virtual DbSet<MReportconfigBackup> MReportconfigBackups { get; set; } = null!;
         public virtual DbSet<MSalesTypeMaster> MSalesTypeMasters { get; set; } = null!;
@@ -612,7 +613,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -8528,6 +8529,29 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UpdatedOn).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<MReportSetupOperational>(entity =>
+            {
+                entity.HasKey(e => e.ReportId);
+
+                entity.ToTable("M_ReportSetupOperational");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.FolderName).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProcedureName).HasMaxLength(255);
+
+                entity.Property(e => e.ReportFileName).HasMaxLength(255);
+
+                entity.Property(e => e.ReportHeaderHtmlName).HasMaxLength(255);
+
+                entity.Property(e => e.ReportHtmlName).HasMaxLength(255);
+
+                entity.Property(e => e.ReportMode).HasMaxLength(255);
+            });
+
             modelBuilder.Entity<MReportTemplateConfig>(entity =>
             {
                 entity.HasKey(e => e.TemplateId);
@@ -8794,7 +8818,7 @@ namespace HIMS.Data.Models
                     .IsUnicode(false)
                     .IsFixedLength();
 
-                entity.Property(e => e.DlNo).HasMaxLength(50);
+                entity.Property(e => e.DlNo).HasMaxLength(100);
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(255)
