@@ -7,14 +7,14 @@ namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
-        //public HIMSDbContext()
-        //{
-        //}
+        ////public HIMSDbContext()
+        ////{
+        ////}
 
-        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
-        //    : base(options)
-        //{
-        //}
+        ////public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        ////    : base(options)
+        ////{
+        ////}
 
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -295,6 +295,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MReportConfig> MReportConfigs { get; set; } = null!;
         public virtual DbSet<MReportConfigDetail> MReportConfigDetails { get; set; } = null!;
         public virtual DbSet<MReportConfiguration> MReportConfigurations { get; set; } = null!;
+        public virtual DbSet<MReportSetupOperational> MReportSetupOperationals { get; set; } = null!;
         public virtual DbSet<MReportTemplateConfig> MReportTemplateConfigs { get; set; } = null!;
         public virtual DbSet<MReportconfigBackup> MReportconfigBackups { get; set; } = null!;
         public virtual DbSet<MSalesTypeMaster> MSalesTypeMasters { get; set; } = null!;
@@ -8526,6 +8527,29 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReportSection).HasMaxLength(100);
 
                 entity.Property(e => e.UpdatedOn).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MReportSetupOperational>(entity =>
+            {
+                entity.HasKey(e => e.ReportId);
+
+                entity.ToTable("M_ReportSetupOperational");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.FolderName).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProcedureName).HasMaxLength(255);
+
+                entity.Property(e => e.ReportFileName).HasMaxLength(255);
+
+                entity.Property(e => e.ReportHeaderHtmlName).HasMaxLength(255);
+
+                entity.Property(e => e.ReportHtmlName).HasMaxLength(255);
+
+                entity.Property(e => e.ReportMode).HasMaxLength(255);
             });
 
             modelBuilder.Entity<MReportTemplateConfig>(entity =>
