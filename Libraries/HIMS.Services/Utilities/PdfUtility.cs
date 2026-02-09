@@ -106,6 +106,13 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
             htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
             htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
+            bool hasHospitalShortName = !string.IsNullOrWhiteSpace(objHospital?.HospitalShortName);
+
+            htmlHeader = htmlHeader
+                .Replace("{{HospitalShortName}}", objHospital?.HospitalShortName ?? "")
+                .Replace("{{chkHospitalShortNameFlag}}", hasHospitalShortName ? "table-row" : "none");
+
+
 
             var HospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
             var HospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
