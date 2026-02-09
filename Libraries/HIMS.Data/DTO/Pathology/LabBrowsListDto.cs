@@ -91,6 +91,13 @@ namespace HIMS.Data.DTO.Pathology
         public int? PaymentCompleted { get; set; }
         public string? PatientName { get; set; }
         public string? DoctorName { get; set; }
+        public string? LabRequestNo { get; set; }
+        public string? AgeYear { get; set; }
+        public string? AgeMonth { get; set; }
+        public string? AgeDay { get; set; }
+        public long? GenderId { get; set; }
+        public string? SuggestionNotes { get; set; }
+        
 
 
     }
