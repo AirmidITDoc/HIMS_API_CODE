@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HIMS.API.Models.Masters;
 
-namespace HIMS.Data.Models
+namespace HIMS.API.Models.Pathology
 {
-    public partial class THomeCollectionRegistrationInfo
+    public class HomeCollectionModel
     {
-        public THomeCollectionRegistrationInfo()
-        {
-            THomeCollectionServiceDetails = new HashSet<THomeCollectionServiceDetail>();
-        }
-
         public long HomeCollectionId { get; set; }
         public long? UnitId { get; set; }
-        public string? HomeSeqNo { get; set; }
+        //public string? HomeSeqNo { get; set; }
         public long PrefixId { get; set; }
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
@@ -28,21 +22,29 @@ namespace HIMS.Data.Models
         public string? Remark { get; set; }
         public bool? Priority { get; set; }
         public DateTime? CollectionDate { get; set; }
-        public DateTime? CollectionTime { get; set; }
+        public string? CollectionTime { get; set; }
         public long? Phlebotomist { get; set; }
         public string? Location { get; set; }
         public string? Latitude { get; set; }
         public string? Longitude { get; set; }
         public string? Radius { get; set; }
-        public int? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public int? ModifiedBy { get; set; }
-        public DateTime? ModifiedDate { get; set; }
+        public List<HomeCollectionServiceDetailModel> THomeCollectionServiceDetails { get; set; }
+
+    }
+    public class HomeCollectionServiceDetailModel
+    {
+        public long HomeDetId { get; set; }
+        public long? HomeCollectionId { get; set; }
+        public long? UnitId { get; set; }
+        public long? TestId { get; set; }
+        public decimal? Price { get; set; }
+        public int? Qty { get; set; }
+        public decimal? TotalAmount { get; set; }
+        public double? DiscPer { get; set; }
+        public decimal? DiscAmount { get; set; }
+        public decimal? NetAmount { get; set; }
         public bool? IsCancel { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-        public long? Status { get; set; }
-
-        public virtual ICollection<THomeCollectionServiceDetail> THomeCollectionServiceDetails { get; set; }
     }
 }

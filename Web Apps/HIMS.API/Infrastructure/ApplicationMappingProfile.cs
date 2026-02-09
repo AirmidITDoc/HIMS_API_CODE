@@ -439,15 +439,8 @@ namespace HIMS.API.Infrastructure
 
 
             CreateMap<TCurrentStock, CurrentStockMaterialModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
-
-
-
-
-
-
-
-
+            CreateMap<THomeCollectionRegistrationInfo, HomeCollectionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<THomeCollectionServiceDetail, HomeCollectionServiceDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TCurrentStock, IssueToDepartmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
