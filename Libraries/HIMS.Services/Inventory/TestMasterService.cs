@@ -220,86 +220,78 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
-        //public virtual async Task CancelAsync(MPathTestMaster objTest, int CurrentUserId, string CurrentUserName)
+        public virtual async Task TestUpdateAsync(MPathTestMaster ObjMPathTestMaster, int CurrentUserId, string CurrentUserName)
+        {
+            DatabaseHelper odal = new();
+            string[] AEntity = { "TestId", "SpecimenTypeId", "SpecimenQty", "SpecimenConditionId", "ContainerTypeId", "CollectionMethod", "NoofContainer", "PreservationUsed", "BarcodeLabel", "IsConsentRequired", "IsFastingRequired", "IsApprovedRequired", "TestInformationTemplate", "Tatday", "Tathour", "Tatmin"};
+            var Rentity = ObjMPathTestMaster.ToDictionary();
+
+            foreach (var rProperty in Rentity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                    Rentity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("ps_Update_TestSpecimenDetails", CommandType.StoredProcedure, Rentity);
+            await _context.LogProcedureExecution(Rentity, nameof(MPathTestMaster), ObjMPathTestMaster.TestId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+        }
+
+        Task<IPagedList<PathTestListDto>> ITestMasterServices.PetListAsync(GridRequestModel objGrid)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IPagedList<PathTestDetailDto>> ITestMasterServices.PathTestDetailListAsync(GridRequestModel objGrid)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IPagedList<PathTestForUpdateListdto>> ITestMasterServices.ListAsync(GridRequestModel objGrid)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IPagedList<SubTestMasterListDto>> ITestMasterServices.GetListAsync(GridRequestModel objGrid)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IPagedList<PathTemplateForUpdateListDto>> ITestMasterServices.PathTemplateList(GridRequestModel objGrid)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ITestMasterServices.InsertAsync(MPathTestMaster objTest, int UserId, string Username)
+        {
+            throw new NotImplementedException();
+        }
+
+        void ITestMasterServices.InsertSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username)
+        {
+            throw new NotImplementedException();
+        }
+
+        void ITestMasterServices.UpdateSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ITestMasterServices.UpdateAsync(MPathTestMaster objTest, int UserId, string Username)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ITestMasterServices.PaymentDateTimeUpdate(TPaymentPharmacy ObjTPaymentPharmacy, int UserId, string Username)
+        {
+            throw new NotImplementedException();
+        }
+
+        //Task ITestMasterServices.TestUpdateAsync(MPathTestMaster ObjMPathTestMaster, int UserId, string Username)
         //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        // Update header table records
-        //        MPathTestMaster objPathology = await _context.MPathTestMasters.FindAsync(objTest.TestId);
-        //        objPathology.IsActive = false;
-        //        objPathology.CreatedDate = objTest.CreatedDate;
-        //        objPathology.ModifiedBy = objTest.ModifiedBy;
-        //        _context.MPathTestMasters.Update(objPathology);
-        //        _context.Entry(objPathology).State = EntityState.Modified;
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-
-
-        //public virtual async Task InsertAsyncSP(MPathTestMaster objTest, int UserId, string Username)
-        //{
-
-
-        //    try
-        //    {
-        //        //Add header table records
-        //        DatabaseHelper odal = new();
-        //        string[] rEntity = { "UpdatedBy", "IsCategoryPrint", "IsPrintTestName", "TestTime", "TestDate", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "MPathTemplateDetails", "MPathTestDetailMasters" };
-        //        var entity = objTest.ToDictionary();
-        //        foreach (var rProperty in rEntity)
-        //        {
-        //            entity.Remove(rProperty);
-        //        }
-        //        string TestId = odal.ExecuteNonQuery("insert_PathologyTestMaster_1", CommandType.StoredProcedure, "TestId", entity);
-        //        objTest.TestId = Convert.ToInt32(TestId);
-
-        //        // Add sub table records
-        //        if (objTest.IsTemplateTest == 1)
-        //        {
-        //            foreach (var item in objTest.MPathTemplateDetails)
-        //            {
-        //                item.TestId = objTest.TestId;
-        //            }
-        //            _context.MPathTemplateDetails.AddRange(objTest.MPathTemplateDetails);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        else
-        //        {
-        //            foreach (var item in objTest.MPathTestDetailMasters)
-        //            {
-        //                item.TestId = objTest.TestId;
-        //            }
-        //            _context.MPathTestDetailMasters.AddRange(objTest.MPathTestDetailMasters);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        // Delete header table realted records
-        //        MPathTestMaster? objtest = await _context.MPathTestMasters.FindAsync(objTest.TestId);
-        //        if (objtest != null)
-        //        {
-        //            _context.MPathTestMasters.Remove(objtest);
-        //        }
-
-        //        // Delete details table realted records
-        //        var lst = await _context.MPathTemplateDetails.Where(x => x.TestId == objTest.TestId).ToListAsync();
-        //        if (lst.Count > 0)
-        //        {
-        //            _context.MPathTemplateDetails.RemoveRange(lst);
-        //        }
-        //        await _context.SaveChangesAsync();
-
-        //        var lst1 = await _context.MPathTestDetailMasters.Where(x => x.TestId == objTest.TestId).ToListAsync();
-        //        if (lst1.Count > 0)
-        //        {
-        //            _context.MPathTestDetailMasters.RemoveRange(lst1);
-        //        }
-        //        await _context.SaveChangesAsync();
-        //    }
+        //    throw new NotImplementedException();
         //}
-        //}
+        
     }
 }
 

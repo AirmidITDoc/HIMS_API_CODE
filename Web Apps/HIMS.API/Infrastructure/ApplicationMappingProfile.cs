@@ -456,6 +456,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<MCurrencyMaster, CurrencyMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MTemplateMaster, PathologyTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MItemGenericNameMaster, GenericMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MPathTestMaster, TestSpecimenDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
             //IP/OP
 

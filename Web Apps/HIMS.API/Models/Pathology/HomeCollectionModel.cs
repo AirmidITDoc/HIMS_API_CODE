@@ -28,6 +28,10 @@ namespace HIMS.API.Models.Pathology
         public string? Latitude { get; set; }
         public string? Longitude { get; set; }
         public string? Radius { get; set; }
+        public bool? IsCancel { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDate { get; set; }
+        public long? Status { get; set; }
         public List<HomeCollectionServiceDetailModel> THomeCollectionServiceDetails { get; set; }
 
     }
