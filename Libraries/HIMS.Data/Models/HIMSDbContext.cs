@@ -13265,6 +13265,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Price).HasColumnType("money");
 
                 entity.Property(e => e.TotalAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.HomeCollection)
+                    .WithMany(p => p.THomeCollectionServiceDetails)
+                    .HasForeignKey(d => d.HomeCollectionId)
+                    .HasConstraintName("FK_T_HomeCollectionServiceDetails_T_HomeCollectionRegistrationInfo");
             });
 
             modelBuilder.Entity<THomeDeliveryOrder>(entity =>
