@@ -10,7 +10,7 @@ namespace HIMS.Core.Domain.Dashboard
     {
         public PatientcountWardWiseCountSummary CountSummary { get; set; }
         public List<FinancialCount> FinancialCount { get; set; }
-        public List<FinancialTestCount>FinancialTestCount { get; set; }
+        public List<FinancialTestCount> FinancialTestCount { get; set; }
         public List<FinancialOPPayment> FinancialOPPayment { get; set; }
         public List<FinancialIPPayment> FinancialIPPayment { get; set; }
         public List<FinancialVisit> FinancialVisit { get; set; }
@@ -92,7 +92,7 @@ namespace HIMS.Core.Domain.Dashboard
     public class FinancialDoctorWisePatientCountSummary
     {
         public string? DoctorName { get; set; }
-        public decimal? PatientCount { get; set; }
+        public long? PatientCount { get; set; }
         public decimal? OPCollection { get; set; }
 
     }
@@ -117,11 +117,11 @@ namespace HIMS.Core.Domain.Dashboard
     public class FinancialOPRefDoctorPatientCount
 
     {
-        public decimal? OPRefDoctorPatientCount { get; set; }
+        public long? OPRefDoctorPatientCount { get; set; }
     }
     public class FinancialIPRefDoctorPatientCount
     {
-        public decimal? IPRefDoctorPatientCount { get; set; }
+        public long? IPRefDoctorPatientCount { get; set; }
     }
     public class FinancialOPDPatientSale
     {
@@ -140,7 +140,7 @@ namespace HIMS.Core.Domain.Dashboard
     public class FinancialAdvanceBalance
     {
         public decimal? UnadjestAdvance { get; set; }
-       
+
     }
     public class FinancialOutStandingOPIP
     {
@@ -152,8 +152,8 @@ namespace HIMS.Core.Domain.Dashboard
     {
         public decimal? IP_ApprovedAmount { get; set; }
         public decimal? IP_UnpaidCharges { get; set; }
-        public decimal? Unadjested_Advance { get; set; }
-        public decimal? Insurance_Adequancy { get; set; }
+        public long Unadjested_Advance { get; set; }
+        public long Insurance_Adequancy { get; set; }
 
 
     }
