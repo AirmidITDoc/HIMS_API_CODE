@@ -91,7 +91,7 @@ namespace HIMS.Data.DTO.Pathology
         public bool? IsVerifySign { get; set; }
         public long IsVerifyid { get; set; }
         public string? IsVerifyedDate { get; set; }
-        public long? OutSourceId { get; set; }
+        public long OutSourceId { get; set; }
         public string? OutSourceLabName { get; set; }
         public string? OutSourceSampleSentDateTime { get; set; }
         public long? OutSourceCreatedBy { get; set; }
