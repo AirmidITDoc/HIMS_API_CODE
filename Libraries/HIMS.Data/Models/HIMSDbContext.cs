@@ -7,14 +7,14 @@ namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
-        ////public HIMSDbContext()
-        ////{
-        ////}
+        //public HIMSDbContext()
+        //{
+        //}
 
-        ////public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
-        ////    : base(options)
-        ////{
-        ////}
+        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        //    : base(options)
+        //{
+        //}
 
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -457,6 +457,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<TGrnsupPayment> TGrnsupPayments { get; set; } = null!;
         public virtual DbSet<TGstadjustment> TGstadjustments { get; set; } = null!;
         public virtual DbSet<THlabRequest> THlabRequests { get; set; } = null!;
+        public virtual DbSet<THomeCollectionRegistrationInfo> THomeCollectionRegistrationInfos { get; set; } = null!;
+        public virtual DbSet<THomeCollectionServiceDetail> THomeCollectionServiceDetails { get; set; } = null!;
         public virtual DbSet<THomeDeliveryOrder> THomeDeliveryOrders { get; set; } = null!;
         public virtual DbSet<TIndentDetail> TIndentDetails { get; set; } = null!;
         public virtual DbSet<TIndentHeader> TIndentHeaders { get; set; } = null!;
@@ -468,6 +470,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TIssueToDepartmentDetail> TIssueToDepartmentDetails { get; set; } = null!;
         public virtual DbSet<TIssueToDepartmentHeader> TIssueToDepartmentHeaders { get; set; } = null!;
         public virtual DbSet<TItemMovementReport> TItemMovementReports { get; set; } = null!;
+        public virtual DbSet<TLabPatientAddress> TLabPatientAddresses { get; set; } = null!;
         public virtual DbSet<TLabPatientPersonInfo> TLabPatientPersonInfos { get; set; } = null!;
         public virtual DbSet<TLabPatientRegisteredMaster> TLabPatientRegisteredMasters { get; set; } = null!;
         public virtual DbSet<TLabPatientRegistration> TLabPatientRegistrations { get; set; } = null!;
@@ -2962,6 +2965,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.HospitalHeaderLine).HasMaxLength(50);
 
                 entity.Property(e => e.HospitalName).HasMaxLength(100);
+
+                entity.Property(e => e.HospitalShortName).HasMaxLength(100);
 
                 entity.Property(e => e.IpdAdvanceCounterId).HasColumnName("IPD_Advance_CounterId");
 
@@ -8250,6 +8255,8 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_PathTestMaster");
 
+                entity.Property(e => e.BarcodeLabel).HasMaxLength(50);
+
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.MachineName).HasMaxLength(2000);
@@ -8259,6 +8266,12 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PrintTestName).HasMaxLength(200);
 
                 entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
+
+                entity.Property(e => e.Tatday).HasColumnName("TATDay");
+
+                entity.Property(e => e.Tathour).HasColumnName("TATHour");
+
+                entity.Property(e => e.Tatmin).HasColumnName("TATMin");
 
                 entity.Property(e => e.TechniqueName).HasMaxLength(2000);
 
@@ -13196,6 +13209,64 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReqTime).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<THomeCollectionRegistrationInfo>(entity =>
+            {
+                entity.HasKey(e => e.HomeCollectionId);
+
+                entity.ToTable("T_HomeCollectionRegistrationInfo");
+
+                entity.Property(e => e.Address).HasMaxLength(255);
+
+                entity.Property(e => e.CollectionDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CollectionTime).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DateofBirth).HasColumnType("datetime");
+
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+
+                entity.Property(e => e.HomeSeqNo).HasMaxLength(50);
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.LastName).HasMaxLength(50);
+
+                entity.Property(e => e.Location).HasMaxLength(255);
+
+                entity.Property(e => e.Longitude).HasColumnName("longitude");
+
+                entity.Property(e => e.MiddleName).HasMaxLength(50);
+
+                entity.Property(e => e.MobileNo).HasMaxLength(20);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Remark).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<THomeCollectionServiceDetail>(entity =>
+            {
+                entity.HasKey(e => e.HomeDetId);
+
+                entity.ToTable("T_HomeCollectionServiceDetails");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DiscAmount).HasColumnType("money");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.NetAmount).HasColumnType("money");
+
+                entity.Property(e => e.Price).HasColumnType("money");
+
+                entity.Property(e => e.TotalAmount).HasColumnType("money");
+            });
+
             modelBuilder.Entity<THomeDeliveryOrder>(entity =>
             {
                 entity.HasKey(e => e.OrderId);
@@ -13498,6 +13569,15 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TransactionType).HasMaxLength(50);
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<TLabPatientAddress>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("T_LabPatientAddress");
+
+                entity.Property(e => e.Address).HasMaxLength(255);
             });
 
             modelBuilder.Entity<TLabPatientPersonInfo>(entity =>
