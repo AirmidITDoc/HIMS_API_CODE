@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "HIMS_Services": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
