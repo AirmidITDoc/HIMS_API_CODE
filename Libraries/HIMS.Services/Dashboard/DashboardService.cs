@@ -202,31 +202,33 @@ namespace HIMS.Services.Dashboard
             para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
             para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
 
-            var data = await sql.Get8ResultsFromSp<PatientcountWardWiseCountSummary, FinancialCount, FinancialTestCount, FinancialOPPayment, FinancialIPPayment, FinancialVisit, FinancialCollectionPayMode, FinancialAdvance, FinancialPharmacyReturn, FinancialRefund,
-                FinancialDoctorWisePatientCountSummary, FinancialModeWiseCollection, FinancialOPExistingPatientCount, FinancialIPExistingPatientCount, FinancialOPDPatientSale, FinancialIPDPatientSale, 
-                FinancialAdvanceBalance, FinancialOutStandingOPIP, FinancialInsuranceCaverageAdequacy>("ps_rtrv_FinancialDashBoard", para);
+            var data = await sql.Get8ResultsFromSp<BedOccupancyCountSummary, ServiceCharges, ReceiptPayment, BillSummary, ReceiptOPIP, AdvanceOPIP, RefundOPIP, PharmacyReturn, TypeOfVisit, DoctorWisePatientCount,
+                 FinancialOPExistingPatientCount, FinancialIPExistingPatientCount, IPRefDoctorCount, PharmacyOPDPatientSale, PharmacySaleOP, PharmacySaleIP, FinancialAdvanceBalance, FinancialOutStandingOPIP, OutandingwithdateCaverage, FinancialInsuranceCaverageAdequacy>("ps_rtrv_FinancialDashBoard", para);
 
             return new FinancialDashboard()
             {
-                CountSummary = data.Item1.FirstOrDefault() ?? new PatientcountWardWiseCountSummary(),
-                FinancialCount = data.Item2 ?? new List<FinancialCount>(),
-                FinancialTestCount = data.Item3 ?? new List<FinancialTestCount>(),
-                FinancialOPPayment = data.Item4 ?? new List<FinancialOPPayment>(),
-                FinancialIPPayment = data.Item5 ?? new List<FinancialIPPayment>(),
-                FinancialVisit = data.Item6 ?? new List<FinancialVisit>(),
-                FinancialCollectionPayMode = data.Item7 ?? new List<FinancialCollectionPayMode>(),
-                FinancialAdvance = data.Item8 ?? new List<FinancialAdvance>(),
-                FinancialPharmacyReturn = data.Item9 ?? new List<FinancialPharmacyReturn>(),
-                FinancialRefund = data.Item10 ?? new List<FinancialRefund>(),
-                FinancialDoctorWisePatientCountSummary = data.Item11 ?? new List<FinancialDoctorWisePatientCountSummary>(),
-                FinancialModeWiseCollection = data.Item12 ?? new List<FinancialModeWiseCollection>(),
-                FinancialOPExistingPatientCount = data.Item13 ?? new List<FinancialOPExistingPatientCount>(),
-                FinancialIPExistingPatientCount = data.Item14 ?? new List<FinancialIPExistingPatientCount>(),
-                FinancialOPDPatientSale = data.Item15 ?? new List<FinancialOPDPatientSale>(),
-                FinancialIPDPatientSale = data.Item16 ?? new List<FinancialIPDPatientSale>(),
+                BedOccupancyCountSummary = data.Item1.FirstOrDefault() ?? new BedOccupancyCountSummary(),
+                ServiceCharges = data.Item2 ?? new List<ServiceCharges>(),
+                ReceiptPayment = data.Item3 ?? new List<ReceiptPayment>(),
+                BillSummary = data.Item4 ?? new List<BillSummary>(),
+                ReceiptOPIP = data.Item5 ?? new List<ReceiptOPIP>(),
+                AdvanceOPIP = data.Item6 ?? new List<AdvanceOPIP>(),
+                RefundOPIP = data.Item7 ?? new List<RefundOPIP>(),
+                PharmacyReturn = data.Item8 ?? new List<PharmacyReturn>(),
+                TypeOfVisit = data.Item9 ?? new List<TypeOfVisit>(),
+                DoctorWisePatientCount = data.Item10 ?? new List<DoctorWisePatientCount>(),
+                FinancialOPExistingPatientCount = data.Item11 ?? new List<FinancialOPExistingPatientCount>(),
+                FinancialIPExistingPatientCount = data.Item12 ?? new List<FinancialIPExistingPatientCount>(),
+                IPRefDoctorCount = data.Item13 ?? new List<IPRefDoctorCount>(),
+                PharmacyOPDPatientSale = data.Item14 ?? new List<PharmacyOPDPatientSale>(),
+                PharmacySaleOP = data.Item15 ?? new List<PharmacySaleOP>(),
+                PharmacySaleIP = data.Item16 ?? new List<PharmacySaleIP>(),
                 FinancialAdvanceBalance = data.Item17 ?? new List<FinancialAdvanceBalance>(),
                 FinancialOutStandingOPIP = data.Item18 ?? new List<FinancialOutStandingOPIP>(),
-                FinancialInsuranceCaverageAdequacy = data.Item19 ?? new List<FinancialInsuranceCaverageAdequacy>(),
+                OutandingwithdateCaverage = data.Item19 ?? new List<OutandingwithdateCaverage>(),
+                FinancialInsuranceCaverageAdequacy = data.Item20 ?? new List<FinancialInsuranceCaverageAdequacy>()
+
+
 
             };
         }

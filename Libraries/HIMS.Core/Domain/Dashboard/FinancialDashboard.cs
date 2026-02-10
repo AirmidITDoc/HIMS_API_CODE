@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,101 +9,99 @@ namespace HIMS.Core.Domain.Dashboard
 {
     public class FinancialDashboard
     {
-        public PatientcountWardWiseCountSummary CountSummary { get; set; }
-        public List<FinancialCount> FinancialCount { get; set; }
-        public List<FinancialTestCount> FinancialTestCount { get; set; }
-        public List<FinancialOPPayment> FinancialOPPayment { get; set; }
-        public List<FinancialIPPayment> FinancialIPPayment { get; set; }
-        public List<FinancialVisit> FinancialVisit { get; set; }
-        public List<FinancialCollectionPayMode> FinancialCollectionPayMode { get; set; }
-        public List<FinancialAdvance> FinancialAdvance { get; set; }
-        public List<FinancialPharmacyReturn> FinancialPharmacyReturn { get; set; }
-        public List<FinancialRefund> FinancialRefund { get; set; }
-        public List<FinancialDoctorWisePatientCountSummary> FinancialDoctorWisePatientCountSummary { get; set; }
-        public List<FinancialModeWiseCollection> FinancialModeWiseCollection { get; set; }
+        public BedOccupancyCountSummary BedOccupancyCountSummary { get; set; }
+        
+        public List<ServiceCharges> ServiceCharges { get; set; }
+        public List<ReceiptPayment> ReceiptPayment { get; set; }
+        public List<BillSummary> BillSummary { get; set; }
+        public List<ReceiptOPIP> ReceiptOPIP { get; set; }
+        public List<AdvanceOPIP> AdvanceOPIP { get; set; }
+        public List<RefundOPIP> RefundOPIP { get; set; }
+        public List<PharmacyReturn> PharmacyReturn { get; set; }
+        public List<TypeOfVisit> TypeOfVisit { get; set; }
+        public List<DoctorWisePatientCount> DoctorWisePatientCount { get; set; }
         public List<FinancialOPExistingPatientCount> FinancialOPExistingPatientCount { get; set; }
         public List<FinancialIPExistingPatientCount> FinancialIPExistingPatientCount { get; set; }
-        public List<FinancialOPDPatientSale> FinancialOPDPatientSale { get; set; }
-        public List<FinancialIPDPatientSale> FinancialIPDPatientSale { get; set; }
+        public List<IPRefDoctorCount> IPRefDoctorCount { get; set; }
+        public List<PharmacyOPDPatientSale> PharmacyOPDPatientSale { get; set; }
+        public List<PharmacySaleOP> PharmacySaleOP { get; set; }
+        public List<PharmacySaleIP> PharmacySaleIP { get; set; }
         public List<FinancialAdvanceBalance> FinancialAdvanceBalance { get; set; }
         public List<FinancialOutStandingOPIP> FinancialOutStandingOPIP { get; set; }
+        public List<OutandingwithdateCaverage> OutandingwithdateCaverage { get; set; }
         public List<FinancialInsuranceCaverageAdequacy> FinancialInsuranceCaverageAdequacy { get; set; }
 
     }
-    public class PatientcountWardWiseCountSummary
+    public class BedOccupancyCountSummary
     {
-        public string? WardName { get; set; }
-        public long PatientCountt { get; set; }
-        public long PatientOccupancy { get; set; }
+        public string? RoomName { get; set; }
+        public long TotalBeds { get; set; }
+        public long OccupiedBeds { get; set; }
+        public decimal? OccupancyPercent {  get; set; }
+
+
     }
-    public class FinancialCount
+    public class ServiceCharges
     {
-        public string GroupName { get; set; }
-        public decimal Discount { get; set; }
+        public string? ServiceName { get; set; }
+        public double OPTotalAMT { get; set; }
+        public decimal OPDiscount { get; set; }
         public decimal OPCollection { get; set; }
-
-    }
-    public class FinancialTestCount
-    {
-        public string GroupName { get; set; }
-        public decimal Discount { get; set; }
-        public decimal IPCollection { get; set; }
-    }
-    public class FinancialOPPayment
-    {
-        public string GroupName { get; set; }
-        public decimal Discount { get; set; }
-        public decimal OPCollection { get; set; }
-
-
-    }
-    public class FinancialIPPayment
-    {
-        public string GroupName { get; set; }
-        public decimal Discount { get; set; }
+        public double IPTotalAMT { get; set; }
+        public decimal IPDiscount { get; set; }
         public decimal IPCollection { get; set; }
 
+    }
+    public class ReceiptPayment
+    {
+        public string? ServiceName { get; set; }
+        public decimal OPCollection { get; set; }
+        public decimal IPCollection { get; set; }
+    }
+    public class BillSummary
+    {
+        public decimal? Cash { get; set; }
+        public decimal? CardPay { get; set; }
+        public decimal? NEFT { get; set; }
+        public decimal? Cheque { get; set; }
+        public decimal? UPI { get; set; }
+        public decimal? UsedAdvance { get; set; }
+
+
 
     }
-    public class FinancialVisit 
+    public class ReceiptOPIP
+    {
+        public decimal Receipt { get; set; }
+
+
+    }
+    public class AdvanceOPIP
+    {
+        public decimal Advance { get; set; }
+    }
+    public class RefundOPIP
+    {
+        public decimal Refund { get; set; }
+       
+
+    }
+    public class PharmacyReturn 
+    {
+        public decimal? Return1 { get; set; }
+    }
+    public class TypeOfVisit
     {
         public string? TypeOFVisit { get; set; }
         public long PatientCount { get; set; }
-    }
-    public class FinancialCollectionPayMode
-    {
-        public decimal? CashPay { get; set; }
-        public decimal? CardPay { get; set; }
-        public decimal? PayTM { get; set; }
-        public decimal? Cheque { get; set; }
 
     }
-    public class FinancialAdvance
-    {
-        public double? Advance { get; set; }
-    }
-    public class FinancialPharmacyReturn
-    {
-        public decimal? PharmacyReturn { get; set; }
-    }
-    public class FinancialRefund
-    {
-        public decimal? RefundAMT { get; set; }
-    }
-    public class FinancialDoctorWisePatientCountSummary
+    public class DoctorWisePatientCount 
     {
         public string? DoctorName { get; set; }
-        public long? PatientCount { get; set; }
+        public long PatientCount { get; set; }
         public decimal? OPCollection { get; set; }
 
-    }
-    public class FinancialModeWiseCollection
-    {
-        public decimal? Cash { get; set; }
-        public decimal? Cardpayment { get; set; }
-        public decimal? PayTMPayment { get; set; }
-        public decimal? ChequePayment { get; set; }
-        public decimal? NEFTPayment { get; set; }
     }
     public class FinancialOPExistingPatientCount
     {
@@ -111,42 +110,58 @@ namespace HIMS.Core.Domain.Dashboard
     }
     public class FinancialIPExistingPatientCount
     {
-        public long? IPNewPatientCount { get; set; }
-        public long? IPExistingPatientCount { get; set; }
+        public long IPNewPatientCount { get; set; }
+        public long IPExistingPatientCount { get; set; }
     }
-    public class FinancialOPRefDoctorPatientCount
+
+    public class IPRefDoctorCount
+    {
+        public string? RefName { get; set; }
+        public decimal? OPRefCount { get; set; }
+        public decimal? ipRefCount { get; set; }
+      
+    }
+    
+   
+    public class PharmacyOPDPatientSale
 
     {
-        public long? OPRefDoctorPatientCount { get; set; }
+        public decimal? OPTotalLandedAmount { get; set; }
+        public decimal? OPNetAmount { get; set; }
+        public decimal? OPprofitamount { get; set; }
+
     }
-    public class FinancialIPRefDoctorPatientCount
+    public class PharmacySaleOP
     {
-        public long? IPRefDoctorPatientCount { get; set; }
+        public decimal? OPTotalLandedAmount { get; set; }
+        public decimal? OPNetAmount { get; set; }
+        public decimal? OPprofitamount { get; set; }
+
     }
-    public class FinancialOPDPatientSale
+    public class PharmacySaleIP
     {
-        public decimal? TotalAmt { get; set; }
-        public decimal? NetAMT { get; set; }
-        public decimal? PaidAMT { get; set; }
-        public decimal? BalAMT { get; set; }
-    }
-    public class FinancialIPDPatientSale
-    {
-        public decimal? TotalAmt { get; set; }
-        public decimal? NetAMT { get; set; }
-        public decimal? PaidAMT { get; set; }
-        public decimal? BalAMT { get; set; }
+        public decimal? IPTotalLandedAmount { get; set; }
+        public decimal? IPNetAmount { get; set; }
+        public decimal? IPprofitamount { get; set; }
     }
     public class FinancialAdvanceBalance
     {
         public decimal? UnadjestAdvance { get; set; }
 
     }
+  
+  
     public class FinancialOutStandingOPIP
     {
         public decimal? OPOustandingAMT { get; set; }
         public decimal? IPOutstandingAMT { get; set; }
         public decimal? TotalOutstanding { get; set; }
+    }
+    public class OutandingwithdateCaverage
+    {
+        public decimal? OPOustandingAMTDate { get; set; }
+        public decimal? IPOutstandingAMTDate { get; set; }
+        public decimal? TotalOutstandingdate { get; set; }
     }
     public class FinancialInsuranceCaverageAdequacy
     {
