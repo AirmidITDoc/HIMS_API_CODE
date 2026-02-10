@@ -125,7 +125,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("SmsconfigList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Configuration", Permission = PagePermission.View)]
         public async Task<IActionResult> smsconfigList(GridRequestModel objGrid)
         {
             IPagedList<Smsconfigdetail> List = await _IConfigService.GetSMSconfig(objGrid);
@@ -133,7 +133,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("EmailconfigList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Configuration", Permission = PagePermission.View)]
         public async Task<IActionResult> EmailConfigList(GridRequestModel objGrid)
         {
             IPagedList<EmailConfigurationdetailListDto> List = await _IConfigService.GetEmailconfigdetail(objGrid);
@@ -141,7 +141,8 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("AuditLogList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
+        //[Permission(PageCode = "Configuration", Permission = PagePermission.View)]
         public async Task<IActionResult> AuditlogList(GridRequestModel objGrid)
         {
             IPagedList<AuditlogDtoList> List = await _IConfigService.GetAuditlog(objGrid);

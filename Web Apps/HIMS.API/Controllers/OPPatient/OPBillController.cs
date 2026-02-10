@@ -56,6 +56,7 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Refund List"));
         }
         [HttpPost("BrowseOPDBillPagiList")]
+        [Permission]
         //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> BrowseOPDBillPagList(GridRequestModel objGrid)
         {

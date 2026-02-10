@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Login
             return Ok(LoginGetMobile.ToGridResponse(objGrid, "LoginGetMobile"));
         }
         [HttpPost("LoginList")]
-        //[Permission(PageCode = "Login", Permission = PagePermission.View)]
+        [Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LoginManagerListDto> LoginManagerList = await _ILoginService.GetListAsync(objGrid);

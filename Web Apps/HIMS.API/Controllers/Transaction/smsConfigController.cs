@@ -203,7 +203,7 @@ namespace HIMS.API.Controllers.Transaction
         }
 
         [HttpPost("EmailOutgoingList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "smsconfigrationtool", Permission = PagePermission.View)]
         public async Task<IActionResult> emailList(GridRequestModel objGrid)
         {
             IPagedList<EmailSendoutListDto> List = await _IsmsConfigService.GetEmailSconfig(objGrid);
@@ -212,7 +212,7 @@ namespace HIMS.API.Controllers.Transaction
 
 
         [HttpPost("WhatsappSendoutList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "smsconfigrationtool", Permission = PagePermission.View)]
         public async Task<IActionResult> WhatsappList(GridRequestModel objGrid)
         {
             IPagedList<WhatsAppsendOutListDto> List = await _IsmsConfigService.GetWhatsAppconfig(objGrid);
