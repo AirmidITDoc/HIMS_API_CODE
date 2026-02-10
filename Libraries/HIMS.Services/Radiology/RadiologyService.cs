@@ -22,6 +22,16 @@ namespace HIMS.Services.Radiology
         {
             return await DatabaseHelper.GetGridDataBySp<RadiologyListDto>(model, "m_Rtrv_RadilogyResultEntryList_Ptnt_Dtls");
         }
+
+        public virtual async Task<IPagedList<LabRadiologyListDto>> GetListAsync1(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabRadiologyListDto>(model, "m_Rtrv_LabRadiologyResultEntryList_Ptnt_Dtls");
+        }
+
+        public virtual async Task<IPagedList<RadiologyApproveListDto>> ListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<RadiologyApproveListDto>(model, "ps_Rtrv_LabRadiologyResult_Completed_List");
+        }
         public virtual async Task RadiologyUpdate(TRadiologyReportHeader ObjTRadiologyReportHeader, int CurrentUserId, string CurrentUserName)
         {
             //throw new NotImplementedException();
