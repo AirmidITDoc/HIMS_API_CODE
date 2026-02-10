@@ -237,61 +237,14 @@ namespace HIMS.Services.Inventory
 
         }
 
-        Task<IPagedList<PathTestListDto>> ITestMasterServices.PetListAsync(GridRequestModel objGrid)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<IPagedList<PathTestDetailDto>> ITestMasterServices.PathTestDetailListAsync(GridRequestModel objGrid)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<IPagedList<PathTestForUpdateListdto>> ITestMasterServices.ListAsync(GridRequestModel objGrid)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<IPagedList<SubTestMasterListDto>> ITestMasterServices.GetListAsync(GridRequestModel objGrid)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<IPagedList<PathTemplateForUpdateListDto>> ITestMasterServices.PathTemplateList(GridRequestModel objGrid)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task ITestMasterServices.InsertAsync(MPathTestMaster objTest, int UserId, string Username)
-        {
-            throw new NotImplementedException();
-        }
-
-        void ITestMasterServices.InsertSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username)
-        {
-            throw new NotImplementedException();
-        }
-
-        void ITestMasterServices.UpdateSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task ITestMasterServices.UpdateAsync(MPathTestMaster objTest, int UserId, string Username)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         Task ITestMasterServices.PaymentDateTimeUpdate(TPaymentPharmacy ObjTPaymentPharmacy, int UserId, string Username)
         {
             throw new NotImplementedException();
         }
 
-        //Task ITestMasterServices.TestUpdateAsync(MPathTestMaster ObjMPathTestMaster, int UserId, string Username)
-        //{
-        //    throw new NotImplementedException();
-        //}
-        
+      
     }
 }
 
