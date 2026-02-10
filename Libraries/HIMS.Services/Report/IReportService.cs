@@ -9,7 +9,7 @@ namespace HIMS.Services.Report
     public partial interface IReportService
     {
         Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "");
-        string GetNewReportSetByProc(ReportConfigDto model);
+        string GetNewReportSetByProc(ReportConfigDto model, string FolderPath = "");
         Task<List<DoctorMaster>> SearchDoctor(string str);
         Task<List<ServiceMasterDTO>> SearchService(string str);
         Task<List<MDepartmentMaster>> SearchDepartment(string str);
@@ -37,7 +37,7 @@ namespace HIMS.Services.Report
 
 
         string GeneratePdfFromSp(string sp, string StorageBaseUrl);
-        Task<Tuple<string,string>> GetPatientBarcode(ReportRequestModel model);
+        Task<Tuple<string, string>> GetPatientBarcode(ReportRequestModel model);
 
         //string GeneratePdfFromSpV1(string sp, string StorageBaseUrl, long OPIPID, long ReservationId, long OPIPType);
 

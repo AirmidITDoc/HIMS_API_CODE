@@ -104,6 +104,28 @@ namespace HIMS.API.Models.Inventory
         public List<PathTemplateDetailModel> PathTemplateDetail { get; set; }
         public List<PathTestDetailModel> PathTestDetail { get; set; }
     }
+    public class TestSpecimenDetailsModel
+    {
+        public long TestId { get; set; }
+        public long? SpecimenTypeId { get; set; }
+        public long? SpecimenQty { get; set; }
+        public long? SpecimenConditionId { get; set; }
+        public long? ContainerTypeId { get; set; }
+        public long? CollectionMethod { get; set; }
+        public long? NoofContainer { get; set; }
+        public long? PreservationUsed { get; set; }
+        public string? BarcodeLabel { get; set; }
+        public bool? IsConsentRequired { get; set; }
+        public bool? IsFastingRequired { get; set; }
+        public bool? IsApprovedRequired { get; set; }
+        public string? TestInformationTemplate { get; set; }
+        public long? Tatday { get; set; }
+        public long? Tathour { get; set; }
+        public long? Tatmin { get; set; }
+
+
+
+    }
 
 }
 

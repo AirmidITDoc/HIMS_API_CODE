@@ -15,6 +15,10 @@ namespace HIMS.Services.Inventory
         void InsertSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username);
         void UpdateSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username);
         Task UpdateAsync(MPathTestMaster objTest, int UserId, string Username);
+        Task PaymentDateTimeUpdate(TPaymentPharmacy ObjTPaymentPharmacy, int UserId, string Username);
+        Task TestUpdateAsync(MPathTestMaster ObjMPathTestMaster, int UserId, string Username);
+
+
 
 
     }
