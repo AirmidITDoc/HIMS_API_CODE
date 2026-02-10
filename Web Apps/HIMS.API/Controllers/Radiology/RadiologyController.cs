@@ -38,8 +38,17 @@ namespace HIMS.API.Controllers.Radiology
         //[Permission(PageCode = "Radiology", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<LabRadiologyListDto> LabRadiologyListDto = await _RadilogyService.GetListAsync1(objGrid);
-            return Ok(LabRadiologyListDto.ToGridResponse(objGrid, "RadiologyLab List "));
+            IPagedList<LabRadiologyListDto> LabRadiologyList = await _RadilogyService.GetListAsync1(objGrid);
+            return Ok(LabRadiologyList.ToGridResponse(objGrid, "RadiologyLab List "));
+        }
+
+
+        [HttpPost("LabRadiologyApproveList")]
+        //[Permission(PageCode = "Radiology", Permission = PagePermission.View)]
+        public async Task<IActionResult> List1(GridRequestModel objGrid)
+        {
+            IPagedList<RadiologyApproveListDto> RadiologyApproveList = await _RadilogyService.ListAsync(objGrid);
+            return Ok(RadiologyApproveList.ToGridResponse(objGrid, "RadiologyLab List "));
         }
 
         [HttpPut("RadiologyUpdate/{id:int}")]
