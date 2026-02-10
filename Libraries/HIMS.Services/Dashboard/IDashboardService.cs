@@ -11,6 +11,6 @@ namespace HIMS.Services.Dashboard
         OPVisitCountList GetOPVisitCount(OPVisitCountRequestModel model);
         Task<PathologyDashboard> GetPathologyDashboard(int UnitId,DateTime FromDate,DateTime ToDate);
         Task<FinancialDashboard> GetFinancialDashBoard(int UnitId, DateTime FromDate, DateTime ToDate);
-
+        Task<RadiologyDashboard> GetRadiologyDashboard(int UnitId, DateTime FromDate, DateTime ToDate);
     }
 }
