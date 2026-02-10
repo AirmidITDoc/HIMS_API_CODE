@@ -232,6 +232,35 @@ namespace HIMS.Services.Dashboard
 
             };
         }
+        public async Task<RadiologyDashboard> GetRadiologyDashboard(int UnitId, DateTime FromDate, DateTime ToDate)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para = new SqlParameter[3];
+            para[0] = new SqlParameter("@UnitId", SqlDbType.Int) { Value = UnitId };
+            para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
+            para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+
+            var data = await sql.Get6ResultsFromSp<
+                RadiologyCountSummary,
+                RadiologyVolume,
+                RadiologyDailyTestCount,
+                RadiologyReport,
+                RadiologyOrderedTest,
+                RadiologyWorkload>
+                ("ps_rtrv_RadiologyDashBoard", para);
+
+            return new RadiologyDashboard()
+            {
+                CountSummary = data.Item1.FirstOrDefault() ?? new RadiologyCountSummary(),
+                RadiologyVolumes = data.Item2 ?? new List<RadiologyVolume>(),
+                DailyTestCounts = data.Item3 ?? new List<RadiologyDailyTestCount>(),
+                RecentRadiologyReports = data.Item4 ?? new List<RadiologyReport>(),
+                TopOrderedTests = data.Item5 ?? new List<RadiologyOrderedTest>(),
+                RadiologyWorkloads = data.Item6 ?? new List<RadiologyWorkload>()
+            };
+        }
+
 
     }
 }
