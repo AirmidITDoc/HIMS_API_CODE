@@ -1057,7 +1057,7 @@ namespace HIMS.Data.DataProviders
         //}
                 // Table 3
                 // Table 3
-        public async Task<(List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>, List<T8>, List<T9>, List<T10>, List<T11>, List<T12>, List<T13>, List<T14>, List<T15>, List<T16>, List<T17>, List<T18>)> Get8ResultsFromSp<T, T1, T2, T3, T4, T5, T6, T7 ,T8,T9,T10,T11, T12, T13, T14, T15, T16, T17, T18>(string Spname, SqlParameter[] para)where T : new() where T1 : new() where T2 : new() where T3 : new()where T4 : new() where T5 : new() where T6 : new() where T7 : new() where T8 : new() where T9 : new() where T10 : new() where T11 : new() where T12 : new() where T13 : new() where T14 : new() where T15 : new() where T16 : new() where T17 : new() where T18 : new()
+        public async Task<(List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>, List<T8>, List<T9>, List<T10>, List<T11>, List<T12>, List<T13>, List<T14>, List<T15>, List<T16>, List<T17>, List<T18>, List<T19>)> Get8ResultsFromSp<T, T1, T2, T3, T4, T5, T6, T7 ,T8,T9,T10,T11, T12, T13, T14, T15, T16, T17, T18, T19>(string Spname, SqlParameter[] para)where T : new() where T1 : new() where T2 : new() where T3 : new()where T4 : new() where T5 : new() where T6 : new() where T7 : new() where T8 : new() where T9 : new() where T10 : new() where T11 : new() where T12 : new() where T13 : new() where T14 : new() where T15 : new() where T16 : new() where T17 : new() where T18 : new() where T19 : new()
         {
 
             Command.CommandType = CommandType.StoredProcedure;Command.Parameters.AddRange(para);Command.CommandText = Spname;
@@ -1119,8 +1119,10 @@ namespace HIMS.Data.DataProviders
                 var item18 = reader.MapToList<T17>();
                 await reader.NextResultAsync();
                 var item19 = reader.MapToList<T18>();
+                await reader.NextResultAsync();
+                var item20 = reader.MapToList<T19>();
 
-                return (item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, item17, item18, item19);
+                return (item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, item17, item18, item19,item20);
 
              }
 
