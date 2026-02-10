@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.Administration
 
         }
         [HttpPost("TemlateByCategoryList")]
-        //[Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
+        [Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
         public async Task<IActionResult> ListTemplate(GridRequestModel objGrid)
         {
             IPagedList<TemplateByCategoryListDto> TemlateByCategoryList = await _ITemplateDescriptionConfigService.GetListAsync(objGrid);

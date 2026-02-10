@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("RoleMasterList")]
-        //[Permission(PageCode = "Sales", Administration = PagePermission.View)]
+        [Permission(PageCode = "RoleTemplateMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> RoleMasterList(GridRequestModel objGrid)
         {
             IPagedList<RoleMasterListDto> RoleMasterList = await _IAdministrationService.RoleMasterList(objGrid);

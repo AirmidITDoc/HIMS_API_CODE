@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("IPDPaymentReceiptList")]
-        //  [Permission(PageCode = "IPDPaymentReceiptList", Permission = PagePermission.View)]
+          [Permission(PageCode = "Paymentmodechanges", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<BrowseIPDPaymentReceiptListDto> IPDPaymentReceiptList = await _paymentpharmacyService.GetListAsync(objGrid);
@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("OPDPaymentReceiptList")]
-        //  [Permission(PageCode = "OPDPaymentReceiptList", Permission = PagePermission.View)]
+          [Permission(PageCode = "Paymentmodechanges", Permission = PagePermission.View)]
         public async Task<IActionResult> List1(GridRequestModel objGrid)
         {
             IPagedList<BrowseOPDPaymentReceiptListDto> OPDPaymentReceiptList = await _paymentpharmacyService.GetListAsync1(objGrid);
@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("IPAdvPaymentReceiptList")]
-        //  [Permission(PageCode = "OPDPaymentReceiptList", Permission = PagePermission.View)]
+          [Permission(PageCode = "Paymentmodechanges", Permission = PagePermission.View)]
         public async Task<IActionResult> List2(GridRequestModel objGrid)
         {
             IPagedList<BrowseIPAdvPaymentReceiptListDto> IPAdvPaymentReceiptList = await _paymentpharmacyService.GetListAsync2(objGrid);
@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("BrowsePharmacyPayReceiptList")]
-        //  [Permission(PageCode = "oPDPaymentReceiptList", Permission = PagePermission.View)]
+          [Permission(PageCode = "Paymentmodechanges", Permission = PagePermission.View)]
         public async Task<IActionResult> List3(GridRequestModel objGrid)
         {
             IPagedList<BrowsePharmacyPayReceiptListDto> PharmacyPayReceiptList = await _paymentpharmacyService.GetListAsync3(objGrid);
@@ -61,7 +61,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("BrowseTPayPharmacyPayReceiptList")]
-        //  [Permission(PageCode = "oPDPaymentReceiptList", Permission = PagePermission.View)]
+          [Permission(PageCode = "Paymentmodechanges", Permission = PagePermission.View)]
         public async Task<IActionResult> TPayList(GridRequestModel objGrid)
         {
             IPagedList<BrowsePharmacyTPaymentReceiptListDto> PharmacyPayReceiptList = await _paymentpharmacyService.GetTPayListAsync(objGrid);

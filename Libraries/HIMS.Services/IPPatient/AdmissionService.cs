@@ -280,7 +280,8 @@ namespace HIMS.Services.IPPatient
                       join d in _context.DoctorMasters on a.DocNameId equals d.DoctorId
                       join c in _context.CompanyMasters on a.CompanyId equals c.CompanyId into comp
                       from c in comp.DefaultIfEmpty()
-                      where a.IsDischarged == 1 &&
+                      where
+                      a.IsDischarged == 1 &&
                       ((r.FirstName + " " + r.LastName).Contains(Keyword) || (r.MobileNo ?? "").Contains(Keyword) || (r.RegNo ?? "").Contains(Keyword))
                       orderby r.FirstName
                       select new PatientAdmittedListSearchDto()
