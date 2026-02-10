@@ -35,6 +35,7 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public long? SpecimenTypeId { get; set; }
+        public long? SpecimenColor { get; set; }
         public long? SpecimenQty { get; set; }
         public long? SpecimenConditionId { get; set; }
         public long? ContainerTypeId { get; set; }
@@ -42,6 +43,7 @@ namespace HIMS.Data.Models
         public long? NoofContainer { get; set; }
         public long? PreservationUsed { get; set; }
         public string? BarcodeLabel { get; set; }
+        public string? ConsentDetail { get; set; }
         public bool? IsConsentRequired { get; set; }
         public bool? IsFastingRequired { get; set; }
         public bool? IsApprovedRequired { get; set; }

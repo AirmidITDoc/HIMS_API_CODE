@@ -9,8 +9,7 @@ namespace HIMS.Core.Domain.Dashboard
 {
     public class FinancialDashboard
     {
-        public BedOccupancyCountSummary BedOccupancyCountSummary { get; set; }
-        
+        public List<BedOccupancyCountSummary> BedOccupancyCountSummary { get; set; }
         public List<ServiceCharges> ServiceCharges { get; set; }
         public List<ReceiptPayment> ReceiptPayment { get; set; }
         public List<BillSummary> BillSummary { get; set; }
@@ -29,7 +28,7 @@ namespace HIMS.Core.Domain.Dashboard
         public List<FinancialAdvanceBalance> FinancialAdvanceBalance { get; set; }
         public List<FinancialOutStandingOPIP> FinancialOutStandingOPIP { get; set; }
         public List<OutandingwithdateCaverage> OutandingwithdateCaverage { get; set; }
-        public List<FinancialInsuranceCaverageAdequacy> FinancialInsuranceCaverageAdequacy { get; set; }
+        public List<InsuranceCaverageAdequacy> InsuranceCaverageAdequacy { get; set; }
 
     }
     public class BedOccupancyCountSummary
@@ -117,58 +116,58 @@ namespace HIMS.Core.Domain.Dashboard
     public class IPRefDoctorCount
     {
         public string? RefName { get; set; }
-        public decimal? OPRefCount { get; set; }
-        public decimal? ipRefCount { get; set; }
-      
+        public long OPRefCount { get; set; }
+        public long ipRefCount { get; set; }
+
     }
     
    
     public class PharmacyOPDPatientSale
 
     {
-        public decimal? OPTotalLandedAmount { get; set; }
-        public decimal? OPNetAmount { get; set; }
-        public decimal? OPprofitamount { get; set; }
+        public decimal OPTotalLandedAmount { get; set; }
+        public decimal OPNetAmount { get; set; }
+        public decimal OPprofitamount { get; set; }
 
     }
     public class PharmacySaleOP
     {
-        public decimal? OPTotalLandedAmount { get; set; }
-        public decimal? OPNetAmount { get; set; }
-        public decimal? OPprofitamount { get; set; }
+        public decimal OPTotalLandedAmount { get; set; }
+        public decimal OPNetAmount { get; set; }
+        public decimal OPprofitamount { get; set; }
 
     }
     public class PharmacySaleIP
     {
-        public decimal? IPTotalLandedAmount { get; set; }
-        public decimal? IPNetAmount { get; set; }
-        public decimal? IPprofitamount { get; set; }
+        public decimal IPTotalLandedAmount { get; set; }
+        public decimal IPNetAmount { get; set; }
+        public decimal IPprofitamount { get; set; }
     }
     public class FinancialAdvanceBalance
     {
-        public decimal? UnadjestAdvance { get; set; }
+        public decimal UnadjestAdvance { get; set; }
 
     }
   
   
     public class FinancialOutStandingOPIP
     {
-        public decimal? OPOustandingAMT { get; set; }
-        public decimal? IPOutstandingAMT { get; set; }
-        public decimal? TotalOutstanding { get; set; }
+        public decimal OPOustandingAMT { get; set; }
+        public decimal IPOutstandingAMT { get; set; }
+        public decimal TotalOutstanding { get; set; }
     }
     public class OutandingwithdateCaverage
     {
-        public decimal? OPOustandingAMTDate { get; set; }
-        public decimal? IPOutstandingAMTDate { get; set; }
-        public decimal? TotalOutstandingdate { get; set; }
+        public decimal OPOustandingAMTDate { get; set; }
+        public decimal IPOutstandingAMTDate { get; set; }
+        public decimal TotalOutstandingdate { get; set; }
     }
-    public class FinancialInsuranceCaverageAdequacy
+    public class InsuranceCaverageAdequacy
     {
-        public decimal? IP_ApprovedAmount { get; set; }
-        public decimal? IP_UnpaidCharges { get; set; }
-        public long Unadjested_Advance { get; set; }
-        public long Insurance_Adequancy { get; set; }
+        public decimal? IPApprovedAmount { get; set; }
+        public decimal? IPUnpaidCharges { get; set; }
+        public long UnadjestedAdvance { get; set; }
+        public long InsuranceAdequancy { get; set; }
 
 
     }

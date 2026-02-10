@@ -223,7 +223,7 @@ namespace HIMS.Services.Inventory
         public virtual async Task TestUpdateAsync(MPathTestMaster ObjMPathTestMaster, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
-            string[] AEntity = { "TestId", "SpecimenTypeId", "SpecimenQty", "SpecimenConditionId", "ContainerTypeId", "CollectionMethod", "NoofContainer", "PreservationUsed", "BarcodeLabel", "IsConsentRequired", "IsFastingRequired", "IsApprovedRequired", "TestInformationTemplate", "Tatday", "Tathour", "Tatmin"};
+            string[] AEntity = { "TestId", "SpecimenTypeId", "SpecimenQty", "SpecimenConditionId", "ContainerTypeId", "CollectionMethod", "NoofContainer", "PreservationUsed", "BarcodeLabel", "IsConsentRequired", "IsFastingRequired", "IsApprovedRequired", "TestInformationTemplate", "Tatday", "Tathour", "Tatmin", "SpecimenColor", "ConsentDetail" };
             var Rentity = ObjMPathTestMaster.ToDictionary();
 
             foreach (var rProperty in Rentity.Keys.ToList())

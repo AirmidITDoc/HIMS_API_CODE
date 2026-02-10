@@ -122,6 +122,10 @@ namespace HIMS.API.Models.Inventory
         public long? Tatday { get; set; }
         public long? Tathour { get; set; }
         public long? Tatmin { get; set; }
+        public long? SpecimenColor { get; set; }
+        public string? ConsentDetail { get; set; }
+
+
 
 
 

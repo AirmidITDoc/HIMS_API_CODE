@@ -39,7 +39,6 @@ namespace HIMS.Data.DTO.Pathology
         public long TestId { get; set; }
         public string? TestName { get; set; }
         public string? CategoryName { get; set; }
-
         public long BillNo { get; set; }
         public long opdipdtype { get; set; }
         public string? PBillNo { get; set; }
@@ -49,7 +48,13 @@ namespace HIMS.Data.DTO.Pathology
         public string? ServiceName { get; set; }
         public string? IsRadOutSource { get; set; }
         public string? PatientType { get; set; }
-     
+        public DateTime? ReportDate { get; set; }
+        public string? ReportTime { get; set; }
+        public long? RadResultDr1 { get; set; }
+
+
+
+
 
 
     }
