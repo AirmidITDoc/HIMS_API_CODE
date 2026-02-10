@@ -9,7 +9,7 @@ namespace HIMS.Core.Domain.Dashboard
 {
     public class FinancialDashboard
     {
-        public BedOccupancyCountSummary BedOccupancyCountSummary { get; set; }
+        public List<BedOccupancyCountSummary> BedOccupancyCountSummary { get; set; }
         public List<ServiceCharges> ServiceCharges { get; set; }
         public List<ReceiptPayment> ReceiptPayment { get; set; }
         public List<BillSummary> BillSummary { get; set; }

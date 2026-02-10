@@ -207,7 +207,7 @@ namespace HIMS.Services.Dashboard
 
             return new FinancialDashboard()
             {
-                BedOccupancyCountSummary = data.Item1.FirstOrDefault() ?? new BedOccupancyCountSummary(),
+                BedOccupancyCountSummary = data.Item1 ?? new List<BedOccupancyCountSummary>(),
                 ServiceCharges = data.Item2 ?? new List<ServiceCharges>(),
                 ReceiptPayment = data.Item3 ?? new List<ReceiptPayment>(),
                 BillSummary = data.Item4 ?? new List<BillSummary>(),
