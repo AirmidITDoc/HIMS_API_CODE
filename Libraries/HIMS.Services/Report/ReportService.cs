@@ -18082,6 +18082,186 @@ namespace HIMS.Services.Report
                         break;
                     }
 
+                case "BranchWiseStatement":
+                    {
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "BranchWiseStatement.html");
+                        string html = System.IO.File.ReadAllText(htmlFilePath);
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        string sp = "ps_rpt_BranchWiseStatement_Test";
+                        DatabaseHelper sql = new();
+                        Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+                        DatabaseHelper odal = new();
+                        int sp_Para = 0;
+                        SqlParameter[] para = new SqlParameter[fields.Count];
+                        foreach (var property in fields)
+                        {
+                            var param = new SqlParameter
+                            {
+                                ParameterName = "@" + property.Key,
+                                Value = property.Value.ToString()
+                            };
+
+                            para[sp_Para] = param;
+                            sp_Para++;
+                        }
+
+                        DataSet ds = sql.FetchDataSetBySP(sp, para);
+                        if (ds.Tables.Count > 0)
+                        {
+                            html = html.Replace("{{FromDate}}", fields["FromDate"]);
+                            html = html.Replace("{{ToDate}}", fields["ToDate"]);
+                            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        }
+                        if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                        {
+                            var dt0 = ds.Tables[0];
+                            html = html.Replace("{{TotalRevenue}}", dt0.GetColValue("TotalRevenue"));
+                            html = html.Replace("{{TotalCollection}}", dt0.GetColValue("TotalCollection"));
+                            html = html.Replace("{{TotalDiscount}}", dt0.GetColValue("TotalDiscount"));
+                            html = html.Replace("{{TotalOutstanding}}", dt0.GetColValue("TotalOutstanding"));
+                            html = html.Replace("{{TotalRefund}}", dt0.GetColValue("TotalRefund"));
+                        }
+
+                        if (ds.Tables.Count > 1 && ds.Tables[1].Rows.Count > 0)
+                        {
+                            var dt1 = ds.Tables[1];
+                            html = html.Replace("{{TotalPatient}}", dt1.GetColValue("TotalPatient"));
+                            html = html.Replace("{{NewPatient}}", dt1.GetColValue("NewPatient"));
+                            html = html.Replace("{{OldPatient}}", dt1.GetColValue("OldPatient"));
+                        }
+ 
+
+                        if (ds.Tables.Count > 2 && ds.Tables[2].Rows.Count > 0)
+                        {
+                            var dt2 = ds.Tables[2];
+                            StringBuilder rows = new();
+
+                            foreach (DataRow dr in dt2.Rows)
+                            {
+                                rows.Append("<tr>");
+                                rows.Append("<td>").Append(dr["PatientType"]).Append("</td>");
+                                rows.Append("<td style='text-align:right;'>").Append(dr["RevenueAmount"]).Append("</td>");
+                                rows.Append("</tr>");
+                            }
+
+                            html = html.Replace("{{RevenueSourceRows}}", rows.ToString());
+                        }
+
+                        if (ds.Tables.Count > 3 && ds.Tables[3].Rows.Count > 0)
+                        {
+                            var dt3 = ds.Tables[3];
+                            StringBuilder rows = new();
+
+                            foreach (DataRow dr in dt3.Rows)
+                            {
+                                rows.Append("<tr>");
+                                rows.Append("<td>").Append(dr["PayMode"]).Append("</td>");
+                                rows.Append("<td style='text-align:right;'>").Append(dr["CollectionAmount"]).Append("</td>");
+                                rows.Append("</tr>");
+                            }
+
+                            html = html.Replace("{{CollectionRows}}", rows.ToString());
+                        }
+
+                        if (ds.Tables.Count > 4 && ds.Tables[4].Rows.Count > 0)
+                        {
+                            var dt4 = ds.Tables[4];
+                            StringBuilder rows = new();
+
+                            foreach (DataRow dr in dt4.Rows)
+                            {
+                                rows.Append("<tr>");
+                                rows.Append("<td>").Append(dr["PatientType"]).Append("</td>");
+                                rows.Append("<td style='text-align:right;'>").Append(dr["OutstandingAmount"]).Append("</td>");
+                                rows.Append("</tr>");
+                            }
+
+                            html = html.Replace("{{OutstandingRows}}", rows.ToString());
+                        }
+
+                        if (ds.Tables.Count > 5 && ds.Tables[5].Rows.Count > 0)
+                        {
+                            var dt5 = ds.Tables[5];
+                            StringBuilder rows = new();
+
+                            foreach (DataRow dr in dt5.Rows)
+                            {
+                                rows.Append("<tr>");
+                                rows.Append("<td>").Append(dr["Department"]).Append("</td>");
+                                rows.Append("<td style='text-align:right;'>").Append(dr["DepartmentAmount"]).Append("</td>");
+                                rows.Append("</tr>");
+                            }
+
+                            html = html.Replace("{{DepartmentRows}}", rows.ToString());
+                        }
+
+                        if (ds.Tables.Count > 6 && ds.Tables[6].Rows.Count > 0)
+                        {
+                            var dt6 = ds.Tables[6];
+                            StringBuilder rows = new();
+
+                            foreach (DataRow dr in dt6.Rows)
+                            {
+                                rows.Append("<tr>");
+                                rows.Append("<td>").Append(dr["DoctorName"]).Append("</td>");
+                                rows.Append("<td style='text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
+                                rows.Append("</tr>");
+                            }
+
+                            html = html.Replace("{{DoctorRows}}", rows.ToString());
+                        }
+
+                        if (ds.Tables.Count > 7 && ds.Tables[7].Rows.Count > 0)
+                        {
+                            var dt7 = ds.Tables[7];
+                            StringBuilder rows = new();
+
+                            foreach (DataRow dr in dt7.Rows)
+                            {
+                                rows.Append("<tr>");
+                                rows.Append("<td>").Append(dr["RefDoctorName"]).Append("</td>");
+                                rows.Append("<td style='text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
+                                rows.Append("</tr>");
+                            }
+
+                            html = html.Replace("{{ReferDoctorRows}}", rows.ToString());
+                        }
+
+                        if (ds.Tables.Count > 8 && ds.Tables[8].Rows.Count > 0)
+                        {
+                            var dt8 = ds.Tables[8];
+                            StringBuilder rows = new();
+
+                            foreach (DataRow dr in dt8.Rows)
+                            {
+                                rows.Append("<tr>");
+                                rows.Append("<td>").Append(dr["ServiceName"]).Append("</td>");
+                                rows.Append("<td style='text-align:center;'>").Append(dr["TestCount"]).Append("</td>");
+                                rows.Append("<td style='text-align:right;'>").Append(dr["ServiceAmount"]).Append("</td>");
+                                rows.Append("</tr>");
+                            }
+
+                            html = html.Replace("{{ServiceRows}}", rows.ToString());
+                        }
+
+                        if (ds.Tables.Count > 9 && ds.Tables[9].Rows.Count > 0)
+                        {
+                            var dt9 = ds.Tables[9];
+
+                            html = html.Replace("{{CompletedReports}}", dt9.GetColValue("CompletedReports"));
+                            html = html.Replace("{{PendingReports}}", dt9.GetColValue("PendingReports"));
+                            html = html.Replace("{{CollectedSamples}}", dt9.GetColValue("CollectedSamples"));
+                            html = html.Replace("{{NotCollectedSamples}}", dt9.GetColValue("NotCollectedSamples"));
+                        }
+
+                        var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "BranchWiseStatement");
+                        pdfBytes = tuple.Item1;
+                        break;
+                    }
+
                 default:
                     break;
             }
