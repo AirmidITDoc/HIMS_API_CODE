@@ -137,6 +137,11 @@ namespace HIMS.Services.Report
             return await DatabaseHelper.GetGridDataBySp<MReportListDto>(model, "ps_ReportList");
         }
 
+        public virtual async Task<MReportConfig> GetReportConfigByMode(string ReportMode, string Section)
+        {
+            return await _context.MReportConfigs.FirstOrDefaultAsync(x => x.ReportMode == ReportMode && x.ReportSection == Section && x.IsActive.Value==true);
+        }
+
 
         public async Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
         {
@@ -2737,7 +2742,7 @@ namespace HIMS.Services.Report
             font += "\nbody {font-family: " + fonts + " sans-serif;}";
             return html.Replace("{{LoadFont}}", font);
         }
-        public string GetNewReportSetByProc(ReportConfigDto model, string FolderPath = "")
+        public Tuple<byte[], string> GetNewReportSetByProc(ReportConfigDto model, string FolderPath = "")
         {
 
             string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
@@ -2767,10 +2772,7 @@ namespace HIMS.Services.Report
 
             html = html.Replace("{{HospitalHeader}}", htmlHeaderFilePath);
 
-            var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, model.FolderName, model.FileName + vDate, vPageOrg, PaperKind.A4);
-            string byteFile = Convert.ToBase64String(tuple.Item1);
-            return byteFile;
-
+            return _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, model.FolderName, model.FileName + vDate, vPageOrg, PaperKind.A4);
         }
 
         private static string GetHTMLViewer(string sp_Name, ReportConfigDto model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "", string[] columnWidths = null, string[] columnAlignments = null)
