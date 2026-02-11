@@ -27,6 +27,11 @@ namespace HIMS.Services.Pathlogy
             return await DatabaseHelper.GetGridDataBySp<homeCollectionDetListDto>(model, "ps_Rtrv_homeCollectionDetList");
 
         }
+        public virtual async Task<IPagedList<HomeCollectionRegistrationInfoListDto>> HomeCollectionListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<HomeCollectionRegistrationInfoListDto>(model, "ps_HomeCollectionRegistrationInfoList");
+
+        }
         public virtual async Task InsertAsync(THomeCollectionRegistrationInfo ObjTHomeCollectionRegistrationInfo, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
