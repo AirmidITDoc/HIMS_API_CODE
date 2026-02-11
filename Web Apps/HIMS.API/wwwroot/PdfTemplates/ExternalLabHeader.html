@@ -20,22 +20,27 @@
                             <table style="width:100%; border-collapse:collapse;">
                                 <tbody>
                                     <tr>
-                                        <td style="font-size:28px;">
+                                        <td style="font-size:15px;">
                                             {{HospitalHeaderLine}}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size:18px; font-weight:600;">
+                                        <td style="font-size:20px; font-weight:600;">
                                             {{HospitalName}}
                                         </td>
                                     </tr>
+                                    <tr style="display: {{chkHospitalShortNameFlag}};">
+                                        <td style="font-size: 13px;text-align:center">
+                                            {{HospitalShortName}}
+                                        </td>
+                                    </tr>
                                     <tr>
-                                        <td style="font-size:16px; color:#b30000;">
+                                        <td style="font-size:15px; color:#b30000;">
                                             NABH Accredited Complete Diagnostic Centre
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size:16px; color:#b30000;">
+                                        <td style="font-size:13px;">
                                             {{Address}} {{City}} - {{Pin}}
                                         </td>
                                     </tr>
@@ -44,11 +49,7 @@
                                             {{Phone}} | {{EmailID}} | {{WebSiteInfo}}
                                         </td>
                                     </tr>
-                                    <tr style="display: {{chkHospitalShortNameFlag}};">
-                                        <td style="font-size: 13px;text-align:center">
-                                            {{HospitalShortName}}
-                                        </td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </td>

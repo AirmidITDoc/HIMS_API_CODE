@@ -15,6 +15,8 @@ namespace HIMS.Services.Pathlogy
         Task InsertAsync(THomeCollectionRegistrationInfo ObjTHomeCollectionRegistrationInfo, int UserId, string Username);
         Task UpdateAsync(THomeCollectionRegistrationInfo ObjTHomeCollectionRegistrationInfo, int UserId, string Username, string[]? ignoreColumns = null);
         Task<IPagedList<homeCollectionDetListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<HomeCollectionRegistrationInfoListDto>> HomeCollectionListAsync(GridRequestModel objGrid);
+
 
 
 
