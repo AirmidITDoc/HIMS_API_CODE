@@ -589,6 +589,9 @@ namespace HIMS.API.Controllers.Report
                 case "OTMultiTabReport_V1":
                     break;
 
+                case "BranchWiseStatement":
+                    break;
+
                 default:
                     break;
             }

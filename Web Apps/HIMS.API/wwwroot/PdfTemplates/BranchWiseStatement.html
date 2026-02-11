@@ -1,0 +1,181 @@
+﻿<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Branch Wise Statement</title>
+</head>
+<body style="font-family: Arial; font-size:12px;">
+
+{{NewHeader}}
+
+<br />
+
+<table width="100%" cellpadding="4" cellspacing="0">
+    <tr>
+        <td><b>Branch Wise Statement</b></td>
+        <td align="right"><b>Generated On :</b> {{CurrentDate}}</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <b>Period :</b> {{FromDate}} To {{ToDate}}
+        </td>
+    </tr>
+</table>
+
+<hr />
+
+<h3>1. Financial Summary</h3>
+
+<table width="100%" border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <td><b>Total Revenue</b></td>
+        <td align="right">{{TotalRevenue}}</td>
+    </tr>
+    <tr>
+        <td><b>Total Collection</b></td>
+        <td align="right">{{TotalCollection}}</td>
+    </tr>
+    <tr>
+        <td><b>Total Discount</b></td>
+        <td align="right">{{TotalDiscount}}</td>
+    </tr>
+    <tr>
+        <td><b>Total Outstanding</b></td>
+        <td align="right">{{TotalOutstanding}}</td>
+    </tr>
+    <tr>
+        <td><b>Total Refund</b></td>
+        <td align="right">{{TotalRefund}}</td>
+    </tr>
+</table>
+
+<br />
+
+
+<h3>2. Patient Summary</h3>
+
+<table width="100%" border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <td><b>Total Patients</b></td>
+        <td align="center">{{TotalPatient}}</td>
+        <td><b>New Patients</b></td>
+        <td align="center">{{NewPatient}}</td>
+        <td><b>Old Patients</b></td>
+        <td align="center">{{OldPatient}}</td>
+    </tr>
+</table>
+
+<br />
+
+<h3>3. Revenue Source (Patient Type)</h3>
+
+<table width="100%" border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <th align="left">Patient Type</th>
+        <th align="right">Revenue Amount</th>
+    </tr>
+    {{RevenueSourceRows}}
+</table>
+
+<br />
+
+
+<h3>4. Collection Mode</h3>
+
+<table width="100%" border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <th align="left">Payment Mode</th>
+        <th align="right">Collection Amount</th>
+    </tr>
+    {{CollectionRows}}
+</table>
+
+<br />
+
+
+<h3>5. Outstanding By Patient Type</h3>
+
+<table width="100%" border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <th align="left">Patient Type</th>
+        <th align="right">Outstanding Amount</th>
+    </tr>
+    {{OutstandingRows}}
+</table>
+
+<br />
+
+
+<h3>6. Department Wise Revenue</h3>
+
+<table width="100%" border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <th align="left">Department</th>
+        <th align="right">Amount</th>
+    </tr>
+    {{DepartmentRows}}
+</table>
+
+<br />
+
+
+<h3>7. Doctor Wise Patient Count</h3>
+
+<table width="100%" border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <th align="left">Doctor Name</th>
+        <th align="center">Patient Count</th>
+    </tr>
+    {{DoctorRows}}
+</table>
+
+<br />
+
+
+<h3>8. Refer Doctor Count</h3>
+
+<table width="100%" border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <th align="left">Refer Doctor Name</th>
+        <th align="center">Patient Count</th>
+    </tr>
+    {{ReferDoctorRows}}
+</table>
+
+<br />
+
+
+<h3>9. Service Wise Details</h3>
+
+<table width="100%" border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <th align="left">Service Name</th>
+        <th align="center">Test Count</th>
+        <th align="right">Service Amount</th>
+    </tr>
+    {{ServiceRows}}
+</table>
+
+<br />
+
+<h3>10. Report Status Summary</h3>
+
+<table width="100%" border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <td><b>Completed Reports</b></td>
+        <td align="center">{{CompletedReports}}</td>
+        <td><b>Pending Reports</b></td>
+        <td align="center">{{PendingReports}}</td>
+    </tr>
+    <tr>
+        <td><b>Samples Collected</b></td>
+        <td align="center">{{CollectedSamples}}</td>
+        <td><b>Samples Not Collected</b></td>
+        <td align="center">{{NotCollectedSamples}}</td>
+    </tr>
+</table>
+
+<br /><br />
+
+
+</body>
+</html>
