@@ -500,7 +500,8 @@ namespace HIMS.API.Controllers.Report
                 model.vPageOrientation = MReportConfigList[0].ReportPageOrientation;
             }
             model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
-            string byteFile = _reportService.GetNewReportSetByProc(model);
+            var tuple = _reportService.GetNewReportSetByProc(model);
+            string byteFile = Convert.ToBase64String(tuple.Item1);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
         [HttpPost("NewExportExcelReport")]
