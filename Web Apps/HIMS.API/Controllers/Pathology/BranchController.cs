@@ -61,5 +61,36 @@ namespace HIMS.API.Controllers.Pathology
             IPagedList<UnitCompanyTestSummaryDto> UnitBranchWiseCompanySummaryList = await _IBranchService.UnitBranchWiseCompanySummaryListAsync(objGrid);
             return Ok(UnitBranchWiseCompanySummaryList.ToGridResponse(objGrid, "UnitBranchWiseDoctorSummary List"));
         }
+
+
+        [HttpPost("BranchWiseTestSummaryList")]
+        public async Task<IActionResult> BranchWiseTestSummaryList(GridRequestModel objGrid)
+        {
+            IPagedList<BranchWiseTestSummaryDto> BranchWiseTestSummaryList = await _IBranchService.BranchWiseTestSummaryList(objGrid);
+            return Ok(BranchWiseTestSummaryList.ToGridResponse(objGrid, "BranchWiseTestSummary List"));
+        }
+
+        [HttpPost("BranchWiseDoctorSummaryList")]
+        public async Task<IActionResult> BranchWiseDoctorSummaryList(GridRequestModel objGrid)
+        {
+            IPagedList<BranchWiseDoctorSummaryDto> BranchWiseDoctorSummaryList = await _IBranchService.BranchWiseDoctorSummaryList(objGrid);
+            return Ok(BranchWiseDoctorSummaryList.ToGridResponse(objGrid, "BranchWiseDoctorSummary List"));
+        }
+
+
+        [HttpPost("BranchWiseCompanySummaryList")]
+        public async Task<IActionResult> BranchWiseCompanySummaryList(GridRequestModel objGrid)
+        {
+            IPagedList<BranchWiseCompanySummaryDto> BranchWiseCompanySummaryList = await _IBranchService.BranchWiseCompanySummaryList(objGrid);
+            return Ok(BranchWiseCompanySummaryList.ToGridResponse(objGrid, "BranchWiseCompanySummary List"));
+        }
+
+        [HttpPost("BranchWiseCategorySummaryList")]
+        public async Task<IActionResult> BranchWiseCategorySummaryList(GridRequestModel objGrid)
+        {
+            IPagedList<BranchWiseCategorySummaryDto> BranchWiseCategorySummaryList = await _IBranchService.BranchWiseCategorySummaryList(objGrid);
+            return Ok(BranchWiseCategorySummaryList.ToGridResponse(objGrid, "BranchWiseCategorySummary List"));
+        }
+
     }
 }

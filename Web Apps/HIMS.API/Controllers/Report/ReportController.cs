@@ -262,6 +262,7 @@ namespace HIMS.API.Controllers.Report
                 case "LabMoneyReceiptWithoutHeader":
                 case "LabMoneyReceiptWithImage":
 
+                case "LabSlipReport":
 
 
 
@@ -386,6 +387,7 @@ namespace HIMS.API.Controllers.Report
                 case "PathologyReportWithImgHeader":
 
                 case "PathologySampleBarcode":
+
 
 
 
