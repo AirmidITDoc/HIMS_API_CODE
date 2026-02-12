@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace HIMS.Data.Models
 {
-    public partial class MPathSpecimenMaster
+    public partial class MPathSpecimenConditionMaster
     {
-        public long SpecimenId { get; set; }
-        public string? SpecimenName { get; set; }
+        public long SpecimenConditionId { get; set; }
+        public string? SpecimenCondition { get; set; }
         public long? UnitId { get; set; }
         public bool? IsActive { get; set; }
         public int? CreatedBy { get; set; }
