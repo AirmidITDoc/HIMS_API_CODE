@@ -54,5 +54,8 @@ namespace HIMS.Data.DTO.Pathology
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public long? Status { get; set; }
+        public string? HospitalName { get; set; }
+        public string? UserName { get; set; }
+
     }
 }
