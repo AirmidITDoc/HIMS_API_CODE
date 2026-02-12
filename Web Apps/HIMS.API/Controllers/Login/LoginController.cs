@@ -4,15 +4,14 @@ using HIMS.Api.Models.Common;
 using HIMS.Api.Models.Login;
 using HIMS.API.Extensions;
 using HIMS.API.Utility;
+using HIMS.Core.Domain.Common;
 using HIMS.Core.Infrastructure;
-using HIMS.Core.Utilities;
 using HIMS.Data.Models;
 using HIMS.Services.Permissions;
 using HIMS.Services.Users;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace HIMS.API.Controllers.Login
@@ -71,13 +70,11 @@ namespace HIMS.API.Controllers.Login
     public class LoginController : BaseController
     {
         protected readonly IUserService _userService;
-        private readonly IConfiguration _Configuration;
         private readonly IPermissionService _IPermissionService;
         private readonly IMenuService _IMenuService;
-        public LoginController(IUserService userService, IConfiguration configuration, IPermissionService permission, IMenuService iMenuService)
+        public LoginController(IUserService userService, IPermissionService permission, IMenuService iMenuService)
         {
             _userService = userService;
-            _Configuration = configuration;
             _IPermissionService = permission;
             _IMenuService = iMenuService;
         }
@@ -90,10 +87,10 @@ namespace HIMS.API.Controllers.Login
         {
             //string id = Guid.NewGuid().ToString();
             //string secret = ApiKeyUtility.EncryptString(id + "|" + AppTime.Now.AddYears(1).ToString("yyyy-MM-dd"));
-            string secret = ConfigurationHelper.config.GetSection("Licence:ApiSecret").Value ?? "";
-            string apiKey = ConfigurationHelper.config.GetSection("Licence:ApiKey").Value ?? "";
-            string[] keys = ApiKeyUtility.DecryptString(secret).Split('|');
-            if (apiKey == keys[0] && Convert.ToDateTime(keys[1]) >= AppTime.Now)
+            //string secret = ConfigurationHelper.config.GetSection("Licence:ApiSecret").Value ?? "";
+            //string apiKey = ConfigurationHelper.config.GetSection("Licence:ApiKey").Value ?? "";
+            string[] keys = ApiKeyUtility.DecryptString(AppSettings.Settings.Licence.ApiSecret).Split('|');
+            if (AppSettings.Settings.Licence.ApiKey == keys[0] && Convert.ToDateTime(keys[1]) >= AppTime.Now)
             {
                 if (string.IsNullOrWhiteSpace(model.CaptchaCode))
                 {
@@ -174,7 +171,7 @@ namespace HIMS.API.Controllers.Login
                 user.UserToken,
                 user.WebRoleId,
                 Permissions = EncryptionUtility.EncryptForAngular(JsonConvert.SerializeObject(permissions)),
-                Token = CommonExtensions.GenerateToken(user, Convert.ToString(_Configuration["AuthenticationSettings:SecretKey"]), 720, permissionString, loginType),
+                Token = CommonExtensions.GenerateToken(user, AppSettings.Settings.AuthenticationSettings.SecretKey, 720, permissionString, loginType),
                 UserName = user.FirstName + " " + user.LastName,
                 user.UserId,
                 RefreshToken = loginType == LoginType.Mobile ? user.MobileToken : null,
@@ -221,8 +218,7 @@ namespace HIMS.API.Controllers.Login
         [SwaggerOperation(Description = "for see actual captcha open <a target='_blank' href='https://codebeautify.org/base64-to-image-converter'>Link</a> and then paste string in textbox, so you can see actual captcha.")]
         public ApiResponse GetCaptcha()
         {
-            string secret = ConfigurationHelper.config.GetSection("Licence:ApiSecret").Value ?? "";
-            string[] keys = ApiKeyUtility.DecryptString(secret).Split('|');
+            string[] keys = ApiKeyUtility.DecryptString(AppSettings.Settings.Licence.ApiSecret).Split('|');
             const int width = 200;
             const int height = 60;
             string captchaCode = Captcha.GenerateCaptchaCode();

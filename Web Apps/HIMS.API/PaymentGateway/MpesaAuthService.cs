@@ -1,31 +1,23 @@
-﻿using HIMS.Core.Infrastructure;
-using Microsoft.OpenApi.Validations;
+﻿using HIMS.Core.Domain.Common;
+using HIMS.Core.Infrastructure;
 
 namespace HIMS.API.PaymentGateway
 {
     public class MpesaAuthService
     {
         private readonly HttpClient _client;
-        private readonly string _consumerKey = "";
-        private readonly string _consumerSecret = "";
-        private readonly IConfiguration _configuration;
-        public MpesaAuthService(HttpClient client, IConfiguration configuration)
+        public MpesaAuthService(HttpClient client)
         {
             _client = client;
-            _configuration = configuration;
-            _consumerKey = _configuration["MPesa:Key"];
-            _consumerSecret = _configuration["MPesa:Secret"];
         }
 
         public async Task<string> GetAccessTokenAsync()
         {
-            string baseUrl = _configuration["MPesa:AccessTokenUrl"];
-
             var authToken = Convert.ToBase64String(
-                System.Text.Encoding.UTF8.GetBytes($"{_consumerKey}:{_consumerSecret}")
+                System.Text.Encoding.UTF8.GetBytes($"{AppSettings.Settings.MPesa.Key}:{AppSettings.Settings.MPesa.Secret}")
             );
 
-            var request = new HttpRequestMessage(HttpMethod.Get, baseUrl);
+            var request = new HttpRequestMessage(HttpMethod.Get, AppSettings.Settings.MPesa.AccessTokenUrl);
             request.Headers.Add("Authorization", $"Basic {authToken}");
 
             var response = await _client.SendAsync(request);
@@ -42,17 +34,11 @@ namespace HIMS.API.PaymentGateway
         private readonly MpesaAuthService _authService;
         private readonly HttpClient _client;
 
-        private readonly string BusinessShortCode = ""; // Test Paybill/Till
-        private readonly string PassKey = "";
-        private readonly IConfiguration _configuration;
 
-        public MpesaStkService(HttpClient client, MpesaAuthService auth, IConfiguration configuration)
+        public MpesaStkService(HttpClient client, MpesaAuthService auth)
         {
             _client = client;
             _authService = auth;
-            _configuration = configuration;
-            BusinessShortCode = _configuration["MPesa:BusinessShortCode"];
-            PassKey = _configuration["MPesa:PassKey"];
         }
         public async Task<string> RegisterUrls()
         {
@@ -60,13 +46,13 @@ namespace HIMS.API.PaymentGateway
 
             var payload = new
             {
-                ShortCode = _configuration["MPesa:ShortCode"],
-                ResponseType = _configuration["MPesa:ResponseType"],
-                ConfirmationURL = _configuration["MPesa:ConfirmationUrl"],
-                ValidationURL = _configuration["MPesa:ValidationUrl"]
+                AppSettings.Settings.MPesa.ShortCode,
+                AppSettings.Settings.MPesa.ResponseType,
+                ConfirmationURL = AppSettings.Settings.MPesa.ConfirmationUrl,
+                ValidationURL = AppSettings.Settings.MPesa.ValidationUrl
             };
 
-            var request = new HttpRequestMessage(HttpMethod.Post, _configuration["MPesa:RegisterUrl"]);
+            var request = new HttpRequestMessage(HttpMethod.Post, AppSettings.Settings.MPesa.RegisterUrl);
 
             request.Headers.Add("Authorization", $"Bearer {token}");
             request.Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(payload), System.Text.Encoding.UTF8, "application/json");
@@ -79,11 +65,11 @@ namespace HIMS.API.PaymentGateway
             string token = await _authService.GetAccessTokenAsync();
 
             string timestamp = AppTime.Now.ToString("yyyyMMddHHmmss");
-            string password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{BusinessShortCode}{PassKey}{timestamp}"));
+            string password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{AppSettings.Settings.MPesa.BusinessShortCode}{AppSettings.Settings.MPesa.PassKey}{timestamp}"));
 
             var payload = new
             {
-                BusinessShortCode,
+                AppSettings.Settings.MPesa.BusinessShortCode,
                 Password = password,
                 Timestamp = timestamp,
                 CheckoutRequestID = checkoutRequestId
@@ -102,28 +88,28 @@ namespace HIMS.API.PaymentGateway
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> StkPushAsync(string phoneNumber, decimal amount,long Opdipdid, string callbackUrl, string reference)
+        public async Task<string> StkPushAsync(string phoneNumber, decimal amount, long Opdipdid, string callbackUrl, string reference)
         {
             string token = await _authService.GetAccessTokenAsync();
             string timestamp = AppTime.Now.ToString("yyyyMMddHHmmss");
-            string password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{BusinessShortCode}{PassKey}{timestamp}"));
+            string password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{AppSettings.Settings.MPesa.BusinessShortCode}{AppSettings.Settings.MPesa.PassKey}{timestamp}"));
 
             var payload = new
             {
-                BusinessShortCode,
+                AppSettings.Settings.MPesa.BusinessShortCode,
                 Password = password,
                 Timestamp = timestamp,
-                TransactionType = _configuration["MPesa:TransactionType"],
+                AppSettings.Settings.MPesa.TransactionType,
                 Amount = amount,
                 PartyA = phoneNumber,
-                PartyB = BusinessShortCode,
+                PartyB = AppSettings.Settings.MPesa.BusinessShortCode,
                 PhoneNumber = NormalizePhone(phoneNumber),
                 CallBackURL = callbackUrl,
                 AccountReference = reference,
                 TransactionDesc = "Payment",
-                ResponseType = _configuration["MPesa:ResponseType"]
+                AppSettings.Settings.MPesa.ResponseType
             };
-            var request = new HttpRequestMessage(HttpMethod.Post, _configuration["MPesa:StkPushUrl"]);
+            var request = new HttpRequestMessage(HttpMethod.Post, AppSettings.Settings.MPesa.StkPushUrl);
             request.Headers.Add("Authorization", $"Bearer {token}");
             request.Content = new StringContent(
                 System.Text.Json.JsonSerializer.Serialize(payload),

@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Utility;
+using HIMS.Core.Domain.Common;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
@@ -25,18 +26,16 @@ namespace HIMS.API.Controllers.Report
         private readonly IDoctorMasterService _IDoctorMasterService;
         private readonly IGenericService<MReportConfig> _reportlistRepository;
         private readonly IReportService _reportService;
-        public readonly IConfiguration _configuration;
         public readonly IPdfUtility _pdfUtility;
         public readonly IFileUtility _FileUtility;
         public ReportController(IRegistrationService repository, IDoctorMasterService doctorRepository,
             IGenericService<MReportConfig> reportlistRepository, IFileUtility fileUtility,
-            IReportService reportService, IConfiguration configuration, IPdfUtility pdfUtility)
+            IReportService reportService, IPdfUtility pdfUtility)
         {
             _IRegistrationService = repository;
             _IDoctorMasterService = doctorRepository;
             _reportlistRepository = reportlistRepository;
             _reportService = reportService;
-            _configuration = configuration;
             _pdfUtility = pdfUtility;
             _FileUtility = fileUtility;
         }
@@ -455,9 +454,9 @@ namespace HIMS.API.Controllers.Report
                 default:
                     break;
             }
-            model.BaseUrl = Convert.ToString(_configuration["BaseUrl"]);
-            model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
-            var byteFile = await _reportService.GetReportSetByProc(model, _configuration["PdfFontPath"]);
+            model.BaseUrl = AppSettings.Settings.BaseUrl;
+            model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
+            var byteFile = await _reportService.GetReportSetByProc(model, AppSettings.Settings.PdfFontPath);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = Convert.ToBase64String(byteFile.Item1) }));
         }
 
@@ -499,7 +498,7 @@ namespace HIMS.API.Controllers.Report
                 model.FileName = MReportConfigList[0].ReportFileName;
                 model.vPageOrientation = MReportConfigList[0].ReportPageOrientation;
             }
-            model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
+            model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
             var tuple = _reportService.GetNewReportSetByProc(model);
             string byteFile = Convert.ToBase64String(tuple.Item1);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
@@ -565,8 +564,7 @@ namespace HIMS.API.Controllers.Report
         [HttpPost("new-vimal-html-pdf")]
         public async Task<IActionResult> NewVimalHtmlPdf()
         {
-            string StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
-            string byteFile = _reportService.GeneratePdfFromSp("ps_getMultipleTabForReport", StorageBaseUrl);
+            string byteFile = _reportService.GeneratePdfFromSp("ps_getMultipleTabForReport", AppSettings.Settings.StorageBaseUrl);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
 
@@ -596,9 +594,9 @@ namespace HIMS.API.Controllers.Report
                 default:
                     break;
             }
-            model.BaseUrl = Convert.ToString(_configuration["BaseUrl"]);
-            model.StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"]);
-            var byteFile = _reportService.GeneratePdfFromSpV1(model, _configuration["PdfFontPath"]);
+            model.BaseUrl = AppSettings.Settings.BaseUrl;
+            model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
+            var byteFile = _reportService.GeneratePdfFromSpV1(model, AppSettings.Settings.PdfFontPath);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
 

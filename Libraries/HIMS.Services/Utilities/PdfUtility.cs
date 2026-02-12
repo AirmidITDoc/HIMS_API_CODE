@@ -1,4 +1,5 @@
-﻿using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Common;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
@@ -29,18 +30,16 @@ namespace HIMS.Services.Utilities
     {
         private readonly Data.Models.HIMSDbContext _context;
         private static IConverter converter = new SynchronizedConverter(new PdfTools());
-        public readonly IConfiguration _configuration;
+        //public readonly IConfiguration _configuration;
         //private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
         //public readonly IPdfUtility _pdfUtility;
 
 
-        public PdfUtility(HIMSDbContext HIMSDbContext, IConverter _converter, IConfiguration configuration
-            //Microsoft.Extensions.Hosting.IHostingEnvironment hostingEnvironment, IPdfUtility pdfUtility
-            )
+        public PdfUtility(HIMSDbContext HIMSDbContext, IConverter _converter)
         {
             _context = HIMSDbContext;
             converter = _converter;
-            _configuration = configuration;
+           // _configuration = configuration;
             //_hostingEnvironment = (Microsoft.AspNetCore.Hosting.IHostingEnvironment?)hostingEnvironment;
             //_pdfUtility = pdfUtility;
 
@@ -610,7 +609,7 @@ namespace HIMS.Services.Utilities
             var DestinationPath = "";
             //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
-                DestinationPath = _configuration["StorageBaseUrl"];
+                DestinationPath = AppSettings.Settings.StorageBaseUrl;
             //string fullFilePath = "E:\\Storage\\Hospital\\Logo\\hospitallogo.jfif";
 
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));

@@ -1,20 +1,15 @@
-﻿using HIMS.Core.Utilities;
+﻿using HIMS.Core.Domain.Common;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace HIMS.Services.Utilities
 {
-    public class AESSecurityKeys
-    {
-        public static string key = ConfigurationHelper.config.GetSection("AESSecurityKeys:key").Value;
-        public static string iv = ConfigurationHelper.config.GetSection("AESSecurityKeys:iv").Value;
-    }
     public class AESEncrytDecry
     {
         public static string DecryptStringAES(string cipherText)
         {
-            var keybytes = Encoding.UTF8.GetBytes(AESSecurityKeys.key);
-            var iv = Encoding.UTF8.GetBytes(AESSecurityKeys.iv);
+            var keybytes = Encoding.UTF8.GetBytes(AppSettings.Settings.AESSecurityKeys.key);
+            var iv = Encoding.UTF8.GetBytes(AppSettings.Settings.AESSecurityKeys.iv);
             cipherText = cipherText.Replace(" ", "+");
             var encrypted = Convert.FromBase64String(System.Web.HttpUtility.UrlDecode(cipherText));
             var decriptedFromJavascript = DecryptStringFromBytes(encrypted, keybytes, iv);
@@ -77,8 +72,8 @@ namespace HIMS.Services.Utilities
 
         public static string EncryptStringAES(string plainText)
         {
-            var keybytes = Encoding.UTF8.GetBytes(AESSecurityKeys.key);
-            var iv = Encoding.UTF8.GetBytes(AESSecurityKeys.iv);
+            var keybytes = Encoding.UTF8.GetBytes(AppSettings.Settings.AESSecurityKeys.key);
+            var iv = Encoding.UTF8.GetBytes(AppSettings.Settings.AESSecurityKeys.iv);
             var encryoFromJavascript = EncryptStringToBytes(plainText, keybytes, iv);
             return System.Web.HttpUtility.UrlEncode(Convert.ToBase64String(encryoFromJavascript));
         }

@@ -1,4 +1,5 @@
-﻿using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Common;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
@@ -7,15 +8,12 @@ using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
 using HIMS.Services.Utilities;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using PdfSharpCore.Internal;
 using System.Data;
 using System.Globalization;
 using System.Text;
 using WkHtmlToPdfDotNet;
-using static HIMS.Services.Utilities.PdfUtility;
 
 
 
@@ -26,14 +24,14 @@ namespace HIMS.Services.Report
     public class ReportService : IReportService
     {
         private readonly Data.Models.HIMSDbContext _context;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        //private readonly IHostingEnvironment _hostingEnvironment;
         public readonly IPdfUtility _pdfUtility;
         public readonly IBarcodeConfigService _IBarcodeConfigService;
         //public readonly IFileUtility _FileUtility;
-        public ReportService(HIMSDbContext HIMSDbContext, IHostingEnvironment hostingEnvironment, IPdfUtility pdfUtility, IBarcodeConfigService barcodeConfigService)
+        public ReportService(HIMSDbContext HIMSDbContext, IPdfUtility pdfUtility, IBarcodeConfigService barcodeConfigService)
         {
             _context = HIMSDbContext;
-            _hostingEnvironment = hostingEnvironment;
+            //_hostingEnvironment = hostingEnvironment;
             _pdfUtility = pdfUtility;
             _IBarcodeConfigService = barcodeConfigService;
             //_FileUtility = fileUtility;
@@ -139,7 +137,7 @@ namespace HIMS.Services.Report
 
         public virtual async Task<MReportConfig> GetReportConfigByMode(string ReportMode, string Section)
         {
-            return await _context.MReportConfigs.FirstOrDefaultAsync(x => x.ReportMode == ReportMode && x.ReportSection == Section && x.IsActive.Value==true);
+            return await _context.MReportConfigs.FirstOrDefaultAsync(x => x.ReportMode == ReportMode && x.ReportSection == Section && x.IsActive.Value == true);
         }
 
 
@@ -160,8 +158,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "Registration List";
                         string[] headerList = { "Sr.No", "UHID", "Patient Name", "Address", "City", "Pin Code", "Age", "Gender Name", "Mobile No" };
                         string[] colList = { "RegID", "PatientName", "Address", "City", "PinNo", "Age", "GenderName", "MobileNo" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("rptListofRegistration", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RegistrationReport", "RegistrationReport" + vDate, Orientation.Portrait, PaperKind.A4);
 
@@ -175,20 +173,11 @@ namespace HIMS.Services.Report
                 case "LabRegistrationListReport":
                     {
 
-                        //model.RepoertName = "Lab Registration List";
-                        //string[] headerList = { "Sr.No", "UHID", "Visit Date", "Patient Name" };
-                        //string[] colList = { "RegNo", "VisitDate", "PatientName" };
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabregistrationDetailList.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        //var html = GetHTMLView("ps_Rtrv_LabRegisterDetailReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabRegistrationListReport", "LabRegistrationListReport" + vDate, Orientation.Portrait);
-                        //break;
-
                         model.RepoertName = "Lab Registration List";
                         string[] headerList = { "Sr.No", "UHID", "Date", "Patient Name", "Age", "Gender", "DoctorName", "NetAmount", "ConcessionAmt", "PaidAmt", "BalPayAmt" };
                         string[] colList = { "RegNo", "RegTime", "PatientName", "Age", "GenderName", "DoctorName", "NetPayableAmt", "ConcessionAmt", "PaidAmt", "BalanceAmt", };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("ps_LabPatientRegistrationList", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabRegistrationListReport", "LabRegistrationListReport", Orientation.Landscape);
                         break;
@@ -200,30 +189,23 @@ namespace HIMS.Services.Report
                 #region :: OPRefundReceipt ::
                 case "OPRefundReceipt":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPRefundReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OPRefundReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptOPRefundofBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptOPRefundofBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPRefundReceipt", "OPRefundReceipt" + vDate, Orientation.Portrait);
                         break;
-
                     }
                 #endregion
                 #region :: LabRefundReceipt ::
                 case "LabRefundReceipt":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabRefundReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabRefundReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptLabRefundofBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptLabRefundofBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabRefundReceipt", "LabRefundReceipt" + vDate, Orientation.Portrait);
                         break;
 
@@ -234,8 +216,8 @@ namespace HIMS.Services.Report
                     {
                         string[] colList = { "RefundDate", "RegId", "PatientName", "RefundAmount", "TotalAmt" };
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPPaymentReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OPPaymentReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptOPDPaymentReceiptPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -252,8 +234,8 @@ namespace HIMS.Services.Report
 
                         string[] colList = { "RefundDate", "RegId", "PatientName", "RefundAmount", "TotalAmt" };
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPLabPaymentReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OPLabPaymentReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptLabPaymentReceiptPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
 
@@ -270,8 +252,8 @@ namespace HIMS.Services.Report
                     {
                         string[] colList = { "RefundDate", "RegId", "PatientName", "RefundAmount", "TotalAmt" };
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LABPaymentReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LABPaymentReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptLabPaymentReceiptPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -286,16 +268,16 @@ namespace HIMS.Services.Report
                     {
 
                         string[] colList = { "RegNo", "VisitDate", "PatientName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "AppointmentReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AppointmentReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, colList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentReceipt", "AppointmentReceiptWithoutHeader" + vDate, Orientation.Portrait);
                         break;
 
 
 
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "AppointmentReceipt.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        //string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AppointmentReceipt.html");
+                        //string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         //htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
                         //var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, colList);
                         //html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -308,12 +290,10 @@ namespace HIMS.Services.Report
                 #region :: AppointmentReceipt ::
                 case "AppointmentReceipt":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "AppointmentReceiptWithHeader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AppointmentReceiptWithHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentReceipt", "AppointmentReceipt" + vDate, Orientation.Portrait);
@@ -323,12 +303,10 @@ namespace HIMS.Services.Report
                 #region :: OpBillReceipt ::
                 case "OpBillReceipt":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OpBillingReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OpBillingReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
@@ -339,12 +317,10 @@ namespace HIMS.Services.Report
                 #region :: LabBillReceipt ::
                 case "LabBillReceipt":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabBillingReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabBillingReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
@@ -356,12 +332,10 @@ namespace HIMS.Services.Report
                 #region :: LabMoneyReceipt ::
                 case "LabMoneyReceipt":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabMoneyReciept.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabMoneyReciept.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ExternalLabHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabMoneyReceipt", "LabMoneyReceipt" + vDate, Orientation.Portrait);
@@ -373,12 +347,10 @@ namespace HIMS.Services.Report
                 #region :: LabMoneyReceiptWithoutHeader ::
                 case "LabMoneyReceiptWithoutHeader":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabMoneyReceiptWithoutHeader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabMoneyReceiptWithoutHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ExternalLabHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabMoneyReceiptWithoutHeader", "LabMoneyReceiptWithoutHeader" + vDate, Orientation.Portrait);
@@ -390,12 +362,10 @@ namespace HIMS.Services.Report
                 #region :: LabMoneyReceiptWithImage ::
                 case "LabMoneyReceiptWithImage":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabMoneyReciept.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeaderWithImage.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabMoneyReciept.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ExternalLabHeaderWithImage.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeaderWithImage(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabMoneyReceiptWithImage", "LabMoneyReceiptWithImage" + vDate, Orientation.Portrait);
@@ -408,8 +378,8 @@ namespace HIMS.Services.Report
                 //    {
                 //        string[] colList = { };
 
-                //        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabHeaderWithImage.html");
-                //        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeaderWithImage.html");
+                //        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabHeaderWithImage.html");
+                //        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ExternalLabHeaderWithImage.html");
                 //        htmlHeaderFilePath = _pdfUtility.GetHeaderByType(htmlHeaderFilePath,PdfUtility.HeaderType.ImageOnly,0);
                 //        var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                 //        html = html.Replace("{{ExternalLabHeaderWithImage}}", htmlHeaderFilePath);
@@ -421,12 +391,10 @@ namespace HIMS.Services.Report
                 #region :: OpBillReceiptT ::
                 case "OpBillReceiptT":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OpBillingReceiptT.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeaderThermal.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OpBillingReceiptT.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeaderThermal.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeaderThermal}}", htmlHeaderFilePath);
                         html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
@@ -437,12 +405,10 @@ namespace HIMS.Services.Report
                 #region :: EstimatePrint ::
                 case "EstimatePrint":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "EstimatePrint.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "EstimatePrint.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptEstimateHeaderReport", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptEstimateHeaderReport", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
@@ -455,12 +421,10 @@ namespace HIMS.Services.Report
                 #region :: OpDraftBillReceipt ::
                 case "OpDraftBillReceipt":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OpDraftBillReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OpDraftBillReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptOPDraftBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptOPDraftBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
@@ -473,12 +437,10 @@ namespace HIMS.Services.Report
                 #region :: OpDraftPatientStatement ::
                 case "OpDraftPatientStatement":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OpDraftPatientStatement.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OpDraftPatientStatement.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_DraftBillSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_DraftBillSummary", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpDraftPatientStatement", "OpDraftPatientStatement" + vDate, Orientation.Portrait);
@@ -489,12 +451,10 @@ namespace HIMS.Services.Report
                 #region :: OPCasePaper ::
                 case "OPCasePaper":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPCasePaper.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OPCasePaper.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPCasePaper", "OPCasePaper" + vDate, Orientation.Portrait);
@@ -507,10 +467,10 @@ namespace HIMS.Services.Report
                         string[] colList = Array.Empty<string>();
 
                         var dt = GetDataBySp(model, "rptAppointmentPrint1");
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPPatientBarCodeSticker.html");
+                        //string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OPPatientBarCodeSticker.html");
                         var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PatientDetailSticker");
                         string html = objTemplate?.TemplateBody ?? "";
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        //string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         //htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         int i = 0;
 
@@ -669,12 +629,10 @@ namespace HIMS.Services.Report
                 #region :: LabregisterBillReceipt ::
                 case "LabregisterBillReceipt":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabRegisterbillReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabRegisterbillReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptLabRegisterBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptLabRegisterBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabBillReceipt", "LabBillReceipt" + vDate, Orientation.Portrait);
@@ -684,12 +642,10 @@ namespace HIMS.Services.Report
                 #region :: CommonTemplateReport::
                 case "CommonTemplateReport":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "TemplateReportNew2.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "TemplateReportNew2.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptLabRegisterBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptLabRegisterBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "CommonTemplate", "CommonTemplate", Orientation.Portrait);
@@ -703,12 +659,10 @@ namespace HIMS.Services.Report
                     {
 
                         model.RepoertName = "OPGastrologyPrescription ";
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPGastrologyPrescription.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OPGastrologyPrescription.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_OPDPrecriptionGastrologyPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_OPDPrecriptionGastrologyPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{Signature}}", "");
                         html = SetFonts(html, PdfFontPath);
@@ -725,12 +679,10 @@ namespace HIMS.Services.Report
                     {
 
                         model.RepoertName = "OPGastrologyPrescription ";
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPGastrologyPrescriptionWithoutheader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OPGastrologyPrescriptionWithoutheader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_OPDPrecriptionGastrologyPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_OPDPrecriptionGastrologyPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{Signature}}", "");
                         html = SetFonts(html, PdfFontPath);
@@ -747,12 +699,10 @@ namespace HIMS.Services.Report
                     {
 
                         model.RepoertName = "OPPrescription ";
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPPrescriptionNew.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OPPrescriptionNew.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{Signature}}", "");
                         html = SetFonts(html, PdfFontPath);
@@ -769,12 +719,10 @@ namespace HIMS.Services.Report
 
 
                         model.RepoertName = "OPPrescription ";
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPPrescriptionNew.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OPPrescriptionNew.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{Signature}}", "");
                         html = SetFonts(html, PdfFontPath);
@@ -790,12 +738,10 @@ namespace HIMS.Services.Report
                     {
 
                         model.RepoertName = "OPPrescriptionwithoutHeader ";
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPPrescriptionwithoutheader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OPPrescriptionwithoutheader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{Signature}}", "");
                         html = SetFonts(html, PdfFontPath);
@@ -810,12 +756,10 @@ namespace HIMS.Services.Report
                     {
 
                         model.RepoertName = "OPPrescriptionwithoutHeader ";
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OPPrescriptionwithoutheader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OPPrescriptionwithoutheader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptOPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{Signature}}", "");
                         html = SetFonts(html, PdfFontPath);
@@ -830,13 +774,10 @@ namespace HIMS.Services.Report
                 #region :: Certificate ::
                 case "Certificate":
                     {
-
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "CertificateInformationPrint1.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "CertificateInformationPrint1.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rpt_CertificateInformationPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rpt_CertificateInformationPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "Certificate", "CertificateInformation" + vDate, Orientation.Portrait);
@@ -849,13 +790,10 @@ namespace HIMS.Services.Report
                 #region :: EmergencyPrint ::
                 case "EmergencyPrint":
                     {
-
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "Emergencyprint.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "Emergencyprint.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptEmergencyAdmPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptEmergencyAdmPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "EmergencyPrint", "EmergencyPrint" + vDate, Orientation.Portrait);
@@ -870,12 +808,10 @@ namespace HIMS.Services.Report
                     {
 
                         model.RepoertName = "EmergencyPrescription ";
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "EmergencyPresciption.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "EmergencyPresciption.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptEmergencyAdmPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptEmergencyAdmPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         //html = html.Replace("{{Signature}}", "");
                         //html = SetFonts(html, PdfFontPath);
@@ -887,8 +823,8 @@ namespace HIMS.Services.Report
 
 
 
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathologyResultTest.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        //string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PathologyResultTest.html");
+                        //string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
 
 
                         break;
@@ -899,13 +835,10 @@ namespace HIMS.Services.Report
                 #region :: ConsentInformation ::
                 case "ConsentInformation":
                     {
-
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ConsentInformation.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ConsentInformation.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_TConsentInformation", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_TConsentInformation", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "ConsentInformation", "ConsentInformation" + vDate, Orientation.Portrait);
@@ -917,13 +850,10 @@ namespace HIMS.Services.Report
                 #region :: ConsentInformationWithoutHeader ::
                 case "ConsentInformationWithoutHeader":
                     {
-
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ConsentInformationWithoutHeader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ConsentInformationWithoutHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_TConsentInformation", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_TConsentInformation", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         //  html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "ConsentInformationWithoutHeader", "ConsentInformationWithoutHeader" + vDate, Orientation.Portrait);
@@ -935,12 +865,10 @@ namespace HIMS.Services.Report
                 #region :: OPBillWithPackagePrint ::
                 case "OPBillWithPackagePrint":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OpBillWithPackagePrint.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OpBillWithPackagePrint.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptOP_BillWithPackage_Print", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptOP_BillWithPackage_Print", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPBillWithPackagePrint", "OPBillWithPackagePrint" + vDate, Orientation.Portrait);
@@ -950,12 +878,10 @@ namespace HIMS.Services.Report
                 #region :: GRNReport ::
                 case "GRNReport":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "GRNReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "GRNReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptPrintGRN", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptPrintGRN", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "GRNReport", "GRNReport" + vDate, Orientation.Portrait);
@@ -968,12 +894,10 @@ namespace HIMS.Services.Report
                 #region :: GRNReturnReport ::
                 case "GRNReturnReport":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "GRNReturn.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "GRNReturn.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptGRNReturnPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptGRNReturnPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "GRNReturnReport", "GRNReturnReport" + vDate, Orientation.Portrait);
@@ -988,12 +912,10 @@ namespace HIMS.Services.Report
                 #region :: KenyaGRNReport ::
                 case "KenyaGRNReport":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "KenyaGRNReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "KenyaGRNReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptPrintGRN", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptPrintGRN", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "KenyaGRNReport", "KenyaGRNReport" + vDate, Orientation.Portrait);
@@ -1006,12 +928,10 @@ namespace HIMS.Services.Report
                 #region :: IndentwiseReport ::
                 case "IndentwiseReport":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IndentReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IndentReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptPrintIndent", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptPrintIndent", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IndentwiseReport", "IndentwiseReport" + vDate, Orientation.Portrait);
@@ -1027,19 +947,17 @@ namespace HIMS.Services.Report
                     {
 
                         //string[] colList = { "RegNo", "VisitDate", "PatientName" };
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DoctorNoteReceipt.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        //string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "DoctorNoteReceipt.html");
+                        //string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         //var html = GetHTMLView("m_rpt_T_Doctors_Notes", model, htmlFilePath, htmlHeaderFilePath, colList);
                         //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DoctorNotesReceipt", "DoctorNotesReceipt" + vDate, Orientation.Portrait);
                         //break;
 
 
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DoctorNoteReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "DoctorNoteReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rpt_T_Doctors_Notes", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rpt_T_Doctors_Notes", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DoctorNotesReceipt", "DoctorNotesReceipt" + vDate, Orientation.Portrait);
@@ -1050,14 +968,10 @@ namespace HIMS.Services.Report
                 #region :: NursingNotesReceipt ::
                 case "NursingNotesReceipt":
                     {
-
-
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NursingNoteReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NursingNoteReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rpt_T_NursingNotesPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rpt_T_NursingNotesPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NursingNotesReceipt", "NursingNotesReceipt" + vDate, Orientation.Portrait);
@@ -1069,14 +983,10 @@ namespace HIMS.Services.Report
                 #region :: DoctorNoteandNursingNoteReport ::
                 case "DoctorNoteandNursingNoteReport":
                     {
-
-
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DoctorAndNursingNoteReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "DoctorAndNursingNoteReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rpt_T_NursingNotesAndT_Doctors_NotesPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rpt_T_NursingNotesAndT_Doctors_NotesPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NursingNotesReceipt", "NursingNotesReceipt" + vDate, Orientation.Portrait);
@@ -1089,8 +999,8 @@ namespace HIMS.Services.Report
                     {
 
                         string[] colList = { "RegNo", "VisitDate", "PatientName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DoctorPatientHandoverReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "DoctorPatientHandoverReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rpt_T_Doctor_PatientHandover", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1103,8 +1013,8 @@ namespace HIMS.Services.Report
                     {
 
                         string[] colList = { "RegNo", "VisitDate", "PatientName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NursingPatientHandoverReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NursingPatientHandoverReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rpt_T_Nursing_PatientHandover", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1126,8 +1036,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "Appointment List";
                         string[] headerList = { "Sr.No", "UHID", "Date", "IPDNo", "Patient Name", "Age", "Gender", "Ward", "Bed", /*"AdmDoctor Name",*/ "RefDocName", "Company", "ChargesAmt", "AdvAmt", "BalAmt" };
                         string[] colList = { "RegNo", "DOA", "IPDNo", "PatientName", "Age", "GenderName", "RoomName", "BedName",/* "AdmittedDoctorName",*/ "RefDocName", "CompanyName", "ChargesAmount", "AdvanceAmount", "BalPayAmt", };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("rptCurrentAdmittedListReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDCurrentAdmittedDoctorWiseCharges", "IPDCurrentAdmittedDoctorWiseCharges", Orientation.Landscape);
@@ -1139,8 +1049,8 @@ namespace HIMS.Services.Report
                     {
 
                         string[] colList = { "RegNo", "VisitDate", "PatientName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPCasepaper.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPCasepaper.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptAdmissionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1155,8 +1065,8 @@ namespace HIMS.Services.Report
                     {
 
                         string[] colList = { "RegNo", "VisitDate", "PatientName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPCasepaper.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPCasepaper.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("m_rptAdmissionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPCasepaper", "IPCasepaper" + vDate, Orientation.Portrait);
                         break;
@@ -1165,11 +1075,10 @@ namespace HIMS.Services.Report
                 #region :: IpMLCCasePaperPrint ::
                 case "IpMLCCasePaperPrint":
                     {
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_MLCReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPReport_MLCReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_MLCCasePaperPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_MLCCasePaperPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPMLCDetail", "IPMLCDetail" + vDate, Orientation.Portrait);
@@ -1180,11 +1089,9 @@ namespace HIMS.Services.Report
                 #region :: IPCompanyFinalBillWithSR ::
                 case "IPCompanyFinalBillWithSR":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPReport_IPCompanyBillWithSR.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("rptIPComBlPrtSummary_WithAdd_SR", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPReport_IPCompanyBillWithSR.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                        var html = GetHTMLView("rptIPComBlPrtSummary_WithAdd_SR", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPCompanyFinalBillWithSR", "IPCompanyFinalBillWithSR" + vDate, Orientation.Portrait);
                         break;
                     }
@@ -1194,11 +1101,9 @@ namespace HIMS.Services.Report
                 #region :: IpCreditBill ::
                 case "IpCreditBill":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPInterimBill.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
-                        var html = GetHTMLView("m_rptIPDInterimBill", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPInterimBill.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                        var html = GetHTMLView("m_rptIPDInterimBill", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpCreditBill", "IpCreditBill" + vDate, Orientation.Portrait);
                         break;
                     }
@@ -1206,14 +1111,10 @@ namespace HIMS.Services.Report
                 #region :: IPDInterimBill ::
                 case "IPDInterimBill":
                     {
-
-
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPInterimBill.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPInterimBill.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptIPDInterimBill", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptIPDInterimBill", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDInterimBill", "IPDInterimBill" + vDate, Orientation.Portrait);
                         break;
@@ -1224,14 +1125,10 @@ namespace HIMS.Services.Report
                 #region :: IPDInterimBillA5 ::
                 case "IPDInterimBillA5":
                     {
-
-
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPInterimBillA5.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPInterimBillA5.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptIPDInterimBill", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptIPDInterimBill", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, "IPDInterimBill", "IPDInterimBillA5" + vDate, Orientation.Landscape);
                         break;
@@ -1245,12 +1142,10 @@ namespace HIMS.Services.Report
                 #region :: RegistrationForm ::
                 case "RegistrationForm":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "RegistrationForm.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "RegistrationForm.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptRegistrationPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptRegistrationPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RegistrationForm", "RegistrationForm" + vDate, Orientation.Portrait);
@@ -1262,12 +1157,10 @@ namespace HIMS.Services.Report
                 #region :: IPStickerPrint ::
                 case "IPStickerPrint":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PatientDetailsStickerA4Page.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PatientDetailsStickerA4Page.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptAdmissionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptAdmissionPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPStickerPrint", "Sticker" + vDate, Orientation.Portrait);
@@ -1278,12 +1171,10 @@ namespace HIMS.Services.Report
                 #region :: IpDraftBillGroupWise ::
                 case "IpDraftBillGroupWise":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDraftBillGroupWise.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDraftBillGroupWise.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptIPD_DraftBillClassWise_Print", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptIPD_DraftBillClassWise_Print", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillGroupWise" + vDate, Orientation.Portrait);
                         break;
@@ -1293,12 +1184,10 @@ namespace HIMS.Services.Report
                 #region :: IpDraftBillGroupWiseA5 ::
                 case "IpDraftBillGroupWiseA5":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDraftBillGroupWiseA5.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDraftBillGroupWiseA5.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptIPD_DraftBillClassWise_Print", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptIPD_DraftBillClassWise_Print", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillGroupWiseA5" + vDate, Orientation.Portrait);
                         break;
@@ -1308,12 +1197,10 @@ namespace HIMS.Services.Report
                 #region :: IpDraftBillClassWise ::
                 case "IpDraftBillClassWise":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IpDraftBillClassWisee.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IpDraftBillClassWisee.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptIPD_DraftBillSummary_Print", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptIPD_DraftBillSummary_Print", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillClassWise" + vDate, Orientation.Portrait);
@@ -1325,12 +1212,10 @@ namespace HIMS.Services.Report
                 #region :: IpDraftBillClassWiseA5 ::
                 case "IpDraftBillClassWiseA5":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IpDraftBillClassWiseA5.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IpDraftBillClassWiseA5.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptIPD_DraftBillSummary_Print", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptIPD_DraftBillSummary_Print", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillClassWiseA5" + vDate, Orientation.Portrait);
@@ -1341,13 +1226,10 @@ namespace HIMS.Services.Report
                 #region :: IPFinalBillClassWise ::
                 case "IPFinalBillClassWise":
                     {
-
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPFinalBillClassWise.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPFinalBillClassWise.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptIPD_FINAL_BILL_CLASSWISE", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptIPD_FINAL_BILL_CLASSWISE", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBill", "IPDFinalBillClassWise" + vDate, Orientation.Portrait);
@@ -1360,12 +1242,10 @@ namespace HIMS.Services.Report
                 #region :: IpDraftBillDateWise ::
                 case "IpDraftBillDateWise":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IpDraftBillDateWise.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IpDraftBillDateWise.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_IPDDraftBillChargesWithpharmacyPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_IPDDraftBillChargesWithpharmacyPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillDateWise" + vDate, Orientation.Portrait);
                         break;
@@ -1376,13 +1256,10 @@ namespace HIMS.Services.Report
                 #region :: IPFinalBillClassServiceWise ::
                 case "IPFinalBillClassServiceWise":
                     {
-
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPFinalBillClassServiceWise.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPFinalBillClassServiceWise.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptIPD_FINAL_BILL_CLASSWISE", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptIPD_FINAL_BILL_CLASSWISE", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBill", "IPFinalBillClassServiceWise" + vDate, Orientation.Portrait);
@@ -1397,8 +1274,8 @@ namespace HIMS.Services.Report
 
                         string[] colList = { "RegNo", "VisitDate", "PatientName" };
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPFinalBillGroupwise.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPFinalBillGroupwise.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptIPD_FINAL_BILL_GROUPWISE", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1414,8 +1291,8 @@ namespace HIMS.Services.Report
 
                         string[] colList = { "RegNo", "VisitDate", "PatientName" };
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPFinalBillChargesDatewise.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPFinalBillChargesDatewise.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rpt_IPDFinalBillpharmacyWithDateWise", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1432,8 +1309,8 @@ namespace HIMS.Services.Report
 
                         string[] colList = { "RegNo", "VisitDate", "PatientName" };
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPFinalBillChargesDatewisegroupwise.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPFinalBillChargesDatewisegroupwise.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rpt_IPDFinalBillpharmacyWithDateWise", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1449,8 +1326,8 @@ namespace HIMS.Services.Report
 
                         string[] colList = { "RegNo", "VisitDate", "PatientName" };
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPFinalBillChargesDateWisegroupwisewithoutadvance.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPFinalBillChargesDateWisegroupwisewithoutadvance.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rpt_IPDFinalBillpharmacyWithDateWise", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1466,8 +1343,8 @@ namespace HIMS.Services.Report
 
                         string[] colList = Array.Empty<string>();
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SettlementReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SettlementReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptIPDPaymentReceiptPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1482,8 +1359,8 @@ namespace HIMS.Services.Report
 
                         string[] colList = Array.Empty<string>();
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "AdvanceReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AdvanceReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptIPDAdvancePrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1498,8 +1375,8 @@ namespace HIMS.Services.Report
 
                         string[] colList = Array.Empty<string>();
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPAdvanceStatement.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPAdvanceStatement.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("rptIPAdvanceSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1514,13 +1391,11 @@ namespace HIMS.Services.Report
                     {
 
                         model.RepoertName = "Ip Advance Refund  Receipt";
-                        string[] headerList = { };
-                        string[] colList = { };
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "RefundofAdvanceReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "RefundofAdvanceReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptIPRefundofAdvancePrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptIPRefundofAdvancePrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpAdvanceRefundReceipt", "IpAdvanceRefundReceipt" + vDate, Orientation.Portrait);
@@ -1535,13 +1410,10 @@ namespace HIMS.Services.Report
                     {
 
                         model.RepoertName = "Ip Advance Refund  Receipt";
-                        string[] headerList = { };
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPRefundBillReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPRefundBillReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptIPRefundofBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptIPRefundofBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpAdvanceRefundReceipt", "IpAdvanceRefundReceipt" + vDate, Orientation.Portrait);
@@ -1555,12 +1427,10 @@ namespace HIMS.Services.Report
                 #region :: IpDischargeSummaryReport ::
                 case "IpDischargeSummaryReport":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischargeSummary.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDischargeSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryReport", "IpDischargeSummaryReport" + vDate, Orientation.Portrait);
@@ -1573,12 +1443,10 @@ namespace HIMS.Services.Report
                     {
 
                         model.RepoertName = "DischargeSummaryWithoutHeader";
-                        string[] headerList = { };
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischargeSummaryWithoutHeader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDischargeSummaryWithoutHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         //GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryReport", "IpDischargeSummarywithoutHeaderReport" + vDate, Orientation.Portrait);
                         break;
                     }
@@ -1586,14 +1454,10 @@ namespace HIMS.Services.Report
                 #region :: IpDischargeSummaryTemplate ::
                 case "IpDischargeSummaryTemplate":
                     {
-
-
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischargesummaryTemplate.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDischargesummaryTemplate.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplate" + vDate, Orientation.Portrait);
@@ -1605,12 +1469,10 @@ namespace HIMS.Services.Report
                     {
 
                         model.RepoertName = "IpDischargeSummaryTemplateWithoutHeader";
-                        string[] headerList = { };
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischargesummaryTemplateWithoutHeader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDischargesummaryTemplateWithoutHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         //GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplateWithoutHeader" + vDate, Orientation.Portrait);
                         break;
                     }
@@ -1620,21 +1482,18 @@ namespace HIMS.Services.Report
                 #region :: IpDischargeSummaryTemplatewithPatientHeader ::
                 case "IpDischargeSummaryTemplatewithPatientHeader":
                     {
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDischargesummaryTemplatewithPatientheader.html");
 
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischargesummaryTemplatewithPatientheader.html");
-
-                        string htmlHeaderFilePath1 = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlHeaderFilePath1 = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         //htmlHeaderFilePath1 = _pdfUtility.GetHeader(htmlHeaderFilePath1);
 
 
-                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath1, colList);
+                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath1, Array.Empty<string>());
 
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PatientHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PatientHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetPatientHeader(model, htmlHeaderFilePath);
 
-                        string htmlHeaderFilePathHeader = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "HeaderfromTemplate.html");
+                        string htmlHeaderFilePathHeader = Path.Combine(AppSettings.Settings.PdfTemplatePath, "HeaderfromTemplate.html");
                         htmlHeaderFilePathHeader = _pdfUtility.GetHeaderfromtemplate(model, htmlHeaderFilePathHeader);
 
 
@@ -1653,17 +1512,14 @@ namespace HIMS.Services.Report
                 #region :: IpDischargeSummaryTemplatepatientWithoutHeader ::
                 case "IpDischargeSummaryTemplatepatientWithoutHeader":
                     {
-
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDiscsumTempPatientheaderwithoutHeader.html");
-                        string htmlHeaderFilePath1 = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDiscsumTempPatientheaderwithoutHeader.html");
+                        string htmlHeaderFilePath1 = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath1 = _pdfUtility.GetHeader(htmlHeaderFilePath1);
 
 
-                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath1, colList);
+                        var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath1, Array.Empty<string>());
 
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PatientHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PatientHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetPatientHeader(model, htmlHeaderFilePath);
 
 
@@ -1683,8 +1539,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "Discharge Slip";
                         string[] headerList = { "Sr.No", "UHID", "IPDNo", "RoomName", "PatientName", "AdmissionTime", "DoctorName", "RefDoctorName", "BedName", "ChargesAmount", "AdvanceAmount", "BalPayAmt" };
                         string[] colList = { "RegID", "IPDNo", "RoomName", "PatientName", "AdmissionTime", "DoctorName", "RefDoctorName", "BedName", "ChargesAmount", "AdvanceAmount", "BalPayAmt" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPDischarge.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDischarge.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptDischargeCheckOutSlip", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1699,12 +1555,10 @@ namespace HIMS.Services.Report
                 case "BedTransferReceipt":
                     {
                         model.RepoertName = "BedTransferReceipt ";
-                        string[] headerList = { };
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "BedTransferReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "BedTransferReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptBedTransferDetails", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptBedTransferDetails", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "BedTransferReceipt", "BedTransferReceipt" + vDate, Orientation.Portrait);
@@ -1722,8 +1576,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "Current Ward Wise Charges Report ";
                         string[] headerList = { "Sr.No", "UHID", "IPDNo", "RoomName", "PatientName", "AdmissionTime", "DoctorName", "RefDoctorName", "BedName", "ChargesAmount", "AdvanceAmount", "BalPayAmt" };
                         string[] colList = { "RegID", "IPDNo", "RoomName", "PatientName", "AdmissionTime", "DoctorName", "RefDoctorName", "BedName", "ChargesAmount", "AdvanceAmount", "BalPayAmt" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("rptCurrentAdmittedListReportwithCharges", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "wardWisechargesReport", "wardWisechargesReport" + vDate, Orientation.Portrait);
                         break;
@@ -1735,8 +1589,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "Ref DoctorWiseVisit Report ";
                         string[] headerList = { "Sr.No", "UHID", "IPDNo", "PatientName", "Age", "AdmissionDate", "AdmittedDoctorName" };
                         string[] colList = { "RegNo", "IPDNo", "PatientName", "AgeYear", "AdmissionDate", "AdmittedDoctorName" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("RptRefDoctorWiseAdmission", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDrefDoctorwiseReport", "IPDrefDoctorwiseReport" + vDate, Orientation.Portrait);
                         break;
@@ -1748,8 +1602,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "RefDoctorWise Report  ";
                         string[] headerList = { "Sr.No", "AdmissionId", "UHID", "PatientName", "DoctorName", "Admission Date" };
                         string[] colList = { "AdmissionID", "RegNo", "PatientName", "DoctorName", "AdmissionDate" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("RptCurrentRefAdmittedReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDRefDoctorWiseReport", "IPDRefDoctorWiseReport" + vDate, Orientation.Portrait);
                         break;
@@ -1762,8 +1616,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "Doctor Wise Count List";
                         string[] headerList = { "Sr.No", "Doctor Name", "Total Count" };
                         string[] colList = { "DocName", "Lbl" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("Rtrv_IPDocWsSumry", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDoctorWiseVisitCountSummary", "IPDoctorWiseVisitCountSummary" + vDate, Orientation.Portrait);
                         break;
@@ -1775,8 +1629,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "Dischargetype wise List";
                         string[] headerList = { "Sr.No", "AdmissionDate", "DischargeTime", "DischargeTypeName", "IPDNo", "PatientName", "MobileNo", "DoctorName", "RefDoctorName", "DepartmentName", "Diagnosis" };
                         string[] colList = { "AdmissionDate", "DischargeTime", "DischargeTypeName", "IPDNo", "PatientName", "MobileNo", "DoctorName", "RefDoctorName", "DepartmentName", "Diagnosis" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("rptDischargeTypeReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDDischargeTypeReport", "IPDDischargeTypeReport" + vDate, Orientation.Landscape);
                         break;
@@ -1788,8 +1642,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "Dischargetype Company wise List";
                         string[] headerList = { "Sr.No", "AdmissionDate", "DischargeTime", "DischargeTypeName", "IPDNo", "PatientName", "MobileNo", "DoctorName", "RefDoctorName", "DepartmentName", "Diagnosis" };
                         string[] colList = { "AdmissionDate", "DischargeTime", "DischargeTypeName", "IPDNo", "PatientName", "MobileNo", "DoctorName", "RefDoctorName", "DepartmentName", "Diagnosis" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("rptDischargeTypeReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDDischargeTypeCompanywiseReport", "IPDDischargeTypeCompanywiseReport" + vDate, Orientation.Landscape);
                         break;
@@ -1802,8 +1656,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "IPD Department Wise Count List";
                         string[] headerList = { "Sr.No", "Department Name", "Total Count", };
                         string[] colList = { "DepartmentName", "Lbl" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("Rtrv_IPDepartWsSumry", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDDepartmentwisecountsummary", "IPDDepartmentwisecountsummary" + vDate, Orientation.Portrait);
                         break;
@@ -1816,8 +1670,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "Discharge Report With Mark Status List";
                         string[] headerList = { "Sr.No", "UHID", "PatientName", "DOA", "DOT", "Mark Date-Time", "DOD", "DOT", "Time In Hr" };
                         string[] colList = { "RegNo", "PatientName", "AdmissionDate", "AdmissionTime", "MarkStatus", "DischargeDate", "DischargeTime", "DiffTimeInHr" };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SimpleReportFormat.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("rptIPDischargeMarkStatusReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDDischargewithmarkstatus", "IPDDischargewithmarkstatus" + vDate, Orientation.Landscape);
                         break;
@@ -1830,18 +1684,16 @@ namespace HIMS.Services.Report
                         //model.RepoertName = "DischargeSummaryWithTemplate";
                         //string[] headerList = { "Sr.No", "UHID", "PatientName" };
                         //string[] colList = { "RegNo", "PatientName" };
-                        //string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DischargeSummary.html");
-                        //string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        //string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "DischargeSummary.html");
+                        //string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         //var html = GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DischargeSummaryWithTemplate", "DischargeSummaryWithTemplate", Orientation.Landscape);
                         //break;
 
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "DischargeSummary.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "DischargeSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DischargeSummaryReport", "DischargeSummaryReport" + vDate, Orientation.Portrait);
@@ -1863,8 +1715,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "PathologyReport ";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathologyResultTest.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PathologyResultTest.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1883,8 +1735,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "PathologyReportWithHeader";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathTestReportHospitalheader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PathTestReportHospitalheader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         //html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1901,8 +1753,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "PathologyReport ";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathologyResultTestImg.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ImgHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PathologyResultTestImg.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ImgHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{ImgHeader}}", htmlHeaderFilePath);
@@ -1926,8 +1778,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "PathologyReportTemplate";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathTemplate.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PathTemplate.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPrintPathologyReportTemplate", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -1948,8 +1800,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "PathologyReportTemplate";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathTemplateImgHeader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ImgHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PathTemplateImgHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ImgHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{ImgHeader}}", htmlHeaderFilePath);
@@ -1964,12 +1816,10 @@ namespace HIMS.Services.Report
                 #region :: PathologyReportTemplateWithHeader ::
                 case "PathologyReportTemplateWithHeader":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathTemplateHeader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PathTemplateHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rptPrintPathologyReportTemplate", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rptPrintPathologyReportTemplate", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportTemplateWithHeader", "PathologyReportTemplateWithHeader" + vDate, Orientation.Portrait);
@@ -1986,8 +1836,8 @@ namespace HIMS.Services.Report
                         model.RepoertName = "PathologyReport ";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PathologyResultTestReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PathologyResultTestReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -2012,8 +1862,8 @@ namespace HIMS.Services.Report
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "RadiologyTemplateReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "RadiologyTemplateReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("rptRadiologyReportPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -2031,8 +1881,8 @@ namespace HIMS.Services.Report
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "RadiologyTemplateReportwithoutHeader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "RadiologyTemplateReportwithoutHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("rptRadiologyReportPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -2051,8 +1901,8 @@ namespace HIMS.Services.Report
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "RadiologyTemplateReportwithImgHeader.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ImgHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "RadiologyTemplateReportwithImgHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ImgHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("rptRadiologyReportPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{ImgHeader}}", htmlHeaderFilePath);
@@ -2069,12 +1919,10 @@ namespace HIMS.Services.Report
                 #region :: NurMaterialConsumption ::
                 case "NurMaterialConsumption":
                     {
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "MaterialConsumptionReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "MaterialConsumptionReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptPrintMaterialConsumption", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptPrintMaterialConsumption", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NurMaterialConsumption", "NurMaterialConsumption" + vDate, Orientation.Portrait);
@@ -2091,8 +1939,8 @@ namespace HIMS.Services.Report
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabRequest.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabRequest.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("rptLabRequestList", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -2109,8 +1957,8 @@ namespace HIMS.Services.Report
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "CanteenRequest.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "CanteenRequest.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptCanteenRequestPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -2124,12 +1972,10 @@ namespace HIMS.Services.Report
                 #region :: NurIPprescriptionReport ::
                 case "NurIPprescriptionReport":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IpPrescription.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IpPrescription.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptIPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptIPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpPrescription", "IpPrescription" + vDate, Orientation.Portrait);
@@ -2142,12 +1988,10 @@ namespace HIMS.Services.Report
                 #region :: NurIPprescriptionReturnReport ::
                 case "NurIPprescriptionReturnReport":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IPPrescriptionReturn.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPPrescriptionReturn.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptIPPrescriptionReturnListPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptIPPrescriptionReturnListPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPPrescriptionReturn", "IPPrescriptionReturn" + vDate, Orientation.Portrait);
@@ -2159,12 +2003,10 @@ namespace HIMS.Services.Report
                 #region :: Purchaseorder ::
                 case "Purchaseorder":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PurchaseorderNew.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PurchaseorderNew.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptPrintPurchaseOrder", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptPrintPurchaseOrder", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PurchaseOrder", "PurchaseOrder" + vDate, Orientation.Portrait);
@@ -2177,12 +2019,10 @@ namespace HIMS.Services.Report
                 #region :: IndentWiseReport ::
                 case "IndentWiseReport":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IndentReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IndentReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptPrintIndent", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptPrintIndent", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IndentWise", "IndentWise" + vDate, Orientation.Portrait);
@@ -2193,12 +2033,10 @@ namespace HIMS.Services.Report
                 #region :: IndentverifyReport ::
                 case "IndentverifyReport":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "IndentReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IndentReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptPrintIndent", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptPrintIndent", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IndentWise", "IndentWise" + vDate, Orientation.Portrait);
@@ -2209,12 +2047,10 @@ namespace HIMS.Services.Report
                 #region :: Issutodeptissuewise ::
                 case "Issutodeptissuewise":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "InvIssuetoDept.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "InvIssuetoDept.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptPrintIssueToDepartment", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptPrintIssueToDepartment", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "Issuetodept", "Issuetodept" + vDate, Orientation.Portrait);
@@ -2224,12 +2060,10 @@ namespace HIMS.Services.Report
                 #region :: Issutodeptsummarywise ::
                 case "Issutodeptsummarywise":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "InvIssuetodeptsummary.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "InvIssuetodeptsummary.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptIssueToDepartmentSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptIssueToDepartmentSummary", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "Issuetodept", "Issuetodept" + vDate, Orientation.Portrait);
@@ -2240,12 +2074,10 @@ namespace HIMS.Services.Report
                 #region :: OpeningBalance ::
                 case "OpeningBalance":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OpeningBalance.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OpeningBalance.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_OpeningBalance", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_OpeningBalance", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpeningBalance", "OpeningBalance" + vDate, Orientation.Landscape);
@@ -2255,12 +2087,10 @@ namespace HIMS.Services.Report
                 #region :: WorkOrder ::
                 case "WorkOrder":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PurWorkorder.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PurWorkorder.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptWorkOrderPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptWorkOrderPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "WorkOrder", "WorkOrder" + vDate, Orientation.Portrait);
@@ -2271,12 +2101,10 @@ namespace HIMS.Services.Report
                 #region :: MaterialReceivedByDept ::
                 case "MaterialReceivedByDept":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PhrmaMaterialReceivedfrDept.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PhrmaMaterialReceivedfrDept.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptPrintIssueToDepartment", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptPrintIssueToDepartment", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "ReceivedBydept", "ReceivedBydept" + vDate, Orientation.Portrait);
@@ -2288,12 +2116,10 @@ namespace HIMS.Services.Report
                 #region :: PatientBillStatement ::
                 case "PatientBillStatement":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "BillStatementReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "BillStatementReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_BillCompanySummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_BillCompanySummary", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PatientBillStatement", "PatientBillStatement" + vDate, Orientation.Portrait);
@@ -2307,15 +2133,14 @@ namespace HIMS.Services.Report
                 #region :: PharmacyPatientStatement ::
                 case "PharmacyPatientStatement":
                     {
-                        string[] colList = { };
                         int storeId = 0;
                         var fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(x => x.FieldName, x => x.FieldValueString);
                         if (fields.TryGetValue("StoreId", out var s)) storeId = Convert.ToInt32(s);
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacySalesStatementReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacyHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PharmacySalesStatementReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PharmacyHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath, storeId);
-                        var html = GetHTMLView("ps_rptIPPatientSalesSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptIPPatientSalesSummary", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{PharmacyHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharmacyPatientStatement", "pharmacyPatientStatementReport" + vDate, Orientation.Landscape);
@@ -2326,15 +2151,14 @@ namespace HIMS.Services.Report
                 #region :: PharmacySalesDetails ::
                 case "PharmacySalesDetails":
                     {
-                        string[] colList = { };
                         int storeId = 0;
                         var fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(x => x.FieldName, x => x.FieldValueString);
                         if (fields.TryGetValue("StoreId", out var s)) storeId = Convert.ToInt32(s);
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacySalesBillDetailReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacyHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PharmacySalesBillDetailReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PharmacyHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath, storeId);
-                        var html = GetHTMLView("ps_rptIPSalesBill", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptIPSalesBill", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{PharmacyHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "pharmacySalesDetails", "pharmacySalesDetailsReport" + vDate, Orientation.Portrait);
@@ -2345,12 +2169,10 @@ namespace HIMS.Services.Report
                 #region :: PharamcySalesBill ::
                 case "PharamcySalesBill":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SalesTaxReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SalesTaxReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptSalesPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptSalesPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharamcySalesBill", "PharamcySalesBill" + vDate, Orientation.Portrait);
@@ -2360,12 +2182,10 @@ namespace HIMS.Services.Report
                 #region :: PharamcySalesBillKenya ::
                 case "PharamcySalesBillKenya":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SalesPrintKenya.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SalesPrintKenya.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptSalesPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptSalesPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "SalesPrintKenya", "SalesPrintKenya" + vDate, Orientation.Portrait);
@@ -2376,12 +2196,10 @@ namespace HIMS.Services.Report
                 #region :: PharamcySalesReturn ::
                 case "PharamcySalesReturn":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SalesReturnReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SalesReturnReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptSalesReturnPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptSalesReturnPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "SalesReturnPrint", "SalesReturnPrint" + vDate, Orientation.Portrait);
@@ -2391,12 +2209,10 @@ namespace HIMS.Services.Report
                 #region :: PharamcySalesReturnKenya ::
                 case "PharamcySalesReturnKenya":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SalesReturnReceiptKenya.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SalesReturnReceiptKenya.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptSalesReturnPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptSalesReturnPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "SalesReturnPrintKenya", "SalesReturnPrintKenya" + vDate, Orientation.Portrait);
@@ -2407,12 +2223,10 @@ namespace HIMS.Services.Report
                 #region :: PharamcyInPatientSalesBillKenya ::
                 case "PharamcyInPatientSalesBillKenya":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "InPatientSalesPrintKenya.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "InPatientSalesPrintKenya.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptInPatientSalesPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptInPatientSalesPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "InPatientSalesPrintKenya", "InPatientSalesPrintKenya" + vDate, Orientation.Portrait);
@@ -2422,12 +2236,10 @@ namespace HIMS.Services.Report
                 #region :: PharamcyInPatientSalesReturnKenya ::
                 case "PharamcyInPatientSalesReturnKenya":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharamcyInPatientSalesReturnKenya.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PharamcyInPatientSalesReturnKenya.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptInPatientSalesReturnPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptInPatientSalesReturnPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharamcyInPatientSalesReturnKenya", "PharamcyInPatientSalesReturnKenya" + vDate, Orientation.Portrait);
@@ -2441,12 +2253,10 @@ namespace HIMS.Services.Report
                 #region :: OpDraftPharmacyReceipt ::
                 case "OpDraftPharmacyReceipt":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OpDraftPharmacyReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OpDraftPharmacyReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptSalesOpDarftBillPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptSalesOpDarftBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpDraftPharmacyReceipt", "OpDraftPharmacyReceipt" + vDate, Orientation.Portrait);
@@ -2458,12 +2268,10 @@ namespace HIMS.Services.Report
                 #region :: PharmacyInPatientSalesDetails ::
                 case "PharmacyInPatientSalesDetails":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacyInPatientSalesDetails.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PharmacyInPatientSalesDetails.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptInPatientIPSalesBill", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptInPatientIPSalesBill", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharmacyInPatientSalesDetails", "PharmacyInPatientSalesDetails" + vDate, Orientation.Portrait);
@@ -2474,12 +2282,10 @@ namespace HIMS.Services.Report
                 #region :: PharmacyInPatientStatement ::
                 case "PharmacyInPatientStatement":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmacyInPatientStatement.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PharmacyInPatientStatement.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptInPatientIPPatientSalesSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rptInPatientIPPatientSalesSummary", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharmacyInPatientStatement", "PharmacyInPatientStatement" + vDate, Orientation.Landscape);
@@ -2489,12 +2295,10 @@ namespace HIMS.Services.Report
                 #region :: PharamcyAdvanceReceipt ::
                 case "PharamcyAdvanceReceipt":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmaAdvanceReceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PharmaAdvanceReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptIPDPharAdvancePrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptIPDPharAdvancePrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharamcyAdvanceReceipt", "PharamcyAdvanceReceipt" + vDate, Orientation.Portrait);
@@ -2505,12 +2309,10 @@ namespace HIMS.Services.Report
                 #region :: PharamcyAdvanceReturnReceipt ::
                 case "PharamcyAdvanceReturnReceipt":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "PharmaRefundofadvancereceipt.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PharmaRefundofadvancereceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptIPRefundofPharAdvancePrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptIPRefundofPharAdvancePrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharamcyAdvanceReturnReceipt", "PharamcyAdvanceReturnReceipt" + vDate, Orientation.Portrait);
@@ -2521,12 +2323,10 @@ namespace HIMS.Services.Report
                 #region :: SupplierPaymentReciept ::
                 case "SupplierPaymentReciept":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SupplierPaymentReciept.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SupplierPaymentReciept.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("Rtrv_GrnSupPayList", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("Rtrv_GrnSupPayList", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "SupplierPaymentReciept", "SupplierPaymentReciept" + vDate, Orientation.Portrait);
@@ -2537,12 +2337,10 @@ namespace HIMS.Services.Report
                 #region :: SupplierPaymentRecieptByPayment ::
                 case "SupplierPaymentRecieptByPayment":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "SupplierPaymentRecieptByPayment.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SupplierPaymentRecieptByPayment.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_SupplierPaymentReceipt", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_SupplierPaymentReceipt", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "SupplierPaymentRecieptByPayment", "SupplierPaymentRecieptByPayment" + vDate, Orientation.Portrait);
@@ -2553,12 +2351,10 @@ namespace HIMS.Services.Report
                 #region :: ExpenseVoucharPrint ::
                 case "ExpenseVoucharPrint":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExpenseVoucharReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ExpenseVoucharReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("rptExpVoucharPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("rptExpVoucharPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "ExpenseVoucharPrint", "ExpenseVoucharPrint" + vDate, Orientation.Portrait);
@@ -2571,12 +2367,10 @@ namespace HIMS.Services.Report
                 #region :: OTReservation ::
                 case "OTReservation":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTReservation.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OTReservation.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_OTReservation", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_OTReservation", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTReservation", "OTReservation" + vDate, Orientation.Portrait);
@@ -2589,14 +2383,11 @@ namespace HIMS.Services.Report
                 #region :: NursingVitalsReport ::
                 case "NursingVitalsReport":
                     {
-
                         model.RepoertName = "NursingVitalsReport ";
-
-                        string[] colList = { };
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "TNursingVitalsReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "TNursingVitalsReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("m_rpt_ClinicalData_All", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("m_rpt_ClinicalData_All", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NursingVitalsReport", "NursingVitalsReport" + vDate, Orientation.Landscape);
@@ -2615,12 +2406,10 @@ namespace HIMS.Services.Report
                 #region :: OTAnaesthesiaRecord ::
                 case "OTAnaesthesiaRecord":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTAnaesthesiaRecord.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OTAnaesthesiaRecord.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_Rtrv_OTAnesthesiaRecord", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_Rtrv_OTAnesthesiaRecord", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTAnaesthesiaRecord", "OTAnaesthesiaRecord" + vDate, Orientation.Portrait);
@@ -2632,12 +2421,10 @@ namespace HIMS.Services.Report
                 #region :: OTCheckInOutPatientWise ::
                 case "OTCheckInOutPatientWise":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTCheckInOutPatientWise.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OTCheckInOutPatientWise.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("Rtrv_OT_ReservationCheckInOutReport_PatientWiseTest", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("Rtrv_OT_ReservationCheckInOutReport_PatientWiseTest", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTCheckInOutPatientWise", "OTCheckInOutPatientWise" + vDate, Orientation.Portrait);
@@ -2649,12 +2436,10 @@ namespace HIMS.Services.Report
                 #region :: OTInOperationReport ::
                 case "OTInOperationReport":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTInOperationReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OTInOperationReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_OTInoperation", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_OTInoperation", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTInOperationReport", "OTInOperationReport" + vDate, Orientation.Portrait);
@@ -2665,12 +2450,10 @@ namespace HIMS.Services.Report
                 #region :: OTPreOperationReport ::
                 case "OTPreOperationReport":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTPreOperationReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OTPreOperationReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_OTPreOperation", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_OTPreOperation", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTPreOperationReport", "OTPreOperationReport" + vDate, Orientation.Portrait);
@@ -2682,12 +2465,10 @@ namespace HIMS.Services.Report
                 #region :: OTRequestReport ::
                 case "OTRequestReport":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTRequestReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OTRequestReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_Rtrv_OTRequest", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_Rtrv_OTRequest", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTRequestReport", "OTRequestReport" + vDate, Orientation.Portrait);
@@ -2698,12 +2479,10 @@ namespace HIMS.Services.Report
                 #region ::OTOperativeNotesReport ::
                 case "OTOperativeNotesReport":
                     {
-                        string[] colList = { };
-
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTOperativeNotesReport.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OTOperativeNotesReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rpt_OT_OperativeNotes", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        var html = GetHTMLView("ps_rpt_OT_OperativeNotes", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTOperativeNotesReport", "OTOperativeNotesReport" + vDate, Orientation.Portrait);
@@ -2742,7 +2521,7 @@ namespace HIMS.Services.Report
             font += "\nbody {font-family: " + fonts + " sans-serif;}";
             return html.Replace("{{LoadFont}}", font);
         }
-        public Tuple<byte[], string> GetNewReportSetByProc(ReportConfigDto model, string FolderPath = "")
+        public Tuple<byte[], string> GetNewReportSetByProc(ReportConfigDto model)
         {
 
             string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
@@ -2755,16 +2534,15 @@ namespace HIMS.Services.Report
             //string[] groupbyList = model.groupbyList;  //"Type,SectionType";
 
             //Convert vPageOrientation from string to the appropriate Orientation enum
-            Orientation vPageOrg;
-            if (!Enum.TryParse(model.vPageOrientation, true, out vPageOrg))
+            if (!Enum.TryParse(model.vPageOrientation, true, out Orientation vPageOrg))
             {
                 // If conversion fails, set default value (for example, Portrait)
                 vPageOrg = Orientation.Portrait;
             }
 
-            string htmlFilePath = Path.Combine(string.IsNullOrWhiteSpace(FolderPath) ? _hostingEnvironment.WebRootPath : FolderPath, "PdfTemplates", model.htmlFilePath);
+            string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, model.htmlFilePath);
 
-            string htmlHeaderFilePath = Path.Combine(string.IsNullOrWhiteSpace(FolderPath) ? _hostingEnvironment.WebRootPath : FolderPath, "PdfTemplates", model.htmlHeaderFilePath);
+            string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, model.htmlHeaderFilePath);
             htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
 
             var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel, model.columnWidths /*model.columnAlignments*/);
@@ -5900,7 +5678,7 @@ namespace HIMS.Services.Report
                                 items.Append("<tr style=\"font-size:18px;border:1px;\">").Append("<td colspan=\"13\" style=\"padding-left:50px;\">").Append("Composition : ").Append(med.Key.ItemGenericName).Append("</td></tr>");
                             }
 
-                            items.Append("<tr style=\"font-size:18px;border-bottom:1px solid #d4c3c3;\">").Append("<td colspan=\"13\" style=\"padding-left:50px; padding-bottom:20px;\">").Append("Timing : ").Append(med.Key.DoseNameInEnglish).Append(" ").Append(med.Key.DoseNameInMarathi).Append("</td></tr>");
+                            items.Append("<tr style=\"font-size:18px;border-bottom:1px solid #d4c3c3;\">").Append("<td colspan=\"13\" style=\"padding-left:50px; padding-bottom:20px;\">").Append("Timing : ").Append(med.Key.DoseNameInEnglish).Append(' ').Append(med.Key.DoseNameInMarathi).Append("</td></tr>");
                         }
 
                         html = html.Replace("{{Items}}", items.ToString());
@@ -5995,7 +5773,7 @@ namespace HIMS.Services.Report
                         })
                         .ToList();
 
-                        StringBuilder quesHtml = new StringBuilder();
+                        StringBuilder quesHtml = new();
 
                         quesHtml.Append(@"
                         <table style='width:100%; border-collapse:collapse; font-size:20px;'>
@@ -6091,7 +5869,7 @@ namespace HIMS.Services.Report
                                 items.Append("<tr style=\"font-size:18px;border:1px;\">").Append("<td colspan=\"13\" style=\"padding-left:50px;\">").Append("Composition : ").Append(med.Key.ItemGenericName).Append("</td></tr>");
                             }
 
-                            items.Append("<tr style=\"font-size:18px;border-bottom:1px solid #d4c3c3;\">").Append("<td colspan=\"13\" style=\"padding-left:50px; padding-bottom:20px;\">").Append("Timing : ").Append(med.Key.DoseNameInEnglish).Append(" ").Append(med.Key.DoseNameInMarathi).Append("</td></tr>");
+                            items.Append("<tr style=\"font-size:18px;border-bottom:1px solid #d4c3c3;\">").Append("<td colspan=\"13\" style=\"padding-left:50px; padding-bottom:20px;\">").Append("Timing : ").Append(med.Key.DoseNameInEnglish).Append(' ').Append(med.Key.DoseNameInMarathi).Append("</td></tr>");
                         }
 
                         html = html.Replace("{{Items}}", items.ToString());
@@ -6186,7 +5964,7 @@ namespace HIMS.Services.Report
                         })
                         .ToList();
 
-                        StringBuilder quesHtml = new StringBuilder();
+                        StringBuilder quesHtml = new();
 
                         quesHtml.Append(@"
                         <table style='width:100%; border-collapse:collapse; font-size:20px;'>
@@ -9213,7 +8991,7 @@ namespace HIMS.Services.Report
                         }
 
                         TotalBillAmount = F_TotalAmount - MedicineReturnamt;
-                        TotalBillAmount = TotalBillAmount - MedicineReturnamt;
+                        TotalBillAmount -= MedicineReturnamt;
 
 
                         FinalNetAmt = Math.Round(TotalBillAmount - TotalConcessionAmt, 0, MidpointRounding.AwayFromZero);
@@ -9370,7 +9148,7 @@ namespace HIMS.Services.Report
                             if (i == length + 1)
                             {
 
-                                T_TotalAmount = T_TotalAmount - Tot;
+                                T_TotalAmount -= Tot;
                                 items.Append("<tr style='font-size:15px;border:1px solid ;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;'><td colspan='6' style=\"border:1px solid #000;border-collapse: collapse;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Class Wise Total</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;font-weight:bold;\">")
                                 .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
 
@@ -9568,7 +9346,7 @@ namespace HIMS.Services.Report
                             if (i == length + 1)
                             {
 
-                                T_TotalAmount = T_TotalAmount - Tot;
+                                T_TotalAmount -= Tot;
                                 items.Append("<tr style='font-size:18px;border:1px solid black;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;'><td colspan='5' style=\"border:1px solid #eee;border-collapse: collapse;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\">Class Wise Total</td><td style=\"border-right:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-weight:bold;\">")
                                 .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
 
@@ -10037,7 +9815,7 @@ namespace HIMS.Services.Report
 
                         TotalBillAmount = F_TotalAmount - MedicineReturnamt;
 
-                        TotalBillAmount = TotalBillAmount - MedicineReturnamt;
+                        TotalBillAmount -= MedicineReturnamt;
 
                         FinalNetAmt = TotalBillAmount - TotalConcessionAmt;
 
@@ -10511,7 +10289,7 @@ namespace HIMS.Services.Report
 
                         TotalBillAmount = F_TotalAmount - MedicineReturnamt;
 
-                        TotalBillAmount = TotalBillAmount - MedicineReturnamt;
+                        TotalBillAmount -= MedicineReturnamt;
 
                         FinalNetAmt = TotalBillAmount - TotalConcessionAmt;
 
@@ -10737,7 +10515,7 @@ namespace HIMS.Services.Report
 
                         TotalBillAmount = F_TotalAmount - MedicineReturnamt;
 
-                        TotalBillAmount = TotalBillAmount - MedicineReturnamt;
+                        TotalBillAmount -= MedicineReturnamt;
 
                         FinalNetAmt = TotalBillAmount - TotalConcessionAmt;
 
@@ -10923,7 +10701,7 @@ namespace HIMS.Services.Report
                             if (i == length + 1)
                             {
 
-                                T_TotalAmount = T_TotalAmount - Tot;
+                                T_TotalAmount -= Tot;
                                 items.Append("<tr style='font-size:20px;border:1px solid black;font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;'><td colspan='5' style=\"border:1px solid #000;border-collapse: collapse;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;\"> Total</td><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;font-weight:bold;\"><td style=\"border-right:1px solid #000;padding:3px;height:10px;text-align:right;vertical-align:middle;font-weight:bold;\">")
                                 .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
 
@@ -12091,7 +11869,7 @@ namespace HIMS.Services.Report
                         string html1 = File.ReadAllText(htmlFilePath);
                         html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        StringBuilder item = new StringBuilder("");
+                        StringBuilder item = new("");
                         int i = 0;
                         Boolean chkdiscflag = false;
 
@@ -14404,7 +14182,7 @@ namespace HIMS.Services.Report
                         int length = 0;
                         length = dt.Rows.Count;
 
-                        StringBuilder item = new StringBuilder("");
+                        StringBuilder item = new("");
                         int i = 0;
 
 
@@ -14579,7 +14357,7 @@ namespace HIMS.Services.Report
 
                         //html = html.Replace("{{AttendantRows}}", attendantRows.ToString());
 
-                        StringBuilder surgeryRows = new StringBuilder();
+                        StringBuilder surgeryRows = new();
                         int surgeryIndex = 1;
 
                         var uniqueSurgeries = dt.AsEnumerable()
@@ -14617,9 +14395,9 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{SurgeryRows}}", surgeryRows.ToString());
 
-                        StringBuilder attendantRows = new StringBuilder();
+                        StringBuilder attendantRows = new();
 
-                        StringBuilder attendantTable = new StringBuilder();
+                        StringBuilder attendantTable = new();
 
                         var uniqueAttendants = dt.AsEnumerable()
                             .Where(r => !string.IsNullOrEmpty(r["AttendedName"]?.ToString()))
@@ -14903,7 +14681,7 @@ namespace HIMS.Services.Report
                             SurgeonName = r["SurgeonName"].ToString()
                         }).Distinct().ToList();
 
-                        StringBuilder surgeryRows = new StringBuilder();
+                        StringBuilder surgeryRows = new();
                         int surgeryIndex = 1;
 
                         foreach (var dr in distinctSurgeries)
@@ -14938,7 +14716,7 @@ namespace HIMS.Services.Report
                             AttendingDoctor = r["AttendingDoctor"].ToString()
                         }).Distinct().ToList();
 
-                        StringBuilder attendantRows = new StringBuilder();
+                        StringBuilder attendantRows = new();
 
                         foreach (var dr in distinctAttendants)
                         {
@@ -15019,7 +14797,7 @@ namespace HIMS.Services.Report
                             SurgeonName = r["SurgeonName"].ToString()
                         }).Distinct().ToList();
 
-                        StringBuilder surgeryRows = new StringBuilder();
+                        StringBuilder surgeryRows = new();
                         int surgeryIndex = 1;
 
                         foreach (var dr in distinctSurgeries)
@@ -15054,7 +14832,7 @@ namespace HIMS.Services.Report
                             AttendingDoctorName = r["AttendingDoctorName"].ToString()
                         }).Distinct().ToList();
 
-                        StringBuilder attendantRows = new StringBuilder();
+                        StringBuilder attendantRows = new();
 
                         foreach (var dr in distinctAttendants)
                         {
@@ -15128,7 +14906,7 @@ namespace HIMS.Services.Report
                         string html1 = File.ReadAllText(htmlFilePath);
                         html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        StringBuilder item = new StringBuilder("");
+                        StringBuilder item = new("");
                         int i = 0;
                         //html = html.Replace("{{MaterialConsumptionId}}", Bills.GetColValue("MaterialConsumptionId"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
@@ -15176,7 +14954,7 @@ namespace HIMS.Services.Report
                         string html1 = File.ReadAllText(htmlFilePath);
                         html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        StringBuilder item = new StringBuilder("");
+                        StringBuilder item = new("");
                         int i = 0;
                         //html = html.Replace("{{MaterialConsumptionId}}", Bills.GetColValue("MaterialConsumptionId"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
@@ -15236,7 +15014,7 @@ namespace HIMS.Services.Report
                     {
 
                         html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
-                        StringBuilder item = new StringBuilder("");
+                        StringBuilder item = new("");
                         double BillTotal = 0;
                         double BillDiscount = 0;
                         double BillNet = 0;
@@ -15412,7 +15190,7 @@ namespace HIMS.Services.Report
                     {
 
                         html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
-                        StringBuilder item = new StringBuilder("");
+                        StringBuilder item = new("");
                         double BillTotal = 0;
                         double BillDiscount = 0;
                         double BillNet = 0;
@@ -15583,7 +15361,7 @@ namespace HIMS.Services.Report
                         string html1 = File.ReadAllText(htmlFilePath);
                         html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-                        StringBuilder item = new StringBuilder("");
+                        StringBuilder item = new("");
                         int i = 0, j = 0;
                         double salesTotal = 0, salesdisc = 0, salesnet = 0, salesbal = 0, salesrefund = 0, salesadv = 0, salesrefundTotal = 0, salesrefunddisc = 0, salesrefundnet = 0, salesrefundbal = 0, salesrefundrefund = 0, Total_Total = 0, Total_disc = 0, Total_net = 0, Total_bal = 0, Total_refund = 0, salespaid = 0, salesrefundpaid = 0;
                         double salescashTotal = 0, salescard = 0, salescheque = 0, salesneft = 0, salesonline = 0, salesreturncashTotal = 0, salesreturncard = 0, salesreturncheque = 0, salesreturnneft = 0, salesreturnonline = 0;
@@ -15876,7 +15654,7 @@ namespace HIMS.Services.Report
 
 
                         html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
-                        StringBuilder item = new StringBuilder("");
+                        StringBuilder item = new("");
                         int i = 0, j = 0;
                         double totalSales = 0, totalSalesReturn = 0;
                         double netPayableAmt = 0, NetTotal = 0;
@@ -16564,7 +16342,7 @@ namespace HIMS.Services.Report
 
 
                         html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
-                        StringBuilder item = new StringBuilder("");
+                        StringBuilder item = new("");
                         int i = 0, j = 0;
                         double totalSales = 0, totalSalesReturn = 0;
                         double netPayableAmt = 0;
@@ -16804,7 +16582,7 @@ namespace HIMS.Services.Report
                         string html1 = File.ReadAllText(htmlFilePath);
                         html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-                        StringBuilder item = new StringBuilder("");
+                        StringBuilder item = new("");
                         int i = 0, j = 0;
                         double salesTotal = 0, salesdisc = 0, salesnet = 0, salesbal = 0, salesrefund = 0, salesadv = 0, salesrefundTotal = 0, salesrefunddisc = 0, salesrefundnet = 0, salesrefundbal = 0, salesrefundrefund = 0, Total_Total = 0, Total_disc = 0, Total_net = 0, Total_bal = 0, Total_refund = 0, salespaid = 0, salesrefundpaid = 0;
                         double salescashTotal = 0, salescard = 0, salescheque = 0, salesneft = 0, salesonline = 0, salesreturncashTotal = 0, salesreturncard = 0, salesreturncheque = 0, salesreturnneft = 0, salesreturnonline = 0;
@@ -17100,7 +16878,7 @@ namespace HIMS.Services.Report
                 case "PharamcyAdvanceReceipt":
                     {
 
-                        StringBuilder item = new StringBuilder("");
+                        StringBuilder item = new("");
                         int i = 0;
                         Boolean chkresonflag = false;
 
@@ -17183,7 +16961,7 @@ namespace HIMS.Services.Report
                         string html1 = File.ReadAllText(htmlFilePath);
                         html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        StringBuilder item = new StringBuilder("");
+                        StringBuilder item = new("");
                         int i = 0;
 
 
@@ -17616,9 +17394,9 @@ namespace HIMS.Services.Report
 
         //    DataSet ds = sql.FetchDataSetBySP(sp, para);
 
-        //    string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTMultiTabReport.html");
+        //    string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OTMultiTabReport.html");
         //    string html = System.IO.File.ReadAllText(htmlFilePath);
-        //    string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+        //    string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
         //    htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
         //    html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
@@ -17745,10 +17523,10 @@ namespace HIMS.Services.Report
                         string sp = "ps_rpt_OTMultiTabReport";
                         DataSet ds = sql.FetchDataSetBySP(sp, para);
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTMultiTabReport.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OTMultiTabReport.html");
                         string html = System.IO.File.ReadAllText(htmlFilePath);
 
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
 
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -17764,7 +17542,7 @@ namespace HIMS.Services.Report
                               "Anesthesia Record"
                         };
 
-                        StringBuilder allTablesHtml = new StringBuilder();
+                        StringBuilder allTablesHtml = new();
 
                         for (int t = 0; t < ds.Tables.Count; t++)
                         {
@@ -17821,9 +17599,9 @@ namespace HIMS.Services.Report
 
                 case "OTMultiTabReport_V1":
                     {
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "OTMultiTabReportV1.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OTMultiTabReportV1.html");
                         string html = System.IO.File.ReadAllText(htmlFilePath);
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
@@ -17898,7 +17676,7 @@ namespace HIMS.Services.Report
                             {
                                 var dt2 = ds.Tables[2];
 
-                                StringBuilder surgeryRows = new StringBuilder();
+                                StringBuilder surgeryRows = new();
                                 int surgeryIndex = 1;
 
                                 var uniqueSurgeries = dt2.AsEnumerable()
@@ -17916,9 +17694,9 @@ namespace HIMS.Services.Report
                                 foreach (var dr in uniqueSurgeries)
                                 {
                                     surgeryRows.Append("<tr>");
-                                    surgeryRows.Append("<td><b>Surgery Name :</b> ").Append(dr["SurgeryName"]).Append("(").Append(dr["IsPrimary"]).Append(")").Append("</td>");
+                                    surgeryRows.Append("<td><b>Surgery Name :</b> ").Append(dr["SurgeryName"]).Append('(').Append(dr["IsPrimary"]).Append(')').Append("</td>");
                                     surgeryRows.Append("<td><b>Surgery Type :</b> ").Append(dr["SurgeryCategoryName"]).Append("</td>");
-                                    surgeryRows.Append("<td><b>From-To Time :</b> ").Append(dr["SurgeryFromTime"].ConvertToDateString("hh:mm tt")).Append("-").Append(dr["SurgeryEndTime"].ConvertToDateString("hh:mm tt")).Append("</td>");
+                                    surgeryRows.Append("<td><b>From-To Time :</b> ").Append(dr["SurgeryFromTime"].ConvertToDateString("hh:mm tt")).Append('-').Append(dr["SurgeryEndTime"].ConvertToDateString("hh:mm tt")).Append("</td>");
                                     surgeryRows.Append("</tr>");
 
                                     // surgeryRows.Append("<tr>");
@@ -17941,9 +17719,9 @@ namespace HIMS.Services.Report
 
                                 html = html.Replace("{{SurgeryRows}}", surgeryRows.ToString());
 
-                                StringBuilder attendantRows = new StringBuilder();
+                                StringBuilder attendantRows = new();
 
-                                StringBuilder attendantTable = new StringBuilder();
+                                StringBuilder attendantTable = new();
 
                                 var uniqueAttendants = dt2.AsEnumerable()
                                     .Where(r => !string.IsNullOrEmpty(r["AttendedName"]?.ToString()))
@@ -18086,9 +17864,9 @@ namespace HIMS.Services.Report
 
                 case "BranchWiseStatement":
                     {
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "BranchWiseStatement.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "BranchWiseStatement.html");
                         string html = System.IO.File.ReadAllText(htmlFilePath);
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "NewHeader.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
@@ -18134,7 +17912,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{NewPatient}}", dt1.GetColValue("NewPatient"));
                             html = html.Replace("{{OldPatient}}", dt1.GetColValue("OldPatient"));
                         }
- 
+
 
                         if (ds.Tables.Count > 2 && ds.Tables[2].Rows.Count > 0)
                         {

@@ -1,25 +1,16 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
-using HIMS.Api.Models.Login;
 using HIMS.API.Extensions;
 using HIMS.API.Models.PaymentGateway;
 using HIMS.API.PaymentGateway;
-using HIMS.API.Utility;
+using HIMS.Core.Domain.Common;
 using HIMS.Core.Domain.Grid;
-using HIMS.Core;
 using HIMS.Core.Infrastructure;
-using HIMS.Core.Utilities;
 using HIMS.Data;
 using HIMS.Data.Models;
-using HIMS.Services.Permissions;
-using HIMS.Services.Users;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Swashbuckle.AspNetCore.Annotations;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Text.Json;
 
 namespace HIMS.API.Controllers.Login
@@ -32,13 +23,11 @@ namespace HIMS.API.Controllers.Login
     public class MPesaController : BaseController
     {
         private readonly MpesaStkService _stkService;
-        private readonly IConfiguration _config;
         private readonly IGenericService<TMpesaResponse> _mPesaService;
 
-        public MPesaController(MpesaStkService service, IConfiguration config, IGenericService<TMpesaResponse> genericService)
+        public MPesaController(MpesaStkService service,  IGenericService<TMpesaResponse> genericService)
         {
             _stkService = service;
-            _config = config;
             _mPesaService = genericService;
         }
         [HttpPost("validation")]
@@ -92,7 +81,7 @@ namespace HIMS.API.Controllers.Login
         {
             //var result = await _stkService.RegisterUrls();
             string reference = Guid.NewGuid().ToString().Replace("-", "");
-            var result = await _stkService.StkPushAsync(objRequest.phone, objRequest.amount, objRequest.Opdipdid ?? 0 , _config["MPesa:ConfirmationUrl"], reference);
+            var result = await _stkService.StkPushAsync(objRequest.phone, objRequest.amount, objRequest.Opdipdid ?? 0 ,AppSettings.Settings.MPesa.ConfirmationUrl, reference);
             var data = JsonConvert.DeserializeObject<MPesaResponseDto>(result);
             data.ReferenceNo = reference;
             await _mPesaService.Add(new TMpesaResponse() { Amount = objRequest.amount, Opdipdid = objRequest.Opdipdid, CheckoutRequestId = data.CheckoutRequestID, MerchantRequestId = data.MerchantRequestID, PhoneNumber = objRequest.phone, TransactionDate = AppTime.Now }, CurrentUserId, CurrentUserName);

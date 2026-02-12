@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace HIMS.Core.Utilities
+namespace HIMS.Core
 {
     public static class ConfigurationHelper
     {

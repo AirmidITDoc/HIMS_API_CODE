@@ -1,4 +1,5 @@
-﻿using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Common;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
@@ -38,17 +39,17 @@ namespace HIMS.Services.Administration
             _reportServices = reportServices;
         }
 
-        public virtual async Task InsertAsync(TWhatsAppSmsOutgoing ObjWhatsApp, IConfiguration _configuration, long Id, int UserId, string Username) //ReportRequestModel model,
+        public virtual async Task InsertAsync(TWhatsAppSmsOutgoing ObjWhatsApp, long Id, int UserId, string Username) //ReportRequestModel model,
         {
             var tuple = new Tuple<byte[], string>(null, string.Empty);
             string vDate = AppTime.Now.ToString("_ddMMyyyy_hhmmtt");
 
-            var reg = await _context.Registrations.Where(r => r.RegNo == ObjWhatsApp.PatientId.ToString()).Select(r => new { FirstName = r.FirstName, LastName = r.LastName }).FirstOrDefaultAsync();
+            var reg = await _context.Registrations.Where(r => r.RegNo == ObjWhatsApp.PatientId.ToString()).Select(r => new { r.FirstName, r.LastName }).FirstOrDefaultAsync();
             string firstName = Regex.Replace(reg?.FirstName ?? "", @"\s+", " ").Trim();
             // Merge first + last name
             string fullName = $"{reg?.FirstName}_{reg?.LastName}".Trim();
             // Take first 4 characters safely
-            string first4 = (firstName.Length >= 4 ? firstName.Substring(0, 4) : firstName).ToUpper();
+            string first4 = (firstName.Length >= 4 ? firstName[..4] : firstName).ToUpper();
             // Current year (4-digit)
             string currentYear = AppTime.Now.Year.ToString();
             string UserPassword = first4 + currentYear;
@@ -68,10 +69,10 @@ namespace HIMS.Services.Administration
                     {
                         new() { FieldName = mType.mFieldName, FieldValue = Id.ToString(), OpType = OperatorComparer.Equals }
                     },
-                        BaseUrl = Convert.ToString(_configuration["BaseUrl"]),
-                        StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"])
+                        BaseUrl = AppSettings.Settings.BaseUrl,
+                        StorageBaseUrl = AppSettings.Settings.StorageBaseUrl
                     };
-                    var byteFile = await _reportServices.GetReportSetByProc(model, _configuration["PdfFontPath"]);
+                    var byteFile = await _reportServices.GetReportSetByProc(model, AppSettings.Settings.PdfFontPath);
 
                     if (mType.mPasswordProtectedPdf == true)
                     {
@@ -99,28 +100,33 @@ namespace HIMS.Services.Administration
             }
         }
 
-        public virtual async Task InsertEmailAsync(TMailOutgoing ObjEmail, IConfiguration _configuration, long Id, int UserId, string Username) //ReportRequestModel model,
+        public virtual async Task InsertMailVimal(TMailOutgoing ObjEmail)
+        {
+            _context.TMailOutgoings.Add(ObjEmail);
+            await _context.SaveChangesAsync();
+        }
+        public virtual async Task InsertEmailAsync(TMailOutgoing ObjEmail, long Id, int UserId, string Username) //ReportRequestModel model,
         {
             var tuple = new Tuple<byte[], string>(null, string.Empty);
             string vDate = AppTime.Now.ToString("_ddMMyyyy_hhmmtt");
 
-            var reg = await _context.Registrations.Where(r => r.RegNo == ObjEmail.PatientId.ToString()).Select(r => new { FirstName = r.FirstName , LastName = r.LastName}).FirstOrDefaultAsync();
+            var reg = await _context.Registrations.Where(r => r.RegNo == ObjEmail.PatientId.ToString()).Select(r => new { r.FirstName, r.LastName }).FirstOrDefaultAsync();
             string firstName = Regex.Replace(reg?.FirstName ?? "", @"\s+", " ").Trim();
             // Merge first + last name
             string fullName = $"{reg?.FirstName}_{reg?.LastName}".Trim();
             // Take first 4 characters safely
-            string first4 = (firstName.Length >= 4 ? firstName.Substring(0, 4) : firstName).ToUpper();
+            string first4 = (firstName.Length >= 4 ? firstName[..4] : firstName).ToUpper();
             // Current year (4-digit)
             string currentYear = AppTime.Now.Year.ToString();
             string UserPassword = first4 + currentYear;
-            
+
             // Need to pass Pdf Generation type
-            var mType = await _context.SmspdfConfigs.Where(r => r.Type == ObjEmail.EmailType).Select(r=> new { mBillType=r.Type, mPdfModeName =r.PdfModeName , mFieldName =r.FieldName , mPasswordProtectedPdf = r.PasswordProtectedPdf }).FirstOrDefaultAsync();
-            
+            var mType = await _context.SmspdfConfigs.Where(r => r.Type == ObjEmail.EmailType).Select(r => new { mBillType = r.Type, mPdfModeName = r.PdfModeName, mFieldName = r.FieldName, mPasswordProtectedPdf = r.PasswordProtectedPdf }).FirstOrDefaultAsync();
+
             try
             {
                 string FilePath = "";
-                if (ObjEmail.EmailType == mType.mBillType)
+                if (mType != null && ObjEmail.EmailType == mType.mBillType)
                 {
                     ReportRequestModel model = new()
                     {
@@ -129,19 +135,21 @@ namespace HIMS.Services.Administration
                     {
                         new() { FieldName = mType.mFieldName, FieldValue = Id.ToString(), OpType = OperatorComparer.Equals }
                     },
-                        BaseUrl = Convert.ToString(_configuration["BaseUrl"]),
-                        StorageBaseUrl = Convert.ToString(_configuration["StorageBaseUrl"])
+                        BaseUrl = AppSettings.Settings.BaseUrl,
+                        StorageBaseUrl = AppSettings.Settings.StorageBaseUrl
                     };
-                    var byteFile = await _reportServices.GetReportSetByProc(model, _configuration["PdfFontPath"]);
+                    var byteFile = await _reportServices.GetReportSetByProc(model, AppSettings.Settings.PdfFontPath);
 
-                    if (mType.mPasswordProtectedPdf == true) {
+                    if (mType.mPasswordProtectedPdf == true)
+                    {
                         FilePath = _pdfUtility.GeneratePasswordProtectedPdf(byteFile.Item1, UserPassword, model.StorageBaseUrl, model.Mode, "Bill_" + fullName + "_" + Id + vDate);
                     }
-                    else {
+                    else
+                    {
                         FilePath = _pdfUtility.GenerateWithoutPasswordProtectedPdf(byteFile.Item1, model.StorageBaseUrl, model.Mode, "Bill_" + fullName + "_" + Id + vDate);
                     }
+                    ObjEmail.AttachmentName = FilePath;
                 }
-                ObjEmail.AttachmentName = FilePath;
                 var entityData = ObjEmail.ToDictionary().Where(kvp => EmailAllowedFields.Contains(kvp.Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
                 using var dbHelper = new DatabaseHelper();

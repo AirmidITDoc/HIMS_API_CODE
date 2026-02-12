@@ -36,17 +36,13 @@ namespace HIMS.API.Controllers.OPPatient
         private readonly IOPSettlementService _IOPSettlementService;
         private readonly IAdministrationService _IAdministrationService;
         private readonly IVisitDetailsService _IVisitDetailsService;
-        private readonly MpesaStkService _stkService;
-        private readonly IConfiguration _config;
-        public OPBillController(IOPBillingService repository, IOPCreditBillService repository1, IOPSettlementService repository2, IAdministrationService repository3, IVisitDetailsService repository4, MpesaStkService mpesaStkService, IConfiguration configuration)
+        public OPBillController(IOPBillingService repository, IOPCreditBillService repository1, IOPSettlementService repository2, IAdministrationService repository3, IVisitDetailsService repository4)
         {
             _oPBillingService = repository;
             _IOPCreditBillService = repository1;
             _IOPSettlementService = repository2;
             _IAdministrationService = repository3;
             _IVisitDetailsService = repository4;
-            _stkService = mpesaStkService;
-            _config = configuration;
         }
         [HttpPost("BrowseOPRefundList")]
         //   [Permission(PageCode = "Bill", Permission = PagePermission.View)]
@@ -137,7 +133,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.BillNo);
         }
 
-         [HttpPost("OPCreditBillingInsert")]
+        [HttpPost("OPCreditBillingInsert")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OPCreditBillingInsert(OPBillIngModel obj)
         {
@@ -171,7 +167,7 @@ namespace HIMS.API.Controllers.OPPatient
             Bill billmodel = obj.AppOPBillIngModels.MapTo<Bill>();
             Payment objPayment = obj.AppOPBillIngModels.Payments.MapTo<Payment>();
             List<AddCharge> ObjPackagecharge = obj.AppOPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
-            
+
             if (obj.AppRegistrationBills.RegId == 0)
             {
                 Regmodel.CreatedDate = AppTime.Now;
@@ -182,7 +178,7 @@ namespace HIMS.API.Controllers.OPPatient
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",new{ billmodel.BillNo, billmodel.OpdIpdId});
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", new { billmodel.BillNo, billmodel.OpdIpdId });
         }
 
         [HttpPost("AppointmentBillingRegisteredInsert")]
@@ -225,7 +221,7 @@ namespace HIMS.API.Controllers.OPPatient
 
             List<AddCharge> ObjPackagecharge = obj.AppOPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
-          
+
             if (obj.AppRegistrationBills.RegId == 0)
             {
                 Regmodel.RegTime = Convert.ToDateTime(obj.AppRegistrationBills.RegTime);
@@ -237,7 +233,7 @@ namespace HIMS.API.Controllers.OPPatient
                     objVisitDetail.AddedBy = CurrentUserId;
                     objVisitDetail.UpdatedBy = CurrentUserId;
                 }
-               
+
             }
 
             if (obj.AppOPBillIngModels.BillNo == 0)
@@ -270,8 +266,8 @@ namespace HIMS.API.Controllers.OPPatient
                 model.BillDate = Convert.ToDateTime(model.BillDate);
                 model.BillTime = Convert.ToDateTime(model.BillTime);
                 model.AddedBy = CurrentUserId;
-               
-                await _oPBillingService.InsertAsyncTDrbill(model, model1, model2 ,CurrentUserId, CurrentUserName);
+
+                await _oPBillingService.InsertAsyncTDrbill(model, model1, model2, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
