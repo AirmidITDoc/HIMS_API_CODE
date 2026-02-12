@@ -108,6 +108,9 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MPathSpecimenMaster> _MPathSpecimenMaster;
         private readonly IGenericService<MInstructionMaster> _MInstructionMaster;
         private readonly IGenericService<MAdmissionType> _AdmissionType;
+        private readonly IGenericService<MPathSpecimenConditionMaster> _MPathSpecimenConditionMaster;
+
+
 
 
 
@@ -163,7 +166,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MSubQuestionValuesMaster> MSubQuestionValuesMaster,
                               IGenericService<MPathSpecimenMaster> MPathSpecimenMaster,
                               IGenericService<MInstructionMaster> MInstructionMaster,
-                                IGenericService<MAdmissionType> MAdmissionType
+                              IGenericService<MAdmissionType> MAdmissionType,
+                              IGenericService<MPathSpecimenConditionMaster> MPathSpecimenConditionMaster
+
 
                              )
         {
@@ -258,6 +263,8 @@ namespace HIMS.API.Controllers.Common
             _MPathSpecimenMaster = MPathSpecimenMaster;
             _MInstructionMaster = MInstructionMaster;
             _AdmissionType = MAdmissionType;
+            _MPathSpecimenConditionMaster = MPathSpecimenConditionMaster;
+
 
 
         }
@@ -454,6 +461,10 @@ namespace HIMS.API.Controllers.Common
                 "SubQuestionValuesMaster" => (await _MSubQuestionValuesMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubQuestionValuesMaster.SubQuestionValId), nameof(MSubQuestionValuesMaster.SubQuestionValName)),
                 "InstructionMaster" => (await _MInstructionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MInstructionMaster.InstructionId), nameof(MInstructionMaster.InstructionDescription)),
                 "AdmissionType" => (await _AdmissionType.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MAdmissionType.AdmissiontypeId), nameof(MAdmissionType.AdmissiontypeName)),
+                "PathSpecimenConditionMaster" => (await _MPathSpecimenConditionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenConditionMaster.SpecimenConditionId), nameof(MPathSpecimenConditionMaster.SpecimenCondition)),
+                "SpecimentColors" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "SpecimentColors")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
+
 
 
 
