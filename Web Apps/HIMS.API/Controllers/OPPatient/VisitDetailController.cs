@@ -99,7 +99,7 @@ namespace HIMS.API.Controllers.OPPatient
         [HttpGet("DoctorTypeDoctorList")]
         public async Task<ApiResponse> DoctorTypeDoctorList(int DocTypeId)
         {
-            var resultList = await _IDoctorMasterService.GetDoctorsByDepartment(DocTypeId);
+            var resultList = await _IDoctorMasterService.GetDoctorsByDocType(DocTypeId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.DoctorId, text = x.FirstName + " " + x.LastName }));
         }
         //this api not use anywhere//
