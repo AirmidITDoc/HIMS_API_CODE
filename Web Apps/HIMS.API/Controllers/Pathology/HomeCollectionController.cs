@@ -12,6 +12,7 @@ using HIMS.API.Models.Pathology;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Pathology;
+using HIMS.Data;
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -21,10 +22,26 @@ namespace HIMS.API.Controllers.Pathology
     public class HomeCollectionController : BaseController
     {
         private readonly IHomeCollectionService _IHomeCollectionService;
-        public HomeCollectionController(IHomeCollectionService repository)
+        private readonly IGenericService<THomeCollectionRegistrationInfo> _repository;
+
+        public HomeCollectionController(IHomeCollectionService repository, IGenericService<THomeCollectionRegistrationInfo> repository1)
         {
             _IHomeCollectionService = repository;
+            _repository = repository1;
 
+
+        }
+        //List API Get By Id
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.HomeCollectionId == id);
+            return data.ToSingleResponse<THomeCollectionRegistrationInfo, HomeCollectionModel>("THomeCollectionRegistrationInfo");
         }
         [HttpPost("homeCollectionDetList")]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]

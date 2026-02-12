@@ -1914,6 +1914,27 @@ namespace HIMS.Services.Report
 
 
 
+                #region :: LabSlipReport ::
+                case "LabSlipReport":
+                    {
+
+                        model.RepoertName = " Report ";
+                        string[] headerList = Array.Empty<string>();
+                        string[] colList = Array.Empty<string>();
+
+                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabReciept.html");
+                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("ps_rptPrintPathologyRadiologyReport", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabSlipReport", "LabSlipReport" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+
+
 
                 //Nursing
                 #region :: NurMaterialConsumption ::
@@ -4782,6 +4803,62 @@ namespace HIMS.Services.Report
 
                     }
                     break;
+
+                case "LabSlipReport":
+                    {
+
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+
+
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        //html = html.Replace("{{NewHeader}}", htmlHeader);
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("LabPatRegId"));
+                        html = html.Replace("{{LabPatientId}}", dt.GetColValue("LabPatientId"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{BillNo}}", dt.GetColValue("PBillNo"));
+                        html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{Date}}", dt.GetDateColValue("Date").ConvertToDateString());
+                        html = html.Replace("{{RegDate}}", dt.GetColValue("RegTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
+                        html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                        html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+                        html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+
+
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:15;\"><td style=\" text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["TestName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["PrintTestName"].ConvertToString()).Append("</td>");
+                           items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["ReportDate"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
+
+                        }
+                     
+
+                        html = html.Replace("{{Items}}", items.ToString());
+
+                        return html;
+
+                    }
+                    break;
+
+
 
                 case "LabMoneyReceipt":
                     {

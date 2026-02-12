@@ -18,6 +18,14 @@ namespace HIMS.Services.Pathlogy
         Task<IPagedList<UnitCompanyTestSummaryDto>> UnitBranchWiseCompanySummaryListAsync(GridRequestModel objGrid);
 
 
+        Task<IPagedList<BranchWiseTestSummaryDto>> BranchWiseTestSummaryList(GridRequestModel objGrid);
+        Task<IPagedList<BranchWiseDoctorSummaryDto>> BranchWiseDoctorSummaryList(GridRequestModel objGrid);
+        Task<IPagedList<BranchWiseCompanySummaryDto>> BranchWiseCompanySummaryList(GridRequestModel objGrid);
+        Task<IPagedList<BranchWiseCategorySummaryDto>> BranchWiseCategorySummaryList(GridRequestModel objGrid);
+
+
+
+
 
     }
 }

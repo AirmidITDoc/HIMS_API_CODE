@@ -48,4 +48,43 @@ namespace HIMS.Data.DTO.Pathology
         public double TotalAmount { get; set; }
     }
 
+
+
+    public class BranchWiseTestSummaryDto
+    {
+        public string ServiceName { get; set; }
+        public double TestCount { get; set; }
+        public double TotalAmount { get; set; }
+        public decimal DiscAmount { get; set; }
+        public decimal NetAmount { get; set; }
+    }
+
+    public class BranchWiseDoctorSummaryDto
+    {
+        public string DoctorName { get; set; }
+        public long TestCount { get; set; }
+        public double TotalAmount { get; set; }
+        public decimal DiscAmount { get; set; }
+        public decimal NetAmount { get; set; }
+    }
+
+
+    public class BranchWiseCompanySummaryDto
+    {
+        public string CompanyName { get; set; }
+        public long TestCount { get; set; }
+        public double TotalAmount { get; set; }
+        public decimal DiscAmount { get; set; }
+        public decimal NetAmount { get; set; }
+    }
+
+    public class BranchWiseCategorySummaryDto
+    {
+        public string CategoryName { get; set; }
+        public long TestCount { get; set; }
+        public double TotalAmount { get; set; }
+        public decimal DiscAmount { get; set; }
+        public decimal NetAmount { get; set; }
+    }
+
 }
