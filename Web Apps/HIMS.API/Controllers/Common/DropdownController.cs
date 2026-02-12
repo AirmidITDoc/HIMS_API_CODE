@@ -172,8 +172,7 @@ namespace HIMS.API.Controllers.Common
                                 IGenericService<MAdmissionType> MAdmissionType,
                               IGenericService<MPathSpecimenContainerMaster> MPathSpecimenContainerMaster,
                               IGenericService<MPathSpecimenCollectionMaster> MPathSpecimenCollectionMaster,
-                              IGenericService<MPathSpecimenPreservativeMaster> MPathSpecimenPreservativeMaster
-                              IGenericService<MAdmissionType> MAdmissionType,
+                              IGenericService<MPathSpecimenPreservativeMaster> MPathSpecimenPreservativeMaster,
                               IGenericService<MPathSpecimenConditionMaster> MPathSpecimenConditionMaster
 
 

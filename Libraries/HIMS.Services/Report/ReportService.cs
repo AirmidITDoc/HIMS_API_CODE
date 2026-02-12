@@ -1922,8 +1922,8 @@ namespace HIMS.Services.Report
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
 
-                        string htmlFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "LabReciept.html");
-                        string htmlHeaderFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "PdfTemplates", "ExternalLabHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabReciept.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ExternalLabHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptPrintPathologyRadiologyReport", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
@@ -4846,10 +4846,10 @@ namespace HIMS.Services.Report
                             items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:15;\"><td style=\" text-align: center; padding: 6px;\">").Append(i).Append("</td>");
                             items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["TestName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["PrintTestName"].ConvertToString()).Append("</td>");
-                           items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["ReportDate"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
+                            items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["ReportDate"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
 
                         }
-                     
+
 
                         html = html.Replace("{{Items}}", items.ToString());
 
