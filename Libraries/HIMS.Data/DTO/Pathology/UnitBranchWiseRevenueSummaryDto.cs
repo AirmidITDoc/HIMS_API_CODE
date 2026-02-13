@@ -25,13 +25,15 @@ namespace HIMS.Data.DTO.Pathology
         public double Price { get; set; }
         public double Qty { get; set; }
         public double TotalAmount { get; set; }
+        public long ServiceId { get; set; }
     }
     public class UnitCategoryTestSummaryDto
     {
         public string UnitBranchName { get; set; }
         public string CategoryName { get; set; }
         public long TestCount { get; set; }
-        public double TotalAmount { get; set; }
+        public double TotalAmount { get; set; }    
+        public long CategoryId { get; set; }
     }
     public class UnitDoctorTestSummaryDto
     {
@@ -39,6 +41,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? DoctorName { get; set; }
         public int TestCount { get; set; }
         public double TotalAmount { get; set; }
+        public long DoctorId { get; set; }
     }
     public class UnitCompanyTestSummaryDto
     {
@@ -46,6 +49,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? CompanyName { get; set; }
         public int TestCount { get; set; }
         public double TotalAmount { get; set; }
+        public long CompanyId { get; set; }
     }
 
 
