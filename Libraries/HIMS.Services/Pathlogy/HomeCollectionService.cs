@@ -37,19 +37,18 @@ namespace HIMS.Services.Pathlogy
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
             {
-                var lastSeqNoStr = await _context.THomeCollectionRegistrationInfos
-                    .OrderByDescending(x => x.HomeSeqNo)
-                    .Select(x => x.HomeSeqNo)
-                    .FirstOrDefaultAsync();
+                var presNoList = await _context.THomeCollectionRegistrationInfos
+                .Where(x => x.HomeSeqNo != null && x.HomeSeqNo != "")
+                .Select(x => x.HomeSeqNo)
+                .ToListAsync();
 
-                int lastSeqNo = 0;
-                if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
-                    lastSeqNo = parsed;
+                int lastPresNo = presNoList
+                    .Select(p => int.TryParse(p, out var n) ? n : 0)
+                    .DefaultIfEmpty(0)
+                    .Max();
 
-                // Increment the sequence number
-                int newSeqNo = lastSeqNo + 1;
-                ObjTHomeCollectionRegistrationInfo.HomeSeqNo = newSeqNo.ToString();
-
+                //  Increment & assign
+                ObjTHomeCollectionRegistrationInfo.HomeSeqNo = (lastPresNo + 1).ToString();
 
                 ObjTHomeCollectionRegistrationInfo.CreatedBy = UserId;
                 ObjTHomeCollectionRegistrationInfo.CreatedDate = AppTime.Now;
