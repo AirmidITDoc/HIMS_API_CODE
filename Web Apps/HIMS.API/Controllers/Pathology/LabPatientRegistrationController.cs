@@ -243,6 +243,30 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(LabResultList.ToGridResponse(objGrid, " Lab Result List "));
         }
 
-       
+
+        [HttpPost("LabDiscountDetailList")]
+       // [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabDiscountDetailList(GridRequestModel objGrid)
+        {
+            IPagedList<LabDiscountDetailListDto> LabDiscountDetailList = await _ILabPatientRegistrationService.LabDiscountDetailListAsync(objGrid);
+            return Ok(LabDiscountDetailList.ToGridResponse(objGrid, "Lab Discount Detail List"));
+        }
+
+        [HttpPost("LabPaymentDetailList")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabPaymentDetailList(GridRequestModel objGrid)
+        {
+            IPagedList<LabPaymentDetailListDto> LabPaymentDetailList = await _ILabPatientRegistrationService.LabPaymentDetailListAsync(objGrid);
+            return Ok(LabPaymentDetailList.ToGridResponse(objGrid, "Lab Payment Detail List"));
+        }
+
+        [HttpPost("LabCreditDetailList")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabCreditDetailList(GridRequestModel objGrid)
+        {
+            IPagedList<LabCreditDetailDto> LabCreditDetailList = await _ILabPatientRegistrationService.LabCreditDetailListAsync(objGrid);
+            return Ok(LabCreditDetailList.ToGridResponse(objGrid, "Lab Credit Detail List"));
+        }
+
     }
 }
