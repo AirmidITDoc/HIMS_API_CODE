@@ -41,7 +41,7 @@ namespace HIMS.Data.DTO.Pathology
         public bool? Priority { get; set; }
         public DateTime? CollectionDate { get; set; }
         public DateTime? CollectionTime { get; set; }
-        public long? Phlebotomist { get; set; }
+        //public long? Phlebotomist { get; set; }
         public string? Location { get; set; }
         public string? Latitude { get; set; }
         public string? Longitude { get; set; }
@@ -56,6 +56,7 @@ namespace HIMS.Data.DTO.Pathology
         public long? Status { get; set; }
         public string? HospitalName { get; set; }
         public string? UserName { get; set; }
-
+        public string? Phlebotomist { get; set; }
+        public string? CityName { get; set; }
     }
 }
