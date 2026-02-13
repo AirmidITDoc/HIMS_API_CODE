@@ -7,6 +7,7 @@ using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Security.Principal;
 using System.Transactions;
 
 namespace HIMS.Services.Inventory
@@ -42,20 +43,23 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<PathTemplateForUpdateListDto>(model, "Rtrv_PathTemplateForUpdate");
         }
-        public virtual void InsertSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username)
+        public virtual async Task InsertSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int CurrentUserId, string CurrentUserName)
         {
 
 
             //Add header table records
             DatabaseHelper odal = new();
-            string[] rEntity = { "UpdatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "MPathTemplateDetail1s", "MPathTemplateDetails", "MPathTestDetailMasters" };
+            string[] rEntity = {"TestName", "PrintTestName", "CategoryId", "IsSubTest", "TechniqueName", "MachineName", "SuggestionNote", "FootNote", "IsActive", "AddedBy", "ServiceId", "IsTemplateTest", "IsCategoryPrint", "IsPrintTestName", "TestTime", "TestDate", "CreatedBy", "TestId" };
             var entity = objTest.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
             string VTestId = odal.ExecuteNonQuery("insert_PathologyTestMaster_1", CommandType.StoredProcedure, "TestId", entity);
             objTest.TestId = Convert.ToInt32(VTestId);
+            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(MPathTestMaster), objTest.TestId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
 
             if (objTest.IsTemplateTest == 1)
             {
@@ -64,13 +68,16 @@ namespace HIMS.Services.Inventory
                 {
                     item.TestId = Convert.ToInt32(VTestId);
 
-                    string[] Entity = { "PtemplateId", "Test" };
+                    string[] Entity = { "TestId", "TemplateId" };
                     var Tentity = item.ToDictionary();
-                    foreach (var rProperty in Entity)
+                    foreach (var rProperty in Tentity.Keys.ToList())
                     {
-                        Tentity.Remove(rProperty);
+                        if (!Entity.Contains(rProperty))
+                            Tentity.Remove(rProperty);
                     }
                     odal.ExecuteNonQuery("m_insert_PathologyTemplateTest_1", CommandType.StoredProcedure, Tentity);
+                    _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(MPathTestMaster), objTest.TestId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
                 }
 
             }
@@ -82,28 +89,34 @@ namespace HIMS.Services.Inventory
                     Titem.TestId = Convert.ToInt32(VTestId);
 
 
-                    string[] DEntity = { "Test", "TestDetId", "Parameter" };
+                    string[] DEntity = { "TestId", "SubTestId", "ParameterId" };
                     var dentity = Titem.ToDictionary();
-                    foreach (var rProperty in DEntity)
+                    foreach (var rProperty in dentity.Keys.ToList())
                     {
-                        dentity.Remove(rProperty);
+                        if (!DEntity.Contains(rProperty))
+                            dentity.Remove(rProperty);
                     }
                     odal.ExecuteNonQuery("m_insert_PathTestDetailMaster_1", CommandType.StoredProcedure, dentity);
+                    _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(MPathTestMaster), objTest.TestId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
                 }
             }
         }
 
-        public virtual void UpdateSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username)
+        public virtual async Task UpdateSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int CurrentUserId, string CurrentUserName)
         {
             //Add header table records
             DatabaseHelper odal = new();
-            string[] rEntity = { "AddedBy", "CreatedBy", "CreatedDate", "ModifiedDate", "MPathTemplateDetails", "MPathTemplateDetail1s", "MPathTestDetailMasters" };
+            string[] rEntity = { "TestName", "PrintTestName", "CategoryId", "IsSubTest", "TechniqueName", "MachineName", "SuggestionNote", "FootNote", "IsActive", "UpdatedBy", "ServiceId", "IsTemplateTest", "IsCategoryPrint", "IsPrintTestName", "TestTime", "TestDate", "ModifiedBy", "TestId" };
             var entity = objTest.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("m_update_PathologyTestMaster_1", CommandType.StoredProcedure, entity);
+            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(MPathTestMaster), objTest.TestId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
+
 
             foreach (var item in ObjMPathTemplateDetail)
             {
@@ -122,13 +135,16 @@ namespace HIMS.Services.Inventory
                 foreach (var item in ObjMPathTemplateDetail)
 
                 {
-                    string[] Entity = { "PtemplateId", "Test" };
+                    string[] Entity = { "TestId", "TemplateId" };
                     var Tentity = item.ToDictionary();
-                    foreach (var rProperty in Entity)
+                    foreach (var rProperty in Tentity.Keys.ToList())
                     {
-                        Tentity.Remove(rProperty);
+                        if (!Entity.Contains(rProperty))
+                            Tentity.Remove(rProperty);
                     }
                     odal.ExecuteNonQuery("m_insert_PathologyTemplateTest_1", CommandType.StoredProcedure, Tentity);
+                    _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(MPathTestMaster), objTest.TestId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
+
                 }
 
             }
@@ -147,13 +163,16 @@ namespace HIMS.Services.Inventory
                 foreach (var Titem in ObjMPathTestDetailMaster)
                 {
 
-                    string[] DEntity = { "Test", "TestDetId", "Parameter" };
+                    string[] DEntity = { "TestId", "SubTestId", "ParameterId" };
                     var dentity = Titem.ToDictionary();
-                    foreach (var rProperty in DEntity)
+                    foreach (var rProperty in dentity.Keys.ToList())
                     {
-                        dentity.Remove(rProperty);
+                        if (!DEntity.Contains(rProperty))
+                            dentity.Remove(rProperty);
                     }
                     odal.ExecuteNonQuery("m_insert_PathTestDetailMaster_1", CommandType.StoredProcedure, dentity);
+                    _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(MPathTestMaster), objTest.TestId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
+
                 }
             }
 
