@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
+using HIMS.Core.Domain.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 
@@ -10,18 +11,11 @@ namespace HIMS.API.Controllers.Administration
     [ApiVersion("1")]
     public class DbInfoController : BaseController
     {
-        private readonly IConfiguration _configuration;
-        public DbInfoController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
 
         [HttpGet]
         public IActionResult GetDbInfo()
         {
-
-            var connStr = _configuration.GetConnectionString("CONNECTION_STRING");
-            var builder = new SqlConnectionStringBuilder(connStr);
+            var builder = new SqlConnectionStringBuilder(AppSettings.Settings.CONNECTION_STRING);
 
             return Ok(new
             {

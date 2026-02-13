@@ -15,28 +15,28 @@
                 <td style="width:10%; padding:4px;"><strong>Bill Number:</strong></td>
                 <td style="width:25%; padding:4px;">{{BillNo}}</td>
                 <td style="width:10%; padding:4px;"><strong>Bill Date:</strong></td>
-                <td style="width:25%; padding:4px;">{{}}</td>
+                <td style="width:25%; padding:4px;">{{BillDate}}</td>
             </tr>
 
             <tr>
                 <td style="padding:4px;"><strong>Reg. Number:</strong></td>
-                <td style="padding:4px;">{{UHID}}</td>
+                <td style="padding:4px;">{{RegNo}}</td>
                 <td style="padding:4px;"><strong>Age / Sex:</strong></td>
-                <td style="padding:4px;">{{}} / {{}}</td>
+                <td style="padding:4px;">{{AgeYear}} / {{GenderName}}</td>
             </tr>
 
             <tr>
                 <td style="padding:4px;"><strong>Patient Name:</strong></td>
                 <td style="padding:4px;">{{PatientName}}</td>
                 <td style="padding:4px;"><strong>Phone No:</strong></td>
-                <td style="padding:4px;">{{}}</td>
+                <td style="padding:4px;">{{MobileNo}}</td>
             </tr>
 
             <tr>
                 <td style="padding:4px;"><strong>Referred By:</strong></td>
-                <td style="padding:4px;">{{}}</td>
+                <td style="padding:4px;">{{DoctorName}}</td>
                 <td style="padding:4px;"><strong>Address:</strong></td>
-                <td style="padding:4px;">{{}}</td>
+                <td style="padding:4px;">{{Address}}</td>
             </tr>
 
             <tr>
@@ -48,6 +48,7 @@
         </table>
         <table style="width:100%; border-collapse:collapse; margin-top:15px; font-size:14px;">
             <tr style="background:#eaeaea;">
+                <th style="padding:8px; text-align:center;">Sr.No</th>
                 <th style="padding:8px; text-align:center;">Test</th>
                 <th style="padding: 8px; text-align: center;">Vial</th>
                 <th style="padding: 8px; text-align: center;">Report Date</th>
@@ -60,7 +61,7 @@
         </div>
 
         <div style="margin-top:10px; font-size:14px;">
-            <strong>User:</strong>{{}}
+            <strong>User:</strong>{{UserName}}
         </div>
 
         <div style="margin-top:5px; font-size:14px;">
@@ -68,8 +69,8 @@
         </div>
 
         <div style="margin-top:30px; display:flex; justify-content:flex-end;">
-            <div style="text-align:center;">
-                <div style="border-top:1px solid #000; width:200px;"></div>
+            <div style="text-align:right;">
+                <!--<div style="border-top:1px solid #000; width:200px;"></div>-->
                 <div style="font-size:13px;">Received by</div>
             </div>
         </div>

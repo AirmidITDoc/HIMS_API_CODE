@@ -4,8 +4,9 @@ using FluentValidation.AspNetCore;
 using HIMS.API.Extensions;
 using HIMS.API.Hubs;
 using HIMS.API.Infrastructure;
+using HIMS.Core;
+using HIMS.Core.Domain.Common;
 using HIMS.Core.Infrastructure;
-using HIMS.Core.Utilities;
 using HIMS.Data.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
@@ -22,6 +23,8 @@ using WkHtmlToPdfDotNet.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
+
+AppSettings.Initialize(builder.Configuration);
 
 // Add services to the container.
 ConfigurationManager Configuration = builder.Configuration;
@@ -46,11 +49,10 @@ builder.Services.Configure<FormOptions>(o =>
 builder.Services.AddEntityFrameworkSqlServer();
 builder.Services.AddDbContextPool<HIMSDbContext>((provider, options) =>
 {
-    options.UseSqlServer(Configuration.GetValue<string>("CONNECTION_STRING"));
+    options.UseSqlServer(AppSettings.Settings.CONNECTION_STRING);
     options.UseInternalServiceProvider(provider);
 });
-var connectionString = Configuration.GetValue<string>("CONNECTION_STRING");
-ConnectionStrings.SetConnectionString(connectionString);
+ConnectionStrings.SetConnectionString(AppSettings.Settings.CONNECTION_STRING);
 CommonExtensions.PreloadDinkToPdfDll();
 DependencyRegistrar.Register(builder.Services);
 
@@ -101,8 +103,8 @@ builder.Services.AddApiVersioning(config =>
 });
 
 //Configure JWT Token Authentication
-AuthenticationSettings config = builder.Configuration.GetSection("AuthenticationSettings").Get<AuthenticationSettings>();
-byte[] secretKey = Encoding.ASCII.GetBytes(config.SecretKey);
+//AuthenticationSettings config = builder.Configuration.GetSection("AuthenticationSettings").Get<AuthenticationSettings>();
+byte[] secretKey = Encoding.ASCII.GetBytes(AppSettings.Settings.AuthenticationSettings.SecretKey);
 builder.Services.AddAuthentication(auth =>
 {
     auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -150,7 +152,7 @@ builder.Services.AddSwaggerGen(c =>
                     }
                 });
 });
-string[] CorsAllowUrls = Configuration["CorsAllowUrls"].Split(',', StringSplitOptions.RemoveEmptyEntries).Select(url => url.Trim()).ToArray();
+string[] CorsAllowUrls = AppSettings.Settings.CorsAllowUrls.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(url => url.Trim()).ToArray();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "CorsPolicy",
@@ -176,32 +178,10 @@ builder.Services.AddCors(options =>
             .WithExposedHeaders("Content-Disposition");
         });
 });
-//string[] CorsAllowUrls = Configuration["CorsAllowUrls"].Split(',');
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy(name: "CorsPolicy",
-//                      builder =>
-//                      {
-//                          builder
-//                          .WithOrigins(CorsAllowUrls).SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
-//                          .AllowAnyMethod()
-//                          .AllowAnyHeader()
-//                          .AllowCredentials();
-//                      });
-//});
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("CorsPolicy",
-//        builder => builder.AllowAnyOrigin()
-//        .AllowAnyMethod()
-//        .AllowAnyHeader()
-//        //.AllowCredentials()
-//        );
-//});
 var app = builder.Build();
 app.UseStaticFiles();
 app.UseSwagger();
-app.UseSwaggerUI(c => c.SwaggerEndpoint(Configuration["SwaggerUrl"], "API v1"));
+app.UseSwaggerUI(c => c.SwaggerEndpoint(AppSettings.Settings.SwaggerUrl, "API v1"));
 
 app.UseAuthentication();
 app.UseCors("CorsPolicy");

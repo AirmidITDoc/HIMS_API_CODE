@@ -12,11 +12,9 @@ namespace HIMS.ScheduleJobs.Jobs
     {
         private readonly ILogger<WhatsAppJob> _logger;
 
-        private readonly IConfiguration _configuration;
-        public WhatsAppJob(ILogger<WhatsAppJob> logger, IConfiguration configuration)
+        public WhatsAppJob(ILogger<WhatsAppJob> logger)
         {
             _logger = logger;
-            _configuration = configuration;
         }
         public async Task Execute(IJobExecutionContext context)
         {

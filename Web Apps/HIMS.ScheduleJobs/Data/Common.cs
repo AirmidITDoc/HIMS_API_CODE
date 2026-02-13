@@ -167,7 +167,7 @@ namespace HIMS.ScheduleJobs.Data
                 {
                     foreach (var attachmentItem in Attachments)
                     {
-                        if (!string.IsNullOrEmpty(attachmentItem.AttachmentLink))
+                        if (!string.IsNullOrEmpty(attachmentItem.AttachmentLink) && attachmentItem.AttachmentLink.StartsWith("http"))
                         {
                             if (attachmentItem.AttachmentLink.StartsWith("https"))
                             {
@@ -194,6 +194,14 @@ namespace HIMS.ScheduleJobs.Data
                                 byte[] bytes = ms.ToArray();
                                 ms.Close();
 
+                                message.Attachments.Add(new System.Net.Mail.Attachment(new MemoryStream(bytes), attachmentItem.AttachmentName));
+                            }
+                        }
+                        else
+                        {
+                            if (File.Exists(attachmentItem.AttachmentLink))
+                            {
+                                byte[] bytes = File.ReadAllBytes(attachmentItem.AttachmentLink);
                                 message.Attachments.Add(new System.Net.Mail.Attachment(new MemoryStream(bytes), attachmentItem.AttachmentName));
                             }
                         }

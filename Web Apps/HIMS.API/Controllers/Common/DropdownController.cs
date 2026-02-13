@@ -108,6 +108,9 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MPathSpecimenMaster> _MPathSpecimenMaster;
         private readonly IGenericService<MInstructionMaster> _MInstructionMaster;
         private readonly IGenericService<MAdmissionType> _AdmissionType;
+        private readonly IGenericService<MPathSpecimenContainerMaster> _MPathSpecimenContainerMaster;
+        private readonly IGenericService<MPathSpecimenCollectionMaster> _MPathSpecimenCollectionMaster;
+        private readonly IGenericService<MPathSpecimenPreservativeMaster> _MPathSpecimenPreservativeMaster;
         private readonly IGenericService<MPathSpecimenConditionMaster> _MPathSpecimenConditionMaster;
 
 
@@ -166,7 +169,10 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MSubQuestionValuesMaster> MSubQuestionValuesMaster,
                               IGenericService<MPathSpecimenMaster> MPathSpecimenMaster,
                               IGenericService<MInstructionMaster> MInstructionMaster,
-                              IGenericService<MAdmissionType> MAdmissionType,
+                                IGenericService<MAdmissionType> MAdmissionType,
+                              IGenericService<MPathSpecimenContainerMaster> MPathSpecimenContainerMaster,
+                              IGenericService<MPathSpecimenCollectionMaster> MPathSpecimenCollectionMaster,
+                              IGenericService<MPathSpecimenPreservativeMaster> MPathSpecimenPreservativeMaster,
                               IGenericService<MPathSpecimenConditionMaster> MPathSpecimenConditionMaster
 
 
@@ -263,6 +269,10 @@ namespace HIMS.API.Controllers.Common
             _MPathSpecimenMaster = MPathSpecimenMaster;
             _MInstructionMaster = MInstructionMaster;
             _AdmissionType = MAdmissionType;
+            _MPathSpecimenContainerMaster = MPathSpecimenContainerMaster;
+            _MPathSpecimenCollectionMaster = MPathSpecimenCollectionMaster;
+            _MPathSpecimenPreservativeMaster = MPathSpecimenPreservativeMaster;
+
             _MPathSpecimenConditionMaster = MPathSpecimenConditionMaster;
 
 
@@ -466,6 +476,9 @@ namespace HIMS.API.Controllers.Common
 
 
 
+                "PathSpecimenContainerMaster" => (await _MPathSpecimenContainerMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenContainerMaster.SpecimenContainerId), nameof(MPathSpecimenContainerMaster.ContainerType)),
+                "PathSpecimenCollectionMaster" => (await _MPathSpecimenCollectionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenCollectionMaster.SpecimenCollectionId), nameof(MPathSpecimenCollectionMaster.CollectionMethod)),
+                "PathSpecimenPreservativeMaster" => (await _MPathSpecimenPreservativeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenPreservativeMaster.SpecimenPreservativeId), nameof(MPathSpecimenPreservativeMaster.PreservativeUsed)),
 
 
 

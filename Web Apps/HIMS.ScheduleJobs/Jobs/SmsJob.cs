@@ -12,12 +12,9 @@ namespace HIMS.ScheduleJobs.Jobs
     {
         private readonly ILogger<SmsJob> _logger;
 
-        private readonly IConfiguration _configuration;
-
-        public SmsJob(ILogger<SmsJob> logger, IConfiguration configuration)
+        public SmsJob(ILogger<SmsJob> logger)
         {
             _logger = logger;
-            _configuration = configuration;
         }
 
         public async Task Execute(IJobExecutionContext context)

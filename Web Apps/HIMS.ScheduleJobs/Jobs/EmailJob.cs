@@ -11,13 +11,9 @@ namespace HIMS.ScheduleJobs.Jobs
     public class EmailJob : IJob
     {
         private readonly ILogger<EmailJob> _logger;
-
-        private readonly IConfiguration _configuration;
-
-        public EmailJob(ILogger<EmailJob> logger, IConfiguration configuration)
+        public EmailJob(ILogger<EmailJob> logger)
         {
             _logger = logger;
-            _configuration = configuration;
         }
         public async Task Execute(IJobExecutionContext context)
         {
