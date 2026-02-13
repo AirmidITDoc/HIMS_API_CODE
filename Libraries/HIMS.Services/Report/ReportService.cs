@@ -4845,7 +4845,7 @@ namespace HIMS.Services.Report
                             i++;
                             items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:15;\"><td style=\" text-align: center; padding: 6px;\">").Append(i).Append("</td>");
                             items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["TestName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["PrintTestName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["Label"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["ReportDate"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
 
                         }
@@ -8708,7 +8708,7 @@ namespace HIMS.Services.Report
 
                             items.Append("<tr  style=\"font-family: 'Helvetica Neue','Helvetica', Helvetica, Arial, sans-serif;font-size:16px;\"><td style=\"text-align: center; padding: 2px;\">").Append(j).Append("</td>");
                             items.Append("<td style=\"text-align: left; padding: 2px;font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
-                            //items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>");
                             //items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["ClassName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"text-align: center; padding: 2px;font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["Price"].ConvertToDouble()).Append("</td>");
                             items.Append("<td style=\"text-align: center; padding: 2px;font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
@@ -9174,7 +9174,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkadminflag}}", dt.GetColValue("TaxAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkadminchargeflag}}", AdminChares.ConvertToDouble() > 0 ? "table-row " : "none");
 
-
+                        string Netfinalamt = conversion(Convert.ToInt64(FinalNetAmt).ToString()).Replace("₹", "");
+                        html = html.Replace("{{Netfinalamt}}", Netfinalamt.ToUpper());
 
                     }
 
