@@ -42,8 +42,8 @@ namespace HIMS.ScheduleJobs.Jobs
                 {
                     List<SearchGrid> searchFields = new()
                     {
-                        new SearchGrid() { FieldName = "FromDate", FieldValue = "2026-02-01", OpType = OperatorComparer.Equals },
-                        new SearchGrid() { FieldName = "ToDate", FieldValue = "2026-03-01", OpType = OperatorComparer.Equals },
+                        new SearchGrid() { FieldName = "FromDate", FieldValue =DateTime.Now.ToString("yyyy-MM-dd"), OpType = OperatorComparer.Equals },
+                        new SearchGrid() { FieldName = "ToDate", FieldValue = DateTime.Now.ToString("yyyy-MM-dd"), OpType = OperatorComparer.Equals },
                         new SearchGrid() { FieldName = "UserId", FieldValue = "0", OpType = OperatorComparer.Equals },
                         new SearchGrid() { FieldName = "DoctorId", FieldValue = "0", OpType = OperatorComparer.Equals }
                     };
@@ -70,7 +70,7 @@ namespace HIMS.ScheduleJobs.Jobs
                     ToEmail = "elaunch.vimal@gmail.com",
                     MailSubject = model.RepoertName + " - " + DateTime.Now.ToString("dd/MM/yyyy"),
                     MailBody = "Please find the attached report.",
-                    FromEmail = "support@airmidtechinnovations.com",
+                    FromEmail = "reports@medifortehospital.com",
                     FromName = "Airmid Tech Innovations",
                     AttachmentName = "DailySummaryReport_For_" + DateTime.Now.ToString("dd_MM_yyyy") + ".pdf",
                     AttachmentLink = tuple.Item2,
