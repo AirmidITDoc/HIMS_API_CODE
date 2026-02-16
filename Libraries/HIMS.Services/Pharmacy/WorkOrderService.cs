@@ -38,7 +38,8 @@ namespace HIMS.Services.Pharmacy
             }
             string AWOId = odal.ExecuteNonQuery("insert_T_WorkOrderHeader_1", CommandType.StoredProcedure, "Woid", yentity);
             ObjTWorkOrderHeader.Woid = Convert.ToInt32(AWOId);
-            //await _context.LogProcedureExecution(yentity, nameof(TWorkOrderHeader), ObjTWorkOrderHeader.Woid.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            _ = Task.Run(() => _context.LogProcedureExecution(yentity, nameof(TWorkOrderHeader), ObjTWorkOrderHeader.Woid.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
 
 
             foreach (var item in ObjTWorkOrderDetail)
@@ -53,7 +54,8 @@ namespace HIMS.Services.Pharmacy
                         entity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_T_WorkOrderDetail_1", CommandType.StoredProcedure, entity);
-                await _context.LogProcedureExecution(entity, nameof(TWorkOrderDetail), item.Woid.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                _ = Task.Run(() => _context.LogProcedureExecution(yentity, nameof(TWorkOrderDetail), item.Woid.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
 
             }
         }
@@ -70,6 +72,8 @@ namespace HIMS.Services.Pharmacy
                     Sentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("Update_WorkorderHeader", CommandType.StoredProcedure, Sentity);
+            _ = Task.Run(() => _context.LogProcedureExecution(Sentity, nameof(TWorkOrderHeader), ObjTWorkOrderHeader.Woid.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
+
 
             var tokensObj = new
             {
@@ -88,10 +92,7 @@ namespace HIMS.Services.Pharmacy
                         pentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_T_WorkOrderDetail_1", CommandType.StoredProcedure, pentity);
-                await _context.LogProcedureExecution(pentity, nameof(TWorkOrderHeader), ObjTWorkOrderHeader.Woid.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
-
-
+                _ = Task.Run(() => _context.LogProcedureExecution(pentity, nameof(TWorkOrderDetail), item.Woid.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
             }
         }
     }
