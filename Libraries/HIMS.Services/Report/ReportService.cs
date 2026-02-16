@@ -4843,10 +4843,10 @@ namespace HIMS.Services.Report
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++;
-                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:15;\"><td style=\" text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:15px; line-height:18px;\"><td style=\" text-align: center; padding: 6px;\">").Append(i).Append("</td>");
                             items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["TestName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["Label"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["ReportDate"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
+                            items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["ReportDate"].ConvertToDateString("dd/MM/yyyy")).Append("</td></tr>");
 
                         }
 
