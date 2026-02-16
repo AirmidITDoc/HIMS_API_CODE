@@ -43,21 +43,21 @@ namespace HIMS.Services.Pathlogy
 
         public virtual async Task<IPagedList<BranchWiseTestSummaryDto>> BranchWiseTestSummaryList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BranchWiseTestSummaryDto>(model, "ps_BranchWise_TestSummary");
+            return await DatabaseHelper.GetGridDataBySp<BranchWiseTestSummaryDto>(model, "ps_BranchWiseTest__Summary");
         }
 
         public virtual async Task<IPagedList<BranchWiseDoctorSummaryDto>> BranchWiseDoctorSummaryList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BranchWiseDoctorSummaryDto>(model, "ps_BranchWise_DoctorSummary");
+            return await DatabaseHelper.GetGridDataBySp<BranchWiseDoctorSummaryDto>(model, "ps_BranchWise__DoctorSummary");
         }
 
         public virtual async Task<IPagedList<BranchWiseCompanySummaryDto>> BranchWiseCompanySummaryList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BranchWiseCompanySummaryDto>(model, "ps_BranchWise_CompanySummary");
+            return await DatabaseHelper.GetGridDataBySp<BranchWiseCompanySummaryDto>(model, "ps_BranchWise__CompanySummary");
         }
         public virtual async Task<IPagedList<BranchWiseCategorySummaryDto>> BranchWiseCategorySummaryList(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<BranchWiseCategorySummaryDto>(model, "ps_BranchWise_CategorySummary");
+            return await DatabaseHelper.GetGridDataBySp<BranchWiseCategorySummaryDto>(model, "ps_BranchWise__CategorySummary");
         }
     }
 }

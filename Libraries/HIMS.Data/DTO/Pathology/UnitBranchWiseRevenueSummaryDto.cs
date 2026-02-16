@@ -56,7 +56,7 @@ namespace HIMS.Data.DTO.Pathology
 
     public class BranchWiseTestSummaryDto
     {
-        public string ServiceName { get; set; }
+        public string FullDate { get; set; }
         public double TestCount { get; set; }
         public double TotalAmount { get; set; }
         public decimal DiscAmount { get; set; }
@@ -65,7 +65,7 @@ namespace HIMS.Data.DTO.Pathology
 
     public class BranchWiseDoctorSummaryDto
     {
-        public string DoctorName { get; set; }
+        public string FullDate { get; set; }
         public long TestCount { get; set; }
         public double TotalAmount { get; set; }
         public decimal DiscAmount { get; set; }
@@ -75,7 +75,7 @@ namespace HIMS.Data.DTO.Pathology
 
     public class BranchWiseCompanySummaryDto
     {
-        public string CompanyName { get; set; }
+        public string FullDate { get; set; }
         public long TestCount { get; set; }
         public double TotalAmount { get; set; }
         public decimal DiscAmount { get; set; }
@@ -84,7 +84,7 @@ namespace HIMS.Data.DTO.Pathology
 
     public class BranchWiseCategorySummaryDto
     {
-        public string CategoryName { get; set; }
+        public string FullDate { get; set; }
         public long TestCount { get; set; }
         public double TotalAmount { get; set; }
         public decimal DiscAmount { get; set; }
