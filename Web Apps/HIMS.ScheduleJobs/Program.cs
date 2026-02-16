@@ -5,6 +5,7 @@ using HIMS.Data.Models;
 using HIMS.ScheduleJobs.Jobs;
 using HIMS.ScheduleJobs.Models;
 using HIMS.Services.Administration;
+using HIMS.Services.Masters;
 using HIMS.Services.Report;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -65,6 +66,7 @@ namespace HIMS.ScheduleJobs
                 services.AddScoped<IReportService, ReportService>();
                 services.AddScoped<IWhatsAppEmailService, WhatsAppEmailService>();
                 services.AddScoped<IBarcodeConfigService, BarcodeConfigService>();
+                services.AddScoped<IEmailTemplateService, EmailTemplateService>();
 
                 services.AddQuartz(q =>
                 {
