@@ -67,7 +67,7 @@ namespace HIMS.ScheduleJobs.Jobs
                 var tuple = _reportService.GetNewReportSetByProc(model);
                 TMailOutgoing mailModel = new()
                 {
-                    ToEmail = "elaunch.vimal@gmail.com",
+                    ToEmail = "airmidtechinnovations@gmail.com",
                     MailSubject = model.RepoertName + " - " + DateTime.Now.ToString("dd/MM/yyyy"),
                     MailBody = "Please find the attached report.",
                     FromEmail = "reports@medifortehospital.com",

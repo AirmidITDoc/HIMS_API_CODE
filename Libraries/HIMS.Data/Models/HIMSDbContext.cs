@@ -8182,7 +8182,7 @@ namespace HIMS.Data.Models
                 entity.ToTable("M_PathSpecimenCollectionMaster");
 
                 entity.Property(e => e.CollectionMethod)
-                    .HasMaxLength(50)
+                    .HasMaxLength(225)
                     .HasColumnName("Collection Method");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -8201,7 +8201,7 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.SpecimenCondition)
-                    .HasMaxLength(50)
+                    .HasMaxLength(225)
                     .HasColumnName("Specimen Condition");
             });
 
@@ -8212,7 +8212,7 @@ namespace HIMS.Data.Models
                 entity.ToTable("M_PathSpecimenContainerMaster");
 
                 entity.Property(e => e.ContainerType)
-                    .HasMaxLength(50)
+                    .HasMaxLength(225)
                     .HasColumnName("Container Type");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -8230,7 +8230,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.SpecimenName).HasMaxLength(50);
+                entity.Property(e => e.SpecimenName).HasMaxLength(225);
             });
 
             modelBuilder.Entity<MPathSpecimenPreservativeMaster>(entity =>
@@ -8244,7 +8244,7 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PreservativeUsed)
-                    .HasMaxLength(50)
+                    .HasMaxLength(225)
                     .HasColumnName("Preservative Used");
             });
 

@@ -13,6 +13,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data;
+using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -111,5 +112,20 @@ namespace HIMS.API.Controllers.Pathology
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.HomeCollectionId);
         }
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
+        public ApiResponse Cancel(HomeCollectionCancel obj)
+        {
+            THomeCollectionRegistrationInfo model = obj.MapTo<THomeCollectionRegistrationInfo>();
+            if (obj.HomeCollectionId != 0)
+            {
+                model.HomeCollectionId = obj.HomeCollectionId;
+                _IHomeCollectionService.Cancel(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+
     }
 }
