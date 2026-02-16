@@ -18,6 +18,11 @@ namespace HIMS.Data.DTO.Pathology
         public double? DiscPer { get; set; }
         public decimal DiscAmount { get; set; }
         public decimal NetAmount { get; set; }
+        public long IsPathology { get; set; }
+        public bool IsPathOutSource { get; set; }
+        public long IsRadiology { get; set; }
+        public bool IsRadOutSource { get; set; }
+        public long IsPackage { get; set; }
     }
     public class HomeCollectionRegistrationInfoListDto
     {
