@@ -16,6 +16,8 @@ namespace HIMS.Services.Pathlogy
         Task UpdateAsync(THomeCollectionRegistrationInfo ObjTHomeCollectionRegistrationInfo, int UserId, string Username, string[]? ignoreColumns = null);
         Task<IPagedList<homeCollectionDetListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<HomeCollectionRegistrationInfoListDto>> HomeCollectionListAsync(GridRequestModel objGrid);
+        Task Cancel(THomeCollectionRegistrationInfo objTHomeCollectionRegistrationInfo, int UserId, string Username);
+
 
 
 

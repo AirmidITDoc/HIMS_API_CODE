@@ -11,6 +11,8 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Pathology;
+using System.Data;
+using HIMS.Services.Utilities;
 
 
 namespace HIMS.Services.Pathlogy
@@ -97,7 +99,20 @@ namespace HIMS.Services.Pathlogy
                 scope.Complete();
             }
         }
+        public virtual async Task Cancel(THomeCollectionRegistrationInfo objTHomeCollectionRegistrationInfo, int UserId, string Username)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] Entity = { "HomeCollectionId", "IsCancelledBy" };
+            var HEntity = objTHomeCollectionRegistrationInfo.ToDictionary();
+            foreach (var rProperty in HEntity.Keys.ToList())
+            {
+                if (!Entity.Contains(rProperty))
+                    HEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("PS_Cancel_HomeCollection", CommandType.StoredProcedure, HEntity);
+        }
 
-
+        
     }
 }
