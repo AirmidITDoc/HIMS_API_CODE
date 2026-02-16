@@ -53,6 +53,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<DynamicExecuteSchedule> DynamicExecuteSchedules { get; set; } = null!;
         public virtual DbSet<DynamicExecuteScheduleLog> DynamicExecuteScheduleLogs { get; set; } = null!;
         public virtual DbSet<EmailConfiguration> EmailConfigurations { get; set; } = null!;
+        public virtual DbSet<EmailTemplateMaster> EmailTemplateMasters { get; set; } = null!;
         public virtual DbSet<EmployeeMaster> EmployeeMasters { get; set; } = null!;
         public virtual DbSet<EmployeeMasterDetail> EmployeeMasterDetails { get; set; } = null!;
         public virtual DbSet<EmployeeUnitMapping> EmployeeUnitMappings { get; set; } = null!;
@@ -620,7 +621,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -1874,6 +1875,27 @@ namespace HIMS.Data.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("User_Name");
+            });
+
+            modelBuilder.Entity<EmailTemplateMaster>(entity =>
+            {
+                entity.ToTable("EmailTemplateMaster");
+
+                entity.Property(e => e.Bcc).HasMaxLength(250);
+
+                entity.Property(e => e.Cc).HasMaxLength(250);
+
+                entity.Property(e => e.FromEmail).HasMaxLength(250);
+
+                entity.Property(e => e.FromName).HasMaxLength(250);
+
+                entity.Property(e => e.IsWa).HasColumnName("IsWA");
+
+                entity.Property(e => e.MailSubject).HasMaxLength(250);
+
+                entity.Property(e => e.TemplateCode).HasMaxLength(50);
+
+                entity.Property(e => e.Wabody).HasColumnName("WABody");
             });
 
             modelBuilder.Entity<EmployeeMaster>(entity =>
@@ -9005,7 +9027,11 @@ namespace HIMS.Data.Models
             {
                 entity.ToTable("M_UnitWiseCashCounter");
 
-                entity.Property(e => e.CashCounterCode).HasMaxLength(20);
+                entity.Property(e => e.CashCounterCode).HasMaxLength(100);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MUnitofMeasurementMaster>(entity =>
