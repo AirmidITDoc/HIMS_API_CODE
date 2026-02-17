@@ -57,6 +57,17 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<PrevDrVisistListDto>(model, "ps_Rtrv_PreviousLabDoctorVisitList");
         }
+        public List<CompanyComboDto> CompanyComboList(string keywoard)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para =
+             {
+             new SqlParameter("@keywoard",string.IsNullOrWhiteSpace(keywoard) ? DBNull.Value : keywoard)
+             };
+            var data = sql.FetchListBySP<CompanyComboDto>("ps_Rtrv_CompanyMasterCombo", para);
+
+            return data;
+        }
 
         public virtual async Task InsertAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username)
         {

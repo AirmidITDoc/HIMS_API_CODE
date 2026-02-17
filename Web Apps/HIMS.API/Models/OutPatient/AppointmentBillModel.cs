@@ -54,6 +54,8 @@ namespace HIMS.API.Models.OutPatient
             public DateTime? MedTourismDateOfEntry { get; set; }
             public string? MedTourismResidentialAddress { get; set; }
             public string? MedTourismOfficeWorkAddress { get; set; }
+            public string? EmailId { get; set; }
+
             public long RegId { get; set; }
 
 

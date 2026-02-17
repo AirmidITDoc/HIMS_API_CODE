@@ -54,6 +54,8 @@ namespace HIMS.Services.Pathlogy
 
         Task<IPagedList<LabPaymentDetailListDto>> LabPaymentDetailListAsync(GridRequestModel objGrid);
         Task<IPagedList<LabCreditDetailDto>> LabCreditDetailListAsync(GridRequestModel objGrid);
+        List<CompanyComboDto> CompanyComboList(string keywoard);
+
 
 
     }
