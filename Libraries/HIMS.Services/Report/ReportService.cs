@@ -141,7 +141,7 @@ namespace HIMS.Services.Report
         }
 
 
-        public async Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
+        public async Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1)
         {
 
             var tuple = new Tuple<byte[], string>(null, string.Empty);
@@ -334,7 +334,7 @@ namespace HIMS.Services.Report
                     {
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabMoneyReciept.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ExternalLabHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        htmlHeaderFilePath = _pdfUtility.GetHeaderByType(htmlHeaderFilePath, UnitId);
                         var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 
@@ -349,7 +349,7 @@ namespace HIMS.Services.Report
                     {
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabMoneyReceiptWithoutHeader.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ExternalLabHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        htmlHeaderFilePath = _pdfUtility.GetHeaderByType(htmlHeaderFilePath, UnitId);
                         var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 
@@ -1924,7 +1924,7 @@ namespace HIMS.Services.Report
 
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabReciept.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ExternalLabHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        htmlHeaderFilePath = _pdfUtility.GetHeaderByType(htmlHeaderFilePath, UnitId);
                         var html = GetHTMLView("ps_rptPrintPathologyRadiologyReport", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 

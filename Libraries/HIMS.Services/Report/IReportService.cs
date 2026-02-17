@@ -8,7 +8,7 @@ namespace HIMS.Services.Report
 {
     public partial interface IReportService
     {
-        Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "");
+        Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1);
         Tuple<byte[],string> GetNewReportSetByProc(ReportConfigDto model);
         Task<List<DoctorMaster>> SearchDoctor(string str);
         Task<List<ServiceMasterDTO>> SearchService(string str);
