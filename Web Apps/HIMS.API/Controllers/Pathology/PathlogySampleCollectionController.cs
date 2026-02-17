@@ -61,7 +61,8 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(PathRadServiceList.ToGridResponse(objGrid, "PathRadService List "));
         }
         [HttpPut("Update")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Update(PathlogySampleCollectionsModel obj)
         {
             List<TPathologyReportHeader> model = obj.PathlogySampleCollection.MapTo<List<TPathologyReportHeader>>();
@@ -77,14 +78,13 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("UpdateSamplecollectionDatetime")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Verify(PathologyUpdateDateTimeModel obj)
         {
             TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();
             if (obj.SampleNo != 0)
             {
-                
-
                 await _IPathlogySampleCollectionService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             else

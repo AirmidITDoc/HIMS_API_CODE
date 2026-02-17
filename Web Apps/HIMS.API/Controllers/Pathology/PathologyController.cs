@@ -66,7 +66,8 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("InsertResultEntry")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(PathologyResultModel obj)
         {
             List<TPathologyReportDetail> model = obj.PathologyResult.MapTo<List<TPathologyReportDetail>>();
@@ -116,7 +117,9 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("PathologyTemplateSave")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        [Permission]
+
         public async Task<ApiResponse> Insert(PathologyTemplatesModel obj)
         {
             TPathologyReportTemplateDetail model = obj.PathologyReportTemplate.MapTo<TPathologyReportTemplateDetail>();
@@ -160,7 +163,9 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("PathResultentryrollback")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        [Permission]
+
         public async Task<ApiResponse> Delete(PathReportModel obj)
         {
             TPathologyReportDetail Model = obj.MapTo<TPathologyReportDetail>();
@@ -177,7 +182,8 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("Verify")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Verify(PathologyVerifyModel obj)
         {
             TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();
@@ -194,7 +200,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpGet("search-GetServicewiseTemplate")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission]
         public ApiResponse SearchGetServiceWisetemplate(int ServiceId)
         {
             var data = _IPathlogyService.GetServicewisetemplate(ServiceId);
