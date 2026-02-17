@@ -22,7 +22,9 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("InsertSettlement")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+
+        [Permission]
+        //[Permission(PageCode = "CompanySettlement", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(OPSettlementModel obj)
         {
             Payment model = obj.OPCreditPayment.MapTo<Payment>();
@@ -48,7 +50,9 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("InsertSettlementMultiple")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "CompanySettlement", Permission = PagePermission.Add)]
+        [Permission]
+
         public async Task<ApiResponse> Insert(OPSettlementMultipleModel obj)
 
         {
