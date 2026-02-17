@@ -17942,37 +17942,43 @@ namespace HIMS.Services.Report
 
                 case "BranchWiseStatement":
                     {
+                        // Load HTML templates
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "BranchWiseStatement.html");
                         string html = System.IO.File.ReadAllText(htmlFilePath);
+
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
+                        // Stored procedure call
                         string sp = "ps_rpt_BranchWiseStatement_Test";
                         DatabaseHelper sql = new();
-                        Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
-                        DatabaseHelper odal = new();
-                        int sp_Para = 0;
+                        Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension
+                            .GetSearchFields(model.SearchFields)
+                            .ToDictionary(e => e.FieldName, e => e.FieldValueString);
+
                         SqlParameter[] para = new SqlParameter[fields.Count];
+                        int sp_Para = 0;
                         foreach (var property in fields)
                         {
-                            var param = new SqlParameter
+                            para[sp_Para] = new SqlParameter
                             {
                                 ParameterName = "@" + property.Key,
                                 Value = property.Value.ToString()
                             };
-
-                            para[sp_Para] = param;
                             sp_Para++;
                         }
 
                         DataSet ds = sql.FetchDataSetBySP(sp, para);
+
                         if (ds.Tables.Count > 0)
                         {
                             html = html.Replace("{{FromDate}}", fields["FromDate"]);
                             html = html.Replace("{{ToDate}}", fields["ToDate"]);
                             html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         }
+
+                        #region 0 - Revenue Summary
                         if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                         {
                             var dt0 = ds.Tables[0];
@@ -17982,7 +17988,9 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{TotalOutstanding}}", dt0.GetColValue("TotalOutstanding"));
                             html = html.Replace("{{TotalRefund}}", dt0.GetColValue("TotalRefund"));
                         }
+                        #endregion
 
+                        #region 1 - Patient Count
                         if (ds.Tables.Count > 1 && ds.Tables[1].Rows.Count > 0)
                         {
                             var dt1 = ds.Tables[1];
@@ -17990,131 +17998,164 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{NewPatient}}", dt1.GetColValue("NewPatient"));
                             html = html.Replace("{{OldPatient}}", dt1.GetColValue("OldPatient"));
                         }
+                        #endregion
 
-
-                        if (ds.Tables.Count > 2 && ds.Tables[2].Rows.Count > 0)
+                        #region 2 - Revenue Source (Includes Outstanding)
+                        if (ds.Tables.Count > 2 && ds.Tables[2] != null && ds.Tables[2].Rows.Count > 0)
                         {
                             var dt2 = ds.Tables[2];
-                            StringBuilder rows = new();
+                            StringBuilder rows = new StringBuilder();
 
                             foreach (DataRow dr in dt2.Rows)
                             {
+                                decimal revenue = dr["RevenueAmount"] != DBNull.Value ? Convert.ToDecimal(dr["RevenueAmount"]) : 0;
+                                decimal outstanding = dr["OutstandingAmount"] != DBNull.Value ? Convert.ToDecimal(dr["OutstandingAmount"]) : 0;
+
                                 rows.Append("<tr>");
-                                rows.Append("<td>").Append(dr["PatientType"]).Append("</td>");
-                                rows.Append("<td style='text-align:right;'>").Append(dr["RevenueAmount"]).Append("</td>");
+                                rows.Append("<td style='padding:4px 0;'>").Append(dr["PatientType"]).Append("</td>");
+                                rows.Append("<td style='padding:4px 0; text-align:right;'>").Append(revenue.ToString("N2")).Append("</td>");
+                                rows.Append("<td style='padding:4px 0; text-align:right;'>").Append(dr["PatientCount"]).Append("</td>");
+                                rows.Append("<td style='padding:4px 0; text-align:right;'>").Append(outstanding.ToString("N2")).Append("</td>");
                                 rows.Append("</tr>");
                             }
 
                             html = html.Replace("{{RevenueSourceRows}}", rows.ToString());
                         }
+                        else
+                        {
+                            html = html.Replace("{{RevenueSourceRows}}", "<tr><td colspan='4' style='text-align:center; padding:6px;'>No Data</td></tr>");
+                        }
+                        #endregion
 
+                        #region 3 - Collection
                         if (ds.Tables.Count > 3 && ds.Tables[3].Rows.Count > 0)
                         {
                             var dt3 = ds.Tables[3];
-                            StringBuilder rows = new();
+                            StringBuilder rows = new StringBuilder();
 
                             foreach (DataRow dr in dt3.Rows)
                             {
                                 rows.Append("<tr>");
                                 rows.Append("<td>").Append(dr["PayMode"]).Append("</td>");
-                                rows.Append("<td style='text-align:right;'>").Append(dr["CollectionAmount"]).Append("</td>");
+                                rows.Append("<td style='text-align:right;'>").Append(Convert.ToDecimal(dr["CollectionAmount"]).ToString("N2")).Append("</td>");
                                 rows.Append("</tr>");
                             }
 
                             html = html.Replace("{{CollectionRows}}", rows.ToString());
                         }
+                        #endregion
 
-                        if (ds.Tables.Count > 4 && ds.Tables[4].Rows.Count > 0)
+                        #region 4 - Department Wise
+                        if (ds.Tables.Count > 4 && ds.Tables[4] != null && ds.Tables[4].Rows.Count > 0)
                         {
                             var dt4 = ds.Tables[4];
-                            StringBuilder rows = new();
+                            StringBuilder rows = new StringBuilder();
 
                             foreach (DataRow dr in dt4.Rows)
                             {
+                                decimal deptAmount = dr["DepartmentAmount"] != DBNull.Value ? Convert.ToDecimal(dr["DepartmentAmount"]) : 0;
                                 rows.Append("<tr>");
-                                rows.Append("<td>").Append(dr["PatientType"]).Append("</td>");
-                                rows.Append("<td style='text-align:right;'>").Append(dr["OutstandingAmount"]).Append("</td>");
-                                rows.Append("</tr>");
-                            }
-
-                            html = html.Replace("{{OutstandingRows}}", rows.ToString());
-                        }
-
-                        if (ds.Tables.Count > 5 && ds.Tables[5].Rows.Count > 0)
-                        {
-                            var dt5 = ds.Tables[5];
-                            StringBuilder rows = new();
-
-                            foreach (DataRow dr in dt5.Rows)
-                            {
-                                rows.Append("<tr>");
-                                rows.Append("<td>").Append(dr["Department"]).Append("</td>");
-                                rows.Append("<td style='text-align:right;'>").Append(dr["DepartmentAmount"]).Append("</td>");
+                                rows.Append("<td style='padding:4px 0;'>").Append(dr["Department"]).Append("</td>");
+                                rows.Append("<td style='padding:4px 0;text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
+                                rows.Append("<td style='padding:4px 0; text-align:right;'>").Append(deptAmount.ToString("N2")).Append("</td>");
                                 rows.Append("</tr>");
                             }
 
                             html = html.Replace("{{DepartmentRows}}", rows.ToString());
                         }
+                        else
+                        {
+                            html = html.Replace("{{DepartmentRows}}", "<tr><td colspan='2' style='text-align:center; padding:6px;'>No Data</td></tr>");
+                        }
+                        #endregion
 
+                        #region 5 - Doctor & RefDoctor
+                        if (ds.Tables.Count > 5 && ds.Tables[5].Rows.Count > 0)
+                        {
+                            var dt5 = ds.Tables[5];
+                            StringBuilder doctorRows = new StringBuilder();
+                            StringBuilder refDoctorRows = new StringBuilder();
+
+                            foreach (DataRow dr in dt5.Rows)
+                            {
+                                string doctorType = dr["DoctorType"]?.ToString();
+
+                                if (doctorType == "Doctor")
+                                {
+                                    doctorRows.Append("<tr>");
+                                    doctorRows.Append("<td>").Append(dr["DoctorName"]).Append("</td>");
+                                    doctorRows.Append("<td style='text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
+                                    doctorRows.Append("</tr>");
+                                }
+                                else if (doctorType == "RefDoctor")
+                                {
+                                    refDoctorRows.Append("<tr>");
+                                    refDoctorRows.Append("<td>").Append(dr["DoctorName"]).Append("</td>");
+                                    refDoctorRows.Append("<td style='text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
+                                    refDoctorRows.Append("</tr>");
+                                }
+                            }
+
+                            html = html.Replace("{{DoctorRows}}", doctorRows.ToString());
+                            html = html.Replace("{{ReferDoctorRows}}", refDoctorRows.ToString());
+                        }
+                        #endregion
+
+                        #region 6 - Service Wise
                         if (ds.Tables.Count > 6 && ds.Tables[6].Rows.Count > 0)
                         {
                             var dt6 = ds.Tables[6];
-                            StringBuilder rows = new();
+                            StringBuilder rows = new StringBuilder();
 
                             foreach (DataRow dr in dt6.Rows)
                             {
                                 rows.Append("<tr>");
-                                rows.Append("<td>").Append(dr["DoctorName"]).Append("</td>");
-                                rows.Append("<td style='text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
-                                rows.Append("</tr>");
-                            }
-
-                            html = html.Replace("{{DoctorRows}}", rows.ToString());
-                        }
-
-                        if (ds.Tables.Count > 7 && ds.Tables[7].Rows.Count > 0)
-                        {
-                            var dt7 = ds.Tables[7];
-                            StringBuilder rows = new();
-
-                            foreach (DataRow dr in dt7.Rows)
-                            {
-                                rows.Append("<tr>");
-                                rows.Append("<td>").Append(dr["RefDoctorName"]).Append("</td>");
-                                rows.Append("<td style='text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
-                                rows.Append("</tr>");
-                            }
-
-                            html = html.Replace("{{ReferDoctorRows}}", rows.ToString());
-                        }
-
-                        if (ds.Tables.Count > 8 && ds.Tables[8].Rows.Count > 0)
-                        {
-                            var dt8 = ds.Tables[8];
-                            StringBuilder rows = new();
-
-                            foreach (DataRow dr in dt8.Rows)
-                            {
-                                rows.Append("<tr>");
                                 rows.Append("<td>").Append(dr["ServiceName"]).Append("</td>");
                                 rows.Append("<td style='text-align:center;'>").Append(dr["TestCount"]).Append("</td>");
-                                rows.Append("<td style='text-align:right;'>").Append(dr["ServiceAmount"]).Append("</td>");
+                                rows.Append("<td style='text-align:right;'>").Append(Convert.ToDecimal(dr["ServiceAmount"]).ToString("N2")).Append("</td>");
                                 rows.Append("</tr>");
                             }
 
                             html = html.Replace("{{ServiceRows}}", rows.ToString());
                         }
+                        #endregion
 
-                        if (ds.Tables.Count > 9 && ds.Tables[9].Rows.Count > 0)
+                        #region 7 - Report Status
+                        if (ds.Tables.Count > 7 && ds.Tables[7].Rows.Count > 0)
                         {
-                            var dt9 = ds.Tables[9];
-
-                            html = html.Replace("{{CompletedReports}}", dt9.GetColValue("CompletedReports"));
-                            html = html.Replace("{{PendingReports}}", dt9.GetColValue("PendingReports"));
-                            html = html.Replace("{{CollectedSamples}}", dt9.GetColValue("CollectedSamples"));
-                            html = html.Replace("{{NotCollectedSamples}}", dt9.GetColValue("NotCollectedSamples"));
+                            var dt7 = ds.Tables[7];
+                            html = html.Replace("{{CompletedReports}}", dt7.GetColValue("CompletedReports"));
+                            html = html.Replace("{{PendingReports}}", dt7.GetColValue("PendingReports"));
+                            html = html.Replace("{{CollectedSamples}}", dt7.GetColValue("CollectedSamples"));
+                            html = html.Replace("{{NotCollectedSamples}}", dt7.GetColValue("NotCollectedSamples"));
                         }
+                        #endregion
 
+                        #region 8 - Company Wise Summary
+                        if (ds.Tables.Count > 8 && ds.Tables[8].Rows.Count > 0)
+                        {
+                            var dt8 = ds.Tables[8];
+                            StringBuilder rows = new StringBuilder();
+
+                            foreach (DataRow dr in dt8.Rows)
+                            {
+                                rows.Append("<tr>");
+                                rows.Append("<td>").Append(dr["CompanyName"]).Append("</td>");
+                                rows.Append("<td style='text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
+                                rows.Append("<td style='text-align:right;'>").Append(Convert.ToDecimal(dr["TotalRevenue"]).ToString("N2")).Append("</td>");
+                                rows.Append("<td style='text-align:right;'>").Append(Convert.ToDecimal(dr["TotalOutstanding"]).ToString("N2")).Append("</td>");
+                                rows.Append("</tr>");
+                            }
+
+                            html = html.Replace("{{CompanyRows}}", rows.ToString());
+                        }
+                        else
+                        {
+                            html = html.Replace("{{CompanyRows}}", "<tr><td colspan='4' style='text-align:center; padding:6px;'>No Data</td></tr>");
+                        }
+                        #endregion
+
+                        // Generate PDF
                         var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "BranchWiseStatement");
                         pdfBytes = tuple.Item1;
                         break;
