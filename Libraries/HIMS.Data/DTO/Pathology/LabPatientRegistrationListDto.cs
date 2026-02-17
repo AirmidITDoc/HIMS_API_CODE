@@ -57,7 +57,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? ExecutiveName { get; set; }
         public long? PatientTypeId { get; set; }
         public long? PatientTypeId1 { get; set; }
-
+        public decimal RefundAmount { get; set; }
 
 
 

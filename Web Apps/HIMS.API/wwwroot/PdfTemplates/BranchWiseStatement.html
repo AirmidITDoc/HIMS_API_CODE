@@ -1,181 +1,390 @@
-﻿<html>
-<head>
-    <meta charset="utf-8" />
-    <title>Branch Wise Statement</title>
-</head>
-<body style="font-family: Arial; font-size:12px;">
+﻿<div>
+    <div>
+        <!DOCTYPE html>
+        <html lang="en">
 
-{{NewHeader}}
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Branch Wise Statement</title>
+        </head>
 
-<br />
+        <body>
+            <div class="main-content-wrapper">
+                <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;">
+                    <table style="width: 100%;line-height: inherit;text-align: left;">
+                        {{NewHeader}}
+                        <tr class="title-date-row">
+                            <td style="padding: 6px;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr style="font-size: 18px">
+                                        <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>Branch-Wise Statement </b></td>
+                                        <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="font-size: 18px">
+                            <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Period :{{FromDate}} To {{ToDate}}</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 25px 6px 15px 6px;">
+                                <table style="width:100%; border-collapse:collapse; text-align:center;">
+                                    <tr>
+                                        <!-- Total Revenue -->
+                                        <td style="width:18%; padding:8px;">
+                                            <div style="border:2px solid #444; border-radius:12px; padding:14px 12px;">
+                                                <div style="font-size:14px; font-weight:bold; white-space:nowrap;">
+                                                    Total Revenue
+                                                </div>
+                                                <div style="border-top:1px solid #999; margin:8px 0;"></div>
+                                                <div style="font-size:15px;">
+                                                    {{TotalRevenue}}
+                                                </div>
+                                            </div>
+                                        </td>
 
-<table width="100%" cellpadding="4" cellspacing="0">
-    <tr>
-        <td><b>Branch Wise Statement</b></td>
-        <td align="right"><b>Generated On :</b> {{CurrentDate}}</td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <b>Period :</b> {{FromDate}} To {{ToDate}}
-        </td>
-    </tr>
-</table>
-
-<hr />
-
-<h3>1. Financial Summary</h3>
-
-<table width="100%" border="1" cellpadding="6" cellspacing="0">
-    <tr>
-        <td><b>Total Revenue</b></td>
-        <td align="right">{{TotalRevenue}}</td>
-    </tr>
-    <tr>
-        <td><b>Total Collection</b></td>
-        <td align="right">{{TotalCollection}}</td>
-    </tr>
-    <tr>
-        <td><b>Total Discount</b></td>
-        <td align="right">{{TotalDiscount}}</td>
-    </tr>
-    <tr>
-        <td><b>Total Outstanding</b></td>
-        <td align="right">{{TotalOutstanding}}</td>
-    </tr>
-    <tr>
-        <td><b>Total Refund</b></td>
-        <td align="right">{{TotalRefund}}</td>
-    </tr>
-</table>
-
-<br />
-
-
-<h3>2. Patient Summary</h3>
-
-<table width="100%" border="1" cellpadding="6" cellspacing="0">
-    <tr>
-        <td><b>Total Patients</b></td>
-        <td align="center">{{TotalPatient}}</td>
-        <td><b>New Patients</b></td>
-        <td align="center">{{NewPatient}}</td>
-        <td><b>Old Patients</b></td>
-        <td align="center">{{OldPatient}}</td>
-    </tr>
-</table>
-
-<br />
-
-<h3>3. Revenue Source (Patient Type)</h3>
-
-<table width="100%" border="1" cellpadding="6" cellspacing="0">
-    <tr>
-        <th align="left">Patient Type</th>
-        <th align="right">Revenue Amount</th>
-    </tr>
-    {{RevenueSourceRows}}
-</table>
-
-<br />
+                                        <!-- = -->
+                                        <td style="width:3%; font-size:20px; font-weight:bold;">
+                                            -
+                                        </td>
 
 
-<h3>4. Collection Mode</h3>
-
-<table width="100%" border="1" cellpadding="6" cellspacing="0">
-    <tr>
-        <th align="left">Payment Mode</th>
-        <th align="right">Collection Amount</th>
-    </tr>
-    {{CollectionRows}}
-</table>
-
-<br />
-
-
-<h3>5. Outstanding By Patient Type</h3>
-
-<table width="100%" border="1" cellpadding="6" cellspacing="0">
-    <tr>
-        <th align="left">Patient Type</th>
-        <th align="right">Outstanding Amount</th>
-    </tr>
-    {{OutstandingRows}}
-</table>
-
-<br />
+                                        <!-- Total Discount -->
+                                        <td style="width:18%; padding:8px;">
+                                            <div style="border:2px solid #444; border-radius:12px; padding:14px 12px;">
+                                                <div style="font-size:14px; font-weight:bold; white-space:nowrap;">
+                                                    Total Discount
+                                                </div>
+                                                <div style="border-top:1px solid #999; margin:8px 0;"></div>
+                                                <div style="font-size:15px;">
+                                                    {{TotalDiscount}}
+                                                </div>
+                                            </div>
+                                        </td>
 
 
-<h3>6. Department Wise Revenue</h3>
+                                        <!-- + -->
+                                        <td style="width:3%; font-size:18px; font-weight:bold;">
+                                            =
+                                        </td>
 
-<table width="100%" border="1" cellpadding="6" cellspacing="0">
-    <tr>
-        <th align="left">Department</th>
-        <th align="right">Amount</th>
-    </tr>
-    {{DepartmentRows}}
-</table>
+                                        <!-- Total Collection -->
+                                        <td style="width:18%; padding:8px;">
+                                            <div style="border:2px solid #444; border-radius:12px; padding:14px 12px;">
+                                                <div style="font-size:14px; font-weight:bold; white-space:nowrap;">
+                                                    Total Collection
+                                                </div>
+                                                <div style="border-top:1px solid #999; margin:8px 0;"></div>
+                                                <div style="font-size:15px;">
+                                                    {{TotalCollection}}
+                                                </div>
+                                            </div>
+                                        </td>
 
-<br />
+                                        <!-- + -->
+                                        <td style="width:3%; font-size:18px; font-weight:bold;">
+                                            +
+                                        </td>
 
+                                        <!-- Total Outstanding -->
+                                        <td style="width:18%; padding:8px;">
+                                            <div style="border:2px solid #444; border-radius:12px; padding:14px 12px;">
+                                                <div style="font-size:14px; font-weight:bold; white-space:nowrap;">
+                                                    Total Outstanding
+                                                </div>
+                                                <div style="border-top:1px solid #999; margin:8px 0;"></div>
+                                                <div style="font-size:15px;">
+                                                    {{TotalOutstanding}}
+                                                </div>
+                                            </div>
+                                        </td>
 
-<h3>7. Doctor Wise Patient Count</h3>
+                                        <!-- + -->
+                                        <td style="width:3%; font-size:18px; font-weight:bold;">
+                                            +
+                                        </td>
 
-<table width="100%" border="1" cellpadding="6" cellspacing="0">
-    <tr>
-        <th align="left">Doctor Name</th>
-        <th align="center">Patient Count</th>
-    </tr>
-    {{DoctorRows}}
-</table>
-
-<br />
-
-
-<h3>8. Refer Doctor Count</h3>
-
-<table width="100%" border="1" cellpadding="6" cellspacing="0">
-    <tr>
-        <th align="left">Refer Doctor Name</th>
-        <th align="center">Patient Count</th>
-    </tr>
-    {{ReferDoctorRows}}
-</table>
-
-<br />
-
-
-<h3>9. Service Wise Details</h3>
-
-<table width="100%" border="1" cellpadding="6" cellspacing="0">
-    <tr>
-        <th align="left">Service Name</th>
-        <th align="center">Test Count</th>
-        <th align="right">Service Amount</th>
-    </tr>
-    {{ServiceRows}}
-</table>
-
-<br />
-
-<h3>10. Report Status Summary</h3>
-
-<table width="100%" border="1" cellpadding="6" cellspacing="0">
-    <tr>
-        <td><b>Completed Reports</b></td>
-        <td align="center">{{CompletedReports}}</td>
-        <td><b>Pending Reports</b></td>
-        <td align="center">{{PendingReports}}</td>
-    </tr>
-    <tr>
-        <td><b>Samples Collected</b></td>
-        <td align="center">{{CollectedSamples}}</td>
-        <td><b>Samples Not Collected</b></td>
-        <td align="center">{{NotCollectedSamples}}</td>
-    </tr>
-</table>
-
-<br /><br />
+                                        <!-- Vertical Separator -->
+                                        <!--<td style="width:2%; padding:0 6px;">
+                        <div style="height:90px; border-left:3px solid #000; margin:auto;"></div>
+                    </td>-->
+                                        <!-- Total Refund -->
+                                        <td style="width:17%; padding:8px;">
+                                            <div style="border:2px solid #444; border-radius:12px; padding:14px 12px;">
+                                                <div style="font-size:14px; font-weight:bold; white-space:nowrap;">
+                                                    Total Refund
+                                                </div>
+                                                <div style="border-top:1px solid #999; margin:8px 0;"></div>
+                                                <div style="font-size:15px;">
+                                                    {{TotalRefund}}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
 
 
-</body>
-</html>
+                                </table>
+                            </td>
+                        </tr>
+                        <br />
+
+                        <tr>
+                            <td style="padding:20px 6px;">
+                                <table style="width:100%; border-collapse:collapse;">
+                                    <tr>
+                                        <!-- LEFT 75% -->
+                                        <td style="width:75%; vertical-align:top; padding-right:10px;">
+                                            <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:18px 10px;">
+                                                <div style="text-align:center; font-weight:bold; margin-bottom:15px;">
+                                                    Report Status
+                                                </div>
+                                                <table style="width:100%; text-align:center; border-collapse:collapse;">
+                                                    <tr>
+                                                        <td style="width:25%; border-right:1px solid #bbb;">
+                                                            <b>Completed Reports</b>
+                                                            <div style="border-top:1px solid #ccc; margin:6px 0;"></div>
+                                                            <div style="font-size:18px;">{{CompletedReports}}</div>
+                                                        </td>
+                                                        <td style="width:25%; border-right:1px solid #bbb;">
+                                                            <b>Pending Reports</b>
+                                                            <div style="border-top:1px solid #ccc; margin:6px 0;"></div>
+                                                            <div style="font-size:18px;">{{PendingReports}}</div>
+                                                        </td>
+                                                        <td style="width:25%; border-right:1px solid #bbb;">
+                                                            <b>Collected Samples</b>
+                                                            <div style="border-top:1px solid #ccc; margin:6px 0;"></div>
+                                                            <div style="font-size:18px;">{{CollectedSamples}}</div>
+                                                        </td>
+                                                        <td style="width:25%;">
+                                                            <b>Not Collected Samples</b>
+                                                            <div style="border-top:1px solid #ccc; margin:6px 0;"></div>
+                                                            <div style="font-size:18px;">{{NotCollectedSamples}}</div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+
+                                        <!-- RIGHT 25% -->
+                                        <td style="width:25%; vertical-align:top;">
+
+                                            <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:14px 10px; font-size:13px;">
+
+
+                                                <!-- Old / New Table -->
+                                                <table style="width:100%; font-size:13px; border-collapse:collapse; text-align:center;">
+
+                                                    <tr>
+                                                        <td style="width:50%; padding:4px 0; border-right:1px solid #ccc;">
+                                                            <b>Old Patient</b>
+                                                        </td>
+                                                        <td style="width:50%; padding:4px 0;">
+                                                            <b>New Patient</b>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="padding:6px 0; border-right:1px solid #ccc; text-align:center;">
+                                                            {{OldPatient}}
+                                                        </td>
+                                                        <td style="padding:6px 0; text-align:center;">
+                                                            {{NewPatient}}
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                                <div style="border-top:1px solid #bbb; margin:6px 0;"></div>
+
+                                                <!-- Title -->
+                                                <div style="text-align:center; font-weight:bold; margin-bottom:6px;">
+                                                    Patient Count
+                                                </div>
+
+                                                <!-- Total -->
+                                                <div style="text-align:center; font-size:15px; font-weight:bold; margin-bottom:6px;">
+                                                    {{TotalPatient}}
+                                                </div>
+
+                                                </>
+                                        </td>
+
+
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <br />
+                        <!-- COLLECTION (40%) + REVENUE (60%) -->
+                        <tr>
+                            <td style="padding:20px 6px;">
+                                <table style="width:100%;">
+
+                                    <tr>
+
+                                        <!-- LEFT 40% -->
+                                        <td style="width:40%; padding-right:8px; vertical-align:top;">
+                                            <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:12px;">
+                                                <div style="text-align:center; font-weight:bold; margin-bottom:8px;">
+                                                    Collection Summary
+                                                </div>
+
+                                                <table style="width:100%; font-size:13px; border-collapse:collapse;">
+                                                    <tr style="border-bottom:1px solid #bbb;">
+                                                        <th style="text-align:left;">Pay Mode</th>
+                                                        <th style="text-align:right;">Amount</th>
+                                                    </tr>
+                                                    {{CollectionRows}}
+                                                </table>
+                                            </div>
+                                        </td>
+
+                                        <!-- RIGHT 60% -->
+                                        <td style="width:60%; padding-left:8px; vertical-align:top;">
+                                            <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:12px;">
+                                                <div style="text-align:center; font-weight:bold; margin-bottom:8px;">
+                                                    Revenue Source
+                                                </div>
+
+                                                <table style="width:100%; font-size:13px; border-collapse:collapse;">
+                                                    <tr style="border-bottom:1px solid #bbb;">
+                                                        <th style="text-align:left;">Patient Type</th>
+                                                        <th style="text-align:left;">Patient Count</th>
+                                                        <th style="text-align:right;">Revenue</th>
+                                                        <th style="text-align:right;">Outstanding</th>
+                                                    </tr>
+                                                    {{RevenueSourceRows}}
+                                                </table>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <br />
+                        <tr>
+                            <td style="padding:20px 6px;">
+                                <table style="width:100%;">
+                                    <tr>
+
+                                        <!-- EMPTY LEFT 40% -->
+                                        <td style="width:40%;"></td>
+
+                                        <!-- RIGHT 60% -->
+                                        <td style="width:60%; vertical-align:top;">
+                                            <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:12px;">
+
+                                                <div style="text-align:center; font-weight:bold; margin-bottom:8px;">
+                                                    Department Wise Summary
+                                                </div>
+
+                                                <table style="width:100%; font-size:13px; border-collapse:collapse;">
+                                                    <tr style="border-bottom:1px solid #bbb;">
+                                                        <th style="text-align:left;">Department</th>
+                                                        <th style="text-align:left;">Patient Count</th>
+                                                        <th style="text-align:right;">Department Amount</th>
+                                                    </tr>
+                                                    {{DepartmentRows}}
+                                                </table>
+
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <br />
+                        <tr>
+                            <td style="padding:20px 6px;">
+                                <table style="width:100%; border-collapse:collapse;">
+                                    <tr>
+
+                                        <!-- LEFT 50% : Service Wise -->
+                                        <td style="width:50%; padding-right:8px; vertical-align:top;">
+                                            <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:12px;">
+                                                <div style="text-align:center; font-weight:bold; margin-bottom:8px;">
+                                                    Service Wise Summary
+                                                </div>
+
+                                                <table style="width:100%; font-size:13px; border-collapse:collapse;">
+                                                    <tr style="border-bottom:1px solid #bbb;">
+                                                        <th style="text-align:left;">Service</th>
+                                                        <th style="text-align:center;">Count</th>
+                                                        <th style="text-align:right;">Amount</th>
+                                                    </tr>
+                                                    {{ServiceRows}}
+                                                </table>
+                                            </div>
+                                        </td>
+
+                                        <!-- RIGHT 50% : Doctor / Ref Doctor -->
+                                        <td style="width:50%; padding-left:8px; vertical-align:top;">
+                                            <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:12px;">
+                                                <div style="text-align:center; font-weight:bold; margin-bottom:8px;">
+                                                    Doctor & Refer Doctor Patient Count
+                                                </div>
+
+                                                <table style="width:100%; font-size:13px; border-collapse:collapse;">
+                                                    <tr style="border-bottom:1px solid #bbb;">
+                                                        <th style="text-align:left;">Doctor</th>
+                                                        <th style="text-align:center;">Patients</th>
+                                                    </tr>
+
+                                                    {{DoctorRows}}
+
+                                                    <tr>
+                                                        <td colspan="2" style="padding-top:10px; font-weight:bold;">
+                                                            Refer Doctor Patients
+                                                        </td>
+                                                    </tr>
+
+                                                    {{ReferDoctorRows}}
+
+                                                </table>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:20px 6px;">
+                                <table style="width:100%; border-collapse:collapse;">
+                                    <tr>
+
+                                        <!-- LEFT 50% : Service Wise -->
+                                        <td style="width:50%; padding-right:8px; vertical-align:top;">
+                                            <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:12px;">
+                                                <div style="text-align:center; font-weight:bold; margin-bottom:8px;">
+                                                    Company Wise Summary
+                                                </div>
+
+                                                <table style="width:100%; font-size:13px; border-collapse:collapse;">
+                                                    <tr style="border-bottom:1px solid #bbb;">
+                                                        <th style="text-align:left;">Comapany Name</th>
+                                                        <th style="text-align:center;">Count</th>
+                                                        <th style="text-align:right;">Total Revenue</th>
+                                                        <th style="text-align:right;">Total Outstanding</th>
+                                                    </tr>
+                                                    {{CompanyRows}}
+                                                </table>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </div>
+            </div>
+        </body>
+    </html>
+</div>
+</div>
