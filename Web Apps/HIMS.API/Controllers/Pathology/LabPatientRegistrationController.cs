@@ -109,6 +109,15 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(LabResultDetailsList.ToGridResponse(objGrid, " Lab ResultDetails List "));
         }
 
+        [HttpGet("CompanyComboList")]
+        //[Permission]
+        public ApiResponse CompanyComboList(string? keywoard)
+        {
+            var data = _ILabPatientRegistrationService.CompanyComboList(keywoard);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyCombo List", data);
+        }
+
         [HttpPost("Insert")]
         [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LabPatientRegistrationModels obj)
