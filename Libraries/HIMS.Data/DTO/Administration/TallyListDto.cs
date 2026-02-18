@@ -329,4 +329,113 @@ namespace HIMS.Data.DTO.Administration
         public double ChargesTotalAmt { get; set; }
         public string DoctorName { get; set; }
     }
+
+
+
+    public class TallyIPBillRefundListMediforteDto
+    {
+        public string Lbl { get; set; }
+        public long UnitId { get; set; }
+        public long BillNo { get; set; }
+        public string PBillNo { get; set; }
+        public string IP_RefundPaymentNo { get; set; }
+        public string PaymentDate { get; set; }
+        public decimal CashPayAmount { get; set; }
+        public decimal ChequePayAmount { get; set; }
+        public decimal CardPayAmount { get; set; }
+        public decimal AdvanceUsedAmount { get; set; }
+        public decimal NEFTPayAmount { get; set; }
+        public decimal PayTMAmount { get; set; }
+        public double TDSAmount { get; set; }
+        public decimal WFAmount { get; set; }
+        public long TransactionType { get; set; }
+        public long AdvanceId { get; set; }
+        public long RefundId { get; set; }
+        public string CompanyName { get; set; }
+        public string IPDNo { get; set; }
+        public string RegNo { get; set; }
+        public string PatientName { get; set; }
+      
+    }
+
+
+
+    public class TallyIPAdvancePaymentListMediforteDto
+    {
+        public string Lbl { get; set; }
+        public long UnitId { get; set; }
+        public long BillNo { get; set; }
+        public long Expr1 { get; set; }
+        public string IP_Adv_ReceiptNo { get; set; }
+        public string PaymentDate { get; set; }
+        public decimal CashPayAmount { get; set; }
+        public decimal ChequePayAmount { get; set; }
+        public decimal CardPayAmount { get; set; }
+        public decimal AdvanceUsedAmount { get; set; }
+        public decimal NEFTPayAmount { get; set; }
+        public decimal PayTMAmount { get; set; }
+        public double TDSAmount { get; set; }
+        public decimal WFAmount { get; set; }
+        public long TransactionType { get; set; }
+        public long AdvanceId { get; set; }
+        public long RefundId { get; set; }
+        public string CompanyName { get; set; }
+        public string IPDNo { get; set; }
+        public string RegNo { get; set; }
+        public string PatientName { get; set; }
+
+    }
+
+    public class TallyIPAdvanceRefundPaymentListMediforteDto
+    {
+        public string Lbl { get; set; }
+        public long UnitId { get; set; }
+        public long BillNo { get; set; }
+        public string IP_RefundAdvNo { get; set; }
+        public string PaymentDate { get; set; }
+        public decimal CashPayAmount { get; set; }
+        public decimal ChequePayAmount { get; set; }
+        public decimal CardPayAmount { get; set; }
+        public decimal AdvanceUsedAmount { get; set; }
+        public decimal NEFTPayAmount { get; set; }
+        public decimal PayTMAmount { get; set; }
+        public double TDSAmount { get; set; }
+        public decimal WFAmount { get; set; }
+        public long TransactionType { get; set; }
+        public long AdvanceId { get; set; }
+        public long RefundId { get; set; }
+        public string IPDNo { get; set; }
+        public string RegNo { get; set; }
+        public string PatientName { get; set; }
+
+    }
+
+    public class TallyIPBillPaymentListMediforteDto
+    {
+        public string Lbl { get; set; }
+        public long UnitId { get; set; }
+        public long BillNo { get; set; }
+        public string IP_ReceiptNo { get; set; }
+        public string PaymentDate { get; set; }
+        public decimal CashPayAmount { get; set; }
+        public decimal ChequePayAmount { get; set; }
+        public decimal CardPayAmount { get; set; }
+        public decimal AdvanceUsedAmount { get; set; }
+        public decimal NEFTPayAmount { get; set; }
+        public decimal PayTMAmount { get; set; }
+        public double TDSAmount { get; set; }
+        public decimal WFAmount { get; set; }
+        public long TransactionType { get; set; }
+        public long AdvanceId { get; set; }
+        public long RefundId { get; set; }
+        public string CompanyName { get; set; }
+
+        public string IPDNo { get; set; }
+        public string RegNo { get; set; }
+        public string PatientName { get; set; }
+
+    }
+
+
+
 }
