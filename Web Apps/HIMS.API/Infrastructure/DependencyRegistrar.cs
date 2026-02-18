@@ -89,11 +89,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IBranchService, BranchService>();
             services.AddScoped<ILabApprovalService, LabApprovalService>();
             services.AddScoped<IHomeCollectionService, HomeCollectionService>();
-
-
-
-
-
+            services.AddScoped<IPurchaseRequisitionService, PurchaseRequisitionService>();
             services.AddScoped<IPathDispatchReportHistoryService, PathDispatchReportHistoryService>();
 
 
@@ -158,13 +154,6 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IGastrologyEMRService, GastrologyEMRService>();
             services.AddScoped<ITallyService, TallyService>();
             services.AddScoped<IEstimasteService, EstimateSerive>();
-
-
-
-
-
-
-
             services.AddScoped<IBillingService, BillingService>();
             services.AddScoped<ILoginService, LoginService>();
 

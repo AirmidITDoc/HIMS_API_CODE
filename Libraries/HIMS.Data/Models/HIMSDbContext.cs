@@ -564,6 +564,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<TProcessOtp> TProcessOtps { get; set; } = null!;
         public virtual DbSet<TPurchaseDetail> TPurchaseDetails { get; set; } = null!;
         public virtual DbSet<TPurchaseHeader> TPurchaseHeaders { get; set; } = null!;
+        public virtual DbSet<TPurchaseRequisitionDetail> TPurchaseRequisitionDetails { get; set; } = null!;
+        public virtual DbSet<TPurchaseRequisitionHeader> TPurchaseRequisitionHeaders { get; set; } = null!;
         public virtual DbSet<TRadiologyReportHeader> TRadiologyReportHeaders { get; set; } = null!;
         public virtual DbSet<TRefundDetail> TRefundDetails { get; set; } = null!;
         public virtual DbSet<TReturnFromDepartmentDetail> TReturnFromDepartmentDetails { get; set; } = null!;
@@ -621,7 +623,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -16485,6 +16487,45 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.VerifiedDateTime).HasColumnType("datetime");
 
                 entity.Property(e => e.Worrenty).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TPurchaseRequisitionDetail>(entity =>
+            {
+                entity.HasKey(e => e.PurchaseRequisitionDetId);
+
+                entity.ToTable("T_PurchaseRequisitionDetails");
+
+                entity.HasOne(d => d.PurchaseRequisition)
+                    .WithMany(p => p.TPurchaseRequisitionDetails)
+                    .HasForeignKey(d => d.PurchaseRequisitionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_PurchaseRequisitionDetails_T_PurchaseRequisitionHeader");
+            });
+
+            modelBuilder.Entity<TPurchaseRequisitionHeader>(entity =>
+            {
+                entity.HasKey(e => e.PurchaseRequisitionId)
+                    .HasName("PK_t_PurchaseRequisitionHeader");
+
+                entity.ToTable("T_PurchaseRequisitionHeader");
+
+                entity.Property(e => e.Comments).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsCancelledDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.IsInchargeVerifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PurchaseRequisitionDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PurchaseRequisitionNo).HasMaxLength(50);
+
+                entity.Property(e => e.PurchaseRequisitionTime).HasColumnType("datetime");
+
+                entity.Property(e => e.UnitId).HasColumnName("UnitID");
             });
 
             modelBuilder.Entity<TRadiologyReportHeader>(entity =>
