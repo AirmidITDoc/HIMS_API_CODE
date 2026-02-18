@@ -99,26 +99,37 @@ namespace HIMS.Services.Administration
         {
             return await DatabaseHelper.GetGridDataBySp<TallyOPBillDetailListMediforteDto>(model, "ps_Tally_OPBillDetailList_Mediforte");
         }
-
         public virtual async Task<IPagedList<TallyIPBillRefundListMediforteDto>> TallyIPBillRefundListMediforteAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<TallyIPBillRefundListMediforteDto>(model, "Tally_IPBillRefund_Payment_Mediforte");
         }
-
-
         public virtual async Task<IPagedList<TallyIPAdvancePaymentListMediforteDto>> TallyIPAdvancePaymentListMediforteAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<TallyIPAdvancePaymentListMediforteDto>(model, "Tally_IPAdvance_Payment_Mediforte");
         }
-
         public virtual async Task<IPagedList<TallyIPAdvanceRefundPaymentListMediforteDto>> TallyIPAdvanceRefundPaymentListMediforteAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<TallyIPAdvanceRefundPaymentListMediforteDto>(model, "Tally_IPAdvanceRefund_Payment_Mediforte");
         }
-
         public virtual async Task<IPagedList<TallyIPBillPaymentListMediforteDto>> TallyIPBillPaymentListMediforteAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<TallyIPBillPaymentListMediforteDto>(model, "Tally_IPBill_Payment_Mediforte");
+        }
+
+
+        public virtual async Task<IPagedList<TallyOPIPSalesDetailListMediforteDto>> TallyOPIPSalesDetailListMediforteAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TallyOPIPSalesDetailListMediforteDto>(model, "Tally_OP_IP_Sales_DetailList_Mediforte");
+        }
+
+        public virtual async Task<IPagedList<TallyPharmacyOPIPSalesReturnDetailListMediforteDto>> TallyPharmacyOPIPSalesReturnDetailListMediforteAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TallyPharmacyOPIPSalesReturnDetailListMediforteDto>(model, "ps_Tally_OPIP_Sales_ReturnBillDetailList_Mediforte");
+        }
+
+        public virtual async Task<IPagedList<TallyPharmacyOPIPSalesPaymentListMediforteDto>> TallyPharmacyOPIPSalesPaymentListMediforteAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TallyPharmacyOPIPSalesPaymentListMediforteDto>(model, "ps_Tally_OPIPSalsePayment_Mediforte");
         }
 
 

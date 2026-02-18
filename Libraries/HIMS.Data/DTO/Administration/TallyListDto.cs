@@ -437,5 +437,70 @@ namespace HIMS.Data.DTO.Administration
     }
 
 
+    public class TallyOPIPSalesDetailListMediforteDto
+    {
+        public string salesType { get; set; }
+        public long AdmissionId { get; set; }
+   
+        public string ChargesDate { get; set; }
+        public string SalesNo { get; set; }
+        public string Billdate { get; set; }
+        public string ItemName { get; set; }
+        public decimal UnitMRP { get; set; }
+        public double Qty { get; set; }
+        public double ChargesTotalAmt { get; set; }
+        public string OPIPNO { get; set; }
+        public string PatientName { get; set; }
+        public string RegNo { get; set; }
+        public decimal TotalAmount { get; set; }
+        public decimal DiscAmount { get; set; }
+        public decimal NetAmount { get; set; }
+      
+
+    }
+
+
+    public class TallyPharmacyOPIPSalesReturnDetailListMediforteDto
+    {
+        public string ReturnType { get; set; }
+        public long AdmissionId { get; set; }
+
+        public string ChargesDate { get; set; }
+        public string SalesReturnNo { get; set; }
+        public string Billdate { get; set; }
+        public string ItemName { get; set; }
+        public decimal Price { get; set; }
+        public double Qty { get; set; }
+        public double ChargesTotalAmt { get; set; }
+        public string OPIPNO { get; set; }
+        public string PatientName { get; set; }
+        public string RegNo { get; set; }
+      
+
+
+    }
+
+    public class TallyPharmacyOPIPSalesPaymentListMediforteDto
+    {
+        public string RegNo { get; set; }
+        public string PatientName { get; set; }
+        public string PaymentDate { get; set; }
+        public string ReceiptNo { get; set; }
+        public decimal CashPayAmount { get; set; }
+        public decimal onlinePayment { get; set; }
+        public decimal MPaisa { get; set; }
+        public long StoreId { get; set; }
+        public string OPDIPNO { get; set; }
+        public string SalesNo { get; set; }
+        public decimal TotalAmount { get; set; }
+        public decimal DiscAmount { get; set; }
+        public decimal NetAmount { get; set; }
+        public string Lbl { get; set; }
+
+
+
+    }
+
+
 
 }

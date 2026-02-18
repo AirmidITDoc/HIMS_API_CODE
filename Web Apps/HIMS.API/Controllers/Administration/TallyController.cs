@@ -218,6 +218,39 @@ namespace HIMS.API.Controllers.Administration
 
 
 
+        [HttpPost("TallyPharmacyOPIPSalesDetailListMediforte")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+
+        public async Task<IActionResult> TallyOPIPSalesDetailListMediforte(GridRequestModel objGrid)
+        {
+            IPagedList<TallyOPIPSalesDetailListMediforteDto> TallyOPBillDetailListMediforte = await _ITallyService.TallyOPIPSalesDetailListMediforteAsync(objGrid);
+            return Ok(TallyOPBillDetailListMediforte.ToGridResponse(objGrid, "Tally OPBill Detail List Mediforte"));
+        }
+
+
+
+        [HttpPost("TallyPharmacyOPIPSalesReturnDetailListMediforte")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+
+        public async Task<IActionResult> TallyPharmacyOPIPSalesReturnDetailListMediforte(GridRequestModel objGrid)
+        {
+            IPagedList<TallyPharmacyOPIPSalesReturnDetailListMediforteDto> TallyOPBillDetailListMediforte = await _ITallyService.TallyPharmacyOPIPSalesReturnDetailListMediforteAsync(objGrid);
+            return Ok(TallyOPBillDetailListMediforte.ToGridResponse(objGrid, "Tally OPBill Detail List Mediforte"));
+        }
+
+
+
+        [HttpPost("TallyPharmacyOPIPSalesPaymentListMediforte")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+
+        public async Task<IActionResult> TallyPharmacyOPIPSalesPaymentDetailListMediforte(GridRequestModel objGrid)
+        {
+            IPagedList<TallyPharmacyOPIPSalesPaymentListMediforteDto> TallyOPBillDetailListMediforte = await _ITallyService.TallyPharmacyOPIPSalesPaymentListMediforteAsync(objGrid);
+            return Ok(TallyOPBillDetailListMediforte.ToGridResponse(objGrid, "Tally OPBill Detail List Mediforte"));
+        }
+
+
+
 
     }
 
