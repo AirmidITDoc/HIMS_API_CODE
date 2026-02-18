@@ -19,6 +19,8 @@ namespace HIMS.Data.DTO.Pathology
         public long? IsRadiology { get; set; }
         public string? DoctorName { get; set; }
         public bool? IsCompleted { get; set; }
+        public bool? IsVerifySign { get; set; }
+        public DateTime? IsVerifyedDate { get; set; }
 
     }
     public class LabResultListDto

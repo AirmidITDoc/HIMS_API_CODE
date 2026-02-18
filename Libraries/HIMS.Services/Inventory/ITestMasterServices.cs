@@ -12,8 +12,8 @@ namespace HIMS.Services.Inventory
         Task<IPagedList<SubTestMasterListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<PathTemplateForUpdateListDto>> PathTemplateList(GridRequestModel objGrid);
         Task InsertAsync(MPathTestMaster objTest, int UserId, string Username);
-        void InsertSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username);
-        void UpdateSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username);
+        Task InsertSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username);
+        Task UpdateSP(MPathTestMaster objTest, List<MPathTemplateDetail> ObjMPathTemplateDetail, List<MPathTestDetailMaster> ObjMPathTestDetailMaster, int UserId, string Username);
         Task UpdateAsync(MPathTestMaster objTest, int UserId, string Username);
         Task PaymentDateTimeUpdate(TPaymentPharmacy ObjTPaymentPharmacy, int UserId, string Username);
         Task TestUpdateAsync(MPathTestMaster ObjMPathTestMaster, int UserId, string Username);

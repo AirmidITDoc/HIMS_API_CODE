@@ -48,5 +48,14 @@ namespace HIMS.Data.DTO.Pathology
 
         public string? PaymentId { get; set; }
         public string? UserName { get; set; }
+
+        public decimal CashAmount { get; set; }
+        public decimal CardAmount { get; set; }
+        public decimal ChequeAmount { get; set; }
+        public decimal OnlineAmount { get; set; }
+        public string? UpitranNo { get; set; }
+
+        public decimal PaidAmt { get; set; }
+
     }
 }

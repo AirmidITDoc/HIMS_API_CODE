@@ -22,7 +22,7 @@ namespace HIMS.Core.Domain.Dashboard
         public List<FinancialOPExistingPatientCount> FinancialOPExistingPatientCount { get; set; }
         public List<FinancialIPExistingPatientCount> FinancialIPExistingPatientCount { get; set; }
         public List<IPRefDoctorCount> IPRefDoctorCount { get; set; }
-        public List<PharmacyOPDPatientSale> PharmacyOPDPatientSale { get; set; }
+        //public List<PharmacyOPDPatientSale> PharmacyOPDPatientSale { get; set; }
         public List<PharmacySaleOP> PharmacySaleOP { get; set; }
         public List<PharmacySaleIP> PharmacySaleIP { get; set; }
         public List<FinancialAdvanceBalance> FinancialAdvanceBalance { get; set; }
@@ -36,7 +36,7 @@ namespace HIMS.Core.Domain.Dashboard
         public string? RoomName { get; set; }
         public long TotalBeds { get; set; }
         public long OccupiedBeds { get; set; }
-        public decimal? OccupancyPercent {  get; set; }
+        public decimal? OccupancyPercent { get; set; }
 
 
     }
@@ -82,10 +82,10 @@ namespace HIMS.Core.Domain.Dashboard
     public class RefundOPIP
     {
         public decimal Refund { get; set; }
-       
+
 
     }
-    public class PharmacyReturn 
+    public class PharmacyReturn
     {
         public decimal? Return1 { get; set; }
     }
@@ -95,7 +95,7 @@ namespace HIMS.Core.Domain.Dashboard
         public long PatientCount { get; set; }
 
     }
-    public class DoctorWisePatientCount 
+    public class DoctorWisePatientCount
     {
         public string? DoctorName { get; set; }
         public long PatientCount { get; set; }
@@ -120,16 +120,9 @@ namespace HIMS.Core.Domain.Dashboard
         public long ipRefCount { get; set; }
 
     }
-    
-   
-    public class PharmacyOPDPatientSale
 
-    {
-        public decimal OPTotalLandedAmount { get; set; }
-        public decimal OPNetAmount { get; set; }
-        public decimal OPprofitamount { get; set; }
 
-    }
+
     public class PharmacySaleOP
     {
         public float OPTotalLandedAmount { get; set; }
@@ -150,11 +143,11 @@ namespace HIMS.Core.Domain.Dashboard
     }
     public class FinancialAdvanceBalance
     {
-        public decimal UnadjestAdvance { get; set; }
+        public double UnadjestAdvance { get; set; }
 
     }
-  
-  
+
+
     public class FinancialOutStandingOPIP
     {
         public decimal OPOustandingAMT { get; set; }
@@ -162,18 +155,17 @@ namespace HIMS.Core.Domain.Dashboard
         public decimal TotalOutstanding { get; set; }
     }
     public class OutandingwithdateCaverage
-    {
+        {
         public decimal OPOustandingAMTDate { get; set; }
         public decimal IPOutstandingAMTDate { get; set; }
         public decimal TotalOutstandingdate { get; set; }
     }
     public class InsuranceCaverageAdequacy
     {
-        public decimal? IPApprovedAmount { get; set; }
-        public decimal? IPUnpaidCharges { get; set; }
+        public decimal IPApprovedAmount { get; set; }
+        public decimal IPUnpaidCharges { get; set; }
         public long UnadjestedAdvance { get; set; }
         public long InsuranceAdequancy { get; set; }
-
-
     }
 }
+

@@ -1,4 +1,5 @@
-﻿using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Common;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
@@ -29,18 +30,16 @@ namespace HIMS.Services.Utilities
     {
         private readonly Data.Models.HIMSDbContext _context;
         private static IConverter converter = new SynchronizedConverter(new PdfTools());
-        public readonly IConfiguration _configuration;
+        //public readonly IConfiguration _configuration;
         //private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
         //public readonly IPdfUtility _pdfUtility;
 
 
-        public PdfUtility(HIMSDbContext HIMSDbContext, IConverter _converter, IConfiguration configuration
-            //Microsoft.Extensions.Hosting.IHostingEnvironment hostingEnvironment, IPdfUtility pdfUtility
-            )
+        public PdfUtility(HIMSDbContext HIMSDbContext, IConverter _converter)
         {
             _context = HIMSDbContext;
             converter = _converter;
-            _configuration = configuration;
+           // _configuration = configuration;
             //_hostingEnvironment = (Microsoft.AspNetCore.Hosting.IHostingEnvironment?)hostingEnvironment;
             //_pdfUtility = pdfUtility;
 
@@ -147,25 +146,36 @@ namespace HIMS.Services.Utilities
             );
         }
 
-        public string GetHeaderByType(string filePath,HeaderType headerType, long hospitalId = 0)
+        public string GetHeaderByType(string filePath, long hospitalId = 1)
         {
             string htmlHeader = System.IO.File.ReadAllText(filePath);
-            HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
+            HospitalMaster objHospital = _context.HospitalMasters.Find(hospitalId);
 
-            htmlHeader = htmlHeader
-                .Replace("{{HospitalName}}", "")
-                .Replace("{{Address}}", "")
-                .Replace("{{City}}", "")
-                .Replace("{{Pin}}", "")
-                .Replace("{{Phone}}", "")
-                .Replace("{{HospitalHeaderLine}}", "")
-                .Replace("{{EmailID}}", "")
-                .Replace("{{WebSiteInfo}}", "")
-                .Replace("{{logo}}", "")
-                .Replace("{{logo2}}", "")
-                .Replace("{{hospitalinfo}}", "");
+            var chklogo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+            var chklogo2 = _context.FileMasters.FirstOrDefault(x => x.RefType == 10 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+            var chkinfoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
 
-            if (headerType == HeaderType.TextWithLogo)
+            //htmlHeader = htmlHeader
+            //    .Replace("{{HospitalName}}", "")
+            //    .Replace("{{Address}}", "")
+            //    .Replace("{{City}}", "")
+            //    .Replace("{{Pin}}", "")
+            //    .Replace("{{Phone}}", "")
+            //    .Replace("{{HospitalHeaderLine}}", "")
+            //    .Replace("{{EmailID}}", "")
+            //    .Replace("{{WebSiteInfo}}", "")
+            //    .Replace("{{logo}}", "")
+            //    .Replace("{{logo2}}", "")
+            //    .Replace("{{hospitalinfo}}", "");
+            //if (chkinfoImg != null && chklogo != null && chklogo2 != null)
+            //{
+            //    var infoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+            //    var hospitalInfo = infoImg != null ? GetBase64FromFolder("Upload\\Img_Upload", infoImg.DocSavedName) : "";
+            //    htmlHeader = htmlHeader.Replace("{{hospitalinfo}}", hospitalInfo);
+
+            //}
+            //else
+            if (chklogo != null && chklogo2 != null)
             {
                 var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
                 var logo2 = _context.FileMasters.FirstOrDefault(x => x.RefType == 10 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
@@ -178,6 +188,11 @@ namespace HIMS.Services.Utilities
                 htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
                 htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
                 htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
+                bool hasHospitalShortName = !string.IsNullOrWhiteSpace(objHospital?.HospitalShortName);
+
+                htmlHeader = htmlHeader
+                    .Replace("{{HospitalShortName}}", objHospital?.HospitalShortName ?? "")
+                    .Replace("{{chkHospitalShortNameFlag}}", hasHospitalShortName ? "table-row" : "none");
 
                 var HospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
                 var HospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
@@ -185,16 +200,16 @@ namespace HIMS.Services.Utilities
                 htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
                 htmlHeader = htmlHeader.Replace("{{logo2}}", HospitalLogo2);
             }
-            if (headerType == HeaderType.ImageOnly)
+            else if (chkinfoImg != null)
             {
                 var infoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
                 var hospitalInfo = infoImg != null ? GetBase64FromFolder("Upload\\Img_Upload", infoImg.DocSavedName) : "";
                 htmlHeader = htmlHeader.Replace("{{hospitalinfo}}", hospitalInfo);
             }
-            htmlHeader = htmlHeader.Replace("{{TextHeaderDisplay}}", headerType == HeaderType.TextWithLogo ? "block" : "none");
-            htmlHeader = htmlHeader.Replace("{{ImageHeaderDisplay}}",headerType == HeaderType.ImageOnly ? "block" : "none");
-            htmlHeader = htmlHeader.Replace("{{Display}}",headerType == HeaderType.None ? "none" : "block");
-
+           
+            htmlHeader = htmlHeader.Replace("{{TextHeaderDisplay}}", (chklogo != null && chklogo2 != null) ? "table-row" : "none");
+            htmlHeader = htmlHeader.Replace("{{ImageHeaderDisplay}}", (chkinfoImg != null) ? "table-row" : "none");
+            //htmlHeader = htmlHeader.Replace("{{TextHeaderDisplay}}", (chkinfoImg != null && chklogo != null && chklogo2 != null) ? "table-row" : "none");
             return htmlHeader;
         }
 
@@ -610,7 +625,7 @@ namespace HIMS.Services.Utilities
             var DestinationPath = "";
             //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
-                DestinationPath = _configuration["StorageBaseUrl"];
+                DestinationPath = AppSettings.Settings.StorageBaseUrl;
             //string fullFilePath = "E:\\Storage\\Hospital\\Logo\\hospitallogo.jfif";
 
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));

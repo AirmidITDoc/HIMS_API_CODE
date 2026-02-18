@@ -36,14 +36,11 @@ namespace HIMS.Services.OutPatient
             payentity["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
 
             string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", payentity);
-
             objpayment.PaymentId = Convert.ToInt32(PaymentId);
 
             //Udpate Bill Table 
 
             string[] rBillEntity = { "BillNo", "BalanceAmt" };
-
-
             var rAdmissentity1 = objBill.ToDictionary();
 
             foreach (var rProperty in rAdmissentity1.Keys.ToList())

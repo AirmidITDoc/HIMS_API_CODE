@@ -53,17 +53,17 @@ namespace HIMS.Services.Inventory
 
         return data;
     }
-        public List<CompanyComboDto> CompanyComboList(string keywoard)
-        {
-            DatabaseHelper sql = new();
-            SqlParameter[] para =
-             {
-             new SqlParameter("@keywoard",string.IsNullOrWhiteSpace(keywoard) ? DBNull.Value : keywoard)
-             };
-            var data = sql.FetchListBySP<CompanyComboDto>("ps_Rtrv_CompanyMasterCombo", para);
+        //public List<CompanyComboDto> CompanyComboList(string keywoard)
+        //{
+        //    DatabaseHelper sql = new();
+        //    SqlParameter[] para =
+        //     {
+        //     new SqlParameter("@keywoard",string.IsNullOrWhiteSpace(keywoard) ? DBNull.Value : keywoard)
+        //     };
+        //    var data = sql.FetchListBySP<CompanyComboDto>("ps_Rtrv_CompanyMasterCombo", para);
 
-            return data;
-        }
+        //    return data;
+        //}
         public virtual void Insertsp(List<ServiceWiseCompanyCode> ObjServiceWiseCompanyCode, int UserId, string UserName, long? userId)
         {
             DatabaseHelper odal = new();

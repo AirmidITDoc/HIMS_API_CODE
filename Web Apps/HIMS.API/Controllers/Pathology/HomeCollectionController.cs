@@ -12,6 +12,8 @@ using HIMS.API.Models.Pathology;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Pathology;
+using HIMS.Data;
+using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -21,10 +23,26 @@ namespace HIMS.API.Controllers.Pathology
     public class HomeCollectionController : BaseController
     {
         private readonly IHomeCollectionService _IHomeCollectionService;
-        public HomeCollectionController(IHomeCollectionService repository)
+        private readonly IGenericService<THomeCollectionRegistrationInfo> _repository;
+
+        public HomeCollectionController(IHomeCollectionService repository, IGenericService<THomeCollectionRegistrationInfo> repository1)
         {
             _IHomeCollectionService = repository;
+            _repository = repository1;
 
+
+        }
+        //List API Get By Id
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.HomeCollectionId == id);
+            return data.ToSingleResponse<THomeCollectionRegistrationInfo, HomeCollectionModel>("THomeCollectionRegistrationInfo");
         }
         [HttpPost("homeCollectionDetList")]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
@@ -32,6 +50,13 @@ namespace HIMS.API.Controllers.Pathology
         {
             IPagedList<homeCollectionDetListDto> homeCollectionDetList = await _IHomeCollectionService.GetListAsync(objGrid);
             return Ok(homeCollectionDetList.ToGridResponse(objGrid, "homeCollectionDet List"));
+        }
+        [HttpPost("HomeCollectionRegistrationInfoList")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListHomeCollection(GridRequestModel objGrid)
+        {
+            IPagedList<HomeCollectionRegistrationInfoListDto> HomeCollectionRegistrationInfoList = await _IHomeCollectionService.HomeCollectionListAsync(objGrid);
+            return Ok(HomeCollectionRegistrationInfoList.ToGridResponse(objGrid, "HomeCollectionRegistrationInfo List"));
         }
 
         [HttpPost("Insert")]
@@ -87,5 +112,20 @@ namespace HIMS.API.Controllers.Pathology
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.HomeCollectionId);
         }
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
+        public ApiResponse Cancel(HomeCollectionCancel obj)
+        {
+            THomeCollectionRegistrationInfo model = obj.MapTo<THomeCollectionRegistrationInfo>();
+            if (obj.HomeCollectionId != 0)
+            {
+                model.HomeCollectionId = obj.HomeCollectionId;
+                _IHomeCollectionService.Cancel(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+
     }
 }

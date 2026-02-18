@@ -11,6 +11,8 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Pathology;
+using System.Data;
+using HIMS.Services.Utilities;
 
 
 namespace HIMS.Services.Pathlogy
@@ -27,24 +29,28 @@ namespace HIMS.Services.Pathlogy
             return await DatabaseHelper.GetGridDataBySp<homeCollectionDetListDto>(model, "ps_Rtrv_homeCollectionDetList");
 
         }
+        public virtual async Task<IPagedList<HomeCollectionRegistrationInfoListDto>> HomeCollectionListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<HomeCollectionRegistrationInfoListDto>(model, "ps_HomeCollectionRegistrationInfoList");
+
+        }
         public virtual async Task InsertAsync(THomeCollectionRegistrationInfo ObjTHomeCollectionRegistrationInfo, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
             {
-                var lastSeqNoStr = await _context.THomeCollectionRegistrationInfos
-                    .OrderByDescending(x => x.HomeSeqNo)
-                    .Select(x => x.HomeSeqNo)
-                    .FirstOrDefaultAsync();
+                var presNoList = await _context.THomeCollectionRegistrationInfos
+                .Where(x => x.HomeSeqNo != null && x.HomeSeqNo != "")
+                .Select(x => x.HomeSeqNo)
+                .ToListAsync();
 
-                int lastSeqNo = 0;
-                if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
-                    lastSeqNo = parsed;
+                int lastPresNo = presNoList
+                    .Select(p => int.TryParse(p, out var n) ? n : 0)
+                    .DefaultIfEmpty(0)
+                    .Max();
 
-                // Increment the sequence number
-                int newSeqNo = lastSeqNo + 1;
-                ObjTHomeCollectionRegistrationInfo.HomeSeqNo = newSeqNo.ToString();
-
+                //  Increment & assign
+                ObjTHomeCollectionRegistrationInfo.HomeSeqNo = (lastPresNo + 1).ToString();
 
                 ObjTHomeCollectionRegistrationInfo.CreatedBy = UserId;
                 ObjTHomeCollectionRegistrationInfo.CreatedDate = AppTime.Now;
@@ -93,7 +99,20 @@ namespace HIMS.Services.Pathlogy
                 scope.Complete();
             }
         }
+        public virtual async Task Cancel(THomeCollectionRegistrationInfo objTHomeCollectionRegistrationInfo, int UserId, string Username)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] Entity = { "HomeCollectionId", "IsCancelledBy" };
+            var HEntity = objTHomeCollectionRegistrationInfo.ToDictionary();
+            foreach (var rProperty in HEntity.Keys.ToList())
+            {
+                if (!Entity.Contains(rProperty))
+                    HEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("PS_Cancel_HomeCollection", CommandType.StoredProcedure, HEntity);
+        }
 
-
+        
     }
 }

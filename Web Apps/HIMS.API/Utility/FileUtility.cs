@@ -1,4 +1,5 @@
-﻿using HIMS.Services.Users;
+﻿using HIMS.Core.Domain.Common;
+using HIMS.Services.Users;
 using Microsoft.AspNetCore.StaticFiles;
 
 namespace HIMS.API.Utility
@@ -6,18 +7,16 @@ namespace HIMS.API.Utility
     public class FileUtility : IFileUtility
     {
         public readonly ISalesService _Sales;
-        public readonly IConfiguration _configuration;
-        public FileUtility(ISalesService sales, IConfiguration configuration)
+        public FileUtility(ISalesService sales)
         {
             _Sales = sales;
-            _configuration = configuration;
         }
 
         public async Task<Tuple<MemoryStream, string, string>> DownloadFile(string filePath)
         {
             var DestinationPath = "";
             if (string.IsNullOrWhiteSpace(DestinationPath))
-                DestinationPath = _configuration.GetValue<string>("StorageBaseUrl");
+                DestinationPath =AppSettings.Settings.StorageBaseUrl;
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), filePath.Trim('\\'));
             var memoryStream = new MemoryStream();
             using (var stream = new FileStream(FilePath, FileMode.Open))
@@ -49,7 +48,7 @@ namespace HIMS.API.Utility
             var DestinationPath = "";
             //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
-                DestinationPath = _configuration.GetValue<string>("StorageBaseUrl");
+                DestinationPath =AppSettings.Settings.StorageBaseUrl;
             if (!Directory.Exists(DestinationPath))
                 Directory.CreateDirectory(DestinationPath);
             if (!Directory.Exists($"{DestinationPath.Trim('\\')}\\{Folder}"))
@@ -64,7 +63,7 @@ namespace HIMS.API.Utility
             var DestinationPath = "";
             //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
-                DestinationPath = _configuration.GetValue<string>("StorageBaseUrl");
+                DestinationPath = AppSettings.Settings.StorageBaseUrl;
             if (!Directory.Exists(DestinationPath))
                 Directory.CreateDirectory(DestinationPath);
             if (!Directory.Exists($"{DestinationPath.Trim('\\')}\\{Folder}"))
@@ -84,7 +83,7 @@ namespace HIMS.API.Utility
             var DestinationPath = "";
             //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
-                DestinationPath = _configuration.GetValue<string>("StorageBaseUrl");
+                DestinationPath = AppSettings.Settings.StorageBaseUrl;
             if (!Directory.Exists(DestinationPath))
                 Directory.CreateDirectory(DestinationPath);
             if (!Directory.Exists($"{DestinationPath.Trim('\\')}\\{Folder}"))
@@ -98,7 +97,7 @@ namespace HIMS.API.Utility
             var DestinationPath = "";
             //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
-                DestinationPath = _configuration.GetValue<string>("StorageBaseUrl");
+                DestinationPath = AppSettings.Settings.StorageBaseUrl;
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
             if (!File.Exists($"{FilePath}\\{filename}"))
                 return "";

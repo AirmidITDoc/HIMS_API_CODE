@@ -266,7 +266,7 @@ namespace HIMS.Services.Masters
 
         public async Task<List<DoctorMaster>> GetDoctorsByDocType(int DocTypeId)
         {
-            return await _context.DoctorMasters.Where(x => x.IsConsultant == true && x.DoctorTypeId == DocTypeId).ToListAsync();
+            return await _context.DoctorMasters.Where(x =>  x.DoctorTypeId == DocTypeId).ToListAsync();
         }
         //public async Task<List<MConsentMaster>> GetDoctorsByConsentType(int DeptId)
         //{

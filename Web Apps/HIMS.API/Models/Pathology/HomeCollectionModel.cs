@@ -51,4 +51,9 @@ namespace HIMS.API.Models.Pathology
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
     }
+    public class HomeCollectionCancel
+    {
+        public long HomeCollectionId { get; set; }
+        public long? IsCancelledBy { get; set; }
+    }
 }

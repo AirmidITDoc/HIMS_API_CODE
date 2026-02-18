@@ -49,13 +49,14 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "CompanyRepresentative List", data );
         }
 
-        [HttpGet("CompanyComboList")]
-        public ApiResponse CompanyComboList(string? keywoard)
-        {
-            var data = _CompanyMasterService.CompanyComboList(keywoard);
+        //[HttpGet("CompanyComboList")]
+        ////[Permission]
+        //public ApiResponse CompanyComboList(string? keywoard)
+        //{
+        //    var data = _CompanyMasterService.CompanyComboList(keywoard);
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyCombo List", data);
-        }
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyCombo List", data);
+        //}
 
         [HttpPost("CompanyMasterList")]
         //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]

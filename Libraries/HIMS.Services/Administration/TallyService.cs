@@ -99,5 +99,29 @@ namespace HIMS.Services.Administration
         {
             return await DatabaseHelper.GetGridDataBySp<TallyOPBillDetailListMediforteDto>(model, "ps_Tally_OPBillDetailList_Mediforte");
         }
+
+        public virtual async Task<IPagedList<TallyIPBillRefundListMediforteDto>> TallyIPBillRefundListMediforteAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TallyIPBillRefundListMediforteDto>(model, "Tally_IPBillRefund_Payment_Mediforte");
+        }
+
+
+        public virtual async Task<IPagedList<TallyIPAdvancePaymentListMediforteDto>> TallyIPAdvancePaymentListMediforteAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TallyIPAdvancePaymentListMediforteDto>(model, "Tally_IPAdvance_Payment_Mediforte");
+        }
+
+        public virtual async Task<IPagedList<TallyIPAdvanceRefundPaymentListMediforteDto>> TallyIPAdvanceRefundPaymentListMediforteAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TallyIPAdvanceRefundPaymentListMediforteDto>(model, "Tally_IPAdvanceRefund_Payment_Mediforte");
+        }
+
+        public virtual async Task<IPagedList<TallyIPBillPaymentListMediforteDto>> TallyIPBillPaymentListMediforteAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TallyIPBillPaymentListMediforteDto>(model, "Tally_IPBill_Payment_Mediforte");
+        }
+
+
+
     }
 }

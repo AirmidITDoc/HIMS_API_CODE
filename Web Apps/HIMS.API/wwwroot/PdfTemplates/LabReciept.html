@@ -1,81 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
+    <title>MRI Requisition Slip</title>
 </head>
-<body style="font-family: Arial, Helvetica, sans-serif;  margin:0;">
+<body style="margin:0; padding:0; background:#ffffff; font-family:Arial, Helvetica, sans-serif;">
 
-    <div style="width:900px; margin:0 auto;  padding:20px;">
+    <div style="width:900px; margin:20px auto; background:#ffffff; padding:25px; box-shadow:0 0 8px rgba(0,0,0,0.1);">
 
-        {{ExternalLabHeader}}
+        <div style="text-align:center; border-bottom:1px solid #ccc; padding-bottom:10px;">
+            {{ExternalLabHeader}}
 
-
-        <table style="width:100%; margin-top:15px; font-size:14px;">
+        </div>
+        <!-- Patient & Bill Info -->
+        <table style="width:100%; margin-top:20px; font-size:14px; border-collapse:collapse;">
             <tr>
-                <td style="width:10%; padding:4px;"><strong>Bill Number:</strong></td>
-                <td style="width:25%; padding:4px;">{{BillNo}}</td>
-                <td style="width:10%; padding:4px;"><strong>Bill Date:</strong></td>
-                <td style="width:25%; padding:4px;">{{}}</td>
-            </tr>
+                <!-- LEFT SIDE -->
+                <td style="width:50%; vertical-align:top; padding-right:15px;">
 
-            <tr>
-                <td style="padding:4px;"><strong>Reg. Number:</strong></td>
-                <td style="padding:4px;">{{UHID}}</td>
-                <td style="padding:4px;"><strong>Age / Sex:</strong></td>
-                <td style="padding:4px;">{{}} / {{}}</td>
-            </tr>
+                    <table style="width:100%; border-collapse:collapse;">
+                        <tr>
+                            <td style="width:40%; padding:4px 0;"><strong>Bill Number</strong></td>
+                            <td style="width:60%; padding:4px 0;">: {{BillNo}}</td>
+                        </tr>
 
-            <tr>
-                <td style="padding:4px;"><strong>Patient Name:</strong></td>
-                <td style="padding:4px;">{{PatientName}}</td>
-                <td style="padding:4px;"><strong>Phone No:</strong></td>
-                <td style="padding:4px;">{{}}</td>
-            </tr>
+                        <tr>
+                            <td style="padding:4px 0;"><strong>Reg. Number</strong></td>
+                            <td style="padding:4px 0;">: {{RegNo}}</td>
+                        </tr>
 
-            <tr>
-                <td style="padding:4px;"><strong>Referred By:</strong></td>
-                <td style="padding:4px;">{{}}</td>
-                <td style="padding:4px;"><strong>Address:</strong></td>
-                <td style="padding:4px;">{{}}</td>
-            </tr>
+                        <tr>
+                            <td style="padding:4px 0;"><strong>Patient Name</strong></td>
+                            <td style="padding:4px 0;">: {{PatientName}}</td>
+                        </tr>
 
-            <tr>
-                <td style="padding:4px;"><strong>Center Party:</strong></td>
-                <td style="padding:4px;">{{}}</td>
-                <td style="padding:4px;"></td>
-                <td style="padding:4px;"></td>
+                        <tr>
+                            <td style="padding:4px 0;"><strong>Referred By</strong></td>
+                            <td style="padding:4px 0;">: {{RefDoctorName}}</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:4px 0;"><strong>Center Party</strong></td>
+                            <td style="padding:4px 0;">: </td>
+                        </tr>
+                    </table>
+
+                </td>
+
+                <!-- RIGHT SIDE -->
+                <td style="width:50%; vertical-align:top; padding-left:15px;">
+
+                    <table style="width:100%; border-collapse:collapse;">
+                        <tr>
+                            <td style="width:40%; padding:4px 0;"><strong>Bill Date</strong></td>
+                            <td style="width:60%; padding:4px 0;">: {{BillDate}}</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:4px 0;"><strong>Age / Sex</strong></td>
+                            <td style="padding:4px 0;">: {{AgeYear}}/{{GenderName}}</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:4px 0;"><strong>Phone No</strong></td>
+                            <td style="padding:4px 0;">: {{MobileNo}}</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:4px 0;"><strong>Address</strong></td>
+                            <td style="padding:4px 0;">: {{Address}}</td>
+                        </tr>
+                    </table>
+
+                </td>
             </tr>
         </table>
+
+        <!-- Section Title -->
+        <!--<div style="margin-top:25px; text-align:center; font-weight:bold; font-size:16px; border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding:8px;">
+        Requisition for the Department of MRI
+    </div>-->
+
         <table style="width:100%; border-collapse:collapse; margin-top:15px; font-size:14px;">
-            <tr style="background:#eaeaea;">
-                <th style="padding:8px; text-align:center;">Test</th>
+            <tr style="background:#f5f5f5;">
+                <th style=" padding:8px; text-align:center;">Sr.No</th>
+                <th style="padding: 8px; text-align: center;">Test</th>
                 <th style="padding: 8px; text-align: center;">Vial</th>
-                <th style="padding: 8px; text-align: center;">Report Date</th>
+                <th style=" padding: 8px; text-align: center;">Report Date</th>
             </tr>
+
             {{Items}}
         </table>
 
-        <div style="margin-top:15px; font-size:14px;">
-            <strong>*** Note: ***</strong>
-        </div>
-
-        <div style="margin-top:10px; font-size:14px;">
-            <strong>User:</strong>{{}}
-        </div>
-
-        <div style="margin-top:5px; font-size:14px;">
-            I Consent to do the above test(s).
-        </div>
-
-        <div style="margin-top:30px; display:flex; justify-content:flex-end;">
-            <div style="text-align:center;">
-                <div style="border-top:1px solid #000; width:200px;"></div>
-                <div style="font-size:13px;">Received by</div>
-            </div>
-        </div>
-
         <div style="margin-top:20px; font-size:14px;">
-            <strong>Remarks / Clinical Information:</strong>
+
+            <div style="margin-bottom:8px;">
+                <strong>*** Note:***</strong> 
+            </div>
+
+            <div style="margin-bottom:8px;">
+                <strong>User :</strong> {{UserName}}
+            </div>
+
+            <div style="margin-bottom:8px;">
+                I Consent to do the above test(s).
+            </div>
+
+            <div style="margin-top:15px;">
+                <strong>Received by :</strong>
+                <span style="display:inline-block; width:300px; border-bottom:1px solid #000; margin-left:10px;"></span>
+            </div>
+
+            <div style="margin-top:20px;">
+                <strong>Remarks / Clinical Information :</strong>
+
+            </div>
+
         </div>
 
     </div>

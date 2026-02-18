@@ -52,7 +52,9 @@ namespace HIMS.API.Controllers.Radiology
         }
 
         [HttpPut("RadiologyUpdate/{id:int}")]
-        [Permission(PageCode = "Radiology", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Radiology", Permission = PagePermission.Edit)]
+        [Permission]
+
         public ApiResponse Update(TRadiologyReportModel obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();
@@ -87,7 +89,8 @@ namespace HIMS.API.Controllers.Radiology
         }
 
         [HttpPost("Verify")]
-        [Permission(PageCode = "Radiology", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Radiology", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Verify(RadiologyVerifyModel obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();

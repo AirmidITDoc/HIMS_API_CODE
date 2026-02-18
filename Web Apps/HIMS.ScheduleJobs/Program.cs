@@ -1,10 +1,21 @@
-﻿using HIMS.ScheduleJobs.Jobs;
+﻿using HIMS.Core.Domain.Common;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.Extensions;
+using HIMS.Data.Models;
+using HIMS.ScheduleJobs.Jobs;
 using HIMS.ScheduleJobs.Models;
+using HIMS.Services.Administration;
+using HIMS.Services.Masters;
+using HIMS.Services.Report;
+using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Quartz;
 using System;
+using WkHtmlToPdfDotNet;
+using WkHtmlToPdfDotNet.Contracts;
 
 namespace HIMS.ScheduleJobs
 {
@@ -35,13 +46,27 @@ namespace HIMS.ScheduleJobs
                 // =========================
                 // EXISTING SERVICES (KEEP AS IT IS FOR NOW)
                 // =========================
-
-
+                // ✅ ADD THIS - DB CONTEXT REGISTRATION
+                // services.AddDbContext<HIMSDbContext>(options => options.UseSqlServer(configuration.GetValue<string>("CONNECTION_STRING")));
+                AppSettings.Initialize(configuration);
+                services.AddDbContextPool<HIMSDbContext>((provider, options) =>
+                {
+                    options.UseSqlServer(AppSettings.Settings.CONNECTION_STRING);
+                });
+                ConnectionStrings.SetConnectionString(AppSettings.Settings.CONNECTION_STRING);
                 // Bind settings
                 var quartzSettings = new QuartzSettings();
                 configuration.GetSection("QuartzSettings").Bind(quartzSettings);
 
+                services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+
                 services.AddSingleton(quartzSettings);
+                services.AddScoped<IContext, HIMSDbContext>();
+                services.AddScoped<IPdfUtility, PdfUtility>();
+                services.AddScoped<IReportService, ReportService>();
+                services.AddScoped<IWhatsAppEmailService, WhatsAppEmailService>();
+                services.AddScoped<IBarcodeConfigService, BarcodeConfigService>();
+                services.AddScoped<IEmailTemplateService, EmailTemplateService>();
 
                 services.AddQuartz(q =>
                 {

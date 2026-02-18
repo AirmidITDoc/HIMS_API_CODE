@@ -8,8 +8,8 @@ namespace HIMS.Services.Report
 {
     public partial interface IReportService
     {
-        Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "");
-        string GetNewReportSetByProc(ReportConfigDto model, string FolderPath = "");
+        Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1);
+        Tuple<byte[],string> GetNewReportSetByProc(ReportConfigDto model);
         Task<List<DoctorMaster>> SearchDoctor(string str);
         Task<List<ServiceMasterDTO>> SearchService(string str);
         Task<List<MDepartmentMaster>> SearchDepartment(string str);
@@ -30,7 +30,7 @@ namespace HIMS.Services.Report
         Task<List<MExpensesHeadMaster>> SearchMExpensesHeadMaster(string str);
 
         Task<List<MExpensesCategoryMaster>> SearchMExpensesCategoryMaster(string str);
-
+        Task<MReportConfig> GetReportConfigByMode(string ReportMode, string Section);
 
         Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel objGrid);
         DataTable GetReportDataBySp(ReportConfigDto model);

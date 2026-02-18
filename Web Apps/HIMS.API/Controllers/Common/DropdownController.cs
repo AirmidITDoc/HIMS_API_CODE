@@ -108,6 +108,12 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MPathSpecimenMaster> _MPathSpecimenMaster;
         private readonly IGenericService<MInstructionMaster> _MInstructionMaster;
         private readonly IGenericService<MAdmissionType> _AdmissionType;
+        private readonly IGenericService<MPathSpecimenContainerMaster> _MPathSpecimenContainerMaster;
+        private readonly IGenericService<MPathSpecimenCollectionMaster> _MPathSpecimenCollectionMaster;
+        private readonly IGenericService<MPathSpecimenPreservativeMaster> _MPathSpecimenPreservativeMaster;
+        private readonly IGenericService<MPathSpecimenConditionMaster> _MPathSpecimenConditionMaster;
+
+
 
 
 
@@ -163,7 +169,12 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MSubQuestionValuesMaster> MSubQuestionValuesMaster,
                               IGenericService<MPathSpecimenMaster> MPathSpecimenMaster,
                               IGenericService<MInstructionMaster> MInstructionMaster,
-                                IGenericService<MAdmissionType> MAdmissionType
+                                IGenericService<MAdmissionType> MAdmissionType,
+                              IGenericService<MPathSpecimenContainerMaster> MPathSpecimenContainerMaster,
+                              IGenericService<MPathSpecimenCollectionMaster> MPathSpecimenCollectionMaster,
+                              IGenericService<MPathSpecimenPreservativeMaster> MPathSpecimenPreservativeMaster,
+                              IGenericService<MPathSpecimenConditionMaster> MPathSpecimenConditionMaster
+
 
                              )
         {
@@ -258,6 +269,12 @@ namespace HIMS.API.Controllers.Common
             _MPathSpecimenMaster = MPathSpecimenMaster;
             _MInstructionMaster = MInstructionMaster;
             _AdmissionType = MAdmissionType;
+            _MPathSpecimenContainerMaster = MPathSpecimenContainerMaster;
+            _MPathSpecimenCollectionMaster = MPathSpecimenCollectionMaster;
+            _MPathSpecimenPreservativeMaster = MPathSpecimenPreservativeMaster;
+
+            _MPathSpecimenConditionMaster = MPathSpecimenConditionMaster;
+
 
 
         }
@@ -355,7 +372,7 @@ namespace HIMS.API.Controllers.Common
                 "ItemGeneric" => (await _IMItemgenericService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemGenericNameMaster.ItemGenericNameId), nameof(MItemGenericNameMaster.ItemGenericName)),
                 "ItemType" => (await _IMItemtypeService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemTypeMaster.ItemTypeId), nameof(MItemTypeMaster.ItemTypeName)),
                 "Currency" => (await _IMCurrencyeService.GetAll()).ToList().ToDropDown(nameof(MCurrencyMaster.CurrencyId), nameof(MCurrencyMaster.CurrencyName)),
-                "ItemDrugType" => (await _IMItemDrugtypeService.GetAll(x => x.IsDeleted.Value)).ToList().ToDropDown(nameof(MItemDrugTypeMaster.ItemDrugTypeId), nameof(MItemDrugTypeMaster.DrugTypeName)),
+                "ItemDrugType" => (await _IMItemDrugtypeService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MItemDrugTypeMaster.ItemDrugTypeId), nameof(MItemDrugTypeMaster.DrugTypeName)),
                 "UnitOfMeasurment" => (await _IMUnitOfMeasurmentService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MUnitofMeasurementMaster.UnitofMeasurementId), nameof(MUnitofMeasurementMaster.UnitofMeasurementName)),
                 
                 "ItemManufacture" => (await _IMItemManufService.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MManufactureMaster.ManufId), nameof(MManufactureMaster.ManufName)),
@@ -454,7 +471,14 @@ namespace HIMS.API.Controllers.Common
                 "SubQuestionValuesMaster" => (await _MSubQuestionValuesMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MSubQuestionValuesMaster.SubQuestionValId), nameof(MSubQuestionValuesMaster.SubQuestionValName)),
                 "InstructionMaster" => (await _MInstructionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MInstructionMaster.InstructionId), nameof(MInstructionMaster.InstructionDescription)),
                 "AdmissionType" => (await _AdmissionType.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MAdmissionType.AdmissiontypeId), nameof(MAdmissionType.AdmissiontypeName)),
+                "PathSpecimenConditionMaster" => (await _MPathSpecimenConditionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenConditionMaster.SpecimenConditionId), nameof(MPathSpecimenConditionMaster.SpecimenCondition)),
+                "SpecimentColors" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "SpecimentColors")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
+
+
+                "PathSpecimenContainerMaster" => (await _MPathSpecimenContainerMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenContainerMaster.SpecimenContainerId), nameof(MPathSpecimenContainerMaster.ContainerType)),
+                "PathSpecimenCollectionMaster" => (await _MPathSpecimenCollectionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenCollectionMaster.SpecimenCollectionId), nameof(MPathSpecimenCollectionMaster.CollectionMethod)),
+                "PathSpecimenPreservativeMaster" => (await _MPathSpecimenPreservativeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenPreservativeMaster.SpecimenPreservativeId), nameof(MPathSpecimenPreservativeMaster.PreservativeUsed)),
 
 
 

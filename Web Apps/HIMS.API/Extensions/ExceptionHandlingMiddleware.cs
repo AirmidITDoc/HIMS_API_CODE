@@ -1,4 +1,5 @@
 ﻿using HIMS.Api.Models.Common;
+using HIMS.Core.Domain.Common;
 using HIMS.Core.Domain.Logging;
 using System.Net;
 using System.Text.Json;
@@ -9,17 +10,15 @@ namespace HIMS.API.Extensions
     {
         private readonly RequestDelegate _next;
         private readonly Microsoft.IO.RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
-        private readonly IConfiguration Configuration;
-        public ExceptionHandlingMiddleware(RequestDelegate next, IConfiguration configuration)
+        public ExceptionHandlingMiddleware(RequestDelegate next)
         {
             _next = next;
             _recyclableMemoryStreamManager = new Microsoft.IO.RecyclableMemoryStreamManager();
-            Configuration = configuration;
         }
 
         public async Task Invoke(HttpContext context)
         {
-            string IsAllowLog = Configuration["RequestLog:IsAllow"];
+            string IsAllowLog = "false";
             RequestLog log = new();
             try
             {

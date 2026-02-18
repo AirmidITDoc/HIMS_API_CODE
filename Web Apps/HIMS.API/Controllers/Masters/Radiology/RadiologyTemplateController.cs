@@ -54,6 +54,8 @@ namespace HIMS.API.Controllers.Masters.Radiology
         //List API Get By Id
         [HttpGet("RadReportId/{id?}")]
         //[Permission(PageCode = "RadiologyTemplateMaster", Permission = PagePermission.View)]
+        [Permission]
+
         public async Task<ApiResponse> RGet(int id)
         {
             if (id == 0)

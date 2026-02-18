@@ -57,6 +57,17 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<PrevDrVisistListDto>(model, "ps_Rtrv_PreviousLabDoctorVisitList");
         }
+        public List<CompanyComboDto> CompanyComboList(string keywoard)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para =
+             {
+             new SqlParameter("@keywoard",string.IsNullOrWhiteSpace(keywoard) ? DBNull.Value : keywoard)
+             };
+            var data = sql.FetchListBySP<CompanyComboDto>("ps_Rtrv_CompanyMasterCombo", para);
+
+            return data;
+        }
 
         public virtual async Task InsertAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username)
         {
@@ -575,5 +586,21 @@ namespace HIMS.Services.Pathlogy
         //{
         //    throw new NotImplementedException();
         //}
+
+        public virtual async Task<IPagedList<LabDiscountDetailListDto>> LabDiscountDetailListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabDiscountDetailListDto>(model, "ps_Rtrv_LabRegisterTestDiscountDetail");
+        }
+
+        public virtual async Task<IPagedList<LabPaymentDetailListDto>> LabPaymentDetailListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabPaymentDetailListDto>(model, "ps_Rtrv_LabRegisterPaymentDetail");
+        }
+
+        public virtual async Task<IPagedList<LabCreditDetailDto>> LabCreditDetailListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabCreditDetailDto>(model, "ps_Rtrv_LabRegisterCreditDetail");
+        }
+
     }
 }
