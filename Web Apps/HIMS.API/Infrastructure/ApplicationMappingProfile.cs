@@ -464,6 +464,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<MPathTestMaster, TestSpecimenDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MItemDrugTypeMaster, ItemDrugTypeMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<THomeCollectionRegistrationInfo, HomeCollectionCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPurchaseRequisitionHeader, PurchaseRequisitionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPurchaseRequisitionDetail, PurchaseRequisitionDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 

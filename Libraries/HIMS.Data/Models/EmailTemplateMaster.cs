@@ -12,6 +12,7 @@ namespace HIMS.Data.Models
         public string? Wabody { get; set; }
         public string FromEmail { get; set; } = null!;
         public string FromName { get; set; } = null!;
+        public string? ToMail { get; set; }
         public string? Cc { get; set; }
         public string? Bcc { get; set; }
         public bool IsWa { get; set; }
