@@ -18013,8 +18013,8 @@ namespace HIMS.Services.Report
 
                                 rows.Append("<tr>");
                                 rows.Append("<td style='padding:4px 0;'>").Append(dr["PatientType"]).Append("</td>");
-                                rows.Append("<td style='padding:4px 0; text-align:right;'>").Append(revenue.ToString("N2")).Append("</td>");
-                                rows.Append("<td style='padding:4px 0; text-align:right;'>").Append(dr["PatientCount"]).Append("</td>");
+                                rows.Append("<td style='padding:4px 0; text-align:center;'>").Append(revenue.ToString("N2")).Append("</td>");
+                                rows.Append("<td style='padding:4px 0; text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
                                 rows.Append("<td style='padding:4px 0; text-align:right;'>").Append(outstanding.ToString("N2")).Append("</td>");
                                 rows.Append("</tr>");
                             }
@@ -18085,6 +18085,7 @@ namespace HIMS.Services.Report
                                     doctorRows.Append("<tr>");
                                     doctorRows.Append("<td>").Append(dr["DoctorName"]).Append("</td>");
                                     doctorRows.Append("<td style='text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
+                                    doctorRows.Append("<td style='text-align:center;'>").Append(dr["TotalRevenue"]).Append("</td>");
                                     doctorRows.Append("</tr>");
                                 }
                                 else if (doctorType == "RefDoctor")
@@ -18092,6 +18093,7 @@ namespace HIMS.Services.Report
                                     refDoctorRows.Append("<tr>");
                                     refDoctorRows.Append("<td>").Append(dr["DoctorName"]).Append("</td>");
                                     refDoctorRows.Append("<td style='text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
+                                    refDoctorRows.Append("<td style='text-align:center;'>").Append(dr["TotalRevenue"]).Append("</td>");
                                     refDoctorRows.Append("</tr>");
                                 }
                             }
@@ -18124,10 +18126,15 @@ namespace HIMS.Services.Report
                         if (ds.Tables.Count > 7 && ds.Tables[7].Rows.Count > 0)
                         {
                             var dt7 = ds.Tables[7];
+                            html = html.Replace("{{TotalReports}}", dt7.GetColValue("TotalReports"));
                             html = html.Replace("{{CompletedReports}}", dt7.GetColValue("CompletedReports"));
                             html = html.Replace("{{PendingReports}}", dt7.GetColValue("PendingReports"));
                             html = html.Replace("{{CollectedSamples}}", dt7.GetColValue("CollectedSamples"));
                             html = html.Replace("{{NotCollectedSamples}}", dt7.GetColValue("NotCollectedSamples"));
+                            html = html.Replace("{{VerifiedReports}}", dt7.GetColValue("VerifiedReports"));
+                            html = html.Replace("{{NonVerifiedReports}}", dt7.GetColValue("NonVerifiedReports"));
+                            html = html.Replace("{{DispatchedReports}}", dt7.GetColValue("DispatchedReports"));
+                            html = html.Replace("{{NonDispatchedReports}}", dt7.GetColValue("NonDispatchedReports"));
                         }
                         #endregion
 
@@ -18152,6 +18159,30 @@ namespace HIMS.Services.Report
                         else
                         {
                             html = html.Replace("{{CompanyRows}}", "<tr><td colspan='4' style='text-align:center; padding:6px;'>No Data</td></tr>");
+                        }
+                        #endregion
+
+                        #region 8 - Refund Wise Summary
+                        if (ds.Tables.Count > 9 && ds.Tables[9].Rows.Count > 0)
+                        {
+                            var dt9 = ds.Tables[9];
+                            StringBuilder rows = new StringBuilder();
+
+                            foreach (DataRow dr in dt9.Rows)
+                            {
+                                rows.Append("<tr>");
+                                rows.Append("<td>").Append(dr["PatientType"]).Append("</td>");
+                                rows.Append("<td style='text-align:center;'>").Append(dr["TotalRefundTransactions"]).Append("</td>");
+                                rows.Append("<td style='text-align:center;'>").Append(Convert.ToDecimal(dr["TotalRefundAmount"]).ToString("N2")).Append("</td>");
+                                rows.Append("<td style='text-align:center;'>").Append(Convert.ToDecimal(dr["RefundPercentage"]).ToString("N2")).Append("</td>");
+                                rows.Append("</tr>");
+                            }
+
+                            html = html.Replace("{{RefundRows}}", rows.ToString());
+                        }
+                        else
+                        {
+                            html = html.Replace("{{RefundRows}}", "<tr><td colspan='4' style='text-align:center; padding:6px;'>No Data</td></tr>");
                         }
                         #endregion
 
