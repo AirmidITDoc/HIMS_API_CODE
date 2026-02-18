@@ -54,4 +54,15 @@ namespace HIMS.API.Models.Pharmacy
             //RuleFor(x => x.VerifiedQty).NotNull().NotEmpty().WithMessage("VerifiedQty  is required");
         }
     }
+    public class PurchaseRequisitionCancel
+    {
+        public long PurchaseRequisitionId { get; set; }
+        public long? IsCancelledBy { get; set; }
+
+    }
+    public class PurchaseRequisitionVarifyModel
+    {
+        public long PurchaseRequisitionId { get; set; }
+        public long? IsInchargeVerifyId { get; set; }
+    }
 }

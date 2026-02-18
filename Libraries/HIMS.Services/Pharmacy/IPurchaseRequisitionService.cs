@@ -11,6 +11,10 @@ namespace HIMS.Services.Pharmacy
     {
         Task InsertAsync(TPurchaseRequisitionHeader ObjTPurchaseRequisitionHeader, int UserId, string Username);
         Task UpdateAsync(TPurchaseRequisitionHeader ObjTPurchaseRequisitionHeader, int UserId, string Username, string[]? ignoreColumns = null);
+        Task Cancel(TPurchaseRequisitionHeader ObjTPurchaseRequisitionHeader, int UserId, string Username);
+        Task VerifyAsync(TPurchaseRequisitionHeader ObjTPurchaseRequisitionHeader, int UserId, string Username);
+
+
 
     }
 }

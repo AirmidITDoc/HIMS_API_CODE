@@ -12,6 +12,8 @@ using HIMS.API.Models.Pharmacy;
 using HIMS.Services.Pharmacy;
 using Asp.Versioning;
 using HIMS.Services.IPPatient;
+using HIMS.Core.Domain.Grid;
+using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 
 namespace HIMS.API.Controllers.Pharmacy
 {
@@ -21,14 +23,22 @@ namespace HIMS.API.Controllers.Pharmacy
     public class PurchaseRequisitionController : BaseController
     {
         private readonly IPurchaseRequisitionService _IPurchaseRequisitionService;
-        private readonly IGenericService<TPurchaseRequisitionHeader> _repository;
-        public PurchaseRequisitionController(IPurchaseRequisitionService repository, IGenericService<TPurchaseRequisitionHeader> repository1)
+        private readonly IGenericService<TPurchaseRequisitionDetail> _repository;
+        public PurchaseRequisitionController(IPurchaseRequisitionService repository, IGenericService<TPurchaseRequisitionDetail> repository1)
         {
             _IPurchaseRequisitionService = repository;
             _repository = repository1;
         }
+        //List API
+        [HttpPost("PurchaseRequisitionDetailList")]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<TPurchaseRequisitionDetail> PurchaseRequisitionDetailList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(PurchaseRequisitionDetailList.ToGridResponse(objGrid, "PurchaseRequisitionDetail List"));
+        }
         [HttpPost("Insert")]
-        //[Permission(PageCode = "PurchaseRequisitionHeader", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PurchaseRequisitionModel obj)
         {
             TPurchaseRequisitionHeader model = obj.MapTo<TPurchaseRequisitionHeader>();
@@ -48,7 +58,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.PurchaseRequisitionId);
         }
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "PurchaseRequisitionHeader", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PurchaseRequisitionModel obj)
         {
             TPurchaseRequisitionHeader model = obj.MapTo<TPurchaseRequisitionHeader>();
@@ -63,5 +73,37 @@ namespace HIMS.API.Controllers.Pharmacy
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.PurchaseRequisitionId);
         }
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Delete)]
+        public ApiResponse Cancel(PurchaseRequisitionCancel obj)
+        {
+            TPurchaseRequisitionHeader model = obj.MapTo<TPurchaseRequisitionHeader>();
+            if (obj.PurchaseRequisitionId != 0)
+            {
+                model.PurchaseRequisitionId = obj.PurchaseRequisitionId;
+                _IPurchaseRequisitionService.Cancel(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+        [HttpPost("Verify")]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Verify(PurchaseRequisitionVarifyModel obj)
+        {
+            TPurchaseRequisitionHeader model = obj.MapTo<TPurchaseRequisitionHeader>();
+            if (obj.PurchaseRequisitionId != 0)
+            {
+                model.IsInchargeVerify = true;
+                model.Isverify = true;
+                model.IsInchargeVerifyDate = AppTime.Now.Date;
+
+                await _IPurchaseRequisitionService.VerifyAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record verify successfully.");
+        }
+
     }
 }

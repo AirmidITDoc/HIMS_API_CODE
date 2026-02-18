@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using HIMS.Data.DataProviders;
+using System.Data;
+using HIMS.Services.Utilities;
 
 
 
@@ -87,5 +90,35 @@ namespace HIMS.Services.Pharmacy
                 scope.Complete();
              }
         }
+        public virtual async Task Cancel(TPurchaseRequisitionHeader ObjTPurchaseRequisitionHeader, int UserId, string Username)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] Entity = { "PurchaseRequisitionId", "IsCancelledBy" };
+            var entity = ObjTPurchaseRequisitionHeader.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!Entity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("PS_Cancel_PurchaseRequisition", CommandType.StoredProcedure, entity);
+        }
+        public virtual async Task VerifyAsync(TPurchaseRequisitionHeader ObjTPurchaseRequisitionHeader, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Update header table records
+                TPurchaseRequisitionHeader objPur = await _context.TPurchaseRequisitionHeaders.FindAsync(ObjTPurchaseRequisitionHeader.PurchaseRequisitionId);
+                objPur.Isverify = ObjTPurchaseRequisitionHeader.Isverify;
+                objPur.IsInchargeVerifyId = ObjTPurchaseRequisitionHeader.IsInchargeVerifyId;
+                objPur.IsInchargeVerifyDate = ObjTPurchaseRequisitionHeader.IsInchargeVerifyDate;
+                _context.TPurchaseRequisitionHeaders.Update(objPur);
+                _context.Entry(objPur).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+
     }
 }

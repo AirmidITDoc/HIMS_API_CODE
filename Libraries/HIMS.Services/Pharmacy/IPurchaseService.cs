@@ -10,19 +10,10 @@ namespace HIMS.Services.Pharmacy
         Task InsertAsyncSP(TPurchaseHeader objPurchase, int UserId, string Username);
         Task UpdateAsync(TPurchaseHeader objPurchase, int UserId, string Username, string[]? references);
         Task VerifyAsync(TPurchaseHeader objPurchase, int UserId, string Username);
-
-
         Task<IPagedList<PurchaseListDto>> GetPurchaseListAsync(GridRequestModel objGrid);
-
         Task<IPagedList<PurchaseDetailListDto>> GetOldPurchaseorderAsync(GridRequestModel objGrid);
-
         Task<IPagedList<PurchaseDetailListDto>> GetPurchaseDetailListAsync(GridRequestModel objGrid);
-
         Task<IPagedList<LastthreeItemListDto>> GetLastthreeItemListAsync(GridRequestModel objGrid);
-
         Task<IPagedList<SupplierRatelistDto>> GetSupplierRatetAsync(GridRequestModel objGrid);
-
-
-
     }
 }

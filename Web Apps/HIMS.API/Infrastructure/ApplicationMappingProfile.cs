@@ -466,7 +466,11 @@ namespace HIMS.API.Infrastructure
             CreateMap<THomeCollectionRegistrationInfo, HomeCollectionCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPurchaseRequisitionHeader, PurchaseRequisitionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPurchaseRequisitionDetail, PurchaseRequisitionDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPurchaseRequisitionHeader, PurchaseRequisitionCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPurchaseRequisitionHeader, PurchaseRequisitionVarifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+
+            
 
 
 
