@@ -1881,9 +1881,9 @@ namespace HIMS.Data.Models
             {
                 entity.ToTable("EmailTemplateMaster");
 
-                entity.Property(e => e.Bcc).HasMaxLength(250);
+                entity.Property(e => e.Bcc).HasMaxLength(500);
 
-                entity.Property(e => e.Cc).HasMaxLength(250);
+                entity.Property(e => e.Cc).HasMaxLength(500);
 
                 entity.Property(e => e.FromEmail).HasMaxLength(250);
 
@@ -1894,6 +1894,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MailSubject).HasMaxLength(250);
 
                 entity.Property(e => e.TemplateCode).HasMaxLength(50);
+
+                entity.Property(e => e.ToMail).HasMaxLength(500);
 
                 entity.Property(e => e.Wabody).HasColumnName("WABody");
             });
