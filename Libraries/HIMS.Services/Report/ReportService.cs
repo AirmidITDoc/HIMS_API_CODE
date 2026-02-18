@@ -2528,7 +2528,7 @@ namespace HIMS.Services.Report
             //return byteFile;
 
         }
-        public string SetFonts(string html, string PdfFontPath)
+        public static string SetFonts(string html, string PdfFontPath)
         {
             string font = "";
             int c = 0;
@@ -4095,7 +4095,7 @@ namespace HIMS.Services.Report
 
 
 
-        private DataTable GetDataBySp(ReportRequestModel model, string sp_Name)
+        private static DataTable GetDataBySp(ReportRequestModel model, string sp_Name)
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
             DatabaseHelper odal = new();
@@ -17936,7 +17936,7 @@ namespace HIMS.Services.Report
                             if (ds.Tables.Count > 7 && ds.Tables[7].Rows.Count > 0)
                             {
                                 var dt7 = ds.Tables[7];
-                                StringBuilder items = new StringBuilder();
+                                StringBuilder items = new();
                                 int i = 0;
 
                                 foreach (DataRow dr in dt7.Rows)
@@ -18040,7 +18040,7 @@ namespace HIMS.Services.Report
                         if (ds.Tables.Count > 2 && ds.Tables[2] != null && ds.Tables[2].Rows.Count > 0)
                         {
                             var dt2 = ds.Tables[2];
-                            StringBuilder rows = new StringBuilder();
+                            StringBuilder rows = new();
 
                             foreach (DataRow dr in dt2.Rows)
                             {
@@ -18067,7 +18067,7 @@ namespace HIMS.Services.Report
                         if (ds.Tables.Count > 3 && ds.Tables[3].Rows.Count > 0)
                         {
                             var dt3 = ds.Tables[3];
-                            StringBuilder rows = new StringBuilder();
+                            StringBuilder rows = new();
 
                             foreach (DataRow dr in dt3.Rows)
                             {
@@ -18085,7 +18085,7 @@ namespace HIMS.Services.Report
                         if (ds.Tables.Count > 4 && ds.Tables[4] != null && ds.Tables[4].Rows.Count > 0)
                         {
                             var dt4 = ds.Tables[4];
-                            StringBuilder rows = new StringBuilder();
+                            StringBuilder rows = new();
 
                             foreach (DataRow dr in dt4.Rows)
                             {
@@ -18109,8 +18109,8 @@ namespace HIMS.Services.Report
                         if (ds.Tables.Count > 5 && ds.Tables[5].Rows.Count > 0)
                         {
                             var dt5 = ds.Tables[5];
-                            StringBuilder doctorRows = new StringBuilder();
-                            StringBuilder refDoctorRows = new StringBuilder();
+                            StringBuilder doctorRows = new();
+                            StringBuilder refDoctorRows = new();
 
                             foreach (DataRow dr in dt5.Rows)
                             {
@@ -18143,7 +18143,7 @@ namespace HIMS.Services.Report
                         if (ds.Tables.Count > 6 && ds.Tables[6].Rows.Count > 0)
                         {
                             var dt6 = ds.Tables[6];
-                            StringBuilder rows = new StringBuilder();
+                            StringBuilder rows = new();
 
                             foreach (DataRow dr in dt6.Rows)
                             {
@@ -18178,7 +18178,7 @@ namespace HIMS.Services.Report
                         if (ds.Tables.Count > 8 && ds.Tables[8].Rows.Count > 0)
                         {
                             var dt8 = ds.Tables[8];
-                            StringBuilder rows = new StringBuilder();
+                            StringBuilder rows = new();
 
                             foreach (DataRow dr in dt8.Rows)
                             {
@@ -18202,7 +18202,7 @@ namespace HIMS.Services.Report
                         if (ds.Tables.Count > 9 && ds.Tables[9].Rows.Count > 0)
                         {
                             var dt9 = ds.Tables[9];
-                            StringBuilder rows = new StringBuilder();
+                            StringBuilder rows = new();
 
                             foreach (DataRow dr in dt9.Rows)
                             {

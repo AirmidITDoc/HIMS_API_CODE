@@ -14,7 +14,7 @@ namespace HIMS.Services.Administration
             _context = HIMSDbContext;
         }
 
-        public List<MenuModel> PrepareMenu(List<MenuMasterDTO> lstMenu, bool isActiveMenuOnly)
+        public static List<MenuModel> PrepareMenu(List<MenuMasterDTO> lstMenu, bool isActiveMenuOnly)
         {
             List<MenuModel> finalList = new();
             try
@@ -109,16 +109,16 @@ namespace HIMS.Services.Administration
             }
             return finalList;
         }
-        private List<MenuModel> AddChildtems(List<MenuMasterDTO> Data, MenuModel obj, bool isActiveMenuOnly)
+        private static List<MenuModel> AddChildtems(List<MenuMasterDTO> Data, MenuModel obj, bool isActiveMenuOnly)
         {
-            List<MenuModel> lstChilds = new List<MenuModel>();
+            List<MenuModel> lstChilds = new();
             try
             {
                 //var lstData = Data.Where(x => x.KeyNo.StartsWith(obj.key + "_")).ToList();
                 var lstData = Data.Where(x => x.UpId == Convert.ToInt32(obj.Id)).ToList();
                 foreach (var objItem in lstData)
                 {
-                    MenuModel objData = new MenuModel()
+                    MenuModel objData = new()
                     {
                         Id = objItem.Id.ToString(),
                         Icon = objItem.Icon,
