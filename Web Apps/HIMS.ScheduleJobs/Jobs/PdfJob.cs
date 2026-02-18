@@ -99,7 +99,7 @@ namespace HIMS.ScheduleJobs.Jobs
             }
             TMailOutgoing mailModel = new()
             {
-                ToEmail = ToEmail,
+                ToEmail = objEmailTemplate.ToMail,
                 MailSubject = objEmailTemplate.MailSubject.Replace("{{Date}}", DateTime.Now.ToString("dd/MM/yyyy")),
                 MailBody = objEmailTemplate.MailBody.Replace("{{Name}}", "Vimal Vataliya"),
                 FromEmail = objEmailTemplate.FromEmail,
