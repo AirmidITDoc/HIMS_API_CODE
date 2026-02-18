@@ -470,11 +470,6 @@ namespace HIMS.API.Infrastructure
             CreateMap<TPurchaseRequisitionHeader, PurchaseRequisitionVarifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
-            
-
-
-
-
             //IP/OP
 
             CreateMap<VisitDetail, VisitDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

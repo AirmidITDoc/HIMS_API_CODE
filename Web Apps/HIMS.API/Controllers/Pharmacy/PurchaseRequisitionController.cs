@@ -97,7 +97,6 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.IsInchargeVerify = true;
                 model.Isverify = true;
                 model.IsInchargeVerifyDate = AppTime.Now.Date;
-
                 await _IPurchaseRequisitionService.VerifyAsync(model, CurrentUserId, CurrentUserName);
             }
             else
