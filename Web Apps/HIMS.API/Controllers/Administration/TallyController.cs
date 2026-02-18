@@ -173,6 +173,8 @@ namespace HIMS.API.Controllers.Administration
             return Ok(TallyOPBillDetailListMediforte.ToGridResponse(objGrid, "Tally OPBill Detail List Mediforte"));
         }
 
+        // --------------------------
+
 
 
 
@@ -247,6 +249,27 @@ namespace HIMS.API.Controllers.Administration
         {
             IPagedList<TallyPharmacyOPIPSalesPaymentListMediforteDto> TallyOPBillDetailListMediforte = await _ITallyService.TallyPharmacyOPIPSalesPaymentListMediforteAsync(objGrid);
             return Ok(TallyOPBillDetailListMediforte.ToGridResponse(objGrid, "Tally OPBill Detail List Mediforte"));
+        }
+
+
+
+        //-----------
+
+        [HttpPost("TallyOPPaymentMediforte")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+        public async Task<IActionResult> TallyOPPaymentMediforte(GridRequestModel objGrid)
+        {
+            IPagedList<TallyOPPaymentMediforteDto> TallyOPPaymentMediforte = await _ITallyService.TallyOPPaymentMediforteAsync(objGrid);
+            return Ok(TallyOPPaymentMediforte.ToGridResponse(objGrid, "Tally OP Payment Mediforte"));
+        }
+
+
+        [HttpPost("TallyOPBillRefundPaymentMediforte")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+        public async Task<IActionResult> TallyOPBillRefundPaymentMediforte(GridRequestModel objGrid)
+        {
+            IPagedList<TallyOPBillRefundPaymentMediforteDto> TallyOPBillRefundPaymentMediforte = await _ITallyService.TallyOPBillRefundPaymentMediforteAsync(objGrid);
+            return Ok(TallyOPBillRefundPaymentMediforte.ToGridResponse(objGrid, "Tally OP Bill Refund Payment Mediforte"));
         }
 
 

@@ -501,6 +501,61 @@ namespace HIMS.Data.DTO.Administration
 
     }
 
+    public class TallyOPPaymentMediforteDto
+    {
+        public string Expr1 { get; set; }
+        public long UnitId { get; set; }
+        public long BillNo { get; set; }
+        public string? PBillNo { get; set; }
+        public string? OP_ReceiptNo { get; set; }
+        public string? PaymentDate { get; set; }
+
+        public decimal CashPayAmount { get; set; }
+        public decimal ChequePayAmount { get; set; }
+        public decimal CardPayAmount { get; set; }
+        public decimal AdvanceUsedAmount { get; set; }
+        public decimal NEFTPayAmount { get; set; }
+        public decimal PayTMAmount { get; set; }
+        public double TDSAmount { get; set; }
+        public decimal WFAmount { get; set; }
+
+        public long TransactionType { get; set; }
+        public long? AdvanceId { get; set; }
+        public long? RefundId { get; set; }
+
+        public string CompanyName { get; set; }
+        public string OPDNo { get; set; }
+        public string? RegNo { get; set; }
+        public string PatitentName { get; set; }
+    }
+
+    public class TallyOPBillRefundPaymentMediforteDto
+    {
+        public string Lbl { get; set; }
+        public long UnitId { get; set; }
+        public long BillNo { get; set; }
+        public string? PBillNo { get; set; }
+        public string? OP_RefundPaymentNo { get; set; }
+        public string? PaymentDate { get; set; }
+
+        public decimal CashPayAmount { get; set; }
+        public decimal ChequePayAmount { get; set; }
+        public decimal CardPayAmount { get; set; }
+        public decimal AdvanceUsedAmount { get; set; }
+        public decimal NEFTPayAmount { get; set; }
+        public decimal PayTMAmount { get; set; }
+        public double TDSAmount { get; set; }
+        public decimal WFAmount { get; set; }
+
+        public long TransactionType { get; set; }
+        public long? AdvanceId { get; set; }
+        public long? RefundId { get; set; }
+
+        public string CompanyName { get; set; }
+        public string? RegNo { get; set; }
+        public string PatitentName { get; set; }
+
+    }
 
 
 }

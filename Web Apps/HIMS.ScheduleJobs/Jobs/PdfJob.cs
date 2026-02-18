@@ -44,18 +44,18 @@ namespace HIMS.ScheduleJobs.Jobs
                     };
                 List<Tuple<byte[], string, string>> Attachments = new()
                 {
-                    await GenerateReportAndSendMail("COMMON Report", "DailyCollectionSummary", searchFields, "DailyCollectionSummary", "elaunch.vimal@gmail.com"),
-                    await GenerateReportAndSendMail("Pharmacy Report", "SalesSummaryReport", searchFields, "SalesSummaryReport", "elaunch.vimal@gmail.com"),
-                    await GenerateReportAndSendMail("Pharmacy Report", "PharmacyDailyCollectionSummaryDayandUserWise", searchFields, "PharmacyDailyCollectionSummaryDayandUserWise", "elaunch.vimal@gmail.com")
+                    await GenerateReportAndSendMail("COMMON Report", "DailyCollectionSummary", searchFields),
+                    await GenerateReportAndSendMail("Pharmacy Report", "SalesSummaryReport", searchFields),
+                    await GenerateReportAndSendMail("Pharmacy Report", "PharmacyDailyCollectionSummaryDayandUserWise", searchFields)
                 };
-                await PrepareMail("DailyCollectionSummary", "elaunch.vimal@gmail.com", Attachments);
+                await PrepareMail("DailyCollectionSummary", Attachments);
             }
             catch (Exception ex)
             {
                 Common.WriteToFile("Pdf Generate Service errors details : " + DateTime.Now.ToString("dd/MM/yyyy HH:mm") + "error : " + ex.Message);
             }
         }
-        public async Task<Tuple<byte[], string, string>> GenerateReportAndSendMail(string Section, string Mode, List<SearchGrid> searchFields, string EmailTemplateCode, string ToEmail)
+        public async Task<Tuple<byte[], string, string>> GenerateReportAndSendMail(string Section, string Mode, List<SearchGrid> searchFields)
         {
             var objReport = await _reportService.GetReportConfigByMode(Mode, Section);
             ReportConfigDto model = new();
@@ -87,7 +87,7 @@ namespace HIMS.ScheduleJobs.Jobs
             var tuple = _reportService.GetNewReportSetByProc(model);
             return new(tuple.Item1, tuple.Item2, Mode);
         }
-        public async Task PrepareMail(string EmailTemplateCode, string ToEmail, List<Tuple<byte[], string, string>> Attachments)
+        public async Task PrepareMail(string EmailTemplateCode, List<Tuple<byte[], string, string>> Attachments)
         {
             EmailTemplateMaster objEmailTemplate = await _emailTemplateService.GetTemplateByCode(EmailTemplateCode);
             string AttachmentLink = string.Empty;
