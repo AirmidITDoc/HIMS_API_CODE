@@ -6,7 +6,7 @@
 
 4) Install service by running below PowerShell commands
 
-sc.exe create "AirmidTech_Schedule_Services" binpath= "F:\AirmidTech_HIMS_Services\AirmidTechScheduler_15Feb_v1\HIMS.ScheduleJobs.exe" start= auto
+sc.exe create "AirmidTech_Schedule_Services_v1" binpath= "F:\AirmidTech_HIMS_Services\AirmidTechScheduler_18Feb_V1\HIMS.ScheduleJobs.exe" start= auto
 
 Set-Service -Name "AirmidTech Scheduler Services" -Description "AirmidTech Scheduler Service is designed to send automated Emails, WhatsApp notifications, and Daily PDF reports to the Management Team."
 

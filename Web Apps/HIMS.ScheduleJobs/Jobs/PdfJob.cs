@@ -42,16 +42,20 @@ namespace HIMS.ScheduleJobs.Jobs
                         new SearchGrid() { FieldName = "UserId", FieldValue = "0", OpType = OperatorComparer.Equals },
                         new SearchGrid() { FieldName = "DoctorId", FieldValue = "0", OpType = OperatorComparer.Equals }
                     };
-                await GenerateReportAndSendMail("COMMON Report", "DailyCollectionSummary", searchFields, "DailyCollectionSummary", "elaunch.vimal@gmail.com");
-                await GenerateReportAndSendMail("Pharmacy Report", "SalesSummaryReport", searchFields, "SalesSummaryReport", "elaunch.vimal@gmail.com");
-                await GenerateReportAndSendMail("Pharmacy Report", "PharmacyDailyCollectionSummaryDayandUserWise", searchFields, "PharmacyDailyCollectionSummaryDayandUserWise", "elaunch.vimal@gmail.com");
+                List<Tuple<byte[], string, string>> Attachments = new()
+                {
+                    await GenerateReportAndSendMail("COMMON Report", "DailyCollectionSummary", searchFields, "DailyCollectionSummary", "elaunch.vimal@gmail.com"),
+                    await GenerateReportAndSendMail("Pharmacy Report", "SalesSummaryReport", searchFields, "SalesSummaryReport", "elaunch.vimal@gmail.com"),
+                    await GenerateReportAndSendMail("Pharmacy Report", "PharmacyDailyCollectionSummaryDayandUserWise", searchFields, "PharmacyDailyCollectionSummaryDayandUserWise", "elaunch.vimal@gmail.com")
+                };
+                await PrepareMail("DailyCollectionSummary", "elaunch.vimal@gmail.com", Attachments);
             }
             catch (Exception ex)
             {
                 Common.WriteToFile("Pdf Generate Service errors details : " + DateTime.Now.ToString("dd/MM/yyyy HH:mm") + "error : " + ex.Message);
             }
         }
-        public async Task GenerateReportAndSendMail(string Section, string Mode, List<SearchGrid> searchFields, string EmailTemplateCode, string ToEmail)
+        public async Task<Tuple<byte[], string, string>> GenerateReportAndSendMail(string Section, string Mode, List<SearchGrid> searchFields, string EmailTemplateCode, string ToEmail)
         {
             var objReport = await _reportService.GetReportConfigByMode(Mode, Section);
             ReportConfigDto model = new();
@@ -81,16 +85,27 @@ namespace HIMS.ScheduleJobs.Jobs
             }
             model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
             var tuple = _reportService.GetNewReportSetByProc(model);
+            return new(tuple.Item1, tuple.Item2, Mode);
+        }
+        public async Task PrepareMail(string EmailTemplateCode, string ToEmail, List<Tuple<byte[], string, string>> Attachments)
+        {
             EmailTemplateMaster objEmailTemplate = await _emailTemplateService.GetTemplateByCode(EmailTemplateCode);
+            string AttachmentLink = string.Empty;
+            string AttachmentName = string.Empty;
+            foreach (var item in Attachments)
+            {
+                AttachmentLink += item.Item2 + ",";
+                AttachmentName += $"{item.Item3}_For_{DateTime.Now:dd_MM_yyyy}.pdf,";
+            }
             TMailOutgoing mailModel = new()
             {
-                ToEmail = ToEmail,
+                ToEmail = objEmailTemplate.ToMail,
                 MailSubject = objEmailTemplate.MailSubject.Replace("{{Date}}", DateTime.Now.ToString("dd/MM/yyyy")),
                 MailBody = objEmailTemplate.MailBody.Replace("{{Name}}", "Vimal Vataliya"),
                 FromEmail = objEmailTemplate.FromEmail,
                 FromName = objEmailTemplate.FromName,
-                AttachmentName = $"{Mode}_For_{DateTime.Now:dd_MM_yyyy}.pdf",
-                AttachmentLink = tuple.Item2,
+                AttachmentName = AttachmentName.Trim(','),
+                AttachmentLink = AttachmentLink.Trim(','),
                 TranNo = 123,
                 PatientId = 0,
                 EmailType = "DailyCollectionSummary",

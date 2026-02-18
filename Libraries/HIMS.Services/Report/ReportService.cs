@@ -141,7 +141,7 @@ namespace HIMS.Services.Report
         }
 
 
-        public async Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "")
+        public async Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1)
         {
 
             var tuple = new Tuple<byte[], string>(null, string.Empty);
@@ -334,7 +334,7 @@ namespace HIMS.Services.Report
                     {
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabMoneyReciept.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ExternalLabHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        htmlHeaderFilePath = _pdfUtility.GetHeaderByType(htmlHeaderFilePath, UnitId);
                         var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 
@@ -349,7 +349,7 @@ namespace HIMS.Services.Report
                     {
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabMoneyReceiptWithoutHeader.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ExternalLabHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        htmlHeaderFilePath = _pdfUtility.GetHeaderByType(htmlHeaderFilePath, UnitId);
                         var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 
@@ -1924,7 +1924,7 @@ namespace HIMS.Services.Report
 
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabReciept.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ExternalLabHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        htmlHeaderFilePath = _pdfUtility.GetHeaderByType(htmlHeaderFilePath, UnitId);
                         var html = GetHTMLView("ps_rptPrintPathologyRadiologyReport", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 
@@ -17797,8 +17797,6 @@ namespace HIMS.Services.Report
 
                                 html = html.Replace("{{SurgeryRows}}", surgeryRows.ToString());
 
-                                StringBuilder attendantRows = new();
-
                                 StringBuilder attendantTable = new();
 
                                 var uniqueAttendants = dt2.AsEnumerable()
@@ -17808,33 +17806,37 @@ namespace HIMS.Services.Report
                                         DoctorType = r["DoctorType"].ToString(),
                                         AttendedName = r["AttendedName"].ToString()
                                     })
-                                    .Select(g => g.First())
-                                    .ToList();
+                                    .Select(g => g.First());
 
-                                if (uniqueAttendants.Count > 0)
+                                if (uniqueAttendants.Any())
                                 {
-                                    attendantTable.Append(@"
-                                     <table width='100%' border='1' cellspacing='0' cellpadding='6' style='border-collapse:collapse;'>
-                                         <tr style='background:#e2e8f0;'>
-                                             <td colspan='3'><b>Attendant Details</b></td>
-                                         </tr>
-                                         <tr style='background:#f9fafb; font-weight:bold;'>
-                                             <td>Doctor Type</td>
-                                             <td>Doctor Name</td>
-                                         </tr>");
+                                    attendantTable.Append("<br/>");
+                                    attendantTable.Append("<table width='100%' cellspacing='0' cellpadding='6' style='border-collapse:collapse; background:#ffffff;'>");
+
+                                    // 🔵 Blue Header (Same as Surgery)
+                                    attendantTable.Append("<tr style='background:#e2e8f0;'>");
+                                    attendantTable.Append("<td colspan='2'><b>Attendant Details</b></td>");
+                                    attendantTable.Append("</tr>");
 
                                     foreach (var dr in uniqueAttendants)
                                     {
                                         attendantTable.Append("<tr>");
-                                        attendantTable.Append("<td>").Append(dr["DoctorType"]).Append("</td>");
-                                        attendantTable.Append("<td>").Append(dr["AttendedName"]).Append("</td>");
+                                        attendantTable.Append("<td><b>Doctor Type :</b> ")
+                                                      .Append(dr["DoctorType"])
+                                                      .Append("</td>");
+                                        attendantTable.Append("<td><b>Doctor Name :</b> ")
+                                                      .Append(dr["AttendedName"])
+                                                      .Append("</td>");
                                         attendantTable.Append("</tr>");
+
+                                        attendantTable.Append("<tr><td colspan='2' style='height:8px;'></td></tr>");
                                     }
 
-                                    attendantTable.Append("</table><br><br>");
+                                    attendantTable.Append("</table>");
                                 }
 
-                                html = html.Replace("{{AttendantRows}}", attendantTable.ToString());
+                                html = html.Replace("{{AttendantTable}}", attendantTable.ToString());
+
 
                                 html = html.Replace("{{SurgeryCategoryName}}", dt2.GetColValue("SurgeryCategoryName"));
                                 html = html.Replace("{{BloodGroup}}", dt2.GetColValue("Name"));
@@ -17931,6 +17933,40 @@ namespace HIMS.Services.Report
                                 html = html.Replace("{{FinalAnaesthesiaType}}", dt6.GetColValue("AnaesthesiaType"));
 
                             }
+                            if (ds.Tables.Count > 7 && ds.Tables[7].Rows.Count > 0)
+                            {
+                                var dt7 = ds.Tables[7];
+                                StringBuilder items = new StringBuilder();
+                                int i = 0;
+
+                                foreach (DataRow dr in dt7.Rows)
+                                {
+                                    i++;
+                                    items.Append("<tr style='font-family:Calibri,Arial,sans-serif;font-size:14px;'><td style='text-align:left;padding:6px;'>")
+                                         .Append(dr["ConsentText"].ConvertToString())
+                                         .Append("</td></tr>");
+                                }
+
+                                html = html.Replace("{{Consent_Items}}", items.ToString());
+
+                                html = html.Replace("{{consent_ConsentId}}", dt7.GetColValue("ConsentId"));
+                                html = html.Replace("{{consent_PatientName}}", dt7.GetColValue("PatientName"));
+                                html = html.Replace("{{consent_AgeYear}}", dt7.GetColValue("AgeYear"));
+                                html = html.Replace("{{consent_AgeMonth}}", dt7.GetColValue("AgeMonth"));
+                                html = html.Replace("{{consent_AgeDay}}", dt7.GetColValue("AgeDay"));
+                                html = html.Replace("{{consent_GenderName}}", dt7.GetColValue("GenderName"));
+                                html = html.Replace("{{consent_RegNo}}", dt7.GetColValue("RegNo"));
+                                html = html.Replace("{{consent_IPDNo}}", dt7.GetColValue("IPDNo"));
+                                html = html.Replace("{{consent_OP_IP_Type}}", dt7.GetColValue("OP_IP_Type"));
+                                html = html.Replace("{{consent_OPIPID}}", dt7.GetColValue("OPIPID"));
+                                html = html.Replace("{{consent_DoctorName}}", dt7.GetColValue("DoctorName"));
+                                html = html.Replace("{{consent_DepartmentName}}", dt7.GetColValue("DepartmentName"));
+                                html = html.Replace("{{consent_ConsentName}}", dt7.GetColValue("ConsentName"));
+                                html = html.Replace("{{consent_ConsentText}}", dt7.GetColValue("ConsentText"));
+                                html = html.Replace("{{consent_UserName}}", dt7.GetColValue("UserName"));
+                                html = html.Replace("{{consent_AdmissionTime}}", dt7.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                            }
+
 
                         }
                         html = System.Text.RegularExpressions.Regex.Replace(html, @"\{\{[^}]+\}\}", "");
@@ -18013,8 +18049,8 @@ namespace HIMS.Services.Report
 
                                 rows.Append("<tr>");
                                 rows.Append("<td style='padding:4px 0;'>").Append(dr["PatientType"]).Append("</td>");
-                                rows.Append("<td style='padding:4px 0; text-align:right;'>").Append(revenue.ToString("N2")).Append("</td>");
-                                rows.Append("<td style='padding:4px 0; text-align:right;'>").Append(dr["PatientCount"]).Append("</td>");
+                                rows.Append("<td style='padding:4px 0; text-align:center;'>").Append(revenue.ToString("N2")).Append("</td>");
+                                rows.Append("<td style='padding:4px 0; text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
                                 rows.Append("<td style='padding:4px 0; text-align:right;'>").Append(outstanding.ToString("N2")).Append("</td>");
                                 rows.Append("</tr>");
                             }
@@ -18085,6 +18121,7 @@ namespace HIMS.Services.Report
                                     doctorRows.Append("<tr>");
                                     doctorRows.Append("<td>").Append(dr["DoctorName"]).Append("</td>");
                                     doctorRows.Append("<td style='text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
+                                    doctorRows.Append("<td style='text-align:center;'>").Append(dr["TotalRevenue"]).Append("</td>");
                                     doctorRows.Append("</tr>");
                                 }
                                 else if (doctorType == "RefDoctor")
@@ -18092,6 +18129,7 @@ namespace HIMS.Services.Report
                                     refDoctorRows.Append("<tr>");
                                     refDoctorRows.Append("<td>").Append(dr["DoctorName"]).Append("</td>");
                                     refDoctorRows.Append("<td style='text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
+                                    refDoctorRows.Append("<td style='text-align:center;'>").Append(dr["TotalRevenue"]).Append("</td>");
                                     refDoctorRows.Append("</tr>");
                                 }
                             }
@@ -18124,10 +18162,15 @@ namespace HIMS.Services.Report
                         if (ds.Tables.Count > 7 && ds.Tables[7].Rows.Count > 0)
                         {
                             var dt7 = ds.Tables[7];
+                            html = html.Replace("{{TotalReports}}", dt7.GetColValue("TotalReports"));
                             html = html.Replace("{{CompletedReports}}", dt7.GetColValue("CompletedReports"));
                             html = html.Replace("{{PendingReports}}", dt7.GetColValue("PendingReports"));
                             html = html.Replace("{{CollectedSamples}}", dt7.GetColValue("CollectedSamples"));
                             html = html.Replace("{{NotCollectedSamples}}", dt7.GetColValue("NotCollectedSamples"));
+                            html = html.Replace("{{VerifiedReports}}", dt7.GetColValue("VerifiedReports"));
+                            html = html.Replace("{{NonVerifiedReports}}", dt7.GetColValue("NonVerifiedReports"));
+                            html = html.Replace("{{DispatchedReports}}", dt7.GetColValue("DispatchedReports"));
+                            html = html.Replace("{{NonDispatchedReports}}", dt7.GetColValue("NonDispatchedReports"));
                         }
                         #endregion
 
@@ -18152,6 +18195,30 @@ namespace HIMS.Services.Report
                         else
                         {
                             html = html.Replace("{{CompanyRows}}", "<tr><td colspan='4' style='text-align:center; padding:6px;'>No Data</td></tr>");
+                        }
+                        #endregion
+
+                        #region 8 - Refund Wise Summary
+                        if (ds.Tables.Count > 9 && ds.Tables[9].Rows.Count > 0)
+                        {
+                            var dt9 = ds.Tables[9];
+                            StringBuilder rows = new StringBuilder();
+
+                            foreach (DataRow dr in dt9.Rows)
+                            {
+                                rows.Append("<tr>");
+                                rows.Append("<td>").Append(dr["PatientType"]).Append("</td>");
+                                rows.Append("<td style='text-align:center;'>").Append(dr["TotalRefundTransactions"]).Append("</td>");
+                                rows.Append("<td style='text-align:center;'>").Append(Convert.ToDecimal(dr["TotalRefundAmount"]).ToString("N2")).Append("</td>");
+                                rows.Append("<td style='text-align:center;'>").Append(Convert.ToDecimal(dr["RefundPercentage"]).ToString("N2")).Append("</td>");
+                                rows.Append("</tr>");
+                            }
+
+                            html = html.Replace("{{RefundRows}}", rows.ToString());
+                        }
+                        else
+                        {
+                            html = html.Replace("{{RefundRows}}", "<tr><td colspan='4' style='text-align:center; padding:6px;'>No Data</td></tr>");
                         }
                         #endregion
 
