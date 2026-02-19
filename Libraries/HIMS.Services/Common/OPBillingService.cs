@@ -355,7 +355,7 @@ namespace HIMS.Services.Common
             {
                 DatabaseHelper odal1 = new();
                 string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity",
-                    "ReligionId","AreaId","IsSeniorCitizen","AadharCardNo","PanCardNo","Photo","EmgContactPersonName","EmgRelationshipId","EmgMobileNo","EmgLandlineNo","EngAddress","EmgAadharCardNo","EmgDrivingLicenceNo","MedTourismPassportNo","MedTourismVisaIssueDate","MedTourismVisaValidityDate","MedTourismNationalityId","MedTourismCitizenship","MedTourismPortOfEntry","MedTourismDateOfEntry","MedTourismResidentialAddress","MedTourismOfficeWorkAddress","RegId" };
+                    "ReligionId","AreaId","IsSeniorCitizen","AadharCardNo","PanCardNo","Photo","EmgContactPersonName","EmgRelationshipId","EmgMobileNo","EmgLandlineNo","EngAddress","EmgAadharCardNo","EmgDrivingLicenceNo","MedTourismPassportNo","MedTourismVisaIssueDate","MedTourismVisaValidityDate","MedTourismNationalityId","MedTourismCitizenship","MedTourismPortOfEntry","MedTourismDateOfEntry","MedTourismResidentialAddress","MedTourismOfficeWorkAddress","EmailId","RegId" };
                 var entity = objRegistration.ToDictionary();
                 foreach (var rProperty in entity.Keys.ToList())
                 {
