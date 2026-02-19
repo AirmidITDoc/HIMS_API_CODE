@@ -140,6 +140,35 @@ namespace HIMS.Services.Report
             return await _context.MReportConfigs.FirstOrDefaultAsync(x => x.ReportMode == ReportMode && x.ReportSection == Section && x.IsActive.Value == true);
         }
 
+        public async Task<Tuple<byte[], string>> GetReportSetByProcDB(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1)
+        {
+            var tuple = new Tuple<byte[], string>(null, string.Empty);
+            string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
+            var mrMode = model.Mode;
+            var mType = await _context.MReportSetupOperationals.Where(r => r.ReportMode == mrMode).Select(r => new { mReportHtmlName = r.ReportHtmlName , mReportHeaderHtmlName =r.ReportHeaderHtmlName , mProcedureName =r.ProcedureName }).FirstOrDefaultAsync();
+
+            switch (model.Mode)
+            {
+
+                #region :: OpBillReceipt ::
+                case "OpBillReceipt":
+                    {
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHtmlName);
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHeaderHtmlName);
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpBillReceipt", "OpBillReceipt" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+                default:
+                    break;
+            }
+            return tuple;
+        }
 
         public async Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1)
         {
