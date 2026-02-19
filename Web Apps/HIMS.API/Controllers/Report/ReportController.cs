@@ -468,17 +468,6 @@ namespace HIMS.API.Controllers.Report
         [HttpPost("ViewReportFromDB")]
         public async Task<IActionResult> ViewReportFromDB(ReportRequestModel model)
         {
-            switch (model.Mode)
-            {
-                #region"OP Reports"
-                case "OpBillReceipt":
-
-                #endregion
-
-
-                default:
-                    break;
-            }
             // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
             long UnitId = 1;
             // long UnitId = Context.UnitId;
