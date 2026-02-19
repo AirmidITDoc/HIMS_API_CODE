@@ -37,6 +37,8 @@ namespace HIMS.Services.OutPatient
 
             string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", payentity);
             objpayment.PaymentId = Convert.ToInt32(PaymentId);
+            await _context.LogProcedureExecution(payentity, nameof(Payment), objpayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
             //Udpate Bill Table 
 
@@ -50,6 +52,8 @@ namespace HIMS.Services.OutPatient
             }
 
             odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, rAdmissentity1);
+            await _context.LogProcedureExecution(rAdmissentity1, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
             foreach (var item in ObjTPayment)
             {
@@ -63,6 +67,8 @@ namespace HIMS.Services.OutPatient
                 }
                 string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
                 item.PaymentId = Convert.ToInt32(VPaymentId);
+                await _context.LogProcedureExecution(pentity, nameof(TPayment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
             }
 
             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
@@ -117,10 +123,12 @@ namespace HIMS.Services.OutPatient
                     }
                     string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
                     item.PaymentId = Convert.ToInt32(VPaymentId);
-                }
-
+                    await _context.LogProcedureExecution(pentity, nameof(TPayment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             }
+
+
+        }
         
         public virtual async Task InsertAsync(Payment objpayment, Bill objBill, int CurrentUserId, string CurrentUserName)
         {

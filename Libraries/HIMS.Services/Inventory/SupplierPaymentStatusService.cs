@@ -38,46 +38,53 @@ namespace HIMS.Services.Inventory
         }
 
 
-        public virtual void InsertSP(TGrnsupPayment ObjTGrnsupPayment, List<TGrnheader> ObjTGrnheader, List<TSupPayDet> ObjTSupPayDet, int UserId, string UserName)
+        public virtual async Task  InsertSP(TGrnsupPayment ObjTGrnsupPayment, List<TGrnheader> ObjTGrnheader, List<TSupPayDet> ObjTSupPayDet, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "SupPayNo", "TSupPayDets" };
+            string[] rEntity = { "SupPayId", "SupPayDate", "SupPayTime", "GrnId", "CashPayAmt", "ChequePayAmt", "CardPayDate", "ChequePayDate", "ChequeBankName", "CardBankName", "CardNo", "ChequeNo", "Remarks", "IsAddedBy", "IsUpdatedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDatetime", "PartyReceiptNo", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "CardPayAmt"};
             var entity = ObjTGrnsupPayment.ToDictionary();
-            foreach (var rProperty in rEntity)
+
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
             string PSupPayId = odal.ExecuteNonQuery("insert_T_GRNSupPayment_1", CommandType.StoredProcedure, "SupPayId", entity);
             ObjTGrnsupPayment.SupPayId = Convert.ToInt32(PSupPayId);
-
-
+            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TGrnsupPayment), ObjTGrnsupPayment.SupPayId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
 
             foreach (var item in ObjTGrnheader)
             {
 
-                string[] pEntity = { "GrnNumber","Grndate","Grntime","StoreId","SupplierId","InvoiceNo","DeliveryNo","GateEntryNo","CashCreditType","Grntype","TotalAmount","TotalDiscAmount","TotalVatamount","NetAmount","Remark","ReceivedBy",
-                "IsVerified","IsClosed","AddedBy","UpdatedBy","Prefix","IsCancelled","IsPaymentProcess","PaymentPrcDate","ProcessDes","InvDate","DebitNote","CreditNote","OtherCharge","RoundingAmt","TotCgstamt",
-               "TotSgstamt","TotIgstamt","TranProcessId","TranProcessMode","BillDiscAmt","EwayBillNo","PaymentDate","EwayBillDate","TGrndetails","TSupPayDets"};
+                string[] pEntity = { "Grnid","PaidAmount","BalAmount"};
                 var qentity = item.ToDictionary();
-                foreach (var rProperty in pEntity)
+
+                foreach (var rProperty in qentity.Keys.ToList())
                 {
-                    qentity.Remove(rProperty);
+                    if (!pEntity.Contains(rProperty))
+                        qentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("Update_TGRNHeader_PayStatus", CommandType.StoredProcedure, qentity);
+                _ = Task.Run(() => _context.LogProcedureExecution(qentity, nameof(TGrnheader), item.Grnid.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
             }
 
             foreach (var item in ObjTSupPayDet)
             {
                 item.SupPayId = Convert.ToInt32(PSupPayId);
 
-                string[] EEntity = { "SupTranId", "SupGrn", "SupPay" };
+                string[] EEntity = { "SupPayId", "SupGrnId"};
                 var Rentity = item.ToDictionary();
-                foreach (var rProperty in EEntity)
+
+                foreach (var rProperty in Rentity.Keys.ToList())
                 {
-                    Rentity.Remove(rProperty);
+                    if (!EEntity.Contains(rProperty))
+                        Rentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_T_SupPayDet_PayStatus", CommandType.StoredProcedure, Rentity);
+                _ = Task.Run(() => _context.LogProcedureExecution(Rentity, nameof(TSupPayDet), item.SupTranId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
             }
 
         }

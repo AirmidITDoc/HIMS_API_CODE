@@ -57,10 +57,8 @@ namespace HIMS.API.Controllers.Inventory
             return Ok(List1.ToGridResponse(objGrid, "GetSupplierPaymentList"));
         }
 
-
-
         [HttpPost("Insert")]
-        // [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
+         //[Permission]
         public ApiResponse Insert(TGRNSupPayment obj)
         {
             TGrnsupPayment model = obj.GrnsupPayment.MapTo<TGrnsupPayment>();
