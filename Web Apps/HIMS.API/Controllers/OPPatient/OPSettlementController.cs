@@ -23,7 +23,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("InsertSettlement")]
 
-        //[Permission]
+        [Permission]
         //[Permission(PageCode = "CompanySettlement", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(OPSettlementModel obj)
         {
