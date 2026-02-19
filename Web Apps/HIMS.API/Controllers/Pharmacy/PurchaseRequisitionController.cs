@@ -14,6 +14,8 @@ using Asp.Versioning;
 using HIMS.Services.IPPatient;
 using HIMS.Core.Domain.Grid;
 using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Pathology;
 
 namespace HIMS.API.Controllers.Pharmacy
 {
@@ -29,14 +31,22 @@ namespace HIMS.API.Controllers.Pharmacy
             _IPurchaseRequisitionService = repository;
             _repository = repository1;
         }
+        [HttpPost("PurchaseRequisitionHeaderList")]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<PurchaseRequitionListDto> PurchaseRequisitionHeaderList = await _IPurchaseRequisitionService.GetListAsync(objGrid);
+            return Ok(PurchaseRequisitionHeaderList.ToGridResponse(objGrid, "PurchaseRequisitionHeader List"));
+        }
         //List API
         [HttpPost("PurchaseRequisitionDetailList")]
         //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
+        public async Task<IActionResult> ListP(GridRequestModel objGrid)
         {
             IPagedList<TPurchaseRequisitionDetail> PurchaseRequisitionDetailList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(PurchaseRequisitionDetailList.ToGridResponse(objGrid, "PurchaseRequisitionDetail List"));
         }
+
         [HttpPost("Insert")]
         //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PurchaseRequisitionModel obj)

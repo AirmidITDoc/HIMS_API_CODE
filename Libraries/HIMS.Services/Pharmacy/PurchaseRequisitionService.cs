@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using HIMS.Data.DataProviders;
 using System.Data;
 using HIMS.Services.Utilities;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Pathology;
 
 
 
@@ -23,7 +26,10 @@ namespace HIMS.Services.Pharmacy
         {
             _context = HIMSDbContext;
         }
-
+        public virtual async Task<IPagedList<PurchaseRequitionListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PurchaseRequitionListDto>(model, "ps_PurchaseRequisitionHeaderList");
+        }
         public virtual async Task InsertAsync(TPurchaseRequisitionHeader ObjTPurchaseRequisitionHeader, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
