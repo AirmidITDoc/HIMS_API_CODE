@@ -365,11 +365,18 @@ namespace HIMS.Services.Common
                 string RegId = odal1.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
                 objRegistration.RegId = Convert.ToInt32(RegId);
 
-
                 objVisitDetail.RegId = objRegistration.RegId;
+                objVisitDetail.CreatedBy = CurrentUserId;
+                objVisitDetail.CreatedDate = AppTime.Now;   
                 _context.VisitDetails.Add(objVisitDetail);
                 await _context.SaveChangesAsync();
                 objBill.OpdIpdId = objVisitDetail.VisitId;
+
+                //objVisitDetail.RegId = objRegistration.RegId;
+                //_context.VisitDetails.Add(objVisitDetail);
+                //await _context.SaveChangesAsync();
+                //objBill.OpdIpdId = objVisitDetail.VisitId;
+
 
                 ConfigSetting objConfigSetting = await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
                 objConfigSetting.Opno = Convert.ToString(Convert.ToInt32(objConfigSetting.Opno) + 1);
