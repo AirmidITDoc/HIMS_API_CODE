@@ -94,7 +94,7 @@ namespace HIMS.Services.Pathlogy
             await _context.LogProcedureExecution(Hentity, "PathologyTemplate", ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, UserId, UserName);
 
         }
-        public virtual void InsertPathPrintResultentry(List<TempPathReportId> ObjTempPathReportId, int UserId, string UserName)
+        public virtual async Task InsertPathPrintResultentry(List<TempPathReportId> ObjTempPathReportId, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
@@ -118,6 +118,7 @@ namespace HIMS.Services.Pathlogy
                     entity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("m_Insert_Temp_PathReportId", CommandType.StoredProcedure, entity);
+                await _context.LogProcedureExecution(entity, nameof(TempPathReportId), item.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             }
 
