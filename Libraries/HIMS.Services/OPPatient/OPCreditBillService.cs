@@ -35,6 +35,7 @@ namespace HIMS.Services.OPPatient
                 string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
                 objBill.BillNo = Convert.ToInt32(vBillNo);
 
+
                 using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 foreach (var objItem1 in objBill.AddCharges)
@@ -120,10 +121,11 @@ namespace HIMS.Services.OPPatient
                                 Packagescharge["PackageMainChargeId"] = objItem1.ChargesId;
                                 Packagescharge["BillNo"] = objBill.BillNo;
                                 var VChargesId = odal.ExecuteNonQuery("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
-                            item.ChargesId = Convert.ToInt32(VChargesId);
+                               item.ChargesId = Convert.ToInt32(VChargesId);
 
-                            // //   Package Service add in Bill Details
-                            Dictionary<string, object> OPBillDet2 = new()
+
+                                // //   Package Service add in Bill Details
+                                Dictionary<string, object> OPBillDet2 = new()
                             {
                                 ["BillNo"] = objBill.BillNo,
                                 ["ChargesId"] = VChargesId
@@ -144,6 +146,7 @@ namespace HIMS.Services.OPPatient
                         };
 
                         odal.ExecuteNonQuery("PS_UpdateDraft", CommandType.StoredProcedure, tentity);
+
                     }
 
 
