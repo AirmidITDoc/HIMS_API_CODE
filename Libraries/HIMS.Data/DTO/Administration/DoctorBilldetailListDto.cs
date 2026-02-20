@@ -18,5 +18,9 @@
         public string? PatientName { get; set; }
         public string? AddChargeDrName { get; set; }
 
+
+        public decimal? DocServicePer { get; set; }
+        public decimal? DocServiceAmt { get; set; }
+
     }
 }
