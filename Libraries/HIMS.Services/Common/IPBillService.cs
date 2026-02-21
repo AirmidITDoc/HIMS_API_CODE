@@ -329,6 +329,8 @@ namespace HIMS.Services.Common
             entity["OPDIPDType"] = 1; // Ensure objpayment has OPDIPDType
             string PaymentId = odal.ExecuteNonQuery("ps_insert_Payment_New_1", CommandType.StoredProcedure, "PaymentId", entity);
             objPayment.PaymentId = Convert.ToInt32(PaymentId);
+            await _context.LogProcedureExecution(entity, nameof(Payment), objPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
 
 
             string[] rDetailEntity = { "BillNo", "BalanceAmt" };
@@ -340,6 +342,8 @@ namespace HIMS.Services.Common
                     BillEntity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, BillEntity);
+            await _context.LogProcedureExecution(BillEntity, nameof(Bill), ObjBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
 
             foreach (var item in objadvanceDetailList)
             {
@@ -366,6 +370,9 @@ namespace HIMS.Services.Common
                     AdvanceHeaderEntity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_AdvanceHeader_1", CommandType.StoredProcedure, AdvanceHeaderEntity);
+            await _context.LogProcedureExecution(AdvanceHeaderEntity, nameof(AdvanceHeader), objAdvanceHeader.AdvanceId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+
             foreach (var item in ObjTPayment)
             {
                 string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
@@ -401,13 +408,12 @@ namespace HIMS.Services.Common
                 entity["OPDIPDType"] = 1; // Ensure objpayment has OPDIPDType
                 string PaymentId = odal.ExecuteNonQuery("ps_insert_Payment_New_1", CommandType.StoredProcedure, "PaymentId", entity);
                 item.PaymentId = Convert.ToInt32(PaymentId);
+                await _context.LogProcedureExecution(entity, nameof(Payment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
             }
             foreach (var item in ObjBill)
             {
-
-
                 string[] rDetailEntity = { "BillNo", "BalanceAmt" };
-
                 var BillEntity = item.ToDictionary();
                 foreach (var rProperty in BillEntity.Keys.ToList())
                 {
@@ -415,6 +421,8 @@ namespace HIMS.Services.Common
                         BillEntity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_update_BillBalAmount_1", CommandType.StoredProcedure, BillEntity);
+                await _context.LogProcedureExecution(BillEntity, nameof(Bill), item.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
             }
             foreach (var item in ObjTPayment)
             {

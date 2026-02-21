@@ -75,6 +75,8 @@ namespace HIMS.Services.Common
                 }
                 string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
                 objBill.BillNo = Convert.ToInt32(vBillNo);
+                await _context.LogProcedureExecution(bentity, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
                 using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
                 {
@@ -169,6 +171,9 @@ namespace HIMS.Services.Common
 
                                 var VChargesId = odal.ExecuteNonQuery("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
                                 item.ChargesId = Convert.ToInt32(VChargesId);
+                                await _context.LogProcedureExecution(Packagescharge, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+
                                 // //   Package Service add in Bill Details
                                 Dictionary<string, object> OPBillDet2 = new()
                                 {
@@ -197,6 +202,8 @@ namespace HIMS.Services.Common
                     entity2["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
                     string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
                     objPayment.PaymentId = Convert.ToInt32(PaymentId);
+                    await _context.LogProcedureExecution(entity2, nameof(Payment), objPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
                     foreach (var item in ObjTPayment)
                     {
@@ -215,9 +222,11 @@ namespace HIMS.Services.Common
                         }
                         string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
                         item.PaymentId = Convert.ToInt32(VPaymentId);
+                        await _context.LogProcedureExecution(pentity, nameof(TPayment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
                     }
 
-                    
+
                     if (ObjTDrbill != null && ObjTDrbill.Drbno > 0)
                     {
                         Dictionary<string, object> tentity = new()
@@ -364,6 +373,8 @@ namespace HIMS.Services.Common
                 }
                 string RegId = odal1.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
                 objRegistration.RegId = Convert.ToInt32(RegId);
+                await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
                 objVisitDetail.RegId = objRegistration.RegId;
                 objVisitDetail.CreatedBy = CurrentUserId;
@@ -398,6 +409,8 @@ namespace HIMS.Services.Common
                 }
                 string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
                 objBill.BillNo = Convert.ToInt32(vBillNo);
+                await _context.LogProcedureExecution(bentity, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
                 using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
                 {
@@ -490,6 +503,8 @@ namespace HIMS.Services.Common
                                 Packagescharge["BillNo"] = objBill.BillNo;
                                 var VChargesId = odal.ExecuteNonQuery("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
                                 item.ChargesId = Convert.ToInt32(VChargesId);
+                                await _context.LogProcedureExecution(Packagescharge, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
                                 // //   Package Service add in Bill Details
                                 Dictionary<string, object> OPBillDet2 = new()
                                 {
@@ -518,6 +533,8 @@ namespace HIMS.Services.Common
                     entity2["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
                     string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
                     objPayment.PaymentId = Convert.ToInt32(PaymentId);
+                    await _context.LogProcedureExecution(entity2, nameof(Payment), objPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
 
                     scope.Complete();
