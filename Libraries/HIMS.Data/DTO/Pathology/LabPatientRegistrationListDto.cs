@@ -58,6 +58,10 @@ namespace HIMS.Data.DTO.Pathology
         public long? PatientTypeId { get; set; }
         public long? PatientTypeId1 { get; set; }
         public decimal RefundAmount { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+        
+
 
 
 

@@ -56,6 +56,9 @@ namespace HIMS.Data.DTO.Pathology
         public string? UpitranNo { get; set; }
 
         public decimal PaidAmt { get; set; }
+        public string TransactionLabel { get; set; }
+
+       
 
     }
 }
