@@ -15,7 +15,7 @@
         public string? PBillNo { get; set; }
         public string? IsSampleCollection { get; set; }
         public string? BillNo { get; set; }
-        public string? PathDate { get; set; }
+        public DateTime? PathDate { get; set; }
         public string? PathTime { get; set; }
 
         public string? WardName { get; set; }
