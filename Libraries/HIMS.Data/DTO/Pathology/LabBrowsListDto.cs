@@ -28,10 +28,9 @@ namespace HIMS.Data.DTO.Pathology
         public decimal? NetPayableAmt { get; set; }
         
        public string? OPD_IPD_ID { get; set; }
-        
-      //public byte? IsCancelled { get; set; }
-       // public long? OPD_IPD_Type { get; set; }
 
+
+        public bool? IsVerifySign { get; set; }
 
         public string? PaidAmt { get; set; }
         
