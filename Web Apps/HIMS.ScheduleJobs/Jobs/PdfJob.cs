@@ -101,7 +101,7 @@ namespace HIMS.ScheduleJobs.Jobs
             {
                 ToEmail = objEmailTemplate.ToMail,
                 MailSubject = objEmailTemplate.MailSubject.Replace("{{Date}}", DateTime.Now.ToString("dd/MM/yyyy")),
-                MailBody = objEmailTemplate.MailBody.Replace("{{Name}}", "Vimal Vataliya"),
+                MailBody = objEmailTemplate.MailBody.Replace("{{Name}}", objEmailTemplate.FromName),
                 FromEmail = objEmailTemplate.FromEmail,
                 FromName = objEmailTemplate.FromName,
                 AttachmentName = AttachmentName.Trim(','),
