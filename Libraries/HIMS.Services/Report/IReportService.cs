@@ -29,14 +29,10 @@ namespace HIMS.Services.Report
         Task<List<MItemMaster>> SearchMItemMaster(string str);
         Task<List<MModeOfPayment>> SearchMModeOfPayment(string str);
         Task<List<MExpensesHeadMaster>> SearchMExpensesHeadMaster(string str);
-
         Task<List<MExpensesCategoryMaster>> SearchMExpensesCategoryMaster(string str);
         Task<MReportConfig> GetReportConfigByMode(string ReportMode, string Section);
-
         Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel objGrid);
         DataTable GetReportDataBySp(ReportConfigDto model);
-
-
         string GeneratePdfFromSp(string sp, string StorageBaseUrl);
         Task<Tuple<string, string>> GetPatientBarcode(ReportRequestModel model);
 
