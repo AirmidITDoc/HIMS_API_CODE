@@ -125,9 +125,9 @@ namespace HIMS.Core.Domain.Dashboard
 
     public class PharmacySaleOP
     {
-        public float OPTotalLandedAmount { get; set; }
-        //public decimal OPNetAmount { get; set; }
-        //public decimal OPprofitamount { get; set; }
+        public decimal OPTotalLandedAmount { get; set; }
+        public decimal OPNetAmount { get; set; }
+        public decimal OPprofitamount { get; set; }
 
 
         //public float OPTotalLandedAmount { get; set; }

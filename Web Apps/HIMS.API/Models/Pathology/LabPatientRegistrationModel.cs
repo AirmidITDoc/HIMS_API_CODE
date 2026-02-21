@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OPPatient;
+using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Pathology
 {
@@ -102,6 +103,8 @@ namespace HIMS.API.Models.Pathology
         public long? DoctorId { get; set; }
         public long? RefDocId { get; set; }
         public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+
         public long LabPatientId { get; set; }
         public long LabPatRegId { get; set; }
         public long? AdharCardNo { get; set; }
