@@ -7,11 +7,23 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Branch Wise Statement</title>
+            <style>
+                .report-header {
+                    display: inline-block;
+                    padding: 3px 10px;
+                    font-weight: bold;
+                    background-color: #f1f3f6; /* slightly darker than white */
+                    border: 1px solid #b8bcc2;
+                    border-radius: 12px; /* SAME as outer box */
+                    color: #111;
+                    margin-bottom: 8px;
+                }
+            </style>
         </head>
 
         <body>
             <div class="main-content-wrapper">
-                <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;">
+                <div class="invoice-box" style="font-size: 16px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica',, Arial, sans-serif;color: #101828;">
                     <table style="width: 100%;line-height: inherit;text-align: left;">
                         {{NewHeader}}
                         <tr class="title-date-row">
@@ -33,9 +45,9 @@
                                     <tr>
                                         <!-- Total Revenue -->
                                         <td style="width:18%; padding:8px;">
-                                            <div style="border:2px solid #444; border-radius:12px; padding:14px 12px;">
+                                            <div style="border: 1.8px solid #2a2a2a; border-radius: 12px; padding: 14px 12px;">
                                                 <div style="font-size:14px; font-weight:bold; white-space:nowrap;">
-                                                    Total Revenue
+                                                    <span style="background:#e8f1fb;">Revenue</span>
                                                 </div>
                                                 <div style="border-top:1px solid #999; margin:8px 0;"></div>
                                                 <div style="font-size:15px;">
@@ -52,9 +64,9 @@
 
                                         <!-- Total Discount -->
                                         <td style="width:18%; padding:8px;">
-                                            <div style="border:2px solid #444; border-radius:12px; padding:14px 12px;">
+                                            <div style="border: 1.8px solid #2a2a2a; border-radius: 12px; padding: 14px 12px;">
                                                 <div style="font-size:14px; font-weight:bold; white-space:nowrap;">
-                                                    Total Discount
+                                                    Discount
                                                 </div>
                                                 <div style="border-top:1px solid #999; margin:8px 0;"></div>
                                                 <div style="font-size:15px;">
@@ -71,9 +83,9 @@
 
                                         <!-- Total Collection -->
                                         <td style="width:18%; padding:8px;">
-                                            <div style="border:2px solid #444; border-radius:12px; padding:14px 12px;">
+                                            <div style="border: 1.8px solid #2a2a2a; border-radius: 12px; padding: 14px 12px;">
                                                 <div style="font-size:14px; font-weight:bold; white-space:nowrap;">
-                                                    Total Collection
+                                                    <span style="background:#e8f1fb;">Collection</span>
                                                 </div>
                                                 <div style="border-top:1px solid #999; margin:8px 0;"></div>
                                                 <div style="font-size:15px;">
@@ -89,9 +101,9 @@
 
                                         <!-- Total Outstanding -->
                                         <td style="width:18%; padding:8px;">
-                                            <div style="border:2px solid #444; border-radius:12px; padding:14px 12px;">
+                                            <div style="border: 1.8px solid #2a2a2a; border-radius: 12px; padding: 14px 12px;">
                                                 <div style="font-size:14px; font-weight:bold; white-space:nowrap;">
-                                                    Total Outstanding
+                                                    Outstanding
                                                 </div>
                                                 <div style="border-top:1px solid #999; margin:8px 0;"></div>
                                                 <div style="font-size:15px;">
@@ -107,13 +119,14 @@
 
                                         <!-- Vertical Separator -->
                                         <!--<td style="width:2%; padding:0 6px;">
-                        <div style="height:90px; border-left:3px solid #000; margin:auto;"></div>
-                    </td>-->
+                                            <div style="height:90px; border-left:3px solid #000; margin:auto;"></div>
+                                        </td>-->
                                         <!-- Total Refund -->
                                         <td style="width:17%; padding:8px;">
-                                            <div style="border:2px solid #444; border-radius:12px; padding:14px 12px;">
+                                            <div style="border: 1.8px solid #2a2a2a; border-radius: 12px; padding: 14px 12px;">
                                                 <div style="font-size:14px; font-weight:bold; white-space:nowrap;">
-                                                    Total Refund
+                                                    Refund
+
                                                 </div>
                                                 <div style="border-top:1px solid #999; margin:8px 0;"></div>
                                                 <div style="font-size:15px;">
@@ -277,8 +290,8 @@
                                         <!-- LEFT 40% -->
                                         <td style="width:40%; padding-right:8px; vertical-align:top;">
                                             <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:12px;">
-                                                <div style="text-align:center; font-weight:bold; margin-bottom:8px;">
-                                                    Collection Summary
+                                                <div style="text-align:center;">
+                                                    <div class="report-header"> Doctor Wise Summary</div>
                                                 </div>
 
                                                 <table style="width:100%; font-size:13px; border-collapse:collapse;">
@@ -294,15 +307,15 @@
                                         <!-- RIGHT 60% -->
                                         <td style="width:60%; padding-left:8px; vertical-align:top;">
                                             <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:12px;">
-                                                <div style="text-align:center; font-weight:bold; margin-bottom:8px;">
-                                                    Revenue Source
+                                                <div style="text-align:center;">
+                                                    <div class="report-header"> Revenue Summary</div>
                                                 </div>
 
                                                 <table style="width:100%; font-size:13px; border-collapse:collapse;">
                                                     <tr style="border-bottom:1px solid #bbb;">
                                                         <th style="text-align:left;">Patient Type</th>
-                                                        <th style="text-align:center;">Patient Count</th>
                                                         <th style="text-align:center;">Revenue</th>
+                                                        <th style="text-align:center;">Patient Count</th>
                                                         <th style="text-align:right;">Outstanding</th>
                                                     </tr>
                                                     {{RevenueSourceRows}}
@@ -324,16 +337,16 @@
                                         <td style="width: 60%; padding-right: 8px; vertical-align: top;">
                                             <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:12px;">
 
-                                                <div style="text-align:center; font-weight:bold; margin-bottom:8px;">
-                                                    Refund Summary
+                                                <div style="text-align:center;">
+                                                    <div class="report-header"> Refund Summary</div>
                                                 </div>
 
                                                 <table style="width:100%; font-size:13px; border-collapse:collapse;">
                                                     <tr style="border-bottom:1px solid #bbb;">
                                                         <th style="text-align:left;">PatientType</th>
-                                                        <th style="text-align:center;">Total Transactions</th>
-                                                        <th style="text-align:center;">Total Amount</th>
-                                                        <th style="text-align:center;">Refund Percentage </th>
+                                                        <th style="text-align:center;">Count</th>
+                                                        <th style="text-align:center;">Amount</th>
+                                                        <th style="text-align:right;">Refund (%)</th>
                                                     </tr>
                                                     {{RefundRows}}
                                                 </table>
@@ -347,8 +360,8 @@
                                         <td style="width: 40%; padding-left: 8px; vertical-align: top;">
                                             <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:12px;">
 
-                                                <div style="text-align:center; font-weight:bold; margin-bottom:8px;">
-                                                    Department Wise Summary
+                                                <div style="text-align:center;">
+                                                    <div class="report-header"> Department Wise Summary</div>
                                                 </div>
 
                                                 <table style="width:100%; font-size:13px; border-collapse:collapse;">
@@ -376,15 +389,15 @@
                                         <!-- LEFT 50% : Service Wise -->
                                         <td style="width:50%; padding-right:8px; vertical-align:top;">
                                             <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:12px;">
-                                                <div style="text-align:center; font-weight:bold; margin-bottom:8px;">
-                                                    Doctor Wise Summary
+                                                <div style="text-align:center;">
+                                                    <div class="report-header"> Doctor Wise Summary</div>
                                                 </div>
 
                                                 <table style="width:100%; font-size:13px; border-collapse:collapse;">
                                                     <tr style="border-bottom:1px solid #bbb;">
                                                         <th style="text-align:left;">Doctor</th>
                                                         <th style="text-align:center;">Patients</th>
-                                                        <th style="text-align:center;">Reveune Amount</th>
+                                                        <th style="text-align:right;">Reveune Amount</th>
                                                     </tr>
                                                     {{DoctorRows}}
                                                 </table>
@@ -393,15 +406,16 @@
                                         <!-- LEFT 50% : Service Wise -->
                                         <td style="width:50%; padding-left:8px; vertical-align:top;">
                                             <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:12px;">
-                                                <div style="text-align:center; font-weight:bold; margin-bottom:8px;">
-                                                    Ref Doctor Wise Summary
+
+                                                <div style="text-align:center;">
+                                                    <div class="report-header">Ref Doctor Wise Summary</div>
                                                 </div>
 
                                                 <table style="width:100%; font-size:13px; border-collapse:collapse;">
                                                     <tr style="border-bottom:1px solid #bbb;">
                                                         <th style="text-align:left;">Doctor</th>
                                                         <th style="text-align:center;">Patients</th>
-                                                        <th style="text-align:center;">Reveune Amount</th>
+                                                        <th style="text-align:right;">Reveune Amount</th>
                                                     </tr>
                                                     {{ReferDoctorRows}}
                                                 </table>
@@ -423,8 +437,8 @@
                                         <td style="width:50%; padding-right:8px; vertical-align:top;">
                                             <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:12px;">
 
-                                                <div style="text-align:center; font-weight:bold; margin-bottom:8px;">
-                                                    Service Wise Summary
+                                                <div style="text-align:center;">
+                                                    <div class="report-header">Service Wise Summary</div>
                                                 </div>
 
                                                 <table style="width:100%; font-size:13px; border-collapse:collapse;">
@@ -441,8 +455,8 @@
                                         <!-- LEFT 50% : Service Wise -->
                                         <td style="width:50%; padding-left:8px; vertical-align:top;">
                                             <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:12px;">
-                                                <div style="text-align:center; font-weight:bold; margin-bottom:8px;">
-                                                    Company Wise Summary
+                                                <div style="text-align:center;">
+                                                    <div class="report-header">Company Wise Summary</div>
                                                 </div>
 
                                                 <table style="width:100%; font-size:13px; border-collapse:collapse;">
@@ -460,7 +474,41 @@
                                 </table>
                             </td>
                         </tr>
+                        <br />
+                        <br />
+                                            <tr>
+                        <td style="padding:18px 6px;">
+                            <div style="
+                                border:2px dashed #f4a261;
+                                border-radius:10px;
+                                padding:14px 18px;
+                                font-size:13px;
+                                line-height:19px;
+                                color:#2d2d2d;
+                                background:#fff3e6;
+                            ">
+                                <div style="
+                                    font-weight:bold;
+                                    font-size:13.5px;
+                                    margin-bottom:6px;
+                                    text-align:center;
+                                    letter-spacing:1px;
+                                    color:#b45309;
+                                ">
+                                    NOTE
+                                </div>
 
+                                <div style="border-top:1px dashed #f4a261; margin:6px 0 8px 0;"></div>
+
+                                <div style="text-align:justify;">
+                                    All figures and summaries presented in this statement are generated
+                                    strictly from <b>finalized billing records</b> maintained in the system.
+                                    This report is intended for <b>professional and internal review</b> purposes only.
+                                    Any discrepancy, if observed, should be verified against the original billing data.
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
 
 
                     </table>

@@ -18062,11 +18062,11 @@ namespace HIMS.Services.Report
                         if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                         {
                             var dt0 = ds.Tables[0];
-                            html = html.Replace("{{TotalRevenue}}", dt0.GetColValue("TotalRevenue"));
-                            html = html.Replace("{{TotalCollection}}", dt0.GetColValue("TotalCollection"));
-                            html = html.Replace("{{TotalDiscount}}", dt0.GetColValue("TotalDiscount"));
-                            html = html.Replace("{{TotalOutstanding}}", dt0.GetColValue("TotalOutstanding"));
-                            html = html.Replace("{{TotalRefund}}", dt0.GetColValue("TotalRefund"));
+                            html = html.Replace("{{TotalRevenue}}", Convert.ToDecimal(dt0.GetColValue("TotalRevenue")).ToString("N2"));
+                            html = html.Replace("{{TotalCollection}}", Convert.ToDecimal(dt0.GetColValue("TotalCollection")).ToString("N2"));
+                            html = html.Replace("{{TotalDiscount}}", Convert.ToDecimal(dt0.GetColValue("TotalDiscount")).ToString("N2"));
+                            html = html.Replace("{{TotalOutstanding}}", Convert.ToDecimal(dt0.GetColValue("TotalOutstanding")).ToString("N2"));
+                            html = html.Replace("{{TotalRefund}}", Convert.ToDecimal(dt0.GetColValue("TotalRefund")).ToString("N2"));
                         }
                         #endregion
 
@@ -18165,7 +18165,7 @@ namespace HIMS.Services.Report
                                     doctorRows.Append("<tr>");
                                     doctorRows.Append("<td>").Append(dr["DoctorName"]).Append("</td>");
                                     doctorRows.Append("<td style='text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
-                                    doctorRows.Append("<td style='text-align:center;'>").Append(dr["TotalRevenue"]).Append("</td>");
+                                    doctorRows.Append("<td style='text-align:right;'>").Append(Convert.ToDecimal(dr["TotalRevenue"]).ToString("N2")).Append("</td>");
                                     doctorRows.Append("</tr>");
                                 }
                                 else if (doctorType == "RefDoctor")
@@ -18173,7 +18173,7 @@ namespace HIMS.Services.Report
                                     refDoctorRows.Append("<tr>");
                                     refDoctorRows.Append("<td>").Append(dr["DoctorName"]).Append("</td>");
                                     refDoctorRows.Append("<td style='text-align:center;'>").Append(dr["PatientCount"]).Append("</td>");
-                                    refDoctorRows.Append("<td style='text-align:center;'>").Append(dr["TotalRevenue"]).Append("</td>");
+                                    refDoctorRows.Append("<td style='text-align:right;'>").Append(Convert.ToDecimal(dr["TotalRevenue"]).ToString("N2")).Append("</td>");
                                     refDoctorRows.Append("</tr>");
                                 }
                             }
@@ -18254,7 +18254,7 @@ namespace HIMS.Services.Report
                                 rows.Append("<td>").Append(dr["PatientType"]).Append("</td>");
                                 rows.Append("<td style='text-align:center;'>").Append(dr["TotalRefundTransactions"]).Append("</td>");
                                 rows.Append("<td style='text-align:center;'>").Append(Convert.ToDecimal(dr["TotalRefundAmount"]).ToString("N2")).Append("</td>");
-                                rows.Append("<td style='text-align:center;'>").Append(Convert.ToDecimal(dr["RefundPercentage"]).ToString("N2")).Append("</td>");
+                                rows.Append("<td style='text-align:right;'>").Append(Convert.ToDecimal(dr["RefundPercentage"]).ToString("N2")).Append("</td>");
                                 rows.Append("</tr>");
                             }
 
@@ -18267,7 +18267,7 @@ namespace HIMS.Services.Report
                         #endregion
 
                         // Generate PDF
-                        var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "BranchWiseStatement");
+                        var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "BranchWiseStatement", "BranchWiseStatement");
                         pdfBytes = tuple.Item1;
                         break;
                     }
