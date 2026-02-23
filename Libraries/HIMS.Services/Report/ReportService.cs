@@ -318,6 +318,24 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+
+
+
+                #region :: AppointmentReceiptWithTemplate ::
+                case "AppointmentReceiptWithTemplate":
+                    {
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AppointmentReceipttemplate.html");
+                        string htmlTemplateHeaderPath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "HeaderfromTemplate.html");
+                        htmlTemplateHeaderPath = _pdfUtility.GetHeaderfromtemplate(model, htmlTemplateHeaderPath);
+                        string htmlPatientHeaderPath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PatientHeader.html");
+                        htmlPatientHeaderPath = _pdfUtility.GetPatientHeader(model, htmlPatientHeaderPath);
+                        var html = GetHTMLView( "rptAppointmentPrint1",  model, htmlFilePath, "",Array.Empty<string>());
+                        html = html.Replace("{{TemplateHeader}}", htmlTemplateHeaderPath);
+                        html = html.Replace("{{PatientHeader}}", htmlPatientHeaderPath);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html,   model.StorageBaseUrl, "AppointmentReceipt",  "AppointmentReceipt" + vDate,  Orientation.Portrait);
+                        break;
+                    }
+                #endregion
                 #region :: OpBillReceipt ::
                 case "OpBillReceipt":
                     {
@@ -7543,6 +7561,86 @@ namespace HIMS.Services.Report
                     }
                     break;
 
+
+
+
+                case "AppointmentReceiptWithTemplate":
+                    {
+
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+
+
+                            html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                            html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                            html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                            html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                            html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                            html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                            html = html.Replace("{{VisitDate}}", dt.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                            html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+                            html = html.Replace("{{ConsultantDoctorName}}", dt.GetColValue("ConsultantDoctorName"));
+
+                            html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                            html = html.Replace("{{Expr1}}", dt.GetColValue("Expr1"));
+                            html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+                            html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                            html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+
+
+                            html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName"));
+                            html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
+
+                            html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                            html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+
+                            html = html.Replace("{{RelativeName}}", dt.GetColValue("RelativeName"));
+                            html = html.Replace("{{RelativePhoneNo}}", dt.GetColValue("RelativePhoneNo"));
+
+                            html = html.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName"));
+                            html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+                            html = html.Replace("{{IsMLC}}", dt.GetColValue("IsMLC"));
+
+                            html = html.Replace("{{AdmittedDoctor2}}", dt.GetColValue("AdmittedDoctor2"));
+                            html = html.Replace("{{LoginUserSurname}}", dt.GetColValue("LoginUserSurname"));
+
+                            html = html.Replace("{{BP}}", dt.GetColValue("BP"));
+                            html = html.Replace("{{Pulse}}", dt.GetColValue("Pulse"));
+                            html = html.Replace("{{Height}}", dt.GetColValue("Height"));
+                            html = html.Replace("{{Weight}}", dt.GetColValue("PWeight"));
+                            html = html.Replace("{{Temp}}", dt.GetColValue("Temp"));
+                            html = html.Replace("{{BP}}", dt.GetColValue("BP"));
+                            html = html.Replace("{{BSL}}", dt.GetColValue("BSL"));
+                            html = html.Replace("{{BMI}}", dt.GetColValue("BMI"));
+                            html = html.Replace("{{SpO2}}", dt.GetColValue("SpO2"));
+
+
+
+                            html = html.Replace("{{chkBPflag}}", dt.GetColValue("BP").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkPulseflag}}", dt.GetColValue("Pulse").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkHeightflag}}", dt.GetColValue("Height").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkWeightflag}}", dt.GetColValue("PWeight").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkTempflag}}", dt.GetColValue("Temp").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkBSLflag}}", dt.GetColValue("BSL").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkBMIflag}}", dt.GetColValue("BMI").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkSpO2flag}}", dt.GetColValue("SpO2").ConvertToString() != "" ? "visible" : "none");
+                            html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
+
+
+                        }
+
+                        return html;
+
+
+                    }
+                    break;
+
                 case "DoctorNotesReceipt":
                     {
 
@@ -12701,7 +12799,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
 
                         html = html.Replace("{{FooterComment}}", dt.GetColValue("FooterComment").ConvertToString());
-                       // html = html.Replace("{{FontFlag}}", dt.GetColValue("FontFlag").ConvertToString());
+
+                        html = html.Replace("{{FontFlag}}", dt.GetColValue("FontFlag").ConvertToString());
+
                         //foreach (DataRow dr in dt.Rows)
                         //{
                         //    i++;
