@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <div>
+                <div>
+                    <div>
+                        <div>
+                            <table style="width: 100%;line-height: inherit;text-align: left;">
+                                <tr class="top-header-row">
+                                    <!--{{HospitalHeader}}-->
+                                    {{TemplateHeader}}
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 6px; padding-right: 6px; padding-bottom: 6px; ">
+
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 18px;">
+
+                                            {{PatientHeader}}
+
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <tr style="margin-top: 12px;">
+                                <td colspan="6">
+                                    <div style="margin-left:80px;">
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
+
+                                            {{TemplateDescriptionHtml}}
+
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
