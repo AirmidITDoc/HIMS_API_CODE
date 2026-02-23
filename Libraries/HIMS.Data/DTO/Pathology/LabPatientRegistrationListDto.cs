@@ -59,8 +59,8 @@ namespace HIMS.Data.DTO.Pathology
         public long? PatientTypeId1 { get; set; }
         public decimal RefundAmount { get; set; }
         public DateTime CreatedDate { get; set; }
-
-        
+        public int? IsAllPathServicesVerified { get; set; }
+        public int? IsAllRadServicesVerified { get; set; }
 
 
 
