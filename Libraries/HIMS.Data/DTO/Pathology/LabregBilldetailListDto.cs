@@ -107,11 +107,12 @@ namespace HIMS.Data.DTO.Pathology
         public string? ReportDate { get; set; }
         public string? ReportTime { get; set; }
         public string? ReportCompletedUser { get; set; }
+        public long PaymentCompleted { get; set; }
 
 
 
 
-        
+
 
 
 
