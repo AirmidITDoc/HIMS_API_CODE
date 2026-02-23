@@ -15,7 +15,11 @@
         public decimal? BalanceAmt { get; set; }
         public long RegId { get; set; }
         public long VisitId { get; set; }
-        public string BilDate { get; set; }
+        public string BilDate { get; set; }     
+        public decimal PaidAmt { get; set; }
+        public bool? PathologyVerify { get; set; }
+        public bool? RadiologyVerify { get; set; }
+
 
     }
 }
