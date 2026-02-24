@@ -32,6 +32,8 @@ namespace HIMS.API.Models.Pathology
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public long? Status { get; set; }
+        public long? PatientType { get; set; }
+
         public List<HomeCollectionServiceDetailModel> THomeCollectionServiceDetails { get; set; }
 
     }
@@ -55,5 +57,7 @@ namespace HIMS.API.Models.Pathology
     {
         public long HomeCollectionId { get; set; }
         public long? IsCancelledBy { get; set; }
+        public string? CancelReason { get; set; }
+
     }
 }

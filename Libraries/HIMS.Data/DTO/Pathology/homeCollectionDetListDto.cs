@@ -63,5 +63,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? UserName { get; set; }
         public string? Phlebotomist { get; set; }
         public string? CityName { get; set; }
+        public long? PatientType { get; set; }
+
     }
 }

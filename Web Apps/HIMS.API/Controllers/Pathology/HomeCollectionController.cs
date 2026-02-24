@@ -113,7 +113,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.HomeCollectionId);
         }
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Delete)]
         public ApiResponse Cancel(HomeCollectionCancel obj)
         {
             THomeCollectionRegistrationInfo model = obj.MapTo<THomeCollectionRegistrationInfo>();

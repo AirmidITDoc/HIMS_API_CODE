@@ -34,6 +34,12 @@ namespace HIMS.API.Models.Inventory
         public long? PackageIcudays { get; set; }
         public decimal? PackageMedicineAmount { get; set; }
         public decimal? PackageConsumableAmount { get; set; }
+        public long? TariffId { get; set; }
+
+
+
+
+
 
         public List<ServiceDetailModel> serviceDetails { get; set; }
     }
