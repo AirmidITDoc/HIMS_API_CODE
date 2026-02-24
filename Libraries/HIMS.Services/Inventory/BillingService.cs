@@ -50,7 +50,7 @@ namespace HIMS.Services.Inventory
         }
         public virtual async Task UpdateAsync(ServiceMaster objService, int UserId, string Username, string[]? ignoreColumns = null)
         {
-             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 // 1. Attach the entity without marking everything as modified
                 _context.Attach(objService);
@@ -77,6 +77,45 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
+
+        //public virtual async Task UpdateAsync(ServiceMaster objService, int UserId, string Username, string[]? ignoreColumns = null)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        DatabaseHelper odal = new();
+        //        // 1. Attach the entity without marking everything as modified
+        //        _context.Attach(objService);
+        //        _context.Entry(objService).State = EntityState.Modified;
+
+        //        // 2. Ignore specific columns
+        //        if (ignoreColumns?.Length > 0)
+        //        {
+        //            foreach (var column in ignoreColumns)
+        //            {
+        //                _context.Entry(objService).Property(column).IsModified = false;
+        //            }
+        //        }
+
+        //        foreach (var item in objService)
+        //        {
+
+        //            string[] AEntity = { "ServiceDetailId", "ServiceId", "TariffId", "ClassId", "ClassRate", "DiscountAmount", "DiscountPercentage" };
+        //            var Pentity = item.ToDictionary();
+        //            foreach (var rProperty in AEntity)
+        //            {
+        //                Pentity.Remove(rProperty);
+        //            }
+
+        //            odal.ExecuteNonQuery("ps_Delete_ServiceDetails", CommandType.StoredProcedure, Pentity);
+
+        //        }
+
+        //        // 4. Save changes once
+        //        await _context.SaveChangesAsync();
+        //        scope.Complete();
+        //    }
+        //}
+
         public virtual async Task CancelAsync(ServiceMaster objService, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
