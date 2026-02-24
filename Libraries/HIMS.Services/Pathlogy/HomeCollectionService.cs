@@ -103,7 +103,7 @@ namespace HIMS.Services.Pathlogy
         {
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] Entity = { "HomeCollectionId", "IsCancelledBy" };
+            string[] Entity = { "HomeCollectionId", "IsCancelledBy", "CancelReason" };
             var HEntity = objTHomeCollectionRegistrationInfo.ToDictionary();
             foreach (var rProperty in HEntity.Keys.ToList())
             {

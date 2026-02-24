@@ -11,6 +11,8 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Transactions;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace HIMS.Services.Inventory
 {
@@ -48,35 +50,113 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
-        public virtual async Task UpdateAsync(ServiceMaster objService, int UserId, string Username, string[]? ignoreColumns = null)
-        {
-             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // 1. Attach the entity without marking everything as modified
-                _context.Attach(objService);
-                _context.Entry(objService).State = EntityState.Modified;
+        //public virtual async Task UpdateAsync(ServiceMaster objService, int UserId, string Username, string[]? ignoreColumns = null)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // 1. Attach the entity without marking everything as modified
+        //        _context.Attach(objService);
+        //        _context.Entry(objService).State = EntityState.Modified;
 
-                // 2. Ignore specific columns
-                if (ignoreColumns?.Length > 0)
+        //        // 2. Ignore specific columns
+        //        if (ignoreColumns?.Length > 0)
+        //        {
+        //            foreach (var column in ignoreColumns)
+        //            {
+        //                _context.Entry(objService).Property(column).IsModified = false;
+        //            }
+        //        }
+
+        //        // 3. Delete details related to the service
+        //        var lst = await _context.ServiceDetails.Where(x => x.ServiceId == objService.ServiceId).ToListAsync();
+        //        if (lst.Count > 0)
+        //        {
+        //            _context.ServiceDetails.RemoveRange(lst);
+        //        }
+
+        //        // 4. Save changes once
+        //        await _context.SaveChangesAsync();
+        //        scope.Complete();
+        //    }
+        //}
+        public virtual async Task UpdateAsync(ServiceMaster objService, int userId, string username,int tariffId,string[]? ignoreColumns = null)
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                _context.Attach(objService);
+                var entry = _context.Entry(objService);
+                entry.State = EntityState.Modified;
+
+                //  Ignore specific columns
+                if (ignoreColumns != null && ignoreColumns.Length > 0)
                 {
                     foreach (var column in ignoreColumns)
                     {
-                        _context.Entry(objService).Property(column).IsModified = false;
+                        entry.Property(column).IsModified = false;
                     }
                 }
 
-                // 3. Delete details related to the service
-                var lst = await _context.ServiceDetails.Where(x => x.ServiceId == objService.ServiceId).ToListAsync();
-                if (lst.Count > 0)
+                // Delete ONLY matching ServiceId + TariffId
+                var records = await _context.ServiceDetails
+                    .Where(x => x.ServiceId == objService.ServiceId
+                             && x.TariffId == tariffId)
+                    .ToListAsync();
+
+                if (records.Any())
                 {
-                    _context.ServiceDetails.RemoveRange(lst);
+                    _context.ServiceDetails.RemoveRange(records);
                 }
 
-                // 4. Save changes once
                 await _context.SaveChangesAsync();
-                scope.Complete();
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
             }
         }
+
+        //public virtual async Task UpdateAsync(ServiceMaster objService, int UserId, string Username, string[]? ignoreColumns = null)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        DatabaseHelper odal = new();
+        //        // 1. Attach the entity without marking everything as modified
+        //        _context.Attach(objService);
+        //        _context.Entry(objService).State = EntityState.Modified;
+
+        //        // 2. Ignore specific columns
+        //        if (ignoreColumns?.Length > 0)
+        //        {
+        //            foreach (var column in ignoreColumns)
+        //            {
+        //                _context.Entry(objService).Property(column).IsModified = false;
+        //            }
+        //        }
+
+        //        foreach (var item in objService)
+        //        {
+
+        //            string[] AEntity = { "ServiceDetailId", "ServiceId", "TariffId", "ClassId", "ClassRate", "DiscountAmount", "DiscountPercentage" };
+        //            var Pentity = item.ToDictionary();
+        //            foreach (var rProperty in AEntity)
+        //            {
+        //                Pentity.Remove(rProperty);
+        //            }
+
+        //            odal.ExecuteNonQuery("ps_Delete_ServiceDetails", CommandType.StoredProcedure, Pentity);
+
+        //        }
+
+        //        // 4. Save changes once
+        //        await _context.SaveChangesAsync();
+        //        scope.Complete();
+        //    }
+        //}
+
         public virtual async Task CancelAsync(ServiceMaster objService, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

@@ -9,7 +9,7 @@ namespace HIMS.Services.Inventory
     {
         Task InsertAsync(ServiceMaster objService, int UserId, string Username);
         //Task InsertAsyncSP(ServiceMaster objService, int UserId, string Username);
-        Task UpdateAsync(ServiceMaster objService, int UserId, string Username, string[]? references);
+        Task UpdateAsync(ServiceMaster objService, int UserId, string Username, int tariffId,string[]? references);
         Task CancelAsync(ServiceMaster objService, int CurrentUserId, string CurrentUserName);
         Task<IPagedList<BillingServiceDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<PackageServiceInfoListDto>> GetListAsync1(GridRequestModel objGrid);

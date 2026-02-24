@@ -34,6 +34,8 @@ namespace HIMS.Data.Models
         public string? Latitude { get; set; }
         public string? Longitude { get; set; }
         public string? Radius { get; set; }
+        public long? PatientType { get; set; }
+        public string? CancelReason { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }

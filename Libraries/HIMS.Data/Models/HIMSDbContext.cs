@@ -13311,6 +13311,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Address).HasMaxLength(255);
 
+                entity.Property(e => e.CancelReason).HasMaxLength(255);
+
                 entity.Property(e => e.CollectionDate).HasColumnType("datetime");
 
                 entity.Property(e => e.CollectionTime).HasColumnType("datetime");
