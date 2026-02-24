@@ -45,9 +45,9 @@
                                     <tr>
                                         <!-- Total Revenue -->
                                         <td style="width:18%; padding:8px;">
-                                            <div style="border: 1.8px solid #2a2a2a; border-radius: 12px; padding: 14px 12px;">
+                                            <div style="border:1.8px solid #2a2a2a;border-top:4px solid #2f6fed; border-radius:12px; padding:14px 12px;background:#f5f9ff;">
                                                 <div style="font-size:14px; font-weight:bold; white-space:nowrap;">
-                                                    <span style="background:#e8f1fb;">Revenue</span>
+                                                    Revenue
                                                 </div>
                                                 <div style="border-top:1px solid #999; margin:8px 0;"></div>
                                                 <div style="font-size:15px;">
@@ -65,14 +65,14 @@
                                         <!-- Total Discount -->
                                         <td style="width:18%; padding:8px;">
                                             <div style="border: 1.8px solid #2a2a2a; border-radius: 12px; padding: 14px 12px;">
-                                                <div style="font-size:14px; font-weight:bold; white-space:nowrap;">
-                                                    Discount
+                                                    <div style="font-size:14px; font-weight:bold; white-space:nowrap;">
+                                                        Discount
+                                                    </div>
+                                                    <div style="border-top:1px solid #999; margin:8px 0;"></div>
+                                                    <div style="font-size:15px;">
+                                                        {{TotalDiscount}}
+                                                    </div>
                                                 </div>
-                                                <div style="border-top:1px solid #999; margin:8px 0;"></div>
-                                                <div style="font-size:15px;">
-                                                    {{TotalDiscount}}
-                                                </div>
-                                            </div>
                                         </td>
 
 
@@ -83,9 +83,9 @@
 
                                         <!-- Total Collection -->
                                         <td style="width:18%; padding:8px;">
-                                            <div style="border: 1.8px solid #2a2a2a; border-radius: 12px; padding: 14px 12px;">
+                                            <div style="border:1.8px solid #2a2a2a;border-top:4px solid #2e7d32;border-radius:12px;padding:14px 12px;background:#f4fbf6;">
                                                 <div style="font-size:14px; font-weight:bold; white-space:nowrap;">
-                                                    <span style="background:#e8f1fb;">Collection</span>
+                                                 Collection
                                                 </div>
                                                 <div style="border-top:1px solid #999; margin:8px 0;"></div>
                                                 <div style="font-size:15px;">
@@ -119,8 +119,8 @@
 
                                         <!-- Vertical Separator -->
                                         <!--<td style="width:2%; padding:0 6px;">
-                                            <div style="height:90px; border-left:3px solid #000; margin:auto;"></div>
-                                        </td>-->
+                        <div style="height:90px; border-left:3px solid #000; margin:auto;"></div>
+                    </td>-->
                                         <!-- Total Refund -->
                                         <td style="width:17%; padding:8px;">
                                             <div style="border: 1.8px solid #2a2a2a; border-radius: 12px; padding: 14px 12px;">
@@ -153,68 +153,72 @@
 
 
                                                 <!-- Highlight Header -->
-                                                <div style="
-                                                    text-align:center;
-                                                    font-weight:bold;
-                                                    font-size:15px;
-                                                    background:#f2f2f2;
-                                                    color:#333;
-                                                    padding:6px;
-                                                    border-radius:5px;
-                                                    margin-bottom:10px;
-                                                    border:1px solid #ddd;">
-                                                    REPORT STATUS
+                                                <!-- Header -->
+                                                <div style="text-align:center; margin-bottom:12px;">
+                                                    <div class="report-header">REPORT STATUS</div>
                                                 </div>
-
 
                                                 <table style="width:100%; border-collapse:collapse; font-size:13px;">
                                                     <tr>
 
-                                                        <!-- LEFT SIDE TOTAL (Separate Box) -->
-                                                        <td style="width:20%; text-align:center; border-right:1px solid #ccc; vertical-align:middle;">
-                                                            <div style="font-weight:bold;">Total Reports</div>
-                                                            <div style="font-size:18px; margin-top:5px;">{{TotalReports}}</div>
+                                                        <!-- TOTAL REPORTS -->
+                                                        <td style="width:22%; padding:10px; text-align:center; vertical-align:middle;">
+                                                            <div style="
+                border:1.5px solid #444;
+                border-radius:10px;
+                padding:14px 8px;
+            ">
+                                                                <div style="font-size:12px; font-weight:bold; letter-spacing:0.4px;">
+                                                                    TOTAL REPORTS
+                                                                </div>
+                                                                <div style="font-size:22px; font-weight:bold; margin-top:6px;">
+                                                                    {{TotalReports}}
+                                                                </div>
+                                                            </div>
                                                         </td>
 
-                                                        <!-- RIGHT SIDE STATUS GRID -->
-                                                        <td style="width:80%; padding-left:8px;">
-                                                            <table style="width:100%; text-align:center; border-collapse:collapse;">
+                                                        <!-- STATUS GRID -->
+                                                        <td style="width:78%; padding-left:10px;">
+                                                            <table style="width:100%; border-collapse:collapse; text-align:center;">
 
                                                                 <!-- Row 1 -->
-                                                                <tr style="border-bottom:1px solid #e0e0e0;">
-                                                                    <td style="padding:6px; border-right:1px solid #e0e0e0;">
+                                                                <tr>
+                                                                    <td style="padding:8px; border:1px solid #bbb; border-right:none;">
                                                                         <b>Completed</b><br />
                                                                         {{CompletedReports}}
                                                                     </td>
-                                                                    <td style="padding:6px; border-right:1px solid #e0e0e0;">
+                                                                    <td style="padding:8px; border:1px solid #bbb; border-right:none;">
                                                                         <b>Pending</b><br />
                                                                         {{PendingReports}}
                                                                     </td>
-                                                                    <td style="padding:6px; border-right:1px solid #e0e0e0;">
+                                                                    <td style="padding:8px; border:1px solid #bbb; border-right:none;">
                                                                         <b>Collected</b><br />
                                                                         {{CollectedSamples}}
                                                                     </td>
-                                                                    <td style="padding:6px;">
+                                                                    <td style="padding:8px; border:1px solid #bbb;">
                                                                         <b>Not Collected</b><br />
                                                                         {{NotCollectedSamples}}
                                                                     </td>
                                                                 </tr>
 
+                                                                <!-- Gap -->
+                                                                <tr><td colspan="4" style="height:6px;"></td></tr>
+
                                                                 <!-- Row 2 -->
                                                                 <tr>
-                                                                    <td style="padding:6px; border-right:1px solid #e0e0e0;">
+                                                                    <td style="padding:8px; border:1px solid #bbb; border-right:none;">
                                                                         <b>Verified</b><br />
                                                                         {{VerifiedReports}}
                                                                     </td>
-                                                                    <td style="padding:6px; border-right:1px solid #e0e0e0;">
+                                                                    <td style="padding:8px; border:1px solid #bbb; border-right:none;">
                                                                         <b>Not Verified</b><br />
                                                                         {{NonVerifiedReports}}
                                                                     </td>
-                                                                    <td style="padding:6px; border-right:1px solid #e0e0e0;">
+                                                                    <td style="padding:8px; border:1px solid #bbb; border-right:none;">
                                                                         <b>Dispatched</b><br />
                                                                         {{DispatchedReports}}
                                                                     </td>
-                                                                    <td style="padding:6px;">
+                                                                    <td style="padding:8px; border:1px solid #bbb;">
                                                                         <b>Not Dispatched</b><br />
                                                                         {{NonDispatchedReports}}
                                                                     </td>
@@ -222,7 +226,6 @@
 
                                                             </table>
                                                         </td>
-
 
                                                     </tr>
                                                 </table>
@@ -236,6 +239,9 @@
 
                                             <div style="border:1.8px solid #2a2a2a; border-radius:12px; padding:14px 10px; font-size:13px;">
 
+                                                <div style="text-align:center; margin-bottom:10px;">
+                                                    <div class="report-header">Patient Summary</div>
+                                                </div>
 
                                                 <!-- Old / New Table -->
                                                 <table style="width:100%; font-size:13px; border-collapse:collapse; text-align:center;">
@@ -272,7 +278,7 @@
                                                 </div>
 
                                                 </>
-                                        </td>
+</td>
 
 
                                     </tr>
@@ -476,41 +482,33 @@
                         </tr>
                         <br />
                         <br />
-                                            <tr>
-                        <td style="padding:18px 6px;">
-                            <div style="
-                                border:2px dashed #f4a261;
-                                border-radius:10px;
-                                padding:14px 18px;
-                                font-size:13px;
-                                line-height:19px;
-                                color:#2d2d2d;
-                                background:#fff3e6;
-                            ">
-                                <div style="
-                                    font-weight:bold;
-                                    font-size:13.5px;
-                                    margin-bottom:6px;
-                                    text-align:center;
-                                    letter-spacing:1px;
-                                    color:#b45309;
-                                ">
-                                    NOTE
-                                </div>
 
-                                <div style="border-top:1px dashed #f4a261; margin:6px 0 8px 0;"></div>
+                        <tr>
+                            <td style="height:120px;"></td>
+                        </tr>
 
-                                <div style="text-align:justify;">
-                                    All figures and summaries presented in this statement are generated
-                                    strictly from <b>finalized billing records</b> maintained in the system.
-                                    This report is intended for <b>professional and internal review</b> purposes only.
-                                    Any discrepancy, if observed, should be verified against the original billing data.
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
-
+                        <tfoot style="position: fixed; bottom: 0; left: 0; right: 0; background: white;">
+                            <tr>
+                                <td style="padding:10px 6px;">
+                                    <div style="
+                border-top:1px dotted #666;
+                padding-top:8px;
+                font-size:12px;
+                line-height:18px;
+                color:#333;
+                text-align:justify;
+            ">
+                                        <div style="text-align:center; font-weight:bold; margin-bottom:4px;">
+                                            NOTE
+                                        </div>
+                                        All figures and summaries presented in this statement are generated
+                                        strictly from <b>finalized billing records</b> maintained in the system.
+                                        This report is intended for <b>professional and internal review</b> purposes only.
+                                        Any discrepancy, if observed, should be verified against the original billing data.
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
