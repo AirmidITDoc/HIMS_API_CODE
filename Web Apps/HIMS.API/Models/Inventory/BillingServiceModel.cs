@@ -35,12 +35,6 @@ namespace HIMS.API.Models.Inventory
         public decimal? PackageMedicineAmount { get; set; }
         public decimal? PackageConsumableAmount { get; set; }
         public long? TariffId { get; set; }
-
-
-
-
-
-
         public List<ServiceDetailModel> serviceDetails { get; set; }
     }
     public class BillingServiceModelValidator : AbstractValidator<BillingServiceModel>
