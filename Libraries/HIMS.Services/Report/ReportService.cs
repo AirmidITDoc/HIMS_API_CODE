@@ -18354,7 +18354,7 @@ namespace HIMS.Services.Report
                                 rows.Append("<td>").Append(dr["PatientType"]).Append("</td>");
                                 rows.Append("<td style='text-align:center;'>").Append(dr["TotalRefundTransactions"]).Append("</td>");
                                 rows.Append("<td style='text-align:center;'>").Append(Convert.ToDecimal(dr["TotalRefundAmount"]).ToString("N2")).Append("</td>");
-                                rows.Append("<td style='text-align:right;'>").Append(Convert.ToDecimal(dr["RefundPercentage"]).ToString("N2")).Append("</td>");
+                                rows.Append("<td style='text-align:right;'>").Append(Convert.ToDecimal(dr["RefundPercentage"]).ToString("N2")).Append("%").Append("</td>");
                                 rows.Append("</tr>");
                             }
 
@@ -18367,7 +18367,9 @@ namespace HIMS.Services.Report
                         #endregion
 
                         // Generate PDF
-                        var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "BranchWiseStatement", "BranchWiseStatement");
+                        string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
+                        var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "BranchWiseStatement", "BranchWiseStatement" + vDate, Orientation.Portrait);
+               
                         pdfBytes = tuple.Item1;
                         break;
                     }
