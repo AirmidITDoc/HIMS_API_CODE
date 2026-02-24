@@ -1,132 +1,105 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
+﻿<body>
     <div class="main-content-wrapper">
-        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
-            <table style="width: 100%;line-height: inherit;text-align: left;">
+        <div class="invoice-box" style="font-size:14px; line-height:24px; font-family:Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif; color:#101828;">
+
+            <table style="width:100%; border-collapse:collapse;">
 
                 {{NewHeader}}
-                <tr class="title-date-row">
-                    <td style="padding: 6px;">
-                        <table style="width: 100%; border-collapse: collapse;">
-                            <tr style="font-size: 18px">
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>CHECK OUT SLIP</b></td>
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
 
-                <tr class="bill-info-row">
-                    <td style="padding: 6px;">
-                        <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
-
-                            <tr>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">UHID No :</span>
-                                    <span>{{RegNo}}</span>
-                                </td>
-
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;" >Age | Gender :</span>
-                                    <span> {{AgeYear}} Y | {{AgeMonth}} M|{{AgeDay}} D | {{GenderName}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;" >DOA | Time :</span>
-                                    <span>{{AdmissionTime}}</span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">IPD No :</span>
-                                    <span>{{IPDNo}}</span>
-                                </td>
-                               
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Ward | Bed Name : </span>
-                                    <span>{{RoomName}}|{{BedName}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">DOD | Time :</span>
-                                    <span>{{DischargeTime}}</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Patient Name :</span>
-                                    <span>{{PatientName}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Doctor Name :</span>
-                                    <span>{{DoctorName}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Department :</span>
-                                    <span>{{DepartmentName}} </span>
-                                </td>
-                               
-                            </tr>
-
-                            <tr>
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Ref.Doctor Name :</span>
-                                    <span>{{RefDocName}}</span>
-                                </td>
-
-                                <td style="padding: 2px;">
-                                    <span style="font-weight:bold;">Patient Type :</span>
-                                    <span>{{PatientType}}</span>
-                                </td>
-
-                                <td style="padding-left:10px; display:{{chkCompanyNameflag}}">
-                                    <b>Company Name :</b> {{CompanyName}}
-                                </td>
-                            </tr>
-
-                        </table>
-                    </td>
-                </tr>
-                <hr />
                 <tr>
-                    <div style="font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;font-size:18px;">
+                    <td style="padding:6px;">
+                        <table style="width:100%; border-collapse:collapse;">
+                            <tr style="font-size:18px;">
+                                <td style="border-bottom:1px solid #d4c3c3; padding-bottom:10px;">
+                                    <b>CHECK OUT SLIP</b>
+                                </td>
+                                <td style="border-bottom:1px solid #d4c3c3; text-align:right; padding-bottom:10px;">
+                                    <b>Print Date : {{CurrentDate}}</b>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:6px;">
+                        <table style="width:100%; border-collapse:collapse; font-size:18px;">
 
-                        <div>
-                            <div style="display: flex; margin-top: 10px; margin-left: 20px; font-size: 20px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
-                                <div style="padding-top:10px;">This Is Certify that <span style="font-weight:bold">{{PatientName}}</span><span> Is being discharged / Left Againt medical advice /dead today on date :</span><span style="font-weight:bold"> {{DischargeTime}}</span> </div>
+                            <tr>
+                                <td><b>UHID No :</b> {{RegNo}}</td>
+                                <td><b>Age | Gender :</b> {{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D | {{GenderName}}</td>
+                                <td><b>DOA | Time :</b> {{AdmissionTime}}</td>
+                            </tr>
+
+                            <tr>
+                                <td><b>IPD No :</b> {{IPDNo}}</td>
+                                <td><b>Ward | Bed :</b> {{RoomName}} | {{BedName}}</td>
+                                <td><b>DOD | Time :</b> {{DischargeTime}}</td>
+                            </tr>
+
+                            <tr>
+                                <td><b>Patient Name :</b> {{PatientName}}</td>
+                                <td><b>Doctor Name :</b> {{DoctorName}}</td>
+                                <td><b>Department :</b> {{DepartmentName}}</td>
+                            </tr>
+
+                            <tr>
+                                <td><b>Ref.Doctor :</b> {{RefDocName}}</td>
+                                <td><b>Patient Type :</b> {{PatientType}}</td>
+                                <td style="display:{{chkCompanyNameflag}};">
+                                    <b>Company :</b> {{CompanyName}}
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div style="border-top:1px solid #000; margin:15px 0;"></div>
+                    </td>
+                </tr>
 
 
-                                <div style="padding-top:20px;">   His / Her is Bill Generated Vide Bill No : {{BillNo}}</div>
-                                <div style="padding-top:50px;"> The Patient is Allowed to check out.</div>
-                            </div>
+                <tr>
+                    <td style="padding:10px 20px;">
 
-                        </div>
-                        <div style="display: flex; margin-top: 30px; margin-right: 50px; margin-left: 30px; font-size: 18px; float: left;">
-                            <div>{{UserName}}</div>
-                            <div style="font-weight:bold">Discharged By </div>
+                        <p style="margin-bottom:15px; font-size:20px; line-height:28px;">
+                            This is to certify that <b>{{PatientName}}</b>
+                            is being discharged / Left Against Medical Advice / Dead
+                            on date : <b>{{DischargeTime}}</b>
+                        </p>
 
-                        </div>
+                        <p style="margin-bottom:15px; font-size:20px; line-height:28px;">
+                            His / Her bill generated vide Bill No : <b>{{BillNo}}</b>
+                        </p>
 
-                        <div style="display: flex; margin-top: 30px; margin-right: 50px;  font-size: 18px; float: right;">
-                            <div>{{BillingUserName}}</div>
-                            <div style="font-weight:bold">Billing Clerk</div>
+                        <p style="margin-bottom:30px; font-size:20px; line-height:28px;">
+                            The patient is allowed to check out.
+                        </p>
 
-                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:10px 20px;">
+                        <table style="width:100%; border-collapse:collapse; font-size:18px;">
+                            <tr>
+                                <td style="text-align:left;">
+                                    <div>{{UserName}}</div>
+                                    <div style="font-weight:bold;">Discharged By</div>
+                                </td>
 
-                    </div>
-
+                                <td style="text-align:right;">
+                                    <div>{{BillingUserName}}</div>
+                                    <div style="font-weight:bold;">Billing Clerk</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
 
             </table>
+
         </div>
     </div>
 </body>
-
-</html>
