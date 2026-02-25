@@ -53,14 +53,14 @@ namespace HIMS.Data.DTO.Pathology
         public string? DepartmentName { get; set; }
         public long? LabPatientId { get; set; }
         public DateTime? DateofBirth { get; set; }
-
+        public string LabRequestNo { get; set; }
 
 
 
     }
     public class LabResultDetailsListDto
     {
-        public string? LabRequestNo { get; set; }
+        public string LabRequestNo { get; set; }
         public string PatientName { get; set; }
         public string OP_IP_No { get; set; }
         public string RegDate { get; set; }
@@ -108,11 +108,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? ReportTime { get; set; }
         public string? ReportCompletedUser { get; set; }
         public long PaymentCompleted { get; set; }
-
-
-
-
-
+        public DateTime OutSourceReportCollectedDateTime { get; set; }
 
 
 
