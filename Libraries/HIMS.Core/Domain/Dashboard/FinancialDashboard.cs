@@ -26,6 +26,7 @@ namespace HIMS.Core.Domain.Dashboard
         public List<PharmacySaleOP> PharmacySaleOP { get; set; }
         public List<PharmacySaleIP> PharmacySaleIP { get; set; }
         public List<FinancialAdvanceBalance> FinancialAdvanceBalance { get; set; }
+        public List<PackagePatientCount> PackagePatientCount { get; set; }
         public List<FinancialOutStandingOPIP> FinancialOutStandingOPIP { get; set; }
         public List<OutandingwithdateCaverage> OutandingwithdateCaverage { get; set; }
         public List<InsuranceCaverageAdequacy> InsuranceCaverageAdequacy { get; set; }
@@ -111,6 +112,7 @@ namespace HIMS.Core.Domain.Dashboard
     {
         public long IPNewPatientCount { get; set; }
         public long IPExistingPatientCount { get; set; }
+        public long IPEmergencyPatientCount { get; set; }
     }
 
     public class IPRefDoctorCount
@@ -144,7 +146,14 @@ namespace HIMS.Core.Domain.Dashboard
     public class FinancialAdvanceBalance
     {
         public double UnadjestAdvance { get; set; }
+        public long UnPaidIPCharges { get; set; }
+        public long AdequacyAdvance { get; set; }
 
+    }
+    public class PackagePatientCount
+    {
+        public string PackageName { get; set; }
+        public long PatientCount { get; set; }
     }
 
 
@@ -162,10 +171,14 @@ namespace HIMS.Core.Domain.Dashboard
     }
     public class InsuranceCaverageAdequacy
     {
-        public decimal IPApprovedAmount { get; set; }
-        public decimal IPUnpaidCharges { get; set; }
-        public long UnadjestedAdvance { get; set; }
-        public long InsuranceAdequancy { get; set; }
+        //public decimal IPApprovedAmount { get; set; }
+        //public decimal IPUnpaidCharges { get; set; }
+        //public long UnadjestedAdvance { get; set; }
+        //public long InsuranceAdequancy { get; set; }
+        public decimal IP_ApprovedAmount { get; set; }
+        public decimal IP_UnpaidCharges { get; set; }
+        public long Unadjested_Advance { get; set; }
+        public long Insurance_Adequancy { get; set; }
     }
 }
 

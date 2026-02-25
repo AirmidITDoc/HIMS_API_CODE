@@ -203,7 +203,7 @@ namespace HIMS.Services.Dashboard
             para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
 
             var data = await sql.Get8ResultsFromSp<BedOccupancyCountSummary, ServiceCharges, ReceiptPayment, BillSummary, ReceiptOPIP, AdvanceOPIP, RefundOPIP, PharmacyReturn, TypeOfVisit, DoctorWisePatientCount,
-                 FinancialOPExistingPatientCount, FinancialIPExistingPatientCount, IPRefDoctorCount, PharmacySaleOP, PharmacySaleIP, FinancialAdvanceBalance, FinancialOutStandingOPIP, OutandingwithdateCaverage, InsuranceCaverageAdequacy>("ps_rtrv_FinancialDashBoard", para);
+                 FinancialOPExistingPatientCount, FinancialIPExistingPatientCount, IPRefDoctorCount, PharmacySaleOP, PharmacySaleIP, FinancialAdvanceBalance, PackagePatientCount, FinancialOutStandingOPIP, OutandingwithdateCaverage, InsuranceCaverageAdequacy>("ps_rtrv_FinancialDashBoard", para);
 
             return new FinancialDashboard()
             {
@@ -224,9 +224,10 @@ namespace HIMS.Services.Dashboard
                 PharmacySaleOP = data.Item14 ?? new List<PharmacySaleOP>(),
                 PharmacySaleIP = data.Item15 ?? new List<PharmacySaleIP>(),
                 FinancialAdvanceBalance = data.Item16 ?? new List<FinancialAdvanceBalance>(),
-                FinancialOutStandingOPIP = data.Item17 ?? new List<FinancialOutStandingOPIP>(),
-                OutandingwithdateCaverage = data.Item18 ?? new List<OutandingwithdateCaverage>(),
-                InsuranceCaverageAdequacy = data.Item19 ?? new List<InsuranceCaverageAdequacy>()
+                PackagePatientCount = data.Item17 ?? new List<PackagePatientCount>(),
+                FinancialOutStandingOPIP = data.Item18 ?? new List<FinancialOutStandingOPIP>(),
+                OutandingwithdateCaverage = data.Item19 ?? new List<OutandingwithdateCaverage>(),
+                InsuranceCaverageAdequacy = data.Item20 ?? new List<InsuranceCaverageAdequacy>()
 
 
 
