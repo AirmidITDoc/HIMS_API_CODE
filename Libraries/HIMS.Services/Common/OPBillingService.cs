@@ -374,20 +374,23 @@ namespace HIMS.Services.Common
                 string RegId = odal1.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
                 objRegistration.RegId = Convert.ToInt32(RegId);
                 await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
-
-                objVisitDetail.RegId = objRegistration.RegId;
-                objVisitDetail.CreatedBy = CurrentUserId;
-                objVisitDetail.CreatedDate = AppTime.Now;   
-                _context.VisitDetails.Add(objVisitDetail);
-                await _context.SaveChangesAsync();
-                objBill.OpdIpdId = objVisitDetail.VisitId;
+                string[] rVisitEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
+                var visitentity = objVisitDetail.ToDictionary();
+                foreach (var rProperty in visitentity.Keys.ToList())
+                {
+                    if (!rVisitEntity.Contains(rProperty))
+                        visitentity.Remove(rProperty);
+                }
+                string VisitId = odal1.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+                objVisitDetail.VisitId = Convert.ToInt32(VisitId);
+                await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                 //objVisitDetail.RegId = objRegistration.RegId;
+                //objVisitDetail.CreatedBy = CurrentUserId;
+                //objVisitDetail.CreatedDate = AppTime.Now;   
                 //_context.VisitDetails.Add(objVisitDetail);
                 //await _context.SaveChangesAsync();
                 //objBill.OpdIpdId = objVisitDetail.VisitId;
-
 
                 ConfigSetting objConfigSetting = await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
                 objConfigSetting.Opno = Convert.ToString(Convert.ToInt32(objConfigSetting.Opno) + 1);

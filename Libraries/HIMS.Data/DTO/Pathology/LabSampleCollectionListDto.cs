@@ -46,6 +46,9 @@ namespace HIMS.Data.DTO.Pathology
         public DateTime? OutSourceCreatedDateTime { get; set; }
         public long? OutSourceModifiedby { get; set; }
         public DateTime? OutSourceModifiedDateTime { get; set; }
+        public long? PathReportID { get; set; }
+
+        
         //public bool? IsPathOutSource { get; set; }
         //public bool? IsRadOutSource { get; set; }
 
