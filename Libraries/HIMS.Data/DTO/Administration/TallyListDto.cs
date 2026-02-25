@@ -415,6 +415,7 @@ namespace HIMS.Data.DTO.Administration
         public string Lbl { get; set; }
         public long UnitId { get; set; }
         public long BillNo { get; set; }
+        public string? PbillNo { get; set; }
         public string IP_ReceiptNo { get; set; }
         public string PaymentDate { get; set; }
         public decimal CashPayAmount { get; set; }
