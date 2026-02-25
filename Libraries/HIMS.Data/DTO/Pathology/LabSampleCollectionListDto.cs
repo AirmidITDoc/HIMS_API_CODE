@@ -46,8 +46,8 @@ namespace HIMS.Data.DTO.Pathology
         public DateTime? OutSourceCreatedDateTime { get; set; }
         public long? OutSourceModifiedby { get; set; }
         public DateTime? OutSourceModifiedDateTime { get; set; }
-        //public bool? IsPathOutSource { get; set; }
-        //public bool? IsRadOutSource { get; set; }
+        public string? IsPathOutSource { get; set; }
+        public string? IsRadOutSource { get; set; }
 
     }
     public class LabSampleCollectionDetailListDto
