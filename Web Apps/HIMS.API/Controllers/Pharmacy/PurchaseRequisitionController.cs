@@ -31,6 +31,18 @@ namespace HIMS.API.Controllers.Pharmacy
             _IPurchaseRequisitionService = repository;
             _repository = repository1;
         }
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _IPurchaseRequisitionService.GetById(id);
+            return data.ToSingleResponse<TPurchaseRequisitionHeader, PurchaseRequisitionModel>("Doctor Master");
+        }
+
         [HttpPost("PurchaseRequisitionHeaderList")]
         //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)

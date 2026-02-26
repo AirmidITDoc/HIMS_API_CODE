@@ -18,6 +18,8 @@ namespace HIMS.Services.Pharmacy
         Task VerifyAsync(TPurchaseRequisitionHeader ObjTPurchaseRequisitionHeader, int UserId, string Username);
         Task<IPagedList<PurchaseRequitionListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<PurchaseRequisitionDetailListDto>> GetListAsyncPurchase(GridRequestModel objGrid);
+        Task<TPurchaseRequisitionHeader> GetById(int Id);
+
 
 
 

@@ -26,6 +26,10 @@ namespace HIMS.Services.Pharmacy
         {
             _context = HIMSDbContext;
         }
+        public virtual async Task<TPurchaseRequisitionHeader> GetById(int Id)
+        {
+            return await this._context.TPurchaseRequisitionHeaders.Include(x => x.TPurchaseRequisitionDetails).FirstOrDefaultAsync(x => x.PurchaseRequisitionId == Id);
+        }
         public virtual async Task<IPagedList<PurchaseRequitionListDto>> GetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PurchaseRequitionListDto>(model, "ps_PurchaseRequisitionHeaderList");

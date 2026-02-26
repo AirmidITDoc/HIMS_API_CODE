@@ -187,6 +187,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDoctorShareMasterService, DoctorShareMasterService>();
             services.AddScoped<IHospitalMasterService, HospitalMasterService>();
             services.AddScoped<INotificationUtility, NotificationUtility>();
+            services.AddScoped<ILabSampleRecivedService, LabSampleRecivedService>();
+
 
             services.AddScoped<I_MRDCertificate, MRDService>();
             services.AddScoped<IOPBillingService, OPBillingService>();
