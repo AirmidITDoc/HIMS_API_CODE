@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class Admission
     {
+        public Admission()
+        {
+            IpdDrugSchedules = new HashSet<IpdDrugSchedule>();
+        }
+
         public long AdmissionId { get; set; }
         public long? RegId { get; set; }
         public DateTime? AdmissionDate { get; set; }
@@ -94,5 +99,7 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+
+        public virtual ICollection<IpdDrugSchedule> IpdDrugSchedules { get; set; }
     }
 }
