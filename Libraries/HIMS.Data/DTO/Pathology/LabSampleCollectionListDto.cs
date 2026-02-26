@@ -118,6 +118,12 @@ namespace HIMS.Data.DTO.Pathology
         public long? Tathour { get; set; }
         public long? Tatmin { get; set; }
         public string? RefDoctorName { get; set; }
+        public string? SpecimenColorName { get; set; }
+        public string? SpecimenTypeName { get; set; }
+        public string? ContainerType { get; set; }
+        public string? SpecimenCondition { get; set; }
+        public string? PreservativeUsedName { get; set; }
+        public string? CollectionMethodName { get; set; }
 
     }
 }
