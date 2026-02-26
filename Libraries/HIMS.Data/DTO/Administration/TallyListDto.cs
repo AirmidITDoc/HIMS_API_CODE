@@ -244,7 +244,7 @@ namespace HIMS.Data.DTO.Administration
     public class TallyIPBillListMediforteDto
     {
         public long BillNo { get; set; }
-        public DateTime? BillDate { get; set; }
+        public string? BillDate { get; set; }
 
         public long? RegNo { get; set; }
         public string? PatientName { get; set; }
@@ -276,9 +276,9 @@ namespace HIMS.Data.DTO.Administration
     {
         public string Lbl { get; set; }
         public long AdmissionId { get; set; }
-        public DateTime BillDate { get; set; }
+        public string BillDate { get; set; }
         public string PBillNo { get; set; }
-        public DateTime ChargesDate { get; set; }
+        public string ChargesDate { get; set; }
         public string ServiceName { get; set; }
         public double Price { get; set; }
         public double Qty { get; set; }
