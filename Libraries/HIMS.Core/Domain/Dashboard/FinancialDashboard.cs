@@ -19,6 +19,9 @@ namespace HIMS.Core.Domain.Dashboard
         public List<PharmacyReturn> PharmacyReturn { get; set; }
         public List<TypeOfVisit> TypeOfVisit { get; set; }
         public List<DoctorWisePatientCount> DoctorWisePatientCount { get; set; }
+        public List<DoctorWiseTotalBusiness> DoctorWiseTotalBusiness { get; set; }
+        public List<GroupWiseCollectionOP> GroupWiseCollectionOP { get; set; }
+        public List<GroupWiseCollectionIP> GroupWiseCollectionIP { get; set; }
         public List<FinancialOPExistingPatientCount> FinancialOPExistingPatientCount { get; set; }
         public List<FinancialIPExistingPatientCount> FinancialIPExistingPatientCount { get; set; }
         public List<IPRefDoctorCount> IPRefDoctorCount { get; set; }
@@ -101,8 +104,28 @@ namespace HIMS.Core.Domain.Dashboard
         public string? DoctorName { get; set; }
         public long PatientCount { get; set; }
         public decimal? OPCollection { get; set; }
+        public double? DoctorShare{ get; set; }
 
     }
+    public class DoctorWiseTotalBusiness
+    {
+        public string DoctorName { get; set; }
+        public long PatientCount { get; set; }
+        public decimal TotalBusiness { get; set; }
+    }
+
+    public class GroupWiseCollectionOP
+    {
+        public string GroupName { get; set; }
+        public decimal TotalAmount { get; set; }
+    }
+
+    public class GroupWiseCollectionIP
+    {
+        public string GroupName { get; set; }
+        public decimal TotalAmount { get; set; }
+    }
+
     public class FinancialOPExistingPatientCount
     {
         public long OPNewPatientCount { get; set; }
