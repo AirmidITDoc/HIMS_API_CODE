@@ -202,7 +202,7 @@ namespace HIMS.Services.Dashboard
             para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
             para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
 
-            var data = await sql.Get8ResultsFromSp<BedOccupancyCountSummary, ServiceCharges, ReceiptPayment, BillSummary, ReceiptOPIP, AdvanceOPIP, RefundOPIP, PharmacyReturn, TypeOfVisit, DoctorWisePatientCount,
+            var data = await sql.Get8ResultsFromSp<BedOccupancyCountSummary, ServiceCharges, ReceiptPayment, BillSummary, ReceiptOPIP, AdvanceOPIP, RefundOPIP, PharmacyReturn, TypeOfVisit, DoctorWisePatientCount, DoctorWiseTotalBusiness, GroupWiseCollectionOP, GroupWiseCollectionIP,
                  FinancialOPExistingPatientCount, FinancialIPExistingPatientCount, IPRefDoctorCount, PharmacySaleOP, PharmacySaleIP, FinancialAdvanceBalance, PackagePatientCount, FinancialOutStandingOPIP, OutandingwithdateCaverage, InsuranceCaverageAdequacy>("ps_rtrv_FinancialDashBoard", para);
 
             return new FinancialDashboard()
@@ -217,17 +217,21 @@ namespace HIMS.Services.Dashboard
                 PharmacyReturn = data.Item8 ?? new List<PharmacyReturn>(),
                 TypeOfVisit = data.Item9 ?? new List<TypeOfVisit>(),
                 DoctorWisePatientCount = data.Item10 ?? new List<DoctorWisePatientCount>(),
-                FinancialOPExistingPatientCount = data.Item11 ?? new List<FinancialOPExistingPatientCount>(),
-                FinancialIPExistingPatientCount = data.Item12 ?? new List<FinancialIPExistingPatientCount>(),
-                IPRefDoctorCount = data.Item13 ?? new List<IPRefDoctorCount>(),
+                DoctorWiseTotalBusiness = data.Item11 ?? new List<DoctorWiseTotalBusiness>(),
+                GroupWiseCollectionOP = data.Item12 ?? new List<GroupWiseCollectionOP>(),
+                GroupWiseCollectionIP = data.Item13 ?? new List<GroupWiseCollectionIP>(),
+
+                FinancialOPExistingPatientCount = data.Item14 ?? new List<FinancialOPExistingPatientCount>(),
+                FinancialIPExistingPatientCount = data.Item15 ?? new List<FinancialIPExistingPatientCount>(),
+                IPRefDoctorCount = data.Item16 ?? new List<IPRefDoctorCount>(),
                 //PharmacyOPDPatientSale = data.Item14 ?? new List<PharmacyOPDPatientSale>(),
-                PharmacySaleOP = data.Item14 ?? new List<PharmacySaleOP>(),
-                PharmacySaleIP = data.Item15 ?? new List<PharmacySaleIP>(),
-                FinancialAdvanceBalance = data.Item16 ?? new List<FinancialAdvanceBalance>(),
-                PackagePatientCount = data.Item17 ?? new List<PackagePatientCount>(),
-                FinancialOutStandingOPIP = data.Item18 ?? new List<FinancialOutStandingOPIP>(),
-                OutandingwithdateCaverage = data.Item19 ?? new List<OutandingwithdateCaverage>(),
-                InsuranceCaverageAdequacy = data.Item20 ?? new List<InsuranceCaverageAdequacy>()
+                PharmacySaleOP = data.Item17 ?? new List<PharmacySaleOP>(),
+                PharmacySaleIP = data.Item18 ?? new List<PharmacySaleIP>(),
+                FinancialAdvanceBalance = data.Item19 ?? new List<FinancialAdvanceBalance>(),
+                PackagePatientCount = data.Item20 ?? new List<PackagePatientCount>(),
+                FinancialOutStandingOPIP = data.Item21 ?? new List<FinancialOutStandingOPIP>(),
+                OutandingwithdateCaverage = data.Item22 ?? new List<OutandingwithdateCaverage>(),
+                InsuranceCaverageAdequacy = data.Item23 ?? new List<InsuranceCaverageAdequacy>()
 
 
 
