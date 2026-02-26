@@ -38,14 +38,14 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<PurchaseRequitionListDto> PurchaseRequisitionHeaderList = await _IPurchaseRequisitionService.GetListAsync(objGrid);
             return Ok(PurchaseRequisitionHeaderList.ToGridResponse(objGrid, "PurchaseRequisitionHeader List"));
         }
-        //List API
         [HttpPost("PurchaseRequisitionDetailList")]
         //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        public async Task<IActionResult> ListP(GridRequestModel objGrid)
+        public async Task<IActionResult> Listp(GridRequestModel objGrid)
         {
-            IPagedList<TPurchaseRequisitionDetail> PurchaseRequisitionDetailList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(PurchaseRequisitionDetailList.ToGridResponse(objGrid, "PurchaseRequisitionDetail List"));
+            IPagedList<PurchaseRequisitionDetailListDto> PurchaseRequisitionDetailList = await _IPurchaseRequisitionService.GetListAsyncPurchase(objGrid);
+            return Ok(PurchaseRequisitionDetailList.ToGridResponse(objGrid, "PurchaseRequisitionHeader List"));
         }
+      
 
         [HttpPost("Insert")]
         //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
