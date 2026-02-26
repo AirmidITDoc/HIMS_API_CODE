@@ -58,6 +58,8 @@ namespace HIMS.Data.DTO.Pathology
         public long? SpecimenConditionId { get; set; }
         public long? ContainerTypeId { get; set; }
         public long? CollectionMethod { get; set; }
+        public long? NoofContainer { get; set; }
+        public long? PreservationUsed { get; set; }
         public string? BarcodeLabel { get; set; }
         public string? ConsentDetail { get; set; }
         public bool? IsConsentRequired { get; set; }
@@ -67,6 +69,9 @@ namespace HIMS.Data.DTO.Pathology
         public long? Tatday { get; set; }
         public long? Tathour { get; set; }
         public long? Tatmin { get; set; }
+        public string? RefDoctorName { get; set; }
+
+        
 
 
 
@@ -93,5 +98,26 @@ namespace HIMS.Data.DTO.Pathology
         public string? UserName { get; set; }
         public int? IsApprovedByCamp { get; set; }
         public int? PatientTypeID { get; set; }
+        public DateTime? TestTime { get; set; }
+        public DateTime? TestDate { get; set; }
+        public long? SpecimenTypeId { get; set; }
+        public long? SpecimenColor { get; set; }
+        public long? SpecimenQty { get; set; }
+        public long? SpecimenConditionId { get; set; }
+        public long? ContainerTypeId { get; set; }
+        public long? CollectionMethod { get; set; }
+        public long? NoofContainer { get; set; }
+        public long? PreservationUsed { get; set; }
+        public string? BarcodeLabel { get; set; }
+        public string? ConsentDetail { get; set; }
+        public bool? IsConsentRequired { get; set; }
+        public bool? IsFastingRequired { get; set; }
+        public bool? IsApprovedRequired { get; set; }
+        public string? TestInformationTemplate { get; set; }
+        public long? Tatday { get; set; }
+        public long? Tathour { get; set; }
+        public long? Tatmin { get; set; }
+        public string? RefDoctorName { get; set; }
+
     }
 }
