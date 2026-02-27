@@ -43,7 +43,7 @@ namespace HIMS.Data.DTO.Pathology
         public long? OutSourceModifiedby { get; set; }
         public DateTime? OutSourceModifiedDateTime { get; set; }
         public DateTime? SampleReceviedDateTime { get; set; }
-        public int? SampleReceviedUserId { get; set; }
+        public long SampleReceviedUserId { get; set; }
         public bool? IsSampleReceivedStatus { get; set; }
         public string? ServiceName { get; set; }
         public bool? IsPathOutSource { get; set; }
