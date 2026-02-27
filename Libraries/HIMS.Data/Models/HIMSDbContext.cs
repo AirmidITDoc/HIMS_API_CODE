@@ -10148,7 +10148,11 @@ namespace HIMS.Data.Models
             {
                 entity.ToTable("Refund");
 
+                entity.Property(e => e.ApprovalDatetime).HasColumnType("datetime");
+
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsApproval).HasColumnName("isApproval");
 
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
 

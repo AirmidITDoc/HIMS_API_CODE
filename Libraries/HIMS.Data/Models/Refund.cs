@@ -26,6 +26,10 @@ namespace HIMS.Data.Models
         public bool? IsRefundFlag { get; set; }
         public long? AddBy { get; set; }
         public long? AddedBy { get; set; }
+        public bool? IsApproval { get; set; }
+        public long? ApprovedBy { get; set; }
+        public DateTime? ApprovalDatetime { get; set; }
+        public string? Comment { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
