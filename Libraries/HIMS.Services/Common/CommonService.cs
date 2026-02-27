@@ -88,6 +88,7 @@ namespace HIMS.Services.Common
 
                 case "LabCreditBillList": sp_Name = "ps_Lab_CreditBillList"; break;
                 case "LabBillHistoryList": sp_Name = "ps_Lab_BillDetailsList"; break;
+                case "LabSampletracker": sp_Name = "ps_SampleCollectiontracker"; break;
 
                 //
                 case "OPBillPrint": sp_Name = "ps_rptBillPrint"; break;
@@ -154,7 +155,6 @@ namespace HIMS.Services.Common
                 case "Admin_VisitBillWisePaymentlist": sp_Name = "ps_Admin_VisitWiseBillPaymentList"; break;
                 case "Admin_VisitRefundBillWiselist": sp_Name = "ps_Admin_VisitWiseRefundBillList"; break;
                 case "Admin_VisitAdvanceWiselist":sp_Name = "ps_Admin_VisitWiseAdvanceList"; break;
-
 
 
                 // AirmidMobile App API
