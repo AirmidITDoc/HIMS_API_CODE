@@ -135,5 +135,14 @@ namespace HIMS.API.Models.OPPatient
         public List<TPaymentModel> TPayments { get; set; }
 
     }
+    public class RefundUpdateModel
+    {
+        public long RefundId { get; set; }
+        public bool? IsApproval { get; set; }
+        public long? ApprovedBy { get; set; }
+        public DateTime? ApprovalDatetime { get; set; }
+        public string? Comment { get; set; }
+    }
+
 }
 

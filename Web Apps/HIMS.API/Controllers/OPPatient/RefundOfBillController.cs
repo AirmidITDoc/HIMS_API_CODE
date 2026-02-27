@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
+using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
@@ -71,7 +72,9 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("IPRefundOfBILLInsert")]
-        [Permission(PageCode = "Refund", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Refund", Permission = PagePermission.Add)]
+        [Permission]
+
         public ApiResponse InsertSP(RefundBillModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
@@ -102,8 +105,8 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("InsertOPRefundOfBill")]
-        [Permission(PageCode = "Refund", Permission = PagePermission.Add)]
-        //[Permission]
+        //[Permission(PageCode = "Refund", Permission = PagePermission.Add)]
+        [Permission]
         public ApiResponse Insert(RefundBillModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
@@ -130,6 +133,20 @@ namespace HIMS.API.Controllers.OPPatient
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.RefundId);
+        }
+
+        [HttpPut("UpdateRefundApproval{id:int}")]
+        [Permission]
+        public ApiResponse UpdateRefundApproval(RefundUpdateModel obj)
+        {
+            Refund model = obj.MapTo<Refund>();
+            if (obj.RefundId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                _IRefundOfBillService.Update(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
     }
 }
