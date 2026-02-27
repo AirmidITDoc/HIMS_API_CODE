@@ -10,7 +10,9 @@ using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Security.Principal;
+using System.Text.RegularExpressions;
 using System.Transactions;
+using static LinqToDB.SqlQuery.SqlPredicate;
 
 namespace HIMS.Services.Common
 {
@@ -375,7 +377,16 @@ namespace HIMS.Services.Common
                 objRegistration.RegId = Convert.ToInt32(RegId);
                 objVisitDetail.RegId = Convert.ToInt32(RegId);
 
+                //  ( For RegNo fetch )
+                var regNo = await _context.Registrations
+                           .Where(x => x.RegId == objRegistration.RegId)
+                           .Select(x => x.RegNo)
+                           .FirstOrDefaultAsync();
+
+                objRegistration.RegNo = regNo;
+
                 await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
                 string[] rVisitEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
                 var visitentity = objVisitDetail.ToDictionary();
                 foreach (var rProperty in visitentity.Keys.ToList())
@@ -385,6 +396,8 @@ namespace HIMS.Services.Common
                 }
                 string VisitId = odal1.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
                 objVisitDetail.VisitId = Convert.ToInt32(VisitId);
+                objBill.OpdIpdId = objVisitDetail.VisitId;
+                objBill.RegNo = Convert.ToInt64(objRegistration.RegNo);
                 await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                 //objVisitDetail.RegId = objRegistration.RegId;
