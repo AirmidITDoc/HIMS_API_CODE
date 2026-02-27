@@ -325,13 +325,19 @@ namespace HIMS.Services.Report
                 case "AppointmentReceiptWithTemplate":
                     {
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AppointmentReceipttemplate.html");
+
                         string htmlTemplateHeaderPath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "HeaderfromTemplate.html");
                         htmlTemplateHeaderPath = _pdfUtility.GetHeaderfromtemplate(model, htmlTemplateHeaderPath);
+
                         string htmlPatientHeaderPath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PatientHeader.html");
                         htmlPatientHeaderPath = _pdfUtility.GetPatientHeader(model, htmlPatientHeaderPath);
-                        var html = GetHTMLView( "rptAppointmentPrint1",  model, htmlFilePath, "",Array.Empty<string>());
+
+                        var html = GetHTMLView( "rptAppointmentPrint2",  model, htmlFilePath, "",Array.Empty<string>());
+
                         html = html.Replace("{{TemplateHeader}}", htmlTemplateHeaderPath);
                         html = html.Replace("{{PatientHeader}}", htmlPatientHeaderPath);
+
+
                         tuple = _pdfUtility.GeneratePdfFromHtml(html,   model.StorageBaseUrl, "AppointmentReceipt",  "AppointmentReceipt" + vDate,  Orientation.Portrait);
                         break;
                     }
@@ -6138,22 +6144,22 @@ namespace HIMS.Services.Report
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++;
-                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size:20px;\">");
-                            items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align: center; font-size:16px; font-weight:bold;\">" + i + ")" + "</td>");
-                            items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align:left; font-weight: bold; font-size:16px; padding-left:7px;\">").Append(dr["DrugName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["DoseName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["Instruction"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"vertical-align:middle;padding: 6px;height:10px;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["Days"].ConvertToString()).Append(" Days").Append("</td></tr>");
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size:18px;\">");
+                            items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align: center; font-size:14px; font-weight:bold;\">" + i + ")" + "</td>");
+                            items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align:left; font-weight: bold; font-size:14px; padding-left:7px;\">").Append(dr["DrugName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:14px;padding-left:10px;\">").Append(dr["DoseName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:14px;padding-left:10px;\">").Append(dr["Instruction"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:14px;padding-left:10px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"vertical-align:middle;padding: 6px;height:10px;text-align:left;font-size:14px;padding-left:10px;\">").Append(dr["Days"].ConvertToString()).Append(" Days").Append("</td></tr>");
 
 
                             if (dr["ItemGenericName"].ConvertToString() != "")
                             {
-                                items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;\">").Append("Composition :").Append(dr["ItemGenericName"].ConvertToString()).Append("</td></tr>");
+                                items.Append("<tr style=\"font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;\">").Append("Composition :").Append(dr["ItemGenericName"].ConvertToString()).Append("</td></tr>");
 
                             }
 
-                            items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px;border-bottom: 1px solid #d4c3c3;padding-bottom:20px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;padding-bottom:20px;\">").Append("Timing :").Append(dr["DoseNameInEnglish"].ConvertToString()).Append(dr["DoseNameInMarathi"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<tr style=\"font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px;border-bottom: 1px solid #d4c3c3;padding-bottom:20px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;padding-bottom:20px;\">").Append("Timing :").Append(dr["DoseNameInEnglish"].ConvertToString()).Append(dr["DoseNameInMarathi"].ConvertToString()).Append("</td></tr>");
 
 
 
@@ -6479,21 +6485,21 @@ namespace HIMS.Services.Report
                         {
                             i++;
 
-                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size:20px;\">");
-                            items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align: center; font-size:16px; font-weight:bold;\">" + i + ")" + "</td>");
-                            items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align:left; font-weight: bold; font-size:16px; padding-left:7px;\">").Append(dr["DrugName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["DoseName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["Instruction"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"vertical-align:middle;padding: 6px;height:10px;text-align:left;font-size:20px;padding-left:10px;\">").Append(dr["Days"].ConvertToString()).Append(" Days").Append("</td></tr>");
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size:18px;\">");
+                            items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align: center; font-size:14px; font-weight:bold;\">" + i + ")" + "</td>");
+                            items.Append("<td style=\"vertical-align: top; padding: 6px; height: 20px; text-align:left; font-weight: bold; font-size:14px; padding-left:7px;\">").Append(dr["DrugName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:18px;padding-left:10px;\">").Append(dr["DoseName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:18px;padding-left:10px;\">").Append(dr["Instruction"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:18px;padding-left:10px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"vertical-align:middle;padding: 6px;height:10px;text-align:left;font-size:18px;padding-left:10px;\">").Append(dr["Days"].ConvertToString()).Append(" Days").Append("</td></tr>");
 
                             if (dr["ItemGenericName"].ConvertToString() != "")
                             {
-                                items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;\">").Append("Composition :").Append(dr["ItemGenericName"].ConvertToString()).Append("</td></tr>");
+                                items.Append("<tr style=\"font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;\">").Append("Composition :").Append(dr["ItemGenericName"].ConvertToString()).Append("</td></tr>");
 
                             }
 
-                            items.Append("<tr style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px;border-bottom: 1px solid #d4c3c3;padding-bottom:20px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;padding-bottom:20px;\">").Append("Timing :").Append(dr["DoseNameInEnglish"].ConvertToString()).Append(dr["DoseNameInMarathi"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<tr style=\"font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px;border-bottom: 1px solid #d4c3c3;padding-bottom:20px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;padding-bottom:20px;\">").Append("Timing :").Append(dr["DoseNameInEnglish"].ConvertToString()).Append(dr["DoseNameInMarathi"].ConvertToString()).Append("</td></tr>");
 
 
                         }
@@ -7609,6 +7615,12 @@ namespace HIMS.Services.Report
 
                             html = html.Replace("{{AdmittedDoctor2}}", dt.GetColValue("AdmittedDoctor2"));
                             html = html.Replace("{{LoginUserSurname}}", dt.GetColValue("LoginUserSurname"));
+                            html = html.Replace("{{TemplateDescriptionHtml}}", dt.GetColValue("TemplateDescriptionHtml"));
+                            html = html.Replace("{{Templatedescription}}", dt.GetColValue("Templatedescription"));
+                            html = html.Replace("{{HospitalHeader}}", dt.GetColValue("HospitalHeader"));
+
+
+
 
                             html = html.Replace("{{BP}}", dt.GetColValue("BP"));
                             html = html.Replace("{{Pulse}}", dt.GetColValue("Pulse"));
