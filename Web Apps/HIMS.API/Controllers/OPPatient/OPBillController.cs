@@ -254,7 +254,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("OPDraftBillInsert")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OPDraftBillInsert(DraftBillModel obj)
         {
             TDrbill model = obj.DRBill.MapTo<TDrbill>();
@@ -274,7 +274,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", model.Drbno);
         }
         [HttpPost("OPDraftBillUpdate")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OPDraftBillUpdate(DraftBillModel obj)
         {
             TDrbill model = obj.DRBill.MapTo<TDrbill>();
