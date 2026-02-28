@@ -1,4 +1,6 @@
-﻿namespace HIMS.API.Models.Pathology
+﻿using HIMS.API.Models.OutPatient;
+
+namespace HIMS.API.Models.Pathology
 {
     public class PathologyLabReportHeaderModel
     {
@@ -9,4 +11,10 @@
 
 
     }
+    public class PathologyLabReportHeader
+    {
+        public List<PathologyLabReportHeaderModel> PathologyLabReport { get; set; }
+
+    }
+
 }

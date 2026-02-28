@@ -35,17 +35,37 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(LabSampleRecivedList.ToGridResponse(objGrid, "LabSampleRecived List"));
         }
 
-        [HttpPut("LabSampleRecivedUpdate{id:int}")]
 
-        public ApiResponse LabSampleRecivedUpdate(List<PathologyLabReportHeaderModel> obj)
+        //[HttpPut("LabSampleRecivedUpdate")]
+        ////[Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        //public ApiResponse Update(PathologyLabReportHeader obj)
+        //{
+        //    List<TPathologyReportHeader> model = obj.PathologyLabReport.MapTo<List<TPathologyReportHeader>>();
+        //    if (model.Count > 0)
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    else
+        //    {
+        //        _ILabSampleRecivedService.Update(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        //}
+        [HttpPut("LabSampleRecivedUpdate")]
+        public ApiResponse Update(PathologyLabReportHeader obj)
         {
-            if (obj == null || !obj.Any()) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            if (obj?.PathologyLabReport == null || !obj.PathologyLabReport.Any())
+            {
+                return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status500InternalServerError,  "Invalid params");
+            }
 
-            List<TPathologyReportHeader> model = obj.MapTo<List<TPathologyReportHeader>>();
+            List<TPathologyReportHeader> model = obj.PathologyLabReport .MapTo<List<TPathologyReportHeader>>();
 
-            _ILabSampleRecivedService.Update(model, CurrentUserId, CurrentUserName);
+            _ILabSampleRecivedService.Update( model,  CurrentUserId,  CurrentUserName);
 
-            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK,"Record updated successfully.");
+            return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+
+
+
+
     }
 }

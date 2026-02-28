@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 
 namespace HIMS.Services.OPPatient
@@ -15,6 +16,10 @@ namespace HIMS.Services.OPPatient
         Task<IPagedList<RefundAgainstBillListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<IPBillListforRefundListDto>> IPBillGetListAsync(GridRequestModel objGrid);
         Task<IPagedList<IPBillForRefundListDto>> IPBillForRefundListAsync(GridRequestModel objGrid);
+        Task Update(Refund objRefund, int CurrentUserId, string CurrentUserName);
+
+        Task<IPagedList<LabRefundApprovedListDto>> LabRefundApprovedListAsync(GridRequestModel objGrid);
+
 
 
     }

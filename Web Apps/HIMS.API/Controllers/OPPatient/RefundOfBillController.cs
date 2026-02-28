@@ -3,10 +3,12 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.OPPatient;
+using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.OPPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -71,7 +73,9 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("IPRefundOfBILLInsert")]
-        [Permission(PageCode = "Refund", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Refund", Permission = PagePermission.Add)]
+        [Permission]
+
         public ApiResponse InsertSP(RefundBillModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
@@ -130,6 +134,28 @@ namespace HIMS.API.Controllers.OPPatient
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.RefundId);
+        }
+
+        [HttpPut("UpdateRefundApproval{id:int}")]
+        [Permission]
+        public ApiResponse UpdateRefundApproval(RefundUpdateModel obj)
+        {
+            Refund model = obj.MapTo<Refund>();
+            if (obj.RefundId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                _IRefundOfBillService.Update(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+        [HttpPost("LabRefundApprovedList")]
+        //[Permission(PageCode = "Refund", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabRefundApprovedList(GridRequestModel objGrid)
+        {
+            IPagedList<LabRefundApprovedListDto> LabRefundApprovedList = await _IRefundOfBillService.LabRefundApprovedListAsync(objGrid);
+            return Ok(LabRefundApprovedList.ToGridResponse(objGrid, "Lab Refund Approved List"));
         }
     }
 }

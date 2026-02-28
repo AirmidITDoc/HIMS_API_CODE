@@ -26,26 +26,44 @@ namespace HIMS.Services.Pathlogy
         }
 
 
+        //public virtual async Task Update(List<TPathologyReportHeader> ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)
+        //{
+
+        //    DatabaseHelper odal = new();
+        //    foreach (var items in ObjTPathologyReportHeader)
+        //    {
+
+        //        string[] AEntity = { "PathReportID", "SampleReceviedDateTime", "SampleReceviedUserId", "IsSampleReceivedStatus" };
+        //        var pentity = items.ToDictionary();
+        //        foreach (var rProperty in pentity.Keys.ToList())
+        //        {
+        //            if (!AEntity.Contains(rProperty))
+        //                pentity.Remove(rProperty);
+        //        }
+
+
+        //        odal.ExecuteNonQuery("ps_UpdateLabSampleRecived", CommandType.StoredProcedure, pentity);
+        //        await _context.LogProcedureExecution(pentity, nameof(TPathologyReportHeader), Convert.ToInt32(items.PathReportId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+        //    }
+        //}
         public virtual async Task Update(List<TPathologyReportHeader> ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)
+
         {
-
             DatabaseHelper odal = new();
-            foreach (var items in ObjTPathologyReportHeader)
-            { 
 
-               string[] AEntity = { "PathReportId", "SampleReceviedDateTime", "SampleReceviedUserId", "IsSampleReceivedStatus" };
-                var pentity = items.ToDictionary();
-               foreach (var rProperty in pentity.Keys.ToList())
-               {
-                   if (!AEntity.Contains(rProperty))
-                    pentity.Remove(rProperty);
-               }
+            foreach (var item in ObjTPathologyReportHeader)
+            {
+                Dictionary<string, object> parameters = new()
+                {
+                    ["PathReportID"] = item.PathReportId,
+                    ["SampleReceviedDateTime"] = item.SampleReceviedDateTime,
+                    ["SampleReceviedUserId"] = item.SampleReceviedUserId,
+                    ["IsSampleReceivedStatus"] = item.IsSampleReceivedStatus
+                };
 
-
-            odal.ExecuteNonQuery("ps_UpdateLabSampleRecived", CommandType.StoredProcedure, pentity);
-            await _context.LogProcedureExecution(  pentity,  nameof(TPathologyReportHeader),Convert.ToInt32(items.PathReportId),Core.Domain.Logging.LogAction.Edit,  CurrentUserId,CurrentUserName  );
+                odal.ExecuteNonQuery(  "ps_UpdateLabSampleRecived", CommandType.StoredProcedure, parameters);
             }
         }
-       
+
     }
 }
