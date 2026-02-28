@@ -8,6 +8,7 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.OPPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -147,6 +148,14 @@ namespace HIMS.API.Controllers.OPPatient
                 _IRefundOfBillService.Update(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+        [HttpPost("LabRefundApprovedList")]
+        //[Permission(PageCode = "Refund", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabRefundApprovedList(GridRequestModel objGrid)
+        {
+            IPagedList<LabRefundApprovedListDto> LabRefundApprovedList = await _IRefundOfBillService.LabRefundApprovedListAsync(objGrid);
+            return Ok(LabRefundApprovedList.ToGridResponse(objGrid, "Lab Refund Approved List"));
         }
     }
 }

@@ -2,6 +2,7 @@
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -289,6 +290,11 @@ namespace HIMS.Services.OPPatient
             await _context.LogProcedureExecution(pentity, nameof(Refund), ObjRefund.RefundId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
 
+        }
+
+        public virtual async Task<IPagedList<LabRefundApprovedListDto>> LabRefundApprovedListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabRefundApprovedListDto>(model, "ps_Rtrv_LabRefundApprovedList");
         }
 
     }
