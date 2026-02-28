@@ -149,7 +149,7 @@ namespace HIMS.Services.Report
 
             string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHtmlName);
             string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHeaderHtmlName);
-            htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+            htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath,UnitId);
             var html = GetHTMLView(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
             html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
             html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);

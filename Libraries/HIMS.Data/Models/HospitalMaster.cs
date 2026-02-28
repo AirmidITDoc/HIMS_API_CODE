@@ -36,5 +36,6 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public long? CityId { get; set; }
+        public int? IsHeaderOption { get; set; }
     }
 }

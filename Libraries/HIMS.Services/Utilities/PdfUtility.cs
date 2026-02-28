@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using PdfSharpCore.Pdf;
 using PdfSharpCore.Pdf.IO;
+using QRCoder;
 using System;
 using System.Data;
 using System.Globalization;
@@ -151,32 +152,15 @@ namespace HIMS.Services.Utilities
             string htmlHeader = System.IO.File.ReadAllText(filePath);
             HospitalMaster objHospital = _context.HospitalMasters.Find(hospitalId);
 
+
             var chklogo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
             var chklogo2 = _context.FileMasters.FirstOrDefault(x => x.RefType == 10 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
             var chkinfoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
 
-            //htmlHeader = htmlHeader
-            //    .Replace("{{HospitalName}}", "")
-            //    .Replace("{{Address}}", "")
-            //    .Replace("{{City}}", "")
-            //    .Replace("{{Pin}}", "")
-            //    .Replace("{{Phone}}", "")
-            //    .Replace("{{HospitalHeaderLine}}", "")
-            //    .Replace("{{EmailID}}", "")
-            //    .Replace("{{WebSiteInfo}}", "")
-            //    .Replace("{{logo}}", "")
-            //    .Replace("{{logo2}}", "")
-            //    .Replace("{{hospitalinfo}}", "");
-            //if (chkinfoImg != null && chklogo != null && chklogo2 != null)
-            //{
-            //    var infoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
-            //    var hospitalInfo = infoImg != null ? GetBase64FromFolder("Upload\\Img_Upload", infoImg.DocSavedName) : "";
-            //    htmlHeader = htmlHeader.Replace("{{hospitalinfo}}", hospitalInfo);
+            var vIsHeaderOption = _context.HospitalMasters.FirstOrDefault(x => x.HospitalId == objHospital.HospitalId);
 
-            //}
-            //else
-            if (chklogo != null && chklogo2 != null)
-            {
+            if (vIsHeaderOption.IsHeaderOption == 1)//With logo and hopital info 
+            {  
                 var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
                 var logo2 = _context.FileMasters.FirstOrDefault(x => x.RefType == 10 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
 
@@ -200,14 +184,23 @@ namespace HIMS.Services.Utilities
                 htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
                 htmlHeader = htmlHeader.Replace("{{logo2}}", HospitalLogo2);
             }
-            else if (chkinfoImg != null)
+            else if (vIsHeaderOption.IsHeaderOption == 2)// With Hospital Image  
             {
                 var infoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
                 var hospitalInfo = infoImg != null ? GetBase64FromFolder("Upload\\Img_Upload", infoImg.DocSavedName) : "";
                 htmlHeader = htmlHeader.Replace("{{hospitalinfo}}", hospitalInfo);
             }
-           
-            htmlHeader = htmlHeader.Replace("{{TextHeaderDisplay}}", (chklogo != null && chklogo2 != null) ? "table-row" : "none");
+
+            else if (vIsHeaderOption.IsHeaderOption == 3)// With  Template (Need to add Template Code) 
+            {
+                var infoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+                var hospitalInfo = infoImg != null ? GetBase64FromFolder("Upload\\Img_Upload", infoImg.DocSavedName) : "";
+                htmlHeader = htmlHeader.Replace("{{hospitalinfo}}", hospitalInfo);
+
+
+            }
+
+                htmlHeader = htmlHeader.Replace("{{TextHeaderDisplay}}", (chklogo != null && chklogo2 != null) ? "table-row" : "none");
             htmlHeader = htmlHeader.Replace("{{ImageHeaderDisplay}}", (chkinfoImg != null) ? "table-row" : "none");
             //htmlHeader = htmlHeader.Replace("{{TextHeaderDisplay}}", (chkinfoImg != null && chklogo != null && chklogo2 != null) ? "table-row" : "none");
             return htmlHeader;
