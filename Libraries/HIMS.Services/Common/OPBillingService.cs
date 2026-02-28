@@ -400,6 +400,13 @@ namespace HIMS.Services.Common
                 objBill.RegNo = Convert.ToInt64(objRegistration.RegNo);
                 await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
+                var tokenObj = new
+                {
+                    VisitId = Convert.ToInt32(VisitId)
+                };
+                odal1.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+                await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
                 //objVisitDetail.RegId = objRegistration.RegId;
                 //objVisitDetail.CreatedBy = CurrentUserId;
                 //objVisitDetail.CreatedDate = AppTime.Now;   
@@ -938,9 +945,9 @@ namespace HIMS.Services.Common
             }
             string VDrbno = odal.ExecuteNonQuery("PS_Insert_T_DRBill", CommandType.StoredProcedure, "Drbno", bentity);
             ObjTDrbill.Drbno = Convert.ToInt32(VDrbno);
+            await _context.LogProcedureExecution(bentity, nameof(TDrbill), ObjTDrbill.Drbno.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-
-            foreach (var item in ObjTDraddCharge)
+                foreach (var item in ObjTDraddCharge)
             {
                 item.BillNo = Convert.ToInt32(VDrbno);
 
@@ -956,6 +963,8 @@ namespace HIMS.Services.Common
 
                 string VChargId = odal.ExecuteNonQuery("PS_Insert_T_DRAddCharges", CommandType.StoredProcedure, "ChargesId", centity);
                 item.ChargesId = Convert.ToInt32(VChargId);
+                await _context.LogProcedureExecution(bentity, nameof(TDrbillDet), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
                 Dictionary<string, object> tokenObj = new()
                 {
                     ["DRNo"] = VDrbno,
@@ -968,11 +977,13 @@ namespace HIMS.Services.Common
 
                 //};
                 odal.ExecuteNonQuery("PS_Insert_T_DRBillDet", CommandType.StoredProcedure, tokenObj);
+                await _context.LogProcedureExecution(bentity, nameof(TDrbillDet), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
             }
 
 
-          
+
 
         }
         public virtual async Task UpdateAsyncTDrbill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDet, List<TDraddCharge> ObjTDraddCharge, int CurrentUserId, string CurrentUserName)
