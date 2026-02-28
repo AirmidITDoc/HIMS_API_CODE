@@ -48,4 +48,19 @@ namespace HIMS.Data.DTO.Pathology
 
 
     }
+    public class PurRequisiionItemListDto
+    {
+        public long PurchaseRequisitionId { get; set; }
+        public long PurchaseRequisitionDetId { get; set; }
+        public long? ItemId { get; set; }
+        public string? ItemName { get; set; }
+        public double Qty { get; set; }
+        public long? IndQty { get; set; }
+        public long? IssQty { get; set; }
+        public double BalanceQty { get; set; }
+        public string? FromStoreName { get; set; }
+        public string? ToStoreName { get; set; }
+        public long FromStoreId { get; set; }
+        public long ToStoreId { get; set; }
+    }
 }

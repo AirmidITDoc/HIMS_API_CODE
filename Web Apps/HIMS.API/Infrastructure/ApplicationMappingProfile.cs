@@ -30,6 +30,7 @@ using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
 using static HIMS.API.Models.Pharmacy.TSalesInpatientHeaderModel;
 using HIMS.API.Models.GastrologyMasterModel;
 using static HIMS.API.Models.GastrologyMasterModel.MSubQuestionMasterModel;
+using HIMS.API.Models.MRD;
 namespace HIMS.API.Infrastructure
 {
     public class ApplicationMappingProfile : Profile
@@ -569,8 +570,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<EstimateDetailModel, TEstimateDetail>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<PathologyLabReportHeaderModel, TPathologyReportHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<RefundUpdateModel, Refund>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MrdFileReceivedModel, TMrdfileReceived>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-            
+
+
 
             CreateMap<AddCharge, AdddChargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 

@@ -405,7 +405,7 @@ namespace HIMS.Services.Common
                     VisitId = Convert.ToInt32(VisitId)
                 };
                 odal1.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
-                await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                //await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                 //objVisitDetail.RegId = objRegistration.RegId;
                 //objVisitDetail.CreatedBy = CurrentUserId;

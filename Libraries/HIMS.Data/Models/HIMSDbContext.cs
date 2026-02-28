@@ -493,8 +493,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<TMedicolegalCertificate> TMedicolegalCertificates { get; set; } = null!;
         public virtual DbSet<TMlcinformation> TMlcinformations { get; set; } = null!;
         public virtual DbSet<TMpesaResponse> TMpesaResponses { get; set; } = null!;
-        public virtual DbSet<TMrdAdmFile> TMrdAdmFiles { get; set; } = null!;
-        public virtual DbSet<TMrdcasePaperIssueReturn> TMrdcasePaperIssueReturns { get; set; } = null!;
+        public virtual DbSet<TMrdfileReceived> TMrdfileReceiveds { get; set; } = null!;
+        public virtual DbSet<TMrdoutInFile> TMrdoutInFiles { get; set; } = null!;
         public virtual DbSet<TMrpAdjustment> TMrpAdjustments { get; set; } = null!;
         public virtual DbSet<TMrpstockAdjestment> TMrpstockAdjestments { get; set; } = null!;
         public virtual DbSet<TNeroSurgeryOtnote> TNeroSurgeryOtnotes { get; set; } = null!;
@@ -14116,52 +14116,64 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TransactionDate).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<TMrdAdmFile>(entity =>
+            modelBuilder.Entity<TMrdfileReceived>(entity =>
             {
-                entity.ToTable("T_MRD_AdmFile");
+                entity.HasKey(e => e.RmdrecordId);
 
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.ToTable("T_MRDFileReceived");
 
-                entity.Property(e => e.CategoryName).HasMaxLength(100);
+                entity.Property(e => e.RmdrecordId).HasColumnName("RMDRecordId");
 
-                entity.Property(e => e.FileName).HasMaxLength(100);
+                entity.Property(e => e.Comments).HasMaxLength(255);
 
-                entity.Property(e => e.FilePath).HasMaxLength(500);
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.FilePathLocation).HasMaxLength(500);
+                entity.Property(e => e.Location).HasMaxLength(255);
 
-                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+                entity.Property(e => e.Mrdno)
+                    .HasMaxLength(100)
+                    .HasColumnName("MRDNo");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPId");
+
+                entity.Property(e => e.RecievedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RecievedTime).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<TMrdcasePaperIssueReturn>(entity =>
+            modelBuilder.Entity<TMrdoutInFile>(entity =>
             {
-                entity.HasKey(e => e.MrdissueId);
+                entity.HasKey(e => e.OutFileId);
 
-                entity.ToTable("T_MRDCasePaperIssueReturn");
+                entity.ToTable("T_MRDOutInFile");
 
-                entity.Property(e => e.MrdissueId).HasColumnName("MRDIssueID");
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.CasePaperIssueName).HasMaxLength(300);
+                entity.Property(e => e.InDate).HasColumnType("datetime");
 
-                entity.Property(e => e.IsStatus).HasDefaultValueSql("((0))");
+                entity.Property(e => e.InNo).HasMaxLength(50);
 
-                entity.Property(e => e.IssueDate).HasColumnType("datetime");
+                entity.Property(e => e.InReason).HasMaxLength(255);
 
-                entity.Property(e => e.Issuetime).HasColumnType("datetime");
+                entity.Property(e => e.InTime).HasColumnType("datetime");
 
-                entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
+                entity.Property(e => e.Opipid).HasColumnName("OPIPId");
 
-                entity.Property(e => e.Reason).HasMaxLength(300);
+                entity.Property(e => e.OutDate).HasColumnType("datetime");
 
-                entity.Property(e => e.ReturnByPersonName).HasMaxLength(300);
+                entity.Property(e => e.OutNo).HasMaxLength(50);
 
-                entity.Property(e => e.ReturnDate).HasColumnType("datetime");
+                entity.Property(e => e.OutReason).HasMaxLength(255);
 
-                entity.Property(e => e.ReturnTime).HasColumnType("datetime");
+                entity.Property(e => e.OutTime).HasColumnType("datetime");
+
+                entity.Property(e => e.PersonName).HasMaxLength(255);
+
+                entity.Property(e => e.ReturnPersonName).HasMaxLength(255);
             });
 
             modelBuilder.Entity<TMrpAdjustment>(entity =>
