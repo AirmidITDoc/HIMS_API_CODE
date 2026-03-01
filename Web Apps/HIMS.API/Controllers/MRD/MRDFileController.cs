@@ -15,6 +15,7 @@ using Asp.Versioning;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.MRD;
+using HIMS.API.Models.DoctorPayout;
 
 namespace HIMS.API.Controllers.MRD
 {
@@ -72,6 +73,43 @@ namespace HIMS.API.Controllers.MRD
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.RmdrecordId);
         }
-
+        [HttpPost("InsertOutFile")]
+        //[Permission]
+        public async Task<ApiResponse> InsertOutFile(MRDOutInFileModel obj)
+        {
+            TMrdoutInFile Outfilemodel = obj.MapTo<TMrdoutInFile>();
+            if (obj.OutFileId == 0)
+            {
+                Outfilemodel.OutDate = Convert.ToDateTime(obj.OutDate);
+                Outfilemodel.OutTime = Convert.ToDateTime(obj.OutTime);
+                Outfilemodel.CreatedDate = AppTime.Now;
+                Outfilemodel.CreatedBy = CurrentUserId == 0 ? 1 : CurrentUserId;
+                Outfilemodel.ModifiedDate = AppTime.Now;
+                Outfilemodel.ModifiedBy = CurrentUserId;
+                await _IMRDFileService.InsertOutFileAsync(Outfilemodel, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", Outfilemodel.OutFileId);
+        }
+        [HttpPost("InsertInFile")]
+        //[Permission]
+        public async Task<ApiResponse> InsertInFile(MRDOutInFileModel obj)
+        {
+            TMrdoutInFile Outfilemodel = obj.MapTo<TMrdoutInFile>();
+            if (obj.OutFileId != 0)
+            {
+                Outfilemodel.OutDate = Convert.ToDateTime(obj.OutDate);
+                Outfilemodel.OutTime = Convert.ToDateTime(obj.OutTime);
+                Outfilemodel.CreatedDate = AppTime.Now;
+                Outfilemodel.CreatedBy = CurrentUserId == 0 ? 1 : CurrentUserId;
+                Outfilemodel.ModifiedDate = AppTime.Now;
+                Outfilemodel.ModifiedBy = CurrentUserId;
+                await _IMRDFileService.InsertInFileAsync(Outfilemodel, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
     }
 }

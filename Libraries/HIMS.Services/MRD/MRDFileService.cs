@@ -1,17 +1,11 @@
-﻿using HIMS.Core.Infrastructure;
-using HIMS.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HIMS.Data.Models;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.MRD;
-
+using System.Data;
+using HIMS.Services.Utilities;
 
 
 namespace HIMS.Services.MRD
@@ -70,6 +64,37 @@ namespace HIMS.Services.MRD
             await _context.SaveChangesAsync();
 
             scope.Complete();
+        }
+
+        public virtual async Task InsertOutFileAsync(TMrdoutInFile ObjTMrdoutInFile, int UserId, string Username)
+        {
+            DatabaseHelper odal = new();
+            string[] AEntity = { "Opipid", "GivenUserId", "PersonName", "OutDate", "OutTime", "OutReason", "CreatedBy" };
+            var entity = ObjTMrdoutInFile.ToDictionary();
+
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("ps_Insert_MRDOutInFile", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, nameof(TMrdoutInFile), (int)ObjTMrdoutInFile.OutFileId, Core.Domain.Logging.LogAction.Add, UserId, Username);
+        }
+        public virtual async Task InsertInFileAsync(TMrdoutInFile ObjTMrdoutInFile, int UserId, string Username)
+        {
+            DatabaseHelper odal = new();
+            string[] AEntity = { "Opipid", "InDate", "InTime", "ReturnPersonName", "ReturnUserId", "InReason", "OutFileId" };
+            var entity = ObjTMrdoutInFile.ToDictionary();
+
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("ps_Update_MRDOutInFile_Return", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, nameof(TMrdoutInFile), (int)ObjTMrdoutInFile.OutFileId, Core.Domain.Logging.LogAction.Edit, UserId, Username);
         }
 
     }

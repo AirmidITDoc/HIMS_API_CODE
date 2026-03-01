@@ -15,8 +15,8 @@ namespace HIMS.Services.MRD
         Task InsertAsync(TMrdfileReceived ObjTMrdfileReceived, int UserId, string Username);
         Task UpdateAsync(TMrdfileReceived ObjTMrdfileReceived, int UserId, string Username, string[]? references);
         Task<IPagedList<MRDFileReceivedListDto>> GetListAsync(GridRequestModel objGrid);
-
-
+        Task InsertOutFileAsync(TMrdoutInFile ObjmrdoutInFile, int UserId, string Username);
+        Task InsertInFileAsync(TMrdoutInFile ObjmrdoutInFile, int UserId, string Username);
 
     }
 }

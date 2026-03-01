@@ -89,7 +89,7 @@
         public string? AdvanceAmount { get; set; }
         public string? ChargesAmount { get; set; }
         public decimal DayWiseCredit { get; set; }
-
+        public long MrdInFileStatus { get; set; }   
 
     }
 

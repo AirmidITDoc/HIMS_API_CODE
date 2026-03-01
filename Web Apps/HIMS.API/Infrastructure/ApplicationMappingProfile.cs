@@ -571,6 +571,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<PathologyLabReportHeaderModel, TPathologyReportHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<RefundUpdateModel, Refund>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MrdFileReceivedModel, TMrdfileReceived>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MRDOutInFileModel, TMrdoutInFile>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
