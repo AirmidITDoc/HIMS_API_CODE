@@ -1,180 +1,205 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lab Refund Receipt</title>
 </head>
 
-<body>
+<body style="margin:0;padding:0;">
+
     <div class="main-content-wrapper">
-        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
-            <table style="width: 100%;line-height: inherit;text-align: left;">
+
+        <!-- ====================== PATIENT COPY ====================== -->
+        <div class="invoice-box" style="font-size:14px;line-height:24px;font-family:Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif;color:#101828;padding:20px;">
+
+            <table style="width:100%;text-align:left;">
                 {{NewHeader}}
-                <tr class="title-date-row">
-                    <td style="padding: 6px;">
-                        <table style="width: 100%; border-collapse: collapse;">
-                            <tr style="font-size: 18px">
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 20px; "><b>  LAB  REFUND  OF BILL RECEIPT</b></td>
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 20px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr class="bill-info-row">
-                    <td style="padding: 6px;">
-                        <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
-                            <tr>
 
-                                <td style="padding: 2px;">
-                                    <span><b>Refund No :</b> </span>
-                                    <span>{{RefundNo}}</span>
+                <tr>
+                    <td style="padding:6px;">
+                        <table style="width:100%;border-collapse:collapse;">
+                            <tr style="font-size:18px">
+                                <td style="border-bottom:1px solid #d4c3c3;padding-bottom:15px;">
+                                    <b>LAB REFUND RECEIPT - PATIENT COPY</b>
                                 </td>
-                                <td style="padding: 2px;">
-                                    <span><b>UHID :</b> </span>
-                                    <span>{{RegNo}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span><b>Refund Date :</b>  </span>
-                                    <span>{{RefundDateTime}}</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 2px;">
-                                    <span><b>Patient Name :</b> </span>
-                                    <span>{{PatientName}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span><b>Age | Gender:</b> </span>
-                                    <span>{{AgeYear}} | {{GenderName}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span><b>OPD | Time :</b> </span>
-                                    <span>{{RegDate}}</span>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td style="padding: 2px;">
-                                    <span><b>Patient Type :</b> </span>
-                                    <span>{{PatientType}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span><b>Doctor Name :</b> </span>
-                                    <span>{{ConsultantDocName}}</span>
-                                </td>
-                                <td style="padding: 2px;">
-                                    <span><b>Ref Doc Name :</b> </span>
-                                    <span>{{RefDocName}}</span>
-                                </td>
-
-                            </tr>
-
-                            <tr>
-                                <td style="padding: 2px;display: {{chkCompanyNameflag}};">
-                                    <span><b>Department :</b></span>
-                                    <span>{{DepartmentName}}</span>
-                                </td>
-                           
-                                <td style="padding: 2px; display: {{chkCompanyNameflag}};">
-                                    <span><b>Company Name :</b> </span>
-                                    <span>{{CompanyName}}</span>
+                                <td style="border-bottom:1px solid #d4c3c3;text-align:right;padding-bottom:15px;">
+                                    <b>Print Date : {{CurrentDate}}</b>
                                 </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
-                <br />
-                <br />
 
-                <tr class="payment-info-row">
-                    <td style="padding: 6px;">
-                        <table style="width: 100%; border-collapse: collapse;">
+                <!-- ======= YOUR FULL EXISTING CONTENT START ======= -->
+
+                <tr>
+                    <td style="padding:6px;">
+                        <table style="width:100%;border-collapse:collapse;font-size:16px;">
                             <tr>
-                                <td>
-                                    <table style="text-align:center; border-collapse: collapse; width: 100%;">
-                                        <thead style="font-size: 14px;">
-                                            <tr>
-                                                <th style=" border: 1px solid #d4c3c3; text-align: center;" colspan="2">
-                                                    <h4 style="margin: 6px 0px; font-size: 20px;">
-                                                        Bill Information
-                                                    </h4>
-                                                </th>
-                                            </tr>
+                                <td><b>Refund No :</b> {{RefundNo}}</td>
+                                <td><b>UHID :</b> {{RegNo}}</td>
+                                <td><b>Refund Date :</b> {{RefundDateTime}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Patient Name :</b> {{PatientName}}</td>
+                                <td><b>Age | Gender :</b> {{AgeYear}} | {{GenderName}}</td>
+                                <td><b>OPD | Time :</b> {{RegDate}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Patient Type :</b> {{PatientType}}</td>
+                                <td><b>Doctor Name :</b> {{ConsultantDocName}}</td>
+                                <td><b>Ref Doc Name :</b> {{RefDocName}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
 
-                                        </thead>
-                                        <tbody style="font-size: 20px;">
-                                            <tr>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold;">
-                                                    Bill No : {{PBillNo}}
-                                                </td>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px; font-weight: bold;">
-                                                    Bill Date : {{BillDate}} |
-                                                    Bill Amount : {{NetPayableAmt}}
-                                                </td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold;">
-                                                    Refund Amount :
-                                                </td>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
-                                                    {{RefundAmount}}
-                                                </td>
-                                            </tr>
-                                            <!--<tr>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold;">
-                                                    Payment Mode:
-                                                </td>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px; ">
-                                                    {{PaymentMode}}
-                                                </td>
-                                            </tr>-->
-                                            <tr>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold;">
-                                                    Total Amount in words :
-                                                </td>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px; ">
-                                                    {{finalamt}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-weight: bold;">
-                                                    Remark
-                                                </td>
-                                                <td style=" border: 1px solid #d4c3c3; text-align: right; padding: 6px;">
-                                                    {{Remark}}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                <tr>
+                    <td style="padding:6px;">
+                        <table style="width:100%;border-collapse:collapse;">
+                            <tr>
+                                <td style="border:1px solid #d4c3c3;padding:8px;font-weight:bold;">
+                                    Bill No : {{PBillNo}}
+                                </td>
+                                <td style="border:1px solid #d4c3c3;padding:8px;text-align:right;font-weight:bold;">
+                                    Bill Date : {{BillDate}} | Bill Amount : {{NetPayableAmt}}
                                 </td>
                             </tr>
+                            <tr>
+                                <td style="border:1px solid #d4c3c3;padding:8px;font-weight:bold;">
+                                    Refund Amount :
+                                </td>
+                                <td style="border:1px solid #d4c3c3;padding:8px;text-align:right;">
+                                    {{RefundAmount}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #d4c3c3;padding:8px;font-weight:bold;">
+                                    Total Amount in words :
+                                </td>
+                                <td style="border:1px solid #d4c3c3;padding:8px;text-align:right;">
+                                    {{finalamt}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #d4c3c3;padding:8px;font-weight:bold;">
+                                    Remark
+                                </td>
+                                <td style="border:1px solid #d4c3c3;padding:8px;text-align:right;">
+                                    {{Remark}}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
+
             </table>
-            <tr>
-                <table style="width: 100%; border-collapse: collapse;margin-top:20px;">
-                    <tr style="margin-top: 12px;">
-                    <tr>
-                        <td style="padding: 6px;font-size: 12px;">This is Computer generated invoice hence doesn’t require signature</td>
-                    </tr>
-                    <tr style="padding: 6px; text-align: right;margin-top:20px;">
-                        <td>
-                            <span>{{UserName}}</span>
-                        </td>
-                    </tr>
-                    <tr style="padding: 6px; text-align: right;">
-                        <td>
-                            <span>Authorized Signature</span>
-                        </td>
-                    </tr>
 
-                </table>
-            </tr>
+            <div style="text-align:right;margin-top:20px;">
+                {{UserName}}<br>
+                Authorized Signature
+            </div>
+
         </div>
-    </div>
-</body>
 
+        <!-- ====================== DIVIDER ====================== -->
+        <div style="border-top:2px dashed #000;margin:20px 0;"></div>
+
+        <!-- ====================== OFFICE COPY ====================== -->
+        <div class="invoice-box" style="font-size:14px;line-height:24px;font-family:Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif;color:#101828;padding:20px;">
+
+            <table style="width:100%;text-align:left;">
+                {{NewHeader}}
+
+                <tr>
+                    <td style="padding:6px;">
+                        <table style="width:100%;border-collapse:collapse;">
+                            <tr style="font-size:18px">
+                                <td style="border-bottom:1px solid #d4c3c3;padding-bottom:15px;">
+                                    <b>LAB REFUND RECEIPT - OFFICE COPY</b>
+                                </td>
+                                <td style="border-bottom:1px solid #d4c3c3;text-align:right;padding-bottom:15px;">
+                                    <b>Print Date : {{CurrentDate}}</b>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- SAME CONTENT REPEATED -->
+
+                <tr>
+                    <td style="padding:6px;">
+                        <table style="width:100%;border-collapse:collapse;font-size:16px;">
+                            <tr>
+                                <td><b>Refund No :</b> {{RefundNo}}</td>
+                                <td><b>UHID :</b> {{RegNo}}</td>
+                                <td><b>Refund Date :</b> {{RefundDateTime}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Patient Name :</b> {{PatientName}}</td>
+                                <td><b>Age | Gender :</b> {{AgeYear}} | {{GenderName}}</td>
+                                <td><b>OPD | Time :</b> {{RegDate}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Patient Type :</b> {{PatientType}}</td>
+                                <td><b>Doctor Name :</b> {{ConsultantDocName}}</td>
+                                <td><b>Ref Doc Name :</b> {{RefDocName}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:6px;">
+                        <table style="width:100%;border-collapse:collapse;">
+                            <tr>
+                                <td style="border:1px solid #d4c3c3;padding:8px;font-weight:bold;">
+                                    Bill No : {{PBillNo}}
+                                </td>
+                                <td style="border:1px solid #d4c3c3;padding:8px;text-align:right;font-weight:bold;">
+                                    Bill Date : {{BillDate}} | Bill Amount : {{NetPayableAmt}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #d4c3c3;padding:8px;font-weight:bold;">
+                                    Refund Amount :
+                                </td>
+                                <td style="border:1px solid #d4c3c3;padding:8px;text-align:right;">
+                                    {{RefundAmount}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #d4c3c3;padding:8px;font-weight:bold;">
+                                    Total Amount in words :
+                                </td>
+                                <td style="border:1px solid #d4c3c3;padding:8px;text-align:right;">
+                                    {{finalamt}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #d4c3c3;padding:8px;font-weight:bold;">
+                                    Remark
+                                </td>
+                                <td style="border:1px solid #d4c3c3;padding:8px;text-align:right;">
+                                    {{Remark}}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+
+           
+            <div style="text-align:right;margin-top:20px;">
+                {{UserName}}<br>
+                Authorized Signature
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
 </html>

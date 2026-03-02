@@ -324,16 +324,21 @@ namespace HIMS.Services.Report
                     {
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AppointmentReceipttemplate.html");
 
-                        string htmlTemplateHeaderPath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "HeaderfromTemplate.html");
-                        htmlTemplateHeaderPath = _pdfUtility.GetHeaderfromtemplate(model, htmlTemplateHeaderPath);
+                        string htmlHeaderFilePath1 = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                        var html = GetHTMLView("rptAppointmentPrint2", model, htmlFilePath, htmlHeaderFilePath1, Array.Empty<string>());
+      
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PatientHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetPatientHeader(model, htmlHeaderFilePath);
 
-                        string htmlPatientHeaderPath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PatientHeader.html");
-                        htmlPatientHeaderPath = _pdfUtility.GetPatientHeader(model, htmlPatientHeaderPath);
+                        string htmlHeaderFilePathHeader = Path.Combine(AppSettings.Settings.PdfTemplatePath, "GetAppointmentfromtemplate.html");
+                        htmlHeaderFilePathHeader = _pdfUtility.GetAppointmentfromtemplate(model, htmlHeaderFilePathHeader);
 
-                        var html = GetHTMLView( "rptAppointmentPrint2",  model, htmlFilePath, "",Array.Empty<string>());
 
-                        html = html.Replace("{{TemplateHeader}}", htmlTemplateHeaderPath);
-                        html = html.Replace("{{PatientHeader}}", htmlPatientHeaderPath);
+                        html = html.Replace("{{TemplateHeader}}", htmlHeaderFilePathHeader);
+
+                        html = html.Replace("{{PatientHeader}}", htmlHeaderFilePath);
+
+                        //html = html.Replace("{{NewHeader}}", htmlHeaderFilePath1);
 
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html,   model.StorageBaseUrl, "AppointmentReceipt",  "AppointmentReceipt" + vDate,  Orientation.Portrait);

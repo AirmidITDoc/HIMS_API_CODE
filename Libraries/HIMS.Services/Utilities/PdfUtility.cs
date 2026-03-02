@@ -304,6 +304,38 @@ namespace HIMS.Services.Utilities
             return htmlHeader;
         }
 
+        public string GetAppointmentfromtemplate(ReportRequestModel model, string filePath)
+        {
+            string htmlHeader = System.IO.File.ReadAllText(filePath);
+
+            var dt = GetDataBySp(model, "rptAppointmentPrint2");
+
+            HospitalMaster objHospital = _context.HospitalMasters.Find(Convert.ToInt64(1));
+            MReportTemplateConfig objDisconfig = _context.MReportTemplateConfigs.Find(Convert.ToInt64(1));
+
+            var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+            string logoFileName = (objHospital?.Header ?? "").ConvertToString();
+
+            //var HospitalLogo = string.IsNullOrWhiteSpace(logoFileName) ? "" : GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
+
+            var HospitalLogo = GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
+
+            htmlHeader = htmlHeader.Replace("{{TemplateHeader}}", dt.GetColValue("HospitalHeader"));
+
+            htmlHeader = htmlHeader.Replace("{{HospitalName}}", objHospital?.HospitalName ?? "");
+            htmlHeader = htmlHeader.Replace("{{Address}}", objHospital?.HospitalAddress ?? "");
+            htmlHeader = htmlHeader.Replace("{{City}}", objHospital?.City ?? "");
+            htmlHeader = htmlHeader.Replace("{{Pin}}", objHospital?.Pin ?? "");
+            htmlHeader = htmlHeader.Replace("{{Phone}}", objHospital?.Phone ?? "");
+            htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
+            htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
+            htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
+            htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
+
+
+            return htmlHeader;
+        }
+
         private DataTable GetDataBySp(ReportRequestModel model, string sp_Name)
         {
             Dictionary<string, string> fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
