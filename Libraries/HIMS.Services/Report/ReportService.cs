@@ -7711,7 +7711,7 @@ namespace HIMS.Services.Report
 
                             items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:20px;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;font-size:22px;\">").Append(dr["TTime"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;font-size:22px;\">").Append(dr["NursingNotes"].ConvertToString()).Append("</td></tr>");
-
+                        }
                             html = html.Replace("{{Items}}", items.ToString());
                             html = html.Replace("{{AdmId}}", dt.GetColValue("AdmId"));
                             html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
@@ -7733,12 +7733,8 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
 
                             return html;
+                     }
 
-
-                        }
-
-
-                    }
                     break;
 
                 case "DoctorNoteandNursingNoteReport":

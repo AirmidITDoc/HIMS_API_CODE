@@ -29,5 +29,6 @@ namespace HIMS.Data.DTO.Pathology
         public string? LabRequestNo { get; set; }
 
         public string? CompanyName { get; set; }
+        public string UserName { get; set; }
     }
 }
