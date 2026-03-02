@@ -21,6 +21,7 @@ namespace HIMS.Data.Models
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
         public string? Address { get; set; }
+        public long? AdharCardNo { get; set; }
         public long? CityId { get; set; }
         public long? StateId { get; set; }
         public long? CountryId { get; set; }
