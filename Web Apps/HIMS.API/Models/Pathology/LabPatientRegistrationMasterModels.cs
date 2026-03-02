@@ -22,6 +22,8 @@
         public long? CityId { get; set; }
         public long? StateId { get; set; }
         public long? CountryId { get; set; }
+        public long? AdharCardNo { get; set; }
+
 
     }
 }
