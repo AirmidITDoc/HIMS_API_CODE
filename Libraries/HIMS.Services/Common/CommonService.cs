@@ -121,6 +121,8 @@ namespace HIMS.Services.Common
                 case "LoginAccessConfigList": sp_Name = "ps_M_LoginAccessConfigList"; break;
                 case "SystemConfigList": sp_Name = "ps_M_SystemConfigList"; break;
                 case "UnitWiseSystemConfige": sp_Name = "ps_UnitWiseSystemConfige"; break;
+                case "LoginWiseAccessConfigList": sp_Name = "ps_LoginWise_LoginAccessConfigList"; break;
+                    
 
                 //GSTType  
                 case "grnInvoicenocheck": sp_Name = "ps_m_grnInvoiceno_check"; break;
