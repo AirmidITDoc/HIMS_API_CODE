@@ -20,6 +20,7 @@ using System.Data;
 using System.Globalization;
 using System.Reflection.PortableExecutable;
 using System.Text;
+using System.Text.RegularExpressions;
 using WkHtmlToPdfDotNet;
 using WkHtmlToPdfDotNet.Contracts;
 
@@ -724,5 +725,83 @@ namespace HIMS.Services.Utilities
 
         //    return new Tuple<byte[], string>(bytes, st); ;
         //}
+
+        public string Render(string html, DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+                return html;
+
+            DataRow firstRow = dt.Rows[0];
+
+            html = ReplaceItemTable(html, dt);
+            html = ReplaceNormalValues(html, firstRow);
+            html = ReplaceDateFormats(html, firstRow);
+            html = ReplaceFlags(html, firstRow);
+
+            return html;
+        }
+
+        private string ReplaceNormalValues(string html, DataRow row)
+        {
+            foreach (DataColumn col in row.Table.Columns)
+            {
+                html = html.Replace("{{" + col.ColumnName + "}}",row[col]?.ToString() ?? "");
+            }
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            return html;
+        }
+
+        private string ReplaceDateFormats(string html, DataRow row)
+        {
+            return Regex.Replace(html, @"\{\{(\w+)\|(.+?)\}\}", m =>
+            {
+                string column = m.Groups[1].Value;
+                string format = m.Groups[2].Value;
+
+                if (!row.Table.Columns.Contains(column))
+                    return "";
+
+                if (DateTime.TryParse(row[column]?.ToString(), out DateTime dt))
+                    return dt.ToString(format);
+
+                return "";
+            });
+        }
+
+        private string ReplaceFlags(string html, DataRow row)
+        {
+            foreach (DataColumn col in row.Table.Columns)
+            {
+                string value = row[col]?.ToString();
+                string display = (!string.IsNullOrEmpty(value) && value != "0")? "table-row": "none";
+                html = html.Replace("{{" + "chk" + col.ColumnName + "flag}}",display);
+            }
+            return html;
+        }
+
+        private string ReplaceItemTable(string html, DataTable dt)
+        {
+            Match m = Regex.Match(html, @"<!--ITEMS-->([\s\S]*?)<!--/ITEMS-->");
+            if (!m.Success)
+                return html;
+
+            string rowTemplate = m.Groups[1].Value;
+            StringBuilder rows = new StringBuilder();
+            int sr = 1;
+
+            foreach (DataRow r in dt.Rows)
+            {
+                string rowHtml = rowTemplate.Replace("{{#}}", sr.ToString());
+                sr++;
+
+                foreach (DataColumn col in dt.Columns)
+                {
+                    rowHtml = rowHtml.Replace("{{" + col.ColumnName + "}}",r[col]?.ToString() ?? "");
+                }
+                rows.Append(rowHtml);
+            }
+            return html.Replace(m.Value, rows.ToString());
+        }
     }
 }
+

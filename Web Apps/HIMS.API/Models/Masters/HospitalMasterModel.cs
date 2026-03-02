@@ -8,7 +8,6 @@ namespace HIMS.API.Models.Masters
         public string? HospitalHeaderLine { get; set; }
         public string? HospitalName { get; set; }
         public string? HospitalShortName { get; set; }
-
         public string? HospitalAddress { get; set; }
         public string? City { get; set; }
         public string? Pin { get; set; }

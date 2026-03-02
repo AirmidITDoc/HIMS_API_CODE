@@ -37,5 +37,7 @@ namespace HIMS.Data.Models
         public DateTime? ModifiedDate { get; set; }
         public long? CityId { get; set; }
         public int? IsHeaderOption { get; set; }
+        public string? HospitalLatitude { get; set; }
+        public string? Hospitallongitude { get; set; }
     }
 }

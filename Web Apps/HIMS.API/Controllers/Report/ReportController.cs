@@ -266,6 +266,7 @@ namespace HIMS.API.Controllers.Report
 
                 case "LabSlipReport":
 
+                case "OpBillReceiptTestingOnly":
 
 
 
