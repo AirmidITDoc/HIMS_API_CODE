@@ -354,6 +354,22 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+
+                #region :: OpBillReceiptTestingOnly ::
+                case "OpBillReceiptTestingOnly":
+                    {
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OpBillReceiptTestingOnly.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("ps_rptBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpBillReceiptTestingOnly", "OpBillReceiptTestingOnly" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
                 #region :: LabBillReceipt ::
                 case "LabBillReceipt":
                     {
@@ -4826,6 +4842,18 @@ namespace HIMS.Services.Report
 
                     }
                     break;
+
+                case "OpBillReceiptTestingOnly":
+                    {
+                   
+                        html = _pdfUtility.Render(html, dt);
+
+                        double net = dt.Compute("SUM(NetAmount)", "").ConvertToDouble();
+                        html = html.Replace("{{finalamt}}", conversion(Math.Round(net).ToString()).ToUpper());
+
+                        return html;
+                    }
+
                 case "LabBillReceipt":
                     {
 
