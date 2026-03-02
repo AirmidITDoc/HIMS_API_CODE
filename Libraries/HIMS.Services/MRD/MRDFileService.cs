@@ -84,7 +84,7 @@ namespace HIMS.Services.MRD
         public virtual async Task InsertInFileAsync(TMrdoutInFile ObjTMrdoutInFile, int UserId, string Username)
         {
             DatabaseHelper odal = new();
-            string[] AEntity = { "Opipid", "InDate", "InTime", "ReturnPersonName", "ReturnUserId", "InReason", "OutFileId" };
+            string[] AEntity = { "Opipid", "InDate", "InTime", "ReturnPersonName", "ReturnUserId", "InReason", "OutFileId", "ModifiedBy" };
             var entity = ObjTMrdoutInFile.ToDictionary();
 
             foreach (var rProperty in entity.Keys.ToList())
