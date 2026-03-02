@@ -319,8 +319,6 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
-
-
                 #region :: AppointmentReceiptWithTemplate ::
                 case "AppointmentReceiptWithTemplate":
                     {
@@ -1187,7 +1185,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "RegistrationForm.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
-                        var html = GetHTMLView("ps_rptRegistrationPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                        var html = GetHTMLViewGenericToMapping("ps_rptRegistrationPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RegistrationForm", "RegistrationForm" + vDate, Orientation.Portrait);
@@ -4156,6 +4154,92 @@ namespace HIMS.Services.Report
             }
             return odal.FetchDataTableBySP(sp_Name, para);
         }
+
+        private string GetHTMLViewGenericToMapping(string sp_Name, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "")
+        {
+            var dt = GetDataBySp(model, sp_Name);
+            string html = File.ReadAllText(htmlFilePath);
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{RepoertName}}", model.RepoertName);
+
+            DateTime FromDate = Convert.ToDateTime(model.SearchFields.Find(x => x.FieldName?.ToLower() == "fromdate".ToLower())?.FieldValue ?? null);
+            DateTime ToDate = Convert.ToDateTime(model.SearchFields.Find(x => x.FieldName?.ToLower() == "todate".ToLower())?.FieldValue ?? null);
+
+            StringBuilder HeaderItems = new("");
+            StringBuilder items = new("");
+            StringBuilder ItemsTotal = new("");
+            double T_Count = 0;
+            switch (model.Mode)
+            {
+
+                case "RegistrationForm":
+                    {
+
+                        int i = 0;
+
+
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{RegId}}", dt.GetColValue("RegId"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{RegDate}}", dt.GetColValue("RegTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{City}}", dt.GetColValue("City"));
+                        html = html.Replace("{{CityName}}", dt.GetColValue("CityName"));
+                        html = html.Replace("{{PinNo}}", dt.GetColValue("PinNo"));
+
+                        html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+
+                        html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
+
+
+                        html = html.Replace("{{UpdatedBy}}", dt.GetColValue("UpdatedBy"));
+                        html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
+                        html = html.Replace("{{CountryName}}", dt.GetColValue("CountryName"));
+
+
+                        // New
+                        html = html.Replace("{{EmgContactPersonName}}", dt.GetColValue("EmgContactPersonName"));
+                        html = html.Replace("{{EmgRelationshipId}}", dt.GetColValue("EmgRelationshipId"));
+                        html = html.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName"));
+                        html = html.Replace("{{EmgMobileNo}}", dt.GetColValue("EmgMobileNo"));
+                        html = html.Replace("{{EmgAadharCardNo}}", dt.GetColValue("EmgAadharCardNo"));
+                        html = html.Replace("{{EngAddress}}", dt.GetColValue("EngAddress"));
+                        html = html.Replace("{{MedTourismPassportNo}}", dt.GetColValue("MedTourismPassportNo"));
+                        html = html.Replace("{{MedTourismNationalityID}}", dt.GetColValue("MedTourismNationalityID"));
+                        html = html.Replace("{{MedTourismResidentialAddress}}", dt.GetColValue("MedTourismResidentialAddress"));
+                        html = html.Replace("{{MedTourismOfficeWorkAddress}}", dt.GetColValue("MedTourismOfficeWorkAddress"));
+                        html = html.Replace("{{MedTourismCitizenship}}", dt.GetColValue("MedTourismCitizenship"));
+
+
+                        html = html.Replace("{{chkEmgContactPersonNameflag}}", dt.GetColValue("EmgContactPersonName").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkEmgRelationshipIdflag}}", dt.GetColValue("EmgRelationshipId").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkRelationshipNameflag}}", dt.GetColValue("RelationshipName").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkEmgMobileNoflag}}", dt.GetColValue("EmgMobileNo").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkEmgAadharCardNoflag}}", dt.GetColValue("EmgAadharCardNo").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkEngAddressflag}}", dt.GetColValue("EngAddress").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkMedTourismPassportNoflag}}", dt.GetColValue("MedTourismPassportNo").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkMedTourismNationalityIDflag}}", dt.GetColValue("MedTourismNationalityID").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkMedTourismResidentialAddressflag}}", dt.GetColValue("MedTourismResidentialAddress").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkMedTourismOfficeWorkAddressflag}}", dt.GetColValue("MedTourismOfficeWorkAddress").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkMedTourismCitizenshipflag}}", dt.GetColValue("MedTourismCitizenship").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkCountryNameflag}}", dt.GetColValue("CountryName").ConvertToString() != "" ? "table-row" : "none");
+
+                        return html;
+
+                    }
+                    break;
+            }
+            html = html.Replace("{{HeaderItems}}", HeaderItems.ToString());
+            html = html.Replace("{{Items}}", items.ToString());
+            html = html.Replace("{{ItemsTotal}}", ItemsTotal.ToString());
+            html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
+            html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
+            return html;
+        }
         private string GetHTMLView(string sp_Name, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "")
         {
             var dt = GetDataBySp(model, sp_Name);
@@ -5390,9 +5474,6 @@ namespace HIMS.Services.Report
                     }
                     break;
 
-
-
-
                 case "OpDraftBillReceipt":
                     {
 
@@ -5679,13 +5760,6 @@ namespace HIMS.Services.Report
                     }
                     break;
 
-
-
-
-
-
-
-
                 case "OPDSpineCasePaper":
                     {
 
@@ -5941,7 +6015,6 @@ namespace HIMS.Services.Report
                         return html;
                     }
                     break;
-
 
                 case "OPGastrologyPrescriptionWithoutHeader":
                     {
@@ -6737,7 +6810,6 @@ namespace HIMS.Services.Report
                     }
                     break;
 
-
                 case "Certificate":
                     {
 
@@ -6791,7 +6863,6 @@ namespace HIMS.Services.Report
                         return html;
                     }
                     break;
-
 
                 case "GRNReport":
                     {
@@ -6920,7 +6991,6 @@ namespace HIMS.Services.Report
 
                     }
                     break;
-
 
                 case "KenyaGRNReport":
                     {
@@ -7095,7 +7165,6 @@ namespace HIMS.Services.Report
                     }
                     break;
 
-
                 case "GRNReturnReport":
                     {
 
@@ -7228,9 +7297,6 @@ namespace HIMS.Services.Report
                     }
                     break;
 
-
-
-
                 case "EmergencyPrescription":
                     {
 
@@ -7301,7 +7367,6 @@ namespace HIMS.Services.Report
                         return html;
                     }
                     break;
-
 
                 case "ConsentInformation":
                     {
@@ -7412,7 +7477,6 @@ namespace HIMS.Services.Report
                         return html;
                     }
                     break;
-
 
                 case "AppointmentReceipt":
                     {
@@ -7566,9 +7630,6 @@ namespace HIMS.Services.Report
 
                     }
                     break;
-
-
-
 
                 case "AppointmentReceiptWithTemplate":
                     {
@@ -7815,7 +7876,6 @@ namespace HIMS.Services.Report
                     }
                     break;
 
-
                 case "DoctorPatientHandoverReceipt":
                     {
 
@@ -7868,7 +7928,6 @@ namespace HIMS.Services.Report
 
 
                     break;
-
 
                 case "NursingPatientHandoverReceipt":
                     {
@@ -8338,8 +8397,6 @@ namespace HIMS.Services.Report
 
 
                     break;
-
-
 
                 case "IPDInterimBillA5":
                     {
@@ -8818,7 +8875,6 @@ namespace HIMS.Services.Report
 
                     break;
 
-
                 case "IpDraftBillClassWise":
                     {
 
@@ -8946,7 +9002,6 @@ namespace HIMS.Services.Report
 
                     break;
 
-
                 case "IpDraftBillClassWiseA5":
                     {
 
@@ -9071,7 +9126,6 @@ namespace HIMS.Services.Report
 
 
                     break;
-
 
                 case "IpDraftBillDateWise":
                     {
@@ -9693,7 +9747,6 @@ namespace HIMS.Services.Report
 
                     break;
 
-
                 case "IPFinalBillGroupwise":
                     {
 
@@ -9900,7 +9953,6 @@ namespace HIMS.Services.Report
 
 
                     break;
-
 
                 case "IPFinalBillChargesDateWise":
                     {
@@ -10618,10 +10670,6 @@ namespace HIMS.Services.Report
 
 
                     break;
-
-
-
-
 
                 case "IPFinalBillChargesDateWisegroupwisewithoutadvance":
                     {
