@@ -8,6 +8,8 @@ namespace HIMS.Data.DTO.MRD
 {
     public  class MRDFileReceivedListDto
     {
+
+        public long RMDRecordId { get; set; }
         public DateTime RecievedDate { get; set; }
         public DateTime? RecievedTime { get; set; }
         public long UnitId { get; set; }
@@ -33,6 +35,21 @@ namespace HIMS.Data.DTO.MRD
         public string? ReturnPersonName { get; set; }
         public string? InReason { get; set; }
 
+
+
+        public string? PatientName { get; set; }
+        public string? AgeYear { get; set; }
+        public string? AgeMonth { get; set; }
+        public string? AgeDay { get; set; }
+        public DateTime? AdmissionTime { get; set; }
+        //public string? PatientType { get; set; }
+        public string? RoomName { get; set; }
+        public string? BedName { get; set; }
+
+        public string? IPDNo { get; set; }
+        public string? TariffName { get; set; }
+
+        public string? DoctorName { get; set; }
 
     }
 }
