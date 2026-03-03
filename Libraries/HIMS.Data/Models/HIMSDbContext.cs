@@ -570,6 +570,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPurchaseRequisitionHeader> TPurchaseRequisitionHeaders { get; set; } = null!;
         public virtual DbSet<TRadiologyReportHeader> TRadiologyReportHeaders { get; set; } = null!;
         public virtual DbSet<TRefundDetail> TRefundDetails { get; set; } = null!;
+        public virtual DbSet<TReportLog> TReportLogs { get; set; } = null!;
         public virtual DbSet<TReturnFromDepartmentDetail> TReturnFromDepartmentDetails { get; set; } = null!;
         public virtual DbSet<TReturnFromDepartmentHeader> TReturnFromDepartmentHeaders { get; set; } = null!;
         public virtual DbSet<TSalesDetail> TSalesDetails { get; set; } = null!;
@@ -625,7 +626,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -16651,6 +16652,25 @@ namespace HIMS.Data.Models
                     .WithMany(p => p.TRefundDetails)
                     .HasForeignKey(d => d.RefundId)
                     .HasConstraintName("constraint_name");
+            });
+
+            modelBuilder.Entity<TReportLog>(entity =>
+            {
+                entity.HasKey(e => e.LogId);
+
+                entity.ToTable("T_ReportLog");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.LogDate).HasColumnType("datetime");
+
+                entity.Property(e => e.LogTime).HasColumnType("datetime");
+
+                entity.Property(e => e.LogTypeName).HasMaxLength(50);
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
             });
 
             modelBuilder.Entity<TReturnFromDepartmentDetail>(entity =>
