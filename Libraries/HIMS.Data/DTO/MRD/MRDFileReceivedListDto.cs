@@ -51,5 +51,12 @@ namespace HIMS.Data.DTO.MRD
 
         public string? DoctorName { get; set; }
 
+        public string? InFileInfo { get; set; }
+        public string? OutFileInfo { get; set; }
+
+        
+
+        
+
     }
 }
