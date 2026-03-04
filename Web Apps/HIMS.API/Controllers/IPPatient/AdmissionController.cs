@@ -30,8 +30,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AdmissionList")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.View)]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<AdmissionListDto> AdmissionListList = await _IAdmissionService.GetAdmissionListAsync(objGrid);
