@@ -34,6 +34,7 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? FreightCharges { get; set; }
         public bool? IsCancelled { get; set; }
 
+
         public List<PurchaseDetailModel> TPurchaseDetails { get; set; }
 
     }
@@ -43,7 +44,6 @@ namespace HIMS.API.Models.Pharmacy
         {
             RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("Store is required");
             RuleFor(x => x.SupplierId).NotNull().NotEmpty().WithMessage("Supplier is required");
-            //RuleFor(x => x.TPurchaseDetails).NotNull().NotEmpty().WithMessage("Purchase items is required");
         }
     }
 }
