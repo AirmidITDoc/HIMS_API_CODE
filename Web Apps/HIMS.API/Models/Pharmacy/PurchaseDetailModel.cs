@@ -26,6 +26,8 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? DefRate { get; set; }
         public float? VendDiscPer { get; set; }
         public decimal? VendDiscAmt { get; set; }
+        public float? FreeQty { get; set; }
+
     }
     public class PurchaseDetailModellValidator : AbstractValidator<PurchaseDetailModel>
     {

@@ -26,25 +26,24 @@ namespace HIMS.Services.MRD
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
-            {
-                var lastSeqNoStr = await _context.TMrdfileReceiveds
-                    .OrderByDescending(x => x.Mrdno)
-                    .Select(x => x.Mrdno)
-                    .FirstOrDefaultAsync();
+            
+                var MrdnoList = await _context.TMrdfileReceiveds
+                .Where(x => x.Mrdno != null && x.Mrdno != "")
+                .Select(x => x.Mrdno)
+                .ToListAsync();
 
-                int lastSeqNo = 0;
-                if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
-                    lastSeqNo = parsed;
+                int lastMrdno = MrdnoList
+                    .Select(p => int.TryParse(p, out var n) ? n : 0)
+                    .DefaultIfEmpty(0)
+                    .Max();
 
-                // Increment the sequence number
-                int newSeqNo = lastSeqNo + 1;
-                ObjTMrdfileReceived.Mrdno = newSeqNo.ToString();
-
+            //  Increment & assign
+            ObjTMrdfileReceived.Mrdno = (lastMrdno + 1).ToString();
                 _context.TMrdfileReceiveds.Add(ObjTMrdfileReceived);
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
-            }
+            
         }
         public virtual async Task UpdateAsync(TMrdfileReceived ObjTMrdfileReceived, int UserId, string Username, string[]? ignoreColumns = null)
         {
