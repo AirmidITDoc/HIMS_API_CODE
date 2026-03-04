@@ -14569,6 +14569,43 @@ namespace HIMS.Services.Report
                     }
 
                     break;
+                case "PurchaseRequisitionReport":
+                    {
+                        int i = 0;
+                        String Verify = " ";
+
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr><td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;border-bottom: 1px solid black;text-align:center;font-size:18px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center;border-bottom: 1px solid black;font-size:18px;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;vertical-align:middle;padding:0;border-right:1px solid #000;height:10px;text-align:center;border-bottom: 1px solid black;font-size:18px;\">").Append(dr["Qty"].ConvertToString()).Append("</td></tr>");
+
+                        }
+
+
+
+                        html = html.Replace("{{Items}}", items.ToString());
+                        html = html.Replace("{{FromStoreName}}", dt.GetColValue("FromStoreName"));
+
+                        html = html.Replace("{{VLabel}}", dt.GetColValue("VLabel"));
+                        html = html.Replace("{{Remark}}", dt.GetColValue("Comments"));
+                        html = html.Replace("{{ToStoreName}}", dt.GetColValue("ToStoreName"));
+                        html = html.Replace("{{PurchaseRequisitionNo}}", dt.GetColValue("PurchaseRequisitionNo"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+                        html = html.Replace("{{PurchaseRequisitionTime}}", dt.GetColValue("PurchaseRequisitionTime").ConvertToDateString("dd.MM.yyyy hhLmm tt"));
+                        html = html.Replace("{{Isverify}}", dt.GetColValue("Isverify"));
+                        html = html.Replace("{{Comments}}", dt.GetColValue("Comments"));
+
+                        html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
+                        html = html.Replace("{{StoreAddress}}", dt.GetColValue("StoreAddress"));
+                        return html;
+
+                    }
+
+                    break;
 
                 case "IndentverifyReport":
                     {
