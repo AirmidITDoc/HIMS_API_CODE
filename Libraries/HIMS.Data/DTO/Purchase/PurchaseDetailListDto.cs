@@ -26,6 +26,8 @@
         public decimal? VendDiscAmt { get; set; }
         public string? Specification { get; set; }
         public float? FreeQty { get; set; }
+        public float? TotalQty { get; set; }
+
 
 
 

@@ -109,6 +109,14 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(LabResultDetailsList.ToGridResponse(objGrid, " Lab ResultDetails List "));
         }
 
+        [HttpPost("LabResultPrintedList")]
+        [Permission]
+        public async Task<IActionResult> LabResultPrintedList(GridRequestModel objGrid)
+        {
+            IPagedList<LabResultPrintedListDto> LabResultPrintedList = await _ILabPatientRegistrationService.LabResultPrintedListAsync(objGrid);
+            return Ok(LabResultPrintedList.ToGridResponse(objGrid, " Lab Result Printed List "));
+        }
+
         [HttpGet("CompanyComboList")]
         //[Permission]
         public ApiResponse CompanyComboList(string? keywoard)

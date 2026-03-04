@@ -209,15 +209,5 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Template List.", data);
         }
 
-
-
-        //[HttpGet("search-GetServicewiseTemplate")]
-        //public async Task<ApiResponse> SearchGetServiceWisetemplate(int ServiceId)
-        //{
-        //    var resultList = await _IPathlogyService.GetServicewisetemplate(ServiceId);
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Template List.", resultList.Select(x => new { value = x.TemplateId, text = x.TemplateDesc }));
-        //}
-
-
     }
 }
