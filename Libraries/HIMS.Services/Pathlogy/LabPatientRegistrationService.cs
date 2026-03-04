@@ -57,6 +57,10 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<PrevDrVisistListDto>(model, "ps_Rtrv_PreviousLabDoctorVisitList");
         }
+        public virtual async Task<IPagedList<LabResultPrintedListDto>> LabResultPrintedListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabResultPrintedListDto>(model, "ps_Rtrv_LabResultPrintedList");
+        }
         public List<CompanyComboDto> CompanyComboList(string keywoard)
         {
             DatabaseHelper sql = new();
