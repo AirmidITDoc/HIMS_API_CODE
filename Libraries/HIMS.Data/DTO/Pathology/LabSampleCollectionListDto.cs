@@ -12,8 +12,6 @@ namespace HIMS.Data.DTO.Pathology
         public string? DoctorName { get; set; }
         public string? LBL { get; set; }
         public string? PBillNo { get; set; }
-        //public bool? IsSampleCollection { get; set; }
-        //public string? SampleNo { get; set; }
         public string? BillNo { get; set; }
         public DateTime? PathDate { get; set; }
         public string? WardName { get; set; }
@@ -30,47 +28,18 @@ namespace HIMS.Data.DTO.Pathology
         public string? AgeDay { get; set; }
         public string? OPD_IPD_Type { get; set; }
         public string? GenderName { get; set; }
-        // From Expr columns (usually name split or extra fields)
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
         public string? HospitalName { get; set; }
         public string ServiceNames { get; set; }
-        //public string SampleCollectionTime { get; set; }
-        //public long? OutSourceId { get; set; }
-        //public string? OutSourceLabName { get; set; }
-        //public DateTime? OutSourceSampleSentDateTime { get; set; }
-        //public long? OutSourceStatus { get; set; }
-        //public DateTime? OutSourceReportCollectedDateTime { get; set; }
-        //public long? OutSourceCreatedBy { get; set; }
-        //public DateTime? OutSourceCreatedDateTime { get; set; }
-        //public long? OutSourceModifiedby { get; set; }
-        //public DateTime? OutSourceModifiedDateTime { get; set; }
-        //public long? PathReportID { get; set; }
         public string? IsPathOutSource { get; set; }
         public string? IsRadOutSource { get; set; }
         public long? PathTestID { get; set; }
-        //public DateTime? TestTime { get; set; }
-        //public DateTime? TestDate { get; set; }
-        //public long? SpecimenTypeId { get; set; }
-        //public long? SpecimenColor { get; set; }
-        //public long? SpecimenQty { get; set; }
-        //public long? SpecimenConditionId { get; set; }
-        //public long? ContainerTypeId { get; set; }
-        //public long? CollectionMethod { get; set; }
-        //public long? NoofContainer { get; set; }
-        //public long? PreservationUsed { get; set; }
-        //public string? BarcodeLabel { get; set; }
-        //public string? ConsentDetail { get; set; }
-        //public bool? IsConsentRequired { get; set; }
-        //public bool? IsFastingRequired { get; set; }
-        //public bool? IsApprovedRequired { get; set; }
-        //public string? TestInformationTemplate { get; set; }
-        //public long? Tatday { get; set; }
-        //public long? Tathour { get; set; }
-        //public long? Tatmin { get; set; }
         public string? RefDoctorName { get; set; }
         public string? TestCountStatus { get; set; }
+        public string? CompanyName { get; set; }
+
 
     }
     public class LabSampleCollectionDetailListDto

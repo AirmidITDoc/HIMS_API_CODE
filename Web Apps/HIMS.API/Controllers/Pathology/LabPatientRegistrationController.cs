@@ -18,6 +18,9 @@ using HIMS.Data.Models;
 using HIMS.Services.DoctorPayout;
 using HIMS.Services.Pathlogy;
 using Microsoft.AspNetCore.Mvc;
+using HIMS.API.Models.Pathology;
+using System.Net.Mime;
+
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -29,21 +32,25 @@ namespace HIMS.API.Controllers.Pathology
         private readonly ILabPatientRegistrationService _ILabPatientRegistrationService;
         private readonly IGenericService<TLabPatientRegistration> _repository;
         private readonly IGenericService<TLabPatientRegisteredMaster> _repository1;
+        private readonly IGenericService<MConstant> _repository2;
 
 
-        public LabPatientRegistrationController(ILabPatientRegistrationService repository, IGenericService<TLabPatientRegistration> repository1, IGenericService<TLabPatientRegisteredMaster> repository2)
+
+        public LabPatientRegistrationController(ILabPatientRegistrationService repository, IGenericService<TLabPatientRegistration> repository1, IGenericService<TLabPatientRegisteredMaster> repository2, IGenericService<MConstant> repository3)
         {
             _ILabPatientRegistrationService = repository;
             _repository = repository1;
             _repository1 = repository2;
+            _repository2 = repository3;
+
 
 
         }
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
-            var data = await _repository.GetById(x => x.LabPatientId == id);
+            var data = await _repository.GetById(x => x.LabPatRegId == id);
             return data.ToSingleResponse<TLabPatientRegistration, TLabPatientRegistrationModel>("LabPatientRegistration");
         }
         [HttpGet("GetLabPatientRegisteredMaster")]
@@ -53,8 +60,12 @@ namespace HIMS.API.Controllers.Pathology
             var data = await _repository1.GetById(x => x.LabPatRegId == id);
             return data.ToSingleResponse<TLabPatientRegisteredMaster, LabPatientRegistrationMasterModels>("TLabPatientRegisteredMaster");
         }
-
-
+        [HttpGet("GetMConstant")]
+        public async Task<ApiResponse> GetMConstant(string ConstantType)
+        {
+            var data = await _ILabPatientRegistrationService.GetMConstant(ConstantType);
+            return new ApiResponse { Data = data, StatusCode = 200, Message = "MConstant" };
+        }
         [HttpPost("PrevLabDoctorVisitList")]
         public async Task<IActionResult> OPPrevDrVisistList(GridRequestModel objGrid)
         {
@@ -283,6 +294,21 @@ namespace HIMS.API.Controllers.Pathology
         {
             IPagedList<LabCreditDetailDto> LabCreditDetailList = await _ILabPatientRegistrationService.LabCreditDetailListAsync(objGrid);
             return Ok(LabCreditDetailList.ToGridResponse(objGrid, "Lab Credit Detail List"));
+        }
+
+        [HttpPost("DiscApprovalDetails")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertDiscApprovalDetails(DiscApprovalDetailsModel obj)
+        {
+            TDiscApprovalDetail model = obj.MapTo<TDiscApprovalDetail>();
+            if (obj.DiscSeqId == 0)
+            {
+               
+                await _ILabPatientRegistrationService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
     }
