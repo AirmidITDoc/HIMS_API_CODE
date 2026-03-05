@@ -1,4 +1,5 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Data.DTO.Purchase;
+using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace HIMS.Services.Pharmacy
 {
     public interface IPurchaseRequisitionFinalService
     {
-        Task InsertAsync(TPrheader ObjTPrheader, int UserId, string Username);
+        Task InsertAsync(TPrheader ObjTPrheader, List<TPurchaseRequisitionHeader> objPurchaseRequisitionHeader, int UserId, string Username);
     }
 }

@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using Microsoft.AspNetCore.Mvc;
@@ -29,13 +30,17 @@ namespace HIMS.API.Controllers.Pharmacy
         public async Task<ApiResponse> Insert(PurchaseRequisitionFinalModel obj)
         {
             TPrheader model = obj.MapTo<TPrheader>();
+            List<TPurchaseRequisitionHeader> objPurchaseRequisitionHeader = obj.Tpr.Select(x => new TPurchaseRequisitionHeader
+            {
+                PurchaseRequisitionId = (long)x.PrrequestHeaderId,
+            }).ToList();
             if (obj.Prid == 0)
             {
                 model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                await _IPurchaseRequisitionFinalService.InsertAsync(model, CurrentUserId, CurrentUserName);
+                await _IPurchaseRequisitionFinalService.InsertAsync(model, objPurchaseRequisitionHeader, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
