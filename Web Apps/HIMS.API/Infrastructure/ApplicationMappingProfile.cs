@@ -576,6 +576,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<RefundUpdateModel, Refund>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MrdFileReceivedModel, TMrdfileReceived>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MRDOutInFileModel, TMrdoutInFile>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<DiscApprovalDetailsModel, TDiscApprovalDetail>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 

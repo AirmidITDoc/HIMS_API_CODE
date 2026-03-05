@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using WkHtmlToPdfDotNet;
 
+
 namespace HIMS.Services.Pathlogy
 {
     public class LabPatientRegistrationService : ILabPatientRegistrationService
@@ -72,7 +73,14 @@ namespace HIMS.Services.Pathlogy
 
             return data;
         }
-
+        
+        public async Task<List<MConstant>> GetMConstant(string ConstantType)
+        {
+            var data = await _context.MConstants
+                        .Where(x => x.ConstantType == ConstantType)
+                        .ToListAsync();
+            return data;
+        }
         public virtual async Task InsertAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -101,7 +109,7 @@ namespace HIMS.Services.Pathlogy
             {
 
                 DatabaseHelper odal = new();
-                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId", 
+                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "CityId",
                     "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId", "AdharCardNo", "CompanyId", "SubCompanyId", "CampId",
                     "PatientType","Comments","ReferByName","CompanyExecutiveId"};
 
@@ -212,8 +220,8 @@ namespace HIMS.Services.Pathlogy
                         {
                             foreach (var item in ObjaddCharge)
                             {
-                                string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType","OpdIpdId", "ServiceId", "Price", "Qty", "UnitId", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", 
-                                    "DocPercentage", "DocAmt", "HospitalAmt", "RefundAmount", "IsGenerated", "IsComServ", "IsPrintCompSer", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", 
+                                string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType","OpdIpdId", "ServiceId", "Price", "Qty", "UnitId", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName",
+                                    "DocPercentage", "DocAmt", "HospitalAmt", "RefundAmount", "IsGenerated", "IsComServ", "IsPrintCompSer", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology",
                                     "IsPackage", "WardId", "BedId", "ServiceCode", "ServiceName", "CompanyServiceName", "IsInclusionExclusion", "IsHospMrk", "PackageMainChargeID", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId", "TariffId", "BillNo", "CreatedBy" };
                                 var Packagescharge = item.ToDictionary();
 
@@ -263,24 +271,24 @@ namespace HIMS.Services.Pathlogy
 
 
 
-                        //string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount" };
-                        //Payment objPay = new();
-                        //objPay = objPayment;
-                        //objPay.BillNo = objBill.BillNo;
-                        //var entity2 = objPayment.ToDictionary();
-                        //foreach (var rProperty in entity2.Keys.ToList())
-                        //{
-                        //    if (!rPaymentEntity.Contains(rProperty))
-                        //        entity2.Remove(rProperty);
-                        //}
-                        //entity2["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
-                        //string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
-                        //objPayment.PaymentId = Convert.ToInt32(PaymentId);
+                    //string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount" };
+                    //Payment objPay = new();
+                    //objPay = objPayment;
+                    //objPay.BillNo = objBill.BillNo;
+                    //var entity2 = objPayment.ToDictionary();
+                    //foreach (var rProperty in entity2.Keys.ToList())
+                    //{
+                    //    if (!rPaymentEntity.Contains(rProperty))
+                    //        entity2.Remove(rProperty);
+                    //}
+                    //entity2["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
+                    //string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
+                    //objPayment.PaymentId = Convert.ToInt32(PaymentId);
 
-                        scope.Complete();
-                    }
+                    scope.Complete();
                 }
-                
+            }
+
 
             catch (Exception ex)
             {
@@ -297,7 +305,7 @@ namespace HIMS.Services.Pathlogy
             {
 
                 DatabaseHelper odal = new();
-                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", 
+                string[] rEntity = { "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address",
                     "CityId", "StateId", "CountryId", "PatientTypeId", "TariffId", "ClassId", "DepartmentId", "DoctorId", "RefDocId", "CreatedBy", "LabPatientId", "LabPatRegId","AdharCardNo", "CompanyId", "SubCompanyId", "CampId",
                     "PatientType","Comments","ReferByName","CompanyExecutiveId"};
 
@@ -409,8 +417,8 @@ namespace HIMS.Services.Pathlogy
                         {
                             foreach (var item in ObjaddCharge)
                             {
-                                string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType","OpdIpdId", "ServiceId", "Price", "Qty", "UnitId", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", "DocPercentage", 
-                                    "DocAmt", "HospitalAmt", "RefundAmount", "IsGenerated", "IsComServ", "IsPrintCompSer", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "WardId", "BedId", 
+                                string[] AEntity = { "ChargesId", "ChargesDate", "OpdIpdType","OpdIpdId", "ServiceId", "Price", "Qty", "UnitId", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DoctorName", "DocPercentage",
+                                    "DocAmt", "HospitalAmt", "RefundAmount", "IsGenerated", "IsComServ", "IsPrintCompSer", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "WardId", "BedId",
                                     "ServiceCode", "ServiceName", "CompanyServiceName", "IsInclusionExclusion", "IsHospMrk", "PackageMainChargeID", "IsSelfOrCompanyService", "PackageId", "ChargesTime", "ClassId", "TariffId", "BillNo", "CreatedBy" };
                                 var Packagescharge = item.ToDictionary();
 
@@ -436,7 +444,7 @@ namespace HIMS.Services.Pathlogy
 
                         }
                     }
-                    string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", 
+                    string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount",
                         "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "CompanyId" };
                     Payment objPay = new();
                     objPay = objPayment;
@@ -454,7 +462,7 @@ namespace HIMS.Services.Pathlogy
                     foreach (var item in ObjTPayment)
                     {
 
-                    string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                        string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
                                            "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
 
                         TPayment objTPay = new();
@@ -487,16 +495,7 @@ namespace HIMS.Services.Pathlogy
             }
         }
 
-        //public List<LabVisitDetailsListSearchDto> SearchlabRegistration(long UnitId ,string Keyword)
-        //{
-        //    DatabaseHelper sql = new();
 
-        //    SqlParameter[] para = new SqlParameter[2];
-        //    para[0] = new SqlParameter("@UnitId", UnitId);
-        //    para[1] = new SqlParameter("@Keyword", Keyword);
-
-        //    return sql.FetchListBySP<LabVisitDetailsListSearchDto>("ps_Rtrv_PatientLabRegisteredListSearch", para);
-        //}
         public List<LabVisitDetailsListSearchDto> SearchlabRegistration(long UnitId, string Keyword)
         {
             DatabaseHelper sql = new();
@@ -505,7 +504,7 @@ namespace HIMS.Services.Pathlogy
             para[0] = new SqlParameter("@UnitId", UnitId);
             para[1] = new SqlParameter("@Keyword", Keyword);
 
-            return sql.FetchListBySP<LabVisitDetailsListSearchDto>( "ps_Rtrv_PatientLabRegisteredListSearch", para);
+            return sql.FetchListBySP<LabVisitDetailsListSearchDto>("ps_Rtrv_PatientLabRegisteredListSearch", para);
         }
 
 
@@ -516,7 +515,7 @@ namespace HIMS.Services.Pathlogy
                .Where(x =>
                    (x.FirstName + " " + x.LastName).ToLower().StartsWith(str) || // Optional: if you want full name search
                    x.FirstName.ToLower().StartsWith(str) ||                     // Match first name starting with str
-                   //x.RegNo.ToLower().StartsWith(str) ||                         // Match RegNo starting with str
+                                                                                //x.RegNo.ToLower().StartsWith(str) ||                         // Match RegNo starting with str
                    x.MobileNo.ToLower().Contains(str)                           // Keep full Contains() for MobileNo
                )
                .Take(25)
@@ -528,7 +527,7 @@ namespace HIMS.Services.Pathlogy
                    MiddleName = x.MiddleName,
                    MobileNo = x.MobileNo,
                    //RegNo = x.RegNo,
-                   
+
                    AgeYear = x.AgeYear,
                    AgeMonth = x.AgeMonth,
                    AgeDay = x.AgeDay,
@@ -538,7 +537,7 @@ namespace HIMS.Services.Pathlogy
               .ThenBy(x => x.FirstName).ToListAsync();
         }
 
-    
+
         public virtual async Task UpdateAsync(TLabPatientRegisteredMaster ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -574,22 +573,13 @@ namespace HIMS.Services.Pathlogy
 
         public virtual async Task<IPagedList<LabResultDetailsListDto>> LabApprovalResultListAsync(GridRequestModel model)
         {
-            
+
             return await DatabaseHelper.GetGridDataBySp<LabResultDetailsListDto>(model, "ps_Rtrv_LabLabApprovalList");
         }
 
 
 
 
-        //public virtual async Task<IPagedList<PatientEstimateListDto>> GetPatientEstimate(GridRequestModel model)
-        //{
-        //    return await DatabaseHelper.GetGridDataBySp<PatientEstimateListDto>(model, "ps_Rtrv_T_EstimatePatietwise");
-        //}
-
-        //public Task<IPagedList<PatientEstimateDetailsListDto>> GetPatientEstimateDetail(GridRequestModel objGrid)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public virtual async Task<IPagedList<LabDiscountDetailListDto>> LabDiscountDetailListAsync(GridRequestModel model)
         {
@@ -605,6 +595,24 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<LabCreditDetailDto>(model, "ps_Rtrv_LabRegisterCreditDetail");
         }
+        public virtual async Task InsertAsync(TDiscApprovalDetail ObjTDiscApprovalDetail, int CurrentUserId, string CurrentUserName)
+        {
 
+
+            DatabaseHelper odal = new();
+            string[] Entity = { "DiscSeqId", "Opipid", "Opiptype", "BillNo", "RequestAmount", "ApprovedAmount", "AppovedBy", "ApprovedDateTime", "Comments", "IsActive" };
+
+            var entity = ObjTDiscApprovalDetail.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!Entity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+            string DiscSeqId = odal.ExecuteNonQuery("ps_Insert_T_DiscApprovalDetails", CommandType.StoredProcedure, "DiscSeqId", entity);
+            ObjTDiscApprovalDetail.DiscSeqId = Convert.ToInt32(DiscSeqId);
+            await _context.LogProcedureExecution(entity, nameof(TDiscApprovalDetail), Convert.ToInt32(ObjTDiscApprovalDetail.DiscSeqId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+
+        }
     }
 }
