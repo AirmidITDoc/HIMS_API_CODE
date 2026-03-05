@@ -20,6 +20,7 @@ namespace HIMS.API.Models.Pharmacy
         public DateTime? IsCancelledDateTime { get; set; }
 
         public List<PurchaseRequisitionDetailFinalModel> TPrdetails { get; set; }
+        public List<PurchaseRequestModel> Tpr { get; set; }
     }
     public class PurchaseRequisitionFinalModelValidator : AbstractValidator<PurchaseRequisitionFinalModel>
     {
@@ -48,5 +49,10 @@ namespace HIMS.API.Models.Pharmacy
         {
             //RuleFor(x => x.VerifiedQty).NotNull().NotEmpty().WithMessage("VerifiedQty  is required");
         }
+    }
+    public class PurchaseRequestModel
+    {
+        public long? PrrequestHeaderId { get; set; }
+
     }
 }
