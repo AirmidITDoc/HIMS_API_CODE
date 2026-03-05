@@ -593,14 +593,32 @@ namespace HIMS.Services.Common
                 objRegistration.RegId = Convert.ToInt32(RegId);
                 await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, currentUserName);
 
+                //  ( For RegNo fetch )
+                var regNo = await _context.Registrations
+                           .Where(x => x.RegId == objRegistration.RegId)
+                           .Select(x => x.RegNo)
+                           .FirstOrDefaultAsync();
 
-
-
-
-                objVisitDetail.RegId = objRegistration.RegId;
-                _context.VisitDetails.Add(objVisitDetail);
-                await _context.SaveChangesAsync();
+                objRegistration.RegNo = regNo;
+                string[] rVisitEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
+                var visitentity = objVisitDetail.ToDictionary();
+                foreach (var rProperty in visitentity.Keys.ToList())
+                {
+                    if (!rVisitEntity.Contains(rProperty))
+                        visitentity.Remove(rProperty);
+                }
+                string VisitId = odal1.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+                objVisitDetail.VisitId = Convert.ToInt32(VisitId);
                 objBill.OpdIpdId = objVisitDetail.VisitId;
+                objBill.RegNo = Convert.ToInt64(objRegistration.RegNo);
+                await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, currentUserName);
+
+
+
+                //objVisitDetail.RegId = objRegistration.RegId;
+                //_context.VisitDetails.Add(objVisitDetail);
+                //await _context.SaveChangesAsync();
+                //objBill.OpdIpdId = objVisitDetail.VisitId;
 
                 ConfigSetting objConfigSetting = await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
                 objConfigSetting.Opno = Convert.ToString(Convert.ToInt32(objConfigSetting.Opno) + 1);
@@ -766,10 +784,24 @@ namespace HIMS.Services.Common
         {
             try
             {
+                DatabaseHelper odal = new();
 
-                _context.VisitDetails.Add(objVisitDetail);
-                await _context.SaveChangesAsync();
+                string[] rVisitEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
+                var visitentity = objVisitDetail.ToDictionary();
+                foreach (var rProperty in visitentity.Keys.ToList())
+                {
+                    if (!rVisitEntity.Contains(rProperty))
+                        visitentity.Remove(rProperty);
+                }
+                string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+                objVisitDetail.VisitId = Convert.ToInt32(VisitId);
                 objBill.OpdIpdId = objVisitDetail.VisitId;
+                //objBill.RegNo = Convert.ToInt64(objRegistration.RegNo);
+                await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+                //_context.VisitDetails.Add(objVisitDetail);
+                //await _context.SaveChangesAsync();
+                //objBill.OpdIpdId = objVisitDetail.VisitId;
 
                 ConfigSetting objConfigSetting = await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
                 objConfigSetting.Opno = Convert.ToString(Convert.ToInt32(objConfigSetting.Opno) + 1);
@@ -778,7 +810,6 @@ namespace HIMS.Services.Common
                 await _context.SaveChangesAsync();
 
 
-                DatabaseHelper odal = new();
                 string[] BEntity = { "OpdIpdId", "RegNo",  "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId","PatientType", "CompanyName", "CompanyAmt",
                     "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments"/*"CashCounterId"*/,"CreatedBy","GovtApprovedAmt","BillNo"};
                 var bentity = objBill.ToDictionary();
