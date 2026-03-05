@@ -185,10 +185,7 @@ namespace HIMS.API.Controllers.OPPatient
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AppBillRegisteredInsert(RegistredAppBillingMainModels obj)
         {
-            //Registration Regmodel = obj.AppRegistrationBills.MapTo<Registration>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
-
-
             Bill billmodel = obj.AppOPBillIngModels.MapTo<Bill>();
             Payment objPayment = obj.AppOPBillIngModels.Payments.MapTo<Payment>();
             List<AddCharge> ObjPackagecharge = obj.AppOPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
@@ -215,10 +212,8 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> OPAppointCreditBillingInsert(AppBillingMainModels obj)
         {
             Registration Regmodel = obj.AppRegistrationBills.MapTo<Registration>();
-
             Bill model = obj.AppOPBillIngModels.MapTo<Bill>();
             Payment objPayment = obj.AppOPBillIngModels.Payments.MapTo<Payment>();
-
             List<AddCharge> ObjPackagecharge = obj.AppOPBillIngModels.Packcagecharges.MapTo<List<AddCharge>>();
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
 

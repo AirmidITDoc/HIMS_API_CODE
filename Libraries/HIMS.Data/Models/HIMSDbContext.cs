@@ -434,6 +434,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TCustomerPayment> TCustomerPayments { get; set; } = null!;
         public virtual DbSet<TDeathCertificate> TDeathCertificates { get; set; } = null!;
         public virtual DbSet<TDialysi> TDialyses { get; set; } = null!;
+        public virtual DbSet<TDiscApprovalDetail> TDiscApprovalDetails { get; set; } = null!;
         public virtual DbSet<TDiscCaseSheet> TDiscCaseSheets { get; set; } = null!;
         public virtual DbSet<TDiscountTransactionHistory> TDiscountTransactionHistories { get; set; } = null!;
         public virtual DbSet<TDlabRequest> TDlabRequests { get; set; } = null!;
@@ -1117,6 +1118,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AdvanceUsedAmount).HasColumnType("money");
 
+                entity.Property(e => e.ApprovalDatetime).HasColumnType("datetime");
+
                 entity.Property(e => e.BalanceAmt).HasColumnType("money");
 
                 entity.Property(e => e.BillDate).HasColumnType("datetime");
@@ -1166,6 +1169,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Ipdno)
                     .HasMaxLength(50)
                     .HasColumnName("IPDNo");
+
+                entity.Property(e => e.IsApproval).HasColumnName("isApproval");
 
                 entity.Property(e => e.IsBillCheck).HasDefaultValueSql("((0))");
 
@@ -12189,6 +12194,27 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
 
                 entity.Property(e => e.TechinicianName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<TDiscApprovalDetail>(entity =>
+            {
+                entity.HasKey(e => e.DiscSeqId);
+
+                entity.ToTable("T_DiscApprovalDetails");
+
+                entity.Property(e => e.ApprovedAmount).HasColumnType("money");
+
+                entity.Property(e => e.ApprovedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Comments).HasMaxLength(255);
+
+                entity.Property(e => e.DiscApprovalNo).HasMaxLength(50);
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.RequestAmount).HasColumnType("money");
             });
 
             modelBuilder.Entity<TDiscCaseSheet>(entity =>
