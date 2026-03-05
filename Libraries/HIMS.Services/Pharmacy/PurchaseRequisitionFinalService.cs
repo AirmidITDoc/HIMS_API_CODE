@@ -1,6 +1,8 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using System;
@@ -62,6 +64,16 @@ namespace HIMS.Services.Pharmacy
 
                 scope.Complete();
             }         
+        }
+
+        public virtual async Task<IPagedList<PurchaseRequisitionFinalHeaderListDto>> PurchaseRequisitionFinalHeaderListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PurchaseRequisitionFinalHeaderListDto>(model, "ps_PurchaseRequisitionFinalHeaderList");
+        }
+
+        public virtual async Task<IPagedList<PurchaseRequisitionFinalDetailListDto>> PurchaseRequisitionFinalDetailListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PurchaseRequisitionFinalDetailListDto>(model, "ps_PurchaseRequisitionFinalDetailList");
         }
     }
 }

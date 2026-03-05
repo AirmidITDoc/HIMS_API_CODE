@@ -3,8 +3,10 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Pharmacy;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
@@ -45,6 +47,22 @@ namespace HIMS.API.Controllers.Pharmacy
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.Prid);
+        }
+
+        [HttpPost("PurchaseRequisitionFinalHeaderList")]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        public async Task<IActionResult> PurchaseRequisitionFinalHeaderList(GridRequestModel objGrid)
+        {
+            IPagedList<PurchaseRequisitionFinalHeaderListDto> PurchaseRequisitionFinalHeaderList = await _IPurchaseRequisitionFinalService.PurchaseRequisitionFinalHeaderListAsync(objGrid);
+            return Ok(PurchaseRequisitionFinalHeaderList.ToGridResponse(objGrid, "Purchase Requisition Final HeaderList"));
+        }
+
+        [HttpPost("PurchaseRequisitionFinalDetailList")]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        public async Task<IActionResult> PurchaseRequisitionFinalDetailList(GridRequestModel objGrid)
+        {
+            IPagedList<PurchaseRequisitionFinalDetailListDto> PurchaseRequisitionFinalDetailList = await _IPurchaseRequisitionFinalService.PurchaseRequisitionFinalDetailListAsync(objGrid);
+            return Ok(PurchaseRequisitionFinalDetailList.ToGridResponse(objGrid, "Purchase Requisition Final Detail List"));
         }
     }
 }
