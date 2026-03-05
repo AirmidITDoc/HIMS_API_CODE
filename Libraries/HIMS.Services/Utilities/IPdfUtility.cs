@@ -26,6 +26,8 @@ namespace HIMS.Services.Utilities
         string GetStoreHeader(string filePath, long StoreId = 0);
 
         string GetPatientHeader(ReportRequestModel model, string filePath);
+        string GetPatientHeaders(ReportRequestModel model, string filePath);
+
         string GetHeaderfromtemplate(ReportRequestModel model, string filePath);
         string GetAppointmentfromtemplate(ReportRequestModel model, string filePath);
 

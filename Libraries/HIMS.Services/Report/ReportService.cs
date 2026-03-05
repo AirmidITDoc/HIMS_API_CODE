@@ -328,11 +328,11 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptAppointmentPrint2", model, htmlFilePath, htmlHeaderFilePath1, Array.Empty<string>());
       
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PatientHeader.html");
-                        htmlHeaderFilePath = _pdfUtility.GetPatientHeader(model, htmlHeaderFilePath);
+                        htmlHeaderFilePath = _pdfUtility.GetPatientHeaders(model, htmlHeaderFilePath);
 
                         string htmlHeaderFilePathHeader = Path.Combine(AppSettings.Settings.PdfTemplatePath, "GetAppointmentfromtemplate.html");
                         htmlHeaderFilePathHeader = _pdfUtility.GetAppointmentfromtemplate(model, htmlHeaderFilePathHeader);
-
+                  
 
                         html = html.Replace("{{TemplateHeader}}", htmlHeaderFilePathHeader);
 
