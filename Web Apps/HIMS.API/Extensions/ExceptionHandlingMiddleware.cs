@@ -33,16 +33,16 @@ namespace HIMS.API.Extensions
                     await _next.Invoke(context);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 HttpResponse response = context.Response;
                 response.ContentType = "application/json";
                 log.ResponseCode = "500";
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                string param = "";
+                string param;
                 if (context.Request.Method.ToLower() == "get")
                 {
-                    param = context.Request.QueryString.HasValue ? context.Request.QueryString.Value : "";
+                    _ = context.Request.QueryString.HasValue ? context.Request.QueryString.Value : "";
                 }
                 else
                 {
