@@ -133,6 +133,8 @@ namespace HIMS.API.Models.OPPatient
         public long? TariffId { get; set; }
         public long? BillNo { get; set; }
         public long? CreatedBy { get; set; }
+        public bool? IsOtherService { get; set; }
+
 
     }
     public class ChargesModelValidator : AbstractValidator<ChargesModel>

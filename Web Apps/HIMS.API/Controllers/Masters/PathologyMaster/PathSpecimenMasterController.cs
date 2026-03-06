@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PathSpecimenMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MPathSpecimenMaster> PathSpecimenMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PathSpecimenMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PathSpecimenMaster", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(PathSpecimenMasterModel obj)
         {
             MPathSpecimenMaster model = obj.MapTo<MPathSpecimenMaster>();
@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PathSpecimenMaster", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(PathSpecimenMasterModel obj)
         {
             MPathSpecimenMaster model = obj.MapTo<MPathSpecimenMaster>();
@@ -89,7 +89,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PathSpecimenMaster", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             MPathSpecimenMaster model = await _repository.GetById(x => x.SpecimenId == Id);
@@ -105,6 +105,4 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
     }
-
-
 }

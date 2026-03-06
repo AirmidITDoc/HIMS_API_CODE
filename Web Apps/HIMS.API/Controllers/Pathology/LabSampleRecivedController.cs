@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Pathology
             _ILabSampleRecivedService = repository;
         }
         [HttpPost("LabSampleRecivedList")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LabSampleRecivedListDto> LabSampleRecivedList = await _ILabSampleRecivedService.LabGetListAsync(objGrid);
