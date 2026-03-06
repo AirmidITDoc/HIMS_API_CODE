@@ -75,5 +75,8 @@ namespace HIMS.Data.DTO.Pathology
         public string? PreservationUsedName { get; set; }
         public string? RefDoctorName { get; set; }
         public string? UserName { get; set; }
+        public string? SamplecollectedBy { get; set; }
+
+        
     }
 }
