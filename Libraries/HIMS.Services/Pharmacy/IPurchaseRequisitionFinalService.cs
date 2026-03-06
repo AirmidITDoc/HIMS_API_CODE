@@ -1,4 +1,6 @@
-﻿using HIMS.Data.DTO.Purchase;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Pathology;
+using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -11,5 +13,8 @@ namespace HIMS.Services.Pharmacy
     public interface IPurchaseRequisitionFinalService
     {
         Task InsertAsync(TPrheader ObjTPrheader, List<TPurchaseRequisitionHeader> objPurchaseRequisitionHeader, int UserId, string Username);
+        Task<IPagedList<PurchaseRequisitionFinalHeaderListDto>> PurchaseRequisitionFinalHeaderListAsync(GridRequestModel objGrid);
+
+        Task<IPagedList<PurchaseRequisitionFinalDetailListDto>> PurchaseRequisitionFinalDetailListAsync(GridRequestModel objGrid);
     }
 }
