@@ -40,6 +40,7 @@ namespace HIMS.Data.Models
         public long? PackageIcudays { get; set; }
         public decimal? PackageMedicineAmount { get; set; }
         public decimal? PackageConsumableAmount { get; set; }
+        public bool? IsOtherService { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }

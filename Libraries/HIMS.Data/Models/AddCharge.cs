@@ -28,6 +28,7 @@ namespace HIMS.Data.Models
         public decimal? RefundAmount { get; set; }
         public long? IsPathology { get; set; }
         public long? IsRadiology { get; set; }
+        public bool? IsOtherService { get; set; }
         public long? IsDoctorShareGenerated { get; set; }
         public byte? IsInterimBillFlag { get; set; }
         public long? IsPackage { get; set; }

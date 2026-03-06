@@ -413,6 +413,34 @@ namespace HIMS.Services.Pathlogy
                             _context.TRadiologyReportHeaders.Add(objRadio);
                             await _context.SaveChangesAsync();
                         }
+                        // Is othertest Code
+                        if (objItem1?.IsOtherService == true)
+                        {
+                            TRadiologyReportHeader objRadio = new()
+                            {
+                                RadDate = objItem1.ChargesDate,
+                                RadTime = objItem1?.ChargesTime,
+                                OpdIpdType = objItem1?.OpdIpdType,
+                                OpdIpdId = objItem1?.OpdIpdId,
+                                RadTestId = objItem1?.ServiceId,
+                                AddedBy = objItem1?.AddedBy,
+                                ChargeId = objItem1?.ChargesId,
+                                IsCompleted = false,
+                                IsCancelled = 0,
+                                IsPrinted = false,
+                                TestType = true,
+                                PatientName = objBill.PatientName,
+                                RegNo = objBill.RegNo.ToString(),
+                                Opipnumber = objBill.Ipdno,
+                                DoctorName = objBill.DoctorName,
+                                CreatedBy = CurrentUserId,
+                                CreatedDate = AppTime.Now
+                            };
+
+                            _context.TRadiologyReportHeaders.Add(objRadio);
+                            await _context.SaveChangesAsync();
+                        }
+
                         if (objItem1.IsPackage == 1)
                         {
                             foreach (var item in ObjaddCharge)
