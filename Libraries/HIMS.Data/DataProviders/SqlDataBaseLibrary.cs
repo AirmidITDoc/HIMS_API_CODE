@@ -957,9 +957,9 @@ namespace HIMS.Data.DataProviders
 
             return result;
         }
-        public async Task<Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>>> Get2ResultsFromSp<T, T1, T2, T3, T4, T5>(string Spname, SqlParameter[] para) where T : new() where T1 : new() where T2 : new() where T3 : new() where T4 : new() where T5 : new()
+        public async Task<Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>>> Get2ResultsFromSp<T, T1, T2, T3, T4, T5, T6>(string Spname, SqlParameter[] para) where T : new() where T1 : new() where T2 : new() where T3 : new() where T4 : new() where T5 : new() where T6 : new()
         {
-            Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>> result = null;
+            Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>> result = null;
             Command.CommandType = CommandType.StoredProcedure;
             Command.Parameters.AddRange(para);
             Command.CommandText = Spname;
@@ -986,7 +986,10 @@ namespace HIMS.Data.DataProviders
                 await reader.NextResultAsync();
                 var item6 = reader.MapToList<T5>();
 
-                result = new Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>>(item1, item2, item3, item4, item5, item6);
+                await reader.NextResultAsync();
+                var item7 = reader.MapToList<T6>();
+
+                result = new Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5> ,List<T6>>(item1, item2, item3, item4, item5, item6, item7);
             }
             catch (Exception ex)
             {
