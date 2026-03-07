@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.License
                 });
             return new ApiResponse() { Data = licenseRequests, Message = "License list", StatusCode = 200, StatusText = "Ok" };
         }
-        [HttpGet]
+        [HttpGet("{id?}")]
         [Route("get-license")]
         public ApiResponse GetLicense(int Id)
         {
