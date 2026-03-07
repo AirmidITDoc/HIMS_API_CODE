@@ -45,6 +45,7 @@ namespace HIMS.Data.DTO.Pathology
         public long? IndQty { get; set; }
         public long? IssQty { get; set; }
         public bool IsClosed { get; set; }
+        public long ItemId { get; set; }
 
 
     }

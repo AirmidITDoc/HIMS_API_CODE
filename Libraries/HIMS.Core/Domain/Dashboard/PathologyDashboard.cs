@@ -14,6 +14,7 @@ namespace HIMS.Core.Domain.Dashboard
         public List<PathologyReport> RecentPathologyReports { get; set; }
         public List<PathologyOrderedTest> MostOrderedTests { get; set; }
         public List<PathologyWorkload> PathologyWorkloads { get; set; }
+        public List<PathologyReportStatus> PathologyReportStatus { get; set; }
     }
     public class PathologyCountSummary
     {
@@ -53,5 +54,18 @@ namespace HIMS.Core.Domain.Dashboard
     {
         public string DoctorName { get; set; }
         public int Count { get; set; }
+    }
+
+    public class PathologyReportStatus
+    {
+        public long TotalReports { get; set; }
+        public long CompletedReports { get; set; }
+        public long PendingReports { get; set; }
+        public long CollectedSamples { get; set; }
+        public long NotCollectedSamples { get; set; }
+        public long VerifiedReports { get; set; }
+        public long NonVerifiedReports { get; set; }
+        public long DispatchedReports { get; set; }
+        public long NonDispatchedReports { get; set; }
     }
 }
