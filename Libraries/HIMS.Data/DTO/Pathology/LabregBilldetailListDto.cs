@@ -109,6 +109,25 @@ namespace HIMS.Data.DTO.Pathology
         public string? ReportCompletedUser { get; set; }
         public long PaymentCompleted { get; set; }
         public DateTime OutSourceReportCollectedDateTime { get; set; }
+        public long? SpecimenTypeId { get; set; }
+        public long? SpecimenColor { get; set; }
+        public string? SpecimenName { get; set; }
+        public string? SpecimenColorName { get; set; }
+        public long? SpecimenQty { get; set; }
+        public long? NoofContainer { get; set; }
+        public string? BarcodeLabel { get; set; }
+        public long? Tatday { get; set; }
+        public long? Tathour { get; set; }
+        public long? Tatmin { get; set; }
+
+
+
+
+
+
+
+
+
 
 
 

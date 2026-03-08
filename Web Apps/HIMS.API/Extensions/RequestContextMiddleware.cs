@@ -1,4 +1,8 @@
-﻿using HIMS.API.Models.Common;
+﻿using HIMS.Api.Models.Common;
+using HIMS.API.Models.Common;
+using HIMS.API.Utility;
+using System.Net;
+using System.Text.Json;
 
 namespace HIMS.API.Extensions
 {
@@ -24,8 +28,17 @@ namespace HIMS.API.Extensions
                     UnitId = int.Parse(unitId)
                 };
             }
-
-            await _next(context);
+            //string validateLicense = new LicenseService().Validate();
+            //if (validateLicense == "Ok")
+                await _next(context);
+            //else
+            //{
+            //    HttpResponse response = context.Response;
+            //    response.ContentType = "application/json";
+            //    response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            //    string errorJson = JsonSerializer.Serialize(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, validateLicense, new { ApiUrl = context.Request.Path.Value }));
+            //    await response.WriteAsync(errorJson);
+            //}
         }
     }
 

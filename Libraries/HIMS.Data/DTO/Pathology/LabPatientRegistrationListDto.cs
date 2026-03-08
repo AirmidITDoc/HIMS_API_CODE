@@ -61,14 +61,7 @@ namespace HIMS.Data.DTO.Pathology
         public DateTime CreatedDate { get; set; }
         public int? IsAllPathServicesVerified { get; set; }
         public int? IsAllRadServicesVerified { get; set; }
-
-
-
-
-
-
-
-
+        public long? LabPatRegId { get; set; }
 
 
     }
