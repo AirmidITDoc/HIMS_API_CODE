@@ -77,5 +77,14 @@ namespace HIMS.API.Controllers.Dashboard
             var data = await _IDashboardService.GetRadiologyDashboard(UnitId, FromDate, ToDate);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology Dashboard", data);
         }
+
+        [HttpGet("pharmacy-dashboard")]
+        //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Pharmacy(int UnitId, DateTime FromDate, DateTime ToDate)
+        {
+            // int UnitId = Context.UnitId;
+                    var data = await _IDashboardService.GetPharmacyDashboard(UnitId, FromDate, ToDate);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pharmacy Dashboard", data);
+        }
     }
 }
