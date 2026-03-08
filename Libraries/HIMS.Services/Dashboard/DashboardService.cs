@@ -267,6 +267,25 @@ namespace HIMS.Services.Dashboard
             };
         }
 
+        public async Task<PharmacyDashboard> GetPharmacyDashboard(int UnitId, DateTime FromDate, DateTime ToDate)
+        {
+            DatabaseHelper sql = new();
 
+            SqlParameter[] para = new SqlParameter[3];
+            para[0] = new SqlParameter("@UnitId", SqlDbType.Int) { Value = UnitId };
+            para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
+            para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+
+            var data = await sql.Get2iResultsFromSp<TodaysCollectionSummary,TodaysPaymentSummary, PatientCategoryWiseSummary, CurrentStockSummary, TopSellingMedicines>("ps_rtrv_PharmacyDashBoard", para);
+
+            return new PharmacyDashboard()
+            {
+                CollectionCountSummary = data.Item1.FirstOrDefault() ?? new TodaysCollectionSummary(),
+                PaymentCountSummary = data.Item2.FirstOrDefault() ?? new TodaysPaymentSummary(),
+                PatientCategoryWiseSummary = data.Item3 ?? new List<PatientCategoryWiseSummary>(),
+                CurrentStockSummary = data.Item4.FirstOrDefault() ?? new CurrentStockSummary(),
+                TopSellingMedicines = data.Item5 ?? new List<TopSellingMedicines>(),
+            };
+        }
     }
 }
