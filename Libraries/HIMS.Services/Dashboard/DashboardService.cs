@@ -277,7 +277,7 @@ namespace HIMS.Services.Dashboard
             para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
             para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
 
-            var data = await sql.Get2iResultsFromSp<TodaysCollectionSummary,TodaysPaymentSummary, PatientCategoryWiseSummary, CurrentStockSummary, TopSellingMedicines>("ps_rtrv_PharmacyDashBoard", para);
+            var data = await sql.Get2iResultsFromSp<TodaysCollectionSummary,TodaysPaymentSummary, PatientCategoryWiseSummary, CurrentStockSummary, TopSellingMedicines, ExpiringMedicines>("ps_rtrv_PharmacyDashBoard", para);
 
             return new PharmacyDashboard()
             {
@@ -286,6 +286,7 @@ namespace HIMS.Services.Dashboard
                 PatientCategoryWiseSummary = data.Item3 ?? new List<PatientCategoryWiseSummary>(),
                 CurrentStockSummary = data.Item4.FirstOrDefault() ?? new CurrentStockSummary(),
                 TopSellingMedicines = data.Item5 ?? new List<TopSellingMedicines>(),
+                ExpiringMedicines = data.Item6 ?? new List<ExpiringMedicines>(),
             };
         }
     }
