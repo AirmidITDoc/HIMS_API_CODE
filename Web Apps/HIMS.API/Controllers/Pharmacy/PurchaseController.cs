@@ -48,7 +48,9 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("LastThreeItemList")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [Permission]
+
         public async Task<IActionResult> GetLastThreeItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<LastthreeItemListDto> List1 = await _IPurchaseService.GetLastthreeItemListAsync(objGrid);

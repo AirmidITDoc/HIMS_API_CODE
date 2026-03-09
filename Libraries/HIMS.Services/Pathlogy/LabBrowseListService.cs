@@ -19,11 +19,12 @@ namespace HIMS.Services.Pathlogy
         {
             _context = HIMSDbContext;
         }
-       
+
         public virtual async Task<IPagedList<LabBrowsListDto>> GetLabListListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<LabBrowsListDto>(model, "ps_Rtrv_BrowseLABBill_Pagi");
         }
+
 
         public virtual async Task<IPagedList<LabBrowsePaymentListDto>> GetLabPaymentListListAsync(GridRequestModel model)
         {
