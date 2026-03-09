@@ -182,7 +182,8 @@ namespace HIMS.Services.Dashboard
             para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
             para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
 
-            var data = await sql.Get2ResultsFromSp<PathologyCountSummary, PathologyValume, DailyTestCount, PathologyReport, PathologyOrderedTest, PathologyWorkload, PathologyReportStatus>("ps_rtrv_PathologyDashBoard", para);
+            var data = await sql.Get2ResultsFromSp<PathologyCountSummary, PathologyValume, DailyTestCount, PathologyReport, PathologyOrderedTest, PathologyWorkload, PathologyReportStatus, WeeklyTestReport>("ps_rtrv_PathologyDashBoard", para);
+
             return new PathologyDashboard()
             {
                 CountSummary = data.Item1.FirstOrDefault() ?? new PathologyCountSummary(),
@@ -191,10 +192,10 @@ namespace HIMS.Services.Dashboard
                 RecentPathologyReports = data.Item4 ?? new List<PathologyReport>(),
                 MostOrderedTests = data.Item5 ?? new List<PathologyOrderedTest>(),
                 PathologyWorkloads = data.Item6 ?? new List<PathologyWorkload>(),
-                PathologyReportStatus = data.Item7 ?? new List<PathologyReportStatus>()
+                PathologyReportStatus = data.Item7 ?? new List<PathologyReportStatus>(),
+                WeeklyTestReport = data.Item8 ?? new List<WeeklyTestReport>()
             };
         }
-
         public async Task<FinancialDashboard> GetFinancialDashBoard(int UnitId, DateTime FromDate, DateTime ToDate)
         {
             DatabaseHelper sql = new();
