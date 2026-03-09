@@ -33,16 +33,19 @@ namespace HIMS.API.Extensions
                     await _next.Invoke(context);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+                string actualError = ex.Message;
+                string stackTrace = ex.StackTrace;
+
                 HttpResponse response = context.Response;
                 response.ContentType = "application/json";
                 log.ResponseCode = "500";
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                string param = "";
+                string param;
                 if (context.Request.Method.ToLower() == "get")
                 {
-                    param = context.Request.QueryString.HasValue ? context.Request.QueryString.Value : "";
+                    _ = context.Request.QueryString.HasValue ? context.Request.QueryString.Value : "";
                 }
                 else
                 {
@@ -53,13 +56,65 @@ namespace HIMS.API.Extensions
                     }
                     context.Request.Body.Dispose();
                 }
-                
-                string errorJson = JsonSerializer.Serialize(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Error. Please try again after some time.", new { ApiUrl = context.Request.Path.Value }));
+
+                string errorJson = JsonSerializer.Serialize(new
+                {
+                    Error = actualError,
+                    // StackTrace = stackTrace,
+                    ApiUrl = context.Request.Path.Value
+                });
+
+                // string errorJson = JsonSerializer.Serialize(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Error. Please try again after some time.", new { ApiUrl = context.Request.Path.Value }));
 
                 await response.WriteAsync(errorJson);
 
             }
         }
+
+        //public async Task Invoke(HttpContext context)
+        //{
+        //    string IsAllowLog = "false";
+        //    RequestLog log = new();
+        //    try
+        //    {
+        //        if ((IsAllowLog ?? "false").ToLower() == "true")
+        //        {
+        //            log = await LogRequest(context, log);
+        //            log = await LogResponse(context, log);
+        //        }
+        //        else
+        //        {
+        //            context.Request.EnableBuffering();
+        //            await _next.Invoke(context);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HttpResponse response = context.Response;
+        //        response.ContentType = "application/json";
+        //        log.ResponseCode = "500";
+        //        response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        //        string param = "";
+        //        if (context.Request.Method.ToLower() == "get")
+        //        {
+        //            param = context.Request.QueryString.HasValue ? context.Request.QueryString.Value : "";
+        //        }
+        //        else
+        //        {
+        //            context.Request.Body.Seek(0, SeekOrigin.Begin);
+        //            using (StreamReader stream = new(context.Request.Body))
+        //            {
+        //                param = await stream.ReadToEndAsync();
+        //            }
+        //            context.Request.Body.Dispose();
+        //        }
+                
+        //        string errorJson = JsonSerializer.Serialize(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Error. Please try again after some time.", new { ApiUrl = context.Request.Path.Value }));
+
+        //        await response.WriteAsync(errorJson);
+
+        //    }
+        //}
         private async Task<RequestLog> LogRequest(HttpContext context, RequestLog Log)
         {
             context.Request.EnableBuffering();

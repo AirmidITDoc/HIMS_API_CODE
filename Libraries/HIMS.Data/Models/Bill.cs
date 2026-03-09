@@ -65,17 +65,21 @@ namespace HIMS.Data.Models
         public decimal? ChConcessionAmt { get; set; }
         public decimal? ChNetPayAmt { get; set; }
         public long? IsCancelled { get; set; }
-        public long? AddedBy { get; set; }
-        public long? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public long? ModifiedBy { get; set; }
-        public DateTime? ModifiedDate { get; set; }
         public decimal? GovtApprovedAmt { get; set; }
         public long? GovtCompanyId { get; set; }
         public string? GovtRefNo { get; set; }
         public decimal? CompanyApprovedAmt { get; set; }
         public long? CompanyApprovedId { get; set; }
         public string? CompRefNo { get; set; }
+        public bool? IsApproval { get; set; }
+        public long? ApprovedBy { get; set; }
+        public DateTime? ApprovalDatetime { get; set; }
+        public string? Comment { get; set; }
+        public long? AddedBy { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<AddCharge> AddCharges { get; set; }
         public virtual ICollection<BillDetail> BillDetails { get; set; }

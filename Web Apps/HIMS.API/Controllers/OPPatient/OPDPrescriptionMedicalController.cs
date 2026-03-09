@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(RequestListFromEMRD.ToGridResponse(objGrid, "OPRequestListFromEMR "));
         }
         [HttpPost("GetPrevVisitDiagnosisList")]
-        [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> ListG(GridRequestModel objGrid)
         {
             IPagedList<GetPrevVisitDiagnosisListDto> GetPrevVisitDiagnosisList = await _OPDPrescriptionService.VGetListAsync(objGrid);

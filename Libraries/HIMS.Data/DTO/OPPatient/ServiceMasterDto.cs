@@ -15,12 +15,12 @@ namespace HIMS.Data.DTO.OPPatient
         public string? ServiceName { get; set; }
         public decimal ClassRate { get; set; }
         public decimal Price { get; set; }
-
         public long TariffId { get; set; }
         public long ClassId { get; set; }
         public string? CompanyCode { get; set; }
         public string? CompanyServicePrint { get; set; }
         public bool? IsInclusionOrExclusion { get; set; }
+        public bool? IsOtherService { get; set; }
         public string FormattedText { get { return this.ServiceName + " | Price : " + this.Price.ToString("F2"); } }
 
     }

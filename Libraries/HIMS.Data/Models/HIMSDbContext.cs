@@ -434,6 +434,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TCustomerPayment> TCustomerPayments { get; set; } = null!;
         public virtual DbSet<TDeathCertificate> TDeathCertificates { get; set; } = null!;
         public virtual DbSet<TDialysi> TDialyses { get; set; } = null!;
+        public virtual DbSet<TDiscApprovalDetail> TDiscApprovalDetails { get; set; } = null!;
         public virtual DbSet<TDiscCaseSheet> TDiscCaseSheets { get; set; } = null!;
         public virtual DbSet<TDiscountTransactionHistory> TDiscountTransactionHistories { get; set; } = null!;
         public virtual DbSet<TDlabRequest> TDlabRequests { get; set; } = null!;
@@ -561,8 +562,10 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPhadvanceHeader> TPhadvanceHeaders { get; set; } = null!;
         public virtual DbSet<TPharPatientInformation> TPharPatientInformations { get; set; } = null!;
         public virtual DbSet<TPhoneAppointment> TPhoneAppointments { get; set; } = null!;
+        public virtual DbSet<TPrdetail> TPrdetails { get; set; } = null!;
         public virtual DbSet<TPrePostOperativeNote> TPrePostOperativeNotes { get; set; } = null!;
         public virtual DbSet<TPrescription> TPrescriptions { get; set; } = null!;
+        public virtual DbSet<TPrheader> TPrheaders { get; set; } = null!;
         public virtual DbSet<TProcessOtp> TProcessOtps { get; set; } = null!;
         public virtual DbSet<TPurchaseDetail> TPurchaseDetails { get; set; } = null!;
         public virtual DbSet<TPurchaseHeader> TPurchaseHeaders { get; set; } = null!;
@@ -626,7 +629,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -1115,6 +1118,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AdvanceUsedAmount).HasColumnType("money");
 
+                entity.Property(e => e.ApprovalDatetime).HasColumnType("datetime");
+
                 entity.Property(e => e.BalanceAmt).HasColumnType("money");
 
                 entity.Property(e => e.BillDate).HasColumnType("datetime");
@@ -1164,6 +1169,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Ipdno)
                     .HasMaxLength(50)
                     .HasColumnName("IPDNo");
+
+                entity.Property(e => e.IsApproval).HasColumnName("isApproval");
 
                 entity.Property(e => e.IsBillCheck).HasDefaultValueSql("((0))");
 
@@ -12189,6 +12196,27 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TechinicianName).HasMaxLength(100);
             });
 
+            modelBuilder.Entity<TDiscApprovalDetail>(entity =>
+            {
+                entity.HasKey(e => e.DiscSeqId);
+
+                entity.ToTable("T_DiscApprovalDetails");
+
+                entity.Property(e => e.ApprovedAmount).HasColumnType("money");
+
+                entity.Property(e => e.ApprovedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Comments).HasMaxLength(255);
+
+                entity.Property(e => e.DiscApprovalNo).HasMaxLength(50);
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.RequestAmount).HasColumnType("money");
+            });
+
             modelBuilder.Entity<TDiscCaseSheet>(entity =>
             {
                 entity.HasKey(e => e.DiscCaseId);
@@ -16269,6 +16297,27 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.StartTime).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<TPrdetail>(entity =>
+            {
+                entity.HasKey(e => e.PrdetId);
+
+                entity.ToTable("T_PRDetails");
+
+                entity.Property(e => e.PrdetId).HasColumnName("PRDetId");
+
+                entity.Property(e => e.Prid).HasColumnName("PRId");
+
+                entity.Property(e => e.PrrequestDetId).HasColumnName("PRRequestDetId");
+
+                entity.Property(e => e.PrrequestHeaderId).HasColumnName("PRRequestHeaderId");
+
+                entity.HasOne(d => d.Pr)
+                    .WithMany(p => p.TPrdetails)
+                    .HasForeignKey(d => d.Prid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_PRDetails_T_PRHeader");
+            });
+
             modelBuilder.Entity<TPrePostOperativeNote>(entity =>
             {
                 entity.HasKey(e => e.Otid);
@@ -16399,6 +16448,40 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SpO2).HasMaxLength(20);
 
                 entity.Property(e => e.Temp).HasMaxLength(10);
+            });
+
+            modelBuilder.Entity<TPrheader>(entity =>
+            {
+                entity.HasKey(e => e.Prid)
+                    .HasName("PK_t_PRHeader");
+
+                entity.ToTable("T_PRHeader");
+
+                entity.Property(e => e.Prid).HasColumnName("PRId");
+
+                entity.Property(e => e.Comments).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsCancelledDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.IsVerifyDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Prdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("PRDate");
+
+                entity.Property(e => e.Prno)
+                    .HasMaxLength(50)
+                    .HasColumnName("PRNo");
+
+                entity.Property(e => e.Prtime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("PRTime");
+
+                entity.Property(e => e.UnitId).HasColumnName("UnitID");
             });
 
             modelBuilder.Entity<TProcessOtp>(entity =>
