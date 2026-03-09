@@ -12,6 +12,8 @@
         public DateTime RegDate { get; set; }
 
         public long CampId { get; set; }
+
+        public long VisitId { get; set; }
         public long? LabPatientId { get; set; }
     }
 }

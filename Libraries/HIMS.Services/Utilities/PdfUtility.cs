@@ -272,6 +272,8 @@ namespace HIMS.Services.Utilities
             
         }
 
+
+     
         public string GetHeaderfromtemplate(ReportRequestModel model, string filePath)
         {
             string htmlHeader = System.IO.File.ReadAllText(filePath);
@@ -302,6 +304,39 @@ namespace HIMS.Services.Utilities
 
 
             return htmlHeader;
+        }
+        public string GetPatientHeaders(ReportRequestModel model, string filePath)
+        {
+            string htmlHeader = System.IO.File.ReadAllText(filePath);
+
+            var dt = GetDataBySp(model, "rptAppointmentPrint2");
+
+            htmlHeader = htmlHeader.Replace("{{TemplateHeader}}", dt.GetColValue("TemplateHeader"));
+
+            htmlHeader = htmlHeader.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+            htmlHeader = htmlHeader.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+            htmlHeader = htmlHeader.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+            htmlHeader = htmlHeader.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+            htmlHeader = htmlHeader.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+            htmlHeader = htmlHeader.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+            htmlHeader = htmlHeader.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+            htmlHeader = htmlHeader.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+            htmlHeader = htmlHeader.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+            htmlHeader = htmlHeader.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+            htmlHeader = htmlHeader.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+            htmlHeader = htmlHeader.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+            htmlHeader = htmlHeader.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+            htmlHeader = htmlHeader.Replace("{{BedName}}", dt.GetColValue("BedName"));
+            htmlHeader = htmlHeader.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+            htmlHeader = htmlHeader.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+            htmlHeader = htmlHeader.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
+            htmlHeader = htmlHeader.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+
+          
+
+
+            return htmlHeader;
+
         }
 
         public string GetAppointmentfromtemplate(ReportRequestModel model, string filePath)
