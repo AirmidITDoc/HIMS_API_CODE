@@ -4595,8 +4595,8 @@ namespace HIMS.Services.Report
                         string previousLabel = "";
                         int k = 0;
                         var dynamicVariable = new Dictionary<string, double>();
-                        foreach (DataRow dr in dt.Rows)
-                        {
+                        //foreach (DataRow dr in dt.Rows)
+                        //{
 
                             html = html.Replace("{{BillNo}}", dt.GetColValue("BillNo"));
                             html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
@@ -4664,7 +4664,7 @@ namespace HIMS.Services.Report
                             string finalamt = conversion(dt.GetColValue("PaidAmt").ConvertToDouble().To2DecimalPlace().ToString());
                             html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
-                        }
+                       // }
 
 
 
