@@ -14,7 +14,7 @@ namespace HIMS.Core.Domain.Dashboard
         public List<PatientCategoryWiseSummary> PatientCategoryWiseSummary { get; set; }
         public CurrentStockSummary CurrentStockSummary { get; set; }
         public List<TopSellingMedicines> TopSellingMedicines { get; set; }
-        //public List<ExpiringMedicines> ExpiringMedicines { get; set; }
+        public List<ExpiringMedicines> ExpiringMedicines { get; set; }
     }
 
     public class TodaysCollectionSummary
@@ -32,7 +32,6 @@ namespace HIMS.Core.Domain.Dashboard
     }
     public class TodaysPaymentSummary
     {
-        public int CountPatient { get; set; }
         public decimal CashPay { get; set; }
         public decimal CardPay { get; set; }
         public decimal AdvUsed { get; set; }
@@ -63,7 +62,7 @@ namespace HIMS.Core.Domain.Dashboard
     public class TopSellingMedicines
     {
         public string ItemName { get; set; }
-        public long Qty { get; set; }
+        public double Qty { get; set; }
         public decimal TotalAmount { get; set; }
     }
     public class ExpiringMedicines

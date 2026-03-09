@@ -957,54 +957,37 @@ namespace HIMS.Data.DataProviders
 
             return result;
         }
-        public async Task<Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>>> Get2ResultsFromSp<T, T1, T2, T3, T4, T5, T6>(string Spname, SqlParameter[] para) where T : new() where T1 : new() where T2 : new() where T3 : new() where T4 : new() where T5 : new() where T6 : new()
+        public async Task<(List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>)> Get2ResultsFromSp<T, T1, T2, T3, T4, T5, T6, T7>(string Spname, SqlParameter[] para) where T : new() where T1 : new() where T2 : new() where T3 : new() where T4 : new() where T5 : new() where T6 : new() where T7 : new()
         {
-            Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>> result = null;
-            Command.CommandType = CommandType.StoredProcedure;
-            Command.Parameters.AddRange(para);
-            Command.CommandText = Spname;
+            Command.CommandType = CommandType.StoredProcedure; Command.Parameters.AddRange(para); Command.CommandText = Spname;
+
             try
             {
                 objConnection.Open();
                 using var reader = await Command.ExecuteReaderAsync();
-                // Table 1
+
                 var item1 = reader.MapToList<T>();
+                await reader.NextResultAsync(); var item2 = reader.MapToList<T1>();
+                await reader.NextResultAsync(); var item3 = reader.MapToList<T2>();
+                await reader.NextResultAsync(); var item4 = reader.MapToList<T3>();
+                await reader.NextResultAsync(); var item5 = reader.MapToList<T4>();
+                await reader.NextResultAsync(); var item6 = reader.MapToList<T5>();
+                await reader.NextResultAsync(); var item7 = reader.MapToList<T6>();
+                await reader.NextResultAsync(); var item8 = reader.MapToList<T7>();
 
-                // Table 2
-                await reader.NextResultAsync();
-                var item2 = reader.MapToList<T1>();
-                // Table 3
-                await reader.NextResultAsync();
-                var item3 = reader.MapToList<T2>();
-                // Table 4
-                await reader.NextResultAsync();
-                var item4 = reader.MapToList<T3>();
-                // Table 5
-                await reader.NextResultAsync();
-                var item5 = reader.MapToList<T4>();
-                // Table 6
-                await reader.NextResultAsync();
-                var item6 = reader.MapToList<T5>();
-
-                await reader.NextResultAsync();
-                var item7 = reader.MapToList<T6>();
-
-                result = new Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5> ,List<T6>>(item1, item2, item3, item4, item5, item6, item7);
+                return (item1, item2, item3, item4, item5, item6, item7, item8);
             }
             catch (Exception ex)
             {
-                HandleExceptions(ex, Spname);
+                HandleExceptions(ex, Spname); throw;
             }
             finally
             {
-                //objCommand.Parameters.Clear();
                 if (Command.Transaction == null)
                 {
                     objConnection.Close();
                 }
             }
-
-            return result;
         }
         //public async Task<Tuple<List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>>> Get7ResultsFromSp<T, T1, T2, T3, T4, T5,T6,T7>(string Spname, SqlParameter[] para) where T : new() where T1 : new() where T2 : new() where T3 : new() where T4 : new() where T5 : new() where T6 : new() where T7 : new()
         //{
@@ -1058,8 +1041,8 @@ namespace HIMS.Data.DataProviders
 
         //    return result;
         //}
-                // Table 3
-                // Table 3
+        // Table 3
+        // Table 3
         public async Task<(List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>, List<T8>, List<T9>, List<T10>, List<T11>, List<T12>, List<T13>, List<T14>, List<T15>, List<T16>, List<T17>, List<T18>, List<T19>, List<T20>, List<T21>, List<T22>)> Get8ResultsFromSp<T, T1, T2, T3, T4, T5, T6, T7 ,T8,T9,T10,T11, T12, T13, T14, T15, T16, T17, T18,T19,T20,T21,T22>(string Spname, SqlParameter[] para)where T : new() where T1 : new() where T2 : new() where T3 : new()where T4 : new() where T5 : new() where T6 : new() where T7 : new() where T8 : new() where T9 : new() where T10 : new() where T11 : new() where T12 : new() where T13 : new() where T14 : new() where T15 : new() where T16 : new() where T17 : new() where T18 : new() where T19 : new() where T20 : new() where T21 : new() where T22 : new()
         {
 
@@ -1198,7 +1181,7 @@ namespace HIMS.Data.DataProviders
             }
         }
 
-        public async Task<(List<T1>, List<T2>, List<T3>, List<T4>, List<T5>)> Get2iResultsFromSp<T1, T2, T3, T4, T5>(string spName, SqlParameter[] parameters) where T1 : new() where T2 : new() where T3 : new() where T4 : new() where T5 : new()
+        public async Task<(List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>)> Get2iResultsFromSp<T1, T2, T3, T4, T5, T6>(string spName, SqlParameter[] parameters) where T1 : new() where T2 : new() where T3 : new() where T4 : new() where T5 : new() where T6 : new()
         {
             Command.CommandType = CommandType.StoredProcedure;
             Command.CommandText = spName;
@@ -1224,8 +1207,10 @@ namespace HIMS.Data.DataProviders
                 await reader.NextResultAsync();
                 var item5 = reader.MapToList<T5>();
 
+                await reader.NextResultAsync();
+                var item6 = reader.MapToList<T6>();
 
-                return (item1, item2, item3, item4, item5);
+                return (item1, item2, item3, item4, item5, item6);
             }
             catch (Exception ex)
             {

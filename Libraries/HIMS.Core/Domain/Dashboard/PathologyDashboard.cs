@@ -15,6 +15,7 @@ namespace HIMS.Core.Domain.Dashboard
         public List<PathologyOrderedTest> MostOrderedTests { get; set; }
         public List<PathologyWorkload> PathologyWorkloads { get; set; }
         public List<PathologyReportStatus> PathologyReportStatus { get; set; }
+        public List<WeeklyTestReport>? WeeklyTestReport { get; set; }
     }
     public class PathologyCountSummary
     {
@@ -67,5 +68,13 @@ namespace HIMS.Core.Domain.Dashboard
         public long NonVerifiedReports { get; set; }
         public long DispatchedReports { get; set; }
         public long NonDispatchedReports { get; set; }
+    }
+    public class WeeklyTestReport
+    {
+        public string DayName { get; set; }
+        public long TotalTests { get; set; }
+        public long CompletedReports { get; set; }
+        public long PendingReports { get; set; }
+        public long CancelledReports { get; set; }
     }
 }

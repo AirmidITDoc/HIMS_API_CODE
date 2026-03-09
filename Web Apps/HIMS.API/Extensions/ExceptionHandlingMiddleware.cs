@@ -33,7 +33,7 @@ namespace HIMS.API.Extensions
         //            await _next.Invoke(context);
         //        }
         //    }
-        //    catch (Exception)
+        //    catch (Exception ex)
         //    {
         //        string actualError = ex.Message;
         //        string stackTrace = ex.StackTrace;
