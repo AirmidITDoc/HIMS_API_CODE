@@ -75,5 +75,40 @@ namespace HIMS.Services.Pharmacy
         {
             return await DatabaseHelper.GetGridDataBySp<PurchaseRequisitionFinalDetailListDto>(model, "ps_PurchaseRequisitionFinalDetailList");
         }
+
+        public virtual async Task PRToPOInsertAsync(TPurchaseHeader objPurchase, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                // Fetch Store Info
+                MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objPurchase.StoreId);
+
+                if (StoreInfo == null)
+                {
+                    throw new Exception($"StoreInfo is null. No store found with StoreId: {objPurchase.StoreId}");
+                }
+
+                // Ensure PurchaseNo is valid
+                int purchaseNo = 0;
+                if (!string.IsNullOrEmpty(StoreInfo.PurchaseNo))
+                {
+                    purchaseNo = Convert.ToInt32(StoreInfo.PurchaseNo);
+                }
+                StoreInfo.PurchaseNo = (purchaseNo + 1).ToString();
+
+                // Update Store Record
+                _context.MStoreMasters.Update(StoreInfo);
+                await _context.SaveChangesAsync();
+
+                // Add Purchase Header
+                objPurchase.PurchaseNo = StoreInfo.PurchaseNo;
+                _context.TPurchaseHeaders.Add(objPurchase);
+                await _context.SaveChangesAsync();
+
+                // Complete Transaction
+                scope.Complete();
+
+            }
+        }
     }
 }

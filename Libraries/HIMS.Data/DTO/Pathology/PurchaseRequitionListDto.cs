@@ -32,6 +32,8 @@ namespace HIMS.Data.DTO.Pathology
         public string? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool? IsCancelled { get; set; }
+        public long? FromStoreId { get; set; }
+        public long? ToStoreId { get; set; }
 
 
     }

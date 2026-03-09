@@ -16,5 +16,6 @@ namespace HIMS.Services.Pharmacy
         Task<IPagedList<PurchaseRequisitionFinalHeaderListDto>> PurchaseRequisitionFinalHeaderListAsync(GridRequestModel objGrid);
 
         Task<IPagedList<PurchaseRequisitionFinalDetailListDto>> PurchaseRequisitionFinalDetailListAsync(GridRequestModel objGrid);
+        Task PRToPOInsertAsync(TPurchaseHeader objPurchase, int UserId, string Username);
     }
 }
