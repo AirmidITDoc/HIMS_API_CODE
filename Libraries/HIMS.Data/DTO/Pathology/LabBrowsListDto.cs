@@ -26,14 +26,9 @@ namespace HIMS.Data.DTO.Pathology
         public decimal? TotalAmt { get; set; }
         public double? ConcessionAmt { get; set; }
         public decimal? NetPayableAmt { get; set; }
-        
-       public string? OPD_IPD_ID { get; set; }
-
-
-        public bool? IsVerifySign { get; set; }
-
+        public string? OPD_IPD_ID { get; set; }
+        public long IsVerifySign { get; set; }
         public string? PaidAmt { get; set; }
-        
         public decimal? BalanceAmt { get; set; }
         public decimal? CashPay { get; set; }
         public decimal? ChequePay { get; set; }
@@ -42,7 +37,6 @@ namespace HIMS.Data.DTO.Pathology
         public decimal? OnlinePay { get; set; }
         public string? OPDNo { get; set; }
         public string? PayCount { get; set; }
-        
         public decimal? RefundAmount { get; set; }
         public string? RefundCount { get; set; }
         public string? CashCounterName { get; set; }
