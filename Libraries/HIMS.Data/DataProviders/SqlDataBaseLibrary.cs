@@ -1136,7 +1136,7 @@ namespace HIMS.Data.DataProviders
             }
 
         }
-        public async Task<(List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>)> Get6ResultsFromSp<T1, T2, T3, T4, T5, T6>(string spName, SqlParameter[] parameters) where T1 : new() where T2 : new() where T3 : new() where T4 : new() where T5 : new() where T6 : new()
+        public async Task<(List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>)> Get6ResultsFromSp<T1, T2, T3, T4, T5, T6, T7>(string spName, SqlParameter[] parameters) where T1 : new() where T2 : new() where T3 : new() where T4 : new() where T5 : new() where T6 : new() where T7 : new()
         {
             Command.CommandType = CommandType.StoredProcedure;
             Command.CommandText = spName;
@@ -1165,7 +1165,11 @@ namespace HIMS.Data.DataProviders
                 await reader.NextResultAsync();
                 var item6 = reader.MapToList<T6>();
 
-                return (item1, item2, item3, item4, item5, item6);
+                await reader.NextResultAsync();
+                var item7 = reader.MapToList<T7>();
+
+
+                return (item1, item2, item3, item4, item5, item6, item7);
             }
             catch (Exception ex)
             {
@@ -1211,6 +1215,50 @@ namespace HIMS.Data.DataProviders
                 var item6 = reader.MapToList<T6>();
 
                 return (item1, item2, item3, item4, item5, item6);
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, spName);
+                throw;
+            }
+            finally
+            {
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+        }
+        public async Task<(List<T1>, List<T2>, List<T3>, List<T4>)>
+        Get4ResultsFromSp<T1, T2, T3, T4>(string spName, SqlParameter[] parameters)
+        where T1 : new()
+        where T2 : new()
+        where T3 : new()
+        where T4 : new()
+        {
+            Command.CommandType = CommandType.StoredProcedure;
+            Command.CommandText = spName;
+            Command.Parameters.Clear();
+            Command.Parameters.AddRange(parameters);
+
+            try
+            {
+                objConnection.Open();
+
+                using var reader = await Command.ExecuteReaderAsync();
+
+                var item1 = reader.MapToList<T1>();
+
+                await reader.NextResultAsync();
+                var item2 = reader.MapToList<T2>();
+
+                await reader.NextResultAsync();
+                var item3 = reader.MapToList<T3>();
+
+                await reader.NextResultAsync();
+                var item4 = reader.MapToList<T4>();
+
+                return (item1, item2, item3, item4);
             }
             catch (Exception ex)
             {

@@ -254,7 +254,8 @@ namespace HIMS.Services.Dashboard
                 RadiologyDailyTestCount,
                 RadiologyReport,
                 RadiologyOrderedTest,
-                RadiologyWorkload>
+                RadiologyWorkload,
+                RadWeeklyTestReport>
                 ("ps_rtrv_RadiologyDashBoard", para);
 
             return new RadiologyDashboard()
@@ -264,7 +265,8 @@ namespace HIMS.Services.Dashboard
                 DailyTestCounts = data.Item3 ?? new List<RadiologyDailyTestCount>(),
                 RecentRadiologyReports = data.Item4 ?? new List<RadiologyReport>(),
                 TopOrderedTests = data.Item5 ?? new List<RadiologyOrderedTest>(),
-                RadiologyWorkloads = data.Item6 ?? new List<RadiologyWorkload>()
+                RadiologyWorkloads = data.Item6 ?? new List<RadiologyWorkload>(),
+                 RadWeeklyTestReport = data.Item7 ?? new List<RadWeeklyTestReport>()
             };
         }
 
@@ -287,6 +289,26 @@ namespace HIMS.Services.Dashboard
                 CurrentStockSummary = data.Item4.FirstOrDefault() ?? new CurrentStockSummary(),
                 TopSellingMedicines = data.Item5 ?? new List<TopSellingMedicines>(),
                 ExpiringMedicines = data.Item6 ?? new List<ExpiringMedicines>(),
+            };
+        }
+        public async Task<DailyDashboard> GetDailyDashboard(int UnitId, DateTime FromDate, DateTime ToDate)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para = new SqlParameter[3];
+            para[0] = new SqlParameter("@UnitId", SqlDbType.Int) { Value = UnitId };
+            para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
+            para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+
+            var data = await sql.Get4ResultsFromSp<DailyTrend, PatientSummary, DashboardSummary, PaymentOverview>
+            ("ps_DailyDashboard", para);
+
+            return new DailyDashboard()
+            {
+                Trend = data.Item1 ?? new List<DailyTrend>(),
+                PatientSummary = data.Item2.FirstOrDefault() ?? new PatientSummary(),
+                DashboardSummary = data.Item3.FirstOrDefault() ?? new DashboardSummary(),
+                PaymentOverview = data.Item4.FirstOrDefault() ?? new PaymentOverview()
             };
         }
     }
