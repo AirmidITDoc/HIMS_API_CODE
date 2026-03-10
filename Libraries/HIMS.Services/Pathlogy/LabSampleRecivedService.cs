@@ -64,6 +64,22 @@ namespace HIMS.Services.Pathlogy
                 odal.ExecuteNonQuery(  "ps_UpdateLabSampleRecived", CommandType.StoredProcedure, parameters);
             }
         }
+        public virtual async Task DeleteAsync(TPathologyReportHeader ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] AEntity = { "PathReportId", "SampleReceviedCancelReason" };
+            var entity = ObjTPathologyReportHeader.ToDictionary();
+
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_PathologyReportHeaderCancel", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, nameof(TPathologyReportHeader), Convert.ToInt32(ObjTPathologyReportHeader.PathReportId), Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
+
+        }
 
     }
 }

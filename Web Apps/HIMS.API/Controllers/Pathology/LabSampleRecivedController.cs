@@ -50,6 +50,7 @@ namespace HIMS.API.Controllers.Pathology
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         //}
         [HttpPut("LabSampleRecivedUpdate")]
+        [Permission]
         public ApiResponse Update(PathologyLabReportHeader obj)
         {
             if (obj?.PathologyLabReport == null || !obj.PathologyLabReport.Any())
@@ -64,6 +65,22 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
+        [HttpPost("Cancel")]
+        [Permission]
+        public async Task<ApiResponse> Delete(PathologyReportHeaderCancel obj)
+        {
+            TPathologyReportHeader Model = obj.MapTo<TPathologyReportHeader>();
+
+            if (obj.PathReportId != 0)
+            {
+
+                //   Model.AddedBy = CurrentUserId;
+                await _ILabSampleRecivedService.DeleteAsync(Model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Cancel successfully.");
+        }
 
 
 

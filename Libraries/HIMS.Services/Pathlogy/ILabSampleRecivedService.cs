@@ -13,6 +13,8 @@ namespace HIMS.Services.Pathlogy
     {
         Task Update(List<TPathologyReportHeader> ObjTPathologyReportHeader, int currentUserId, string CurrentUserName);
         Task<IPagedList<LabSampleRecivedListDto>> LabGetListAsync(GridRequestModel objGrid);
+        Task DeleteAsync(TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string Username);
+
 
 
     }

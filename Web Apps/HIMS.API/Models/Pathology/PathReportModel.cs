@@ -12,8 +12,7 @@ namespace HIMS.API.Models.Pathology
     {
         public PathReportModelValidator()
         {
-            //   RuleFor(x => x.IsCancelledBy).NotNull().NotEmpty().WithMessage("IsCancelledBy id is required");
-            //  RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId  is required");
+             RuleFor(x => x.PathReportID).NotNull().NotEmpty().WithMessage("PathReportID  is required");
         }
     }
 }

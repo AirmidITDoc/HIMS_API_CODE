@@ -8,6 +8,7 @@ namespace HIMS.Data.Models
         public long TestDetId { get; set; }
         public long TestId { get; set; }
         public string? TestName { get; set; }
+        public string? ParameterShortName { get; set; }
         public long? SubTestId { get; set; }
         public string SubTestName { get; set; } = null!;
         public long? ParameterId { get; set; }

@@ -76,7 +76,10 @@ namespace HIMS.Data.DTO.Pathology
         public string? RefDoctorName { get; set; }
         public string? UserName { get; set; }
         public string? SamplecollectedBy { get; set; }
+        public bool? IsSampleReceviedCancel { get; set; }
+        public string? SampleReceviedCancelReason { get; set; }
+        public long? SampleReceviedCanceledBy { get; set; }
 
-        
+
     }
 }

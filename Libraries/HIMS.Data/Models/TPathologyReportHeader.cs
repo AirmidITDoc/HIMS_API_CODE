@@ -49,6 +49,9 @@ namespace HIMS.Data.Models
         public DateTime? SampleReceviedDateTime { get; set; }
         public long? SampleReceviedUserId { get; set; }
         public bool? IsSampleReceivedStatus { get; set; }
+        public bool? IsSampleReceviedCancel { get; set; }
+        public string? SampleReceviedCancelReason { get; set; }
+        public long? SampleReceviedCanceledBy { get; set; }
         public long? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }

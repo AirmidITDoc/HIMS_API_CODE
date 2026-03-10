@@ -10,20 +10,16 @@ namespace HIMS.Services.Pathlogy
     {
         Task<IPagedList<PathParaFillListDto>> PathParaFillList(GridRequestModel objGrid);
         Task<IPagedList<PathSubtestFillListDto>> PathSubtestFillList(GridRequestModel objGrid);
-        //Task<IPagedList<PathologyTestListDto>> PathologyTestList(GridRequestModel objGrid);
         Task<IPagedList<PathResultEntryListDto>> PathResultEntry(GridRequestModel objGrid);
         Task<IPagedList<PathPatientTestListDto>> GetListAsync(GridRequestModel objGrid);
         Task InsertAsyncResultEntry(List<TPathologyReportDetail> ObjPathologyReportDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string Username);
-
         Task InsertAsyncResultEntry1(TPathologyReportTemplateDetail ObjTPathologyReportTemplateDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string Username);
         Task DeleteAsync(TPathologyReportDetail ObjTPathologyReportDetail, int UserId, string Username);
         Task InsertPathPrintResultentry(List<TempPathReportId> model, int currentUserId, string currentUserName);
         Task UpdateAsync(TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string Username);
         Task VerifyAsync(TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string Username);
         List<pathologistdoctorDto> SearchPatient();
-
         List<PathServicewiseTemplateListDto> GetServicewisetemplate(int ServiceId);
-        //Task<IPagedList<PathServicewiseTemplateListDto>> GetServicewisetemplate(GridRequestModel objGrid);
 
 
 

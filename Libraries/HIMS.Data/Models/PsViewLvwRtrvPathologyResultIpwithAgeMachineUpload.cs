@@ -12,6 +12,7 @@ namespace HIMS.Data.Models
         public string SubTestName { get; set; } = null!;
         public long? ParameterId { get; set; }
         public string? ParameterName { get; set; }
+        public string? ParameterShortName { get; set; }
         public long? ServiceId { get; set; }
         public long? PathparaRangeId { get; set; }
         public string MinValue { get; set; } = null!;
