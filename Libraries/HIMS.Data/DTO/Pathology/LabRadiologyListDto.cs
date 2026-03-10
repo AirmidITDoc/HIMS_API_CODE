@@ -51,6 +51,9 @@ namespace HIMS.Data.DTO.Pathology
         public DateTime? ReportDate { get; set; }
         public string? ReportTime { get; set; }
         public long? RadResultDr1 { get; set; }
+        public string? GroupName { get; set; }
+
+        
 
 
 
