@@ -570,6 +570,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TDraddCharge, TDraddChargeUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TDrbill, TdrBillModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPathDispatchReportHistory, PathDispatchReportHistoryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPathDispatchReportHistoryDetail, TPathDispatchReportHistoryDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             CreateMap<EstimateModel, TEstimateHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<EstimateDetailModel, TEstimateDetail>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<PathologyLabReportHeaderModel, TPathologyReportHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

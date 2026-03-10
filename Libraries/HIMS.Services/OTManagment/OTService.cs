@@ -102,15 +102,15 @@ namespace HIMS.Services.IPPatient
             }
         }
        
-            public virtual async Task UpdateAsync(TOtReservationHeader ObjTOtReservationHeader, int UserId, string Username, string[]? ignoreColumns = null)
-            {
+        public virtual async Task UpdateAsync(TOtReservationHeader ObjTOtReservationHeader, int UserId, string Username, string[]? ignoreColumns = null)
+        {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
 
             {
                 long reservationId = ObjTOtReservationHeader.OtreservationId;
 
-                // ✅ Delete related details first
+                // Delete related details first
                 var lstAttend = await _context.TOtReservationAttendingDetails
                     .Where(x => x.OtreservationId == reservationId)
                     .ToListAsync();
@@ -129,10 +129,10 @@ namespace HIMS.Services.IPPatient
                 if (lstDiagnosis.Any())
                     _context.TOtReservationDiagnoses.RemoveRange(lstDiagnosis);
 
-                // ✅ Save deletion first
+                //Save deletion first
                 await _context.SaveChangesAsync();
 
-                // ✅ Then attach and update header
+                // Then attach and update header
                 _context.Attach(ObjTOtReservationHeader);
                 _context.Entry(ObjTOtReservationHeader).State = EntityState.Modified;
 
@@ -159,7 +159,7 @@ namespace HIMS.Services.IPPatient
 
 
 
-    public virtual async Task InsertAsync(TOtReservation OBJTOtbooking, int UserId, string Username)
+        public virtual async Task InsertAsync(TOtReservation OBJTOtbooking, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
