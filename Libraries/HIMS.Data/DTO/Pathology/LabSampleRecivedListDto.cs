@@ -79,6 +79,8 @@ namespace HIMS.Data.DTO.Pathology
         public bool? IsSampleReceviedCancel { get; set; }
         public string? SampleReceviedCancelReason { get; set; }
         public long? SampleReceviedCanceledBy { get; set; }
+        public bool? IsCompleted { get; set; }
+
 
 
     }
