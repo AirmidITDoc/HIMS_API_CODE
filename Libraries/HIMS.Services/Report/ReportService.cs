@@ -4595,8 +4595,8 @@ namespace HIMS.Services.Report
                         string previousLabel = "";
                         int k = 0;
                         var dynamicVariable = new Dictionary<string, double>();
-                        foreach (DataRow dr in dt.Rows)
-                        {
+                        //foreach (DataRow dr in dt.Rows)
+                        //{
 
                             html = html.Replace("{{BillNo}}", dt.GetColValue("BillNo"));
                             html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
@@ -4664,7 +4664,7 @@ namespace HIMS.Services.Report
                             string finalamt = conversion(dt.GetColValue("PaidAmt").ConvertToDouble().To2DecimalPlace().ToString());
                             html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
-                        }
+                       // }
 
 
 
@@ -13970,7 +13970,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName").ConvertToString());
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName").ConvertToString());
                         html = html.Replace("{{ComapanyName}}", dt.GetColValue("ComapanyName"));
-
+                        html = html.Replace("{{AdharCardNo}}", dt.GetColValue("AdharCardNo"));
+                        html = html.Replace("{{SampleNo}}", dt.GetColValue("SampleNo"));
+                        html = html.Replace("{{SampleCollection}}", dt.GetColValue("SampleCollection").ConvertToDateString("dd/MM/yyyy|hh:mmtt"));
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
                         html = html.Replace("{{Path_RefDoctorName}}", dt.GetColValue("Path_RefDoctorName"));
                         html = html.Replace("{{PathTemplateDetailsResult}}", dt.GetColValue("PathTemplateDetailsResult").ConvertToString());
@@ -14106,6 +14108,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ComapanyName}}", dt.GetColValue("ComapanyName"));
                         html = html.Replace("{{AdharCardNo}}", dt.GetColValue("AdharCardNo"));
                         html = html.Replace("{{SampleNo}}", dt.GetColValue("SampleNo"));
+
+                        html = html.Replace("{{SampleCollection}}", dt.GetColValue("SampleCollection").ConvertToDateString("dd/MM/yyyy|hh:mmtt"));
 
                         html = html.Replace("{{Path_RefDoctorName}}", dt.GetColValue("Path_RefDoctorName"));
                         html = html.Replace("{{PathTemplateDetailsResult}}", dt.GetColValue("PathTemplateDetailsResult").ConvertToString());

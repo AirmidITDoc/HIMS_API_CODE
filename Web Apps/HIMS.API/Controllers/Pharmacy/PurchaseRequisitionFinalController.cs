@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Pharmacy;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
@@ -28,7 +29,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Insert")]
-        [Permission]
+       // [Permission]
         public async Task<ApiResponse> Insert(PurchaseRequisitionFinalModel obj)
         {
             TPrheader model = obj.MapTo<TPrheader>();
@@ -63,6 +64,33 @@ namespace HIMS.API.Controllers.Pharmacy
         {
             IPagedList<PurchaseRequisitionFinalDetailListDto> PurchaseRequisitionFinalDetailList = await _IPurchaseRequisitionFinalService.PurchaseRequisitionFinalDetailListAsync(objGrid);
             return Ok(PurchaseRequisitionFinalDetailList.ToGridResponse(objGrid, "Purchase Requisition Final Detail List"));
+        }
+
+        [HttpPost("PRToPOInsert")]
+        // [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> PRToPOInsert(List<PurchaseModel> objList)
+        {
+            foreach (var obj in objList)
+            {
+                TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
+
+                if (obj.PurchaseId == 0)
+                {
+                    model.PurchaseDate = Convert.ToDateTime(obj.PurchaseDate);
+                    model.PurchaseTime = AppTime.Now;
+                    model.AddedBy = CurrentUserId;
+                    model.CreatedBy = CurrentUserId;
+                    model.CreatedDate = AppTime.Now;
+                    model.ModifiedBy = CurrentUserId;
+                    model.ModifiedDate = AppTime.Now;
+
+                    await _IPurchaseRequisitionFinalService.PRToPOInsertAsync(model, CurrentUserId, CurrentUserName);
+                }
+                else
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records added successfully.");
         }
     }
 }
