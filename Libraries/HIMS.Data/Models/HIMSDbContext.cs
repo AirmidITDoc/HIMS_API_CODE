@@ -8295,9 +8295,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.PreservativeUsed)
-                    .HasMaxLength(225)
-                    .HasColumnName("Preservative Used");
+                entity.Property(e => e.PreservativeUsed).HasMaxLength(225);
             });
 
             modelBuilder.Entity<MPathTemplateDetail>(entity =>
