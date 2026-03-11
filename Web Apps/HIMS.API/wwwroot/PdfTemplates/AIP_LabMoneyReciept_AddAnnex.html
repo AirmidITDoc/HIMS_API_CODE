@@ -19,22 +19,25 @@
     <table style="width:100%; line-height:22px;">
         <tr>
             <td><b>Name :</b>{{PatientName}} </td>
-            <td><b>Receipt No :</b>{{BillNo}} </td>
-            <td><b>Receipt Date :</b>{{BillDate}} </td>
+            <td><b>Bill No :</b>{{BillNo}} </td>
+            
 
         </tr>
         <tr>
-            <td><b>UHID :</b>{{RegNo}} </td>
+            <td><b>Receipt Date :</b>{{BillDate}} </td>
+            <td><b>Reg. Number :</b>{{RegNo}} </td>
+            
+        </tr>
+        <tr>
             <td><b>Age/Sex :</b> {{AgeYear}}/{{GenderName}}</td>
             <td><b>Patient Type : </b>{{PatientType}} </td>
-        </tr>
-        <tr>
-            <td><b>Referring Dr. :</b>{{RefDocName}} </td>
+           
         </tr>
 
-        <!--<tr>
-        <td><b>Referring Dr. :</b>{{ConsultantDocName}} </td>
-    </tr>-->
+        <tr>
+            <td><b>Referring Dr. :</b>{{RefDocName}} </td>
+            <!--<td><b>Referring Dr. :</b>{{ConsultantDocName}} </td>-->
+        </tr>
         <!--<tr>
                <td><b>Bill To :</b> </td>
     <td><b>Patient ID : </b>{{LabPatientId}} </td>
@@ -102,31 +105,38 @@
         </div>
         <div style="width:100%;height:50vh;box-sizing:border-box;page-break-inside: avoid;">
 
-            {{ExternalLabHeader}}
+            {{NewHeader}}
             <!--<hr>-->
             <table style="width:100%; line-height:22px;">
                 <tr>
                     <td><b>Name :</b>{{PatientName}} </td>
-                    <td><b>Receipt No :</b>{{BillNo}} </td>
+                    <td><b>Bill No :</b>{{BillNo}} </td>
+
+
+                </tr>
+                <tr>
                     <td><b>Receipt Date :</b>{{BillDate}} </td>
+                    <td><b>Reg. Number :</b>{{RegNo}} </td>
 
                 </tr>
                 <tr>
                     <td><b>Age/Sex :</b> {{AgeYear}}/{{GenderName}}</td>
                     <td><b>Patient Type : </b>{{PatientType}} </td>
+
+                </tr>
+
+                <tr>
                     <td><b>Referring Dr. :</b>{{RefDocName}} </td>
+                    <!--<td><b>Referring Dr. :</b>{{ConsultantDocName}} </td>-->
                 </tr>
                 <!--<tr>
-                    <td><b>Referring Dr. :</b>{{ConsultantDocName}} </td>
-                </tr>-->
+               <td><b>Bill To :</b> </td>
+    <td><b>Patient ID : </b>{{LabPatientId}} </td>
+           </tr>-->
                 <!--<tr>
-                           <td><b>Bill To :</b> </td>
-                <td><b>Patient ID : </b>{{LabPatientId}} </td>
-                       </tr>-->
-                <!--<tr>
-                    <td><b>Patient Category :</b> </td>
-                    <td><b>Reference No : </b>  </td>
-                </tr>-->
+        <td><b>Patient Category :</b> </td>
+        <td><b>Reference No : </b>  </td>
+    </tr>-->
             </table>
 
             <br>
@@ -152,9 +162,9 @@
                     <td><b>Balance Due :</b> {{BalanceAmt}}</td>
                 </tr>
                 <!--<tr>
-                    <td><b>Refund Amount :</b> </td>
-                    <td><b>Balance Due : </b></td>
-                </tr>-->
+            <td><b>Refund Amount :</b> </td>
+            <td><b>Balance Due : </b></td>
+        </tr>-->
             </table>
 
             <br><br>
@@ -165,10 +175,10 @@
                     <td style="text-align:right;">Patient Signature</td>
                 </tr>
                 <!--<tr>
-                    <td colspan="2" style="padding-top:15px;">
-                        Printed By : {{UserName}}
-                    </td>
-                </tr>-->
+            <td colspan="2" style="padding-top:15px;">
+                Printed By : {{UserName}}
+            </td>
+        </tr>-->
             </table>
 
         </div>
