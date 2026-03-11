@@ -50,5 +50,7 @@
         public long IsVerifiedUserId { get; set; }
         public double? DiscPerc2 { get; set; }
         public decimal? DiscAmt2 { get; set; }
+        public decimal? HmrpStrip { get; set; }
+        public decimal? HmrpUnitPrice { get; set; }
     }
 }
