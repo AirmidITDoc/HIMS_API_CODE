@@ -112,7 +112,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MPathSpecimenCollectionMaster> _MPathSpecimenCollectionMaster;
         private readonly IGenericService<MPathSpecimenPreservativeMaster> _MPathSpecimenPreservativeMaster;
         private readonly IGenericService<MPathSpecimenConditionMaster> _MPathSpecimenConditionMaster;
-
+        private readonly IGenericService<MedicalRecordConfig> _MedicalRecordConfig;
 
 
 
@@ -173,7 +173,8 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MPathSpecimenContainerMaster> MPathSpecimenContainerMaster,
                               IGenericService<MPathSpecimenCollectionMaster> MPathSpecimenCollectionMaster,
                               IGenericService<MPathSpecimenPreservativeMaster> MPathSpecimenPreservativeMaster,
-                              IGenericService<MPathSpecimenConditionMaster> MPathSpecimenConditionMaster
+                              IGenericService<MPathSpecimenConditionMaster> MPathSpecimenConditionMaster,
+                              IGenericService<MedicalRecordConfig> MedicalRecordConfig
 
 
                              )
@@ -274,7 +275,7 @@ namespace HIMS.API.Controllers.Common
             _MPathSpecimenPreservativeMaster = MPathSpecimenPreservativeMaster;
 
             _MPathSpecimenConditionMaster = MPathSpecimenConditionMaster;
-
+            _MedicalRecordConfig = MedicalRecordConfig;
 
 
         }
@@ -478,6 +479,8 @@ namespace HIMS.API.Controllers.Common
 
                 "PathSpecimenContainerMaster" => (await _MPathSpecimenContainerMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenContainerMaster.SpecimenContainerId), nameof(MPathSpecimenContainerMaster.ContainerType)),
                 "PathSpecimenCollectionMaster" => (await _MPathSpecimenCollectionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenCollectionMaster.SpecimenCollectionId), nameof(MPathSpecimenCollectionMaster.CollectionMethod)),
+                "PathSpecimenPreservativeMaster" => (await _MPathSpecimenPreservativeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenPreservativeMaster.SpecimenPreservativeId), nameof(MPathSpecimenPreservativeMaster.PreservativeUsed)),
+                "DrugTimeDurationMaster" => (await _MedicalRecordConfig.GetAll(x => x.IsActive)).ToList().ToDropDown(nameof(MedicalRecordConfig.IntervalHours), nameof(MedicalRecordConfig.Code)),
                 //"PathSpecimenPreservativeMaster" => (await _MPathSpecimenPreservativeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenPreservativeMaster.SpecimenPreservativeId), nameof(MPathSpecimenPreservativeMaster.PreservativeUsed)),
                 "SpecimenPreservativeMaster" => (await _MPathSpecimenPreservativeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenPreservativeMaster.SpecimenPreservativeId), nameof(MPathSpecimenPreservativeMaster.PreservativeUsed)),
 
