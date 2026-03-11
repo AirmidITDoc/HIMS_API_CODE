@@ -63,18 +63,18 @@ namespace HIMS.API.Utility
     {
         public static string Generate()
         {
-            var mac = NetworkInterface
-                .GetAllNetworkInterfaces()
-                .FirstOrDefault(n => n.OperationalStatus == OperationalStatus.Up)?
-                .GetPhysicalAddress()
-                .ToString();
-
-            var machineName = Environment.MachineName;
-            var raw = $"{machineName}-{mac}";
-
+            var mac = FormatMac(NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(n => n.OperationalStatus == OperationalStatus.Up)?.GetPhysicalAddress().ToString());
             using var sha = SHA256.Create();
-            var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(raw));
+            var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(mac));
             return Convert.ToBase64String(bytes);
+        }
+        private static string FormatMac(string raw)
+        {
+            if (raw == "Unknown" || raw.Length != 12)
+                return raw;
+
+            return string.Join(":", Enumerable.Range(0, 6)
+                .Select(i => raw.Substring(i * 2, 2)));
         }
     }
 }
