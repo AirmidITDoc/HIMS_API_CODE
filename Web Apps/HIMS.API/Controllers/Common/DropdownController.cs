@@ -481,6 +481,10 @@ namespace HIMS.API.Controllers.Common
                 "PathSpecimenCollectionMaster" => (await _MPathSpecimenCollectionMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenCollectionMaster.SpecimenCollectionId), nameof(MPathSpecimenCollectionMaster.CollectionMethod)),
                 "PathSpecimenPreservativeMaster" => (await _MPathSpecimenPreservativeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenPreservativeMaster.SpecimenPreservativeId), nameof(MPathSpecimenPreservativeMaster.PreservativeUsed)),
                 "DrugTimeDurationMaster" => (await _MedicalRecordConfig.GetAll(x => x.IsActive)).ToList().ToDropDown(nameof(MedicalRecordConfig.IntervalHours), nameof(MedicalRecordConfig.Code)),
+                //"PathSpecimenPreservativeMaster" => (await _MPathSpecimenPreservativeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenPreservativeMaster.SpecimenPreservativeId), nameof(MPathSpecimenPreservativeMaster.PreservativeUsed)),
+                "SpecimenPreservativeMaster" => (await _MPathSpecimenPreservativeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenPreservativeMaster.SpecimenPreservativeId), nameof(MPathSpecimenPreservativeMaster.PreservativeUsed)),
+
+
 
 
                 _ => new List<SelectListItem>()

@@ -1,61 +1,63 @@
-﻿using Asp.Versioning;
-using HIMS.Api.Controllers;
-using HIMS.Api.Models.Common;
+﻿using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
+using HIMS.Api.Models.Common;
 using HIMS.API.Models.Masters;
-using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
-using HIMS.Data;
+using HIMS.Core;
 using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using Asp.Versioning;
+using HIMS.Data;
+using HIMS.API.Models.Nursing;
 
-namespace HIMS.API.Controllers.Masters.Personal_Information
+namespace HIMS.API.Controllers.NursingStation
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class PatientTypeController : BaseController
+    public class MedicalRecordConfigController : BaseController
     {
-        private readonly IGenericService<PatientTypeMaster> _repository;
-        public PatientTypeController(IGenericService<PatientTypeMaster> repository)
+        private readonly IGenericService<MedicalRecordConfig> _repository;
+        public MedicalRecordConfigController(IGenericService<MedicalRecordConfig> repository)
         {
             _repository = repository;
         }
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<PatientTypeMaster> PatientTypeList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(PatientTypeList.ToGridResponse(objGrid, "PatientType List"));
+            IPagedList<MedicalRecordConfig> MedicalRecordConfigList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(MedicalRecordConfigList.ToGridResponse(objGrid, "MedicalRecordConfig List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        [Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        //[Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.PatientTypeId == id);
-            return data.ToSingleResponse<PatientTypeMaster, PatientTypeModel>("PatientType");
+            var data = await _repository.GetById(x => x.Id == id);
+            return data.ToSingleResponse<MedicalRecordConfig, MedicalRecordModel>("MedicalRecordConfig");
         }
         //Add API
         [HttpPost]
-        [Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(PatientTypeModel obj)
+        //[Permission]
+        public async Task<ApiResponse> Post(MedicalRecordModel obj)
         {
-            PatientTypeMaster model = obj.MapTo<PatientTypeMaster>();
+            MedicalRecordConfig model = obj.MapTo<MedicalRecordConfig>();
             model.IsActive = true;
-            if (obj.PatientTypeId == 0)
+            if (obj.Id == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
+
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -64,28 +66,29 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(PatientTypeModel obj)
+        //[Permission]
+        public async Task<ApiResponse> Edit(MedicalRecordModel obj)
         {
-            PatientTypeMaster model = obj.MapTo<PatientTypeMaster>();
+            MedicalRecordConfig model = obj.MapTo<MedicalRecordConfig>();
             model.IsActive = true;
-            if (obj.PatientTypeId == 0)
+            if (obj.Id == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
+
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        //[Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
-            PatientTypeMaster model = await _repository.GetById(x => x.PatientTypeId == Id);
-            if ((model?.PatientTypeId ?? 0) > 0)
+            MedicalRecordConfig model = await _repository.GetById(x => x.Id == Id);
+            if ((model?.Id ?? 0) > 0)
             {
                 model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
@@ -96,6 +99,5 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
     }
 }

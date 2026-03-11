@@ -378,6 +378,22 @@ namespace HIMS.Services.Inventory
                 await _context.SaveChangesAsync();
             }
         }
+        public List<PathologyServiceComboDto> PathologyServicesearch(string Keyword)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@Keyword", Keyword);
+            return sql.FetchListBySP<PathologyServiceComboDto>("Rtrv_PathologyServiceCombo", para);
+        }
+        public List<RadiologyServiceComboDto> RadiologyServicesearch(string Keyword)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@Keyword", Keyword);
+            return sql.FetchListBySP<RadiologyServiceComboDto>("Rtrv_RadiologyServiceCombo", para);
+        }
+
+
     }
 }
 
