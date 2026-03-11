@@ -9157,6 +9157,10 @@ namespace HIMS.Data.Models
                 entity.ToTable("MedicalRecordConfig");
 
                 entity.Property(e => e.Code).HasMaxLength(20);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MenuMaster>(entity =>

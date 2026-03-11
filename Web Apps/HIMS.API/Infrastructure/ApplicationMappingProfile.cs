@@ -580,6 +580,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<MRDOutInFileModel, TMrdoutInFile>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<DiscApprovalDetailsModel, TDiscApprovalDetail>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<PathologyReportHeaderCancel, TPathologyReportHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MedicalRecordConfig, MedicalRecordModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 

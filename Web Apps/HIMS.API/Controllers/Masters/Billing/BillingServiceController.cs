@@ -44,6 +44,23 @@ namespace HIMS.API.Controllers.Masters.Billing
             return Ok(ServiceList.ToGridResponse(objGrid, "PackageService List"));
         }
 
+        [HttpGet("PathologyServicesearch")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse PathologyServicesearch(string Keyword)
+        {
+            var data = _BillingService.PathologyServicesearch(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathologyService search  data", data);
+        }
+
+        [HttpGet("RadiologyServicesearch")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse RadiologyServicesearch(string Keyword)
+        {
+            var data = _BillingService.RadiologyServicesearch(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "RadiologyService search  data", data);
+        }
+
+
 
         [HttpPost("InsertEDMX")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
