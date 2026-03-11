@@ -10,6 +10,8 @@
         public decimal? Rate { get; set; }
         public double? VatPercentage { get; set; }
         public string? SupplierName { get; set; }
+        public long SupplierId { get; set; }
+
 
 
 
