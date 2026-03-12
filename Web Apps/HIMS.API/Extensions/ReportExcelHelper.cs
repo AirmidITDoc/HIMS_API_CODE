@@ -243,7 +243,7 @@ namespace HIMS.API.Extensions
                         if (totalColList.Length == col)
                         {
                             workSheet.Cell(RowNo, 1).Value = "Summary";
-                            workSheet.Range(RowNo, 1, RowNo, colspan - 1).Merge();
+                            workSheet.Range(RowNo, 1, RowNo, colspan == 1 ? 1 : (colspan - 1)).Merge();
                         }
                         else
                             colspan++;
@@ -251,7 +251,7 @@ namespace HIMS.API.Extensions
                     else if (colName == "lableTotal")
                     {
                         workSheet.Cell(RowNo, 1).Value = $"Total {group}";
-                        workSheet.Range(RowNo, 1, RowNo, colspan - 1).Merge();
+                        workSheet.Range(RowNo, 1, RowNo, colspan == 1 ? 1 : (colspan - 1)).Merge();
                         colspan = 1;
                     }
                     else
@@ -278,7 +278,7 @@ namespace HIMS.API.Extensions
                             if (totalColList.Length == col)
                             {
                                 workSheet.Cell(RowNo, 1).Value = "";
-                                workSheet.Range(RowNo, 1, RowNo, colspan - 1).Merge();
+                                workSheet.Range(RowNo, 1, RowNo, colspan == 1 ? 1 : (colspan - 1)).Merge();
                                 colspan = 1;
                             }
                             else
@@ -287,7 +287,7 @@ namespace HIMS.API.Extensions
                         else if (colName == "lableTotal")
                         {
                             workSheet.Cell(RowNo, col).Value = $"{subGroup} Sub Total";
-                            workSheet.Range(RowNo, 1, RowNo, colspan - 1).Merge();
+                            workSheet.Range(RowNo, 1, RowNo, colspan == 1 ? 1 : (colspan - 1)).Merge();
                             colspan = 1;
                         }
                         else
@@ -311,7 +311,7 @@ namespace HIMS.API.Extensions
                     if (totalColList.Length == col)
                     {
                         workSheet.Cell(RowNo, 1).Value = "";
-                        workSheet.Range(RowNo, 1, RowNo, colspan - 1).Merge();
+                        workSheet.Range(RowNo, 1, RowNo, colspan == 1 ? 1 : (colspan - 1)).Merge();
                     }
                     else
                         colspan++;
@@ -319,7 +319,7 @@ namespace HIMS.API.Extensions
                 else if (colName == "lableTotal")
                 {
                     workSheet.Cell(RowNo, 1).Value = "Grand Total";
-                    workSheet.Range(RowNo, 1, RowNo, colspan - 1).Merge();
+                    workSheet.Range(RowNo, 1, RowNo, colspan == 1 ? 1 : (colspan - 1)).Merge();
                     colspan = 1;
                 }
                 else
