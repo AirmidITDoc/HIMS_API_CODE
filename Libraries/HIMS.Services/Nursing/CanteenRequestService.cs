@@ -110,6 +110,12 @@ namespace HIMS.Services.Nursing
             }
         }
 
+      
+
+        public virtual async Task<IPagedList<CanteenItemListDto>> CanteenItemList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<CanteenItemListDto>(model, "Rtrv_CaneenItem");
+        }
     }
 }
 

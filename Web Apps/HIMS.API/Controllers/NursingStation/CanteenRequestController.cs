@@ -8,6 +8,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
 using HIMS.Services.Nursing;
 using Microsoft.AspNetCore.Mvc;
@@ -99,6 +100,15 @@ namespace HIMS.API.Controllers.NursingStation
         {
             var resultList = await _ICanteenRequestService.GetItemListForCanteen(ItemName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetItemList For Canteen List.", resultList);
+        }
+
+
+        [HttpPost("CanteenItemList")]
+        //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
+        public async Task<IActionResult> ItemList(GridRequestModel objGrid)
+        {
+            IPagedList<CanteenItemListDto> DList = await _ICanteenRequestService.CanteenItemList(objGrid);
+            return Ok(DList.ToGridResponse(objGrid, "Item  List"));
         }
 
     }
