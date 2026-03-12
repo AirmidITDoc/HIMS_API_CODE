@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.License
                     ExpDate = Convert.ToDateTime(dr["ExpDate"]),
                     MachineName = dr["MachineName"].ToString() ?? string.Empty,
                     Mac = dr["Mac"].ToString() ?? string.Empty,
-                    IsActive= Convert.ToBoolean(dr["IsActive"])
+                    IsActive = Convert.ToBoolean(dr["IsActive"])
                 });
             return new ApiResponse() { Data = licenseRequests, Message = "License list", StatusCode = 200, StatusText = "Ok" };
         }
@@ -67,7 +67,8 @@ namespace HIMS.API.Controllers.License
             string validationMsg = ValidateData(obj.Id, obj.Code, obj.Mac);
             if (validationMsg == "Ok")
             {
-                GenerateLicense(obj);
+                if (obj.Id == 0)
+                    GenerateLicense(obj);
                 SqlParameter[] para = new SqlParameter[] {
                 new(){ ParameterName="@Id",Value=obj.Id,  SqlDbType=SqlDbType.BigInt },
                 new(){ ParameterName="@HospitalName",Value=obj.HospitalName,  SqlDbType=SqlDbType.NVarChar,Size=250 },
@@ -268,5 +269,5 @@ namespace HIMS.API.Controllers.License
         public string Mac { get; set; } = string.Empty;
         public bool IsActive { get; set; } = false;
     }
-    
+
 }
