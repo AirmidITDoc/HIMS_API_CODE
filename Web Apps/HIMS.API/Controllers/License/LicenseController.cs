@@ -51,7 +51,8 @@ namespace HIMS.API.Controllers.License
                     ContactPersonMobile = dr["ContactPersonMobile"].ToString() ?? string.Empty,
                     ExpDate = Convert.ToDateTime(dr["ExpDate"]),
                     MachineName = dr["MachineName"].ToString() ?? string.Empty,
-                    Mac = dr["Mac"].ToString() ?? string.Empty
+                    Mac = dr["Mac"].ToString() ?? string.Empty,
+                    IsActive= Convert.ToBoolean(dr["IsActive"])
                 });
             return new ApiResponse() { Data = licenseRequests, Message = "License list", StatusCode = 200, StatusText = "Ok" };
         }
@@ -174,7 +175,8 @@ namespace HIMS.API.Controllers.License
                 ContactPersonMobile = dr["ContactPersonMobile"].ToString() ?? string.Empty,
                 ExpDate = Convert.ToDateTime(dr["ExpDate"]),
                 MachineName = dr["MachineName"].ToString() ?? string.Empty,
-                Mac = dr["Mac"].ToString() ?? string.Empty
+                Mac = dr["Mac"].ToString() ?? string.Empty,
+                IsActive = Convert.ToBoolean(dr["IsActive"])
             };
         }
         [NonAction]
@@ -189,8 +191,8 @@ namespace HIMS.API.Controllers.License
             var license = new LicenseModel
             {
                 Customer = obj.HospitalName,
-                MachineHash = MachineFingerprint.Generate(),
-                ExpiryDate = obj.ExpDate
+                MachineHash = LicenseSecurity.EncryptString(MachineFingerprint.Generate() + "||" + obj.ExpDate.ToString("yyyy-MM-dd")),
+                // ExpiryDate = obj.ExpDate
             };
 
             var json = JsonSerializer.Serialize(license);
@@ -264,5 +266,7 @@ namespace HIMS.API.Controllers.License
         public DateTime ExpDate { get; set; }
         public string MachineName { get; set; } = string.Empty;
         public string Mac { get; set; } = string.Empty;
+        public bool IsActive { get; set; } = false;
     }
+    
 }
