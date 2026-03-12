@@ -24,6 +24,8 @@
         public long? IsVerifiedUserId { get; set; }
         public decimal? VatAmount { get; set; }
         public string? UOM { get; set; }
+        public decimal? HmrpStrip { get; set; }
+        public decimal? HmrpUnitPrice { get; set; }
 
 
     }

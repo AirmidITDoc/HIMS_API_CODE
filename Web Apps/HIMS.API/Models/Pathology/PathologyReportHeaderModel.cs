@@ -16,5 +16,13 @@ namespace HIMS.API.Models.Pathology
         public List<PathologyLabReportHeaderModel> PathologyLabReport { get; set; }
 
     }
+    public class PathologyReportHeaderCancel
+    {
+        public long PathReportId { get; set; }
+        public string? SampleReceviedCancelReason { get; set; }
+       
+
+
+    }
 
 }

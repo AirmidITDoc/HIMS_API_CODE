@@ -14,6 +14,7 @@ namespace HIMS.Core.Domain.Dashboard
         public List<RadiologyReport> RecentRadiologyReports { get; set; }
         public List<RadiologyOrderedTest> TopOrderedTests { get; set; }
         public List<RadiologyWorkload> RadiologyWorkloads { get; set; }
+        public List<RadWeeklyTestReport> RadWeeklyTestReport { get; set; }
     }
 
     public class RadiologyCountSummary
@@ -58,5 +59,13 @@ namespace HIMS.Core.Domain.Dashboard
     {
         public string DoctorName { get; set; }
         public int Count { get; set; }
+    }
+    public class RadWeeklyTestReport
+    {
+        public string DayName { get; set; }
+        public long TotalTests { get; set; }
+        public long CompletedReports { get; set; }
+        public long PendingReports { get; set; }
+        public long CancelledReports { get; set; }
     }
 }

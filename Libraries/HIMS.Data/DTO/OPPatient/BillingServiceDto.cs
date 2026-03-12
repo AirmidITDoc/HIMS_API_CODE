@@ -95,4 +95,16 @@
         public int ClassId { get; set; }
         public int ClassValue { get; set; }
     }
+    public class PathologyServiceComboDto
+    {
+        public long ServiceId { get; set; }
+        public string? ServiceName { get; set; }
+    }
+    public class RadiologyServiceComboDto
+    {
+        public long ServiceId { get; set; }
+        public string? ServiceName { get; set; }
+    }
+
+
 }

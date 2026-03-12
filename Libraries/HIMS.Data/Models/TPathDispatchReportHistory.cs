@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class TPathDispatchReportHistory
     {
+        public TPathDispatchReportHistory()
+        {
+            TPathDispatchReportHistoryDetails = new HashSet<TPathDispatchReportHistoryDetail>();
+        }
+
         public long DispatchId { get; set; }
         public long? LabPatientId { get; set; }
         public long? UnitId { get; set; }
@@ -16,5 +21,7 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+
+        public virtual ICollection<TPathDispatchReportHistoryDetail> TPathDispatchReportHistoryDetails { get; set; }
     }
 }

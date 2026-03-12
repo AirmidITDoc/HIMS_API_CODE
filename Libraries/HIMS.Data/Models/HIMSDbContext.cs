@@ -544,6 +544,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPatIcdcdeD> TPatIcdcdeDs { get; set; } = null!;
         public virtual DbSet<TPatIcdcdeH> TPatIcdcdeHs { get; set; } = null!;
         public virtual DbSet<TPathDispatchReportHistory> TPathDispatchReportHistories { get; set; } = null!;
+        public virtual DbSet<TPathDispatchReportHistoryDetail> TPathDispatchReportHistoryDetails { get; set; } = null!;
         public virtual DbSet<TPathologyReportDetail> TPathologyReportDetails { get; set; } = null!;
         public virtual DbSet<TPathologyReportDetailsArch> TPathologyReportDetailsArches { get; set; } = null!;
         public virtual DbSet<TPathologyReportHeader> TPathologyReportHeaders { get; set; } = null!;
@@ -8294,9 +8295,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.PreservativeUsed)
-                    .HasMaxLength(225)
-                    .HasColumnName("Preservative Used");
+                entity.Property(e => e.PreservativeUsed).HasMaxLength(225);
             });
 
             modelBuilder.Entity<MPathTemplateDetail>(entity =>
@@ -9158,6 +9157,10 @@ namespace HIMS.Data.Models
                 entity.ToTable("MedicalRecordConfig");
 
                 entity.Property(e => e.Code).HasMaxLength(20);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MenuMaster>(entity =>
@@ -10068,6 +10071,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ParameterName).HasMaxLength(100);
 
+                entity.Property(e => e.ParameterShortName).HasMaxLength(100);
+
                 entity.Property(e => e.PathTestId).HasColumnName("PathTestID");
 
                 entity.Property(e => e.RegNo)
@@ -10123,6 +10128,8 @@ namespace HIMS.Data.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.ParameterName).HasMaxLength(100);
+
+                entity.Property(e => e.ParameterShortName).HasMaxLength(100);
 
                 entity.Property(e => e.PathTestId).HasColumnName("PathTestID");
 
@@ -15698,6 +15705,22 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DispatchOn).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TPathDispatchReportHistoryDetail>(entity =>
+            {
+                entity.HasKey(e => e.DispatchDetailId);
+
+                entity.ToTable("T_PathDispatchReportHistoryDetail");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Dispatch)
+                    .WithMany(p => p.TPathDispatchReportHistoryDetails)
+                    .HasForeignKey(d => d.DispatchId)
+                    .HasConstraintName("FK_T_PathDispatchReportHistoryDetail_T_PathDispatchReportHistory");
             });
 
             modelBuilder.Entity<TPathologyReportDetail>(entity =>

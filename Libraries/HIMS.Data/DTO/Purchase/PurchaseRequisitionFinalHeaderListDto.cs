@@ -38,6 +38,7 @@ namespace HIMS.Data.DTO.Purchase
         public double? Qty { get; set; }
         public long? PrrequestHeaderId { get; set; }
         public long? PrrequestDetId { get; set; }
+        public long  ItemId { get; set; }
     }
 
 }

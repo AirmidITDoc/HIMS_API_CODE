@@ -89,6 +89,14 @@ namespace HIMS.Data.DTO.Pathology
         public string? SpecimenCondition { get; set; }
         public string? PreservativeUsedName { get; set; }
         public string? CollectionMethodName { get; set; }
+        public long OutSourceId { get; set; }
+        public string OutSourceLabName { get; set; }
+        public string? OutSourceSampleSentDateTime { get; set; }
+        public long OutSourceStatus { get; set; }
+        public DateTime OutSourceReportCollectedDateTime { get; set; }
+        public bool IsPathOutSource { get; set; }
+        public bool IsRadOutSource { get; set; }
+
 
     }
 }

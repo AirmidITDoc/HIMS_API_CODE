@@ -33,13 +33,16 @@ namespace HIMS.Data.DTO.Administration
         public bool? IsCompleted { get; set; }
         public long PathTestID { get; set; }
         public string? ServiceName { get; set; }
-
         public string? CreatedUser { get; set; }
-
         public string? Modifieduser { get; set; }
 
-
-
-
+    }
+    public class TestDispatchModelDto
+    {
+        public long TestId { get; set; }
+        public string? TestName { get; set; }
+        public string? Name { get; set; }
+        public DateTime? DispatchOn { get; set; }
+        public string? DispatchBy { get; set; }
     }
 }

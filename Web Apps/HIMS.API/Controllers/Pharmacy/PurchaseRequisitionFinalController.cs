@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("PurchaseRequisitionFinalDetailList")]
-        [Permission]
+       // [Permission]
         public async Task<IActionResult> PurchaseRequisitionFinalDetailList(GridRequestModel objGrid)
         {
             IPagedList<PurchaseRequisitionFinalDetailListDto> PurchaseRequisitionFinalDetailList = await _IPurchaseRequisitionFinalService.PurchaseRequisitionFinalDetailListAsync(objGrid);
