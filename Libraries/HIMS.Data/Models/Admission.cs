@@ -99,6 +99,10 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public bool? IsReimbursement { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDateTime { get; set; }
+        public string? IsCancelComment { get; set; }
 
         public virtual ICollection<IpdDrugSchedule> IpdDrugSchedules { get; set; }
     }

@@ -39,5 +39,6 @@ namespace HIMS.Data.Models
         public int? IsHeaderOption { get; set; }
         public string? HospitalLatitude { get; set; }
         public string? Hospitallongitude { get; set; }
+        public string? HospitalShortCode { get; set; }
     }
 }
