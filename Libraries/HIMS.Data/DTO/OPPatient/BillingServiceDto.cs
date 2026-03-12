@@ -99,11 +99,15 @@
     {
         public long ServiceId { get; set; }
         public string? ServiceName { get; set; }
+        public string? Status { get; set; }
+
     }
     public class RadiologyServiceComboDto
     {
         public long ServiceId { get; set; }
         public string? ServiceName { get; set; }
+        public string? Status { get; set; }
+
     }
 
 
