@@ -130,6 +130,12 @@ namespace HIMS.Services.Report
         }
 
 
+        public virtual async Task<List<HospitalMaster>> SearchHospitalMaster(string str)
+        {
+            return await this._context.HospitalMasters.Where(x => (x.HospitalName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
+
         public virtual async Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<MReportListDto>(model, "ps_ReportList");
