@@ -871,17 +871,16 @@ namespace HIMS.Services.Common
         public virtual void InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName, long traiffId, long ReqDetId)
         {
             DatabaseHelper odal = new();
-            string[] AEntity = {  "ChargesId","OpdIpdType",  "Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount",
-                "DocPercentage", "DocAmt", "HospitalAmt", "IsGenerated", "AddedBy", "IsCancelled","IsCancelledDate", "IsPathology", "IsRadiology", "IsPackage", "PackageMainChargeID",
-                "IsSelfOrCompanyService", "PackageId", "ChargesTime", "IsDoctorShareGenerated", "IsInterimBillFlag", "PackageMainChargeId", "RefundAmount", "CPrice", "CQty", "CTotalAmount",
-                "IsComServ", "IsPrintCompSer", "ServiceName", "ChPrice","ChQty","ChTotalAmount","IsBillableCharity","SalesId","IsHospMrk","BillNoNavigation","BillNo","IsCancelledBy","UnitId","TariffId",
-                "DoctorName","ServiceCode","CompanyServiceName","IsInclusionExclusion","WardId","BedId","IsApprovedByCamp","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+            string[] AEntity = {  "OpdIpdId","ClassID",  "ServiceId", "TraiffId", "ReqDetId", "UserId", "ChargesDate", "DoctorId"};
             var entity = ObjaddCharge.ToDictionary();
 
-            foreach (var rProperty in AEntity)
+
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!AEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
+            
             // Add TraiffId manually to dictionary
             entity["TraiffId"] = traiffId;
             entity["ReqDetId"] = ReqDetId;
