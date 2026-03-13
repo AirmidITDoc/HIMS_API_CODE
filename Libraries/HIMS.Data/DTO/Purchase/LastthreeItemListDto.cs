@@ -11,6 +11,10 @@
         public double? VatPercentage { get; set; }
         public string? SupplierName { get; set; }
         public long SupplierId { get; set; }
+        public string? UnitofMeasurementName { get; set; }
+        public long? Uomid { get; set; }
+
+
 
 
 

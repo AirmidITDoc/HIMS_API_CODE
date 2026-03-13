@@ -108,6 +108,8 @@ namespace HIMS.API.Models.IPPatient
         public byte? AdmissionType { get; set; }
         public long AdmissionId { get; set; }
         public bool? Ischarity { get; set; }
+        public bool? IsReimbursement { get; set; }
+
 
 
 
@@ -177,6 +179,8 @@ namespace HIMS.API.Models.IPPatient
         public bool? IsOpToIpconv { get; set; }
         public long? ConvertId { get; set; }
         public bool? Ischarity { get; set; }
+        public bool? IsReimbursement { get; set; }
+
     }
 }
 

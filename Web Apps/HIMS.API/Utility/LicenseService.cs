@@ -48,15 +48,24 @@ namespace HIMS.API.Utility
             if (!valid)
                 return "License signature invalid.";
 
-            if (licenseFile.Data.ExpiryDate < DateTime.UtcNow)
-                return "License expired.";
+            var machineHashExp = LicenseSecurity.DecryptString(licenseFile.Data.MachineHash).Split(new string[] { "||" }, StringSplitOptions.None);
+            if (machineHashExp.Length == 2)
+            {
+                DateTime ExpDate = Convert.ToDateTime(machineHashExp[1]);
+                if (ExpDate < DateTime.UtcNow)
+                    return "License expired.";
 
-            var machineHash = MachineFingerprint.Generate();
+                var machineHash = MachineFingerprint.Generate();
 
-            if (licenseFile.Data.MachineHash != machineHash)
-                return "License not valid for this machine.";
+                if (machineHashExp[0] != machineHash)
+                    return "License not valid for this machine.";
 
-            return "Ok";
+                return "Ok";
+            }
+            else
+            {
+                return "Invalid machine hash in license.";
+            }
         }
     }
     public static class MachineFingerprint

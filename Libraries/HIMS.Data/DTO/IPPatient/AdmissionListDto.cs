@@ -91,6 +91,10 @@
         public decimal DayWiseCredit { get; set; }
         public long MrdInFileStatus { get; set; }
         public bool IsAnaesthetistPaid { get; set; }
+        public bool? IsReimbursement { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDateTime { get; set; }
+        public string? IsCancelComment { get; set; }
 
 
     }

@@ -216,6 +216,15 @@ namespace HIMS.API.Controllers.Report
         }
 
 
+        [HttpGet("HospitalMaster/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetHospitalMasterAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchHospitalMaster(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchHospitalMaster Data.", data.Select(x => new { Text = x.HospitalName, Value = x.HospitalId }));
+        }
+
+
 
         [HttpGet("{mode?}")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]

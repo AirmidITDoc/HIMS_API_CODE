@@ -130,6 +130,12 @@ namespace HIMS.Services.Report
         }
 
 
+        public virtual async Task<List<HospitalMaster>> SearchHospitalMaster(string str)
+        {
+            return await this._context.HospitalMasters.Where(x => (x.HospitalName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
+
         public virtual async Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<MReportListDto>(model, "ps_ReportList");
@@ -13028,6 +13034,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName").ConvertToString());
 
+                        html = html.Replace("{{CategoryName}}", dt.GetColValue("CategoryName").ConvertToString());
 
 
 
@@ -13479,6 +13486,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Adm_Visit_Time}}", dt.GetColValue("Adm_Visit_Time").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
 
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName").ConvertToString());
+                        html = html.Replace("{{CategoryName}}", dt.GetColValue("CategoryName").ConvertToString());
+
 
 
 

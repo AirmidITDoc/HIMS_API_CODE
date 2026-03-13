@@ -108,6 +108,30 @@ namespace HIMS.Data.DTO.Inventory
         public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty; } }
         public double? TaxPer { get; set; }
     }
+    public class ItemListDTO
+    {
+        public long StoreId { get; set; }
+        public long ItemId { get; set; }
+        public string ItemName { get; set; }
+        public decimal? PurchaseRate { get; set; }
+        public long? UMOId { get; set; }
+        public string UMOName { get; set; }
+        public double BalanceQty { get; set; }
+        public string? DoseName { get; set; }
+        public string? DoseDay { get; set; }
+        public string? Instruction { get; set; }
+        public decimal? UnitMrp { get; set; }
+        public decimal? LandedRate { get; set; }
+        public string? HSNcode { get; set; }
+        public float? Cgstper { get; set; }
+        public float? Sgstper { get; set; }
+        public float? Igstper { get; set; }
+        public string? ConverFactor { get; set; }
+
+        public string? ItemCompanyName { get; set; }
+        public string FormattedText { get; set; }
+        public double? TaxPer { get; set; }
+    }
     public class ItemListForBatchPopDTO
     {
         public long StockId { get; set; }
@@ -195,7 +219,6 @@ namespace HIMS.Data.DTO.Inventory
     {
         public long ItemId { get; set; }                 
         public string? ItemName { get; set; }            
-
         public long? UMOId { get; set; }                 
         public string? UMOName { get; set; }             
 

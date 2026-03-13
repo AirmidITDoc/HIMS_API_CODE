@@ -51,7 +51,7 @@ namespace HIMS.Services.IPPatient
             DatabaseHelper odal = new();
             string[] rVisitEntity = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "WardId", "BedId", "DischargeDate",
             "DischargeTime","IsDischarged","IsBillGenerated","CompanyId","TariffId","ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc",
-            "MotherName","AdmittedDoctor1","AdmittedDoctor2","RefByTypeId","RefByName","SubTpaComId","PolicyNo","AprovAmount","CompDod","ConvertId","IsOpToIpconv","RefDoctorDept","AdmissionType","AdmissionId","Ischarity"};
+            "MotherName","AdmittedDoctor1","AdmittedDoctor2","RefByTypeId","RefByName","SubTpaComId","PolicyNo","AprovAmount","CompDod","ConvertId","IsOpToIpconv","RefDoctorDept","AdmissionType","AdmissionId","Ischarity","IsReimbursement"};
             var admientity = objAdmission.ToDictionary();
 
             foreach (var rProperty in admientity.Keys.ToList())
@@ -113,7 +113,7 @@ namespace HIMS.Services.IPPatient
 
             string[] rVisitEntity = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "WardId", "BedId", "DischargeDate",
                 "DischargeTime","IsDischarged","IsBillGenerated","CompanyId","TariffId","ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc",
-                "MotherName","AdmittedDoctor1","AdmittedDoctor2","RefByTypeId","RefByName","SubTpaComId","PolicyNo","AprovAmount","CompDod","ConvertId","IsOpToIpconv","RefDoctorDept","AdmissionType","AdmissionId","Ischarity"};
+                "MotherName","AdmittedDoctor1","AdmittedDoctor2","RefByTypeId","RefByName","SubTpaComId","PolicyNo","AprovAmount","CompDod","ConvertId","IsOpToIpconv","RefDoctorDept","AdmissionType","AdmissionId","Ischarity","IsReimbursement"};
             var admientity = objAdmission.ToDictionary();
 
             foreach (var rProperty in admientity.Keys.ToList())
@@ -157,7 +157,7 @@ namespace HIMS.Services.IPPatient
             //throw new NotImplementedException();
             DatabaseHelper odal = new();
             string[] rAdmissEntity = {"AdmissionId", "AdmissionDate", "AdmissionTime", "HospitalId", "PatientTypeId", "CompanyId", "TariffId", "DepartmentId", "DocNameId", "RefDocNameId",
-               "RelativeName" , "RelativeAddress", "PhoneNo", "RelationshipId", "IsMlc", "MotherName", "AdmittedDoctor1" ,"AdmittedDoctor2", "RefByTypeId","RefByName","IsUpdatedBy","SubTpaComId","IsOpToIpconv","ConvertId","Ischarity"};
+               "RelativeName" , "RelativeAddress", "PhoneNo", "RelationshipId", "IsMlc", "MotherName", "AdmittedDoctor1" ,"AdmittedDoctor2", "RefByTypeId","RefByName","IsUpdatedBy","SubTpaComId","IsOpToIpconv","ConvertId","Ischarity","IsReimbursement"};
             var rAdmissentity1 = objAdmission.ToDictionary();
             foreach (var rProperty in rAdmissentity1.Keys.ToList())
             {

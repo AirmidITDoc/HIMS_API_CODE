@@ -6,6 +6,8 @@
         public decimal UnitMRP { get; set; }
         public double Qty { get; set; }
         public long ReqId { get; set; }
+        public long ItemId { get; set; }
+
 
     }
 }
