@@ -13034,6 +13034,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName").ConvertToString());
 
+                        html = html.Replace("{{CategoryName}}", dt.GetColValue("CategoryName").ConvertToString());
 
 
 
@@ -13485,6 +13486,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Adm_Visit_Time}}", dt.GetColValue("Adm_Visit_Time").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
 
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName").ConvertToString());
+                        html = html.Replace("{{CategoryName}}", dt.GetColValue("CategoryName").ConvertToString());
+
 
 
 

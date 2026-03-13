@@ -155,6 +155,15 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List For GRN or PO List.", resultList);
         }
 
+        [HttpGet("NewGetItemListForGRNOrPO")]
+        public async Task<ApiResponse> GetItemListGRN(int StoreId, string ItemName)
+        {
+           var resultList = await _ItemMasterServices.GetItemListGRN(StoreId, ItemName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "NewGetItemListForGRNOrPO", resultList);
+        }
+
+
+
         //[HttpPost("GetItemListForGRNOrPOBySp")]
         ////[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         //public async Task<IActionResult> GetItemListForGRNOrPOBySp(GridRequestModel objGrid)

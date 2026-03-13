@@ -26,6 +26,8 @@ namespace HIMS.Services.Inventory
         List<ItemListForBatchDTO> ItemListForBatch(int StoreId, int ItemId, int PatientTypeId);
 
         List<ItemListForGRNOrPO> ItemListForIndent(int StoreId, string ItemName);
+        Task<List<ItemListDTO>> GetItemListGRN(int StoreId, string ItemName);
+
 
 
     }
