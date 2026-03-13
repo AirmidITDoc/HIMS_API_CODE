@@ -14,7 +14,7 @@ namespace HIMS.Services.Nursing
         Task<IPagedList<DoctorNoteListDto>> DoctorNoteList(GridRequestModel objGrid);
         Task<IPagedList<TDoctorPatientHandoverListDto>> TDoctorPatientHandoverList(GridRequestModel objGrid);
         Task<List<CanteenListDto>> GetItemList(string ItemName);
-        Task<List<CanteenListDto>> GetItemListForCanteen(string ItemName);
+        Task<List<ItemListforCanteenDto>> GetItemListForCanteen(string ItemName);
         Task CancelAsync(TCanteenRequestDetail ObjTCanteenRequestDetail, int CurrentUserId, string CurrentUserName);
 
 
