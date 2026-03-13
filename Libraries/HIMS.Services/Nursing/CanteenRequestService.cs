@@ -78,20 +78,39 @@ namespace HIMS.Services.Nursing
             return await qry.Take(50).ToListAsync();
         }
 
-        public virtual async Task<List<CanteenListDto>> GetItemListForCanteen(string ItemName)
+        //public virtual async Task<List<ItemListforCanteenDto>> GetItemListForCanteen(string ItemName)
+        //{
+        //    var qry = (from MCanItemMaster in _context.MCanItemMasters
+        //               where MCanItemMaster.ItemName == "" || MCanItemMaster.ItemName.Contains(ItemName)
+
+        //               select new ItemListforCanteenDto
+        //               {
+        //                   //ItemID = MCanItemMaster.ItemId,
+        //                   ItemName = MCanItemMaster.ItemName,
+        //                   //Price = MCanItemMaster.Price,
+        //                   //IsBatchRequired = MCanItemMaster.IsBatchRequired
+
+        //               });
+        //    return await qry.Take(50).ToListAsync();
+        //}
+        public virtual async Task<List<ItemListforCanteenDto>> GetItemListForCanteen(string ItemName)
         {
-            var qry = (from MCanItemMaster in _context.MCanItemMasters
-                       where MCanItemMaster.ItemName == "" || MCanItemMaster.ItemName.Contains(ItemName)
+            var qry = _context.MCanItemMasters.AsQueryable();
 
-                       select new CanteenListDto
-                       {
-                           ItemID = MCanItemMaster.ItemId,
-                           ItemName = MCanItemMaster.ItemName,
-                           Price = MCanItemMaster.Price,
-                           IsBatchRequired = MCanItemMaster.IsBatchRequired
+            if (!string.IsNullOrEmpty(ItemName) && ItemName != "%")
+            {
+                qry = qry.Where(x => x.ItemName.Contains(ItemName));
+            }
 
-                       });
-            return await qry.Take(50).ToListAsync();
+            return await qry.Take(50)
+                .Select(x => new ItemListforCanteenDto
+                {
+                    ItemName = x.ItemName,
+                    ItemID = x.ItemId,
+                    Price = x.Price,
+                    IsBatchRequired = x.IsBatchRequired
+                })
+                .ToListAsync();
         }
         public virtual async Task CancelAsync(TCanteenRequestDetail ObjTCanteenRequestDetail, int CurrentUserId, string CurrentUserName)
         {
@@ -110,6 +129,12 @@ namespace HIMS.Services.Nursing
             }
         }
 
+      
+
+        public virtual async Task<IPagedList<CanteenItemListDto>> CanteenItemList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<CanteenItemListDto>(model, "Rtrv_CaneenItem");
+        }
     }
 }
 
