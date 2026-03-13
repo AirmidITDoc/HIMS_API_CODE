@@ -13,6 +13,10 @@ namespace HIMS.Data.Models
         public int Status { get; set; }
         public bool IsActive { get; set; }
         public string? Comment { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
 
         public virtual Admission Admission { get; set; } = null!;
     }

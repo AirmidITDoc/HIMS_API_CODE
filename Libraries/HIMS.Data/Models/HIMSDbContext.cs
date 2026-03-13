@@ -3313,7 +3313,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Comment).HasMaxLength(50);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DoseTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Admission)
                     .WithMany(p => p.IpdDrugSchedules)

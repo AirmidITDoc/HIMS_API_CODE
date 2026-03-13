@@ -107,8 +107,8 @@ namespace HIMS.API.Controllers.NursingStation
         //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> ItemList(GridRequestModel objGrid)
         {
-            IPagedList<CanteenItemListDto> DList = await _ICanteenRequestService.CanteenItemList(objGrid);
-            return Ok(DList.ToGridResponse(objGrid, "Item  List"));
+            IPagedList<CanteenItemListDto> CanteenItemList = await _ICanteenRequestService.CanteenItemList(objGrid);
+            return Ok(CanteenItemList.ToGridResponse(objGrid, "CanteenItemList"));
         }
 
     }
