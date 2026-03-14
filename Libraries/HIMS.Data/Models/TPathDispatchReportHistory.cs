@@ -14,6 +14,7 @@ namespace HIMS.Data.Models
         public long? LabPatientId { get; set; }
         public long? UnitId { get; set; }
         public long? DispatchModeId { get; set; }
+        public long? RefDocId { get; set; }
         public string? Comments { get; set; }
         public long? DispatchBy { get; set; }
         public DateTime? DispatchOn { get; set; }
