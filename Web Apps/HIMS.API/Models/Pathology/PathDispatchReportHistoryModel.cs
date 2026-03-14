@@ -13,6 +13,8 @@ namespace HIMS.API.Models.Pathology
         public string? Comments { get; set; }
         public long? DispatchBy { get; set; }
         public DateTime? DispatchOn { get; set; }
+        public long? RefDocId { get; set; }
+
         public List<TPathDispatchReportHistoryDetailModel> TPathDispatchReportHistoryDetails { get; set; }
     }
     public class PathDispatchReportHistoryModelValidator : AbstractValidator<PathDispatchReportHistoryModel>
