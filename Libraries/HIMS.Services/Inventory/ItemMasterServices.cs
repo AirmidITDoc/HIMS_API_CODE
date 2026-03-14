@@ -338,11 +338,10 @@ namespace HIMS.Services.Inventory
 
             para[0] = new SqlParameter("@StoreId", StoreId);
             para[1] = new SqlParameter("@ItemName", string.IsNullOrEmpty(ItemName) ? DBNull.Value : ItemName);
-            //para[1] = new SqlParameter("@ItemName", ItemName);
-
 
             return sql.FetchListBySP<ItemListDTO>("Retrieve_ItemName_BalanceQty", para);
         }
+
         //public virtual async Task<List<ItemListDTO>> GetItemListGRN(int StoreId, string ItemName)
         //{
         //    DatabaseHelper sql = new();

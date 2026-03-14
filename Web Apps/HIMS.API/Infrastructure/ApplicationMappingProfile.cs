@@ -31,6 +31,7 @@ using static HIMS.API.Models.Pharmacy.TSalesInpatientHeaderModel;
 using HIMS.API.Models.GastrologyMasterModel;
 using static HIMS.API.Models.GastrologyMasterModel.MSubQuestionMasterModel;
 using HIMS.API.Models.MRD;
+using HIMS.API.Models.FeedBack;
 namespace HIMS.API.Infrastructure
 {
     public class ApplicationMappingProfile : Profile
@@ -581,6 +582,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<DiscApprovalDetailsModel, TDiscApprovalDetail>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<PathologyReportHeaderCancel, TPathologyReportHeader>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MedicalRecordConfig, MedicalRecordModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<IpdDrugSchedule, IpdDrugScheduleModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPatientFeedback, PatientFeedbackModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 

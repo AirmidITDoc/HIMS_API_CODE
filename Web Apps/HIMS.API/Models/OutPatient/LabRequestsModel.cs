@@ -3,7 +3,7 @@ namespace HIMS.API.Models.OutPatient
     public class LabRequestsModel
     {
         public long? OpdIpdId { get; set; }
-        public long ClassID { get; set; }
+        public long ClassId { get; set; }
         public long? ServiceId { get; set; }
         public long TraiffId { get; set; }
         public long ReqDetId { get; set; }

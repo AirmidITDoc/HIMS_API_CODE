@@ -35,6 +35,11 @@ namespace HIMS.Data.DTO.Administration
         public string? ServiceName { get; set; }
         public string? CreatedUser { get; set; }
         public string? Modifieduser { get; set; }
+        public long? RefDocId { get; set; }
+        public string? RefDoctorName { get; set; }
+
+        
+
 
     }
     public class TestDispatchModelDto

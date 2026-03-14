@@ -94,37 +94,51 @@ namespace HIMS.Services.Pathlogy
             await _context.LogProcedureExecution(Hentity, "PathologyTemplate", ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, UserId, UserName);
 
         }
+        //public virtual async Task InsertPathPrintResultentry(List<TempPathReportId> ObjTempPathReportId, int CurrentUserId, string CurrentUserName)
+        //{
+
+        //    DatabaseHelper odal = new();
+        //    foreach (var item in ObjTempPathReportId)
+        //    {
+
+        //        var tokensObj = new
+        //        {
+        //            PathReportId = Convert.ToInt32(item.PathReportId)
+        //        };
+
+        //        odal.ExecuteNonQuery("m_truncate_Temp_PathReportId", CommandType.StoredProcedure, tokensObj.ToDictionary());
+        //    }
+        //    foreach (var item in ObjTempPathReportId)
+        //    {
+
+        //        string[] rEntity = Array.Empty<string>();
+        //        var entity = item.ToDictionary();
+        //        foreach (var rProperty in rEntity)
+        //        {
+        //            entity.Remove(rProperty);
+        //        }
+        //        odal.ExecuteNonQuery("m_Insert_Temp_PathReportId", CommandType.StoredProcedure, entity);
+        //        await _context.LogProcedureExecution(entity, nameof(TempPathReportId), item.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+        //    }
+
+        //}
         public virtual async Task InsertPathPrintResultentry(List<TempPathReportId> ObjTempPathReportId, int CurrentUserId, string CurrentUserName)
         {
-
             DatabaseHelper odal = new();
+
+            odal.ExecuteNonQuery("m_truncate_Temp_PathReportId", CommandType.StoredProcedure);
+
             foreach (var item in ObjTempPathReportId)
             {
-
-                var tokensObj = new
-                {
-                    PathReportId = Convert.ToInt32(item.PathReportId)
-                };
-
-                odal.ExecuteNonQuery("m_truncate_Temp_PathReportId", CommandType.StoredProcedure, tokensObj.ToDictionary());
-            }
-            foreach (var item in ObjTempPathReportId)
-            {
-
-                string[] rEntity = Array.Empty<string>();
                 var entity = item.ToDictionary();
-                foreach (var rProperty in rEntity)
-                {
-                    entity.Remove(rProperty);
-                }
+
                 odal.ExecuteNonQuery("m_Insert_Temp_PathReportId", CommandType.StoredProcedure, entity);
-                await _context.LogProcedureExecution(entity, nameof(TempPathReportId), item.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
+                await _context.LogProcedureExecution( entity,nameof(TempPathReportId),item.PathReportId.ToInt(),Core.Domain.Logging.LogAction.Add,  CurrentUserId, CurrentUserName
+                );
             }
-
         }
-
-
 
         public virtual async Task InsertAsyncResultEntry1(TPathologyReportTemplateDetail ObjTPathologyReportTemplateDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string UserName)
         {

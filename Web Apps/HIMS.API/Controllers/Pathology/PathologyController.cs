@@ -99,22 +99,38 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
-        [HttpPost("PathPrintResultentryInsert")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
-        [Permission]
+     //   [HttpPost("PathPrintResultentryInsert")]
+     //   //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+     ////   [Permission]
 
-        public ApiResponse Insert(PathPrintResultentry obj)
+     //   public ApiResponse Insert(PathPrintResultentry obj)
+     //   {
+     //       List<TempPathReportId> model = obj.PathPrintResultEntry.MapTo<List<TempPathReportId>>();
+     //       if (model.Count > 0)
+     //       {
+     //            _IPathlogyService.InsertPathPrintResultentry(model, CurrentUserId, CurrentUserName);
+     //       }
+     //       else
+     //           return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+     //       return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathPrintResultentry  added successfully.");
+     //   }
+
+
+        [HttpPost("PathPrintResultentryInsert")]
+        [Permission]
+        public async Task<ApiResponse> Insert(PathPrintResultentry obj)
         {
             List<TempPathReportId> model = obj.PathPrintResultEntry.MapTo<List<TempPathReportId>>();
+
             if (model.Count > 0)
             {
-                _IPathlogyService.InsertPathPrintResultentry(model, CurrentUserId, CurrentUserName);
+                await _IPathlogyService.InsertPathPrintResultentry(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathPrintResultentry  added successfully.");
-        }
 
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathPrintResultentry added successfully.");
+        }
 
 
 

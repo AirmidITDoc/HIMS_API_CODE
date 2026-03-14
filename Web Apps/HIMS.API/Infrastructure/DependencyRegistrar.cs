@@ -167,6 +167,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<ILabPatientRegistrationService, LabPatientRegistrationService>();
             services.AddScoped<ILabBrowseListService, LabBrowseListService>();
             services.AddScoped<IMRDFileService, MRDFileService>();
+            services.AddScoped<IIpdDrugScheduleService, IpdDrugScheduleService>();
+
 
 
 
