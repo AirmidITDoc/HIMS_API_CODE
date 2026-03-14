@@ -15931,7 +15931,7 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<TPatientFeedback>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.PatientFeedbackId);
 
                 entity.ToTable("T_PatientFeedback");
 
@@ -15944,8 +15944,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
 
                 entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
-
-                entity.Property(e => e.PatientFeedbackId).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<TPatientPolicyInformation>(entity =>
