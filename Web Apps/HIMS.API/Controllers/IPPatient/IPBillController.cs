@@ -359,14 +359,14 @@ namespace HIMS.API.Controllers.IPPatient
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public ApiResponse InsertLabRequest(LabRequestsModel obj)
         {
-            if (obj.ClassID == 0)
+            if (obj.ClassId == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
             // 👇 Manually assign fields from LabRequestsModel to AddCharge
             var model = new AddCharge
             {
-                ClassId = obj.ClassID,
+                ClassId = obj.ClassId,
                 OpdIpdId = obj.OpdIpdId,
                 ServiceId = obj.ServiceId,
                 ChargesDate = obj.ChargesDate,
