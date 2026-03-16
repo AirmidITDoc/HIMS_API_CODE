@@ -62,6 +62,11 @@ namespace HIMS.Data.DTO.Pathology
         public int? IsAllPathServicesVerified { get; set; }
         public int? IsAllRadServicesVerified { get; set; }
         public long? LabPatRegId { get; set; }
+        public long? DoctorId { get; set; }
+        public long? RefDocId { get; set; }
+
+
+
 
 
     }
