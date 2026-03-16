@@ -135,6 +135,11 @@ namespace HIMS.Services.Report
             return await this._context.HospitalMasters.Where(x => (x.HospitalName).ToLower().Contains(str)).Take(25).ToListAsync();
         }
 
+        public virtual async Task<List<MCompanyEmployeInfo>> SearchCompanyEmployeInfo(string str)
+        {
+            return await this._context.MCompanyEmployeInfos.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
 
         public virtual async Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel model)
         {

@@ -224,6 +224,14 @@ namespace HIMS.API.Controllers.Report
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchHospitalMaster Data.", data.Select(x => new { Text = x.HospitalName, Value = x.HospitalId }));
         }
 
+        [HttpGet("MCompanyEmployeInfo/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetCompanyEmployeInfoAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchCompanyEmployeInfo(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyEmployeInfo Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.ExecutiveId }));
+        }
+
 
 
         [HttpGet("{mode?}")]
