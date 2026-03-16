@@ -48,5 +48,19 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+        [HttpPut("LabBillCancel")]
+        //[Permission]
+        public async Task<ApiResponse> LabBillCancel(OpBillCancellationModel obj)
+        {
+            Bill model = obj.MapTo<Bill>();
+            if (obj.BillNo != 0)
+            {
+                await _IOpBillCancellationService.UpdateAsyncLabBill(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
     }
 }

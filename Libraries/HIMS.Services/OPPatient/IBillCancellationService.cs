@@ -6,5 +6,7 @@ namespace HIMS.Services.OPPatient
     {
         Task UpdateAsyncOp(Bill objOpBillCancellation, int CurrentUserId, string CurrentUserName);
         Task UpdateAsyncIp(Bill objIPBillCancellation, int CurrentUserId, string CurrentUserName);
+        Task UpdateAsyncLabBill(Bill objIPBillCancellation, int CurrentUserId, string CurrentUserName);
+
     }
 }

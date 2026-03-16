@@ -107,7 +107,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPut("UpdatePaymentdatetime{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission]
         public ApiResponse PaymentdatetimeUpdate(PaymenntModel obj)
         {
             Payment model = obj.MapTo<Payment>();
@@ -162,7 +162,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPut("TPaymentdatetime{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission]
         public ApiResponse Update(PaymenntModel obj)
         {
             TPayment model = obj.MapTo<TPayment>();

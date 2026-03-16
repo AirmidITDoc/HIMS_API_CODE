@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Administration
          
         }
         [HttpPut("UpdateBilldatetime{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> BilldatetimeUpdate(BilllsModel obj)
         {
             Bill model = obj.MapTo<Bill>();
