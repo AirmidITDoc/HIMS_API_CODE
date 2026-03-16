@@ -61,7 +61,7 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
         [HttpPut("PaymentMode{id:int}")]
-        [Permission(PageCode = "Payment", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> PaymentdatetimeUpdate(paymentUpdateModel obj)
         {
             if (obj == null || obj.TpaymentUpdate == null || !obj.TpaymentUpdate.Any())

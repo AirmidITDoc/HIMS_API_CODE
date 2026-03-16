@@ -22,7 +22,7 @@ namespace HIMS.Services.Pathlogy
         Task<IPagedList<LabregBilldetailListDto>> GetBillDetailListAsync(GridRequestModel objGrid);
         Task<IPagedList<LabResultPrintedListDto>> LabResultPrintedListAsync(GridRequestModel objGrid);
         Task InsertAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username);
-        Task UpdateAsync(TLabPatientRegisteredMaster ObjTLabPatientRegistration, int UserId, string Username, string[]? references);
+        Task UpdateAsync(TLabPatientRegisteredMaster ObjTLabPatientRegistrationMaster, TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username);
         Task InsertAsyncSP(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge,List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName);
         Task InsertPaidBillAsync(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName);
         List<LabVisitDetailsListSearchDto> SearchlabRegistration(long UnitId ,string Keyword );

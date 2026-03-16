@@ -566,27 +566,58 @@ namespace HIMS.Services.Pathlogy
         }
 
 
-        public virtual async Task UpdateAsync(TLabPatientRegisteredMaster ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // 1. Attach the entity without marking everything as modified
-                _context.Attach(ObjTLabPatientRegistration);
-                _context.Entry(ObjTLabPatientRegistration).State = EntityState.Modified;
-                // Always ignore LabRequestNo (auto-increment column)
-                _context.Entry(ObjTLabPatientRegistration).Property(x => x.LabRequestNo).IsModified = false;
+        //public virtual async Task UpdateAsync(TLabPatientRegisteredMaster ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // 1. Attach the entity without marking everything as modified
+        //        _context.Attach(ObjTLabPatientRegistration);
+        //        _context.Entry(ObjTLabPatientRegistration).State = EntityState.Modified;
+        //        // Always ignore LabRequestNo (auto-increment column)
+        //        _context.Entry(ObjTLabPatientRegistration).Property(x => x.LabRequestNo).IsModified = false;
 
-                // 2. Ignore specific columns
-                if (ignoreColumns?.Length > 0)
-                {
-                    foreach (var column in ignoreColumns)
-                    {
-                        _context.Entry(ObjTLabPatientRegistration).Property(column).IsModified = false;
-                    }
-                }
-                await _context.SaveChangesAsync();
-                scope.Complete();
+        //        // 2. Ignore specific columns
+        //        if (ignoreColumns?.Length > 0)
+        //        {
+        //            foreach (var column in ignoreColumns)
+        //            {
+        //                _context.Entry(ObjTLabPatientRegistration).Property(column).IsModified = false;
+        //            }
+        //        }
+        //        await _context.SaveChangesAsync();
+        //        scope.Complete();
+        //    }
+        //}
+
+        public virtual async Task UpdateAsync(TLabPatientRegisteredMaster ObjTLabPatientRegistrationMaster, TLabPatientRegistration ObjTLabPatientRegistration, int CurrentUserId, string CurrentUserName)
+        {
+
+
+            DatabaseHelper odal = new();
+            string[] Entity = { "LabPatRegId", "RegDate", "RegTime", "UnitId", "PrefixId", "FirstName", "MiddleName", "LastName", "GenderId", "MobileNo", "DateofBirth", "AgeYear", "AgeMonth", "AgeDay", "Address", "AdharCardNo", "CityId", "StateId", "CountryId", "ModifiedBy" };
+
+            var entity = ObjTLabPatientRegistrationMaster.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!Entity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
+            odal.ExecuteNonQuery("ps_UpdateT_LabPatientRegisteredMaster", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, nameof(TLabPatientRegisteredMaster), Convert.ToInt32(ObjTLabPatientRegistrationMaster.LabPatRegId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+            string[] LEntity = { "LabPatientId", "UnitId", "PatientTypeId", "TariffId", "DoctorId", "RefDocId", "CompanyId", "PatientType", "Comments", "ReferByName", "ModifiedBy" };
+
+            var lEntity = ObjTLabPatientRegistration.ToDictionary();
+            foreach (var rProperty in lEntity.Keys.ToList())
+            {
+                if (!LEntity.Contains(rProperty))
+                    lEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_Update_T_LabPatientRegistration", CommandType.StoredProcedure, lEntity);
+            await _context.LogProcedureExecution(entity, nameof(TLabPatientRegistration), Convert.ToInt32(ObjTLabPatientRegistration.LabPatientId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
         }
 
         public virtual async Task<IPagedList<WhatsAppsendOutListDto>> GetLabPatientWhatsAppconfig(GridRequestModel model)

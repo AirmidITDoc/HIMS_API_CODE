@@ -202,22 +202,25 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(LabPatientRegistrationMasterModels obj)
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(LabPatientRegnewModel obj)
         {
-            TLabPatientRegisteredMaster model = obj.MapTo<TLabPatientRegisteredMaster>();
-            if (obj.LabPatRegId == 0)
+            TLabPatientRegisteredMaster model = obj.LabPatientRegistrationMaster.MapTo<TLabPatientRegisteredMaster>();
+            TLabPatientRegistration model1 = obj.LabPatientRegModel.MapTo<TLabPatientRegistration>();
+
+            if (obj.LabPatientRegistrationMaster.LabPatRegId == 0)
+
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                await _ILabPatientRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+                await _ILabPatientRegistrationService.UpdateAsync(model, model1, CurrentUserId, CurrentUserName);
 
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
-
+       
 
         [HttpGet("search-patient-1")]
         [Permission]

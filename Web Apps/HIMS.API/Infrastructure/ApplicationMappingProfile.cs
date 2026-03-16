@@ -102,6 +102,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<MOtSurgeryMaster, SurgeryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TLabPatientRegistration, LabRegistrationModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TLabPatientRegisteredMaster, LabPatientRegistrationMasterModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TLabPatientRegistration, LabPatientRegModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             CreateMap<TPayment, TPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MExpensesCategoryMaster, ExpensesCategoryMasterMode>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPaymentPharmacy, TPaymentpharModelS>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -743,24 +745,6 @@ namespace HIMS.API.Infrastructure
             CreateMap<MPresTemplateH, PrescriptionTemplateModels>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             CreateMap<TCanteenRequestHeader, CanteenRequestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TCanteenRequestDetail, TCanteenRequestDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TDoctorsNote, DoctorNoteModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -768,14 +752,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIpprescriptionReturnD, IpprescriptionReturnDModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<RoleMaster, RoleMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-
-
-
-
-
-
-
-            //patholgy
+         //patholgy
 
 
             CreateMap<MTemplateMaster, PathologyTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
