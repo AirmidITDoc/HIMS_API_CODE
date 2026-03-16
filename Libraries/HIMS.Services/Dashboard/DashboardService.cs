@@ -311,5 +311,26 @@ namespace HIMS.Services.Dashboard
                 PaymentOverview = data.Item4.FirstOrDefault() ?? new PaymentOverview()
             };
         }
+        public async Task<CashlessDashboard> GetCashlessDashboard(int UnitId, DateTime FromDate, DateTime ToDate)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para = new SqlParameter[3];
+            para[0] = new SqlParameter("@UnitId", SqlDbType.BigInt) { Value = UnitId };
+            para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
+            para[2] = new SqlParameter("@Todate", SqlDbType.DateTime) { Value = ToDate };
+
+            var data = await sql.Get4ResultsFromSp
+            <CashlessPatientSummary, CompanyPatientCount, CompanyBillSummary, CashlessDailyTrend>
+            ("ps_rtrv_CashlessCompanyDashBoard", para);
+
+            return new CashlessDashboard()
+            {
+                CashlessPatientSummary = data.Item1 ?? new List<CashlessPatientSummary>(),
+                CompanyPatientCounts = data.Item2 ?? new List<CompanyPatientCount>(),
+                CompanyBillSummaries = data.Item3 ?? new List<CompanyBillSummary>(),
+                DailyTrend = data.Item4 ?? new List<CashlessDailyTrend>()
+            };
+        }
     }
 }
