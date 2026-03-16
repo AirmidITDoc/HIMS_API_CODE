@@ -12,10 +12,10 @@ namespace HIMS.Data.Models
         public long? FeedbackQuestionId { get; set; }
         public long? FeedbackRating { get; set; }
         public string? FeedbackComments { get; set; }
+        public bool? IsActive { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
-        public bool? IsActive { get; set; }
     }
 }

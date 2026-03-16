@@ -45,6 +45,8 @@ namespace HIMS.Data.DTO.Pathology
         public string? PatientType { get; set; }
         public string? AadharCardNo { get; set; }
         public string? EmailId { get; set; }
+        public long? IsCancelled { get; set; }
+
     }
     public class LabResultCompletedListDto
     {

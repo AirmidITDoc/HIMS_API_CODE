@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Administration
 
         }
         [HttpPost("OPBillListForPaymentModeChangeList")]
-        //[Permission(PageCode = "Payment", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<OPBillListForPaymentModeChangeListDto> OPBillListForPaymentModeChangeList = await _IPaymentModeService.GetListAsync(objGrid);

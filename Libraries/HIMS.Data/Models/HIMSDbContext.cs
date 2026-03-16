@@ -226,6 +226,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MExaminationMaster> MExaminationMasters { get; set; } = null!;
         public virtual DbSet<MExpensesCategoryMaster> MExpensesCategoryMasters { get; set; } = null!;
         public virtual DbSet<MExpensesHeadMaster> MExpensesHeadMasters { get; set; } = null!;
+        public virtual DbSet<MFeedbackQuestion> MFeedbackQuestions { get; set; } = null!;
         public virtual DbSet<MGenericMaster> MGenericMasters { get; set; } = null!;
         public virtual DbSet<MIcdcdeMainMaster> MIcdcdeMainMasters { get; set; } = null!;
         public virtual DbSet<MIcdcodingMaster> MIcdcodingMasters { get; set; } = null!;
@@ -7137,6 +7138,21 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.HeadName)
                     .HasMaxLength(100)
                     .IsFixedLength();
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MFeedbackQuestion>(entity =>
+            {
+                entity.HasKey(e => e.FeedbackId);
+
+                entity.ToTable("M_FeedbackQuestion");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.FeedbackQuestion).HasMaxLength(500);
+
+                entity.Property(e => e.FeedbackQuestionMarathi).HasMaxLength(500);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });

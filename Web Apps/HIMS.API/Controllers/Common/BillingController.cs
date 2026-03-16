@@ -69,8 +69,7 @@ namespace HIMS.API.Controllers.Common
         }
 
         [HttpPut("UpdateRefund")]
-        [Permission(PageCode = "Billing", Permission = PagePermission.Add)]
-
+        [Permission]
         public async Task<ApiResponse> Update(UpdateRefundModel obj)
         {
             Refund model = obj.MapTo<Refund>();

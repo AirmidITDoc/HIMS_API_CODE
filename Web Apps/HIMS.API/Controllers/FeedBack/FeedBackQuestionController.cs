@@ -1,29 +1,27 @@
 ﻿using HIMS.Api.Controllers;
+using HIMS.API.Extensions;
+using HIMS.Api.Models.Common;
+using HIMS.API.Models.Masters;
+using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
-using HIMS.Services.Pathlogy;
-using Asp.Versioning;
-using HIMS.Core.Domain.Grid;
-using HIMS.API.Extensions;
-using HIMS.Core;
-using HIMS.Api.Models.Common;
-using HIMS.API.Models.Masters;
-using HIMS.Core.Infrastructure;
 using HIMS.API.Models.FeedBack;
+using Asp.Versioning;
 
 namespace HIMS.API.Controllers.FeedBack
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class PatientFeedbackController : BaseController
+    public class FeedBackQuestionController : BaseController
     {
-        private readonly IGenericService<TPatientFeedback> _repository;
-        public PatientFeedbackController(IGenericService<TPatientFeedback> repository)
+        private readonly IGenericService<MFeedbackQuestion> _repository;
+        public FeedBackQuestionController(IGenericService<MFeedbackQuestion> repository)
         {
             _repository = repository;
-
         }
         //List API
         [HttpPost]
@@ -31,8 +29,8 @@ namespace HIMS.API.Controllers.FeedBack
         //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<TPatientFeedback> PatientFeedbackList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(PatientFeedbackList.ToGridResponse(objGrid, "PatientFeedback List"));
+            IPagedList<MFeedbackQuestion> FeedbackQuestionList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(FeedbackQuestionList.ToGridResponse(objGrid, "FeedbackQuestion List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
@@ -43,17 +41,17 @@ namespace HIMS.API.Controllers.FeedBack
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository.GetById(x => x.PatientFeedbackId == id);
-            return data.ToSingleResponse<TPatientFeedback, PatientFeedbackModel>("TPatientFeedback");
+            var data = await _repository.GetById(x => x.FeedbackId == id);
+            return data.ToSingleResponse<MFeedbackQuestion, FeedBackQuestionModel>("PatientType");
         }
         //Add API
         [HttpPost]
         //[Permission]
-        public async Task<ApiResponse> Post(PatientFeedbackModel obj)
+        public async Task<ApiResponse> Post(FeedBackQuestionModel obj)
         {
-            TPatientFeedback model = obj.MapTo<TPatientFeedback>();
+            MFeedbackQuestion model = obj.MapTo<MFeedbackQuestion>();
             model.IsActive = true;
-            if (obj.PatientFeedbackId == 0)
+            if (obj.FeedbackId == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
@@ -68,11 +66,11 @@ namespace HIMS.API.Controllers.FeedBack
         //Edit API
         [HttpPut("{id:int}")]
         //[Permission]
-        public async Task<ApiResponse> Edit(PatientFeedbackModel obj)
+        public async Task<ApiResponse> Edit(FeedBackQuestionModel obj)
         {
-            TPatientFeedback model = obj.MapTo<TPatientFeedback>();
+            MFeedbackQuestion model = obj.MapTo<MFeedbackQuestion>();
             model.IsActive = true;
-            if (obj.PatientFeedbackId == 0)
+            if (obj.FeedbackId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
@@ -87,8 +85,8 @@ namespace HIMS.API.Controllers.FeedBack
         //[Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
-            TPatientFeedback model = await _repository.GetById(x => x.PatientFeedbackId == Id);
-            if ((model?.PatientFeedbackId ?? 0) > 0)
+            MFeedbackQuestion model = await _repository.GetById(x => x.FeedbackId == Id);
+            if ((model?.FeedbackId ?? 0) > 0)
             {
                 model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
@@ -99,7 +97,5 @@ namespace HIMS.API.Controllers.FeedBack
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
-
-
     }
 }
