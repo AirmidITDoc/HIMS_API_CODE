@@ -154,7 +154,7 @@ namespace HIMS.Services.IPPatient
 
             }
         }
-        public virtual void InsertDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, Bedmaster ObjBedmaster, int currentUserId, string currentUserName)
+        public virtual async Task  InsertDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, Bedmaster ObjBedmaster, int CurrentUserId, string CurrentUserName)
         {
             // throw new NotImplementedException();
             DatabaseHelper odal = new();
@@ -167,6 +167,8 @@ namespace HIMS.Services.IPPatient
             }
             string DischargeId = odal.ExecuteNonQuery("ps_insert_Discharge_1", CommandType.StoredProcedure, "DischargeId", entity);
             ObjDischarge.DischargeId = Convert.ToInt32(DischargeId);
+            //await _context.LogProcedureExecution(entity, nameof(Discharge), Convert.ToInt32(ObjDischarge.DischargeId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
             string[] AEntity = { "AdmissionId", "DischargeDate", "DischargeTime", "IsDischarged" };
             var Admientity = ObjAdmission.ToDictionary();
@@ -176,6 +178,8 @@ namespace HIMS.Services.IPPatient
                     Admientity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_Admission_DischareInfo_3", CommandType.StoredProcedure, Admientity);
+            //await _context.LogProcedureExecution(Admientity, nameof(Admission), Convert.ToInt32(ObjAdmission.AdmissionId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
 
             string[] BEntity = { "BedId"};
             var Bentity = ObjBedmaster.ToDictionary();
@@ -184,37 +188,36 @@ namespace HIMS.Services.IPPatient
                 if (!BEntity.Contains(rProperty))
                     Bentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_Update_DischargeBedRelease", CommandType.StoredProcedure, Bentity); ;
+            odal.ExecuteNonQuery("ps_Update_DischargeBedRelease", CommandType.StoredProcedure, Bentity);
+            //await _context.LogProcedureExecution(Bentity, nameof(Bedmaster), Convert.ToInt32(ObjBedmaster.BedId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
 
         }
-        public virtual void UpdateDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, int currentUserId, string currentUserName)
+        public virtual async Task  UpdateDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, int CurrentUserId, string CurrentUserName)
         {
             // throw new NotImplementedException();
             DatabaseHelper odal = new();
-            string[] rEntity = { "IsCancelled", "UpdatedBy", "IsCancelledby", "IsCancelledDate", "IsMrdreceived", "MrdreceivedDate", "MrdreceivedTime", "MrdreceivedUserId", "MrdreceivedName", "CreatedBy", "CreatedDate", "ModifiedDate" };
+            string[] rEntity = { "AdmissionId", "DischargeId", "DischargeDate", "DischargeTime", "DischargeTypeId", "DischargedDocId", "DischargedRmoid", "AddedBy", "ModeOfDischargeId", "ModifiedBy" };
             var Dentity = ObjDischarge.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in Dentity.Keys.ToList())
             {
-                Dentity.Remove(rProperty);
-                // Add the new parameter
-                //change by  Ashutosh 06 Jun 2025
-                //Dentity["ModeOfDischargeId"] = 0; // Ensure objpayment 
-                //    Dentity["ModifiedBy"] = 0; // Ensure objpayment 
+                if (!rEntity.Contains(rProperty))
+                    Dentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_Discharge_1", CommandType.StoredProcedure, Dentity);
+            //await _context.LogProcedureExecution(Dentity, nameof(Discharge), Convert.ToInt32(ObjDischarge.DischargeId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
-            string[] AEntity = { "RegId","AdmissionDate","AdmissionTime","PatientTypeId","HospitalId","DocNameId","RefDocNameId","WardId","BedId","IsBillGenerated","Ipdno","IsCancelled","CompanyId","TariffId","ClassId",
-            "DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing",
-            "Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime","IsCovidFlag","IsCovidUserId","IsCovidUpdateDate","IsUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDod",
-            "IsPharClearance","Ipnumber","EstimatedAmount", "ApprovedAmount", "HosApreAmt", "PathApreAmt", "PharApreAmt", "RadiApreAmt","PharDisc", "CompBillNo", "CompBillDate", "CompDiscount" ,"CompDisDate", "CBillNo", "CFinalBillAmt", "CDisallowedAmt", "ClaimNo", "HdiscAmt", "COutsideInvestAmt", "RecoveredByPatient" ,"HChargeAmt", "HAdvAmt", "HBillId",
-            "HBillDate" ,"HBillNo", "HTotalAmt", "HDiscAmt1", "HNetAmt","HPaidAmt","HBalAmt","DischargeSummaries","Discharges","TIpPrescriptionDischarges","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge","ConvertId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate" };
+
+            string[] AEntity = { "AdmissionId", "DischargeDate", "DischargeTime", "IsDischarged"};
             var Aentity = ObjAdmission.ToDictionary();
-            foreach (var rProperty in AEntity)
+            foreach (var rProperty in Aentity.Keys.ToList())
             {
-                Aentity.Remove(rProperty);
-
+                if (!AEntity.Contains(rProperty))
+                    Aentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_Admission_DischareInfo_3", CommandType.StoredProcedure, Aentity);
+            //await _context.LogProcedureExecution(Aentity, nameof(Admission), Convert.ToInt32(ObjAdmission.AdmissionId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
         }
 
         public virtual async Task DischargeInsertAsyncSP(InitiateDischarge ObjInitiateDischarge, int currentUserId, string currentUserName)

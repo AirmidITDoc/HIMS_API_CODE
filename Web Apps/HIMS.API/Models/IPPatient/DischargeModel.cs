@@ -64,8 +64,8 @@ namespace HIMS.API.Models.IPPatient
     }
     public class DischargeUpdateModel
     {
-        public long AdmissionId { get; set; }
         public long DischargeId { get; set; }
+        public long AdmissionId { get; set; }
         public DateTime? DischargeDate { get; set; }
         public string? DischargeTime { get; set; }
         public long? DischargeTypeId { get; set; }
