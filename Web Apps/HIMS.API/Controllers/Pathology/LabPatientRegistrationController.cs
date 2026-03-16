@@ -202,7 +202,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LabPatientRegnewModel obj)
         {
             TLabPatientRegisteredMaster model = obj.LabPatientRegistrationMaster.MapTo<TLabPatientRegisteredMaster>();
