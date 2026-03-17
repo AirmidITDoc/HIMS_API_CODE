@@ -8,6 +8,10 @@ namespace HIMS.API.Hubs
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
+        public async Task SendInvestigationDashboard(string mode, string message)
+        {
+            await Clients.All.SendAsync("ReceiveInvestigationDashboard", mode, message);
+        }
     }
 
 }

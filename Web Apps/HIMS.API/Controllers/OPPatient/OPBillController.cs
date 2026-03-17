@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Hubs;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pathology;
@@ -19,6 +20,7 @@ using HIMS.Services.Common;
 using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 using static HIMS.API.Models.OutPatient.AppointmentBillModel;
@@ -36,13 +38,15 @@ namespace HIMS.API.Controllers.OPPatient
         private readonly IOPSettlementService _IOPSettlementService;
         private readonly IAdministrationService _IAdministrationService;
         private readonly IVisitDetailsService _IVisitDetailsService;
-        public OPBillController(IOPBillingService repository, IOPCreditBillService repository1, IOPSettlementService repository2, IAdministrationService repository3, IVisitDetailsService repository4)
+        private readonly IHubContext<NotificationHub> _hubContext;
+        public OPBillController(IOPBillingService repository, IOPCreditBillService repository1, IHubContext<NotificationHub> hubContext, IOPSettlementService repository2, IAdministrationService repository3, IVisitDetailsService repository4)
         {
             _oPBillingService = repository;
             _IOPCreditBillService = repository1;
             _IOPSettlementService = repository2;
             _IAdministrationService = repository3;
             _IVisitDetailsService = repository4;
+            _hubContext = hubContext;
         }
         [HttpPost("BrowseOPRefundList")]
         //   [Permission(PageCode = "Bill", Permission = PagePermission.View)]
@@ -127,6 +131,9 @@ namespace HIMS.API.Controllers.OPPatient
                 //var result = await _stkService.StkPushAsync(phone, obj.NetPayableAmt.Value.ToDecimal(), _config["MPesa:ConfirmationUrl"], model.BillNo.ToString());
                 //var Data = JsonConvert.DeserializeObject<MPesaResponseDto>(result);
                 //return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", new { model.BillNo, MPesaResponse = Data });
+
+                //SignalR ---  send signal
+                await _hubContext.Clients.All.SendAsync("ReceiveInvestigationDashboard", "Investigation_Bill", JsonConvert.SerializeObject(new { BillCount = 1, Amount = model.RefundAmount }));
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
