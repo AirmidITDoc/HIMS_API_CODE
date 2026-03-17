@@ -448,7 +448,7 @@ namespace HIMS.API.Controllers.Report
 
                 case "SalesReturnBill":
                 case "ExpenseVoucharPrint":
-
+                case "LabMoneyReceiptPatientCopy":
 
 
                 //PharmacyKenya

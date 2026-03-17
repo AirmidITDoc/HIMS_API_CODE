@@ -424,7 +424,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabMoneyReceiptPatientCopy", "LabMoneyReceiptPatientCopy" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, "LabMoneyReceiptPatientCopy", "LabMoneyReceiptPatientCopy" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
