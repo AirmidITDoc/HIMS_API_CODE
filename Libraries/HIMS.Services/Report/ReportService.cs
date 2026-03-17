@@ -140,6 +140,19 @@ namespace HIMS.Services.Report
             return await this._context.MCompanyEmployeInfos.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(25).ToListAsync();
         }
 
+        public virtual async Task<List<LoginManager>> SearchLoginUser(string str)
+        {
+            return await this._context.LoginManagers.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+        public virtual async Task<List<TLabPatientRegistration>> SearchPatient(string str)
+        {
+            return await this._context.TLabPatientRegistrations.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+        public virtual async Task<List<TLabPatientRegistration>> SearchRegNo(string str)
+        {
+            return await this._context.TLabPatientRegistrations.Where(x => (x.LabRequestNo).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
 
         public virtual async Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel model)
         {
@@ -424,7 +437,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabMoneyReceiptPatientCopy", "LabMoneyReceiptPatientCopy" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, "LabMoneyReceiptPatientCopy", "LabMoneyReceiptPatientCopy" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion

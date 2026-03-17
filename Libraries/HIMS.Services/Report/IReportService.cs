@@ -32,6 +32,10 @@ namespace HIMS.Services.Report
         Task<List<HospitalMaster>> SearchHospitalMaster(string str);
         Task<List<MCompanyEmployeInfo>> SearchCompanyEmployeInfo(string str);
 
+        Task<List<LoginManager>> SearchLoginUser(string str);
+        Task<List<TLabPatientRegistration>> SearchPatient(string str);
+        Task<List<TLabPatientRegistration>> SearchRegNo(string str);
+
 
         Task<List<MExpensesCategoryMaster>> SearchMExpensesCategoryMaster(string str);
         Task<MReportConfig> GetReportConfigByMode(string ReportMode, string Section);

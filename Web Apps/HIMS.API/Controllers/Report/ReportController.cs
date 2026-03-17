@@ -232,6 +232,31 @@ namespace HIMS.API.Controllers.Report
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyEmployeInfo Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.ExecutiveId }));
         }
 
+        [HttpGet("LoginUser/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> SearchLoginUser(string Keyword)
+        {
+            var data = await _reportService.SearchLoginUser(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Search Login User", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.UserId }));
+        }
+
+
+        [HttpGet("SearchPatient/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> SearchPatient(string Keyword)
+        {
+            var data = await _reportService.SearchPatient(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Search Patient", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.LabPatientId }));
+        }
+
+        [HttpGet("SearchRegNo/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> SearchRegNo(string Keyword)
+        {
+            var data = await _reportService.SearchRegNo(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Search RegNo", data.Select(x => new { Text = x.LabRequestNo, Value = x.LabPatientId }));
+        }
+
 
 
         [HttpGet("{mode?}")]
@@ -448,7 +473,7 @@ namespace HIMS.API.Controllers.Report
 
                 case "SalesReturnBill":
                 case "ExpenseVoucharPrint":
-
+                case "LabMoneyReceiptPatientCopy":
 
 
                 //PharmacyKenya
@@ -480,8 +505,8 @@ namespace HIMS.API.Controllers.Report
                     break;
             }
             // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
-            long UnitId = 1;
-           // long UnitId = Context.UnitId;
+            //long UnitId = 1;
+            long UnitId = Context.UnitId;
             model.BaseUrl = AppSettings.Settings.BaseUrl;
             model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
             var byteFile = await _reportService.GetReportSetByProc(model, AppSettings.Settings.PdfFontPath, UnitId);
