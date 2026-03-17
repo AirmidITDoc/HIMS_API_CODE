@@ -87,4 +87,14 @@ namespace HIMS.API.Models.Inventory
 
 
     }
+    public class RadiologyUnVerifyModel
+    {
+        public long RadReportId { get; set; }
+        public long? UnVerifyId { get; set; }
+        public string? UnVerifyComment { get; set; }
+        public DateTime? UnVerifyDateTime { get; set; }
+        public bool? TestType { get; set; }
+
+
+    }
 }

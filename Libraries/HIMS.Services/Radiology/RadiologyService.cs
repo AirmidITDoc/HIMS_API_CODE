@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Pathology;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -86,6 +87,20 @@ namespace HIMS.Services.Radiology
 
                 scope.Complete();
             }
+        }
+        public virtual async Task UnVerifyAsync(TRadiologyReportHeader ObjTRadiologyReportHeader, int CurrentUserId, string CurrentUserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] rEntity = { "RadReportId", "UnVerifyId", "UnVerifyComment", "UnVerifyDateTime", "TestType" };
+            var entity = ObjTRadiologyReportHeader.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_RadiologyReportHeaderUnverify", CommandType.StoredProcedure, entity);
+            //await _context.LogProcedureExecution(entity, nameof(TRadiologyReportHeader), ObjTRadiologyReportHeader.RadReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
         }
 
     }

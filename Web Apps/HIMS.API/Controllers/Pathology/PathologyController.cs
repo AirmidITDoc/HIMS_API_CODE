@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Pathology;
+using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
@@ -66,7 +67,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("InsertResultEntry")]
-        [Permission]
+        //[Permission]
         //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyResultModel obj)
         {
@@ -225,5 +226,20 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Template List.", data);
         }
 
+        [HttpPost("PathologyUnverify")]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Verify(PathologyUnverifyModel obj)
+        {
+            TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();
+            if (obj.PathReportId != 0)
+            {
+                await _IPathlogyService.UnVerifyAsyncSp(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Unverify successfully.");
+        }
+
+      
     }
 }

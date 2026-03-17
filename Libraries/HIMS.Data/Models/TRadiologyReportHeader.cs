@@ -50,5 +50,8 @@ namespace HIMS.Data.Models
         public string? PatientName { get; set; }
         public string? Opipnumber { get; set; }
         public string? DoctorName { get; set; }
+        public long? UnVerifyId { get; set; }
+        public string? UnVerifyComment { get; set; }
+        public DateTime? UnVerifyDateTime { get; set; }
     }
 }

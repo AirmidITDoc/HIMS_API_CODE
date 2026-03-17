@@ -242,8 +242,20 @@ namespace HIMS.Services.Pathlogy
             List<PathServicewiseTemplateListDto> lstServiceList = sql.FetchListBySP<PathServicewiseTemplateListDto>("rtrv_patientTemplateRetriveCombo", para);
             return lstServiceList;
         }
+        public virtual async Task UnVerifyAsyncSp(TPathologyReportHeader ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)
+        {
 
-
-     
+            DatabaseHelper odal = new();
+            string[] rEntity = { "PathReportId", "UnVerifyId", "UnVerifyComment", "UnVerifyDateTime" };
+            var entity = ObjTPathologyReportHeader.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_PathologyReportHeaderUnverify", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, nameof(TGrnheader), ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+        }
+      
     }
 }

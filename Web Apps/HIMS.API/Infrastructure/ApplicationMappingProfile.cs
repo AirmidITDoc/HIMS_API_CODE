@@ -113,6 +113,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<TPayment, TpaymentUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();   
             CreateMap<ClinicalQuesHeader, GastrologyEMRModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ClinicalQuesDetail, ClinicalQuesDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPathologyReportHeader, PathologyUnverifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TRadiologyReportHeader, RadiologyUnVerifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 

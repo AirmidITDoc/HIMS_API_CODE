@@ -105,5 +105,19 @@ namespace HIMS.API.Controllers.Radiology
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record verify successfully.");
         }
+        [HttpPost("RadiologyUnverify")]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> UnVerify(RadiologyUnVerifyModel obj)
+        {
+            TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();
+            if (obj.RadReportId != 0)
+            {
+                await _RadilogyService.UnVerifyAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Unverify successfully.");
+        }
+
     }
 }

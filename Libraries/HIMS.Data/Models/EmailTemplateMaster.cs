@@ -17,5 +17,6 @@ namespace HIMS.Data.Models
         public string? Bcc { get; set; }
         public bool IsWa { get; set; }
         public bool IsActive { get; set; }
+        public string? SearchFields { get; set; }
     }
 }
