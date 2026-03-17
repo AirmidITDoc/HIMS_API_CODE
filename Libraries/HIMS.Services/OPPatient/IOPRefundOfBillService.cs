@@ -19,6 +19,8 @@ namespace HIMS.Services.OPPatient
         Task Update(Refund objRefund, int CurrentUserId, string CurrentUserName);
 
         Task<IPagedList<LabRefundApprovedListDto>> LabRefundApprovedListAsync(GridRequestModel objGrid);
+        Task DraftInsertIP(Refund objRefund, List<TRefundDetail> objTRefundDetail, int CurrentUserId, string CurrentUserName);
+
 
 
 

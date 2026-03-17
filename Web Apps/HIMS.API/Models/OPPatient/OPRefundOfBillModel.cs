@@ -135,6 +135,12 @@ namespace HIMS.API.Models.OPPatient
         public List<TPaymentModel> TPayments { get; set; }
 
     }
+    public class RefundBillModels
+    {
+        public OPRefundOfBillModel Refund { get; set; }
+        public List<TRefundDetailModel> TRefundDetails { get; set; }
+       
+    }
     public class RefundUpdateModel
     {
         public long RefundId { get; set; }

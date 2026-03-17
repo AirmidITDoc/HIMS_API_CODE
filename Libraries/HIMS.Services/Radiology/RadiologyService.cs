@@ -100,7 +100,7 @@ namespace HIMS.Services.Radiology
                     entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_RadiologyReportHeaderUnverify", CommandType.StoredProcedure, entity);
-            //await _context.LogProcedureExecution(entity, nameof(TRadiologyReportHeader), ObjTRadiologyReportHeader.RadReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(entity, nameof(TRadiologyReportHeader), ObjTRadiologyReportHeader.RadReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
         }
 
     }

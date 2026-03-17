@@ -88,6 +88,8 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
                 model.AddedBy = CurrentUserId;
+                model.AddBy = CurrentUserId;
+
 
                 objTRefundDetail.ForEach(x => { x.RefundId = obj.Refund.RefundId; x.AddBy = CurrentUserId; x.UpdatedBy = CurrentUserId; });
                 obj.AddCharges.ForEach(x => { x.ChargesId = obj.Refund.RefundId; });
@@ -103,7 +105,32 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.RefundId);
         }
+        [HttpPost("DraftRefundOfBiLLInsert")]
+        //[Permission(PageCode = "Refund", Permission = PagePermission.Add)]
+        [Permission]
 
+        public ApiResponse DraftInsertSP(RefundBillModels obj)
+        {
+            Refund model = obj.Refund.MapTo<Refund>();
+            List<TRefundDetail> objTRefundDetail = obj.TRefundDetails.MapTo<List<TRefundDetail>>();
+           
+
+            if (obj.Refund.RefundId == 0)
+            {
+                model.RefundTime = Convert.ToDateTime(obj.Refund.RefundTime);
+                model.AddedBy = CurrentUserId;
+                model.AddBy = CurrentUserId;
+
+
+                objTRefundDetail.ForEach(x => { x.RefundId = obj.Refund.RefundId; x.AddBy = CurrentUserId; x.UpdatedBy = CurrentUserId; });
+
+               
+                _IRefundOfBillService.DraftInsertIP(model, objTRefundDetail, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.RefundId);
+        }
 
         [HttpPost("InsertOPRefundOfBill")]
         //[Permission(PageCode = "Refund", Permission = PagePermission.Add)]

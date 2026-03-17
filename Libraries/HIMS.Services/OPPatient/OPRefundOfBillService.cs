@@ -123,7 +123,37 @@ namespace HIMS.Services.OPPatient
             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
 
         }
+        public virtual async Task DraftInsertIP(Refund objRefund, List<TRefundDetail> objTRefundDetail,int CurrentUserId, string CurrentUserName)
+        {
 
+            DatabaseHelper odal = new();
+            string[] rEntity = { "RefundDate", "RefundTime", "RefundNo", "BillId", "AdvanceId", "OpdIpdType", "OpdIpdId", "RefundAmount", "Remark", "TransactionId", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "RefundId", "UnitId", "CashCounterId", "IsApproval", "ApprovedBy", "ApprovalDatetime", "Comment" };
+
+            var entity = objRefund.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+            string vRefundId = odal.ExecuteNonQuery("ps_insert_DraftRefund", CommandType.StoredProcedure, "RefundId", entity);
+            objRefund.RefundId = Convert.ToInt32(vRefundId);
+            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(Refund), objRefund.RefundId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
+            foreach (var item in objTRefundDetail)
+            {
+                item.RefundId = Convert.ToInt32(vRefundId);
+                string[] rRefundEntity = { "RefundId", "ServiceId", "ServiceAmount", "RefundAmount", "DoctorId", "Remark", "AddBy", "ChargesId" };
+                var RefundEntity = item.ToDictionary();
+                foreach (var rProperty in RefundEntity.Keys.ToList())
+                {
+                    if (!rRefundEntity.Contains(rProperty))
+                        RefundEntity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_insert_T_DraftRefundDetail", CommandType.StoredProcedure, RefundEntity);
+                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TRefundDetail), item.RefundId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
+            }
+        }
         public virtual async Task InsertOP(Refund objRefund, List<TRefundDetail> objTRefundDetail, List<AddCharge> objAddCharge, Payment objPayment, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
         {
 
