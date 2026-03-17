@@ -60,5 +60,8 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? OrderNo { get; set; }
+        public long? UnVerifyId { get; set; }
+        public string? UnVerifyComment { get; set; }
+        public DateTime? UnVerifyDateTime { get; set; }
     }
 }

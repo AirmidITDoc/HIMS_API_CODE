@@ -9,11 +9,11 @@ namespace HIMS.Services.Radiology
         Task<IPagedList<RadiologyListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<LabRadiologyListDto>> GetListAsync1(GridRequestModel objGrid);
         Task<IPagedList<RadiologyApproveListDto>> ListAsync(GridRequestModel objGrid);
-
-
         Task RadiologyUpdate(TRadiologyReportHeader ObjTRadiologyReportHeader, int UserId, string Username);
         Task UpdateAsync(TRadiologyReportHeader ObjTRadiologyReportHeader, int UserId, string Username);
         Task VerifyAsync(TRadiologyReportHeader ObjTRadiologyReportHeader, int UserId, string Username);
+        Task UnVerifyAsync(TRadiologyReportHeader ObjTRadiologyReportHeader, int UserId, string Username);
+
 
 
     }

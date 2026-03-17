@@ -1911,6 +1911,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.MailSubject).HasMaxLength(250);
 
+                entity.Property(e => e.SearchFields).HasMaxLength(255);
+
                 entity.Property(e => e.TemplateCode).HasMaxLength(50);
 
                 entity.Property(e => e.ToMail).HasMaxLength(500);
@@ -15902,6 +15904,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SampleNo).HasMaxLength(50);
 
                 entity.Property(e => e.SampleReceviedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.UnVerifyComment).HasMaxLength(255);
+
+                entity.Property(e => e.UnVerifyDateTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TPathologyReportTemplateDetail>(entity =>
@@ -16758,6 +16764,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ResultEntry).HasColumnType("text");
 
                 entity.Property(e => e.SuggestionNotes).HasMaxLength(500);
+
+                entity.Property(e => e.UnVerifyComment).HasMaxLength(255);
+
+                entity.Property(e => e.UnVerifyDateTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TRefundDetail>(entity =>

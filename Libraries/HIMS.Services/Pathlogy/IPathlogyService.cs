@@ -20,6 +20,8 @@ namespace HIMS.Services.Pathlogy
         Task VerifyAsync(TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string Username);
         List<pathologistdoctorDto> SearchPatient();
         List<PathServicewiseTemplateListDto> GetServicewisetemplate(int ServiceId);
+        Task UnVerifyAsyncSp(TPathologyReportHeader ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName);
+
 
 
 
