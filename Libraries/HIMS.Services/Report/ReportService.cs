@@ -3383,33 +3383,75 @@ namespace HIMS.Services.Report
             }
 
             // Grand Total row (Income - Expense)
+            //table.Append("<tr style='border:1px solid black; color:black; background-color:#ccffff; font-weight:bold;'>");
+            //col = 1; colspan = 1;
+            //decimal grandTotalSum = 0; // ✅ To accumulate the final sum
+            //foreach (var colName in totalColList)
+            //{
+            //    if (colName == "space")
+            //    {
+            //        if (totalColList.Length == col)
+            //            table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;' colspan='").Append(colspan).Append("'></td>");
+            //        else
+            //            colspan++;
+            //    }
+            //    else if (colName == "lableTotal")
+            //    {
+            //        table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'  colspan='").Append(colspan).Append("'>Grand Total</td>");
+            //        colspan = 1;
+            //    }
+            //    else
+            //    {
+            //        decimal income = groupTotals.ContainsKey("Income") && groupTotals["Income"].ContainsKey(colName)
+            //            ? groupTotals["Income"][colName] : 0;
+            //        decimal expense = groupTotals.ContainsKey("Expense") && groupTotals["Expense"].ContainsKey(colName)
+            //            ? groupTotals["Expense"][colName] : 0;
+            //        decimal net = income - expense;
+
+            //        // ✅ Add to grand total sum
+            //        grandTotalSum += net;
+
+            //        table.Append($"<td style='text-align:right; border:1px solid #d4c3c3; padding:6px;'>{net:N2}</td>");
+            //    }
+            //    col++;
+            //}
+
+
             table.Append("<tr style='border:1px solid black; color:black; background-color:#ccffff; font-weight:bold;'>");
             col = 1; colspan = 1;
-            decimal grandTotalSum = 0; // ✅ To accumulate the final sum
+            decimal grandTotalSum = 0;
+
             foreach (var colName in totalColList)
             {
                 if (colName == "space")
                 {
                     if (totalColList.Length == col)
-                        table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;' colspan='").Append(colspan).Append("'></td>");
+                        table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;' colspan='")
+                             .Append(colspan).Append("'></td>");
                     else
                         colspan++;
                 }
                 else if (colName == "lableTotal")
                 {
-                    table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'  colspan='").Append(colspan).Append("'>Grand Total</td>");
+                    table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;' colspan='")
+                         .Append(colspan).Append("'>Grand Total</td>");
                     colspan = 1;
                 }
                 else
                 {
                     decimal income = groupTotals.ContainsKey("Income") && groupTotals["Income"].ContainsKey(colName)
                         ? groupTotals["Income"][colName] : 0;
+
                     decimal expense = groupTotals.ContainsKey("Expense") && groupTotals["Expense"].ContainsKey(colName)
                         ? groupTotals["Expense"][colName] : 0;
+
                     decimal net = income - expense;
 
-                    // ✅ Add to grand total sum
-                    grandTotalSum += net;
+                    // ✅ EXCLUDE AdvanceUsedAmount from Grand Total
+                    if (colName != "AdvanceUsedAmount")
+                    {
+                        grandTotalSum += net;
+                    }
 
                     table.Append($"<td style='text-align:right; border:1px solid #d4c3c3; padding:6px;'>{net:N2}</td>");
                 }
