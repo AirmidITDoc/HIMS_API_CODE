@@ -115,13 +115,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<ClinicalQuesDetail, ClinicalQuesDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPathologyReportHeader, PathologyUnverifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TRadiologyReportHeader, RadiologyUnVerifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
-
-
-
-
-
-
+            CreateMap<TLabAppointment, LabAppointmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TLabAppointment, LabAppointmentUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

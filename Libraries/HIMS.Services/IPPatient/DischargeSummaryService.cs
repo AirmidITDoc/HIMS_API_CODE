@@ -167,7 +167,8 @@ namespace HIMS.Services.IPPatient
             }
             string DischargeId = odal.ExecuteNonQuery("ps_insert_Discharge_1", CommandType.StoredProcedure, "DischargeId", entity);
             ObjDischarge.DischargeId = Convert.ToInt32(DischargeId);
-            //await _context.LogProcedureExecution(entity, nameof(Discharge), Convert.ToInt32(ObjDischarge.DischargeId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(Discharge), ObjDischarge.DischargeId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
 
 
             string[] AEntity = { "AdmissionId", "DischargeDate", "DischargeTime", "IsDischarged" };
@@ -178,7 +179,7 @@ namespace HIMS.Services.IPPatient
                     Admientity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_Admission_DischareInfo_3", CommandType.StoredProcedure, Admientity);
-            //await _context.LogProcedureExecution(Admientity, nameof(Admission), Convert.ToInt32(ObjAdmission.AdmissionId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(Admission), ObjAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
 
 
             string[] BEntity = { "BedId"};
@@ -189,11 +190,12 @@ namespace HIMS.Services.IPPatient
                     Bentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_Update_DischargeBedRelease", CommandType.StoredProcedure, Bentity);
-            //await _context.LogProcedureExecution(Bentity, nameof(Bedmaster), Convert.ToInt32(ObjBedmaster.BedId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(Bedmaster), ObjBedmaster.BedId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
 
 
         }
-        public virtual async Task  UpdateDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, int CurrentUserId, string CurrentUserName)
+
+        public virtual async Task UpdateDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, int CurrentUserId, string CurrentUserName)
         {
             // throw new NotImplementedException();
             DatabaseHelper odal = new();
@@ -205,10 +207,10 @@ namespace HIMS.Services.IPPatient
                     Dentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_Discharge_1", CommandType.StoredProcedure, Dentity);
-            //await _context.LogProcedureExecution(Dentity, nameof(Discharge), Convert.ToInt32(ObjDischarge.DischargeId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            _ = Task.Run(() => _context.LogProcedureExecution(Dentity, nameof(Discharge), ObjDischarge.DischargeId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
 
 
-            string[] AEntity = { "AdmissionId", "DischargeDate", "DischargeTime", "IsDischarged"};
+            string[] AEntity = { "AdmissionId", "DischargeDate", "DischargeTime", "IsDischarged" };
             var Aentity = ObjAdmission.ToDictionary();
             foreach (var rProperty in Aentity.Keys.ToList())
             {
@@ -216,11 +218,14 @@ namespace HIMS.Services.IPPatient
                     Aentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_Admission_DischareInfo_3", CommandType.StoredProcedure, Aentity);
-            //await _context.LogProcedureExecution(Aentity, nameof(Admission), Convert.ToInt32(ObjAdmission.AdmissionId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            _ = Task.Run(() => _context.LogProcedureExecution(Dentity, nameof(Admission), ObjAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
 
         }
 
-        public virtual async Task DischargeInsertAsyncSP(InitiateDischarge ObjInitiateDischarge, int currentUserId, string currentUserName)
+
+    
+
+    public virtual async Task DischargeInsertAsyncSP(InitiateDischarge ObjInitiateDischarge, int currentUserId, string currentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {

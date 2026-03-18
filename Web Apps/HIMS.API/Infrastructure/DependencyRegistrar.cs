@@ -1,6 +1,7 @@
 ﻿using DinkToPdf;
 using DinkToPdf.Contracts;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Pathology;
 using HIMS.API.PaymentGateway;
 using HIMS.API.Utility;
 using HIMS.Data;
@@ -168,6 +169,9 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<ILabBrowseListService, LabBrowseListService>();
             services.AddScoped<IMRDFileService, MRDFileService>();
             services.AddScoped<IIpdDrugScheduleService, IpdDrugScheduleService>();
+            services.AddScoped<ILabAppointmentService, LabAppointmentService>();
+
+
 
 
 
