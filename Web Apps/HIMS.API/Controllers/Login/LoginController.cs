@@ -182,6 +182,8 @@ namespace HIMS.API.Controllers.Login
                     user.LastName,
                     user.FirstName,
                     user.UserName,
+                    user.Password,
+
                     user.MobileNo,
                     user.IsBillReview,
                     user.IsAdminMultiview,

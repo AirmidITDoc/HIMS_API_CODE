@@ -447,6 +447,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<TDoctorShareHeader> TDoctorShareHeaders { get; set; } = null!;
         public virtual DbSet<TDoctorsNote> TDoctorsNotes { get; set; } = null!;
         public virtual DbSet<TDraddCharge> TDraddCharges { get; set; } = null!;
+        public virtual DbSet<TDraftRefund> TDraftRefunds { get; set; } = null!;
+        public virtual DbSet<TDraftRefundDetail> TDraftRefundDetails { get; set; } = null!;
         public virtual DbSet<TDrbill> TDrbills { get; set; } = null!;
         public virtual DbSet<TDrbillDet> TDrbillDets { get; set; } = null!;
         public virtual DbSet<TEmergencyAdm> TEmergencyAdms { get; set; } = null!;
@@ -479,6 +481,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TIssueToDepartmentDetail> TIssueToDepartmentDetails { get; set; } = null!;
         public virtual DbSet<TIssueToDepartmentHeader> TIssueToDepartmentHeaders { get; set; } = null!;
         public virtual DbSet<TItemMovementReport> TItemMovementReports { get; set; } = null!;
+        public virtual DbSet<TLabAppointment> TLabAppointments { get; set; } = null!;
         public virtual DbSet<TLabPatientAddress> TLabPatientAddresses { get; set; } = null!;
         public virtual DbSet<TLabPatientPersonInfo> TLabPatientPersonInfos { get; set; } = null!;
         public virtual DbSet<TLabPatientRegisteredMaster> TLabPatientRegisteredMasters { get; set; } = null!;
@@ -12573,6 +12576,60 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ServiceName).HasMaxLength(255);
             });
 
+            modelBuilder.Entity<TDraftRefund>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("T_DraftRefund");
+
+                entity.Property(e => e.ApprovalDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsApproval).HasColumnName("isApproval");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
+
+                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
+
+                entity.Property(e => e.RefundAmount).HasColumnType("money");
+
+                entity.Property(e => e.RefundDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RefundId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.RefundNo).HasMaxLength(20);
+
+                entity.Property(e => e.RefundTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Remark).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<TDraftRefundDetail>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("T_DraftRefundDetail");
+
+                entity.Property(e => e.DoctorAmount).HasColumnType("money");
+
+                entity.Property(e => e.HospitalAmount).HasColumnType("money");
+
+                entity.Property(e => e.RefundAmount).HasColumnType("money");
+
+                entity.Property(e => e.RefundDetId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.RefundId).HasColumnName("RefundID");
+
+                entity.Property(e => e.Remark).HasMaxLength(50);
+
+                entity.Property(e => e.ServiceAmount).HasColumnType("money");
+            });
+
             modelBuilder.Entity<TDrbill>(entity =>
             {
                 entity.HasKey(e => e.Drbno);
@@ -13762,6 +13819,49 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TransactionType).HasMaxLength(50);
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<TLabAppointment>(entity =>
+            {
+                entity.HasKey(e => e.LabAppId);
+
+                entity.ToTable("T_LabAppointment");
+
+                entity.Property(e => e.Address).HasMaxLength(100);
+
+                entity.Property(e => e.AppDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AppTime).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DateofBirth).HasColumnType("datetime");
+
+                entity.Property(e => e.EndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+
+                entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.LabAppDate).HasColumnType("datetime");
+
+                entity.Property(e => e.LabAppTime).HasColumnType("datetime");
+
+                entity.Property(e => e.LastName).HasMaxLength(50);
+
+                entity.Property(e => e.MiddleName).HasMaxLength(50);
+
+                entity.Property(e => e.MobileNo)
+                    .HasMaxLength(15)
+                    .IsFixedLength();
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SeqNo).HasMaxLength(50);
+
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TLabPatientAddress>(entity =>
