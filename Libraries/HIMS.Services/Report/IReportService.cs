@@ -36,6 +36,9 @@ namespace HIMS.Services.Report
         Task<List<TLabPatientRegistration>> SearchPatient(string str);
         Task<List<TLabPatientRegistration>> SearchRegNo(string str);
 
+        Task<List<PatientTypeMaster>> SearchPatientType(string str);
+        Task<List<object>> SearchLabReportStatus(string keyword);
+
 
         Task<List<MExpensesCategoryMaster>> SearchMExpensesCategoryMaster(string str);
         Task<MReportConfig> GetReportConfigByMode(string ReportMode, string Section);

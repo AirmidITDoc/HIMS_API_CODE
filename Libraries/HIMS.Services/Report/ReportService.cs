@@ -153,6 +153,27 @@ namespace HIMS.Services.Report
             return await this._context.TLabPatientRegistrations.Where(x => (x.LabRequestNo).ToLower().Contains(str)).Take(25).ToListAsync();
         }
 
+        public virtual async Task<List<PatientTypeMaster>> SearchPatientType(string str)
+        {
+            return await this._context.PatientTypeMasters.Where(x => (x.PatientType).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+        public virtual async Task<List<object>> SearchLabReportStatus(string keyword)
+        {
+            var statusList = new List<dynamic>
+    {
+        new { Text = "Pending", Value = 0 },
+        new { Text = "Completed", Value = 1 },
+        new { Text = "Printed", Value = 2 }
+    };
+
+            var result = statusList
+                .Where(x => x.Text.ToLower().Contains(keyword.ToLower()))
+                .Take(25)
+                .ToList<object>();
+
+            return await Task.FromResult(result);
+        }
+
 
         public virtual async Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel model)
         {
@@ -2750,6 +2771,225 @@ namespace HIMS.Services.Report
                             ItemsTotal.Append(CreateGrandTotal(dt, totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray(), model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray()));
                         if (model.Mode == "DailyCollectionSummary")
                             ItemsTotal.Append(CreateSummaryIncome(dt, headerList, model.groupByLabel.Split(',').Where(x => x != "").ToArray(), totalColList));
+                    }
+                    break;
+
+                case "CPWiseDetailReport.html":
+                    {
+                        string prevCP = "";
+                        string prevExec = "";
+                        string prevBill = "";
+
+                        decimal billGross = 0;
+                        decimal billDisc = 0;
+                        decimal billNet = 0;
+
+                        decimal billReceipt = 0;
+                        decimal billDue = 0;
+                        decimal billRefund = 0;
+
+                        decimal subGross = 0;
+                        decimal subDisc = 0;
+                        decimal subNet = 0;
+                        decimal subReceipt = 0;
+                        decimal subDue = 0;
+                        decimal subRefund = 0;
+
+                        decimal grandGross = 0;
+                        decimal grandDisc = 0;
+                        decimal grandNet = 0;
+                        decimal grandReceipt = 0;
+                        decimal grandDue = 0;
+                        decimal grandRefund = 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            string cp = dr["CompanyOrDoctorName"].ToString();
+                            string exec = dr["CompanyOrDoctorNameExecutiveName"].ToString();
+                            string bill = dr["PrintBillNo"].ToString();
+
+                            decimal gross = Convert.ToDecimal(dr["ServiceTotalAmt"]);
+                            decimal disc = Convert.ToDecimal(dr["ServiceDiscAmt"]);
+                            decimal net = Convert.ToDecimal(dr["ServiceNetAmt"]);
+
+                            decimal receipt = Convert.ToDecimal(dr["PaidAmt"]);
+                            decimal due = Convert.ToDecimal(dr["BalanceAmt"]);
+                            decimal refund = Convert.ToDecimal(dr["RefundAmount"]);
+
+                            /* CP + EXEC CHANGE */
+
+                            if (prevCP != cp || prevExec != exec)
+                            {
+                                if (prevExec != "")
+                                {
+                                    items.Append("<tr class='subTotal'>");
+
+                                    items.Append("<td colspan='5' class='right'>Subtotal</td>");
+                                    items.Append("<td class='center'>" + subGross + "</td>");
+                                    items.Append("<td class='center'>" + subDisc + "</td>");
+                                    items.Append("<td class='center'>" + subNet + "</td>");
+                                    items.Append("<td class='center'>" + subReceipt + "</td>");
+                                    items.Append("<td class='center'>" + subDue + "</td>");
+                                    items.Append("<td class='center'>" + subRefund + "</td>");
+                                    items.Append("<td></td>");
+
+                                    items.Append("</tr>");
+
+                                    subGross = subDisc = subNet = subReceipt = subDue = subRefund = 0;
+                                }
+
+                                items.Append("<tr class='groupHeader'>");
+                                items.Append("<td colspan='12'>CPName: " + cp + " : Executive Name: " + exec + "</td>");
+                                items.Append("</tr>");
+
+                                prevCP = cp;
+                                prevExec = exec;
+                                prevBill = "";
+                            }
+
+                            /* BILL CHANGE */
+
+                            if (prevBill != bill)
+                            {
+                                if (prevBill != "")
+                                {
+                                    items.Append("<tr class='billTotal'>");
+
+                                    items.Append("<td colspan='5' class='right'>Bill Total</td>");
+
+                                    items.Append("<td class='center'>" + billGross + "</td>");
+                                    items.Append("<td class='center'>" + billDisc + "</td>");
+                                    items.Append("<td class='center'>" + billNet + "</td>");
+
+                                    items.Append("<td class='center'>" + billReceipt + "</td>");
+                                    items.Append("<td class='center'>" + billDue + "</td>");
+                                    items.Append("<td class='center'>" + billRefund + "</td>");
+
+                                    items.Append("<td></td>");
+
+                                    items.Append("</tr>");
+
+                                    billGross = billDisc = billNet = 0;
+                                    billReceipt = billDue = billRefund = 0;
+                                }
+
+                                items.Append("<tr>");
+
+                                items.Append("<td>" + bill + "</td>");
+                                items.Append("<td class='center'>" + dr["BillDate"] + "</td>");
+                                items.Append("<td>" + dr["LabRequestNo"] + "</td>");
+                                items.Append("<td>" + dr["PatientName"] + "</td>");
+                                items.Append("<td>" + dr["CompanyOrDoctorName"] + "</td>");
+
+                                items.Append("<td></td>");
+                                items.Append("<td></td>");
+                                items.Append("<td></td>");
+                                items.Append("<td></td>");
+                                items.Append("<td></td>");
+                                items.Append("<td></td>");
+                                items.Append("<td></td>");
+
+                                items.Append("</tr>");
+
+                                billReceipt = receipt;
+                                billDue = due;
+                                billRefund = refund;
+
+                                subReceipt += receipt;
+                                subDue += due;
+                                subRefund += refund;
+
+                                grandReceipt += receipt;
+                                grandDue += due;
+                                grandRefund += refund;
+
+                                prevBill = bill;
+                            }
+
+                            /* TEST ROW */
+
+                            items.Append("<tr>");
+
+                            items.Append("<td colspan='5'>" + dr["ServiceName"] + "</td>");
+
+                            items.Append("<td class='center'>" + gross + "</td>");
+                            items.Append("<td class='center'>" + disc + "</td>");
+                            items.Append("<td class='center'>" + net + "</td>");
+
+                            items.Append("<td></td>");
+                            items.Append("<td></td>");
+                            items.Append("<td></td>");
+                            items.Append("<td></td>");
+
+                            items.Append("</tr>");
+
+                            billGross += gross;
+                            billDisc += disc;
+                            billNet += net;
+
+                            subGross += gross;
+                            subDisc += disc;
+                            subNet += net;
+
+                            grandGross += gross;
+                            grandDisc += disc;
+                            grandNet += net;
+                        }
+
+                        /* LAST BILL TOTAL */
+
+                        if (prevBill != "")
+                        {
+                            items.Append("<tr class='billTotal'>");
+
+                            items.Append("<td colspan='5' class='right'>Bill Total</td>");
+
+                            items.Append("<td class='center'>" + billGross + "</td>");
+                            items.Append("<td class='center'>" + billDisc + "</td>");
+                            items.Append("<td class='center'>" + billNet + "</td>");
+
+                            items.Append("<td class='center'>" + billReceipt + "</td>");
+                            items.Append("<td class='center'>" + billDue + "</td>");
+                            items.Append("<td class='center'>" + billRefund + "</td>");
+
+                            items.Append("<td></td>");
+
+                            items.Append("</tr>");
+                        }
+
+                        /* LAST SUBTOTAL */
+
+                        if (prevExec != "")
+                        {
+                            items.Append("<tr class='subTotal'>");
+
+                            items.Append("<td colspan='5' class='right'>Subtotal</td>");
+                            items.Append("<td class='center'>" + subGross + "</td>");
+                            items.Append("<td class='center'>" + subDisc + "</td>");
+                            items.Append("<td class='center'>" + subNet + "</td>");
+                            items.Append("<td class='center'>" + subReceipt + "</td>");
+                            items.Append("<td class='center'>" + subDue + "</td>");
+                            items.Append("<td class='center'>" + subRefund + "</td>");
+                            items.Append("<td></td>");
+
+                            items.Append("</tr>");
+                        }
+
+                        /* GRAND TOTAL */
+
+                        items.Append("<tr class='grandTotal'>");
+
+                        items.Append("<td colspan='5' class='right'>GRAND TOTAL</td>");
+
+                        items.Append("<td class='center'>" + grandGross + "</td>");
+                        items.Append("<td class='center'>" + grandDisc + "</td>");
+                        items.Append("<td class='center'>" + grandNet + "</td>");
+                        items.Append("<td class='center'>" + grandReceipt + "</td>");
+                        items.Append("<td class='center'>" + grandDue + "</td>");
+                        items.Append("<td class='center'>" + grandRefund + "</td>");
+                        items.Append("<td></td>");
+
+                        items.Append("</tr>");
                     }
                     break;
 
