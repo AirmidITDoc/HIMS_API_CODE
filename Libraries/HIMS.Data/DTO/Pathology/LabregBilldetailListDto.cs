@@ -22,6 +22,7 @@ namespace HIMS.Data.DTO.Pathology
         public bool? IsVerifySign { get; set; }
         public DateTime? IsVerifyedDate { get; set; }
         public long OPD_IPD_ID { get; set; }
+        public long TestType { get; set; }
 
     }
     public class LabResultListDto
