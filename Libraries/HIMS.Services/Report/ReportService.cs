@@ -2992,6 +2992,65 @@ namespace HIMS.Services.Report
                         items.Append("</tr>");
                     }
                     break;
+                case "DailyCollectionSummary.html":
+                    {
+                        string collectionItems = "";
+                        string refundItems = "";
+
+                        decimal totalCash = 0;
+                        decimal totalNonCash = 0;
+
+                        decimal refundCash = 0;
+                        decimal refundNonCash = 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            string type = dr["Type"].ToString();
+                            string payMode = dr["PayMode"].ToString();
+
+                            decimal cash = Convert.ToDecimal(dr["CashInHand"]);
+                            decimal nonCash = Convert.ToDecimal(dr["NonCash"]);
+
+                            if (type == "LabBill")
+                            {
+                                collectionItems += "<tr>";
+                                collectionItems += "<td>" + payMode + "</td>";
+                                collectionItems += "<td class='center'>" + cash + "</td>";
+                                collectionItems += "<td class='center'>" + nonCash + "</td>";
+                                collectionItems += "</tr>";
+
+                                totalCash += cash;
+                                totalNonCash += nonCash;
+                            }
+                            else
+                            {
+                                refundItems += "<tr>";
+                                refundItems += "<td>" + payMode + "</td>";
+                                refundItems += "<td class='center'>" + cash + "</td>";
+                                refundItems += "<td class='center'>" + nonCash + "</td>";
+                                refundItems += "</tr>";
+
+                                refundCash += cash;
+                                refundNonCash += nonCash;
+                            }
+                        }
+
+                        decimal netCash = totalCash - refundCash;
+                        decimal netNonCash = totalNonCash - refundNonCash;
+
+                        html = html.Replace("{{CollectionItems}}", collectionItems);
+                        html = html.Replace("{{RefundItems}}", refundItems);
+
+                        html = html.Replace("{{TotalCash}}", totalCash.ToString());
+                        html = html.Replace("{{TotalNonCash}}", totalNonCash.ToString());
+
+                        html = html.Replace("{{RefundCash}}", refundCash.ToString());
+                        html = html.Replace("{{RefundNonCash}}", refundNonCash.ToString());
+
+                        html = html.Replace("{{NetCash}}", netCash.ToString());
+                        html = html.Replace("{{NetNonCash}}", netNonCash.ToString());
+                    }
+                    break;
 
             }
 
