@@ -246,7 +246,7 @@ namespace HIMS.API.Controllers.Report
         public async Task<ApiResponse> SearchPatient(string Keyword)
         {
             var data = await _reportService.SearchPatient(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Search Patient", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.LabPatientId }));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Search Patient", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.LabPatRegId }));
         }
 
         [HttpGet("SearchRegNo/auto-complete")]
@@ -257,6 +257,25 @@ namespace HIMS.API.Controllers.Report
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Search RegNo", data.Select(x => new { Text = x.LabRequestNo, Value = x.LabPatientId }));
         }
 
+        [HttpGet("PatientTypeMaster/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> SearchPatientType(string Keyword)
+        {
+            var data = await _reportService.SearchPatientType(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Search PatientType ", data.Select(x => new { Text = x.PatientType, Value = x.PatientTypeId }));
+        }
+
+        [HttpGet("LabReportStatus/auto-complete")]
+        public async Task<ApiResponse> SearchLabReportStatus(string keyword)
+        {
+            var data = await _reportService.SearchLabReportStatus(keyword);
+
+            return ApiResponseHelper.GenerateResponse(
+                ApiStatusCode.Status200OK,
+                "Search Status",
+                data
+            );
+        }
 
 
         [HttpGet("{mode?}")]
