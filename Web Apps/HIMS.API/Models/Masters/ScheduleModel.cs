@@ -41,7 +41,7 @@ namespace HIMS.API.Models.Masters
     {
         public FavouriteDtoModelValidator()
         {
-            RuleFor(x => x.UserId).NotNull().NotEmpty().WithMessage("User Id is required");
+            //RuleFor(x => x.UserId).NotNull().NotEmpty().WithMessage("User Id is required");
             RuleFor(x => x.MenuId).NotNull().NotEmpty().WithMessage("Menu Id is required");
         }
     }

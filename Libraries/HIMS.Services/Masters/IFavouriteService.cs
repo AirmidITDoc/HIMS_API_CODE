@@ -5,7 +5,7 @@ namespace HIMS.Services.Masters
 {
     public partial interface IFavouriteService
     {
-        Task<IPagedList<FavouriteModel>> GetFavouriteModules(GridRequestModel objGrid, List<SearchGrid> list);
+        Task<List<FavouriteModel>> GetFavouriteModules(long roleid, long userid);
         Task InsertAsync(TFavouriteUserList objFavourite);
     }
 }
