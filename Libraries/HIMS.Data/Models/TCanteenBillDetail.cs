@@ -24,5 +24,11 @@ namespace HIMS.Data.Models
         public double? ReturnQty { get; set; }
         public long? ReqId { get; set; }
         public long? ReqDetId { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+
+        public virtual TCanteenBillHeader? BillNoNavigation { get; set; }
     }
 }

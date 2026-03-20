@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class TCanteenBillHeader
     {
+        public TCanteenBillHeader()
+        {
+            TCanteenBillDetails = new HashSet<TCanteenBillDetail>();
+        }
+
         public long BillNo { get; set; }
         public DateTime? Date { get; set; }
         public DateTime? Time { get; set; }
@@ -25,10 +30,14 @@ namespace HIMS.Data.Models
         public bool? IsPrint { get; set; }
         public bool? IsFree { get; set; }
         public long? UnitId { get; set; }
-        public long? AddedBy { get; set; }
-        public long? UpdatedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public long? ReqId { get; set; }
         public bool? IsOtherOrIsEmpBill { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+
+        public virtual ICollection<TCanteenBillDetail> TCanteenBillDetails { get; set; }
     }
 }

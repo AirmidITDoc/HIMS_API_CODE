@@ -9,6 +9,7 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
 using HIMS.Services.Audit;
+using HIMS.Services.Canteen;
 using HIMS.Services.Common;
 using HIMS.Services.Dashboard;
 using HIMS.Services.DoctorPayout;
@@ -170,11 +171,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IMRDFileService, MRDFileService>();
             services.AddScoped<IIpdDrugScheduleService, IpdDrugScheduleService>();
             services.AddScoped<ILabAppointmentService, LabAppointmentService>();
-
-
-
-
-
+            services.AddScoped<ICanteenBillService, CanteenBillService>();
 
             services.AddScoped<IDischargeSummaryService, DischargeSummaryService>();
             services.AddScoped<IIPBillService, IPBIllService>();

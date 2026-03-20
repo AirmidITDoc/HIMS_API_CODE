@@ -80,6 +80,8 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public long? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public decimal? SalesAmount { get; set; }
+        public decimal? Sramount { get; set; }
 
         public virtual ICollection<AddCharge> AddCharges { get; set; }
         public virtual ICollection<BillDetail> BillDetails { get; set; }
