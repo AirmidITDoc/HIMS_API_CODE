@@ -22,40 +22,43 @@ namespace HIMS.Services.IPPatient
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "TransferId" };
+            string[] rEntity = { };
             var Entity = objBedTransferDetail.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in Entity.Keys.ToList())
             {
-                Entity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    Entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_Insert_BedTransferDetails_1", CommandType.StoredProcedure, Entity);
 
             //throw new NotImplementedException();
-            string[] rBedEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] rBedEntity = { "BedId"};
             var rbedentity = ObjBedMaster.ToDictionary();
-            foreach (var rProperty in rBedEntity)
+
+            foreach (var rProperty in rbedentity.Keys.ToList())
             {
-                rbedentity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    rbedentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_M_BedMasterTofreebed", CommandType.StoredProcedure, rbedentity);
 
-            string[] BedEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
+            string[] BedEntity = { "BedId"};
             var bedentity = ObjBedMasterUpdate.ToDictionary();
-            foreach (var rProperty in BedEntity)
+
+            foreach (var rProperty in bedentity.Keys.ToList())
             {
-                bedentity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    bedentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_BedMaster", CommandType.StoredProcedure, bedentity);
 
-            string[] AEntity = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "DischargeDate", "DischargeTime", "IsDischarged", "IsBillGenerated", "Ipdno", "IsCancelled", "CompanyId", "TariffId", "DepartmentId",
-                "RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc","MotherName","AdmittedDoctor1","AdmittedDoctor2","IsProcessing","Ischarity","RefByTypeId","RefByName","IsMarkForDisNur","IsMarkForDisNurId","IsMarkForDisNurDateTime",
-                "IsCovidFlag","IsCovidUserId","IsCovidUpdateDate","IsUpdatedBy","SubTpaComId","PolicyNo","AprovAmount","CompDod","IsPharClearance","Ipnumber","EstimatedAmount","ApprovedAmount","HosApreAmt","PathApreAmt","PharApreAmt","RadiApreAmt",
-                "PharDisc","CompBillNo","CompBillDate","CompDiscount","CompDisDate","CBillNo","CFinalBillAmt","CDisallowedAmt","ClaimNo","HdiscAmt","COutsideInvestAmt","RecoveredByPatient",
-                "HChargeAmt","HAdvAmt","HBillId","HBillDate","HBillNo","HTotalAmt","HDiscAmt1","HNetAmt","HPaidAmt","HBalAmt","IsOpToIpconv","RefDoctorDept","AdmissionType","MedicalApreAmt","AdminPer","AdminAmt","SubTpacomp","IsCtoH","IsInitinatedDischarge","ConvertId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+            string[] AEntity = { "AdmissionId", "BedId", "WardId", "ClassId"};
             var aentity = ObjAdmission.ToDictionary();
-            foreach (var rProperty in AEntity)
+
+            foreach (var rProperty in aentity.Keys.ToList())
             {
-                aentity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    aentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_Update_AdmissionforBedMaster", CommandType.StoredProcedure, aentity);
 

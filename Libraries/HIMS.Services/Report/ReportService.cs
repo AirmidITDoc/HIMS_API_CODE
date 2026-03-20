@@ -14,6 +14,7 @@ using System.Data;
 using System.Globalization;
 using System.Text;
 using WkHtmlToPdfDotNet;
+using static LinqToDB.Common.Configuration;
 
 
 
@@ -3126,6 +3127,78 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NetNonCash}}", netNonCash.ToString());
 
                         html = html.Replace("{{GrandTotal}}", grandTotal.ToString());
+                    }
+                    break;
+
+                case "DailyCollectionDetailsWithSummary.html":
+                    {
+                        string detailRows = "";
+                        string summaryHtml = "";
+
+                        if (dt.Rows.Count == 0)
+                            break;
+
+               
+                        foreach (DataRow dr in dt.Select("RowType = 'DETAIL'"))
+                        {
+                            detailRows += "<tr>";
+
+                            detailRows += $"<td>{dr["BillDate"]}</td>";
+                            detailRows += $"<td>{dr["PrintBillNo"]}</td>";
+                            detailRows += $"<td>{dr["LabRequestNo"]}</td>";
+                            detailRows += $"<td>{dr["PatientName"]}</td>";
+                            detailRows += $"<td>{dr["TestNames"]}</td>";
+
+                            detailRows += $"<td>{dr["TotalAmt"]}</td>";
+                            detailRows += $"<td>{dr["ConcessionAmt"]}</td>";
+                            detailRows += $"<td>{dr["GrossAmt"]}</td>";
+                            detailRows += $"<td>{dr["NetPayableAmt"]}</td>";
+
+                            detailRows += $"<td>{dr["TotalMoneyReceived"]}</td>";
+
+                            detailRows += $"<td>{dr["CashPatientBalance"]}</td>";
+                            detailRows += $"<td>{dr["CreditPatientBalance"]}</td>";
+
+                            detailRows += $"<td>{dr["LessRefundAmt"]}</td>";
+
+                            detailRows += $"<td>{dr["NetCashCollection"]}</td>";
+                            detailRows += $"<td>{dr["NetUpiCollection"]}</td>";
+                            detailRows += $"<td>{dr["NetCardCollection"]}</td>";
+
+                            detailRows += $"<td>{dr["UserName"]}</td>";
+
+                            detailRows += "</tr>";
+                        }
+
+                     
+                        DataRow summary = dt.Select("RowType = 'SUMMARY'").FirstOrDefault();
+
+                   
+                        DataRow payment = dt.Select("RowType = 'PAYMENT SUMMARY'").FirstOrDefault();
+
+
+                        html = html
+                            .Replace("{{TotalAmt}}", summary?["TotalAmt"]?.ToString())
+                            .Replace("{{ConcessionAmt}}", summary?["ConcessionAmt"]?.ToString())
+                            .Replace("{{LessRefundAmt}}", summary?["LessRefundAmt"]?.ToString())
+                            .Replace("{{GrossAmt}}", summary?["GrossAmt"]?.ToString())
+                            .Replace("{{NetPayableAmt}}", summary?["NetPayableAmt"]?.ToString())
+
+                            .Replace("{{Cash}}", payment?["NetCashCollection"]?.ToString())
+                            .Replace("{{UPI}}", payment?["NetUpiCollection"]?.ToString())
+                            .Replace("{{Card}}", payment?["NetCardCollection"]?.ToString())
+
+                            .Replace("{{PaymentTotal}}",
+                                (Convert.ToDecimal(payment["NetCashCollection"] ?? 0) +
+                                 Convert.ToDecimal(payment["NetUpiCollection"] ?? 0) +
+                                 Convert.ToDecimal(payment["NetCardCollection"] ?? 0)).ToString())
+
+                            .Replace("{{TotalPayment}}", summary?["TotalMoneyReceived"]?.ToString())
+                            .Replace("{{CashBalance}}", summary?["CashPatientBalance"]?.ToString())
+                            .Replace("{{CreditBalance}}", summary?["CreditPatientBalance"]?.ToString());
+
+                        html = html.Replace("{{DetailRows}}", detailRows);
+                        html = html.Replace("{{SummaryHtml}}", summaryHtml);
                     }
                     break;
             }
