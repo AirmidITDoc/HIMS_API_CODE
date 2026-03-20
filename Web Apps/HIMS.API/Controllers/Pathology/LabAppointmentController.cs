@@ -14,6 +14,8 @@ using HIMS.Services.OTManagment;
 using HIMS.Services.Pathlogy;
 using HIMS.Services.IPPatient;
 using HIMS.API.Models.OPPatient;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.Pathology;
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -31,13 +33,11 @@ namespace HIMS.API.Controllers.Pathology
             _repository = repository1;
 
         }
-        //List API
-        [HttpPost]
-        [Route("[action]")]
-        //[Permission]
+        [HttpPost("LabAppointmentList")]
+        //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<TLabAppointment> LabAppointmentList = await _repository.GetAllPagedAsync(objGrid);
+            IPagedList<LabAppointmentListDto> LabAppointmentList = await _ILabAppointmentService.GetListAsync(objGrid);
             return Ok(LabAppointmentList.ToGridResponse(objGrid, "LabAppointment List"));
         }
 
@@ -114,9 +114,30 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
-
-
+        [HttpGet("get-Labappoinments")]
+        //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetLabAppoinments(int DocId, DateTime FromDate, DateTime ToDate, int? CategoryId)
+        {
+            var data = await _ILabAppointmentService.GetLabAppoinments(DocId, FromDate, ToDate, CategoryId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new
+            {
+                Start = x.StartTime,
+                Id = x.LabAppId,
+                End = x.EndTime,
+                Title = x.FirstName + " " + x.MiddleName + " " + x.LastName + " (" + x.MobileNo + ")",
+                resizable = new
+                {
+                    beforeStart = true,
+                    afterEnd = true,
+                },
+                draggable = true,
+                color = new
+                {
+                    primary = "#ad2121",
+                    secondary = "#FAE3E3",
+                }
+            }));
+        }
+        
     }
-
-
 }

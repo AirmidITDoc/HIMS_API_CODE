@@ -3,6 +3,7 @@
     public class LabAppointmentModel
     {
         public long LabAppId { get; set; }
+        public long? UnitId { get; set; }
         public DateTime? AppDate { get; set; }
         public string? AppTime { get; set; }
         public long? PrefixId { get; set; }
