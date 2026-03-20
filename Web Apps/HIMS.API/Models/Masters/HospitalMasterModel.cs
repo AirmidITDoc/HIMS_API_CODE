@@ -35,7 +35,6 @@ namespace HIMS.API.Models.Masters
     {
         public HospitalMasterModelModelValidator()
         {
-            RuleFor(x => x.HospitalHeaderLine).NotNull().NotEmpty().WithMessage("HospitalHeaderLine is required");
             RuleFor(x => x.HospitalName).NotNull().NotEmpty().WithMessage("HospitalName is required");
             RuleFor(x => x.HospitalAddress).NotNull().NotEmpty().WithMessage("HospitalAddress is required");
             RuleFor(x => x.City).NotNull().NotEmpty().WithMessage("City is required");

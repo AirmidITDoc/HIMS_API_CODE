@@ -119,7 +119,7 @@ namespace HIMS.API.Controllers.Pathology
         public async Task<ApiResponse> GetLabAppoinments(int DocId, DateTime FromDate, DateTime ToDate, int? CategoryId)
         {
             var data = await _ILabAppointmentService.GetLabAppoinments(DocId, FromDate, ToDate, CategoryId);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Labappoinments Data.", data.Select(x => new
             {
                 Start = x.StartTime,
                 Id = x.LabAppId,

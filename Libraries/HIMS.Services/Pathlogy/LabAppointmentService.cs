@@ -80,7 +80,7 @@ namespace HIMS.Services.Pathlogy
         }
         public virtual async Task<List<TLabAppointment>> GetLabAppoinments(int DocId, DateTime FromDate, DateTime ToDate,int?CategoryId)
         {
-            return await this._context.TLabAppointments.Where(x => x.DoctorId == DocId && !x.IsCancelled.Value && x.AppDate >= FromDate && x.AppTime <= ToDate && (CategoryId == null || x.CategoryId == CategoryId) ).ToListAsync();
+            return await this._context.TLabAppointments.Where(x => x.DoctorId == DocId && !x.IsCancelled.Value && x.AppDate >= FromDate && x.AppDate <= ToDate && (CategoryId == null || x.CategoryId == CategoryId) ).ToListAsync();
         }
        
 
