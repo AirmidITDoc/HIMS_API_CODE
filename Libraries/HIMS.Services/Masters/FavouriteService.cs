@@ -1,7 +1,10 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using Microsoft.Data.SqlClient;
 using System.Transactions;
 
 namespace HIMS.Services.Masters
@@ -13,50 +16,30 @@ namespace HIMS.Services.Masters
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<FavouriteModel>> GetFavouriteModules(GridRequestModel objGrid, List<SearchGrid> list)
+        public virtual async Task<List<FavouriteModel>> GetFavouriteModules(long roleid, long userid)
         {
-            List<SearchModel> fields = SearchFieldExtension.GetSearchFields(list);
-
-            long roleid = Convert.ToInt64(fields.Find(x => x.FieldName?.ToLower() == "roleid".ToLower())?.FieldValueString);
-            long userid = Convert.ToInt64(fields.Find(x => x.FieldName?.ToLower() == "userid".ToLower())?.FieldValueString);
-
-            var query = (from M in _context.MenuMasters
-                         join P in _context.PermissionMasters on M.Id equals P.MenuId
-                         join F in _context.TFavouriteUserLists on M.Id equals F.MenuId
-                         where P.IsView == true
-                            && P.RoleId == roleid
-                            && F.UserId == userid
-                         orderby M.Id
-                         select new FavouriteModel()
-                         {
-                             UserId = userid,
-                             LinkName = M.LinkName,
-                             Icon = M.Icon ?? string.Empty,
-                             LinkAction = M.LinkAction ?? string.Empty,
-                             MenuId = P.MenuId,
-                             IsFavourite = F.FavouriteId > 0
-                         });
-
-            //if (!string.IsNullOrWhiteSpace(objGrid.SortField))
-            //{
-            //    query = query.OrderBy(objGrid.SortField, objGrid.SortOrder == -1);
-            //}
-            return await query.ToPagedListAsync(objGrid.First, objGrid.Rows, objGrid.ExportType != 0 || objGrid.Rows == -1);
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[2];
+            para[0] = new SqlParameter("@RoleId", roleid);
+            para[1] = new SqlParameter("@UserId", userid);
+            List<FavouriteModel> lstMenu = sql.FetchListByQuery<FavouriteModel>(@"select @UserId UserId,M.LinkName,M.Icon,M.LinkAction,P.MenuId,CONVERT(BIT,CASE WHEN F.FavouriteId>0 THEN 1 ELSE 0 END) IsFavourite from MenuMaster M
+INNER JOIN PermissionMaster P ON M.Id=P.MenuId AND P.IsView=1 AND P.RoleId=@RoleId
+LEFT JOIN T_FavouriteUserList F ON M.Id=F.MenuId AND F.UserId=@UserId", para);
+            return lstMenu;
         }
 
         public virtual async Task InsertAsync(TFavouriteUserList objFavourite)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            var exist = await _context.TFavouriteUserLists.FirstOrDefaultAsync(x => x.UserId == objFavourite.UserId && x.MenuId == objFavourite.MenuId);
+            if ((exist?.MenuId ?? 0) > 0)
             {
-                // Delete Exsting match table records
-                var lst = await _context.TFavouriteUserLists.Where(x => x.MenuId == objFavourite.MenuId && x.UserId == objFavourite.UserId).ToListAsync();
-                _context.TFavouriteUserLists.RemoveRange(lst);
-
-                // Add new table records
+                _context.TFavouriteUserLists.Remove(exist);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
                 _context.TFavouriteUserLists.Add(objFavourite);
                 await _context.SaveChangesAsync();
-
-                scope.Complete();
             }
         }
     }
