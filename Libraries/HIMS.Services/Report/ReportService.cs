@@ -3052,6 +3052,83 @@ namespace HIMS.Services.Report
                     }
                     break;
 
+                case "DailyCollectionWithSummary.html":
+                    {
+                        string detailRows = "";
+                        string collectionRows = "";
+                        string refundRows = "";
+
+                        decimal totalCash = 0, totalNonCash = 0;
+                        decimal refundCash = 0, refundNonCash = 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            string rowType = dr["RowType"].ToString();
+
+                            if (rowType == "DETAIL")
+                            {
+                                detailRows += "<tr>";
+                                detailRows += "<td>" + dr["PrintBillNo"] + "</td>";
+                                detailRows += "<td>" + dr["PatientName"] + "</td>";
+                                detailRows += "<td>" + dr["RefDoctor"] + "</td>";
+                                detailRows += "<td>" + dr["PayMode"] + "</td>";
+                                detailRows += "<td>" + dr["Cash"] + "</td>";
+                                detailRows += "<td>" + dr["NonCash"] + "</td>";
+                                detailRows += "</tr>";
+                            }
+                            else if (rowType == "SUMMARY")
+                            {
+                                string type = dr["Type"].ToString();
+                                string payMode = dr["PayMode"].ToString();
+
+                                decimal cash = Convert.ToDecimal(dr["Cash"]);
+                                decimal nonCash = Convert.ToDecimal(dr["NonCash"]);
+
+                                if (type == "LabBill") // COLLECTION
+                                {
+                                    collectionRows += "<tr>";
+                                    collectionRows += "<td>" + payMode + "</td>";
+                                    collectionRows += "<td style=\"text-align:right;\">" + cash + "</td>";
+                                    collectionRows += "<td  style=\"text-align:right;\">" + nonCash + "</td>";
+                                    collectionRows += "</tr>";
+
+                                    totalCash += cash;
+                                    totalNonCash += nonCash;
+                                }
+                                else // REFUND
+                                {
+                                    refundRows += "<tr>";
+                                    refundRows += "<td>" + payMode + "</td>";
+                                    refundRows += "<td style=\"text-align:right;\">" + cash + "</td>";
+                                    refundRows += "<td style=\"text-align:right;\">" + nonCash + "</td>";
+                                    refundRows += "</tr>";
+
+                                    refundCash += cash;
+                                    refundNonCash += nonCash;
+                                }
+                            }
+                        }
+
+                        decimal netCash = totalCash - refundCash;
+                        decimal netNonCash = totalNonCash - refundNonCash;
+                        decimal grandTotal = netCash + netNonCash;
+
+                        html = html.Replace("{{DetailRows}}", detailRows);
+                        html = html.Replace("{{CollectionRows}}", collectionRows);
+                        html = html.Replace("{{RefundRows}}", refundRows);
+
+                        html = html.Replace("{{TotalCash}}", totalCash.ToString());
+                        html = html.Replace("{{TotalNonCash}}", totalNonCash.ToString());
+
+                        html = html.Replace("{{RefundCash}}", refundCash.ToString());
+                        html = html.Replace("{{RefundNonCash}}", refundNonCash.ToString());
+
+                        html = html.Replace("{{NetCash}}", netCash.ToString());
+                        html = html.Replace("{{NetNonCash}}", netNonCash.ToString());
+
+                        html = html.Replace("{{GrandTotal}}", grandTotal.ToString());
+                    }
+                    break;
             }
 
             if (!string.IsNullOrEmpty(T_Count.ToString()))
