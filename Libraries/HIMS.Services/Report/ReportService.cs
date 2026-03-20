@@ -161,9 +161,8 @@ namespace HIMS.Services.Report
         {
             var statusList = new List<dynamic>
     {
-        new { Text = "Pending", Value = 0 },
-        new { Text = "Completed", Value = 1 },
-        new { Text = "Printed", Value = 2 }
+        new { Text = "Delivered", Value = 1 },
+        new { Text = "Not Delivered", Value = 2 },
     };
 
             var result = statusList
