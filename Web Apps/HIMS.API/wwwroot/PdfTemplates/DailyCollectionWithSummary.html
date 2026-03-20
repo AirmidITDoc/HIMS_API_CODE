@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Calibri, Arial;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        /* BOTH TABLES SAME STRUCTURE */
+        .tableStyle {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+            .tableStyle th {
+                border: 1px solid #777;
+                background: #e6e6e6;
+                padding: 7px;
+                text-align: center;
+            }
+
+            .tableStyle td {
+                border: 1px solid #c9c9c9;
+                padding: 6px;
+                text-align: center;
+            }
+
+        .groupHeader {
+            background: #e6e6e6;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .billTotal {
+            font-weight: bold;
+        }
+
+        .grandTotal {
+            background: #ececec;
+            font-weight: bold;
+        }
+
+        .right {
+            text-align: right;
+        }
+        @media print {
+            .page-break {
+                page-break-before: always; /* old but reliable */
+                break-before: page; /* modern */
+            }
+        }
+        .summaryTable {
+            width: 60%; /* reduce width */
+            margin: 20px 0 20px auto;
+            border-collapse: collapse;
+            table-layout: fixed;
+            font-size: 14px; /* slightly smaller */
+            border: 1px solid #ccc;
+        }
+
+            .summaryTable th {
+                padding: 5px;
+            }
+
+            .summaryTable td {
+                padding: 4px;
+            }
+    </style>
+</head>
+
+<body>
+
+    <div style="width:100%; padding:10px; box-sizing:border-box;">
+
+        {{HospitalHeader}}
+
+        <!-- TITLE -->
+        <table style="width:100%;">
+            <tr style="font-size:20px">
+                <td style="border-bottom:1px solid #ccc;padding-bottom:10px">
+                    <b>{{RepoertName}}</b>
+                </td>
+                <td style="border-bottom:1px solid #ccc;padding-bottom:10px;text-align:right">
+                    <b>Print Date : {{CurrentDate}}</b>
+                </td>
+            </tr>
+        </table>
+
+        <!-- DATE -->
+        <table style="width:100%">
+            <tr>
+                <td style="padding:8px;font-size:17px;font-weight:bold;text-align:center;">
+                    From Date : {{FromDate}} -- To Date : {{ToDate}}
+                </td>
+            </tr>
+        </table>
+
+        <!-- ================= MAIN TABLE ================= -->
+        <table class="tableStyle" style="margin-top:10px;">
+            <thead>
+                <tr>
+                    <th>Bill No</th>
+                    <th>Patient Name</th>
+                    <th>Ref Doctor</th>
+                    <th>Mode</th>
+                    <th>Payment</th>
+                    <th>Refund</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{DetailRows}}
+            </tbody>
+        </table>
+        <div class="page-break"></div>
+        <!-- ================= SUMMARY TABLE ================= -->
+        <table class="summaryTable page-break" >
+
+            <thead>
+
+                <tr class="groupHeader">
+                    <th>Payment Mode</th>
+                    <th  style="text-align:right;"> Cash</th>
+                    <th style="text-align:right;">Non Cash</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td colspan="3" style="text-align: center; font-weight: bold;">Collection Summary</td>
+                </tr>
+
+                {{CollectionRows}}
+
+                <tr class="groupHeader">
+                    <td style="text-align:right;">Total Collection</td>
+                    <td style="text-align:right;">{{TotalCash}}</td>
+                    <td class="right">{{TotalNonCash}}</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3" style="text-align: center; font-weight: bold;">Refund Summary</td>
+                </tr>
+
+                <!--<tr>
+
+        <td><b>Payment Mode</b></td>
+        <td class="right"><b>Cash</b></td>
+        <td class="right"><b>Non Cash</b></td>
+    </tr>-->
+                {{RefundRows}}
+
+                <tr class="groupHeader">
+                    <td style="text-align:right;">Total Refund</td>
+                    <td style="text-align: right;">{{RefundCash}}</td>
+                    <td class="right">{{RefundNonCash}}</td>
+                </tr>
+
+                <tr class="grandTotal">
+                    <!--<td ></td>-->
+                    <td style="text-align:right;">Net Collection</td>
+                    <td style="text-align: right;">{{NetCash}}</td>
+                    <td class="right">{{NetNonCash}}</td>
+                </tr>
+
+                <!--<tr class="grandTotal">-->
+                <!--<td ></td>-->
+                <!--<td class="right">Net Non Cash</td>
+
+        <td></td>
+    </tr>-->
+
+                <tr class="grandTotal">
+                    <!--<td ></td>-->
+                    <td style="text-align:right;">Grand Total</td>
+                    <td class="right">{{GrandTotal}}</td>
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>
