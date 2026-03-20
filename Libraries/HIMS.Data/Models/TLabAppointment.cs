@@ -6,6 +6,7 @@ namespace HIMS.Data.Models
     public partial class TLabAppointment
     {
         public long LabAppId { get; set; }
+        public long? UnitId { get; set; }
         public DateTime? AppDate { get; set; }
         public DateTime? AppTime { get; set; }
         public string? SeqNo { get; set; }
