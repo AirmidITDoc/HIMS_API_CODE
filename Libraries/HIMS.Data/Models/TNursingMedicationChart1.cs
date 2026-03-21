@@ -17,5 +17,6 @@ namespace HIMS.Data.Models
         public string? NurseName { get; set; }
         public bool? IsCancelled { get; set; }
         public string? DoseName { get; set; }
+        public long? RouteId { get; set; }
     }
 }

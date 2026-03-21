@@ -13,6 +13,8 @@
         public string CreatedBy { get; set; }
         public string Freq { get; set; }
         public long DoseID { get; set; }
+        public long? RouteId { get; set; }
+
 
 
 

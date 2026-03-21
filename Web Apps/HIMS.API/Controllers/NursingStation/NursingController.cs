@@ -90,7 +90,7 @@ namespace HIMS.API.Controllers.NursingStation
             return Ok(NursingPatientHandoverListDto.ToGridResponse(objGrid, "NursingPatientHandoverListDto"));
         }
         [HttpPost("NursingMedicationList")]
-        [Permission(PageCode = "DoctorNote", Permission = PagePermission.View)]
+        //[Permission(PageCode = "DoctorNote", Permission = PagePermission.View)]
         public async Task<IActionResult> NursingMedicationList(GridRequestModel objGrid)
         {
             IPagedList<NursingMedicationListDto> NursingMedicationList = await _INursingNoteService.NursingMedicationlist(objGrid);
@@ -363,7 +363,7 @@ namespace HIMS.API.Controllers.NursingStation
         [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public ApiResponse InsertEDMX(NursingMedicationChartModel obj)
         {
-            List<TNursingMedicationChart> model = obj.NursingMedicationChart.MapTo<List<TNursingMedicationChart>>();
+            List<TNursingMedicationChart1> model = obj.NursingMedicationChart.MapTo<List<TNursingMedicationChart1>>();
             if (model.Count > 0)
             {
                 _INursingNoteService.Insert(model, CurrentUserId, CurrentUserName);
