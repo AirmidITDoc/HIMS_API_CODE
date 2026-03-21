@@ -1,4 +1,7 @@
-﻿namespace HIMS.API.Models.Pathology
+﻿using HIMS.API.Models.Masters;
+using HIMS.Data.Models;
+
+namespace HIMS.API.Models.Pathology
 {
     public class LabAppointmentModel
     {
@@ -29,6 +32,27 @@
         public long? LabPatRegId { get; set; }
         public string? StartTime { get; set; }
         public string? EndTime { get; set; }
+        public List<LabAppServiceDetailModel> TLabAppServiceDetails { get; set; }
+
+
+    }
+    public  class LabAppServiceDetailModel
+    {
+        public long AppointmentDetId { get; set; }
+        public long? LabAppId { get; set; }
+        public long? UnitId { get; set; }
+        public long? TestId { get; set; }
+        public decimal? Price { get; set; }
+        public int? Qty { get; set; }
+        public decimal? TotalAmount { get; set; }
+        public double? DiscPer { get; set; }
+        public decimal? DiscAmount { get; set; }
+        public decimal? NetAmount { get; set; }
+        public bool? IsCancel { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDate { get; set; }
+       
+
     }
     public class LabAppointmentUpdate
     {
@@ -37,4 +61,5 @@
         public DateTime? EndTime { get; set; }
 
     }
+
 }

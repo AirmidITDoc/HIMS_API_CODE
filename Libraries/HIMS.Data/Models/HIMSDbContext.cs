@@ -481,6 +481,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TIssueToDepartmentDetail> TIssueToDepartmentDetails { get; set; } = null!;
         public virtual DbSet<TIssueToDepartmentHeader> TIssueToDepartmentHeaders { get; set; } = null!;
         public virtual DbSet<TItemMovementReport> TItemMovementReports { get; set; } = null!;
+        public virtual DbSet<TLabAppServiceDetail> TLabAppServiceDetails { get; set; } = null!;
         public virtual DbSet<TLabAppointment> TLabAppointments { get; set; } = null!;
         public virtual DbSet<TLabPatientAddress> TLabPatientAddresses { get; set; } = null!;
         public virtual DbSet<TLabPatientPersonInfo> TLabPatientPersonInfos { get; set; } = null!;
@@ -13839,6 +13840,32 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TransactionType).HasMaxLength(50);
 
                 entity.Property(e => e.VatAmount).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<TLabAppServiceDetail>(entity =>
+            {
+                entity.HasKey(e => e.AppointmentDetId);
+
+                entity.ToTable("T_LabAppServiceDetail");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DiscAmount).HasColumnType("money");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.NetAmount).HasColumnType("money");
+
+                entity.Property(e => e.Price).HasColumnType("money");
+
+                entity.Property(e => e.TotalAmount).HasColumnType("money");
+
+                entity.HasOne(d => d.LabApp)
+                    .WithMany(p => p.TLabAppServiceDetails)
+                    .HasForeignKey(d => d.LabAppId)
+                    .HasConstraintName("FK_T_LabAppServiceDetail_T_LabAppointment");
             });
 
             modelBuilder.Entity<TLabAppointment>(entity =>

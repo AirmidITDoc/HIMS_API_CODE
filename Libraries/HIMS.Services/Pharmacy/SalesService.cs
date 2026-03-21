@@ -427,7 +427,7 @@ namespace HIMS.Services.Users
 
                 string SalesId = odal.ExecuteNonQueryNew("ps_insert_T_SalesInpatientHeader_1", CommandType.StoredProcedure, "SalesId", entity);
                 ObjSalesHeader.SalesId = Convert.ToInt32(SalesId);
-                await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                await _context.LogProcedureExecution(entity, nameof(TSalesInpatientHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
 
                 // 2️⃣ Insert Sales Details (EF)
@@ -450,7 +450,7 @@ namespace HIMS.Services.Users
                     }
 
                     odal.ExecuteNonQueryNew("ps_Update_T_CurStk_Sales_Id_1", CommandType.StoredProcedure, "", IIentity);
-                    await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                    await _context.LogProcedureExecution(entity, nameof(TSalesInpatientHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                 }
 
@@ -468,7 +468,7 @@ namespace HIMS.Services.Users
                 }
 
                 odal.ExecuteNonQueryNew("ps_Update_T_IPPrescription_Isclosed_Status_1", CommandType.StoredProcedure, "", Nentity);
-                await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                await _context.LogProcedureExecution(entity, nameof(TSalesInpatientHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
 
                 // 6️⃣ Update Draft Header
@@ -480,7 +480,7 @@ namespace HIMS.Services.Users
                         Hentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQueryNew("ps_Update_T_SalDraHeader_IsClosed_1", CommandType.StoredProcedure, "", Hentity);
-                await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                await _context.LogProcedureExecution(entity, nameof(TSalesInpatientHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
                 //var SalesReturnObj = new
                 //{

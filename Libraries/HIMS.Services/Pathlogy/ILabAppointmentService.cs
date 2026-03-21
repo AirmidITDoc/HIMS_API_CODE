@@ -15,7 +15,12 @@ namespace HIMS.Services.Pathlogy
         Task InsertAsync(TLabAppointment ObjTLabAppointment, int UserId, string Username);
         Task UpdateAsync(TLabAppointment ObjTLabAppointment, int UserId, string Username, string[]? references);
         Task<IPagedList<LabAppointmentListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<LabAppDetListDto>> LabGetListAsync(GridRequestModel objGrid);
+
         Task<List<TLabAppointment>> GetLabAppoinments(int DocId, DateTime FromDate, DateTime ToDate, int? CategoryId);
+        //Task<List<PhoneAutoCompleteDto>> SearchLabApp(string str);
+        Task CancelAsync(TLabAppointment ObjTLabAppointment, int CurrentUserId, string CurrentUserName);
+
 
 
 
