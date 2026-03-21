@@ -33,12 +33,32 @@ namespace HIMS.API.Controllers.Pathology
             _repository = repository1;
 
         }
+        //List API Get By Id
+        [HttpGet("{id?}")]
+        //[Permission]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.LabAppId == id);
+            return data.ToSingleResponse<TLabAppointment, LabAppointmentModel>("TLabAppointment");
+        }
+
         [HttpPost("LabAppointmentList")]
         //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LabAppointmentListDto> LabAppointmentList = await _ILabAppointmentService.GetListAsync(objGrid);
             return Ok(LabAppointmentList.ToGridResponse(objGrid, "LabAppointment List"));
+        }
+        [HttpPost("LabAppointmentDetailList")]
+        //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        public async Task<IActionResult> DetailList(GridRequestModel objGrid)
+        {
+            IPagedList<LabAppDetListDto> LabAppointmentDetailList = await _ILabAppointmentService.LabGetListAsync(objGrid);
+            return Ok(LabAppointmentDetailList.ToGridResponse(objGrid, "LabAppointmentDetail List"));
         }
 
         [HttpPost("Insert")]
@@ -50,6 +70,12 @@ namespace HIMS.API.Controllers.Pathology
 
             if (obj.LabAppId == 0)
             {
+                foreach (var q in model.TLabAppServiceDetails)
+                {
+                    q.CreatedBy = CurrentUserId;
+                    q.CreatedDate = AppTime.Now;
+
+                }
                 model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
@@ -61,17 +87,29 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.LabAppId);
         }
 
+      
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
+        //[Permission]
         public async Task<ApiResponse> Edit(LabAppointmentModel obj)
         {
             TLabAppointment model = obj.MapTo<TLabAppointment>();
             model.IsActive = true;
-
             if (obj.LabAppId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
+                foreach (var q in model.TLabAppServiceDetails)
+                {
+                    if (q.AppointmentDetId == 0)
+                    {
+                        q.CreatedBy = CurrentUserId;
+                        q.CreatedDate = AppTime.Now;
+                    }
+                    q.ModifiedBy = CurrentUserId;
+                    q.ModifiedDate = AppTime.Now;
+                    q.AppointmentDetId = 0;
+                }
+
               
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
@@ -80,23 +118,7 @@ namespace HIMS.API.Controllers.Pathology
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.LabAppId);
         }
-        //Delete API
-        [HttpDelete]
-        //[Permission]
-        public async Task<ApiResponse> Delete(int Id)
-        {
-            TLabAppointment model = await _repository.GetById(x => x.LabAppId == Id);
-            if ((model?.LabAppId ?? 0) > 0)
-            {
-                model.IsActive = model.IsActive == true ? false : true;
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = AppTime.Now;
-                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  deleted successfully.");
-            }
-            else
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        }
+
 
         [HttpPut("RescheduleLabAppointment")]
         //[Permission]
@@ -138,6 +160,37 @@ namespace HIMS.API.Controllers.Pathology
                 }
             }));
         }
-        
+
+        //[HttpGet("auto-complete")]
+        ////[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> GetAutoComplete(string Keyword)
+        //{
+        //    if (string.IsNullOrWhiteSpace(Keyword) || Keyword == "%")
+        //    {
+        //        Keyword = string.Empty;
+        //    }
+
+        //    var data = await _ILabAppointmentService.SearchLabApp(Keyword);
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, Value = x.Id, RegId = x.RegNo, LabAppId = x.AppId, DoctorId = x.DoctorId, DepartmentId = x.DepartmentId }));
+        //}
+        [HttpDelete("Cancel")]
+        //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(int Id)
+        {
+            TLabAppointment model = await _repository.GetById(x => x.LabAppId == Id);
+            if ((model?.LabAppId ?? 0) > 0)
+            {
+                model.LabAppId = Id;
+                model.IsCancelled = true;
+                model.IsCancelledBy = CurrentUserId;
+                model.IsCancelledDate = AppTime.Now;
+                await _ILabAppointmentService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+
+
     }
 }
