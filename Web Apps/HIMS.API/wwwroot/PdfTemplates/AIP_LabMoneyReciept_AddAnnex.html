@@ -15,173 +15,243 @@
         </div>
         {{NewHeader}}
 
-        <!--<hr>-->
-    <table style="width:100%; line-height:22px;">
-        <tr>
-            <td><b>Name :</b>{{PatientName}} </td>
-            <td><b>Bill No :</b>{{BillNo}} </td>
-            
+        <table style="width:100%; border-bottom:1px solid #000; padding-bottom:5px; ">
+            <tr>
 
-        </tr>
-        <tr>
-            <td><b>Receipt Date :</b>{{BillDate}} </td>
-            <td><b>Reg. Number :</b>{{LabRequestNo}} </td>
-            
-        </tr>
-        <tr>
-            <td><b>Age/Sex :</b> {{AgeYear}}/{{GenderName}}</td>
-            <td><b>Patient Type : </b>{{PatientType}} </td>
-           
-        </tr>
+                <td style="width:35%; vertical-align:top;">
+                    <b>Patient Name</b> : <b>{{PatientName}}</b><br>
+                    <b>Reg. Number</b> : {{LabRequestNo}}<br>
+                    <b>Age/Sex</b> : {{AgeYear}} Years / {{GenderName}}<br>
+                    <b>Referred By</b> : {{RefDocName}}<br>
+                    <b>Address</b> :
+                </td>
 
-        <tr>
-            <td><b>Referring Dr. :</b>{{RefDocName}} </td>
-            <!--<td><b>Referring Dr. :</b>{{ConsultantDocName}} </td>-->
-        </tr>
-        <!--<tr>
-               <td><b>Bill To :</b> </td>
-    <td><b>Patient ID : </b>{{LabPatientId}} </td>
-           </tr>-->
-        <!--<tr>
-        <td><b>Patient Category :</b> </td>
-        <td><b>Reference No : </b>  </td>
-    </tr>-->
-    </table>
 
-        <br>
-        <table style="width:100%; border-collapse: collapse; border-top: 1px solid #000; border-bottom: 1px solid #000;">
-            <tr style="font-weight: bold; text-align: center; border-bottom: 1px solid #000;">
-                <td>Sr.No</td>
-                <td>Procedure Name</td>
-                <td>Procedure Charge</td>
-                <td>Discount</td>
-                <td>Net Amount</td>
+                <td style="width:30%; text-align:center; vertical-align:top;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{LabRequestNo}}"
+                         alt="QR Code"
+                         style="width:80px; height:80px; display:block; margin:0 auto;" />
+
+                    <div style="font-size:12px; margin-top:3px;">
+                        Scan for report
+                    </div>
+                </td>
+
+                <!-- RIGHT (35%) -->
+                <td style="width:35%; vertical-align:top; text-align:left;">
+                    <b>Bill Number</b> : {{BillNo}}<br>
+                    <b>Bill Date</b> : {{BillDate}}<br>
+                    <b>Phone No</b> : {{MobileNo}}<br>
+                    <b>Email Id</b> :<br>
+                    <b>PIN / Area</b> :
+                </td>
             </tr>
+        </table>
+        <br />
+
+        <!-- TITLE -->
+        <div style="text-align:center; margin:8px 0;">
+            <span style="border:1px solid #000; padding:3px 18px; font-weight:bold; border-radius:6px;">
+                BILL / MONEY RECEIPT
+            </span>
+        </div>
+        <br />
+        <!-- TABLE -->
+        <table style="width:100%; border-collapse:collapse;">
+            <tr style="border-top:1px solid #000; border-bottom:1px solid #000; font-weight:bold; text-align:center; background-color:#f2f2f2;">
+                <td style="padding:6px;">No</td>
+                <td style="padding:6px;">Description</td>
+                <td style="padding:6px;">Department</td>
+                <td style="padding:6px;">Amount</td>
+                <td style="padding:6px;">Qty</td>
+                <td style="padding:6px;">NetAmount</td>
+            </tr>
+
             {{Items}}
         </table>
+        <br />
 
+        <!-- BELOW LINE (IMPORTANT LIKE IMAGE) -->
+        <div style="border-top:1px solid #000; margin-top:5px;"></div>
 
-        <br>
-
-        <table style="width:100%; line-height:22px;">
+        <!-- WORD + SUMMARY -->
+        <table style="width:100%; margin-top:5px;">
             <tr>
-                <td><b>Grand Total :</b>{{TotalBillAmount}} </td>
-                <td><b>Total Discount :</b>{{ConcessionAmt}} </td>
-            </tr>
-            <tr>
-                <!--<td><b>Mode of Pay : </b> </td>-->
-                <td><b>Receipt Amount :</b>{{NetPayableAmt}} </td>
-                <td><b>Balance Due :</b> {{BalanceAmt}}</td>
-            </tr>
-            <!--<tr>
-                <td><b>Refund Amount :</b> </td>
-                <td><b>Balance Due : </b></td>
-            </tr>-->
-        </table>
+                <b>
+                    <!-- LEFT -->
+                <td style="width:60%; vertical-align:top;">
+                    <b>In word :</b> {{finalamt}} only<br>
+                    from <b>{{PatientName}}</b><br><br>
 
-        <br><br>
-
-        <table style="width:100%;">
-            <tr>
-                <td style="text-align:left;">Cashier Signature</td>
-                <td style="text-align:right;">Patient Signature</td>
-            </tr>
-            <!--<tr>
-                <td colspan="2" style="padding-top:15px;">
-                    Printed By : {{UserName}}
+                    <b>Details :</b> Received Rs. {{PaidAmount}} by {{PaymentMode}}
                 </td>
-            </tr>-->
+                </b>
+                <b>
+                    <!-- RIGHT -->
+                <td style="width:40%; vertical-align:top;">
+                    <table style="width:100%; border-left:1px solid #000; padding-left:8px;">
+                        <tr>
+                            <td>Gross Amount</td>
+                            <td style="text-align:right;">{{TotalBillAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td>Less: Discount Amount</td>
+                            <td style="text-align:right;">{{ConcessionAmt}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Total Net Amount</b></td>
+                            <td style="text-align:right;"><b>{{NetPayableAmt}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Less: Paid Amount</td>
+                            <td style="text-align:right;">{{PaidAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Total Due Amount</b></td>
+                            <td style="text-align:right;"><b>{{BalanceAmt}}</b></td>
+                        </tr>
+                    </table>
+                </td>
+                </b>
+            </tr>
         </table>
+
+        <!-- BOTTOM LINE ABOVE FOOTER -->
+        <div style="border-top:1px solid #000; margin-top:8px;"></div>
+
+        <!-- FOOTER TEXT -->
+        <div style="text-align:center; font-size:13px; margin-top:5px;">
+            <b>E.& O.E : This is a computer-generated document and does not require any signature.</b>
+        </div>
+
+        <!-- CREATED / PRINTED (MISSING IN YOUR VERSION) -->
+        <div style="text-align:center; font-size:13px; margin-top:3px;">
+            Created by <b> {{CreatedBy}} </b>at {{CreatedDate}} , Printed by <b>{{UserName}} </b>
+        </div>
 
     </div>
     <hr style="border:1px dashed #000; margin:10px 0;">
-
-    <!--<br><br>-->
-
-    <div style="width:100%; margin: auto;">
+    <div style="width:100%;height:50vh;box-sizing:border-box;page-break-inside: avoid;">
 
         <div style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 5px;">
             Patient Copy
         </div>
-        <div style="width:100%;height:50vh;box-sizing:border-box;page-break-inside: avoid;">
+        {{NewHeader}}
 
-            {{NewHeader}}
-            <!--<hr>-->
-            <table style="width:100%; line-height:22px;">
-                <tr>
-                    <td><b>Name :</b>{{PatientName}} </td>
-                    <td><b>Bill No :</b>{{BillNo}} </td>
+        <table style="width:100%; border-bottom:1px solid #000; padding-bottom:5px; ">
+            <tr>
+
+                <td style="width:35%; vertical-align:top;">
+                    <b>Patient Name</b> : <b>{{PatientName}}</b><br>
+                    <b>Reg. Number</b> : {{LabRequestNo}}<br>
+                    <b>Age/Sex</b> : {{AgeYear}} Years / {{GenderName}}<br>
+                    <b>Referred By</b> : {{RefDocName}}<br>
+                    <b>Address</b> :
+                </td>
 
 
-                </tr>
-                <tr>
-                    <td><b>Receipt Date :</b>{{BillDate}} </td>
-                    <td><b>Reg. Number :</b>{{LabRequestNo}} </td>
+                <td style="width:30%; text-align:center; vertical-align:top;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{LabRequestNo}}"
+                         alt="QR Code"
+                         style="width:80px; height:80px; display:block; margin:0 auto;" />
 
-                </tr>
-                <tr>
-                    <td><b>Age/Sex :</b> {{AgeYear}}/{{GenderName}}</td>
-                    <td><b>Patient Type : </b>{{PatientType}} </td>
+                    <div style="font-size:12px; margin-top:3px;">
+                        Scan for report
+                    </div>
+                </td>
 
-                </tr>
+                <!-- RIGHT (35%) -->
+                <td style="width:35%; vertical-align:top; text-align:left;">
+                    <b>Bill Number</b> : {{BillNo}}<br>
+                    <b>Bill Date</b> : {{BillDate}}<br>
+                    <b>Phone No</b> : {{MobileNo}}<br>
+                    <b>Email Id</b> :<br>
+                    <b>PIN / Area</b> :
+                </td>
+            </tr>
+        </table>
+        <br />
 
-                <tr>
-                    <td><b>Referring Dr. :</b>{{RefDocName}} </td>
-                    <!--<td><b>Referring Dr. :</b>{{ConsultantDocName}} </td>-->
-                </tr>
-                <!--<tr>
-               <td><b>Bill To :</b> </td>
-    <td><b>Patient ID : </b>{{LabPatientId}} </td>
-           </tr>-->
-                <!--<tr>
-        <td><b>Patient Category :</b> </td>
-        <td><b>Reference No : </b>  </td>
-    </tr>-->
-            </table>
-
-            <br>
-            <table style="width:100%; border-collapse: collapse; border-top: 1px solid #000; border-bottom: 1px solid #000;">
-                <tr style="font-weight: bold; text-align: center; border-bottom: 1px solid #000;">
-                    <td>Sr.No</td>
-                    <td>Procedure Name</td>
-                    <td>Procedure Charge</td>
-                    <td>Discount</td>
-                    <td>Net Amount</td>
-                </tr>
-                {{Items}}
-            </table>
-            <br>
-            <table style="width:100%; line-height:22px;">
-                <tr>
-                    <td><b>Grand Total :</b>{{TotalBillAmount}} </td>
-                    <td><b>Total Discount :</b>{{ConcessionAmt}} </td>
-                </tr>
-                <tr>
-                    <!--<td><b>Mode of Pay : </b> </td>-->
-                    <td><b>Receipt Amount :</b>{{NetPayableAmt}} </td>
-                    <td><b>Balance Due :</b> {{BalanceAmt}}</td>
-                </tr>
-                <!--<tr>
-            <td><b>Refund Amount :</b> </td>
-            <td><b>Balance Due : </b></td>
-        </tr>-->
-            </table>
-
-            <br><br>
-
-            <table style="width:100%;">
-                <tr>
-                    <td style="text-align:left;">Cashier Signature</td>
-                    <td style="text-align:right;">Patient Signature</td>
-                </tr>
-                <!--<tr>
-            <td colspan="2" style="padding-top:15px;">
-                Printed By : {{UserName}}
-            </td>
-        </tr>-->
-            </table>
-
+        <!-- TITLE -->
+        <div style="text-align:center; margin:8px 0;">
+            <span style="border:1px solid #000; padding:3px 18px; font-weight:bold; border-radius:6px;">
+                BILL / MONEY RECEIPT
+            </span>
         </div>
+        <br />
+        <!-- TABLE -->
+        <table style="width:100%; border-collapse:collapse;">
+            <tr style="border-top:1px solid #000; border-bottom:1px solid #000; font-weight:bold; text-align:center; background-color:#f2f2f2;">
+                <td style="padding:6px;">No</td>
+                <td style="padding:6px;">Description</td>
+                <td style="padding:6px;">Department</td>
+                <td style="padding:6px;">Amount</td>
+                <td style="padding:6px;">Qty</td>
+                <td style="padding:6px;">NetAmount</td>
+            </tr>
+
+            {{Items}}
+        </table>
+        <br />
+
+        <!-- BELOW LINE (IMPORTANT LIKE IMAGE) -->
+        <div style="border-top:1px solid #000; margin-top:5px;"></div>
+
+        <!-- WORD + SUMMARY -->
+        <table style="width:100%; margin-top:5px;">
+            <tr>
+                <b>
+                    <!-- LEFT -->
+                <td style="width:60%; vertical-align:top;">
+                    <b>In word :</b> {{finalamt}} only<br>
+                    from <b>{{PatientName}}</b><br><br>
+
+                    <b>Details :</b> Received Rs. {{PaidAmount}} by {{PaymentMode}}
+                </td>
+                </b>
+                <b>
+                    <!-- RIGHT -->
+                <td style="width:40%; vertical-align:top;">
+                    <table style="width:100%; border-left:1px solid #000; padding-left:8px;">
+                        <tr>
+                            <td>Gross Amount</td>
+                            <td style="text-align:right;">{{TotalBillAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td>Less: Discount Amount</td>
+                            <td style="text-align:right;">{{ConcessionAmt}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Total Net Amount</b></td>
+                            <td style="text-align:right;"><b>{{NetPayableAmt}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Less: Paid Amount</td>
+                            <td style="text-align:right;">{{PaidAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Total Due Amount</b></td>
+                            <td style="text-align:right;"><b>{{BalanceAmt}}</b></td>
+                        </tr>
+                    </table>
+                </td>
+                </b>
+            </tr>
+        </table>
+
+        <!-- BOTTOM LINE ABOVE FOOTER -->
+        <div style="border-top:1px solid #000; margin-top:8px;"></div>
+
+        <!-- FOOTER TEXT -->
+        <div style="text-align:center; font-size:13px; margin-top:5px;">
+            <b>E.& O.E : This is a computer-generated document and does not require any signature.</b>
+        </div>
+
+        <!-- CREATED / PRINTED (MISSING IN YOUR VERSION) -->
+        <div style="text-align:center; font-size:13px; margin-top:3px;">
+            Created by <b> {{CreatedBy}} </b>at {{CreatedDate}} , Printed by <b>{{UserName}} </b>
+        </div>
+
     </div>
 
 </body>
