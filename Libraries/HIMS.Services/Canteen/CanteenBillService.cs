@@ -1,13 +1,17 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
 using HIMS.Services.OTManagment;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace HIMS.Services.Canteen
@@ -18,6 +22,16 @@ namespace HIMS.Services.Canteen
         public CanteenBillService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+
+        public virtual async Task<IPagedList<CanteenBillDetailsLisDto>> CanteenBilldetailList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<CanteenBillDetailsLisDto>(model, "Rtrv_CanteenBillListDetail");
+        }
+
+        public virtual async Task<IPagedList<CanteenBillListDo>> CanteenBillList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<CanteenBillListDo>(model, "rtrv_CanteenBillList");
         }
 
         public virtual async Task InsertAsync(TCanteenBillHeader ObjTCanteenBillHeader, int UserId, string Username)

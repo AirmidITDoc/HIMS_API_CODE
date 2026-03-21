@@ -5585,6 +5585,11 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
                         html = html.Replace("{{LabPatientId}}", dt.GetColValue("LabPatientId"));
                         html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
+                        html = html.Replace("{{CreatedBy}}", dt.GetColValue("CreatedBy"));
+                        html = html.Replace("{{CreatedDate}}", dt.GetColValue("CreatedDate"));
+                        html = html.Replace("{{paymode}}", dt.GetColValue("paymode"));
+                        html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
 
                         html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
@@ -5600,8 +5605,10 @@ namespace HIMS.Services.Report
                             i++;
                             items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:15;\"><td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
                             items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["DepartmentName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ChargesTotalAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
-                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            //items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
 
                             T_NetAmount += dr["NetAmount"].ConvertToDouble();
@@ -5609,7 +5616,7 @@ namespace HIMS.Services.Report
                         T_NetAmount = Math.Round(T_NetAmount);
 
                         html = html.Replace("{{Items}}", items.ToString());
-
+                        double PaidFinal = dt.GetColValue("PaidAmount").ConvertToDouble();
 
                         html = html.Replace("{{T_NetAmount}}", T_NetAmount.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().ToString("F2"));
@@ -5642,7 +5649,7 @@ namespace HIMS.Services.Report
 
 
 
-                        string finalamt = conversion(T_NetAmount.ToString());
+                        string finalamt = conversion(PaidFinal.ToString());
                         html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
 
@@ -5687,6 +5694,11 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
                         html = html.Replace("{{LabPatientId}}", dt.GetColValue("LabPatientId"));
                         html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
+                        html = html.Replace("{{CreatedBy}}", dt.GetColValue("CreatedBy"));
+                        html = html.Replace("{{CreatedDate}}", dt.GetColValue("CreatedDate"));
+                        html = html.Replace("{{paymode}}", dt.GetColValue("paymode"));
+                        html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
 
                         html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
@@ -5702,8 +5714,10 @@ namespace HIMS.Services.Report
                             i++;
                             items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:15;\"><td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
                             items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["DepartmentName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ChargesTotalAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
-                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            //items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
 
                             T_NetAmount += dr["NetAmount"].ConvertToDouble();
@@ -5711,7 +5725,7 @@ namespace HIMS.Services.Report
                         T_NetAmount = Math.Round(T_NetAmount);
 
                         html = html.Replace("{{Items}}", items.ToString());
-
+                        double PaidFinal = dt.GetColValue("PaidAmount").ConvertToDouble();
 
                         html = html.Replace("{{T_NetAmount}}", T_NetAmount.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().ToString("F2"));
@@ -5744,7 +5758,7 @@ namespace HIMS.Services.Report
 
 
 
-                        string finalamt = conversion(T_NetAmount.ToString());
+                        string finalamt = conversion(PaidFinal.ToString());
                         html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
 
@@ -5792,6 +5806,11 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
                         html = html.Replace("{{LabPatientId}}", dt.GetColValue("LabPatientId"));
                         html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
+                        html = html.Replace("{{CreatedBy}}", dt.GetColValue("CreatedBy"));
+                        html = html.Replace("{{CreatedDate}}", dt.GetColValue("CreatedDate"));
+                        html = html.Replace("{{paymode}}", dt.GetColValue("paymode"));
+                        html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
 
                         html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
@@ -5807,8 +5826,10 @@ namespace HIMS.Services.Report
                             i++;
                             items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:15;\"><td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
                             items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["DepartmentName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ChargesTotalAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
-                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            //items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
 
                             T_NetAmount += dr["NetAmount"].ConvertToDouble();
@@ -5816,7 +5837,7 @@ namespace HIMS.Services.Report
                         T_NetAmount = Math.Round(T_NetAmount);
 
                         html = html.Replace("{{Items}}", items.ToString());
-
+                        double PaidFinal = dt.GetColValue("PaidAmount").ConvertToDouble();
 
                         html = html.Replace("{{T_NetAmount}}", T_NetAmount.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().ToString("F2"));
@@ -5849,7 +5870,7 @@ namespace HIMS.Services.Report
 
 
 
-                        string finalamt = conversion(T_NetAmount.ToString());
+                        string finalamt = conversion(PaidFinal.ToString());
                         html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
 
@@ -8712,7 +8733,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{RefundAmount}}", dt.GetColValue("RefundAmount").ConvertToDouble().ToString("F2"));
-
+                        html = html.Replace("{{LabRequestNo}}", dt.GetColValue("LabRequestNo").ConvertToString());
                         html = html.Replace("{{RegNo}}", dt.GetColValue("LabPatRegId").ConvertToString());
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName").ConvertToString());
                         html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo").ConvertToString());
