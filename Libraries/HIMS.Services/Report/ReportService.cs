@@ -2768,7 +2768,7 @@ namespace HIMS.Services.Report
 
 
                         //else
-                            //ItemsTotal.Append(CreateGrandTotal(dt, totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray(), model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray()));
+                            ItemsTotal.Append(CreateGrandTotal(dt, totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray(), model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray()));
                         if (model.Mode == "DailyCollectionSummary")
 
                             ItemsTotal.Append(CreateSummaryIncome(dt, headerList, model.groupByLabel.Split(',').Where(x => x != "").ToArray(), totalColList));
@@ -3308,12 +3308,14 @@ namespace HIMS.Services.Report
                                     {
                                         CreateRows(group3Data, table, headers, columnDataNames, ref RowNo);
                                     }
+                                    CreateFooterGroupBy(group3Data, table, footer, group3);
                                 }
                             }
                             else
                             {
                                 CreateRows(group2Data, table, headers, columnDataNames, ref RowNo);
                             }
+                            CreateFooterGroupBy(group2Data, table, footer, group2);
                         }
                     }
                     else
@@ -3453,7 +3455,7 @@ namespace HIMS.Services.Report
                     // Apply different font + bold for label
                     total = isTotal
                         ? "<span style='font-family: Times New Roman, serif; font-size:15px; font-weight:bold;'>Total</span>"
-                        : "<span style='font-family: Times New Roman, serif; font-size:15px; font-weight:bold;'>Sub Total for " + groupName + "</span>";
+                        : "<span style='font-family: Times New Roman, serif; font-size:15px; font-weight:bold;'>Total : " + groupName + "</span>";
                 }
                 else
                 {
@@ -3694,7 +3696,7 @@ namespace HIMS.Services.Report
                     }
                     else if (colName == "lableTotal")
                     {
-                        table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'colspan='").Append(colspan).Append("'>Total asdsadsad Amount</td>");
+                        table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'colspan='").Append(colspan).Append("'>Total Amount</td>");
                         colspan++;
                     }
                     else
