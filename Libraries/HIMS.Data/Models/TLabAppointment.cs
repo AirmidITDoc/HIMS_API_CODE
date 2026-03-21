@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class TLabAppointment
     {
+        public TLabAppointment()
+        {
+            TLabAppServiceDetails = new HashSet<TLabAppServiceDetail>();
+        }
+
         public long LabAppId { get; set; }
         public long? UnitId { get; set; }
         public DateTime? AppDate { get; set; }
@@ -38,5 +43,7 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool? IsActive { get; set; }
+
+        public virtual ICollection<TLabAppServiceDetail> TLabAppServiceDetails { get; set; }
     }
 }

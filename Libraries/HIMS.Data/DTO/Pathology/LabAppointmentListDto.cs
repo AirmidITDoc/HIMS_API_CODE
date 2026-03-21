@@ -40,7 +40,26 @@ namespace HIMS.Data.DTO.Pathology
             public string? CategoryName { get; set; }
             public string PrefixName { get; set; }
         }
+    public class LabAppDetListDto
+    {
+        public long? UnitId { get; set; }
+        public long? TestId { get; set; }
+        public decimal? Price { get; set; }
+        public int? Qty { get; set; }
+        public decimal? TotalAmount { get; set; }
+        public double? DiscPer { get; set; }
+        public decimal? DiscAmount { get; set; }
+        public decimal? NetAmount { get; set; }
+        public long? LabAppId { get; set; }
+        public string? ServiceName { get; set; }
+        public bool? IsEditable { get; set; }
+        public long? IsPathology { get; set; }
+        public bool? IsPathOutSource { get; set; }
+        public long? IsRadiology { get; set; }
+        public bool? IsRadOutSource { get; set; }
+        public long? IsPackage { get; set; }
     }
+}
 
 
 
