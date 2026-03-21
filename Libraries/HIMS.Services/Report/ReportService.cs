@@ -2774,6 +2774,23 @@ namespace HIMS.Services.Report
                     }
                     break;
 
+                case "NewMultiTotalReportFormat.html":
+                    {
+
+                        HeaderItems.Append(GetCommonHtmlTableHeader(dt, headerList, columnWidths));
+                        items.Append(GetCommonHtmlTableReports(dt, headerList, model.colList, totalColList, model.groupByLabel.Split(',').Where(x => x != "").ToArray()));
+                        if (model.summaryLabel.Split(',').Where(x => x != "").Any()) // if need to display summary 
+                                                                                     //  if (model.groupByLabel.Split(',').Where(x => x != "").Any())
+                            ItemsTotal.Append(CreateSummary(dt, totalColList, model.summaryLabel.Split(',')));
+
+
+                        else
+                            ItemsTotal.Append(CreateGrandTotal(dt, totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray(), model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray()));
+                        if (model.Mode == "DailyCollectionSummary")
+                            ItemsTotal.Append(CreateSummaryIncome(dt, headerList, model.groupByLabel.Split(',').Where(x => x != "").ToArray(), totalColList));
+                    }
+                    break;
+
                 case "CPWiseDetailReport.html":
                     {
                         string prevCP = "";
