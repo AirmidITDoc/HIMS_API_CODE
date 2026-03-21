@@ -7,6 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
+using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.Pathology;
 
 
 namespace HIMS.Services.Pathlogy
@@ -17,6 +21,10 @@ namespace HIMS.Services.Pathlogy
         public LabAppointmentService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+        public virtual async Task<IPagedList<LabAppointmentListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabAppointmentListDto>(model, "ps_LabAppointmentList");
         }
         public virtual async Task InsertAsync(TLabAppointment ObjTLabAppointment, int UserId, string Username)
         {
@@ -47,31 +55,7 @@ namespace HIMS.Services.Pathlogy
                 scope.Complete();
             }
         }
-        //public virtual async Task UpdateAsync( TLabAppointment ObjTLabAppointment,int UserId, string Username, string[]? ignoreColumns = null)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted}, TransactionScopeAsyncFlowOption.Enabled);
-
-        //    var entity = await _context.TLabAppointments.FirstOrDefaultAsync(x => x.LabAppId == ObjTLabAppointment.LabAppId);
-
-        //    if (entity == null)
-        //        throw new Exception("Record not found");
-
-        //    _context.Entry(entity).CurrentValues.SetValues(ObjTLabAppointment);
-
-        //    entity.ModifiedBy = UserId;
-        //    entity.ModifiedDate = AppTime.Now;
-
-        //    if (ignoreColumns?.Length > 0)
-        //    {
-        //        foreach (var column in ignoreColumns)
-        //            _context.Entry(ObjTLabAppointment).Property(column).IsModified = false;
-        //    }
-
-
-        //    await _context.SaveChangesAsync();
-
-        //    scope.Complete();
-        //}
+        
         public virtual async Task UpdateAsync(TLabAppointment ObjTLabAppointment, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -94,6 +78,11 @@ namespace HIMS.Services.Pathlogy
                 scope.Complete();
             }
         }
+        public virtual async Task<List<TLabAppointment>> GetLabAppoinments(int DocId, DateTime FromDate, DateTime ToDate,int?CategoryId)
+        {
+            return await this._context.TLabAppointments.Where(x => x.DoctorId == DocId && !x.IsCancelled.Value && x.AppDate >= FromDate && x.AppDate <= ToDate && (CategoryId == null || x.CategoryId == CategoryId) ).ToListAsync();
+        }
+       
 
     }
 }

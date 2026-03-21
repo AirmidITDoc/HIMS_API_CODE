@@ -621,6 +621,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<UserMailSystemBlog> UserMailSystemBlogs { get; set; } = null!;
         public virtual DbSet<VAdmissionMsg> VAdmissionMsgs { get; set; } = null!;
         public virtual DbSet<VCheckingBalQty> VCheckingBalQties { get; set; } = null!;
+        public virtual DbSet<VInpatientSalesreturnAmount> VInpatientSalesreturnAmounts { get; set; } = null!;
         public virtual DbSet<VPaymentBillwisesumAmount> VPaymentBillwisesumAmounts { get; set; } = null!;
         public virtual DbSet<VTPayment> VTPayments { get; set; } = null!;
         public virtual DbSet<VTPaymentBillwisesumAmount> VTPaymentBillwisesumAmounts { get; set; } = null!;
@@ -1209,11 +1210,17 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.RefundAmount).HasColumnType("money");
 
+                entity.Property(e => e.SalesAmount).HasColumnType("money");
+
                 entity.Property(e => e.SpeTaxAmt)
                     .HasColumnType("money")
                     .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.SpeTaxPer).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Sramount)
+                    .HasColumnType("money")
+                    .HasColumnName("SRAmount");
 
                 entity.Property(e => e.TotalAdvanceAmount).HasColumnType("money");
 
@@ -11561,6 +11568,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.BatchNo).HasMaxLength(50);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.DiscAmount).HasColumnType("money");
 
                 entity.Property(e => e.GrossAmount).HasColumnType("money");
@@ -11575,6 +11584,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.LandedPrice).HasColumnType("money");
 
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.TotalAmount).HasColumnType("money");
 
                 entity.Property(e => e.TotalLandedAmount).HasColumnType("money");
@@ -11582,6 +11593,11 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UnitMrp)
                     .HasColumnType("money")
                     .HasColumnName("UnitMRP");
+
+                entity.HasOne(d => d.BillNoNavigation)
+                    .WithMany(p => p.TCanteenBillDetails)
+                    .HasForeignKey(d => d.BillNo)
+                    .HasConstraintName("FK_T_CanteenBillDetails_T_CanteenBillHeader");
             });
 
             modelBuilder.Entity<TCanteenBillHeader>(entity =>
@@ -11596,6 +11612,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ConcessionReasonId).HasColumnName("ConcessionReasonID");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.CustomerName).HasMaxLength(200);
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
@@ -11609,6 +11627,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Gstper).HasColumnName("GSTPer");
 
                 entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.NetAmount).HasColumnType("money");
 
@@ -18190,6 +18210,17 @@ namespace HIMS.Data.Models
                 entity.ToView("v_CheckingBalQty");
 
                 entity.Property(e => e.StockId).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<VInpatientSalesreturnAmount>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_INPATIENT_SALESRETURN_AMOUNT");
+
+                entity.Property(e => e.NetAmount).HasColumnType("money");
+
+                entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
             });
 
             modelBuilder.Entity<VPaymentBillwisesumAmount>(entity =>

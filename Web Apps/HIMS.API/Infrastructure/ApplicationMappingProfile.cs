@@ -32,6 +32,7 @@ using HIMS.API.Models.GastrologyMasterModel;
 using static HIMS.API.Models.GastrologyMasterModel.MSubQuestionMasterModel;
 using HIMS.API.Models.MRD;
 using HIMS.API.Models.FeedBack;
+using HIMS.API.Models.Canteen;
 namespace HIMS.API.Infrastructure
 {
     public class ApplicationMappingProfile : Profile
@@ -117,6 +118,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<TRadiologyReportHeader, RadiologyUnVerifyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TLabAppointment, LabAppointmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TLabAppointment, LabAppointmentUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TCanteenBillHeader, CanteenBillModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TCanteenBillDetail, CanteenBillDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 

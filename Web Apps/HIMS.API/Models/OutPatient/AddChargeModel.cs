@@ -56,6 +56,7 @@ namespace HIMS.API.Models.OutPatient
         public bool? IsInclusionExclusion { get; set; }
         public int? IsHospMrk { get; set; }
         public long? CreatedBy { get; set; }
+
         public List<Packcagechargemodel?> Packcagecharges { get; set; }
 
     }
@@ -108,6 +109,8 @@ namespace HIMS.API.Models.OutPatient
         public long? TariffId { get; set; }
         public string? ServiceName { get; set; }
         public long ChargesId { get; set; }
+        public long? SalesId { get; set; }
+
 
 
     }

@@ -14,6 +14,7 @@ using System.Data;
 using System.Globalization;
 using System.Text;
 using WkHtmlToPdfDotNet;
+using static LinqToDB.Common.Configuration;
 
 
 
@@ -161,9 +162,8 @@ namespace HIMS.Services.Report
         {
             var statusList = new List<dynamic>
     {
-        new { Text = "Pending", Value = 0 },
-        new { Text = "Completed", Value = 1 },
-        new { Text = "Printed", Value = 2 }
+        new { Text = "Delivered", Value = 1 },
+        new { Text = "Not Delivered", Value = 2 },
     };
 
             var result = statusList
@@ -2775,6 +2775,23 @@ namespace HIMS.Services.Report
                     }
                     break;
 
+                case "NewMultiTotalReportFormat.html":
+                    {
+
+                        HeaderItems.Append(GetCommonHtmlTableHeader(dt, headerList, columnWidths));
+                        items.Append(GetCommonHtmlTableReports(dt, headerList, model.colList, totalColList, model.groupByLabel.Split(',').Where(x => x != "").ToArray()));
+                        if (model.summaryLabel.Split(',').Where(x => x != "").Any()) // if need to display summary 
+                                                                                     //  if (model.groupByLabel.Split(',').Where(x => x != "").Any())
+                            ItemsTotal.Append(CreateSummary(dt, totalColList, model.summaryLabel.Split(',')));
+
+
+                        else
+                            ItemsTotal.Append(CreateGrandTotal(dt, totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray(), model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray()));
+                        if (model.Mode == "DailyCollectionSummary")
+                            ItemsTotal.Append(CreateSummaryIncome(dt, headerList, model.groupByLabel.Split(',').Where(x => x != "").ToArray(), totalColList));
+                    }
+                    break;
+
                 case "CPWiseDetailReport.html":
                     {
                         string prevCP = "";
@@ -3053,6 +3070,155 @@ namespace HIMS.Services.Report
                     }
                     break;
 
+                case "DailyCollectionWithSummary.html":
+                    {
+                        string detailRows = "";
+                        string collectionRows = "";
+                        string refundRows = "";
+
+                        decimal totalCash = 0, totalNonCash = 0;
+                        decimal refundCash = 0, refundNonCash = 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            string rowType = dr["RowType"].ToString();
+
+                            if (rowType == "DETAIL")
+                            {
+                                detailRows += "<tr>";
+                                detailRows += "<td>" + dr["PrintBillNo"] + "</td>";
+                                detailRows += "<td>" + dr["PatientName"] + "</td>";
+                                detailRows += "<td>" + dr["RefDoctor"] + "</td>";
+                                detailRows += "<td>" + dr["PayMode"] + "</td>";
+                                detailRows += "<td>" + dr["Cash"] + "</td>";
+                                detailRows += "<td>" + dr["NonCash"] + "</td>";
+                                detailRows += "</tr>";
+                            }
+                            else if (rowType == "SUMMARY")
+                            {
+                                string type = dr["Type"].ToString();
+                                string payMode = dr["PayMode"].ToString();
+
+                                decimal cash = Convert.ToDecimal(dr["Cash"]);
+                                decimal nonCash = Convert.ToDecimal(dr["NonCash"]);
+
+                                if (type == "LabBill") // COLLECTION
+                                {
+                                    collectionRows += "<tr>";
+                                    collectionRows += "<td>" + payMode + "</td>";
+                                    collectionRows += "<td style=\"text-align:right;\">" + cash + "</td>";
+                                    collectionRows += "<td  style=\"text-align:right;\">" + nonCash + "</td>";
+                                    collectionRows += "</tr>";
+
+                                    totalCash += cash;
+                                    totalNonCash += nonCash;
+                                }
+                                else // REFUND
+                                {
+                                    refundRows += "<tr>";
+                                    refundRows += "<td>" + payMode + "</td>";
+                                    refundRows += "<td style=\"text-align:right;\">" + cash + "</td>";
+                                    refundRows += "<td style=\"text-align:right;\">" + nonCash + "</td>";
+                                    refundRows += "</tr>";
+
+                                    refundCash += cash;
+                                    refundNonCash += nonCash;
+                                }
+                            }
+                        }
+
+                        decimal netCash = totalCash - refundCash;
+                        decimal netNonCash = totalNonCash - refundNonCash;
+                        decimal grandTotal = netCash + netNonCash;
+
+                        html = html.Replace("{{DetailRows}}", detailRows);
+                        html = html.Replace("{{CollectionRows}}", collectionRows);
+                        html = html.Replace("{{RefundRows}}", refundRows);
+
+                        html = html.Replace("{{TotalCash}}", totalCash.ToString());
+                        html = html.Replace("{{TotalNonCash}}", totalNonCash.ToString());
+
+                        html = html.Replace("{{RefundCash}}", refundCash.ToString());
+                        html = html.Replace("{{RefundNonCash}}", refundNonCash.ToString());
+
+                        html = html.Replace("{{NetCash}}", netCash.ToString());
+                        html = html.Replace("{{NetNonCash}}", netNonCash.ToString());
+
+                        html = html.Replace("{{GrandTotal}}", grandTotal.ToString());
+                    }
+                    break;
+
+                case "DailyCollectionDetailsWithSummary.html":
+                    {
+                        string detailRows = "";
+                        string summaryHtml = "";
+
+                        if (dt.Rows.Count == 0)
+                            break;
+
+               
+                        foreach (DataRow dr in dt.Select("RowType = 'DETAIL'"))
+                        {
+                            detailRows += "<tr>";
+
+                            detailRows += $"<td>{dr["BillDate"]}</td>";
+                            detailRows += $"<td>{dr["PrintBillNo"]}</td>";
+                            detailRows += $"<td>{dr["LabRequestNo"]}</td>";
+                            detailRows += $"<td>{dr["PatientName"]}</td>";
+                            detailRows += $"<td>{dr["TestNames"]}</td>";
+
+                            detailRows += $"<td>{dr["TotalAmt"]}</td>";
+                            detailRows += $"<td>{dr["ConcessionAmt"]}</td>";
+                            detailRows += $"<td>{dr["GrossAmt"]}</td>";
+                            detailRows += $"<td>{dr["NetPayableAmt"]}</td>";
+
+                            detailRows += $"<td>{dr["TotalMoneyReceived"]}</td>";
+
+                            detailRows += $"<td>{dr["CashPatientBalance"]}</td>";
+                            detailRows += $"<td>{dr["CreditPatientBalance"]}</td>";
+
+                            detailRows += $"<td>{dr["LessRefundAmt"]}</td>";
+
+                            detailRows += $"<td>{dr["NetCashCollection"]}</td>";
+                            detailRows += $"<td>{dr["NetUpiCollection"]}</td>";
+                            detailRows += $"<td>{dr["NetCardCollection"]}</td>";
+
+                            detailRows += $"<td>{dr["UserName"]}</td>";
+
+                            detailRows += "</tr>";
+                        }
+
+                     
+                        DataRow summary = dt.Select("RowType = 'SUMMARY'").FirstOrDefault();
+
+                   
+                        DataRow payment = dt.Select("RowType = 'PAYMENT SUMMARY'").FirstOrDefault();
+
+
+                        html = html
+                            .Replace("{{TotalAmt}}", summary?["TotalAmt"]?.ToString())
+                            .Replace("{{ConcessionAmt}}", summary?["ConcessionAmt"]?.ToString())
+                            .Replace("{{LessRefundAmt}}", summary?["LessRefundAmt"]?.ToString())
+                            .Replace("{{GrossAmt}}", summary?["GrossAmt"]?.ToString())
+                            .Replace("{{NetPayableAmt}}", summary?["NetPayableAmt"]?.ToString())
+
+                            .Replace("{{Cash}}", payment?["NetCashCollection"]?.ToString())
+                            .Replace("{{UPI}}", payment?["NetUpiCollection"]?.ToString())
+                            .Replace("{{Card}}", payment?["NetCardCollection"]?.ToString())
+
+                            .Replace("{{PaymentTotal}}",
+                                (Convert.ToDecimal(payment["NetCashCollection"] ?? 0) +
+                                 Convert.ToDecimal(payment["NetUpiCollection"] ?? 0) +
+                                 Convert.ToDecimal(payment["NetCardCollection"] ?? 0)).ToString())
+
+                            .Replace("{{TotalPayment}}", summary?["TotalMoneyReceived"]?.ToString())
+                            .Replace("{{CashBalance}}", summary?["CashPatientBalance"]?.ToString())
+                            .Replace("{{CreditBalance}}", summary?["CreditPatientBalance"]?.ToString());
+
+                        html = html.Replace("{{DetailRows}}", detailRows);
+                        html = html.Replace("{{SummaryHtml}}", summaryHtml);
+                    }
+                    break;
             }
 
             if (!string.IsNullOrEmpty(T_Count.ToString()))
