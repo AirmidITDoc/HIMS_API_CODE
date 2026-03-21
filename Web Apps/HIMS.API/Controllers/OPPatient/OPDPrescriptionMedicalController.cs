@@ -279,7 +279,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("NewOPTemplateInsert")]
-        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PrescriptionTemplateModels obj)
         {
             MPresTemplateH model = obj.MapTo<MPresTemplateH>();
