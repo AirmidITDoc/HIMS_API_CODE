@@ -152,18 +152,29 @@ namespace HIMS.Services.Nursing
             throw new NotImplementedException();
         }
 
-        //public virtual async Task InsertAsync(TNursingMedicationChart1 ObjTNursingMedicationChart1, int UserId, string Username)
+       
+        //public virtual void Insert(List<TNursingMedicationChart1> ObjTNursingMedicationChart, int UserId, string UserName)
         //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        _context.TNursingMedicationCharts1.Add(ObjTNursingMedicationChart1);
-        //        await _context.SaveChangesAsync();
 
-        //        scope.Complete();
+        //    DatabaseHelper odal = new();
+
+
+        //    foreach (var item in ObjTNursingMedicationChart)
+        //    {
+        //        string[] rEntity = { "IsCancelledBy", "IsCancelledDateTime", "CreatedBy", "CreatedDatetime", "ModifiedBy", "ModifiedDateTime", "IsAddedBy" };
+
+        //        var entity = item.ToDictionary();
+        //        foreach (var rProperty in rEntity)
+        //        {
+        //            entity.Remove(rProperty);
+        //        }
+        //        odal.ExecuteNonQuery("m_insert_T_Nursing_MedicationChart", CommandType.StoredProcedure, entity);
+        //        // ObjTNursingMedicationChart.MedChartId = Convert.ToInt32(AMedChartId);
         //    }
         //}
 
-        public virtual void Insert(List<TNursingMedicationChart> ObjTNursingMedicationChart, int UserId, string UserName)
+
+        public virtual async Task Insert(List<TNursingMedicationChart1> ObjTNursingMedicationChart, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
@@ -171,41 +182,22 @@ namespace HIMS.Services.Nursing
 
             foreach (var item in ObjTNursingMedicationChart)
             {
-                string[] rEntity = { "IsCancelledBy", "IsCancelledDateTime", "CreatedBy", "CreatedDatetime", "ModifiedBy", "ModifiedDateTime" };
+                string[] rEntity = { "MedChartId", "AdmId", "Mdate", "Mtime", "DurgId", "DoseId", "Route", "Freq", "IsAddedBy", "NurseName", "IsCancelled", "DoseName", "RouteId" };
 
                 var entity = item.ToDictionary();
-                foreach (var rProperty in rEntity)
+                foreach (var rProperty in entity.Keys.ToList())
                 {
-                    entity.Remove(rProperty);
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("m_insert_T_Nursing_MedicationChart", CommandType.StoredProcedure, entity);
-                // ObjTNursingMedicationChart.MedChartId = Convert.ToInt32(AMedChartId);
+
+                string VMedChartId = odal.ExecuteNonQueryNew("m_insert_T_Nursing_MedicationChart", CommandType.StoredProcedure, "MedChartId", entity);
+                item.MedChartId = Convert.ToInt32(VMedChartId);
+                await _context.LogProcedureExecution(entity, nameof(TNursingMedicationChart), (int)item.MedChartId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
             }
         }
 
-
-        //public virtual async Task InsertAsync(TIpmedicalRecord objmedicalRecord, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        _context.TIpmedicalRecords.Add(objmedicalRecord);
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
-
-
-        //public virtual async Task InsertAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        _context.TIpprescriptionReturnHs.Add(objIpprescriptionReturnH);
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
 
 
 
