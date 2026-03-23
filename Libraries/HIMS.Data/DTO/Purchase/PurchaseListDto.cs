@@ -33,6 +33,8 @@
 
         public String? Email { get; set; }
         public String? Mobile { get; set; }
-        
+        public long IsPurchaseRequisitionId { get; set; }
+        public bool IsProceedToApproval { get; set; }
+
     }
 }
