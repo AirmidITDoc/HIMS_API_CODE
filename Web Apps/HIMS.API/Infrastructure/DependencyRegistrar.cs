@@ -13,6 +13,7 @@ using HIMS.Services.Canteen;
 using HIMS.Services.Common;
 using HIMS.Services.Dashboard;
 using HIMS.Services.DoctorPayout;
+using HIMS.Services.FeedBack;
 using HIMS.Services.GastrologyService;
 using HIMS.Services.Inventory;
 using HIMS.Services.IPPatient;
@@ -193,7 +194,9 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IHospitalMasterService, HospitalMasterService>();
             services.AddScoped<INotificationUtility, NotificationUtility>();
             services.AddScoped<ILabSampleRecivedService, LabSampleRecivedService>();
+            services.AddScoped<IPatientFeedBackService, PatientFeedBackService>();
 
+            
 
             services.AddScoped<I_MRDCertificate, MRDService>();
             services.AddScoped<IOPBillingService, OPBillingService>();

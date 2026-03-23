@@ -11,6 +11,8 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Models.Masters;
 using HIMS.Core.Infrastructure;
 using HIMS.API.Models.FeedBack;
+using HIMS.Services.Nursing;
+using HIMS.Services.FeedBack;
 
 namespace HIMS.API.Controllers.FeedBack
 {
@@ -20,9 +22,13 @@ namespace HIMS.API.Controllers.FeedBack
     public class PatientFeedbackController : BaseController
     {
         private readonly IGenericService<TPatientFeedback> _repository;
-        public PatientFeedbackController(IGenericService<TPatientFeedback> repository)
+        private readonly IPatientFeedBackService _IPatientFeedBackService;
+
+        public PatientFeedbackController(IGenericService<TPatientFeedback> repository, IPatientFeedBackService repository1)
         {
             _repository = repository;
+            _IPatientFeedBackService = repository1;
+
 
         }
         //List API
@@ -46,41 +52,52 @@ namespace HIMS.API.Controllers.FeedBack
             var data = await _repository.GetById(x => x.PatientFeedbackId == id);
             return data.ToSingleResponse<TPatientFeedback, PatientFeedbackModel>("TPatientFeedback");
         }
-        //Add API
+       
         [HttpPost]
         //[Permission]
-        public async Task<ApiResponse> Post(PatientFeedbackModel obj)
+        public async Task<ApiResponse> Post(List<PatientFeedbackModel> objList)
         {
-            TPatientFeedback model = obj.MapTo<TPatientFeedback>();
-            model.IsActive = true;
-            if (obj.PatientFeedbackId == 0)
+            if (objList == null || objList.Count == 0)return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status400BadRequest,  "No data received");
+
+            foreach (var obj in objList)
             {
-                model.CreatedBy = CurrentUserId;
-                model.CreatedDate = AppTime.Now;
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = AppTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
+                TPatientFeedback model = obj.MapTo<TPatientFeedback>();
+
+                model.IsActive = true;
+
+                if (obj.PatientFeedbackId == 0)
+                {
+                    model.CreatedBy = CurrentUserId;
+                    model.CreatedDate = AppTime.Now;
+                    model.ModifiedBy = CurrentUserId;
+                    model.ModifiedDate = AppTime.Now;
+
+                    await _IPatientFeedBackService.InsertAsync( model, CurrentUserId,CurrentUserName );
+                }
             }
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
+
+            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "Records added successfully.");
         }
-        //Edit API
-        [HttpPut("{id:int}")]
+        [HttpPut]
         //[Permission]
-        public async Task<ApiResponse> Edit(PatientFeedbackModel obj)
+        public async Task<ApiResponse> Edit(List<PatientFeedbackModel> objList)
         {
-            TPatientFeedback model = obj.MapTo<TPatientFeedback>();
-            model.IsActive = true;
-            if (obj.PatientFeedbackId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
+            if (objList == null || objList.Count == 0) return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status400BadRequest,  "No data received");
+
+            foreach (var obj in objList)
             {
+                if (obj.PatientFeedbackId == 0)continue; 
+
+                TPatientFeedback model = obj.MapTo<TPatientFeedback>();
+
+                model.IsActive = true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
+                await _IPatientFeedBackService.UpdateAsync( model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" }  );
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
+
+            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK,"Records updated successfully." );
         }
         //Delete API
         [HttpDelete]

@@ -7,8 +7,8 @@ namespace HIMS.Services.IPPatient
 {
     public partial interface IDischargeSummaryService
     {
-        void InsertSP(DischargeSummary ObjDischargeSummary, List<TIpPrescriptionDischarge> ObjTIpPrescriptionDischarge, int UserId, string Username);
-        void UpdateSP(DischargeSummary ObjDischargeSummary, List<TIpPrescriptionDischarge> ObjTIpPrescriptionDischarge, int UserId, string Username);
+        Task InsertSP(DischargeSummary ObjDischargeSummary, List<TIpPrescriptionDischarge> ObjTIpPrescriptionDischarge, int UserId, string Username);
+        Task UpdateSP(DischargeSummary ObjDischargeSummary, List<TIpPrescriptionDischarge> ObjTIpPrescriptionDischarge, int UserId, string Username);
         void InsertTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int UserId, string Username);
         void UpdateTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int UserId, string Username);
         Task InsertDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, Bedmaster ObjBedmaster, int currentUserId, string currentUserName);
