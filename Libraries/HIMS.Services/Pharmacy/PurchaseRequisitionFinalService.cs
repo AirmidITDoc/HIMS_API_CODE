@@ -76,7 +76,7 @@ namespace HIMS.Services.Pharmacy
             return await DatabaseHelper.GetGridDataBySp<PurchaseRequisitionFinalDetailListDto>(model, "ps_PurchaseRequisitionFinalDetailList");
         }
 
-        public virtual async Task PRToPOInsertAsync(TPurchaseHeader objPurchase, int UserId, string Username)
+        public virtual async Task PRToPOInsertAsync(TPurchaseHeader objPurchase, List<TPrheader> objTPrheader, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
@@ -104,6 +104,19 @@ namespace HIMS.Services.Pharmacy
                 objPurchase.PurchaseNo = StoreInfo.PurchaseNo;
                 _context.TPurchaseHeaders.Add(objPurchase);
                 await _context.SaveChangesAsync();
+
+                if (objTPrheader != null && objTPrheader.Any())
+                {
+                    foreach (var tpr in objTPrheader)
+                    {
+                        if (tpr.Prid != 0)
+                        {
+                            DatabaseHelper odal = new();
+                            var entity = new Dictionary<string, object> { { "Prid", tpr.Prid } };
+                            odal.ExecuteNonQuery("ps_UpdateTPrheaderStatus", CommandType.StoredProcedure, entity);
+                        }
+                    }
+                }
 
                 // Complete Transaction
                 scope.Complete();

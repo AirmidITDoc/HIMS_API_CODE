@@ -73,6 +73,26 @@ namespace HIMS.API.Controllers.Pharmacy
             foreach (var obj in objList)
             {
                 TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
+                //List<TPrheader> objTPrheader = obj.Tpr.Select(x => new TPrheader
+                //{
+                //    Prid = (long)x.Prid,
+                //}).ToList();
+                List<TPrheader> objTPrheader = new List<TPrheader>();
+
+                //if (obj.Tpr != null && obj.Tpr.Any())
+                //{
+                //    objTPrheader = obj.Tpr.Select(x => new TPrheader
+                //    {
+                //        Prid = (long)x.Prid,
+                //    }).ToList();
+                //}
+                if (obj.Tpr != null)
+                {
+                    objTPrheader = obj.Tpr.Select(x => new TPrheader
+                    {
+                        Prid = (long)x.Prid,
+                    }).ToList();
+                }
 
                 if (obj.PurchaseId == 0)
                 {
@@ -84,7 +104,7 @@ namespace HIMS.API.Controllers.Pharmacy
                     model.ModifiedBy = CurrentUserId;
                     model.ModifiedDate = AppTime.Now;
 
-                    await _IPurchaseRequisitionFinalService.PRToPOInsertAsync(model, CurrentUserId, CurrentUserName);
+                    await _IPurchaseRequisitionFinalService.PRToPOInsertAsync(model, objTPrheader, CurrentUserId, CurrentUserName);
                 }
                 else
                     return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
