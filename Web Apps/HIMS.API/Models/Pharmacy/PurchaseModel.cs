@@ -33,9 +33,11 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? HandlingCharges { get; set; }
         public decimal? FreightCharges { get; set; }
         public bool? IsCancelled { get; set; }
-
+        public long? IsPurchaseRequisitionId { get; set; }
+        public bool? IsProceedToApproval { get; set; } 
 
         public List<PurchaseDetailModel> TPurchaseDetails { get; set; }
+        public List<TprheaderModel>? Tpr { get; set; }
 
     }
     public class PurchaseModelValidator : AbstractValidator<PurchaseModel>
@@ -45,5 +47,11 @@ namespace HIMS.API.Models.Pharmacy
             RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("Store is required");
             RuleFor(x => x.SupplierId).NotNull().NotEmpty().WithMessage("Supplier is required");
         }
+    }
+
+    public class TprheaderModel
+    {
+        public long Prid { get; set; }
+
     }
 }
