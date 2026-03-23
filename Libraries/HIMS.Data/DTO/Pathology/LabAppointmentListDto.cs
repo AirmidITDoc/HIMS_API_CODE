@@ -39,7 +39,7 @@ namespace HIMS.Data.DTO.Pathology
             public string? SeqNo { get; set; }
             public string? CategoryName { get; set; }
             public string PrefixName { get; set; }
-            public bool AppointmentCompleted { get; set; }
+            public string AppointmentCompleted { get; set; }
 
     }
     public class LabAppDetListDto
