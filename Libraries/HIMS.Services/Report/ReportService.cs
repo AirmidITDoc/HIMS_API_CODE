@@ -2109,7 +2109,20 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+                #region :: CanteenBillReceiptT ::
+                case "CanteenBillReceiptT":
+                    {
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "CanteenBillT.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "CanteenHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("Rtrv_CanteenBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                        html = html.Replace("{{NewHeaderThermal}}", htmlHeaderFilePath);
+                        html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
+                        tuple = _pdfUtility.GeneratePdfFromHtmlThermal(html, model.StorageBaseUrl, "CanteenBillReceipt", "CanteenBillReceipt" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
                 #region :: NurIPprescriptionReport ::
                 case "NurIPprescriptionReport":
                     {
@@ -15094,6 +15107,73 @@ namespace HIMS.Services.Report
                     break;
 
 
+
+
+                case "CanteenBillReceiptT":
+                    {
+
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+
+
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        //html = html.Replace("{{NewHeaderThermal}}", htmlHeader);
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{Customer}}", dt.GetColValue("Customer"));
+                        html = html.Replace("{{BillNo}}", dt.GetColValue("PBillNo"));
+                        html = html.Replace("{{BillDate}}", dt.GetColValue("Time").ConvertToDateString("dd/MM/yyyy | H:mm tt"));
+
+
+                        html = html.Replace("{{TotalAmount}}", dt.GetColValue("TotalAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{DiscAmount}}", dt.GetColValue("DiscAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().ToString("F2"));
+
+
+                        
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{BillNo}}", dt.GetColValue("PBillNo"));
+                        html = html.Replace("{{AddedByName}}", dt.GetColValue("AddedByName"));
+                        html = html.Replace("{{TokenNo}}", dt.GetColValue("OP_IP_ID"));
+                        double T_NetAmount = 0;
+                        T_NetAmount = Math.Round(dt.GetColValue("NetAmount").ConvertToDouble());
+
+
+                      
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:14px;font-weight: bold;\"><td style=\"text-align: center; padding: 2px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["UnitMRP"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"text-align: right; padding: 2px; font-size:14px;\">").Append(dr["ItemTotal"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
+
+                            //T_NetAmount += dr["NetAmount"].ConvertToDouble();
+                        }
+                       
+                        html = html.Replace("{{Items}}", items.ToString());
+
+                        html = html.Replace("{{chkdiscflag}}", !string.IsNullOrWhiteSpace(dt.GetColValue("DiscAmount")) ? "table-row" : "none");
+                         html = html.Replace("{{chkpaidflag}}", !string.IsNullOrWhiteSpace(dt.GetColValue("PaidAmount")) ? "table-row" : "none");
+
+
+
+                        string finalamt = conversion(T_NetAmount.ToString());
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+
+                        return html;
+
+                    }
+                    break;
                 case "NurIPprescriptionReport":
                     {
                         int i = 0;
