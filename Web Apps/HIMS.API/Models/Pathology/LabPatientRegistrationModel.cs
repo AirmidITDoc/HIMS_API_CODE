@@ -104,7 +104,6 @@ namespace HIMS.API.Models.Pathology
         public long? RefDocId { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
-
         public long LabPatientId { get; set; }
         public long LabPatRegId { get; set; }
         public long? AdharCardNo { get; set; }
@@ -115,6 +114,8 @@ namespace HIMS.API.Models.Pathology
         public string? Comments { get; set; }
         public string? ReferByName { get; set; }
         public long? CompanyExecutiveId { get; set; }
+        public long? LabAppointmentId { get; set; }
+
 
     }
     public class OPBillIngLabModel

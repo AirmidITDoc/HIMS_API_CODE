@@ -64,6 +64,7 @@ namespace HIMS.Data.DTO.Pathology
         public long? LabPatRegId { get; set; }
         public long? DoctorId { get; set; }
         public long? RefDocId { get; set; }
+        public long? LabAppointmentId { get; set; }
 
 
 
