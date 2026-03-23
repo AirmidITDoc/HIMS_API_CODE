@@ -2116,7 +2116,7 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "CanteenHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("Rtrv_CanteenBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
-                        html = html.Replace("{{NewHeaderThermal}}", htmlHeaderFilePath);
+                        html = html.Replace("{{CanteenHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
                         tuple = _pdfUtility.GeneratePdfFromHtmlThermal(html, model.StorageBaseUrl, "CanteenBillReceipt", "CanteenBillReceipt" + vDate, Orientation.Portrait);
@@ -15121,7 +15121,7 @@ namespace HIMS.Services.Report
 
 
                         html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
-                        //html = html.Replace("{{NewHeaderThermal}}", htmlHeader);
+                       // html = html.Replace("{{NewHeaderThermal}}", htmlHeader);
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{Customer}}", dt.GetColValue("Customer"));
                         html = html.Replace("{{BillNo}}", dt.GetColValue("PBillNo"));
@@ -15139,6 +15139,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BillNo}}", dt.GetColValue("PBillNo"));
                         html = html.Replace("{{AddedByName}}", dt.GetColValue("AddedByName"));
                         html = html.Replace("{{TokenNo}}", dt.GetColValue("OP_IP_ID"));
+                        html = html.Replace("{{ItemGst}}", dt.GetColValue("ItemGst"));
+
                         double T_NetAmount = 0;
                         T_NetAmount = Math.Round(dt.GetColValue("NetAmount").ConvertToDouble());
 
@@ -15149,8 +15151,8 @@ namespace HIMS.Services.Report
                             i++;
                             items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:14px;font-weight: bold;\"><td style=\"text-align: center; padding: 2px;\">").Append(i).Append("</td>");
                             items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["UnitMRP"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            items.Append("<td style=\"text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"text-align: center; padding: 6px;\">").Append(dr["UnitMRP"].ConvertToDouble().ToString("F2")).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"text-align: right; padding: 2px; font-size:14px;\">").Append(dr["ItemTotal"].ConvertToDouble().ToString("F2")).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
