@@ -13900,9 +13900,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.MiddleName).HasMaxLength(50);
 
-                entity.Property(e => e.MobileNo)
-                    .HasMaxLength(15)
-                    .IsFixedLength();
+                entity.Property(e => e.MobileNo).HasMaxLength(12);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 

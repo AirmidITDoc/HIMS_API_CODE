@@ -10,6 +10,7 @@ namespace HIMS.Data.Models
         public DateTime? RegTime { get; set; }
         public long? UnitId { get; set; }
         public string? LabRequestNo { get; set; }
+        public long? LabAppointmentId { get; set; }
         public long? LabPatRegId { get; set; }
         public long? PrefixId { get; set; }
         public string? FirstName { get; set; }

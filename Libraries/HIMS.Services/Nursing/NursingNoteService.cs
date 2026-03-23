@@ -152,29 +152,8 @@ namespace HIMS.Services.Nursing
             throw new NotImplementedException();
         }
 
-       
-        //public virtual void Insert(List<TNursingMedicationChart1> ObjTNursingMedicationChart, int UserId, string UserName)
-        //{
 
-        //    DatabaseHelper odal = new();
-
-
-        //    foreach (var item in ObjTNursingMedicationChart)
-        //    {
-        //        string[] rEntity = { "IsCancelledBy", "IsCancelledDateTime", "CreatedBy", "CreatedDatetime", "ModifiedBy", "ModifiedDateTime", "IsAddedBy" };
-
-        //        var entity = item.ToDictionary();
-        //        foreach (var rProperty in rEntity)
-        //        {
-        //            entity.Remove(rProperty);
-        //        }
-        //        odal.ExecuteNonQuery("m_insert_T_Nursing_MedicationChart", CommandType.StoredProcedure, entity);
-        //        // ObjTNursingMedicationChart.MedChartId = Convert.ToInt32(AMedChartId);
-        //    }
-        //}
-
-
-        public virtual async Task Insert(List<TNursingMedicationChart1> ObjTNursingMedicationChart, int CurrentUserId, string CurrentUserName)
+        public virtual void Insert(List<TNursingMedicationChart1> ObjTNursingMedicationChart, int UserId, string UserName)
         {
 
             DatabaseHelper odal = new();
@@ -182,21 +161,42 @@ namespace HIMS.Services.Nursing
 
             foreach (var item in ObjTNursingMedicationChart)
             {
-                string[] rEntity = { "MedChartId", "AdmId", "Mdate", "Mtime", "DurgId", "DoseId", "Route", "Freq", "IsAddedBy", "NurseName", "IsCancelled", "DoseName", "RouteId" };
+                string[] rEntity = { "IsCancelledBy", "IsCancelledDateTime", "CreatedBy", "CreatedDatetime", "ModifiedBy", "ModifiedDateTime" };
 
                 var entity = item.ToDictionary();
-                foreach (var rProperty in entity.Keys.ToList())
+                foreach (var rProperty in rEntity)
                 {
-                    if (!rEntity.Contains(rProperty))
-                        entity.Remove(rProperty);
+                    entity.Remove(rProperty);
                 }
-
-                string VMedChartId = odal.ExecuteNonQueryNew("m_insert_T_Nursing_MedicationChart", CommandType.StoredProcedure, "MedChartId", entity);
-                item.MedChartId = Convert.ToInt32(VMedChartId);
-                await _context.LogProcedureExecution(entity, nameof(TNursingMedicationChart), (int)item.MedChartId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
+                odal.ExecuteNonQuery("m_insert_T_Nursing_MedicationChart", CommandType.StoredProcedure, entity);
+                // ObjTNursingMedicationChart.MedChartId = Convert.ToInt32(AMedChartId);
             }
         }
+
+
+        //public virtual async Task Insert(List<TNursingMedicationChart1> ObjTNursingMedicationChart, int CurrentUserId, string CurrentUserName)
+        //{
+
+        //    DatabaseHelper odal = new();
+
+
+        //    foreach (var item in ObjTNursingMedicationChart)
+        //    {
+        //        string[] rEntity = { "MedChartId", "AdmId", "Mdate", "Mtime", "DurgId", "DoseId", "Route", "Freq", "IsAddedBy", "NurseName", "IsCancelled", "DoseName", "RouteId" };
+
+        //        var entity = item.ToDictionary();
+        //        foreach (var rProperty in entity.Keys.ToList())
+        //        {
+        //            if (!rEntity.Contains(rProperty))
+        //                entity.Remove(rProperty);
+        //        }
+
+        //        string VMedChartId = odal.ExecuteNonQueryNew("m_insert_T_Nursing_MedicationChart", CommandType.StoredProcedure, "MedChartId", entity);
+        //        item.MedChartId = Convert.ToInt32(VMedChartId);
+        //        await _context.LogProcedureExecution(entity, nameof(TNursingMedicationChart), (int)item.MedChartId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+        //    }
+        //}
 
 
 
