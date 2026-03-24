@@ -360,7 +360,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("NursingMedicationChartInsert")]
-        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public ApiResponse InsertEDMX(NursingMedicationChartModel obj)
         {
             List<TNursingMedicationChart1> model = obj.NursingMedicationChart.MapTo<List<TNursingMedicationChart1>>();

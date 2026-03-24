@@ -18,5 +18,6 @@ namespace HIMS.Data.Models
         public bool? IsCancelled { get; set; }
         public string? DoseName { get; set; }
         public long? RouteId { get; set; }
+        public long? Days { get; set; }
     }
 }

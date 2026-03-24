@@ -17,6 +17,8 @@ namespace HIMS.API.Models.Nursing
         public bool? IsCancelled { get; set; }
         public string? DoseName { get; set; }
         public long? RouteId { get; set; }
+        public long? Days { get; set; }
+
 
 
     }
