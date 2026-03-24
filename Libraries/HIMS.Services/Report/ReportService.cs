@@ -15123,7 +15123,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                        // html = html.Replace("{{NewHeaderThermal}}", htmlHeader);
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
-                        html = html.Replace("{{Customer}}", dt.GetColValue("Customer"));
+                        html = html.Replace("{{CustomerName}}", dt.GetColValue("CustomerName"));
                         html = html.Replace("{{BillNo}}", dt.GetColValue("PBillNo"));
                         html = html.Replace("{{BillDate}}", dt.GetColValue("Time").ConvertToDateString("dd/MM/yyyy | H:mm tt"));
 
@@ -15140,7 +15140,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AddedByName}}", dt.GetColValue("AddedByName"));
                         html = html.Replace("{{TokenNo}}", dt.GetColValue("OP_IP_ID"));
                         html = html.Replace("{{ItemGst}}", dt.GetColValue("ItemGst"));
+                        html = html.Replace("{{ItemTotal}}", dt.GetColValue("ItemTotal"));
 
+                        
                         double T_NetAmount = 0;
                         T_NetAmount = Math.Round(dt.GetColValue("NetAmount").ConvertToDouble());
 
@@ -15152,9 +15154,9 @@ namespace HIMS.Services.Report
                             items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:14px;font-weight: bold;\"><td style=\"text-align: center; padding: 2px;\">").Append(i).Append("</td>");
                             items.Append("<td style=\"text-align: left; padding: 2px;font-size:14px;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"text-align: center; padding: 6px;\">").Append(dr["UnitMRP"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            items.Append("<td style=\"text-align: right; padding: 6px;\">").Append(dr["UnitMRP"].ConvertToDouble().ToString("F2")).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"text-align: right; padding: 2px; font-size:14px;\">").Append(dr["ItemTotal"].ConvertToDouble().ToString("F2")).Append("</td>");
+                        //    items.Append("<td style=\"text-align: right; padding: 2px; font-size:14px;\">").Append(dr["ItemTotal"].ConvertToDouble().ToString("F2")).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
                             //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
 
