@@ -19,7 +19,6 @@ namespace HIMS.API.Models.FeedBack
         public PatientFeedbackModelValidator()
         {
             RuleFor(x => x.DepartmentId).NotNull().NotEmpty().WithMessage("DepartmentId  is required");
-            RuleFor(x => x.FeedbackComments).NotNull().NotEmpty().WithMessage("FeedbackComments  is required");
             RuleFor(x => x.FeedbackRating).NotNull().NotEmpty().WithMessage("FeedbackRating  is required");
 
 
