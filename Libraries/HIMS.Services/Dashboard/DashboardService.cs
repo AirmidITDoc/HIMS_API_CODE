@@ -332,5 +332,35 @@ namespace HIMS.Services.Dashboard
                 DailyTrend = data.Item4 ?? new List<CashlessDailyTrend>()
             };
         }
+        public async Task<LabFinancialDashboard> GetLabFinancialDashboard(int UnitId, DateTime FromDate, DateTime ToDate)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para = new SqlParameter[3];
+            para[0] = new SqlParameter("@UnitId", SqlDbType.BigInt) { Value = UnitId };
+            para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
+            para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+
+            var data = await sql.Get7ResultsFromSp<
+                LabTopBox,
+                HospitalBranch,
+                DepartmentWiseSales,
+                DailySalesTrend,
+                RefDoctorWiseSales,
+                CPWiseSales,
+                ExecutiveWiseSales
+            >("ps_LabFinacialDashboard", para);
+
+            return new LabFinancialDashboard
+            {
+                TopBoxes = data.Item1.FirstOrDefault() ?? new LabTopBox(),
+                BranchList = data.Item2 ?? new List<HospitalBranch>(),
+                DepartmentWiseSales = data.Item3 ?? new List<DepartmentWiseSales>(),
+                DailySalesTrend = data.Item4 ?? new List<DailySalesTrend>(),
+                RefDoctorWiseSales = data.Item5 ?? new List<RefDoctorWiseSales>(),
+                CPWiseSales = data.Item6 ?? new List<CPWiseSales>(),
+                ExecutiveWiseSales = data.Item7 ?? new List<ExecutiveWiseSales>()
+            };
+        }
     }
 }

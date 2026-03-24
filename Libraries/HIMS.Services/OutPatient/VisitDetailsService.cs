@@ -243,14 +243,16 @@ namespace HIMS.Services.OutPatient
             return sql.FetchListBySP<VisitDetailsListSearchDto>("ps_Rtrv_PatientVisitedListSearch", para);
         }
 
-        public List<ServiceMasterDTO> SearchGetServiceListwithTraiff(int TariffId, int ClassId, string SrvcName )
+        public List<ServiceMasterDTO> SearchGetServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId, string SrvcName )
         {
             DatabaseHelper sql = new();
-            SqlParameter[] para = new SqlParameter[3];
+            SqlParameter[] para = new SqlParameter[5];
            
             para[0] = new SqlParameter("@TariffId", TariffId);
             para[1] = new SqlParameter("@ClassId", ClassId);
-            para[2] = new SqlParameter("@SrvcName", SrvcName);
+            para[2] = new SqlParameter("@GroupId", GroupId);
+            para[3] = new SqlParameter("@SubGroupId", SubGroupId);
+            para[4] = new SqlParameter("@SrvcName", SrvcName);
 
             List<ServiceMasterDTO> lstServiceList = sql.FetchListBySP<ServiceMasterDTO>("ps_Rtrv_ServicesList", para);
             return lstServiceList;

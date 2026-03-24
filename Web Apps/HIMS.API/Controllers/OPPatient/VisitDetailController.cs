@@ -233,9 +233,9 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpGet("search-GetServiceListwithTraiff")]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        public ApiResponse SearchGetServiceListwithTraiff(int TariffId, int ClassId, string SrvcName)
+        public ApiResponse SearchGetServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId, string SrvcName)
         {
-            var data = _visitDetailsService.SearchGetServiceListwithTraiff(TariffId, ClassId, SrvcName);
+            var data = _visitDetailsService.SearchGetServiceListwithTraiff(TariffId, ClassId, GroupId, SubGroupId, SrvcName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service List.", data);
         }
 
