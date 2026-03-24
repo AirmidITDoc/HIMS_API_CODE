@@ -14,7 +14,7 @@
 
 
             <table style="width:100%; border-collapse:collapse;">
-                {{NewHeaderThermal}}
+                {{CanteenHeader}}
             </table>
 
 
@@ -37,7 +37,7 @@
                     <td style="padding:2px;">Token No : {{TokenNo}}</td>
                 </tr>
                 <tr>
-                    <td colspan="3" style="padding:2px;">Patient Name : {{Customer}}</td>
+                    <td colspan="3" style="padding:2px;">Patient Name : {{CustomerName}}</td>
                 </tr>
                
             </table>
@@ -61,7 +61,7 @@
                 <tr>
                     <td>Bill Amt :</td>
                     <td></td>
-                    <td style="text-align:right;">{{TotalAmount}}</td>
+                    <td style="text-align:right;">{{ItemTotal}}</td>
                 </tr>
 
                 <tr>
@@ -71,7 +71,7 @@
                 </tr>
                 <tr style="display:{{chkdiscflag}}">
                     <td>Disc Amt :</td>
-                    <!--<td>({{DiscComments}})</td>-->
+                    <td></td>
                     <td style="text-align:right;">{{DiscAmount}}</td>
                 </tr>
 

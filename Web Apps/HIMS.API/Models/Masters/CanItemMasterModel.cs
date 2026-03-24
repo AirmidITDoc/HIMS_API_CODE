@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+using FluentValidation;
 
-namespace HIMS.Data.Models
+namespace HIMS.API.Models.Masters
 {
-    public partial class MCanItemMaster
+    public class CanItemMasterModel
     {
         public long ItemId { get; set; }
         public string? ItemShortName { get; set; }
@@ -11,6 +10,7 @@ namespace HIMS.Data.Models
         public long? ItemCategaryId { get; set; }
         public long? PurchaseUomid { get; set; }
         public string? ConversionFactor { get; set; }
+        public bool? Isdeleted { get; set; }
         public long? Addedby { get; set; }
         public long? UpDatedBy { get; set; }
         public bool? IsBatchRequired { get; set; }
@@ -20,10 +20,18 @@ namespace HIMS.Data.Models
         public string? ProdLocation { get; set; }
         public decimal? Price { get; set; }
         public decimal? EmpPrice { get; set; }
-        public bool? IsActive { get; set; }
-        public int? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public int? ModifiedBy { get; set; }
-        public DateTime? ModifiedDate { get; set; }
     }
+
+    public class CanItemMasterModelValidator : AbstractValidator<CanItemMasterModel>
+    {
+        public CanItemMasterModelValidator()
+        {
+            RuleFor(x => x.ItemShortName).NotNull().NotEmpty().WithMessage("ItemShortName  is required");
+            RuleFor(x => x.ItemName).NotNull().NotEmpty().WithMessage("ItemName  is required");
+            RuleFor(x => x.ItemCategaryId).NotNull().NotEmpty().WithMessage("ItemCategaryId  is required");
+
+
+        }
+    }
+  
 }
