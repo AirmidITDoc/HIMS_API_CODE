@@ -59,5 +59,10 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<BranchWiseCategorySummaryDto>(model, "ps_BranchWise__CategorySummary");
         }
+        public virtual async Task<IPagedList<DailyCollectionDetailList>> DailyCollectionDetailList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DailyCollectionDetailList>(model, "ps_rtrv_DailyCollectionList");
+        }
+
     }
 }
