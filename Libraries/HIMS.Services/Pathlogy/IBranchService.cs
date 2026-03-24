@@ -22,7 +22,7 @@ namespace HIMS.Services.Pathlogy
         Task<IPagedList<BranchWiseDoctorSummaryDto>> BranchWiseDoctorSummaryList(GridRequestModel objGrid);
         Task<IPagedList<BranchWiseCompanySummaryDto>> BranchWiseCompanySummaryList(GridRequestModel objGrid);
         Task<IPagedList<BranchWiseCategorySummaryDto>> BranchWiseCategorySummaryList(GridRequestModel objGrid);
-
+        Task<IPagedList<DailyCollectionDetailList>> DailyCollectionDetailList(GridRequestModel objGrid);
 
 
 

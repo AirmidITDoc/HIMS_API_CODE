@@ -91,6 +91,15 @@ namespace HIMS.API.Controllers.Pathology
             IPagedList<BranchWiseCategorySummaryDto> BranchWiseCategorySummaryList = await _IBranchService.BranchWiseCategorySummaryList(objGrid);
             return Ok(BranchWiseCategorySummaryList.ToGridResponse(objGrid, "BranchWiseCategorySummary List"));
         }
+        [HttpPost("DailyCollectionDetailList")]
+        public async Task<IActionResult> DailyCollectionDetailList(GridRequestModel objGrid)
+        {
+            IPagedList<DailyCollectionDetailList> DailyCollectionDetailList = await _IBranchService.DailyCollectionDetailList(objGrid);
+            return Ok(DailyCollectionDetailList.ToGridResponse(objGrid, "Daily Collection Detail List"));
+        }
+
+
+
 
     }
 }
