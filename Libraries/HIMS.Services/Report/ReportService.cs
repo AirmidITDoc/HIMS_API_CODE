@@ -190,16 +190,36 @@ namespace HIMS.Services.Report
             var tuple = new Tuple<byte[], string>(null, string.Empty);
             string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
             var mrMode = model.Mode;
-            var mType = await _context.MReportSetupOperationals.Where(r => r.ReportMode == mrMode).Select(r => new { mReportHtmlName = r.ReportHtmlName, mReportHeaderHtmlName = r.ReportHeaderHtmlName, mProcedureName = r.ProcedureName, mFolderName = r.FolderName, mReportFileName = r.ReportFileName }).FirstOrDefaultAsync();
+            var mType = await _context.MReportSetupOperationals.Where(r => r.ReportMode == mrMode).Select(r => new { mReportHtmlName = r.ReportHtmlName, mReportHeaderHtmlName = r.ReportHeaderHtmlName, mProcedureName = r.ProcedureName, mFolderName = r.FolderName, mReportFileName = r.ReportFileName , mIsDBFunction =r.IsDbfunction, mIsA5orA4Page =r.IsA5orA4page }).FirstOrDefaultAsync();
 
             string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHtmlName);
             string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHeaderHtmlName);
             htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath,UnitId);
-            var html = GetHTMLView(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+
+            string html;
+
+            if(mType.mIsDBFunction ==false)
+            {
+                 html = GetHTMLView(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+            }
+            else
+            {
+                 html = GetHTMLView(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+            }
+
             html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
             html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
-            tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+            if(mType.mIsA5orA4Page==1)
+            {
+                tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+            }
+             else
+             {
+                tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+             }
+
+            //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
 
             return tuple;
         }
@@ -438,11 +458,11 @@ namespace HIMS.Services.Report
                 #region :: LabMoneyReceipt ::
                 case "LabMoneyReceipt":
                     {
-                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "LabMoneyReciept.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AIP_NoFeeReceipt_AddAnnex.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "ExternalLabHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, UnitId);
                         var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
-                        html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
                         tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabMoneyReceipt", "LabMoneyReceipt" + vDate, Orientation.Portrait);
                         break;
@@ -5621,7 +5641,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{BalanceafterGov}}", dt.GetColValue("BalanceafterGov").ConvertToDouble().ToString("F2"));
 
-
+                        html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                        html = html.Replace("{{PatientType1}}", dt.GetColValue("PatientType1"));
+                        StringBuilder serviceNames = new StringBuilder();
 
 
                         double T_NetAmount = 0;
@@ -5636,9 +5658,12 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
 
+                            serviceNames.Append(dr["ServiceName"].ConvertToString()).Append(", ");
                             T_NetAmount += dr["NetAmount"].ConvertToDouble();
                         }
                         T_NetAmount = Math.Round(T_NetAmount);
+                        string finalServiceNames = serviceNames.ToString().TrimEnd(',', ' ');
+                        html = html.Replace("{{ServiceName}}", finalServiceNames);
 
                         html = html.Replace("{{Items}}", items.ToString());
                         double PaidFinal = dt.GetColValue("PaidAmount").ConvertToDouble();

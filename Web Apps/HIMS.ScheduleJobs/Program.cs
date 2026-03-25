@@ -76,6 +76,7 @@ namespace HIMS.ScheduleJobs
                     q.AddJobWithCron<EmailJob>("EmailJob", quartzSettings.Jobs["EmailJob"]);
                     q.AddJobWithCron<WhatsAppJob>("WhatsAppJob", quartzSettings.Jobs["WhatsAppJob"]);
                     q.AddJobWithCron<PdfJob>("PdfJob", quartzSettings.Jobs["PdfJob"]);
+                    q.AddJobWithCron<DataSyncJob>("DataSyncJob", quartzSettings.Jobs["DataSyncJob"]);
                 });
 
                 // Quartz background hosted service

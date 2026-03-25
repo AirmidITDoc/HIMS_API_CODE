@@ -33,22 +33,53 @@ namespace HIMS.ScheduleJobs.Jobs
         public async Task Execute(IJobExecutionContext context)
         {
             try
+            
             {
-                Common.WriteToFile("Pdf Generate Service is running at " + DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
-                List<SearchGrid> searchFields = new()
-                    {
-                        new SearchGrid() { FieldName = "FromDate", FieldValue =DateTime.Now.ToString("yyyy-MM-dd"), OpType = OperatorComparer.Equals },
-                        new SearchGrid() { FieldName = "ToDate", FieldValue = DateTime.Now.ToString("yyyy-MM-dd"), OpType = OperatorComparer.Equals },
-                        new SearchGrid() { FieldName = "UserId", FieldValue = "0", OpType = OperatorComparer.Equals },
-                        new SearchGrid() { FieldName = "DoctorId", FieldValue = "0", OpType = OperatorComparer.Equals }
-                    };
-                List<Tuple<byte[], string, string>> Attachments = new()
+                //Common.WriteToFile("Pdf Generate Service is running at " + DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+                //List<SearchGrid> searchFields = new()
+                //    {
+                //        new SearchGrid() { FieldName = "FromDate", FieldValue =DateTime.Now.ToString("yyyy-MM-dd"), OpType = OperatorComparer.Equals },
+                //        new SearchGrid() { FieldName = "ToDate", FieldValue = DateTime.Now.ToString("yyyy-MM-dd"), OpType = OperatorComparer.Equals },
+                //        new SearchGrid() { FieldName = "UserId", FieldValue = "0", OpType = OperatorComparer.Equals },
+                //        new SearchGrid() { FieldName = "DoctorId", FieldValue = "0", OpType = OperatorComparer.Equals }
+                //    };
+                //List<Tuple<byte[], string, string>> Attachments = new()
+                //{
+                //    await GenerateReportAndSendMail("COMMON Report", "DailyCollectionSummary", searchFields),
+                //    await GenerateReportAndSendMail("Pharmacy Report", "SalesSummaryReport", searchFields),
+                //    await GenerateReportAndSendMail("Pharmacy Report", "PharmacyDailyCollectionSummaryDayandUserWise", searchFields)
+                //};
+                //await PrepareMail("DailyCollectionSummary", Attachments);
+
+                List<string> templateCodes = new() { "DailyCollectionSummary", "SalesSummaryReport", "PharmacyDailyCollectionSummaryDayandUserWise" };
+
+                List<Tuple<byte[], string, string>> attachments = new();
+
+                foreach (var code in templateCodes)
                 {
-                    await GenerateReportAndSendMail("COMMON Report", "DailyCollectionSummary", searchFields),
-                    await GenerateReportAndSendMail("Pharmacy Report", "SalesSummaryReport", searchFields),
-                    await GenerateReportAndSendMail("Pharmacy Report", "PharmacyDailyCollectionSummaryDayandUserWise", searchFields)
-                };
-                await PrepareMail("DailyCollectionSummary", Attachments);
+                    EmailTemplateMaster template = await _emailTemplateService.GetTemplateByCode(code);
+
+                    string dbFields = template.SearchFields;
+
+                    List<SearchGrid> searchFields = dbFields
+                        .Split(',')
+                        .Select(field => new SearchGrid
+                        {
+                            FieldName = field.Trim(),
+                            FieldValue = (field.Trim() == "FromDate" || field.Trim() == "ToDate")
+                                            ? DateTime.Now.ToString("yyyy-MM-dd")
+                                            : "0",
+                            OpType = OperatorComparer.Equals
+                        })
+                        .ToList();
+
+                    var report = await GenerateReportAndSendMail(template.SectionName, template.TemplateCode, searchFields);
+
+                    attachments.Add(report);
+                }
+
+                await PrepareMail("DailyCollectionSummary", attachments);
+
             }
             catch (Exception ex)
             {
@@ -59,7 +90,7 @@ namespace HIMS.ScheduleJobs.Jobs
         {
             var objReport = await _reportService.GetReportConfigByMode(Mode, Section);
             ReportConfigDto model = new();
-            GridRequestModel objGrid = new() { Filters = new List<SearchGrid>() };
+            GridRequestModel objGrid = new() { Filters = new List<SearchGrid>() };  
             objGrid.Filters.Add(new SearchGrid() { FieldName = "Id", FieldValue = objReport.ReportId.ToString() });
             objGrid.Filters.Add(new SearchGrid() { FieldName = "MenuId", FieldValue = "0" });
             objGrid.First = 0;
