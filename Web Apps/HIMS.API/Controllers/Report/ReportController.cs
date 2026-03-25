@@ -14,6 +14,7 @@ using HIMS.Services.Report;
 using HIMS.Services.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace HIMS.API.Controllers.Report
 {
@@ -225,6 +226,10 @@ namespace HIMS.API.Controllers.Report
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetHospitalMasterAutoComplete(string Keyword)
         {
+            if (string.IsNullOrWhiteSpace(Keyword) || Keyword == "%")
+            {
+                Keyword = string.Empty;
+            }
             var data = await _reportService.SearchHospitalMaster(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchHospitalMaster Data.", data.Select(x => new { Text = x.HospitalName, Value = x.HospitalId }));
         }
@@ -233,6 +238,10 @@ namespace HIMS.API.Controllers.Report
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetCompanyEmployeInfoAutoComplete(string Keyword)
         {
+            if (string.IsNullOrWhiteSpace(Keyword) || Keyword == "%")
+            {
+                Keyword = string.Empty;
+            }
             var data = await _reportService.SearchCompanyEmployeInfo(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyEmployeInfo Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.ExecutiveId }));
         }
@@ -241,6 +250,10 @@ namespace HIMS.API.Controllers.Report
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> SearchLoginUser(string Keyword)
         {
+            if (string.IsNullOrWhiteSpace(Keyword) || Keyword == "%")
+            {
+                Keyword = string.Empty;
+            }
             var data = await _reportService.SearchLoginUser(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Search Login User", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.UserId }));
         }
@@ -250,6 +263,10 @@ namespace HIMS.API.Controllers.Report
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> SearchPatient(string Keyword)
         {
+            if (string.IsNullOrWhiteSpace(Keyword) || Keyword == "%")
+            {
+                Keyword = string.Empty;
+            }
             var data = await _reportService.SearchPatient(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Search Patient", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.LabPatRegId }));
         }
@@ -258,6 +275,10 @@ namespace HIMS.API.Controllers.Report
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> SearchRegNo(string Keyword)
         {
+            if (string.IsNullOrWhiteSpace(Keyword) || Keyword == "%")
+            {
+                Keyword = string.Empty;
+            }
             var data = await _reportService.SearchRegNo(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Search RegNo", data.Select(x => new { Text = x.LabRequestNo, Value = x.LabPatientId }));
         }
@@ -266,6 +287,10 @@ namespace HIMS.API.Controllers.Report
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> SearchPatientType(string Keyword)
         {
+            if (string.IsNullOrWhiteSpace(Keyword) || Keyword == "%")
+            {
+                Keyword = string.Empty;
+            }
             var data = await _reportService.SearchPatientType(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Search PatientType ", data.Select(x => new { Text = x.PatientType, Value = x.PatientTypeId }));
         }
@@ -273,6 +298,10 @@ namespace HIMS.API.Controllers.Report
         [HttpGet("LabReportStatus/auto-complete")]
         public async Task<ApiResponse> SearchLabReportStatus(string keyword)
         {
+            if (string.IsNullOrWhiteSpace(keyword) || keyword == "%")
+            {
+                keyword = string.Empty;
+            }
             var data = await _reportService.SearchLabReportStatus(keyword);
 
             return ApiResponseHelper.GenerateResponse(
@@ -530,8 +559,8 @@ namespace HIMS.API.Controllers.Report
                     break;
             }
             // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
-           long UnitId = 1;
-           // long UnitId = Context.UnitId;
+           //long UnitId = 1;
+            long UnitId = Context.UnitId;
             model.BaseUrl = AppSettings.Settings.BaseUrl;
             model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
             var byteFile = await _reportService.GetReportSetByProc(model, AppSettings.Settings.PdfFontPath, UnitId);

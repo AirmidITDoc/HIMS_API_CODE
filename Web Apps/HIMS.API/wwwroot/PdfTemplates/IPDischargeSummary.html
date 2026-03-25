@@ -22,18 +22,18 @@
                 <tr class="title-date-row">
                     <td>
                         <table style="width: 95%; border-collapse: collapse;">
-                            <tr style="font-size: 18px;font-weight:bold;">
-                                <td style="border-bottom: 1px solid #d4c3c3;padding: 6px;text-align:right;" colspan="2">
+                            <tr style="font-size: 22px;font-weight:bold;">
+                                <td style="border-bottom: 1px solid #d4c3c3;padding: 6px;text-align:center;" colspan="2">
                                     <b>
                                         {{IsNormalOrDeath}} DISCHARGE SUMMARY
                                     </b>
                                 </td>
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
+                                <!--<td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
                                     <b>
                                         Print
                                         Date : {{CurrentDate}}
                                     </b>
-                                </td>
+                                </td>-->
 
                             </tr>
                         </table>
@@ -136,20 +136,26 @@
 
 
                             <tr style="display:{{chkHistoryflag}}">
-                                <td style="border-bottom: 1px solid #eee; padding: 6px; font-weight: bold; font-size: 24px;">History :</td>
+                                <td style="border-bottom: 1px solid #eee; padding: 6px; font-weight: bold; font-size: 24px;">
+                                    History :
+                                </td>
                             </tr>
                             <tr style="display:{{chkHistoryflag}}">
-                                <td style="border-bottom: 1px solid #eee; padding: 6px; text-align: left; font-size: 24px; white-space: pre;" colspan="6">{{History}}</td>
+                                <td colspan="6" style="border-bottom: 1px solid #eee; padding: 6px; text-align: left; font-size: 24px; white-space: pre-wrap; word-break: break-word;">
+                                    {{History}}
+                                </td>
                             </tr>
 
-
-
                             <tr style="display:{{chkClinicalconditionflag}}">
-                                <td style="border-bottom: 1px solid #eee; padding: 6px; font-weight: bold; font-size: 24px;">Clinical Condition On Admisssion :</td>
+                                <td style="border-bottom: 1px solid #eee; padding: 6px; font-weight: bold; font-size: 24px;">
+                                    Clinical Condition On Admission :
+                                </td>
                             </tr>
                             <tr style="display:{{chkClinicalconditionflag}}">
-                                <td style="border-bottom: 1px solid #eee; padding: 6px; text-align: left; font-size: 24px; white-space: pre;" colspan="6">{{ClinicalConditionOnAdmisssion}}</td>
+                                <td colspan="6" style="border-bottom: 1px solid #eee; padding: 6px; text-align: left; font-size: 24px; white-space: pre-wrap; word-break: break-word;">
+                                    {{ClinicalConditionOnAdmisssion}}
 
+                                </td>
                             </tr>
 
 
