@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace HIMS.Data.Models
+namespace HIMS.Data.DTO.Inventory
 {
-    public partial class MItemWiseSupplierRate
+    public  class ItemWiseSupplierRateDto
     {
         public long DefId { get; set; }
         public long? ItemId { get; set; }
@@ -14,5 +17,8 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public string? ItemName { get; set; }
+        public string? SupplierName { get; set; }
+
     }
 }

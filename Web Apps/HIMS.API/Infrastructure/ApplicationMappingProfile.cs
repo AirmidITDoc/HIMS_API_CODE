@@ -597,6 +597,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<IpdDrugSchedule, IpdDrugScheduleModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPatientFeedback, PatientFeedbackModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MFeedbackQuestion, FeedBackQuestionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MItemWiseSupplierRate, ItemWiseSupplierRateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
             CreateMap<AddCharge, AdddChargesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

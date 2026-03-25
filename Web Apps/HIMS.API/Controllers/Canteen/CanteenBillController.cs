@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.Canteen
 
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CanteenBill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(CanteenBillModel obj)
         {
             TCanteenBillHeader model = obj.MapTo<TCanteenBillHeader>();
@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.Canteen
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.BillNo);
         }
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "CanteenBill", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(CanteenBillModel obj)
         {
             TCanteenBillHeader model = obj.MapTo<TCanteenBillHeader>();

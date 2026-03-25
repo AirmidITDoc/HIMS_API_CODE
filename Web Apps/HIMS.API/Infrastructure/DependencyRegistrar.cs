@@ -195,8 +195,10 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<INotificationUtility, NotificationUtility>();
             services.AddScoped<ILabSampleRecivedService, LabSampleRecivedService>();
             services.AddScoped<IPatientFeedBackService, PatientFeedBackService>();
+            services.AddScoped<IItemWiseSupplierRateService, ItemWiseSupplierRateService>();
 
-            
+
+
 
             services.AddScoped<I_MRDCertificate, MRDService>();
             services.AddScoped<IOPBillingService, OPBillingService>();
