@@ -34,34 +34,30 @@ namespace HIMS.Services.Canteen
             return await DatabaseHelper.GetGridDataBySp<CanteenBillListDo>(model, "rtrv_CanteenBillList");
         }
 
-        public virtual async Task InsertAsync(TCanteenBillHeader ObjTCanteenBillHeader, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-
-            {
-                var lastSeqNoStr = await _context.TCanteenBillHeaders
-                    .OrderByDescending(x => x.PbillNo)
-                    .Select(x => x.PbillNo)
-                    .FirstOrDefaultAsync();
-
-                int lastSeqNo = 0;
-                if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
-                    lastSeqNo = parsed;
-
-                // Increment the sequence number
-                int newSeqNo = lastSeqNo + 1;
-                ObjTCanteenBillHeader.PbillNo = newSeqNo.ToString();
-
-                ObjTCanteenBillHeader.CreatedBy = UserId;
-                ObjTCanteenBillHeader.CreatedDate = AppTime.Now;
-
-                _context.TCanteenBillHeaders.Add(ObjTCanteenBillHeader);
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-            }
-        }
        
+        public virtual async Task InsertAsync(TCanteenBillHeader ObjTCanteenBillHeader, int UserId, string Username)
+
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.Serializable }, TransactionScopeAsyncFlowOption.Enabled);
+
+            var presNoList = await _context.TCanteenBillHeaders
+                .Where(x => x.PbillNo != null && x.PbillNo != "")
+                .Select(x => x.PbillNo)
+                .ToListAsync();
+
+            int lastPresNo = presNoList
+                .Select(p => int.TryParse(p, out var n) ? n : 0)
+                .DefaultIfEmpty(0)
+                .Max();
+
+            //  Increment & assign
+            ObjTCanteenBillHeader.PbillNo = (lastPresNo + 1).ToString();
+            _context.TCanteenBillHeaders.Add(ObjTCanteenBillHeader);
+            await _context.SaveChangesAsync();
+
+            scope.Complete();
+        }
+
         public virtual async Task UpdateAsync(TCanteenBillHeader ObjTCanteenBillHeader, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

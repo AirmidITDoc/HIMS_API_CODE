@@ -82,7 +82,7 @@ namespace HIMS.API.Controllers.Masters.Radiology
 
         //Delete API 
         [HttpDelete]
-        //[Permission(PageCode = "Radiology", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Radiology", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MRadiologyCategoryMaster model = await _repository.GetById(x => x.CategoryId == Id);
