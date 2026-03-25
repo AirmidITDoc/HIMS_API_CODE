@@ -6958,17 +6958,22 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:14px;padding-left:10px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"vertical-align:middle;padding: 6px;height:10px;text-align:left;font-size:14px;padding-left:10px;\">").Append(dr["Days"].ConvertToString()).Append(" Days").Append("</td></tr>");
 
-
                             if (dr["ItemGenericName"].ConvertToString() != "")
                             {
-                                items.Append("<tr style=\"font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;\">").Append("Composition :").Append(dr["ItemGenericName"].ConvertToString()).Append("</td></tr>");
-
+                                items.Append("<tr style=\"font-size:14px; line-height:16px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\">")
+                                     .Append("<td colspan=\"13\" style=\"padding:2px; text-align:left; vertical-align:middle; padding-left:40px;\">")
+                                     .Append("Composition : ")
+                                     .Append(dr["ItemGenericName"].ConvertToString())
+                                     .Append("</td></tr>");
                             }
 
-                            items.Append("<tr style=\"font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px;border-bottom: 1px solid #d4c3c3;padding-bottom:20px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;padding-bottom:20px;\">").Append("Timing :").Append(dr["DoseNameInEnglish"].ConvertToString()).Append(dr["DoseNameInMarathi"].ConvertToString()).Append("</td></tr>");
-
-
-
+                            items.Append("<tr style=\"font-size:14px; line-height:16px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\">")
+                                 .Append("<td colspan=\"13\" style=\"padding:2px; text-align:left; vertical-align:middle; padding-left:40px;\">")
+                                 .Append("Timing : ")
+                                 .Append(dr["DoseNameInEnglish"].ConvertToString())
+                                 .Append(" ")
+                                 .Append(dr["DoseNameInMarathi"].ConvertToString())
+                                 .Append("</td></tr>");
 
 
                         }
@@ -7299,14 +7304,22 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\"padding: 6px;height:10px;vertical-align:middle;text-align:left;font-size:18px;padding-left:10px;\">").Append(dr["TotalQty"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"vertical-align:middle;padding: 6px;height:10px;text-align:left;font-size:18px;padding-left:10px;\">").Append(dr["Days"].ConvertToString()).Append(" Days").Append("</td></tr>");
 
-                            if (dr["ItemGenericName"].ConvertToString() != "")
+                               if (dr["ItemGenericName"].ConvertToString() != "")
                             {
-                                items.Append("<tr style=\"font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border: 1px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;\">").Append("Composition :").Append(dr["ItemGenericName"].ConvertToString()).Append("</td></tr>");
-
+                                items.Append("<tr style=\"font-size:14px; line-height:16px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\">")
+                                     .Append("<td colspan=\"13\" style=\"padding:2px; text-align:left; vertical-align:middle; padding-left:40px;\">")
+                                     .Append("Composition : ")
+                                     .Append(dr["ItemGenericName"].ConvertToString())
+                                     .Append("</td></tr>");
                             }
 
-                            items.Append("<tr style=\"font-size:16px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px;border-bottom: 1px solid #d4c3c3;padding-bottom:20px;\"><td colspan=\"13\" style=\"padding:3px;height:10px;text-align:left;vertical-align:middle;padding-left:50px;padding-bottom:20px;\">").Append("Timing :").Append(dr["DoseNameInEnglish"].ConvertToString()).Append(dr["DoseNameInMarathi"].ConvertToString()).Append("</td></tr>");
-
+                            items.Append("<tr style=\"font-size:14px; line-height:16px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\">")
+                                 .Append("<td colspan=\"13\" style=\"padding:2px; text-align:left; vertical-align:middle; padding-left:40px;\">")
+                                 .Append("Timing : ")
+                                 .Append(dr["DoseNameInEnglish"].ConvertToString())
+                                 .Append(" ")
+                                 .Append(dr["DoseNameInMarathi"].ConvertToString())
+                                 .Append("</td></tr>");
 
                         }
 
@@ -10920,10 +10933,14 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkDiscCommentsflag}}", dt.GetColValue("DiscComments").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{ConcessionReason}}", dt.GetColValue("ConcessionReason").ConvertToString());
                         //   html = html.Replace("{{chkPolicyNoflag}}", dt.GetColValue("PolicyNoList").ConvertToDouble() > 0 ? "table-row " : "none");
-                        html = html.Replace("{{chkPolicyNoflag}}", !string.IsNullOrWhiteSpace(dt.GetColValue("PolicyNo")) ? "table-row" : "none");
+                        html = html.Replace("{{chkPolicyNoflag}}", !string.IsNullOrWhiteSpace(dt.GetColValue("PolicyNoList")) ? "table-row" : "none");
                         html = html.Replace("{{chkApprovedAmountflag}}", dt.GetColValue("ApprovedAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCompanyApprovedAmtflag}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkPolicyFlag}}", dt.GetColValue("PolicyNo").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkAadharFlag}}", dt.GetColValue("AadharCardNo").ConvertToDouble() > 0 ? "table-row " : "none");
+
+
                         ///  html = html.Replace("{{chkBalanceafterGovflag}}", dt.GetColValue("BalanceafterGov").ConvertToDouble() > 0 ? "table-row " : "none");
                         ///  
 
