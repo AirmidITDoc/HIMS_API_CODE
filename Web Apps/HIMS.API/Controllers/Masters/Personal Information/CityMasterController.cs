@@ -34,7 +34,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
 
         [HttpGet("{id?}")]
-        [Permission(PageCode = "CityMaster", Permission = PagePermission.View)]
+        [Permission]
+        //[Permission(PageCode = "CityMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
