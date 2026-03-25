@@ -31,6 +31,8 @@ namespace HIMS.Core.Domain.Common
         public AESSecurityKeys AESSecurityKeys { get; set; }
         public Licence Licence { get; set; }
         public MPesa MPesa { get; set; }
+        public RisApiSettings RisApi { get; set; }
+        public HmisApiSettings HmisApi { get; set; }
     }
     public class AuthenticationSettings
     {
@@ -60,6 +62,33 @@ namespace HIMS.Core.Domain.Common
         public string StkPushUrl { get; set; }
         public string TransactionType { get; set; }
         public string ResponseType { get; set; }
+    }
+    public class RisApiSettings
+    {
+        public string BaseUrl { get; set; } = string.Empty;
+        public RisEndpoints Endpoints { get; set; } = new();
+        public RisCredentials Credentials { get; set; } = new();
+        public int TokenExpiryDays { get; set; } = 30;
+    }
+
+    public class RisEndpoints
+    {
+        public string Auth { get; set; } = string.Empty;
+        public string RadiologyOrder { get; set; } = string.Empty;
+        public string PatientPreviousReports { get; set; } = string.Empty;
+    }
+
+    public class RisCredentials
+    {
+        public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+    }
+
+    public class HmisApiSettings
+    {
+        public string SendReportEndpoint { get; set; } = string.Empty;
+        public string SendReportShareStatusEndpoint { get; set; } = string.Empty;
+        public string Token { get; set; } = string.Empty;
     }
 
 }

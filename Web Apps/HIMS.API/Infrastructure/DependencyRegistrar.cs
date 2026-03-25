@@ -214,6 +214,7 @@ namespace HIMS.API.Infrastructure
 
             services.AddScoped<DinkToPdfService>();
             services.AddScoped<IAuditService, AuditService>();
+            services.AddScoped<IRisApiHelper, RisApiHelper>();
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
         }
