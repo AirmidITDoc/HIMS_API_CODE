@@ -42,6 +42,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //}
         //List API Get By Id
         [HttpGet("{id?}")]
+        [Permission]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
