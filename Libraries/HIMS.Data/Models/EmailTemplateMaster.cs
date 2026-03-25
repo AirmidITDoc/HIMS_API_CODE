@@ -18,5 +18,6 @@ namespace HIMS.Data.Models
         public bool IsWa { get; set; }
         public bool IsActive { get; set; }
         public string? SearchFields { get; set; }
+        public string? SectionName { get; set; }
     }
 }
