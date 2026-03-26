@@ -1567,7 +1567,7 @@ namespace HIMS.Services.Report
                 #region :: IpDischargeSummaryReport ::
                 case "IpDischargeSummaryReport":
                     {
-                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDischargeSummary.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDischargeSummaryDSR.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
@@ -1583,7 +1583,7 @@ namespace HIMS.Services.Report
                     {
 
                         model.RepoertName = "DischargeSummaryWithoutHeader";
-                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDischargeSummaryWithoutHeader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDischargeSummaryWithoutHeaderDSR.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         //GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
@@ -5755,7 +5755,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{BalanceafterGov}}", dt.GetColValue("BalanceafterGov").ConvertToDouble().ToString("F2"));
 
-
+                        html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                        html = html.Replace("{{PatientType1}}", dt.GetColValue("PatientType1"));
+                        StringBuilder serviceNames = new StringBuilder();
 
 
                         double T_NetAmount = 0;
@@ -5770,9 +5772,12 @@ namespace HIMS.Services.Report
                             items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
 
+                            serviceNames.Append(dr["ServiceName"].ConvertToString()).Append(", ");
                             T_NetAmount += dr["NetAmount"].ConvertToDouble();
                         }
                         T_NetAmount = Math.Round(T_NetAmount);
+                        string finalServiceNames = serviceNames.ToString().TrimEnd(',', ' ');
+                        html = html.Replace("{{ServiceName}}", finalServiceNames);
 
                         html = html.Replace("{{Items}}", items.ToString());
                         double PaidFinal = dt.GetColValue("PaidAmount").ConvertToDouble();
