@@ -313,6 +313,13 @@ namespace HIMS.API.Controllers.Pathology
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
+        [HttpGet("search-LabServiceListwithTraiff")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse SearchGetServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId, string SrvcName)
+        {
+            var data = _ILabPatientRegistrationService.SearchLabServiceListwithTraiff(TariffId, ClassId, GroupId, SubGroupId, SrvcName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Lab Service List.", data);
+        }
 
     }
 }

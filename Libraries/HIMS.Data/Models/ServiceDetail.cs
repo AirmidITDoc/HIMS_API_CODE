@@ -10,6 +10,8 @@ namespace HIMS.Data.Models
         public long? TariffId { get; set; }
         public long? ClassId { get; set; }
         public decimal? ClassRate { get; set; }
+        public decimal? PatientRate { get; set; }
+        public decimal? Cprate { get; set; }
         public decimal? DiscountAmount { get; set; }
         public double? DiscountPercentage { get; set; }
 

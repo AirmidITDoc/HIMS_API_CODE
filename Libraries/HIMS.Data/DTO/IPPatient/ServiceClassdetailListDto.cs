@@ -9,6 +9,8 @@
         public decimal ClassRate { get; set; }
         public string ClassName { get; set; }
         public string TariffName { get; set; }
+        public decimal? PatientRate { get; set; }
+        public decimal? Cprate { get; set; }
 
     }
 }

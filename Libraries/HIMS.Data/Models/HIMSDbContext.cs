@@ -10846,7 +10846,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ClassRate).HasColumnType("money");
 
+                entity.Property(e => e.Cprate)
+                    .HasColumnType("money")
+                    .HasColumnName("CPRate");
+
                 entity.Property(e => e.DiscountAmount).HasColumnType("money");
+
+                entity.Property(e => e.PatientRate).HasColumnType("money");
 
                 entity.HasOne(d => d.Service)
                     .WithMany(p => p.ServiceDetails)
