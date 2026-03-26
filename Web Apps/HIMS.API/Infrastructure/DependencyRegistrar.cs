@@ -209,6 +209,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IBarcodeConfigService, BarcodeConfigService>();
             services.AddScoped<IWhatsAppEmailService, WhatsAppEmailService>();
             services.AddScoped<IConfigService, ConfigService>();
+            services.AddScoped<ICashLessService, CashLessService>();
+
 
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
             services.AddHttpClient<MpesaAuthService>();
