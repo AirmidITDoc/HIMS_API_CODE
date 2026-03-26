@@ -79,21 +79,6 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
-        //[HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Edit)]
-        //public async Task<ApiResponse> Edit(BillingServiceModel obj)
-        //{
-        //    ServiceMaster model = obj.MapTo<ServiceMaster>();
-        //    if (obj.ServiceId == 0)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    else
-        //    {
-        //        model.ModifiedDate = AppTime.Now;
-        //        model.ModifiedBy = CurrentUserId;
-        //        await _BillingService.UpdateAsync(model, CurrentUserId, CurrentUserName, obj.TariffId, new string[2] { "CreatedBy", "CreatedDate" });
-        //    }
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
-        //}
         [HttpPut("Edit/{id:int}/{tariffId:int}")]
         [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Edit)]
 

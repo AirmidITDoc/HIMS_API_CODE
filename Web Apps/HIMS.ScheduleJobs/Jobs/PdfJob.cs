@@ -11,6 +11,7 @@ using HIMS.Services.Masters;
 using HIMS.Services.Report;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Quartz;
 using System;
 using System.Collections.Generic;
@@ -61,19 +62,19 @@ namespace HIMS.ScheduleJobs.Jobs
 
                     string dbFields = template.SearchFields;
 
-                    List<SearchGrid> searchFields = dbFields
-                        .Split(',')
-                        .Select(field => new SearchGrid
-                        {
-                            FieldName = field.Trim(),
-                            FieldValue = (field.Trim() == "FromDate" || field.Trim() == "ToDate")
-                                            ? DateTime.Now.ToString("yyyy-MM-dd")
-                                            : "0",
-                            OpType = OperatorComparer.Equals
-                        })
-                        .ToList();
+                    ReportRequest request = JsonConvert.DeserializeObject<ReportRequest>(template.SearchFields);
 
-                    var report = await GenerateReportAndSendMail(template.SectionName, template.TemplateCode, searchFields);
+                    // ✅ Override only date fields
+                    foreach (var field in request.SearchFields)
+                    {
+                        if (field.FieldName.Equals("FromDate", StringComparison.OrdinalIgnoreCase) ||
+                            field.FieldName.Equals("ToDate", StringComparison.OrdinalIgnoreCase))
+                        {
+                            field.FieldValue = DateTime.Now.ToString("yyyy-MM-dd");
+                        }
+                    }
+
+                    var report = await GenerateReportAndSendMail(template.SectionName, template.TemplateCode, request.SearchFields);   // direct use);
 
                     attachments.Add(report);
                 }
@@ -85,6 +86,11 @@ namespace HIMS.ScheduleJobs.Jobs
             {
                 Common.WriteToFile("Pdf Generate Service errors details : " + DateTime.Now.ToString("dd/MM/yyyy HH:mm") + "error : " + ex.Message);
             }
+        }
+        public class ReportRequest
+        {
+            public List<SearchGrid> SearchFields { get; set; }
+            public string Mode { get; set; }
         }
         public async Task<Tuple<byte[], string, string>> GenerateReportAndSendMail(string Section, string Mode, List<SearchGrid> searchFields)
         {

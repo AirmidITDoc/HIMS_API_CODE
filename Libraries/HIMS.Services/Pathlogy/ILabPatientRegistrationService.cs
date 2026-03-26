@@ -38,6 +38,8 @@ namespace HIMS.Services.Pathlogy
         List<CompanyComboDto> CompanyComboList(string keywoard);
         Task InsertAsync(TDiscApprovalDetail ObjTDiscApprovalDetail, int UserId, string Username);
         Task<List<MConstant>> GetMConstant(string type);
+        List<ServiceMasterDTO> SearchLabServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId, string SrvcName);
+
 
 
 

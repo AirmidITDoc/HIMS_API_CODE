@@ -223,7 +223,7 @@ namespace HIMS.API.Controllers.Pathology
        
 
         [HttpGet("search-patient-1")]
-        [Permission]
+        //[Permission]
         public ApiResponse SearchPatientNew( [FromQuery] long UnitId,  [FromQuery] string Keyword)
         {
             var data = _ILabPatientRegistrationService.SearchlabRegistration(UnitId, Keyword);
@@ -312,6 +312,13 @@ namespace HIMS.API.Controllers.Pathology
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+        [HttpGet("search-LabServiceListwithTraiff")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse SearchGetServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId, string SrvcName)
+        {
+            var data = _ILabPatientRegistrationService.SearchLabServiceListwithTraiff(TariffId, ClassId, GroupId, SubGroupId, SrvcName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Lab Service List.", data);
         }
 
     }

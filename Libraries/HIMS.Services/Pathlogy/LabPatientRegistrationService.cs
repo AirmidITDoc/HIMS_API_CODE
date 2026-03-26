@@ -670,6 +670,20 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<LabCreditDetailDto>(model, "ps_Rtrv_LabRegisterCreditDetail");
         }
+        public List<ServiceMasterDTO> SearchLabServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId, string SrvcName)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[5];
+
+            para[0] = new SqlParameter("@TariffId", TariffId);
+            para[1] = new SqlParameter("@ClassId", ClassId);
+            para[2] = new SqlParameter("@GroupId", GroupId);
+            para[3] = new SqlParameter("@SubGroupId", SubGroupId);
+            para[4] = new SqlParameter("@SrvcName", SrvcName);
+
+            List<ServiceMasterDTO> lstServiceList = sql.FetchListBySP<ServiceMasterDTO>("ps_Rtrv_LabServicesList ", para);
+            return lstServiceList;
+        }
         public virtual async Task InsertAsync(TDiscApprovalDetail ObjTDiscApprovalDetail, int CurrentUserId, string CurrentUserName)
         {
 
