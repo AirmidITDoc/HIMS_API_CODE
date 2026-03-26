@@ -210,6 +210,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IWhatsAppEmailService, WhatsAppEmailService>();
             services.AddScoped<IConfigService, ConfigService>();
             services.AddScoped<ICashLessService, CashLessService>();
+            services.AddScoped<IFeedBackQuestionService, FeedBackQuestionService>();
+
 
 
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
