@@ -1567,7 +1567,7 @@ namespace HIMS.Services.Report
                 #region :: IpDischargeSummaryReport ::
                 case "IpDischargeSummaryReport":
                     {
-                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDischargeSummaryDSR.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDischargeSummaryDRS.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
@@ -1583,7 +1583,7 @@ namespace HIMS.Services.Report
                     {
 
                         model.RepoertName = "DischargeSummaryWithoutHeader";
-                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDischargeSummaryWithoutHeaderDSR.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPDischargeSummaryWithoutheaderDRS.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         //GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
