@@ -67,6 +67,8 @@ namespace HIMS.API.Models.Inventory
         public decimal? ClassRate { get; set; }
         public decimal? DiscountAmount { get; set; }
         public double? DiscountPercentage { get; set; }
+        public decimal? PatientRate { get; set; }
+        public decimal? Cprate { get; set; }
     }
     public class ServiceDetailModelValidator : AbstractValidator<ServiceDetailModel>
     {

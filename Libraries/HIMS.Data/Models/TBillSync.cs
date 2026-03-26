@@ -3,14 +3,8 @@ using System.Collections.Generic;
 
 namespace HIMS.Data.Models
 {
-    public partial class Bill
+    public partial class TBillSync
     {
-        public Bill()
-        {
-            AddCharges = new HashSet<AddCharge>();
-            BillDetails = new HashSet<BillDetail>();
-        }
-
         public long BillNo { get; set; }
         public DateTime? BillDate { get; set; }
         public DateTime? BillTime { get; set; }
@@ -82,9 +76,5 @@ namespace HIMS.Data.Models
         public DateTime? ModifiedDate { get; set; }
         public decimal? SalesAmount { get; set; }
         public decimal? Sramount { get; set; }
-        public bool? IsSync { get; set; }
-
-        public virtual ICollection<AddCharge> AddCharges { get; set; }
-        public virtual ICollection<BillDetail> BillDetails { get; set; }
     }
 }

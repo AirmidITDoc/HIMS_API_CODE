@@ -195,8 +195,10 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<INotificationUtility, NotificationUtility>();
             services.AddScoped<ILabSampleRecivedService, LabSampleRecivedService>();
             services.AddScoped<IPatientFeedBackService, PatientFeedBackService>();
+            services.AddScoped<IItemWiseSupplierRateService, ItemWiseSupplierRateService>();
 
-            
+
+
 
             services.AddScoped<I_MRDCertificate, MRDService>();
             services.AddScoped<IOPBillingService, OPBillingService>();
@@ -214,6 +216,7 @@ namespace HIMS.API.Infrastructure
 
             services.AddScoped<DinkToPdfService>();
             services.AddScoped<IAuditService, AuditService>();
+            services.AddScoped<IRisApiHelper, RisApiHelper>();
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
         }
