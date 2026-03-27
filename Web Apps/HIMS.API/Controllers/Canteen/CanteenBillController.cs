@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Canteen
         public async Task<IActionResult> CaneenBillList(GridRequestModel objGrid)
         {
             IPagedList<CanteenBillListDo> CanteenBList = await _ICanteenBillService.CanteenBillList(objGrid);
-            return Ok(CanteenBList.ToGridResponse(objGrid, "Bill App List"));
+            return Ok(CanteenBList.ToGridResponse(objGrid, "Canteen Bill List "));
         }
 
 

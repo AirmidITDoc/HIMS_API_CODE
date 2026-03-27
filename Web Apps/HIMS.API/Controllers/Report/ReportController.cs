@@ -83,6 +83,10 @@ namespace HIMS.API.Controllers.Report
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDoctorListAutoCompletes(string Keyword)
         {
+            if (string.IsNullOrWhiteSpace(Keyword) || Keyword == "%")
+            {
+                Keyword = string.Empty;
+            }
             var data = await _reportService.SearchDoctor(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.DoctorId }));
         }
@@ -126,6 +130,10 @@ namespace HIMS.API.Controllers.Report
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetCompanyListAutoComplete(string Keyword)
         {
+            if (string.IsNullOrWhiteSpace(Keyword) || Keyword == "%")
+            {
+                Keyword = string.Empty;
+            }
             var data = await _reportService.SearchCompany(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchCompany Data.", data.Select(x => new { Text = x.CompanyName, Value = x.CompanyId }));
         }

@@ -10,6 +10,9 @@ using HIMS.Data;
 using Microsoft.AspNetCore.Mvc;
 using HIMS.API.Models.FeedBack;
 using Asp.Versioning;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Services.FeedBack;
+using HIMS.Data.DTO.FeedBack;
 
 namespace HIMS.API.Controllers.FeedBack
 {
@@ -19,19 +22,31 @@ namespace HIMS.API.Controllers.FeedBack
     public class FeedBackQuestionController : BaseController
     {
         private readonly IGenericService<MFeedbackQuestion> _repository;
-        public FeedBackQuestionController(IGenericService<MFeedbackQuestion> repository)
+        private readonly IFeedBackQuestionService _IFeedBackQuestionService;
+
+        public FeedBackQuestionController(IGenericService<MFeedbackQuestion> repository, IFeedBackQuestionService repository1)
         {
             _repository = repository;
+            _IFeedBackQuestionService = repository1;
+
         }
-        //List API
-        [HttpPost]
-        [Route("[action]")]
+       
+        [HttpPost("FeedbackQuestionList")]
         //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MFeedbackQuestion> FeedbackQuestionList = await _repository.GetAllPagedAsync(objGrid);
+            IPagedList<FeedbackQuestionListDto> FeedbackQuestionList = await _IFeedBackQuestionService.GetListAsync(objGrid);
             return Ok(FeedbackQuestionList.ToGridResponse(objGrid, "FeedbackQuestion List"));
         }
+
+        [HttpPost("FeedbackDepartmentList")]
+        //[Permission]
+        public async Task<IActionResult> DepartmentList(GridRequestModel objGrid)
+        {
+            IPagedList<DepartmentWithFeedbackListDto> DepartmentList = await _IFeedBackQuestionService.DepartmentListAsync(objGrid);
+            return Ok(DepartmentList.ToGridResponse(objGrid, "Department List"));
+        }
+
         //List API Get By Id
         [HttpGet("{id?}")]
         //[Permission]

@@ -369,41 +369,7 @@ namespace HIMS.Services.Inventory
         public virtual async Task<List<ItemListForBatchPopDTO>> GetItemListForSalesBatchPop(int StoreId, int ItemId)
         {
 
-            //var qry = (from currentStock in _context.TCurrentStocks
-            //             join itemMaster in _context.MItemMasters
-            //             on currentStock.ItemId equals itemMaster.ItemId
-            //             join itemManufactureMaster in _context.MItemManufactureMasters
-            //             on itemMaster.ManufId equals itemManufactureMaster.ItemManufactureId into manufactureGroup
-            //             from manufacture in manufactureGroup.DefaultIfEmpty()
-            //             where currentStock.ItemId == ItemId
-            //                && currentStock.StoreId == StoreId
-            //                && (currentStock.BalanceQty - (currentStock.GrnRetQty ?? 0)) > 0
-            //             orderby currentStock.BalanceQty descending
-            //             select new ItemListForBatchPopDTO
-            //             {
-            //                 StockId=currentStock.StockId,
-            //                 StoreId= currentStock.StoreId,
-            //                 ItemId = currentStock.ItemId,
-            //                 ItemName = itemMaster.ItemName,
-            //                 BalanceQty = currentStock.BalanceQty - (currentStock.GrnRetQty ?? 0),
-            //                 LandedRate = currentStock.LandedRate,
-            //                 UnitMRP = currentStock.UnitMrp,
-            //                 PurchaseRate = currentStock.PurUnitRateWf,
-            //                 VatPercentage = currentStock.VatPercentage,
-            //                 //itemMaster.IsBatchRequired,
-            //                 BatchNo = currentStock.BatchNo,
-            //                 BatchExpDate = currentStock.BatchExpDate,
-            //                 ConverFactor = itemMaster.ConversionFactor,
-            //                 CGSTPer = currentStock.Cgstper,
-            //                 SGSTPer = currentStock.Sgstper,
-            //                 IGSTPer = currentStock.Igstper,
-            //                 ManufactureName = manufacture != null ? manufacture.ManufactureName : string.Empty,
-            //                 GrnRetQty = currentStock.GrnRetQty,
-            //                 DrugTypeName = itemMaster.DrugTypeName
-            //             });
-            //return await qry.Take(50).ToListAsync();
-
-            var qry =
+                var qry =
                 (from cs in _context.TCurrentStocks
                  join im in _context.MItemMasters
                      on cs.ItemId equals im.ItemId
@@ -457,6 +423,17 @@ namespace HIMS.Services.Inventory
             return await qry.Take(50).ToListAsync();
 
         }
+        public virtual async Task<List<NewItemListForBatchPopDTO>> NewGetItemListForSalesBatchPop(int StoreId, int ItemId)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[2];
+            para[0] = new SqlParameter("@StoreId", StoreId);
+            para[1] = new SqlParameter("@ItemId", ItemId);
+
+            List<NewItemListForBatchPopDTO> lstServiceList = sql.FetchListBySP<NewItemListForBatchPopDTO>("m_Rtrv_ItemName_BatchPOP_BalanceQty", para);
+            return lstServiceList;
+        }
+
         public virtual async Task<List<ItemListForSalesPageDTO>> GetItemListForSalesPage(int StoreId, String ItemName)
         {
             var qry = (

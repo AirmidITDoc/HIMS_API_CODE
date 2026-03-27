@@ -27,6 +27,8 @@ namespace HIMS.Services.Inventory
 
         List<ItemListForGRNOrPO> ItemListForIndent(int StoreId, string ItemName);
         Task<List<ItemListDTO>> GetItemListGRN(int StoreId, string ItemName);
+        Task<List<NewItemListForBatchPopDTO>> NewGetItemListForSalesBatchPop(int StoreId, int ItemId);
+
 
 
 

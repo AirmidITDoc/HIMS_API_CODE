@@ -162,6 +162,32 @@ namespace HIMS.Data.DTO.Inventory
         public string? ItemGenericName { get; set; }
         public string? ProdLocation { get; set; }
     }
+    public class NewItemListForBatchPopDTO
+    {
+        public long StockId { get; set; }
+        public long? StoreId { get; set; }
+        public long? ItemId { get; set; }
+        public string? ItemName { get; set; }
+        public float? BalanceQty { get; set; }
+        public decimal? LandedRate { get; set; }
+        public decimal? UnitMRP { get; set; }
+        public decimal? PurchaseRate { get; set; }
+        public decimal? VatPercentage { get; set; }
+        public float? CGSTPer { get; set; }
+        public float? SGSTPer { get; set; }
+        public float? IGSTPer { get; set; }
+        public string? ConverFactor { get; set; }
+        public string? BatchNo { get; set; }
+        public DateTime? BatchExpDate { get; set; }
+        public float? GrnRetQty { get; set; }
+        public string DrugTypeName { get; set; }
+        public string ManufactureName { get; set; }
+        public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty + " | " + this.UnitMRP + " | " + this.PurchaseRate; } }
+        public string ConversionFactor { get; set; }
+        public string? ExpDays { get; set; }
+        public string? DaysFlag { get; set; }
+       
+    }
     public class ItemListForBatchDTO
     {
         public long StockId { get; set; }
