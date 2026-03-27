@@ -187,6 +187,13 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List Sales Page Batch Pop.", resultList);
         }
 
+        [HttpGet("NewGetItemListForSalesBatchPop")]
+        public async Task<ApiResponse> NewGetItemListForSalesBatchPop(int StoreId, int ItemId)
+        {
+            var resultList = await _ItemMasterServices.NewGetItemListForSalesBatchPop(StoreId, ItemId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List Sales Page Batch Pop.", resultList);
+        }
+
         [HttpGet("search-GetItemListForSalesBatchPop")]
         public ApiResponse ItemListForBatch(int StoreId, int ItemId, int PatientTypeId)
         {
