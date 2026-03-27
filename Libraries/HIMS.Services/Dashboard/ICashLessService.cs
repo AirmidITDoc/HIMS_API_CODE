@@ -14,6 +14,8 @@ namespace HIMS.Services.Dashboard
         Task<IPagedList<CashlessPatientWiseSummaryDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<CashlessCountSummaryDto>> CashLessGetListAsync(GridRequestModel objGrid);
         Task<IPagedList<CashlessCompanyWiseSummaryDto>> CashLessCompanyWiseGetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<CashlessPatientBillDto>> CashlessPatientBillInfoListAsync(GridRequestModel objGrid);
+
 
 
 
