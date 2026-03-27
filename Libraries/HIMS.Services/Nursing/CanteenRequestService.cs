@@ -102,7 +102,7 @@ namespace HIMS.Services.Nursing
                 qry = qry.Where(x => x.ItemName.Contains(ItemName));
             }
 
-            return await qry.Take(50)
+            return await qry.Take(100)
                 .Select(x => new ItemListforCanteenDto
                 {
                     ItemName = x.ItemName,

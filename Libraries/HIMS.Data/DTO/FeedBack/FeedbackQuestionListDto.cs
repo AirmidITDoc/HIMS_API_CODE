@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.DTO.FeedBack
 {
-    public  class FeedbackQuestionListDto
+    public class FeedbackQuestionListDto
     {
         public long? DepartmentId { get; set; }
         public long FeedbackId { get; set; }
@@ -20,6 +20,13 @@ namespace HIMS.Data.DTO.FeedBack
         public DateTime? ModifiedDate { get; set; }
         public string? DepartmentName { get; set; }
 
-        
+
+    }
+    public class DepartmentWithFeedbackListDto
+    {
+        public long? DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
+        public bool? IsActive { get; set; }
+
     }
 }

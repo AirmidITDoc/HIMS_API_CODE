@@ -12,6 +12,6 @@ namespace HIMS.Services.FeedBack
     public partial  interface IFeedBackQuestionService
     {
         Task<IPagedList<FeedbackQuestionListDto>> GetListAsync(GridRequestModel objGrid);
-
+        Task<IPagedList<DepartmentWithFeedbackListDto>> DepartmentListAsync(GridRequestModel objGrid);
     }
 }
