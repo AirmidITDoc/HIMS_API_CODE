@@ -22,5 +22,9 @@ namespace HIMS.Services.FeedBack
         {
             return await DatabaseHelper.GetGridDataBySp<FeedbackQuestionListDto>(model, "ps_Rtrv_FeedbackQuestionList");
         }
+        public virtual async Task<IPagedList<DepartmentWithFeedbackListDto>> DepartmentListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DepartmentWithFeedbackListDto>(model, "ps_rtrv_DepartmentWithFeedback_List");
+        }
     }
 }

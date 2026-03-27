@@ -39,6 +39,14 @@ namespace HIMS.API.Controllers.FeedBack
             return Ok(FeedbackQuestionList.ToGridResponse(objGrid, "FeedbackQuestion List"));
         }
 
+        [HttpPost("FeedbackDepartmentList")]
+        //[Permission]
+        public async Task<IActionResult> DepartmentList(GridRequestModel objGrid)
+        {
+            IPagedList<DepartmentWithFeedbackListDto> DepartmentList = await _IFeedBackQuestionService.DepartmentListAsync(objGrid);
+            return Ok(DepartmentList.ToGridResponse(objGrid, "Department List"));
+        }
+
         //List API Get By Id
         [HttpGet("{id?}")]
         //[Permission]
