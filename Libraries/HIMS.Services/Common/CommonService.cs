@@ -188,10 +188,7 @@ namespace HIMS.Services.Common
                 case "PaymentMode": sp_Name = "Rtrv_ConstantPayMode"; break;
 
                 case "BankNameList": sp_Name = "ps_Rtrv_BankMaster"; break;
-               
-
-                    
-
+              
 
 
                 default: break;

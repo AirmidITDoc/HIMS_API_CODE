@@ -484,6 +484,8 @@ namespace HIMS.API.Controllers.Common
                 //"PathSpecimenPreservativeMaster" => (await _MPathSpecimenPreservativeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenPreservativeMaster.SpecimenPreservativeId), nameof(MPathSpecimenPreservativeMaster.PreservativeUsed)),
                 "SpecimenPreservativeMaster" => (await _MPathSpecimenPreservativeMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenPreservativeMaster.SpecimenPreservativeId), nameof(MPathSpecimenPreservativeMaster.PreservativeUsed)),
 
+                "Daytypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DayType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "Mealtypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "MealType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
 
 

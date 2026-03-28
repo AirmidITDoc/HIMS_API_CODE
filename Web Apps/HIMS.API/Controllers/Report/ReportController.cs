@@ -558,6 +558,8 @@ namespace HIMS.API.Controllers.Report
                 case "LabStickerPrint":
                 case "IPStickerPrintV1":
 
+                    //MRD?
+                case "MrdPatinetFileView":
 
 
                 #endregion

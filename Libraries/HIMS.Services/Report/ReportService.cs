@@ -2665,7 +2665,19 @@ namespace HIMS.Services.Report
                 #endregion
 
 
+                #region :: MRDFileView ::
+                case "MrdPatinetFileView":
+                    {
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "MRDFileView.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("Rtrv_MRdPatienwise", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "MRDFileView", "ExpenseVoucharPrint" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
 
 
 
@@ -18877,6 +18889,85 @@ namespace HIMS.Services.Report
                         return html;
 
                     }
+
+
+
+                case "MrdPatinetFileView":
+                    {
+
+                        int length = 0;
+                        length = dt.Rows.Count;
+
+                        StringBuilder item = new("");
+                        int i = 0;
+                       
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:15;\"><td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["OutNo"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["OutTime"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["PersonName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["OutReason"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["InNo"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["InTime"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ReturnPersonName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["InReason"].ConvertToString()).Append("</td>");
+
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["OutFileId"].ConvertToString()).Append("</td>");
+
+
+                        }
+
+
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+
+                        html = html.Replace("{{ExtMobileNo}}", dt.GetColValue("MobileNo"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+
+
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+
+                        html = html.Replace("{{Date}}", dt.GetColValue("Time").ConvertToDateString("dd/M/yyyy hh:mm tt"));
+
+                       
+                        html = html.Replace("{{Addedby}}", dt.GetColValue("Addedby"));
+                        
+                        html = html.Replace("{{Age}}", dt.GetColValue("Age"));
+
+                        html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{PaymentTime}}", dt.GetColValue("PaymentTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
+
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{MRDNo}}", dt.GetColValue("MRDNo"));
+                        html = html.Replace("{{Location}}", dt.GetColValue("Location"));
+                        html = html.Replace("{{Comments}}", dt.GetColValue("Comments"));
+                        html = html.Replace("{{RecievedTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+
+
+
+                        html = html.Replace("{{Items}}", items.ToString());
+
+
+                        return html;
+                    }
+                    break;
 
 
 
