@@ -12,6 +12,8 @@ using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
 using Microsoft.AspNetCore.Mvc;
+using static HIMS.API.Models.Administration.NewTPaymentModel;
+using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 
 namespace HIMS.API.Controllers.Administration
 {
@@ -81,6 +83,30 @@ namespace HIMS.API.Controllers.Administration
             }
              return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+       
+        [HttpPut("NewPaymentMode{id:int}")]
+        //[Permission]
+        public async Task<ApiResponse> PaymentUpdate(NewPaymentModel obj)
+        {
+            if (obj == null || obj.PaymentModel == null || !obj.PaymentModel.Any())
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Invalid params");
+            }
+
+            List<TPayment> models = obj.PaymentModel.MapTo<List<TPayment>>();
+
+            foreach (var model in models)
+            {
+                if (model.BillNo == 0)
+
+                {
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Invalid BillNo");
+                }
+            await _IPaymentModeService.NewPaymentUpdateAsync(new List<TPayment> { model }, CurrentUserId, CurrentUserName);
+            }
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
         [HttpPut("PaymentPharmacyMode{id:int}")]
         [Permission(PageCode = "Payment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse>datetimeUpdate(paymentUpdateModel obj)
@@ -101,6 +127,21 @@ namespace HIMS.API.Controllers.Administration
                 await _IPaymentModeService.PaymentPharmacyUpdateAsync(new List<TPaymentPharmacy> { model }, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+        [HttpPost("Cancel")]
+        //[Permission(PageCode = "Payment", Permission = PagePermission.Delete)]
+        public ApiResponse Cancel(PaymentCancel obj)
+        {
+            TPayment model = obj.MapTo<TPayment>();
+            if (obj.PaymentId != 0)
+            {
+                model.PaymentId = obj.PaymentId;
+                _IPaymentModeService.Cancel(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
 
     }
