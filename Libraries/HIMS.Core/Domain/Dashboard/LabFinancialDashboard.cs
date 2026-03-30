@@ -15,6 +15,8 @@ namespace HIMS.Core.Domain.Dashboard
         public List<RefDoctorWiseSales> RefDoctorWiseSales { get; set; }
         public List<CPWiseSales> CPWiseSales { get; set; }
         public List<ExecutiveWiseSales> ExecutiveWiseSales { get; set; }
+        public List<RadiologyDailySales> RadiologySales { get; set; }
+        public List<DepartmentSummary> DepartmentSummary { get; set; }
     }
     public class LabTopBox
     {
@@ -32,6 +34,9 @@ namespace HIMS.Core.Domain.Dashboard
         public string ServerDatabasename { get; set; }
         public string UserName { get; set; }
         public string ServerPassword { get; set; }
+        public decimal TodaySale { get; set; }
+        public decimal MonthlySale { get; set; }
+
     }
 
     public class DepartmentWiseSales
@@ -78,5 +83,20 @@ namespace HIMS.Core.Domain.Dashboard
         public double Discount { get; set; }
         public decimal Reversal { get; set; }
         public decimal Net { get; set; }
+    }
+    public class RadiologyDailySales
+    {
+        public DateTime RadDate { get; set; }
+        public decimal DailyRadiologySale { get; set; }
+    }
+    public class DepartmentSummary
+    {
+        public string FilterType { get; set; } 
+        public long TestCount { get; set; }
+        public decimal CenterSale { get; set; }
+        public decimal Corporate { get; set; }
+        public decimal Digital { get; set; }
+        public decimal Referral { get; set; }
+        public decimal NetSale { get; set; }
     }
 }
