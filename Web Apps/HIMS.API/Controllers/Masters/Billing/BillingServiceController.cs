@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Administration;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Utility;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
@@ -86,7 +87,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         {
             if (id != obj.ServiceId || obj.ServiceId == 0)
             {
-                return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status500InternalServerError, "Invalid params");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
 
             ServiceMaster model = obj.MapTo<ServiceMaster>();
@@ -94,9 +95,9 @@ namespace HIMS.API.Controllers.Masters.Billing
             model.ModifiedDate = AppTime.Now;
             model.ModifiedBy = CurrentUserId;
 
-            await _BillingService.UpdateAsync(  model,  CurrentUserId,  CurrentUserName,  tariffId,  new string[] { "CreatedBy", "CreatedDate" } );
+            await _BillingService.UpdateAsync(model, CurrentUserId, CurrentUserName, tariffId, new string[] { "CreatedBy", "CreatedDate" });
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Record updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
         [HttpDelete("ServicDelete")]
@@ -124,7 +125,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpGet("GetServicewithGroupWiseList")]
-        public ApiResponse GetServicewithGroupWiseList(int TariffId, int ClassId,string SrvcName)
+        public ApiResponse GetServicewithGroupWiseList(int TariffId, int ClassId, string SrvcName)
         {
             var resultList = _BillingService.GetServicewithGroupWiseList(TariffId, ClassId, SrvcName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList with Group Wise List.", resultList);
@@ -235,8 +236,35 @@ namespace HIMS.API.Controllers.Masters.Billing
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service list updated successfully.");
         }
 
+        [HttpPost("import-preview")]
+        [Permission]
+        public async Task<ApiResponse> PreviewData([FromForm] IFormFile file, [FromForm] string mapping)
+        {
+            return await ExcelImportHelper.GetDataFromExcelAsync<BillingServiceImportDto>(file, mapping, x =>
+            {
+                if (x.ServiceDetailId <= 0)
+                    return (0, "Invalid ServiceDetailId");
 
+                if (x.ClassId <= 0)
+                    return (0, "Invalid ClassId");
+
+                if (x.ServiceId <= 0)
+                    return (0, "Invalid ServiceId");
+
+                if (x.TariffId <= 0)
+                    return (0, "Invalid TariffId");
+
+                if (string.IsNullOrWhiteSpace(x.ServiceName))
+                    return (0, "ServiceName is required");
+
+                if (string.IsNullOrWhiteSpace(x.TariffName))
+                    return (0, "TariffName is required");
+
+                if (x.ClassRate <= 0)
+                    return (0, "ClassRate must be greater than 0");
+
+                return (1, "Valid");
+            });
+        }
     }
 }
-
-
