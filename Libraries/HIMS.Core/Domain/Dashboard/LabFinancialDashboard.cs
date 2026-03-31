@@ -24,6 +24,7 @@ namespace HIMS.Core.Domain.Dashboard
         public decimal TodaySales { get; set; }
         public long TodayTotalTests { get; set; }
         public long TodayPendingReports { get; set; }
+        public decimal MonthlySale { get; set; }
     }
 
     public class HospitalBranch
