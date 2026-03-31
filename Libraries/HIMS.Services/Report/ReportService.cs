@@ -13625,7 +13625,7 @@ namespace HIMS.Services.Report
                                 // ================= TEST NAME HEADER =================
                                 if (previousLabel != currentTestName)
                                 {
-                                    items.Append("<tr style=\"font-size:16px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
+                                    items.Append("<tr style=\"font-size:18px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
                                          .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
                                          .Append("<span style=\"border-bottom:2px solid #000;\">")
                                          .Append(currentTestName)
@@ -13642,7 +13642,7 @@ namespace HIMS.Services.Report
                                     if (!string.IsNullOrWhiteSpace(currentSubTestName) &&
                                         previoussubLabel != currentSubTestName)
                                     {
-                                        items.Append("<tr style=\"font-size:14px;font-family:Verdana, Arial, sans-serif;font-weight:bold;\">")
+                                        items.Append("<tr style=\"font-size:16px;font-family:Verdana, Arial, sans-serif;font-weight:bold;\">")
                                              .Append("<td colspan=\"4\" style=\"padding:5px;text-align:left;\">")
                                              .Append(currentSubTestName)
                                              .Append("</td></tr>");
@@ -13654,16 +13654,16 @@ namespace HIMS.Services.Report
 
                                     // ================= PARAMETER NAME =================
                                     if (dr["IsBoldFlag"].ConvertToString() == "B")
-                                        items.Append("<td style=\"font-size:14px;font-weight:bold;padding:5px;text-align:left;\">");
+                                        items.Append("<td style=\"font-size:16px;font-weight:bold;padding:5px;text-align:left;\">");
                                     else
-                                        items.Append("<td style=\"font-size:14px;padding:5px;text-align:left;\">");
+                                        items.Append("<td style=\"font-size:16px;padding:5px;text-align:left;\">");
 
                                     items.Append(dr["PrintParameterName"].ConvertToString());
 
                                     if (!string.IsNullOrWhiteSpace(dr["MethodName"].ConvertToString()))
                                     {
                                         items.Append("<br/>")
-                                             .Append("<span style=\"font-size:12px;font-style:italic;color:#555;\">")
+                                             .Append("<span style=\"font-size:14px;font-style:italic;color:#555;\">")
                                              .Append(dr["MethodName"].ConvertToString())
                                              .Append("</span>");
                                     }
@@ -13689,11 +13689,11 @@ namespace HIMS.Services.Report
 
                                                 if (numericResult > maxRange)
                                                 {
-                                                    arrow = " <span style='color:red;font-weight:bold;font-size:14px;'>&uarr;</span>";
+                                                    arrow = " <span style='color:red;font-weight:bold;font-size:16px;'>&uarr;</span>";
                                                 }
                                                 else if (numericResult < minRange)
                                                 {
-                                                    arrow = " <span style='color:blue;font-weight:bold;font-size:14px;'>&darr;</span>";
+                                                    arrow = " <span style='color:blue;font-weight:bold;font-size:16px;'>&darr;</span>";
                                                 }
                                             }
                                         }
@@ -13705,17 +13705,17 @@ namespace HIMS.Services.Report
 
                                     // ================= OBSERVED VALUE =================
                                     if (dr["ParaBoldFlag"].ConvertToString() == "B")
-                                        items.Append("<td style=\"font-size:14px;font-weight:bold;padding:6px;text-align:center;\">");
+                                        items.Append("<td style=\"font-size:16px;font-weight:bold;padding:6px;text-align:center;\">");
                                     else
-                                        items.Append("<td style=\"font-size:14px;padding:6px;text-align:center;\">");
+                                        items.Append("<td style=\"font-size:16px;padding:6px;text-align:center;\">");
 
-                              
+
                                     if (arrow.Contains("blue"))
                                     {
-                                        items.Append("<span style='color:blue;font-weight:bold;font-size:14px;'>&darr;</span> ")
+                                        items.Append("<span style='color:blue;font-weight:bold;font-size:16px;'>&darr;</span> ")
                                              .Append(resultValue);
                                     }
-                                  
+
                                     else
                                     {
                                         items.Append(resultValue)
@@ -13725,12 +13725,12 @@ namespace HIMS.Services.Report
                                     items.Append("</td>");
 
                                     // ================= REFERENCE RANGE =================
-                                    items.Append("<td style=\"font-size:14px;padding:6px;text-align:left;\">")
+                                    items.Append("<td style=\"font-size:16px;padding:6px;text-align:left;\">")
                                          .Append(normalRange)
                                          .Append("</td>");
 
                                     // ================= UNITS =================
-                                    items.Append("<td style=\"font-size:14px;padding:6px;text-align:left;\">")
+                                    items.Append("<td style=\"font-size:16px;padding:6px;text-align:left;\">")
                                          .Append(dr["UnitNamePathTran"].ConvertToString())
                                          .Append("</td>");
 
@@ -13741,7 +13741,6 @@ namespace HIMS.Services.Report
                             }
                             html = html.Replace("{{Items}}", items.ToString());
                         }
-
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo").ConvertToString());
 
@@ -14078,7 +14077,7 @@ namespace HIMS.Services.Report
                                 // ================= TEST NAME HEADER =================
                                 if (previousLabel != currentTestName)
                                 {
-                                    items.Append("<tr style=\"font-size:16px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
+                                    items.Append("<tr style=\"font-size:18px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
                                          .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
                                          .Append("<span style=\"border-bottom:2px solid #000;\">")
                                          .Append(currentTestName)
@@ -14095,7 +14094,7 @@ namespace HIMS.Services.Report
                                     if (!string.IsNullOrWhiteSpace(currentSubTestName) &&
                                         previoussubLabel != currentSubTestName)
                                     {
-                                        items.Append("<tr style=\"font-size:14px;font-family:Verdana, Arial, sans-serif;font-weight:bold;\">")
+                                        items.Append("<tr style=\"font-size:16px;font-family:Verdana, Arial, sans-serif;font-weight:bold;\">")
                                              .Append("<td colspan=\"4\" style=\"padding:5px;text-align:left;\">")
                                              .Append(currentSubTestName)
                                              .Append("</td></tr>");
@@ -14107,16 +14106,16 @@ namespace HIMS.Services.Report
 
                                     // ================= PARAMETER NAME =================
                                     if (dr["IsBoldFlag"].ConvertToString() == "B")
-                                        items.Append("<td style=\"font-size:14px;font-weight:bold;padding:5px;text-align:left;\">");
+                                        items.Append("<td style=\"font-size:16px;font-weight:bold;padding:5px;text-align:left;\">");
                                     else
-                                        items.Append("<td style=\"font-size:14px;padding:5px;text-align:left;\">");
+                                        items.Append("<td style=\"font-size:16px;padding:5px;text-align:left;\">");
 
                                     items.Append(dr["PrintParameterName"].ConvertToString());
 
                                     if (!string.IsNullOrWhiteSpace(dr["MethodName"].ConvertToString()))
                                     {
                                         items.Append("<br/>")
-                                             .Append("<span style=\"font-size:12px;font-style:italic;color:#555;\">")
+                                             .Append("<span style=\"font-size:14px;font-style:italic;color:#555;\">")
                                              .Append(dr["MethodName"].ConvertToString())
                                              .Append("</span>");
                                     }
@@ -14142,11 +14141,11 @@ namespace HIMS.Services.Report
 
                                                 if (numericResult > maxRange)
                                                 {
-                                                    arrow = " <span style='color:red;font-weight:bold;font-size:14px;'>&uarr;</span>";
+                                                    arrow = " <span style='color:red;font-weight:bold;font-size:16px;'>&uarr;</span>";
                                                 }
                                                 else if (numericResult < minRange)
                                                 {
-                                                    arrow = " <span style='color:blue;font-weight:bold;font-size:14px;'>&darr;</span>";
+                                                    arrow = " <span style='color:blue;font-weight:bold;font-size:16px;'>&darr;</span>";
                                                 }
                                             }
                                         }
@@ -14158,14 +14157,14 @@ namespace HIMS.Services.Report
 
                                     // ================= OBSERVED VALUE =================
                                     if (dr["ParaBoldFlag"].ConvertToString() == "B")
-                                        items.Append("<td style=\"font-size:14px;font-weight:bold;padding:6px;text-align:center;\">");
+                                        items.Append("<td style=\"font-size:16px;font-weight:bold;padding:6px;text-align:center;\">");
                                     else
-                                        items.Append("<td style=\"font-size:14px;padding:6px;text-align:center;\">");
+                                        items.Append("<td style=\"font-size:16px;padding:6px;text-align:center;\">");
 
                                  
                                     if (arrow.Contains("blue"))
                                     {
-                                        items.Append("<span style='color:blue;font-weight:bold;font-size:14px;'>&darr;</span> ")
+                                        items.Append("<span style='color:blue;font-weight:bold;font-size:16px;'>&darr;</span> ")
                                              .Append(resultValue);
                                     }
                                  
@@ -14178,12 +14177,12 @@ namespace HIMS.Services.Report
                                     items.Append("</td>");
 
                                     // ================= REFERENCE RANGE =================
-                                    items.Append("<td style=\"font-size:14px;padding:6px;text-align:left;\">")
+                                    items.Append("<td style=\"font-size:16px;padding:6px;text-align:left;\">")
                                          .Append(normalRange)
                                          .Append("</td>");
 
                                     // ================= UNITS =================
-                                    items.Append("<td style=\"font-size:14px;padding:6px;text-align:left;\">")
+                                    items.Append("<td style=\"font-size:16px;padding:6px;text-align:left;\">")
                                          .Append(dr["UnitNamePathTran"].ConvertToString())
                                          .Append("</td>");
 
