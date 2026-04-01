@@ -11,8 +11,8 @@ namespace HIMS.API.Controllers.Administration
     [ApiVersion("1")]
     public class DbInfoController : BaseController
     {
-
         [HttpGet]
+        [HttpGet("DBInformation")]
         public IActionResult GetDbInfo()
         {
             var builder = new SqlConnectionStringBuilder(AppSettings.Settings.CONNECTION_STRING);
@@ -21,6 +21,7 @@ namespace HIMS.API.Controllers.Administration
             {
                 Server = builder.DataSource,
                 Database = builder.InitialCatalog,
+                UserName = builder.UserID,
                 Provider = "SQL Server"
             });
         }
