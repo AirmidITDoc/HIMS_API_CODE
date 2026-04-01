@@ -689,6 +689,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.DoctorName).HasMaxLength(500);
 
+                entity.Property(e => e.HospitalAmt).HasColumnType("money");
+
                 entity.Property(e => e.IsBillableCharity).HasColumnName("IsBillable_Charity");
 
                 entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
@@ -707,11 +709,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PackageMainChargeId).HasColumnName("PackageMainChargeID");
 
+                entity.Property(e => e.Price).HasColumnType("money");
+
                 entity.Property(e => e.RefundAmount).HasColumnType("money");
 
                 entity.Property(e => e.ServiceCode).HasMaxLength(50);
 
                 entity.Property(e => e.ServiceName).HasMaxLength(255);
+
+                entity.Property(e => e.TotalAmt).HasColumnType("money");
 
                 entity.HasOne(d => d.BillNoNavigation)
                     .WithMany(p => p.AddCharges)
@@ -761,6 +767,10 @@ namespace HIMS.Data.Models
                     .HasColumnType("datetime")
                     .HasColumnName("CompDOD");
 
+                entity.Property(e => e.CompRefNo).HasMaxLength(20);
+
+                entity.Property(e => e.CompanyApprovedAmt).HasColumnType("money");
+
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.DischargeDate).HasColumnType("datetime");
@@ -770,6 +780,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DocNameId).HasColumnName("DocNameID");
 
                 entity.Property(e => e.EstimatedAmount).HasColumnType("money");
+
+                entity.Property(e => e.GovtApprovedAmt).HasColumnType("money");
+
+                entity.Property(e => e.GovtRefNo).HasMaxLength(20);
 
                 entity.Property(e => e.HAdvAmt)
                     .HasColumnType("money")
@@ -1927,8 +1941,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.IsWa).HasColumnName("IsWA");
 
                 entity.Property(e => e.MailSubject).HasMaxLength(250);
-
-                entity.Property(e => e.SearchFields).HasMaxLength(255);
 
                 entity.Property(e => e.SectionName).HasMaxLength(255);
 
@@ -18796,6 +18808,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Comments).HasMaxLength(500);
 
+                entity.Property(e => e.CompRefNo).HasMaxLength(20);
+
+                entity.Property(e => e.CompanyApprovedAmt).HasColumnType("money");
+
                 entity.Property(e => e.ConEndTime).HasColumnType("datetime");
 
                 entity.Property(e => e.ConStartTime).HasColumnType("datetime");
@@ -18807,6 +18823,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.FollowupDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(((1)/(1))/(1900))");
+
+                entity.Property(e => e.GovtApprovedAmt).HasColumnType("money");
+
+                entity.Property(e => e.GovtRefNo).HasMaxLength(20);
 
                 entity.Property(e => e.Height).HasMaxLength(10);
 
