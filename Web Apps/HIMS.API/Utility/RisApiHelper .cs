@@ -105,13 +105,13 @@ namespace HIMS.API.Utility
             _logger.LogInformation("Fetching new RIS JWT token.");
             var authResult = await AuthenticateAsync();
 
-            if (string.IsNullOrEmpty(authResult.AccessToken))
+            if (string.IsNullOrEmpty(authResult.access_token))
             {
                 _logger.LogError("RIS authentication failed: {Error}", authResult.Error);
                 return null;
             }
 
-            _cachedToken = authResult.AccessToken;
+            _cachedToken = authResult.access_token;
             _tokenExpiry = DateTime.UtcNow.AddDays(AppSettings.Settings.RisApi.TokenExpiryDays - 1); // refresh 1 day early
             return _cachedToken;
         }
