@@ -13,6 +13,7 @@ using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace HIMS.API.Controllers.Masters.Billing
 {
@@ -22,11 +23,15 @@ namespace HIMS.API.Controllers.Masters.Billing
     public class BillingServiceController : BaseController
     {
         private readonly IGenericService<ServiceMaster> _repository;
+        private readonly IGenericService<ClassMaster> _ClassRepository;
+        private readonly IGenericService<TariffMaster> _TariffRepository;
         private readonly IBillingService _BillingService;
-        public BillingServiceController(IBillingService repository, IGenericService<ServiceMaster> repository1)
+        public BillingServiceController(IBillingService repository, IGenericService<ServiceMaster> repository1, IGenericService<ClassMaster> classRepository, IGenericService<TariffMaster> tariffRepository)
         {
             _BillingService = repository;
             _repository = repository1;
+            _ClassRepository = classRepository;
+            _TariffRepository = tariffRepository;
         }
 
         [HttpPost("BillingList")]
@@ -240,31 +245,114 @@ namespace HIMS.API.Controllers.Masters.Billing
         [Permission]
         public async Task<ApiResponse> PreviewData([FromForm] IFormFile file, [FromForm] string mapping)
         {
-            return await ExcelImportHelper.GetDataFromExcelAsync<BillingServiceImportDto>(file, mapping, x =>
+            if (file == null || file.Length == 0)
+                return ApiResponseHelper.GenerateResponse(
+                    ApiStatusCode.Status400BadRequest,
+                    "File is missing",
+                    null);
+
+            try
             {
-                if (x.ServiceDetailId <= 0)
-                    return (0, "Invalid ServiceDetailId");
+                var data = await ExcelImportHelper.ParseExcelAsync<BillingServiceImportDto>(file, mapping, x =>
+                {
 
-                if (x.ClassId <= 0)
-                    return (0, "Invalid ClassId");
+                    if (x.PatientRate < 0)
+                        return (0, "Invalid PatientRate");
 
-                if (x.ServiceId <= 0)
-                    return (0, "Invalid ServiceId");
+                    if (x.CpRate < 0)
+                        return (0, "Invalid CpRate");
 
-                if (x.TariffId <= 0)
-                    return (0, "Invalid TariffId");
+                    if (string.IsNullOrWhiteSpace(x.Service))
+                        return (0, "Service is required");
 
-                if (string.IsNullOrWhiteSpace(x.ServiceName))
-                    return (0, "ServiceName is required");
+                    if (string.IsNullOrWhiteSpace(x.Tariff))
+                        return (0, "Tariff is required");
 
-                if (string.IsNullOrWhiteSpace(x.TariffName))
-                    return (0, "TariffName is required");
+                    if (string.IsNullOrWhiteSpace(x.Class))
+                        return (0, "Class is required");
+
+                    if (x.ClassRate <= 0)
+                        return (0, "ClassRate must be greater than 0");
+
+                    return (1, "Valid");
+                });
+
+                var distinctServices = data.DistinctBy(x => x.Service);
+                var matchedServices = (await _repository.GetAll(x => distinctServices.Select(s => s.Service).Contains(x.ServiceName))).ToList();
+                foreach (var service in matchedServices)
+                    data.Where(x => x.Service == service.ServiceName).ToList().ForEach(x =>
+                    {
+                        x.ServiceId = service.ServiceId;
+                    });
+                var distinctClasses = data.DistinctBy(x => x.Class);
+                var matchedClasses = (await _ClassRepository.GetAll(x => distinctClasses.Select(s => s.Class).Contains(x.ClassName))).ToList();
+                foreach (var cls in matchedClasses)
+                    data.Where(x => x.Class == cls.ClassName).ToList().ForEach(x =>
+                    {
+                        x.ClassId = cls.ClassId;
+                    });
+                var distinctTariffs = data.DistinctBy(x => x.Tariff);
+                var matchedTariffs = (await _TariffRepository.GetAll(x => distinctTariffs.Select(s => s.Tariff).Contains(x.TariffName))).ToList();
+                foreach (var tariff in matchedTariffs)
+                    data.Where(x => x.Tariff == tariff.TariffName).ToList().ForEach(x =>
+                    {
+                        x.TariffId = tariff.TariffId;
+                    });
+                data.Where(x => x.Status == 1).ToList().ForEach(x =>
+                {
+                    x.Status = x.ClassId > 0 && x.ServiceId > 0 && x.TariffId > 0 ? 1 : 0;
+                    x.Message = x.Status == 1 ? "Valid" : $"{(x.ServiceId > 0 ? "" : "Service not found. ")}{(x.ClassId > 0 ? "" : "Class not found. ")}{(x.TariffId > 0 ? "" : "Tariff not found.")}".Trim();
+                });
+
+                return ApiResponseHelper.GenerateResponse(
+                    ApiStatusCode.Status200OK,
+                    "Files are processed successfully.",
+                    data);
+            }
+            catch (Exception ex)
+            {
+                return ApiResponseHelper.GenerateResponse(
+                    ApiStatusCode.Status500InternalServerError,
+                    ex.Message,
+                    null);
+            }
+        }
+        [HttpPost("import-data")]
+        [Permission]
+        public async Task<ApiResponse> ImportData([FromForm] IFormFile file, [FromForm] string mapping)
+        {
+            var data = await ExcelImportHelper.ParseExcelAsync<BillingServiceImportDto>(file, mapping, x =>
+            {
+
+                if (x.PatientRate < 0)
+                    return (0, "Invalid PatientRate");
+
+                if (x.CpRate < 0)
+                    return (0, "Invalid CpRate");
+
+                if (string.IsNullOrWhiteSpace(x.Service))
+                    return (0, "Service is required");
+
+                if (string.IsNullOrWhiteSpace(x.Tariff))
+                    return (0, "Tariff is required");
+
+                if (string.IsNullOrWhiteSpace(x.Class))
+                    return (0, "Class is required");
 
                 if (x.ClassRate <= 0)
                     return (0, "ClassRate must be greater than 0");
 
                 return (1, "Valid");
             });
+            if (!data.Any(x => x.Status == 1))
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No valid data to import.", null);
+            else
+            {
+                var importData = data.Where(x => x.Status == 1);
+                // Add here logic for import data into tables. above data should be inserted into tables. you can map this data into your entity and then save into database.
+
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Data imported successfully.", null);
+            }
         }
     }
 }

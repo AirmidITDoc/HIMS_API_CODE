@@ -91,15 +91,19 @@ namespace HIMS.API.Models.Inventory
     }
 
 
-    public class BillingServiceImportDto: ImportBaseDto
+    public class BillingServiceImportDto : ImportBaseDto
     {
-        public long ServiceDetailId { get; set; }
-        public int ClassId { get; set; }
-        public int ServiceId { get; set; }
-        public int TariffId { get; set; }
-        public string ServiceName { get; set; }
-        public string TariffName { get; set; }
+        public string Tariff { get; set; } = "";
+        public string Class { get; set; } = "";
+        public string Service { get; set; } = "";
         public double ClassRate { get; set; }
+        public double PatientRate { get; set; }
+        public double CpRate { get; set; }
+        public double? DiscountAmount { get; set; }
+        public double? DiscountPercentage { get; set; }
+        public long ServiceId { get; set; }
+        public long TariffId { get; set; }
+        public long ClassId { get; set; }
     }
 }
 
