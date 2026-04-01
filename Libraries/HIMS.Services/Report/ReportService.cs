@@ -5684,6 +5684,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
                         html = html.Replace("{{PatientType1}}", dt.GetColValue("PatientType1"));
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")?.ToString()));
                         StringBuilder serviceNames = new StringBuilder();
 
 
@@ -5798,6 +5799,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
                         html = html.Replace("{{PatientType1}}", dt.GetColValue("PatientType1"));
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")?.ToString()));
                         StringBuilder serviceNames = new StringBuilder();
 
 
@@ -5915,6 +5917,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
                         html = html.Replace("{{PackageServiceList}}", dt.GetColValue("PackageServiceList"));
                         html = html.Replace("{{PatientType1}}", dt.GetColValue("PatientType1"));
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")?.ToString()));
                         StringBuilder serviceNames = new StringBuilder();
 
                         
@@ -6030,6 +6033,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
                         html = html.Replace("{{PackageServiceList}}", dt.GetColValue("PackageServiceList"));
                         html = html.Replace("{{PatientType1}}", dt.GetColValue("PatientType1"));
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")?.ToString()));
                         StringBuilder serviceNames = new StringBuilder();
 
 
@@ -6143,6 +6147,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{BalanceafterGov}}", dt.GetColValue("BalanceafterGov").ConvertToDouble().ToString("F2"));
+
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")?.ToString()));
 
 
 
