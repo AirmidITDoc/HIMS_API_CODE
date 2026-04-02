@@ -473,6 +473,7 @@ namespace HIMS.Services.Pathlogy
                                 }
                                 Packagescharge["PackageMainChargeId"] = objItem1.ChargesId;
                                 Packagescharge["BillNo"] = objBill.BillNo;
+                                
                                 var VChargesId = odal.ExecuteNonQuery("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
                                 item.ChargesId = Convert.ToInt32(VChargesId);
 
