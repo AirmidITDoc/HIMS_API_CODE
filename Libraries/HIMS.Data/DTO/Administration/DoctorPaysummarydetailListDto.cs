@@ -13,7 +13,7 @@
 
 
         public double? DocAmt { get; set; }
-        public double? HospitalAmt { get; set; }
+        public decimal? HospitalAmt { get; set; }
 
 
         public decimal? RefundAmount { get; set; }

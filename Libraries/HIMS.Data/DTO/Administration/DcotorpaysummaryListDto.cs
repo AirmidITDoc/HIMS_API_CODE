@@ -5,7 +5,7 @@
         public string? AddChargeDrName { get; set; }
         public decimal? NetAmount { get; set; }
         public double? DocAmt { get; set; }
-        public double? HospitalAmt { get; set; }
+        public decimal? HospitalAmt { get; set; }
 
 
         public long DoctorId { get; set; }
