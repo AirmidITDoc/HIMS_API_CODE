@@ -103,6 +103,12 @@ namespace HIMS.Data.Models
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
         public string? IsCancelComment { get; set; }
+        public long? GovtCompanyId { get; set; }
+        public decimal? GovtApprovedAmt { get; set; }
+        public string? GovtRefNo { get; set; }
+        public long? CompanyApprovedId { get; set; }
+        public decimal? CompanyApprovedAmt { get; set; }
+        public string? CompRefNo { get; set; }
 
         public virtual ICollection<IpdDrugSchedule> IpdDrugSchedules { get; set; }
     }

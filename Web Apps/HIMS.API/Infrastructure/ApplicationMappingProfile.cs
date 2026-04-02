@@ -33,6 +33,7 @@ using static HIMS.API.Models.GastrologyMasterModel.MSubQuestionMasterModel;
 using HIMS.API.Models.MRD;
 using HIMS.API.Models.FeedBack;
 using HIMS.API.Models.Canteen;
+using static HIMS.API.Models.Administration.NewTPaymentModel;
 namespace HIMS.API.Infrastructure
 {
     public class ApplicationMappingProfile : Profile
@@ -598,6 +599,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<TPatientFeedback, PatientFeedbackModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MFeedbackQuestion, FeedBackQuestionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MItemWiseSupplierRate, ItemWiseSupplierRateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPayment, NewTPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPayment, PaymentCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 

@@ -11,11 +11,8 @@
 
     <div style="width: 100%; margin: auto;">
 
-        <div style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 5px; ">
-            Patient Copy
-        </div>
-        {{NewHeader}}
-        <div style="width:100%;height:50vh;box-sizing:border-box;page-break-inside: avoid;">
+   
+        <div style="width: 100%; height: 50vh; box-sizing: border-box; page-break-inside: avoid; padding-top: 90px ">
 
             <table style="width:100%; border-bottom:1px solid #000; padding-bottom:5px; ">
                 <tr>
@@ -31,12 +28,11 @@
 
                     <td style="width:30%; text-align:center; vertical-align:top;">
                         <!--<img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{LabRequestNo}}"
-                             alt="QR Code"
-                             style="width:80px; height:80px; display:block; margin:0 auto;" />-->
+                        alt="QR Code"
+                        style="width:80px; height:80px; display:block; margin:0 auto;" />-->
                         <img src="{{QrCode}}"
                              alt="QR Code"
                              style="width:100px; height:100px; display:block; margin:0 auto;" />
-
 
                         <div style="font-size:12px; margin-top:3px;">
                             Scan for report
@@ -75,6 +71,19 @@
 
                 {{Items}}
             </table>
+            <!--<table style="width:100%; border-collapse:collapse;">
+        <tr">
+            <td style="padding:6px;"></td>
+            <td style="padding:6px;">Package Details</td> </b>
+
+        </tr>
+             {{PackageDetails}}
+
+    </table>-->
+            <div style="border-top:1px solid #000; margin-top:5px;"></div>
+            <b> Package Details : </b> <br />
+            {{PackageServiceList}}
+
             <br />
 
             <!-- BELOW LINE (IMPORTANT LIKE IMAGE) -->

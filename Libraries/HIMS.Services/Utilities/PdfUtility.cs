@@ -449,12 +449,20 @@ namespace HIMS.Services.Utilities
                     Margins = new MarginSettings() { Top = 10, Bottom=10, Left=10, Right=10 },
                     //Scale = 0.9f,  // Reduce size to 90% of the original content size
                 },
+                //Objects = {
+                //    new ObjectSettings() {
+                //        PagesCount = true,
+                //        HtmlContent = html,
+                //        WebSettings = { DefaultEncoding = "utf-8" },
+                //        FooterSettings = { FontSize = 9, Left = "AirmidTech Innovation Pvt. Ltd, India | Mobile No : +91 9970164262", Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
+                //    }
+                //}
                 Objects = {
                     new ObjectSettings() {
                         PagesCount = true,
                         HtmlContent = html,
                         WebSettings = { DefaultEncoding = "utf-8" },
-                        FooterSettings = { FontSize = 9, Left = "AirmidTech Innovation Pvt. Ltd, India | Mobile No : +91 9970164262", Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
+                        FooterSettings = {FontSize = 0,Left = "",Right = "",Line = false,Spacing = 0}
                     }
                 }
             };

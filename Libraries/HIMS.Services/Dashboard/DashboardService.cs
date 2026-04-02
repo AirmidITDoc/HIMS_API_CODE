@@ -341,14 +341,16 @@ namespace HIMS.Services.Dashboard
             para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
             para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
 
-            var data = await sql.Get7ResultsFromSp<
+            var data = await sql.Get9ResultsFromSp<
                 LabTopBox,
                 HospitalBranch,
                 DepartmentWiseSales,
                 DailySalesTrend,
                 RefDoctorWiseSales,
                 CPWiseSales,
-                ExecutiveWiseSales
+                ExecutiveWiseSales,
+               RadiologyDailySales,
+               DepartmentSummary
             >("ps_LabFinacialDashboard", para);
 
             return new LabFinancialDashboard
@@ -359,7 +361,9 @@ namespace HIMS.Services.Dashboard
                 DailySalesTrend = data.Item4 ?? new List<DailySalesTrend>(),
                 RefDoctorWiseSales = data.Item5 ?? new List<RefDoctorWiseSales>(),
                 CPWiseSales = data.Item6 ?? new List<CPWiseSales>(),
-                ExecutiveWiseSales = data.Item7 ?? new List<ExecutiveWiseSales>()
+                ExecutiveWiseSales = data.Item7 ?? new List<ExecutiveWiseSales>(),
+                RadiologySales = data.Item8 ?? new List<RadiologyDailySales>(),
+                DepartmentSummary = data.Item9 ?? new List<DepartmentSummary>()
             };
         }
     }

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.Common;
 
 namespace HIMS.API.Models.Inventory
 {
@@ -89,5 +90,20 @@ namespace HIMS.API.Models.Inventory
 
     }
 
+
+    public class BillingServiceImportDto : ImportBaseDto
+    {
+        public string Tariff { get; set; } = "";
+        public string Class { get; set; } = "";
+        public string Service { get; set; } = "";
+        public double ClassRate { get; set; }
+        public double PatientRate { get; set; }
+        public double CpRate { get; set; }
+        public double? DiscountAmount { get; set; }
+        public double? DiscountPercentage { get; set; }
+        public long ServiceId { get; set; }
+        public long TariffId { get; set; }
+        public long ClassId { get; set; }
+    }
 }
 

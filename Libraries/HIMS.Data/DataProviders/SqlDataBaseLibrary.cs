@@ -1273,15 +1273,17 @@ namespace HIMS.Data.DataProviders
                 }
             }
         }
-        public async Task<(List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>)>
-        Get7ResultsFromSp<T1, T2, T3, T4, T5, T6, T7>(string spName, SqlParameter[] parameters)
-        where T1 : new()
-        where T2 : new()
-        where T3 : new()
-        where T4 : new()
-        where T5 : new()
-        where T6 : new()
-        where T7 : new()
+        public async Task<(List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>, List<T8>, List<T9>)>
+             Get9ResultsFromSp<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string spName, SqlParameter[] parameters)
+             where T1 : new()
+             where T2 : new()
+             where T3 : new()
+             where T4 : new()
+             where T5 : new()
+             where T6 : new()
+             where T7 : new()
+             where T8 : new()
+             where T9 : new()
         {
             Command.CommandType = CommandType.StoredProcedure;
             Command.CommandText = spName;
@@ -1314,19 +1316,18 @@ namespace HIMS.Data.DataProviders
                 await reader.NextResultAsync();
                 var item7 = reader.MapToList<T7>();
 
-                return (item1, item2, item3, item4, item5, item6, item7);
-            }
-            catch (Exception ex)
-            {
-                HandleExceptions(ex, spName);
-                throw;
+                await reader.NextResultAsync();
+                var item8 = reader.MapToList<T8>();
+
+                await reader.NextResultAsync();
+                var item9 = reader.MapToList<T9>();
+
+                return (item1, item2, item3, item4, item5, item6, item7, item8, item9);
             }
             finally
             {
                 if (Command.Transaction == null)
-                {
                     objConnection.Close();
-                }
             }
         }
 

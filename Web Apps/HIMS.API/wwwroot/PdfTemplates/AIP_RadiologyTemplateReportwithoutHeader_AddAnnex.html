@@ -4,6 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Laboratory Report</title>
+    <style>
+        @media print {
+            * {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: auto !important;
+            }
+        }
+    </style>
 </head>
 
 <body style="margin: 0; height: 100%; font-family: Verdana, Arial, sans-serif; color: #000; display: flex; flex-direction: column; min-height: 100vh; margin-left: 12px; padding-bottom: 96px;">
@@ -51,10 +62,10 @@
                                         <td style="font-size:12px; font-weight:normal;">: <strong>{{ReportTime}}</strong></td>
                                     </tr>
                                     <!--<tr>
-                                        <td style="font-size:12px; font-weight:normal;">NATIONAL ID NO</td>
-                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{AadharCardNo}}</strong></td>-->
-                                        <!--<td style="font-size:12px; font-weight:normal;">SAMPLE NO</td>
-        <td style="font-size:12px; font-weight:normal;">: {{SampleNo}}</td>-->
+                                    <td style="font-size:12px; font-weight:normal;">NATIONAL ID NO</td>
+                                    <td style="font-size:12px; font-weight:normal;">: <strong>{{AadharCardNo}}</strong></td>-->
+                                    <!--<td style="font-size:12px; font-weight:normal;">SAMPLE NO</td>
+                                    <td style="font-size:12px; font-weight:normal;">: {{SampleNo}}</td>-->
                                     <!--</tr>-->
                                     <tr>
                                         <td style="font-size:12px; font-weight:normal;">REPORT STATUS</td>
@@ -89,27 +100,39 @@
 
 
             <tr class="bill-table-row">
-                <td style="padding: 6px;">
+                <!--<td style="padding: 6px;">-->
+                <td style="padding: 6px; page-break-inside: auto;">
                     <table style="width: 100%; border-collapse: collapse;">
 
-                        <tr>
-                            <div>
-                                <div style="padding:5px;margin:5px;width:100%;">
-                                    <div>
-                                        <div style="width:100%;margin-left:5px;height:auto;">
-
-                                            <div innerHtml={{ResultEntry}}</div>
+                        <!--<tr>
+                        <div>
+                            <div style="padding:5px;margin:5px;width:100%;">
+                                <div>
+                                    <div style="width:100%;margin-left:5px;height:auto;">-->
+                        <!--<div innerHtml={{ResultEntry}}</div>-->
+                        <!--<div style="page-break-inside: auto;" innerHtml={{ResultEntry}}></div>
 
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </tr>
+                        </tr>-->
+                        <!--<tr>
+                            <td style="padding:5px;">
+                                <div style="width:100%;margin-left:5px;height:auto;" innerHtml={{ResultEntry}}></div>
+                            </td>
+                        </tr>-->
 
 
                     </table>
                 </td>
             </tr>
+        </table>  <!-- close the outer table BEFORE ResultEntry -->
+
+        <div style="width:100%; padding:6px; box-sizing:border-box;" innerHtml={{ResultEntry}}></div>
+
+        <table style="width:100%; border-collapse:collapse; font-size:12px;">
+            <!-- reopen for what comes after -->
             <tr>
                 <td colspan="2">
                     <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">

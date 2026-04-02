@@ -484,6 +484,35 @@ namespace HIMS.Services.Report
                 #endregion
 
 
+                #region :: PackageBillWithoutHeader ::
+                case "PackageBillWithoutHeader":
+                    {
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AIP_PackageBillWithoutHeader_AddAnnex.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, UnitId);
+                        var html = GetHTMLView("ps_rptPackageLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, "PackageBillWithoutHeader", "PackageBillWithoutHeader" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+                #region :: PackageBillWithHeader ::
+                case "PackageBillWithHeader":
+                    {
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AIP_PackageBillWithHeader_AddAnnex.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, UnitId);
+                        var html = GetHTMLView("ps_rptPackageLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, "PackageBillWithHeader", "PackageBillWithHeader" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+
                 #region :: LabMoneyReceiptWithoutHeader ::
                 case "LabMoneyReceiptWithoutHeader":
                     {
@@ -5658,6 +5687,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
                         html = html.Replace("{{PatientType1}}", dt.GetColValue("PatientType1"));
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")?.ToString()));
                         StringBuilder serviceNames = new StringBuilder();
 
 
@@ -5772,6 +5802,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
                         html = html.Replace("{{PatientType1}}", dt.GetColValue("PatientType1"));
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")?.ToString()));
                         StringBuilder serviceNames = new StringBuilder();
 
 
@@ -5838,6 +5869,239 @@ namespace HIMS.Services.Report
                     break;
 
 
+                case "PackageBillWithoutHeader":
+                    {
+
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+
+
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        //html = html.Replace("{{NewHeader}}", htmlHeader);
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("LabPatRegId"));
+                        html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ConcessionAmt}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("ConsultantDocName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{BillNo}}", dt.GetColValue("PBillNo"));
+                        html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | H:mm tt"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{LabRequestNo}}", dt.GetColValue("LabRequestNo"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{Date}}", dt.GetDateColValue("Date").ConvertToDateString());
+                        html = html.Replace("{{RegDate}}", dt.GetColValue("RegTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+                        html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+                        html = html.Replace("{{LabPatientId}}", dt.GetColValue("LabPatientId"));
+                        html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
+                        html = html.Replace("{{CreatedBy}}", dt.GetColValue("CreatedBy"));
+                        html = html.Replace("{{CreatedDate}}", dt.GetColValue("CreatedDate"));
+                        html = html.Replace("{{paymode}}", dt.GetColValue("paymode"));
+                        html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+
+                        html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
+                        html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{BalanceafterGov}}", dt.GetColValue("BalanceafterGov").ConvertToDouble().ToString("F2"));
+
+                        html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                        html = html.Replace("{{PackageServiceList}}", dt.GetColValue("PackageServiceList"));
+                        html = html.Replace("{{PatientType1}}", dt.GetColValue("PatientType1"));
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")?.ToString()));
+                        StringBuilder serviceNames = new StringBuilder();
+
+                        
+                        double T_NetAmount = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:15;\"><td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["DepartmentName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["TotalBillAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            //items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
+
+                            serviceNames.Append(dr["ServiceName"].ConvertToString()).Append(", ");
+                            T_NetAmount += dr["NetAmount"].ConvertToDouble();
+                        }
+                        T_NetAmount = Math.Round(T_NetAmount);
+                        string finalServiceNames = serviceNames.ToString().TrimEnd(',', ' ');
+                        html = html.Replace("{{ServiceName}}", finalServiceNames);
+
+                        html = html.Replace("{{Items}}", items.ToString());
+                        double PaidFinal = dt.GetColValue("PaidAmount").ConvertToDouble();
+
+                        html = html.Replace("{{T_NetAmount}}", T_NetAmount.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{Price}}", dt.GetColValue("Price").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{TotalGst}}", dt.GetColValue("TotalGst").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("AddedByName").ConvertToString());
+                        html = html.Replace("{{HospitalName}}", dt.GetColValue("HospitalName").ConvertToString());
+                        html = html.Replace("{{DiscComments}}", dt.GetColValue("DiscComments").ConvertToString());
+                        html = html.Replace("{{CashPay}}", dt.GetColValue("CashPay").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ChequePay}}", dt.GetColValue("ChequePay").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CardPay}}", dt.GetColValue("CardPay").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{NeftPay}}", dt.GetColValue("NeftPay").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PayTMPay}}", dt.GetColValue("PayTMPay").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PaymentMode}}", dt.GetColValue("PaymentMode").ConvertToString());
+                        html = html.Replace("{{RefundInfo}}", dt.GetColValue("RefundInfo"));
+                        html = html.Replace("{{chkpaidflag}}", dt.GetColValue("PaidAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkbalflag}}", dt.GetColValue("BalanceAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkdiscflag}}", dt.GetColValue("ConcessionAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkRefundflag}}", dt.GetColValue("RefundAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+                        //   html = html.Replace("{{chkPolicyNoflag}}", dt.GetColValue("PolicyNo").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkPolicyNoflag}}", !string.IsNullOrWhiteSpace(dt.GetColValue("PolicyNo")) ? "table-row" : "none");
+
+                        html = html.Replace("{{chkApprovedAmountflag}}", dt.GetColValue("ApprovedAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkBalanceafterGovflag}}", dt.GetColValue("BalanceafterGov").ConvertToDouble() > 0 ? "table-row " : "none");
+
+
+
+
+                        string finalamt = conversion(PaidFinal.ToString());
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+
+                        return html;
+
+                    }
+                    break;
+                case "PackageBillWithHeader":
+                    {
+
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+
+
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        //html = html.Replace("{{NewHeader}}", htmlHeader);
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("LabPatRegId"));
+                        html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ConcessionAmt}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("ConsultantDocName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{BillNo}}", dt.GetColValue("PBillNo"));
+                        html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | H:mm tt"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{LabRequestNo}}", dt.GetColValue("LabRequestNo"));
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{Date}}", dt.GetDateColValue("Date").ConvertToDateString());
+                        html = html.Replace("{{RegDate}}", dt.GetColValue("RegTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+                        html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+                        html = html.Replace("{{LabPatientId}}", dt.GetColValue("LabPatientId"));
+                        html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
+                        html = html.Replace("{{CreatedBy}}", dt.GetColValue("CreatedBy"));
+                        html = html.Replace("{{CreatedDate}}", dt.GetColValue("CreatedDate"));
+                        html = html.Replace("{{paymode}}", dt.GetColValue("paymode"));
+                        html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+
+                        html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
+                        html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{BalanceafterGov}}", dt.GetColValue("BalanceafterGov").ConvertToDouble().ToString("F2"));
+
+                        html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                        html = html.Replace("{{PackageServiceList}}", dt.GetColValue("PackageServiceList"));
+                        html = html.Replace("{{PatientType1}}", dt.GetColValue("PatientType1"));
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")?.ToString()));
+                        StringBuilder serviceNames = new StringBuilder();
+
+
+                        double T_NetAmount = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:15;\"><td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["DepartmentName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["TotalBillAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            //items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-bottom: 1px solid #808080; text-align: center; padding: 6px;\">").Append(dr["NetAmount"].ConvertToDouble().ToString("F2")).Append("</td></tr>");
+
+                            serviceNames.Append(dr["ServiceName"].ConvertToString()).Append(", ");
+                            T_NetAmount += dr["NetAmount"].ConvertToDouble();
+                        }
+                        T_NetAmount = Math.Round(T_NetAmount);
+                        string finalServiceNames = serviceNames.ToString().TrimEnd(',', ' ');
+                        html = html.Replace("{{ServiceName}}", finalServiceNames);
+
+                        html = html.Replace("{{Items}}", items.ToString());
+                        double PaidFinal = dt.GetColValue("PaidAmount").ConvertToDouble();
+
+                        html = html.Replace("{{T_NetAmount}}", T_NetAmount.ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalBillAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{Price}}", dt.GetColValue("Price").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{TotalGst}}", dt.GetColValue("TotalGst").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{NetPayableAmt}}", dt.GetColValue("NetPayableAmt").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("AddedByName").ConvertToString());
+                        html = html.Replace("{{HospitalName}}", dt.GetColValue("HospitalName").ConvertToString());
+                        html = html.Replace("{{DiscComments}}", dt.GetColValue("DiscComments").ConvertToString());
+                        html = html.Replace("{{CashPay}}", dt.GetColValue("CashPay").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ChequePay}}", dt.GetColValue("ChequePay").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CardPay}}", dt.GetColValue("CardPay").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{NeftPay}}", dt.GetColValue("NeftPay").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PayTMPay}}", dt.GetColValue("PayTMPay").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PaymentMode}}", dt.GetColValue("PaymentMode").ConvertToString());
+                        html = html.Replace("{{RefundInfo}}", dt.GetColValue("RefundInfo"));
+                        html = html.Replace("{{chkpaidflag}}", dt.GetColValue("PaidAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkbalflag}}", dt.GetColValue("BalanceAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkdiscflag}}", dt.GetColValue("ConcessionAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkRefundflag}}", dt.GetColValue("RefundAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+                        //   html = html.Replace("{{chkPolicyNoflag}}", dt.GetColValue("PolicyNo").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkPolicyNoflag}}", !string.IsNullOrWhiteSpace(dt.GetColValue("PolicyNo")) ? "table-row" : "none");
+
+                        html = html.Replace("{{chkApprovedAmountflag}}", dt.GetColValue("ApprovedAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkBalanceafterGovflag}}", dt.GetColValue("BalanceafterGov").ConvertToDouble() > 0 ? "table-row " : "none");
+
+
+
+
+                        string finalamt = conversion(PaidFinal.ToString());
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+
+                        return html;
+
+                    }
+                    break;
+
 
                 case "LabMoneyReceiptWithoutHeader":
                     {
@@ -5886,6 +6150,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{BalanceafterGov}}", dt.GetColValue("BalanceafterGov").ConvertToDouble().ToString("F2"));
+
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")?.ToString()));
 
 
 
@@ -13628,7 +13894,7 @@ namespace HIMS.Services.Report
                                 // ================= TEST NAME HEADER =================
                                 if (previousLabel != currentTestName)
                                 {
-                                    items.Append("<tr style=\"font-size:16px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
+                                    items.Append("<tr style=\"font-size:18px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
                                          .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
                                          .Append("<span style=\"border-bottom:2px solid #000;\">")
                                          .Append(currentTestName)
@@ -13645,7 +13911,7 @@ namespace HIMS.Services.Report
                                     if (!string.IsNullOrWhiteSpace(currentSubTestName) &&
                                         previoussubLabel != currentSubTestName)
                                     {
-                                        items.Append("<tr style=\"font-size:14px;font-family:Verdana, Arial, sans-serif;font-weight:bold;\">")
+                                        items.Append("<tr style=\"font-size:16px;font-family:Verdana, Arial, sans-serif;font-weight:bold;\">")
                                              .Append("<td colspan=\"4\" style=\"padding:5px;text-align:left;\">")
                                              .Append(currentSubTestName)
                                              .Append("</td></tr>");
@@ -13657,16 +13923,16 @@ namespace HIMS.Services.Report
 
                                     // ================= PARAMETER NAME =================
                                     if (dr["IsBoldFlag"].ConvertToString() == "B")
-                                        items.Append("<td style=\"font-size:14px;font-weight:bold;padding:5px;text-align:left;\">");
+                                        items.Append("<td style=\"font-size:16px;font-weight:bold;padding:5px;text-align:left;\">");
                                     else
-                                        items.Append("<td style=\"font-size:14px;padding:5px;text-align:left;\">");
+                                        items.Append("<td style=\"font-size:16px;padding:5px;text-align:left;\">");
 
                                     items.Append(dr["PrintParameterName"].ConvertToString());
 
                                     if (!string.IsNullOrWhiteSpace(dr["MethodName"].ConvertToString()))
                                     {
                                         items.Append("<br/>")
-                                             .Append("<span style=\"font-size:12px;font-style:italic;color:#555;\">")
+                                             .Append("<span style=\"font-size:14px;font-style:italic;color:#555;\">")
                                              .Append(dr["MethodName"].ConvertToString())
                                              .Append("</span>");
                                     }
@@ -13692,11 +13958,11 @@ namespace HIMS.Services.Report
 
                                                 if (numericResult > maxRange)
                                                 {
-                                                    arrow = " <span style='color:red;font-weight:bold;font-size:14px;'>&uarr;</span>";
+                                                    arrow = " <span style='color:red;font-weight:bold;font-size:16px;'>&uarr;</span>";
                                                 }
                                                 else if (numericResult < minRange)
                                                 {
-                                                    arrow = " <span style='color:blue;font-weight:bold;font-size:14px;'>&darr;</span>";
+                                                    arrow = " <span style='color:blue;font-weight:bold;font-size:16px;'>&darr;</span>";
                                                 }
                                             }
                                         }
@@ -13708,17 +13974,17 @@ namespace HIMS.Services.Report
 
                                     // ================= OBSERVED VALUE =================
                                     if (dr["ParaBoldFlag"].ConvertToString() == "B")
-                                        items.Append("<td style=\"font-size:14px;font-weight:bold;padding:6px;text-align:center;\">");
+                                        items.Append("<td style=\"font-size:16px;font-weight:bold;padding:6px;text-align:center;\">");
                                     else
-                                        items.Append("<td style=\"font-size:14px;padding:6px;text-align:center;\">");
+                                        items.Append("<td style=\"font-size:16px;padding:6px;text-align:center;\">");
 
-                              
+
                                     if (arrow.Contains("blue"))
                                     {
-                                        items.Append("<span style='color:blue;font-weight:bold;font-size:14px;'>&darr;</span> ")
+                                        items.Append("<span style='color:blue;font-weight:bold;font-size:16px;'>&darr;</span> ")
                                              .Append(resultValue);
                                     }
-                                  
+
                                     else
                                     {
                                         items.Append(resultValue)
@@ -13728,12 +13994,12 @@ namespace HIMS.Services.Report
                                     items.Append("</td>");
 
                                     // ================= REFERENCE RANGE =================
-                                    items.Append("<td style=\"font-size:14px;padding:6px;text-align:left;\">")
+                                    items.Append("<td style=\"font-size:16px;padding:6px;text-align:left;\">")
                                          .Append(normalRange)
                                          .Append("</td>");
 
                                     // ================= UNITS =================
-                                    items.Append("<td style=\"font-size:14px;padding:6px;text-align:left;\">")
+                                    items.Append("<td style=\"font-size:16px;padding:6px;text-align:left;\">")
                                          .Append(dr["UnitNamePathTran"].ConvertToString())
                                          .Append("</td>");
 
@@ -13744,7 +14010,6 @@ namespace HIMS.Services.Report
                             }
                             html = html.Replace("{{Items}}", items.ToString());
                         }
-
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo").ConvertToString());
 
@@ -14081,7 +14346,7 @@ namespace HIMS.Services.Report
                                 // ================= TEST NAME HEADER =================
                                 if (previousLabel != currentTestName)
                                 {
-                                    items.Append("<tr style=\"font-size:16px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
+                                    items.Append("<tr style=\"font-size:18px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
                                          .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
                                          .Append("<span style=\"border-bottom:2px solid #000;\">")
                                          .Append(currentTestName)
@@ -14098,7 +14363,7 @@ namespace HIMS.Services.Report
                                     if (!string.IsNullOrWhiteSpace(currentSubTestName) &&
                                         previoussubLabel != currentSubTestName)
                                     {
-                                        items.Append("<tr style=\"font-size:14px;font-family:Verdana, Arial, sans-serif;font-weight:bold;\">")
+                                        items.Append("<tr style=\"font-size:16px;font-family:Verdana, Arial, sans-serif;font-weight:bold;\">")
                                              .Append("<td colspan=\"4\" style=\"padding:5px;text-align:left;\">")
                                              .Append(currentSubTestName)
                                              .Append("</td></tr>");
@@ -14110,16 +14375,16 @@ namespace HIMS.Services.Report
 
                                     // ================= PARAMETER NAME =================
                                     if (dr["IsBoldFlag"].ConvertToString() == "B")
-                                        items.Append("<td style=\"font-size:14px;font-weight:bold;padding:5px;text-align:left;\">");
+                                        items.Append("<td style=\"font-size:16px;font-weight:bold;padding:5px;text-align:left;\">");
                                     else
-                                        items.Append("<td style=\"font-size:14px;padding:5px;text-align:left;\">");
+                                        items.Append("<td style=\"font-size:16px;padding:5px;text-align:left;\">");
 
                                     items.Append(dr["PrintParameterName"].ConvertToString());
 
                                     if (!string.IsNullOrWhiteSpace(dr["MethodName"].ConvertToString()))
                                     {
                                         items.Append("<br/>")
-                                             .Append("<span style=\"font-size:12px;font-style:italic;color:#555;\">")
+                                             .Append("<span style=\"font-size:14px;font-style:italic;color:#555;\">")
                                              .Append(dr["MethodName"].ConvertToString())
                                              .Append("</span>");
                                     }
@@ -14145,11 +14410,11 @@ namespace HIMS.Services.Report
 
                                                 if (numericResult > maxRange)
                                                 {
-                                                    arrow = " <span style='color:red;font-weight:bold;font-size:14px;'>&uarr;</span>";
+                                                    arrow = " <span style='color:red;font-weight:bold;font-size:16px;'>&uarr;</span>";
                                                 }
                                                 else if (numericResult < minRange)
                                                 {
-                                                    arrow = " <span style='color:blue;font-weight:bold;font-size:14px;'>&darr;</span>";
+                                                    arrow = " <span style='color:blue;font-weight:bold;font-size:16px;'>&darr;</span>";
                                                 }
                                             }
                                         }
@@ -14161,14 +14426,14 @@ namespace HIMS.Services.Report
 
                                     // ================= OBSERVED VALUE =================
                                     if (dr["ParaBoldFlag"].ConvertToString() == "B")
-                                        items.Append("<td style=\"font-size:14px;font-weight:bold;padding:6px;text-align:center;\">");
+                                        items.Append("<td style=\"font-size:16px;font-weight:bold;padding:6px;text-align:center;\">");
                                     else
-                                        items.Append("<td style=\"font-size:14px;padding:6px;text-align:center;\">");
+                                        items.Append("<td style=\"font-size:16px;padding:6px;text-align:center;\">");
 
                                  
                                     if (arrow.Contains("blue"))
                                     {
-                                        items.Append("<span style='color:blue;font-weight:bold;font-size:14px;'>&darr;</span> ")
+                                        items.Append("<span style='color:blue;font-weight:bold;font-size:16px;'>&darr;</span> ")
                                              .Append(resultValue);
                                     }
                                  
@@ -14181,12 +14446,12 @@ namespace HIMS.Services.Report
                                     items.Append("</td>");
 
                                     // ================= REFERENCE RANGE =================
-                                    items.Append("<td style=\"font-size:14px;padding:6px;text-align:left;\">")
+                                    items.Append("<td style=\"font-size:16px;padding:6px;text-align:left;\">")
                                          .Append(normalRange)
                                          .Append("</td>");
 
                                     // ================= UNITS =================
-                                    items.Append("<td style=\"font-size:14px;padding:6px;text-align:left;\">")
+                                    items.Append("<td style=\"font-size:16px;padding:6px;text-align:left;\">")
                                          .Append(dr["UnitNamePathTran"].ConvertToString())
                                          .Append("</td>");
 

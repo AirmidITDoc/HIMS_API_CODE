@@ -170,7 +170,9 @@ namespace HIMS.Services.Pathlogy
                                 PathDate = objItem1.ChargesDate,
                                 PathTime = objItem1?.ChargesDate,
                                 OpdIpdType = objItem1?.OpdIpdType,
-                                OpdIpdId = objItem1?.OpdIpdId,
+                                //OpdIpdId = objItem1?.OpdIpdId,
+                                OpdIpdId = objBill?.OpdIpdId,
+
                                 PathTestId = objItem1?.ServiceId,
                                 AddedBy = objItem1?.AddedBy,
                                 ChargeId = objItem1?.ChargesId,
@@ -198,7 +200,9 @@ namespace HIMS.Services.Pathlogy
                                 RadDate = objItem1.ChargesDate,
                                 RadTime = objItem1?.ChargesDate,
                                 OpdIpdType = objItem1?.OpdIpdType,
-                                OpdIpdId = objItem1?.OpdIpdId,
+                                //OpdIpdId = objItem1?.OpdIpdId,
+                                OpdIpdId = objBill?.OpdIpdId,
+
                                 RadTestId = objItem1?.ServiceId,
                                 AddedBy = objItem1?.AddedBy,
                                 ChargeId = objItem1?.ChargesId,
@@ -226,7 +230,9 @@ namespace HIMS.Services.Pathlogy
                                 RadDate = objItem1.ChargesDate,
                                 RadTime = objItem1?.ChargesTime,
                                 OpdIpdType = objItem1?.OpdIpdType,
-                                OpdIpdId = objItem1?.OpdIpdId,
+                                //OpdIpdId = objItem1?.OpdIpdId,
+                                OpdIpdId = objBill?.OpdIpdId,
+
                                 RadTestId = objItem1?.ServiceId,
                                 AddedBy = objItem1?.AddedBy,
                                 ChargeId = objItem1?.ChargesId,
@@ -261,7 +267,10 @@ namespace HIMS.Services.Pathlogy
                                         Packagescharge.Remove(rProperty);
                                 }
                                 Packagescharge["PackageMainChargeId"] = objItem1.ChargesId;
+                                Packagescharge["OpdIpdId"] = objBill.OpdIpdId;
                                 Packagescharge["BillNo"] = objBill.BillNo;
+
+
                                 var VChargesId = odal.ExecuteNonQuery("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
                                 item.ChargesId = Convert.ToInt32(VChargesId);
 
@@ -347,6 +356,7 @@ namespace HIMS.Services.Pathlogy
                 objBill.BillNo = Convert.ToInt32(vBillNo);
 
 
+
                 using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
                 {
 
@@ -380,7 +390,10 @@ namespace HIMS.Services.Pathlogy
                                 PathDate = objItem1.ChargesDate,
                                 PathTime = objItem1?.ChargesTime,
                                 OpdIpdType = objItem1?.OpdIpdType,
-                                OpdIpdId = objItem1?.OpdIpdId,
+
+                                //OpdIpdId = objItem1?.OpdIpdId,
+                                OpdIpdId = objBill?.OpdIpdId,
+
                                 PathTestId = objItem1?.ServiceId,
                                 AddedBy = objItem1?.AddedBy,
                                 ChargeId = objItem1?.ChargesId,
@@ -394,7 +407,8 @@ namespace HIMS.Services.Pathlogy
                                 DoctorName = objBill.DoctorName,
                                 CreatedBy = CurrentUserId,
                                 CreatedDate = AppTime.Now,
-                                UnitId = objBill.UnitId
+                                UnitId = objBill.UnitId,
+
                             };
 
                             _context.TPathologyReportHeaders.Add(objPatho);
@@ -408,7 +422,10 @@ namespace HIMS.Services.Pathlogy
                                 RadDate = objItem1.ChargesDate,
                                 RadTime = objItem1?.ChargesTime,
                                 OpdIpdType = objItem1?.OpdIpdType,
-                                OpdIpdId = objItem1?.OpdIpdId,
+
+                                //OpdIpdId = objItem1?.OpdIpdId,
+                                OpdIpdId = objBill?.OpdIpdId,
+
                                 RadTestId = objItem1?.ServiceId,
                                 AddedBy = objItem1?.AddedBy,
                                 ChargeId = objItem1?.ChargesId,
@@ -436,7 +453,10 @@ namespace HIMS.Services.Pathlogy
                                 RadDate = objItem1.ChargesDate,
                                 RadTime = objItem1?.ChargesTime,
                                 OpdIpdType = objItem1?.OpdIpdType,
-                                OpdIpdId = objItem1?.OpdIpdId,
+
+                                //OpdIpdId = objItem1?.OpdIpdId,
+                                OpdIpdId = objBill?.OpdIpdId,
+
                                 RadTestId = objItem1?.ServiceId,
                                 AddedBy = objItem1?.AddedBy,
                                 ChargeId = objItem1?.ChargesId,
@@ -472,8 +492,9 @@ namespace HIMS.Services.Pathlogy
                                         Packagescharge.Remove(rProperty);
                                 }
                                 Packagescharge["PackageMainChargeId"] = objItem1.ChargesId;
+                                Packagescharge["OpdIpdId"] = objBill.OpdIpdId;
                                 Packagescharge["BillNo"] = objBill.BillNo;
-                                
+
                                 var VChargesId = odal.ExecuteNonQuery("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
                                 item.ChargesId = Convert.ToInt32(VChargesId);
 

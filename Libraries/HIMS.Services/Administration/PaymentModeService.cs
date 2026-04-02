@@ -82,6 +82,25 @@ namespace HIMS.Services.Administration
 
             }
         }
+        public virtual async Task NewPaymentUpdateAsync(List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
+        {
+            DatabaseHelper odal = new();
+            foreach (var item in ObjTPayment)
+            {
+
+                string[] AEntity = { "PaymentId", "UnitId", "BillNo", "Opdipdtype", "ReceiptNo", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount", "Comments", "PayMode", "OnlineTranNo", "OnlineTranResponse", "CompanyId", "AdvanceId", "RefundId", "CashCounterId", "TransactionType", "TransactionLabel", "IsSelfOrcompany", "TranMode", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "CreatedBy" };
+                var Rentity = item.ToDictionary();
+
+                foreach (var rProperty in Rentity.Keys.ToList())
+                {
+                    if (!AEntity.Contains(rProperty))
+                        Rentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_NewSaveUpdate_Payment", CommandType.StoredProcedure, Rentity);
+                await _context.LogProcedureExecution(Rentity, nameof(TPayment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+            }
+        }
         public virtual async Task PaymentPharmacyUpdateAsync(List<TPaymentPharmacy> ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
@@ -101,6 +120,20 @@ namespace HIMS.Services.Administration
 
             }
         }
+        public virtual async Task Cancel(TPayment ObjTPayment, int UserId, string Username)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] rDetailEntity = { "PaymentId", "IsCancelledBy" };
+            var CAdvanceEntity = ObjTPayment.ToDictionary();
+            foreach (var rProperty in CAdvanceEntity.Keys.ToList())
+            {
+                if (!rDetailEntity.Contains(rProperty))
+                    CAdvanceEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("PS_Cancel_T_Payment", CommandType.StoredProcedure, CAdvanceEntity);
+        }
+
     }
 }
 

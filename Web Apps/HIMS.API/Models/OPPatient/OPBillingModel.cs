@@ -156,16 +156,16 @@ namespace HIMS.API.Models.OPPatient
         public string? ReceiptNo { get; set; }
         public string? PaymentDate { get; set; }
         public string? PaymentTime { get; set; }
-        public long? CashPayAmount { get; set; }
-        public long? ChequePayAmount { get; set; }
+        public decimal? CashPayAmount { get; set; }
+        public decimal? ChequePayAmount { get; set; }
         public string? ChequeNo { get; set; }
         public string? BankName { get; set; }
         public string? ChequeDate { get; set; }
-        public long? CardPayAmount { get; set; }
+        public decimal? CardPayAmount { get; set; }
         public string? CardNo { get; set; }
         public string? CardBankName { get; set; }
         public string? CardDate { get; set; }
-        public long? AdvanceUsedAmount { get; set; }
+        public decimal? AdvanceUsedAmount { get; set; }
         public int? AdvanceId { get; set; }
         public int? RefundId { get; set; }
         public int? TransactionType { get; set; }
@@ -175,14 +175,14 @@ namespace HIMS.API.Models.OPPatient
         public long? SalesId { get; set; }
         public int? IsCancelledBy { get; set; }
         public string? IsCancelledDate { get; set; }
-        public long? NeftpayAmount { get; set; }
+        public decimal? NeftpayAmount { get; set; }
         public string? Neftno { get; set; }
         public string? NeftbankMaster { get; set; }
         public string? Neftdate { get; set; }
-        public long? PayTmamount { get; set; }
+        public decimal? PayTmamount { get; set; }
         public string? PayTmtranNo { get; set; }
         public string? PayTmdate { get; set; }
-        public long? Tdsamount { get; set; }
+        public decimal? Tdsamount { get; set; }
         public decimal? Wfamount { get; set; }
         public long? CompanyId { get; set; }
 

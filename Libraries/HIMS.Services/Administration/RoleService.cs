@@ -109,6 +109,8 @@ namespace HIMS.Services.Administration
             }
             return finalList;
         }
+
+
         private static List<MenuModel> AddChildtems(List<MenuMasterDTO> Data, MenuModel obj, bool isActiveMenuOnly)
         {
             List<MenuModel> lstChilds = new();
@@ -129,7 +131,9 @@ namespace HIMS.Services.Administration
                         IsView = objItem.IsView,
                         IsAdd = objItem.IsAdd,
                         IsDelete = objItem.IsDelete,
-                        IsEdit = objItem.IsEdit
+                        IsEdit = objItem.IsEdit,
+                        IsExport = objItem.IsExport  
+
                     };
                     objData.Children = AddChildtems(Data, objData, isActiveMenuOnly);
                     if (objData.Children.Count == 0)
@@ -163,6 +167,7 @@ namespace HIMS.Services.Administration
             }
             return lstChilds;
         }
+      
         public List<MenuModel> GetPermisison(int RoleId)
         {
             // return GetListBySp<MenuMaster>("SELECT M.* FROM MenuMaster M LEFT JOIN MenuMaster MM on M.Id=MM.UpId WHERE ISNULL(MM.Id,0)=0", new SqlParameter[0]);

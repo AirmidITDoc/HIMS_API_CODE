@@ -9,10 +9,8 @@
 
     public class AuthResponse
     {
-        public string? AccessToken { get; set; }
-        public string? Description { get; set; }
+        public string? access_token { get; set; }
         public string? Error { get; set; }
-        public int? StatusCode { get; set; }
     }
 
     // ──────────────── Comment ────────────────
