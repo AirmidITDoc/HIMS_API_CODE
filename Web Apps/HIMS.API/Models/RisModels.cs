@@ -1,4 +1,6 @@
-﻿namespace HIMS.API.Models
+﻿using System.Text.Json.Serialization;
+
+namespace HIMS.API.Models
 {
     // ──────────────── Auth ────────────────
     public class AuthRequest
@@ -16,65 +18,110 @@
     // ──────────────── Comment ────────────────
     public class CommentDto
     {
+        [JsonPropertyName("comment")]
         public string Comment { get; set; } = string.Empty;
+        [JsonPropertyName("comments_by")]
         public string CommentBy { get; set; } = string.Empty;       // Domain ID of the user
+        [JsonPropertyName("comment_timestamp")]
         public string CommentTimestamp { get; set; } = string.Empty; // ISO 8601
     }
 
     // ──────────────── Create Radiology Order ────────────────
     public class CreateRadiologyOrderRequest
     {
-        public string First_Name { get; set; } = string.Empty;
-        public string Middle_Name { get; set; } = string.Empty;       // optional
-        public string Last_Name { get; set; } = string.Empty;         // optional
-        public string Patient_Id { get; set; } = string.Empty;
-        public string Patient_Dob { get; set; } = string.Empty;       // dd-mm-YYYY; optional if age given
-        public string Patient_Age { get; set; } = string.Empty;       // optional if dob given
-        public string Patient_Gender { get; set; } = string.Empty;
-        public string Patient_Phone_Number { get; set; } = string.Empty;
+        [JsonPropertyName("first_name")]
+        public string FirstName { get; set; } = string.Empty;
+        [JsonPropertyName("middle_name")]
+        public string MiddleName { get; set; } = string.Empty;       // optional
+        [JsonPropertyName("last_name")]
+        public string LastName { get; set; } = string.Empty;         // optional
+        [JsonPropertyName("patient_id")]
+        public string PatientId { get; set; } = string.Empty;
+        [JsonPropertyName("patient_dob")]
+        public string PatientDob { get; set; } = string.Empty;       // dd-mm-YYYY; optional if age given
+        [JsonPropertyName("patient_age")]
+        public string PatientAge { get; set; } = string.Empty;       // optional if dob given
+        [JsonPropertyName("patient_gender")]
+        public string PatientGender { get; set; } = string.Empty;
+        [JsonPropertyName("patient_phone_number")]
+        public string PatientPhoneNumber { get; set; } = string.Empty;
+        [JsonPropertyName("patient_country_code")]
         public string PatientCountryCode { get; set; } = string.Empty;
-        public string Patient_Email { get; set; } = string.Empty;     // optional
+        [JsonPropertyName("patient_email")]
+        public string PatientEmail { get; set; } = string.Empty;     // optional
+        [JsonPropertyName("modality")]
         public string Modality { get; set; } = string.Empty;
-        public string Accession_Number { get; set; } = string.Empty;  // unique order ID
-        public string Scan_Desc { get; set; } = string.Empty;
-        public string Scan_Id { get; set; } = string.Empty;           // optional
-        public string Ref_Physician { get; set; } = string.Empty;     // optional
-        public string Ref_Physician_Phone_Number { get; set; } = string.Empty; // optional
-        public string Ref_Country_Code { get; set; } = string.Empty;
-        public string Ref_Physician_Email { get; set; } = string.Empty; // optional
-        public string External_Id { get; set; } = string.Empty;       // optional
-        public string Branch_Code { get; set; } = string.Empty;       // optional
-        public string Branch_Name { get; set; } = string.Empty;       // optional
+        [JsonPropertyName("accession_number")]
+        public string AccessionNumber { get; set; } = string.Empty;  // unique order ID
+        [JsonPropertyName("scan_desc")]
+        public string ScanDesc { get; set; } = string.Empty;
+        [JsonPropertyName("scan_id")]
+        public string ScanId { get; set; } = string.Empty;           // optional
+        [JsonPropertyName("ref_physician")]
+        public string RefPhysician { get; set; } = string.Empty;     // optional
+        [JsonPropertyName("ref_physician_phone_number")]
+        public string RefPhysicianPhoneNumber { get; set; } = string.Empty; // optional
+        [JsonPropertyName("ref_country_code")]
+        public string RefCountryCode { get; set; } = string.Empty;
+        [JsonPropertyName("ref_physician_email")]
+        public string RefPhysicianEmail { get; set; } = string.Empty; // optional
+        [JsonPropertyName("external_id")]
+        public string ExternalId { get; set; } = string.Empty;       // optional
+        [JsonPropertyName("branch_code")]
+        public string BranchCode { get; set; } = string.Empty;       // optional
+        [JsonPropertyName("branch_name")]
+        public string BranchName { get; set; } = string.Empty;       // optional
+        [JsonPropertyName("package")]
         public string Package { get; set; } = string.Empty;
-        public string Appointment_Date_Time { get; set; } = string.Empty; // ISO 8601
+        [JsonPropertyName("appointment_date_time")]
+        public string AppointmentDateTime { get; set; } = string.Empty; // ISO 8601
+        [JsonPropertyName("comments")]
         public List<CommentDto> Comments { get; set; } = new();
     }
 
     // ──────────────── Update Radiology Order ────────────────
     public class UpdateRadiologyOrderRequest
     {
+        [JsonPropertyName("first_name")]
         public string FirstName { get; set; } = string.Empty;
+        [JsonPropertyName("middle_name")]
         public string MiddleName { get; set; } = string.Empty;
+        [JsonPropertyName("last_name")]
         public string LastName { get; set; } = string.Empty;
+        [JsonPropertyName("patient_dob")]
         public string PatientDob { get; set; } = string.Empty;
+        [JsonPropertyName("patient_age")]
         public string PatientAge { get; set; } = string.Empty;
+        [JsonPropertyName("patient_gender")]
         public string PatientGender { get; set; } = string.Empty;
+        [JsonPropertyName("patient_phone_number")]
         public string PatientPhoneNumber { get; set; } = string.Empty;
+        [JsonPropertyName("patient_email")]
         public string PatientEmail { get; set; } = string.Empty;
+        [JsonPropertyName("modality")]
         public string Modality { get; set; } = string.Empty;
+        [JsonPropertyName("scan_desc")]
         public string ScanDesc { get; set; } = string.Empty;
+        [JsonPropertyName("scan_id")]
         public string ScanId { get; set; } = string.Empty;
+        [JsonPropertyName("ref_physician")]
         public string RefPhysician { get; set; } = string.Empty;
+        [JsonPropertyName("ref_physician_phone_number")]
         public string RefPhysicianPhoneNumber { get; set; } = string.Empty;
+        [JsonPropertyName("ref_physician_email")]
         public string RefPhysicianEmail { get; set; } = string.Empty;
+        [JsonPropertyName("comments")]
         public List<CommentDto> Comments { get; set; } = new();
     }
 
     // ──────────────── Delete Radiology Order ────────────────
     public class DeleteRadiologyOrderRequest
     {
+        [JsonPropertyName("accession_number")]
         public string AccessionNumber { get; set; } = string.Empty;
+        [JsonPropertyName("scan_id")]
         public string ScanId { get; set; } = string.Empty;
+        [JsonPropertyName("external_id")]
         public string ExternalId { get; set; } = string.Empty;
     }
 
