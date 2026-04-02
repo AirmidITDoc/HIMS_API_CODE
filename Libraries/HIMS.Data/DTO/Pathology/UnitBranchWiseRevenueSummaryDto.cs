@@ -12,7 +12,7 @@ namespace HIMS.Data.DTO.Pathology
         public decimal TotalRevenue { get; set; }
         public double DiscountAmount { get; set; }
         public decimal NetRevenue { get; set; }
-        public decimal BalAmount { get; set; }
+        public double BalAmount { get; set; }
         public double PatientCount { get; set; }
 
     }
@@ -23,7 +23,7 @@ namespace HIMS.Data.DTO.Pathology
         public long TestCount { get; set; }
         public string ServiceName { get; set; }
         public decimal Price { get; set; }
-        public decimal Qty { get; set; }
+        public double Qty { get; set; }
         public decimal TotalAmount { get; set; }
         public long ServiceId { get; set; }
     }
@@ -40,7 +40,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? UnitBranchName { get; set; }
         public string? DoctorName { get; set; }
         public int TestCount { get; set; }
-        public double TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public long DoctorId { get; set; }
     }
     public class UnitCompanyTestSummaryDto
