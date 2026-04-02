@@ -96,14 +96,13 @@ namespace HIMS.API.Models.Inventory
         public string Tariff { get; set; } = "";
         public string Class { get; set; } = "";
         public string Service { get; set; } = "";
-        public double ClassRate { get; set; }
-        public double PatientRate { get; set; }
-        public double CpRate { get; set; }
-        public double? DiscountAmount { get; set; }
+        public decimal ClassRate { get; set; }
+        public decimal PatientRate { get; set; }
+        public decimal CpRate { get; set; }
+        public decimal? DiscountAmount { get; set; }
         public double? DiscountPercentage { get; set; }
         public long ServiceId { get; set; }
         public long TariffId { get; set; }
         public long ClassId { get; set; }
     }
 }
-

@@ -2697,14 +2697,17 @@ namespace HIMS.Services.Report
                 #region :: MRDFileView ::
                 case "MrdPatinetFileView":
                     {
+                       
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "MRDFileView.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("Rtrv_MRdPatienwise", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "MRDFileView", "ExpenseVoucharPrint" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "MRDFileView", "MRDFileView" + vDate, Orientation.Portrait);
                         break;
+
                     }
                 #endregion
 

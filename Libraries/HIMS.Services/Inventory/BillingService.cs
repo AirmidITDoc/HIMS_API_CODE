@@ -79,14 +79,14 @@ namespace HIMS.Services.Inventory
         //        scope.Complete();
         //    }
         //}
-       
-        public virtual async Task UpdateAsync(  ServiceMaster objService,  int userId,  string username,  int tariffId,  string[]? ignoreColumns = null)
+
+        public virtual async Task UpdateAsync(ServiceMaster objService, int userId, string username, int tariffId, string[]? ignoreColumns = null)
         {
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
             {
-                var existingService = await _context.ServiceMasters .FirstOrDefaultAsync(x => x.ServiceId == objService.ServiceId);
+                var existingService = await _context.ServiceMasters.FirstOrDefaultAsync(x => x.ServiceId == objService.ServiceId);
 
                 if (existingService == null)
                     throw new Exception("Service not found");
@@ -105,7 +105,7 @@ namespace HIMS.Services.Inventory
 
                 //  Delete old ServiceDetail records
                 var oldDetails = await _context.ServiceDetails
-                    .Where(x => x.ServiceId == objService.ServiceId && x.TariffId == tariffId) .ToListAsync();
+                    .Where(x => x.ServiceId == objService.ServiceId && x.TariffId == tariffId).ToListAsync();
 
                 _context.ServiceDetails.RemoveRange(oldDetails);
 
@@ -114,7 +114,7 @@ namespace HIMS.Services.Inventory
                 {
                     foreach (var detail in objService.ServiceDetails)
                     {
-                        detail.ServiceDetailId = 0; 
+                        detail.ServiceDetailId = 0;
 
                         detail.ServiceId = objService.ServiceId;
                         detail.TariffId = tariffId;
@@ -393,6 +393,28 @@ namespace HIMS.Services.Inventory
             return sql.FetchListBySP<RadiologyServiceComboDto>("Rtrv_RadiologyServiceCombo", para);
         }
 
+        public async Task Import(List<ServiceDetail> lst)
+        {
+            foreach (var item in lst)
+            {
+                var exist = await _context.ServiceDetails.FirstOrDefaultAsync(x => x.ServiceId == item.ServiceId && x.ClassId == item.ClassId && x.TariffId == item.TariffId);
+                if ((exist?.ServiceDetailId ?? 0) > 0)
+                {
+                    exist.ClassRate = item.ClassRate;
+                    exist.Cprate = item.Cprate;
+                    exist.DiscountPercentage = item.DiscountPercentage;
+                    exist.DiscountAmount = item.DiscountAmount;
+                    exist.PatientRate = item.PatientRate;
+                    exist.Service = item.Service;
+                    _context.Entry(exist).State = EntityState.Modified;
+                }
+                else
+                {
+                    _context.ServiceDetails.Add(item);
+                }
+            }
+            await _context.SaveChangesAsync();
+        }
 
     }
 }
