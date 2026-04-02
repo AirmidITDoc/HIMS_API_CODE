@@ -92,7 +92,7 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(BranchWiseCategorySummaryList.ToGridResponse(objGrid, "BranchWiseCategorySummary List"));
         }
         [HttpPost("DailyCollectionDetailList")]
-        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> DailyCollectionDetailList(GridRequestModel objGrid)
         {
             IPagedList<DailyCollectionDetailList> DailyCollectionDetailList = await _IBranchService.DailyCollectionDetailList(objGrid);
