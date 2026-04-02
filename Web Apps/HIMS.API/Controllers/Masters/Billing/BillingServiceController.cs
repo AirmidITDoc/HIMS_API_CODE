@@ -276,34 +276,7 @@ namespace HIMS.API.Controllers.Masters.Billing
 
                     return (1, "Valid");
                 });
-
-                var distinctServices = data.DistinctBy(x => x.Service);
-                var matchedServices = (await _repository.GetAll(x => distinctServices.Select(s => s.Service).Contains(x.ServiceName))).ToList();
-                foreach (var service in matchedServices)
-                    data.Where(x => x.Service == service.ServiceName).ToList().ForEach(x =>
-                    {
-                        x.ServiceId = service.ServiceId;
-                    });
-                var distinctClasses = data.DistinctBy(x => x.Class);
-                var matchedClasses = (await _ClassRepository.GetAll(x => distinctClasses.Select(s => s.Class).Contains(x.ClassName))).ToList();
-                foreach (var cls in matchedClasses)
-                    data.Where(x => x.Class == cls.ClassName).ToList().ForEach(x =>
-                    {
-                        x.ClassId = cls.ClassId;
-                    });
-                var distinctTariffs = data.DistinctBy(x => x.Tariff);
-                var matchedTariffs = (await _TariffRepository.GetAll(x => distinctTariffs.Select(s => s.Tariff).Contains(x.TariffName))).ToList();
-                foreach (var tariff in matchedTariffs)
-                    data.Where(x => x.Tariff == tariff.TariffName).ToList().ForEach(x =>
-                    {
-                        x.TariffId = tariff.TariffId;
-                    });
-                data.Where(x => x.Status == 1).ToList().ForEach(x =>
-                {
-                    x.Status = x.ClassId > 0 && x.ServiceId > 0 && x.TariffId > 0 ? 1 : 0;
-                    x.Message = x.Status == 1 ? "Valid" : $"{(x.ServiceId > 0 ? "" : "Service not found. ")}{(x.ClassId > 0 ? "" : "Class not found. ")}{(x.TariffId > 0 ? "" : "Tariff not found.")}".Trim();
-                });
-
+                await ValidateDataAsync(data);
                 return ApiResponseHelper.GenerateResponse(
                     ApiStatusCode.Status200OK,
                     "Files are processed successfully.",
@@ -317,6 +290,38 @@ namespace HIMS.API.Controllers.Masters.Billing
                     null);
             }
         }
+
+        [NonAction]
+        public async Task ValidateDataAsync(List<BillingServiceImportDto> data)
+        {
+            var distinctServices = data.DistinctBy(x => x.Service);
+            var matchedServices = (await _repository.GetAll(x => distinctServices.Select(s => s.Service).Contains(x.ServiceName))).ToList();
+            foreach (var service in matchedServices)
+                data.Where(x => x.Service == service.ServiceName).ToList().ForEach(x =>
+                {
+                    x.ServiceId = service.ServiceId;
+                });
+            var distinctClasses = data.DistinctBy(x => x.Class);
+            var matchedClasses = (await _ClassRepository.GetAll(x => distinctClasses.Select(s => s.Class).Contains(x.ClassName))).ToList();
+            foreach (var cls in matchedClasses)
+                data.Where(x => x.Class == cls.ClassName).ToList().ForEach(x =>
+                {
+                    x.ClassId = cls.ClassId;
+                });
+            var distinctTariffs = data.DistinctBy(x => x.Tariff);
+            var matchedTariffs = (await _TariffRepository.GetAll(x => distinctTariffs.Select(s => s.Tariff).Contains(x.TariffName))).ToList();
+            foreach (var tariff in matchedTariffs)
+                data.Where(x => x.Tariff == tariff.TariffName).ToList().ForEach(x =>
+                {
+                    x.TariffId = tariff.TariffId;
+                });
+            data.Where(x => x.Status == 1).ToList().ForEach(x =>
+            {
+                x.Status = x.ClassId > 0 && x.ServiceId > 0 && x.TariffId > 0 ? 1 : 0;
+                x.Message = x.Status == 1 ? "Valid" : $"{(x.ServiceId > 0 ? "" : "Service not found. ")}{(x.ClassId > 0 ? "" : "Class not found. ")}{(x.TariffId > 0 ? "" : "Tariff not found.")}".Trim();
+            });
+        }
+
         [HttpPost("import-data")]
         [Permission]
         public async Task<ApiResponse> ImportData([FromForm] IFormFile file, [FromForm] string mapping)
@@ -344,13 +349,13 @@ namespace HIMS.API.Controllers.Masters.Billing
 
                 return (1, "Valid");
             });
+            await ValidateDataAsync(data);
             if (!data.Any(x => x.Status == 1))
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No valid data to import.", null);
             else
             {
                 var importData = data.Where(x => x.Status == 1);
-                // Add here logic for import data into tables. above data should be inserted into tables. you can map this data into your entity and then save into database.
-
+                await _BillingService.Import(importData.Select(x => new ServiceDetail() { ClassId = x.ClassId, ClassRate = x.ClassRate, Cprate = x.CpRate, DiscountAmount = x.DiscountAmount, DiscountPercentage = x.DiscountPercentage, PatientRate = x.PatientRate, ServiceId = x.ServiceId, TariffId = x.TariffId }).ToList());
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Data imported successfully.", null);
             }
         }
