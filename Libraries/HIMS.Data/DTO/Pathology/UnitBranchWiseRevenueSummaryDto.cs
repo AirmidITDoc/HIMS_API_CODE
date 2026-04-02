@@ -12,7 +12,7 @@ namespace HIMS.Data.DTO.Pathology
         public decimal TotalRevenue { get; set; }
         public double DiscountAmount { get; set; }
         public decimal NetRevenue { get; set; }
-        public double BalAmount { get; set; }
+        public decimal BalAmount { get; set; }
         public double PatientCount { get; set; }
 
     }
