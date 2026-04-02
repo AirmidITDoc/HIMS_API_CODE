@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.RIS
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _logger.LogInformation("Creating radiology order. AccessionNumber: {AccessionNumber}", request.AccessionNumber);
+            _logger.LogInformation("Creating radiology order. AccessionNumber: {AccessionNumber}", request.Accession_Number);
 
             try
             {
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.RIS
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error creating radiology order for AccessionNumber: {AccessionNumber}", request.AccessionNumber);
+                _logger.LogError(ex, "Error creating radiology order for AccessionNumber: {AccessionNumber}", request.Accession_Number);
                 return StatusCode(StatusCodes.Status500InternalServerError, new RisApiResponse
                 {
                     Status = false,

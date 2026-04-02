@@ -24,29 +24,29 @@
     // ──────────────── Create Radiology Order ────────────────
     public class CreateRadiologyOrderRequest
     {
-        public string FirstName { get; set; } = string.Empty;
-        public string MiddleName { get; set; } = string.Empty;       // optional
-        public string LastName { get; set; } = string.Empty;         // optional
-        public string PatientId { get; set; } = string.Empty;
-        public string PatientDob { get; set; } = string.Empty;       // dd-mm-YYYY; optional if age given
-        public string PatientAge { get; set; } = string.Empty;       // optional if dob given
-        public string PatientGender { get; set; } = string.Empty;
-        public string PatientPhoneNumber { get; set; } = string.Empty;
+        public string First_Name { get; set; } = string.Empty;
+        public string Middle_Name { get; set; } = string.Empty;       // optional
+        public string Last_Name { get; set; } = string.Empty;         // optional
+        public string Patient_Id { get; set; } = string.Empty;
+        public string Patient_Dob { get; set; } = string.Empty;       // dd-mm-YYYY; optional if age given
+        public string Patient_Age { get; set; } = string.Empty;       // optional if dob given
+        public string Patient_Gender { get; set; } = string.Empty;
+        public string Patient_Phone_Number { get; set; } = string.Empty;
         public string PatientCountryCode { get; set; } = string.Empty;
-        public string PatientEmail { get; set; } = string.Empty;     // optional
+        public string Patient_Email { get; set; } = string.Empty;     // optional
         public string Modality { get; set; } = string.Empty;
-        public string AccessionNumber { get; set; } = string.Empty;  // unique order ID
-        public string ScanDesc { get; set; } = string.Empty;
-        public string ScanId { get; set; } = string.Empty;           // optional
-        public string RefPhysician { get; set; } = string.Empty;     // optional
-        public string RefPhysicianPhoneNumber { get; set; } = string.Empty; // optional
-        public string RefCountryCode { get; set; } = string.Empty;
-        public string RefPhysicianEmail { get; set; } = string.Empty; // optional
-        public string ExternalId { get; set; } = string.Empty;       // optional
-        public string BranchCode { get; set; } = string.Empty;       // optional
-        public string BranchName { get; set; } = string.Empty;       // optional
+        public string Accession_Number { get; set; } = string.Empty;  // unique order ID
+        public string Scan_Desc { get; set; } = string.Empty;
+        public string Scan_Id { get; set; } = string.Empty;           // optional
+        public string Ref_Physician { get; set; } = string.Empty;     // optional
+        public string Ref_Physician_Phone_Number { get; set; } = string.Empty; // optional
+        public string Ref_Country_Code { get; set; } = string.Empty;
+        public string Ref_Physician_Email { get; set; } = string.Empty; // optional
+        public string External_Id { get; set; } = string.Empty;       // optional
+        public string Branch_Code { get; set; } = string.Empty;       // optional
+        public string Branch_Name { get; set; } = string.Empty;       // optional
         public string Package { get; set; } = string.Empty;
-        public string AppointmentDateTime { get; set; } = string.Empty; // ISO 8601
+        public string Appointment_Date_Time { get; set; } = string.Empty; // ISO 8601
         public List<CommentDto> Comments { get; set; } = new();
     }
 
