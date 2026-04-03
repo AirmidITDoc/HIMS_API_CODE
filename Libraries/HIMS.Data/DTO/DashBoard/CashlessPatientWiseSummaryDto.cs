@@ -27,7 +27,11 @@ namespace HIMS.Data.DTO.DashBoard
     }
     public class CashlessCountSummaryDto
     {
+        public DateTime VisitDate { get; set; }
         public double Count { get; set; }
+        public long SentApproval { get; set; }
+        public long Approved { get; set; }
+
     }
     public class CashlessCompanyWiseSummaryDto
     {
