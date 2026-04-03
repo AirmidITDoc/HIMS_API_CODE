@@ -6,9 +6,9 @@
         public long OPD_IPD_Id { get; set; }
         public long? ServiceId { get; set; }
         public string? ServiceName { get; set; }
-        public double? Price { get; set; }
+        public decimal? Price { get; set; }
         public double? Qty { get; set; }
-        public double? TotalAmt { get; set; }
+        public decimal? TotalAmt { get; set; }
         public double? ConcessionPercentage { get; set; }
         public decimal? ConcessionAmount { get; set; }
         public decimal? NetAmount { get; set; }
@@ -16,7 +16,7 @@
         public string? DoctorName { get; set; }
         public double? DocPercentage { get; set; }
         public double? DocAmt { get; set; }
-        public double? HospitalAmt { get; set; }
+        public decimal? HospitalAmt { get; set; }
         public string? ChargesDate { get; set; }
         public bool? IsGenerated { get; set; }
         public bool? IsCancelled { get; set; }
