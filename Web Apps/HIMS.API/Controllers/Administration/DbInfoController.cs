@@ -13,17 +13,19 @@ namespace HIMS.API.Controllers.Administration
     public class DbInfoController : BaseController
     {
         [HttpGet("DBInformation")]
-        public async Task<IActionResult> DBInformation()
+        public async Task<ApiResponse> DBInformation()
         {
             var builder = new SqlConnectionStringBuilder(AppSettings.Settings.CONNECTION_STRING);
 
-            return Ok(new
+            var dbInfo = new
             {
                 Server = builder.DataSource,
                 Database = builder.InitialCatalog,
                 UserName = builder.UserID,
                 Provider = "SQL Server"
-            });
+            };
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Database info fetched successfully.",dbInfo);
         }
     }
 }
