@@ -38,7 +38,7 @@ namespace HIMS.Data.DTO.DashBoard
         public string? CompanyName { get; set; }
         public double PatientCount { get; set; }
         public double DraftBill { get; set; }
-        public double FinalAmount { get; set; }
+        public decimal FinalAmount { get; set; }
         public double PharmacyAmount { get; set; }
 
     }
