@@ -93,6 +93,9 @@ namespace HIMS.Data.DTO.Pathology
         public long? GenderId { get; set; }
         public string? SuggestionNotes { get; set; }
         public bool? PaymentCompleted { get; set; }
+        public bool? PaymentPending { get; set; }
+
+        
 
 
 
