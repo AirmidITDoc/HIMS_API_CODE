@@ -68,8 +68,7 @@ namespace HIMS.API.Controllers.Report
             {
                 Keyword = string.Empty;
             }
-
-            var data = await _IRegistrationService.SearchRegistration(Keyword);
+            var data = await _reportService.SearchLoginUser(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.Id }));
         }
         [HttpGet("DoctorList/auto-complete")]
