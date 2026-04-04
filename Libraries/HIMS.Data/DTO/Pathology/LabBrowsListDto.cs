@@ -83,7 +83,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? OutSourceModifiedDateTime { get; set; }
         public long? OutSourceCreatedBy { get; set; }
         public long? OutSourceModifiedBy { get; set; }
-        public int? PaymentCompleted { get; set; }
+        //public int? PaymentCompleted { get; set; }
         public string? PatientName { get; set; }
         public string? DoctorName { get; set; }
         public string? LabRequestNo { get; set; }
@@ -92,7 +92,12 @@ namespace HIMS.Data.DTO.Pathology
         public string? AgeDay { get; set; }
         public long? GenderId { get; set; }
         public string? SuggestionNotes { get; set; }
+        public bool? PaymentCompleted { get; set; }
+        public bool? PaymentPending { get; set; }
+
         
+
+
 
 
     }
