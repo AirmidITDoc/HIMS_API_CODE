@@ -71,9 +71,12 @@
 
                             <td style="width:25%; text-align:center; vertical-align:top;">
                                 <!-- QR CODE -->
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{RegNo}}"
+                                <!--<img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{RegNo}}"
+    alt="QR Code"
+    style="width:80px; height:80px; margin:8px auto 4px; display:block; image-rendering:pixelated;" />-->
+                                <img src="{{QrCode}}"
                                      alt="QR Code"
-                                     style="width:80px; height:80px; margin:8px auto 4px; display:block; image-rendering:pixelated;" />
+                                     style="width:100px; height:100px; display:block; margin:0 auto;" />
 
                                 <!-- BARCODE -->
                                 <img src="https://barcode.tec-it.com/barcode.ashx?data={{RegNo}}&code=Code128&dpi=300&modulewidth=0.4&imagetype=png&showtext=true"
