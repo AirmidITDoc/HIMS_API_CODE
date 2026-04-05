@@ -34,6 +34,9 @@ namespace HIMS.Services.Dashboard
         {
             return await DatabaseHelper.GetGridDataBySp<CashlessPatientBillDto>(model, "ps_Cashless_PatientBill_Info");
         }
-
+        public virtual async Task<IPagedList<CashlessPatientApprovalPendingListDto>> CashlessPatientApprovalPendingListsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<CashlessPatientApprovalPendingListDto>(model, "ps_Cashless_PatientBill_Info");
+        }
     }
 }
