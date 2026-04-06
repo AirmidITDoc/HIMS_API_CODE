@@ -51,5 +51,19 @@ namespace HIMS.API.Controllers.Dashboard
             IPagedList<CashlessPatientBillDto> CashlessPatientBillInfoList = await _ICashLessService.CashlessPatientBillInfoListAsync(objGrid);
             return Ok(CashlessPatientBillInfoList.ToGridResponse(objGrid, "Cashless PatientBillInfo List"));
         }
+        [HttpPost("CashlessPatientApprovalPendingList")]
+        //[Permission]
+        public async Task<IActionResult> CashlessPatientApprovalPendingList(GridRequestModel objGrid)
+        {
+            IPagedList<CashlessPatientApprovalPendingListDto> CashlessPatientApprovalPendingList = await _ICashLessService.CashlessPatientApprovalPendingListsync(objGrid);
+            return Ok(CashlessPatientApprovalPendingList.ToGridResponse(objGrid, "Cashless Patient Approval Pending List"));
+        }
+        [HttpPost("CashlessMonthlyCompanyWiseSummary")]
+        //[Permission]
+        public async Task<IActionResult> CashlessMonthlyCompanyWiseSummary(GridRequestModel objGrid)
+        {
+            IPagedList<CashlessMonthlyCompanyWiseSummaryDto> CashlessMonthlyCompanyWiseSummary = await _ICashLessService.CashlessMonthlyCompanyWiseSummarySync(objGrid);
+            return Ok(CashlessMonthlyCompanyWiseSummary.ToGridResponse(objGrid, "Cashless Monthly Company Wise SummaryDto"));
+        }
     }
 }

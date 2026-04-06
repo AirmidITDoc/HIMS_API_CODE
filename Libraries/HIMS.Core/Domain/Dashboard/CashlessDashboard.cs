@@ -15,8 +15,12 @@ namespace HIMS.Core.Domain.Dashboard
     }
     public class CashlessPatientSummary
     {
-        public long CashlessPatientCount { get; set; }
-        public string lbl { get; set; }
+        public string Section { get; set; }
+        public double TotalCount { get; set; }
+        public long SelfCount { get; set; }
+        public long CompanyCount { get; set; }
+        public long ApprovedCount { get; set; }
+        public long PendingCount { get; set; }
     }
 
     public class CompanyPatientCount
