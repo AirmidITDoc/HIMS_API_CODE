@@ -26,7 +26,7 @@ namespace HIMS.Services.Inventory
         List<PathologyServiceComboDto> PathologyServicesearch(string Keyword);
         List<RadiologyServiceComboDto> RadiologyServicesearch(string Keyword);
 
-
+        Task Import(List<ServiceDetail> lst);
 
     }
 }

@@ -13754,7 +13754,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
 
                         html = html.Replace("{{FooterComment}}", dt.GetColValue("FooterComment").ConvertToString());
-
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("RegNo")?.ToString()));
 
 
                         // 1 Means small font and other than 1 shows large font
@@ -14091,8 +14091,9 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{FooterComment}}", dt.GetColValue("FooterComment").ConvertToString());
 
-                      
-                        
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("RegNo")?.ToString()));
+
+
                         // 1 Means small font and other than 1 shows large font
                         string FontFlag = dt.GetColValue("FontFlag").ConvertToString();
 
@@ -14961,6 +14962,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
                         html = html.Replace("{{AdmissionTime}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy|hh:mmtt"));
                         html = html.Replace("{{PathTime}}", dt.GetColValue("PathTime").ConvertToDateString("dd/MM/yyyy"));
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")?.ToString()));
 
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("OP_IP_Number"));
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
@@ -15095,7 +15097,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{SampleCollectionTime}}", dt.GetColValue("SampleCollectionTime").ConvertToDateString("dd/MM/yyyy|hh:mmtt"));
 
 
-
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("LabRequestNo")?.ToString()));
 
                         html = html.Replace("{{PathTime}}", dt.GetColValue("PathTime").ConvertToDateString("dd/MM/yyyy"));
 
@@ -15158,7 +15160,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
 
                         html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
-
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("RegNo")?.ToString()));
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
@@ -15211,7 +15213,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{Signature}}", signature);
                         html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
-
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("RegNo")?.ToString()));
 
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));

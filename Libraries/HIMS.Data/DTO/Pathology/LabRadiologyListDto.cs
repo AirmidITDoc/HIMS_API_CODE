@@ -53,6 +53,11 @@ namespace HIMS.Data.DTO.Pathology
         public long? RadResultDr1 { get; set; }
         public string? GroupName { get; set; }
         public string GenderName { get; set; }
+        public bool? PaymentCompleted { get; set; }
+        public bool? PaymentPending { get; set; }
+
+
+
 
 
 

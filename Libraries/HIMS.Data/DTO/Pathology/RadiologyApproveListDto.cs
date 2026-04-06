@@ -30,5 +30,10 @@ namespace HIMS.Data.DTO.Pathology
         public string? CategoryName { get; set; }
         public long? ChargesId { get; set; }
         public long? BillNo { get; set; }
+        public bool? PaymentCompleted { get; set; }
+        public bool? PaymentPending { get; set; }
+
+
+
     }
 }

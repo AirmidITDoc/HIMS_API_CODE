@@ -14,7 +14,7 @@ namespace HIMS.Data.DTO.Pathology
         public long ChargesId { get; set; }
         public string ServiceName { get; set; }
         public DateTime ChargesTime { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public long? IsPathology { get; set; }
         public long? IsRadiology { get; set; }
         public string? DoctorName { get; set; }
@@ -109,7 +109,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? ReportDate { get; set; }
         public string? ReportTime { get; set; }
         public string? ReportCompletedUser { get; set; }
-        public long PaymentCompleted { get; set; }
+        //public long PaymentCompleted { get; set; }
         public DateTime OutSourceReportCollectedDateTime { get; set; }
         public long? SpecimenTypeId { get; set; }
         public long? SpecimenColor { get; set; }
@@ -121,6 +121,8 @@ namespace HIMS.Data.DTO.Pathology
         public long? Tatday { get; set; }
         public long? Tathour { get; set; }
         public long? Tatmin { get; set; }
+        public bool? PaymentCompleted { get; set; }
+
 
 
 
