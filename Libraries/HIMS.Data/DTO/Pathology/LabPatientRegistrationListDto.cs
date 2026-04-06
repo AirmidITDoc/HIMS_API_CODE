@@ -66,8 +66,11 @@ namespace HIMS.Data.DTO.Pathology
         public long? RefDocId { get; set; }
         public long? LabAppointmentId { get; set; }
         public int? IsPackage { get; set; }
+        public int? IsAllOtherServicesVerified { get; set; }
 
         
+
+
 
 
 
