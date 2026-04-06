@@ -469,6 +469,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<TGrnsupPayment> TGrnsupPayments { get; set; } = null!;
         public virtual DbSet<TGstadjustment> TGstadjustments { get; set; } = null!;
         public virtual DbSet<THlabRequest> THlabRequests { get; set; } = null!;
+        public virtual DbSet<THomeCollectPatientRegistartionDetail> THomeCollectPatientRegistartionDetails { get; set; } = null!;
+        public virtual DbSet<THomeCollectionPatientRegistartion> THomeCollectionPatientRegistartions { get; set; } = null!;
         public virtual DbSet<THomeCollectionRegistrationInfo> THomeCollectionRegistrationInfos { get; set; } = null!;
         public virtual DbSet<THomeCollectionServiceDetail> THomeCollectionServiceDetails { get; set; } = null!;
         public virtual DbSet<THomeDeliveryOrder> THomeDeliveryOrders { get; set; } = null!;
@@ -13608,6 +13610,35 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReqNo).HasMaxLength(50);
 
                 entity.Property(e => e.ReqTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<THomeCollectPatientRegistartionDetail>(entity =>
+            {
+                entity.HasKey(e => e.PatientRegDetId);
+
+                entity.ToTable("T_HomeCollectPatientRegistartionDetails");
+
+                entity.Property(e => e.Status).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<THomeCollectionPatientRegistartion>(entity =>
+            {
+                entity.HasKey(e => e.PatientRegId)
+                    .HasName("PK_T_HomeCollectPatientRegistartion");
+
+                entity.ToTable("T_HomeCollectionPatientRegistartion");
+
+                entity.Property(e => e.Address).HasMaxLength(50);
+
+                entity.Property(e => e.DateofBirth).HasColumnType("datetime");
+
+                entity.Property(e => e.FirstName).HasMaxLength(100);
+
+                entity.Property(e => e.LastName).HasMaxLength(50);
+
+                entity.Property(e => e.MiddleName).HasMaxLength(50);
+
+                entity.Property(e => e.MobileNo).HasMaxLength(50);
             });
 
             modelBuilder.Entity<THomeCollectionRegistrationInfo>(entity =>
