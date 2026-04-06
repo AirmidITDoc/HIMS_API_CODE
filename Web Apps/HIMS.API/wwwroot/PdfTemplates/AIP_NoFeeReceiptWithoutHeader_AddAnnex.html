@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> Money Receipt</title>
+</head>
+
+<!--<body style="font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif; font-size: 18px; line-height: 24px; margin: 20px;">-->
+<body style="height:100%; margin:0; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif; font-size: 18px; line-height: 24px;">
+
+
+    <!--<div style="width:100%;height:50vh;box-sizing:border-box;page-break-inside: avoid;">-->
+    <div style="width:100%; height:50%; box-sizing:border-box; page-break-inside:avoid;">
+        <br />
+        <div style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 5px; padding-top: 90px;">
+            Office Copy
+        </div>
+
+        <div style="text-align:center; margin:8px 0;">
+            <b><u>{{DepartmentName}}</u></b>
+        </div>
+
+
+        <div style="text-align:center; margin:8px 0;">
+            <b><u>NO FEE RECEIPT</u></b>
+        </div>
+
+        <table style="width:100%; padding-bottom:10px;">
+            <tr>
+
+                <td style="width:50%; vertical-align:top;">
+                    <b>Patient UIN</b> : {{LabRequestNo}}<br>
+                    <b>Patient Type</b> : {{PatientType1}}<br>
+                    <b>Patient Name</b> : {{PatientName}}<br>
+                    <b>Address</b> : {{Address}}<br>
+                    <b>Scan/Test Name </b> : {{ServiceName}}<br>
+                    <b>Referred By</b> : {{RefDocName}}<br>
+                </td>
+
+
+                <td style="width:50%; vertical-align:top; text-align:left;">
+                    <b>Reg Date|Time</b> : {{RegDate}}<br>
+                    <b>Age/Sex</b> : {{AgeYear}} Years / {{GenderName}}<br>
+                    <b>Phone No</b> : {{MobileNo}}<br>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <br />
+        <table width="100%">
+            <tr>
+                <td align="right">
+                    <u>Patient Signature</u>
+                </td>
+            </tr>
+        </table>
+        <br />
+
+    </div>
+    <!--<br />
+    <br />
+    <br />
+    <br />-->
+    <hr style="border:1px dashed #000; margin:10px 0;">
+    <br />
+    <!--<br />-->
+    <!--<div style="width:100%;height:50vh;box-sizing:border-box;page-break-inside: avoid;">-->
+    <div style="width:100%; height:50%; box-sizing:border-box; page-break-inside:avoid;">
+
+        <div style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 5px; padding-top: 90px;">
+            Patient Copy
+        </div>
+
+        <div style="text-align:center; margin:8px 0;">
+            <b><u>{{DepartmentName}}</u></b>
+        </div>
+
+
+        <div style="text-align:center; margin:8px 0;">
+            <b><u>NO FEE RECEIPT</u></b>
+        </div>
+
+        <table style="width:100%; padding-bottom:10px;">
+            <tr>
+
+                <td style="width:50%; vertical-align:top;">
+                    <b>Patient UIN</b> : {{LabRequestNo}}<br>
+                    <b>Patient Type</b> : {{PatientType1}}<br>
+                    <b>Patient Name</b> : {{PatientName}}<br>
+                    <b>Address</b> : {{Address}}<br>
+                    <b>Scan/Test Name </b> : {{ServiceName}}<br>
+                    <b>Referred By</b> : {{RefDocName}}<br>
+                </td>
+
+
+                <td style="width:50%; vertical-align:top; text-align:left;">
+                    <b>Reg Date|Time</b> : {{RegDate}}<br>
+                    <b>Age/Sex</b> : {{AgeYear}} Years / {{GenderName}}<br>
+                    <b>Phone No</b> : {{MobileNo}}<br>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <br />
+        <table width="100%">
+            <tr>
+                <td align="right">
+                    <u>Center-IN-Charge Signature</u>
+                </td>
+            </tr>
+        </table>
+        <br />
+
+    </div>
+
+</body>
+</html>
