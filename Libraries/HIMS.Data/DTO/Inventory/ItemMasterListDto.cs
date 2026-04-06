@@ -74,12 +74,14 @@ namespace HIMS.Data.DTO.Inventory
         public long? ItemGenericNameId { get; set; }
         public string? DoseName { get; set; }
         public int? DoseDay { get; set; }
+        public string? ItemTypeName { get; set; }
+
 
         public bool? IsH1Drug { get; set; }
         public bool? IsHighRisk { get; set; }
         public bool? isEmgerency { get; set; }
         public bool? IsLASA { get; set; }
-        public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty; } }
+        public string FormattedText { get { return this.ItemTypeName + " " + this.ItemName + " | " + this.BalanceQty; } }
 
     }
 
