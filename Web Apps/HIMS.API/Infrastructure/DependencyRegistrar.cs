@@ -211,6 +211,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IConfigService, ConfigService>();
             services.AddScoped<ICashLessService, CashLessService>();
             services.AddScoped<IFeedBackQuestionService, FeedBackQuestionService>();
+            services.AddScoped<IHomeCollectionPatientRegService, HomeCollectionPatientRegService>();
+
 
 
 

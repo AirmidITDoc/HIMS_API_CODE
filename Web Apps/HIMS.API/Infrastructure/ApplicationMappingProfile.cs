@@ -601,6 +601,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<MItemWiseSupplierRate, ItemWiseSupplierRateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPayment, NewTPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPayment, PaymentCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<THomeCollectionPatientRegistartion, HomeCollectionPatientRegModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
