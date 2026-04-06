@@ -153,24 +153,25 @@ namespace HIMS.Services.Nursing
         }
 
 
-        public virtual void Insert(List<TNursingMedicationChart1> ObjTNursingMedicationChart, int UserId, string UserName)
+        public virtual async Task Insert(List<TNursingMedicationChart1> ObjTNursingMedicationChart, int UserId, string UserName)
         {
+            _context.AddRange(ObjTNursingMedicationChart);
+            await _context.SaveChangesAsync();
 
-            DatabaseHelper odal = new();
+            //DatabaseHelper odal = new();
 
+            //foreach (var item in ObjTNursingMedicationChart)
+            //{
+            //    string[] rEntity = { "IsCancelledBy", "IsCancelledDateTime", "CreatedBy", "CreatedDatetime", "ModifiedBy", "ModifiedDateTime" };
 
-            foreach (var item in ObjTNursingMedicationChart)
-            {
-                string[] rEntity = { "IsCancelledBy", "IsCancelledDateTime", "CreatedBy", "CreatedDatetime", "ModifiedBy", "ModifiedDateTime" };
-
-                var entity = item.ToDictionary();
-                foreach (var rProperty in rEntity)
-                {
-                    entity.Remove(rProperty);
-                }
-                odal.ExecuteNonQuery("m_insert_T_Nursing_MedicationChart", CommandType.StoredProcedure, entity);
-                // ObjTNursingMedicationChart.MedChartId = Convert.ToInt32(AMedChartId);
-            }
+            //    var entity = item.ToDictionary();
+            //    foreach (var rProperty in rEntity)
+            //    {
+            //        entity.Remove(rProperty);
+            //    }
+            //    odal.ExecuteNonQuery("m_insert_T_Nursing_MedicationChart", CommandType.StoredProcedure, entity);
+            //    // ObjTNursingMedicationChart.MedChartId = Convert.ToInt32(AMedChartId);
+            //}
         }
 
 
