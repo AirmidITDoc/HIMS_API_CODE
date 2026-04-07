@@ -12446,7 +12446,7 @@ namespace HIMS.Services.Report
 
                             // Doctor Header Row
                             items.Append("<tr style=\"font-size:20px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
-                                 .Append("<td colspan=\"13\" style=\"border:1px solid #000; font-weight:bold; padding:3px; height:7px; text-align:left; vertical-align:middle;\">")
+                                 .Append("<td colspan=\"13\" style=\" font-weight:bold; padding:3px; height:7px; text-align:left; vertical-align:middle;\">")
                                  .Append(RoomName)
                                  .Append("</td></tr>");
 
@@ -12456,14 +12456,14 @@ namespace HIMS.Services.Report
                                 j++;
                                 count++;
 
-                                items.Append("<tr style=\"text-align: center; border: 1px solid #000; padding: 4px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
-                                     .Append("<td style=\"text-align: center; border: 1px solid #000; padding: 4px;\">")
+                                items.Append("<tr style=\"text-align: center; padding: 4px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                                     .Append("<td style=\"text-align: center;  padding: 4px;\">")
                                      .Append(j)
                                      .Append("</td>");
 
                                 foreach (var colName in colList)
                                 {
-                                    items.Append("<td style=\"text-align: center; border: 1px solid #000; padding: 4px;\">")
+                                    items.Append("<td style=\"text-align: center;  padding: 4px;\">")
                                          .Append(dr[colName].ConvertToString())
                                          .Append("</td>");
                                 }
@@ -12472,11 +12472,11 @@ namespace HIMS.Services.Report
                             }
 
                             // Total Count Row for this doctor
-                            items.Append("<tr style=' color:black; background-color:white; font-family: Calibri,\"Helvetica Neue\",\"Helvetica\",Helvetica,Arial,sans-serif;'>")
-                                 .Append("<td colspan='12' style=\" padding:3px; height:10px; text-align:right; vertical-align:middle; margin-right:20px; font-weight:bold;\">Total Count</td>")
-                                 .Append("<td style=\" padding:3px; height:10px; text-align:center; vertical-align:middle\">")
-                                 .Append(count)
-                                 .Append("</td></tr>");
+                            //items.Append("<tr style=' color:black; background-color:white; font-family: Calibri,\"Helvetica Neue\",\"Helvetica\",Helvetica,Arial,sans-serif;'>")
+                            //     .Append("<td colspan='12' style=\" padding:3px; height:10px; text-align:right; vertical-align:middle; margin-right:20px; font-weight:bold;\">Total Count</td>")
+                            //     .Append("<td style=\" padding:3px; height:10px; text-align:center; vertical-align:middle\">")
+                            //     .Append(count)
+                            //     .Append("</td></tr>");
                         }
                     }
                     break;
