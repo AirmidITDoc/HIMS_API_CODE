@@ -12432,38 +12432,41 @@ namespace HIMS.Services.Report
                         }
                         HeaderItems.Append("</tr>");
 
-                        // Group data by AdmittedDoctorName
+                        // Group data by RoomName
                         var groupedData = dt.AsEnumerable()
                                             .GroupBy(row => row["RoomName"].ConvertToString())
                                             .ToList();
 
-                        // Loop through each doctor group
+                        int grandTotal = 0; // ✅ Overall total
+
+                        // Loop through each group
                         foreach (var group in groupedData)
                         {
                             string RoomName = group.Key;
-                            int count = 0;
+                            int count = 0;   // Room-wise count
                             int j = 0;
 
-                            // Doctor Header Row
+                            // Room Header Row
                             items.Append("<tr style=\"font-size:20px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
-                                 .Append("<td colspan=\"13\" style=\" font-weight:bold; padding:3px; height:7px; text-align:left; vertical-align:middle;\">")
+                                 .Append("<td colspan=\"13\" style=\"font-weight:bold; padding:3px; text-align:left;\">")
                                  .Append(RoomName)
                                  .Append("</td></tr>");
 
-                            // Data Rows for each patient under that doctor
+                            // Data Rows
                             foreach (var dr in group)
                             {
                                 j++;
                                 count++;
+                                grandTotal++; // ✅ Increment overall
 
                                 items.Append("<tr style=\"text-align: center; padding: 4px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
-                                     .Append("<td style=\"text-align: center;  padding: 4px;\">")
+                                     .Append("<td style=\"padding: 4px;\">")
                                      .Append(j)
                                      .Append("</td>");
 
                                 foreach (var colName in colList)
                                 {
-                                    items.Append("<td style=\"text-align: center;  padding: 4px;\">")
+                                    items.Append("<td style=\"padding: 4px;\">")
                                          .Append(dr[colName].ConvertToString())
                                          .Append("</td>");
                                 }
@@ -12471,15 +12474,83 @@ namespace HIMS.Services.Report
                                 items.Append("</tr>");
                             }
 
-                            // Total Count Row for this doctor
-                            //items.Append("<tr style=' color:black; background-color:white; font-family: Calibri,\"Helvetica Neue\",\"Helvetica\",Helvetica,Arial,sans-serif;'>")
-                            //     .Append("<td colspan='12' style=\" padding:3px; height:10px; text-align:right; vertical-align:middle; margin-right:20px; font-weight:bold;\">Total Count</td>")
-                            //     .Append("<td style=\" padding:3px; height:10px; text-align:center; vertical-align:middle\">")
+                            //// Room Total Row
+                            //items.Append("<tr style='font-weight:bold;'>")
+                            //     .Append("<td colspan='12' style=\"padding:5px; text-align:right;\">Total Count</td>")
+                            //     .Append("<td style=\"padding:5px; text-align:center;\">")
                             //     .Append(count)
                             //     .Append("</td></tr>");
                         }
+
+                        // ✅ Grand Total Row (after all groups)
+                        items.Append("<tr style='background-color:#e6e6e6; font-weight:bold; font-size:18px;'>")
+                             .Append("<td colspan='12' style=\"padding:6px; text-align:right;\">Total Count</td>")
+                             .Append("<td style=\"padding:6px; text-align:center;\">")
+                             .Append(grandTotal)
+                             .Append("</td></tr>");
                     }
                     break;
+
+                //case "WardWiseAdmissionList":
+                //    {
+                //        // Build table headers
+                //        HeaderItems.Append("<tr>");
+                //        foreach (var hr in headerList)
+                //        {
+                //            HeaderItems.Append("<th style=\"border: 1px solid #000; font-size:20px; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                //                       .Append(hr.ConvertToString())
+                //                       .Append("</th>");
+                //        }
+                //        HeaderItems.Append("</tr>");
+
+                //        // Group data by AdmittedDoctorName
+                //        var groupedData = dt.AsEnumerable()
+                //                            .GroupBy(row => row["RoomName"].ConvertToString())
+                //                            .ToList();
+
+                //        // Loop through each doctor group
+                //        foreach (var group in groupedData)
+                //        {
+                //            string RoomName = group.Key;
+                //            int count = 0;
+                //            int j = 0;
+
+                //            // Doctor Header Row
+                //            items.Append("<tr style=\"font-size:20px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                //                 .Append("<td colspan=\"13\" style=\" font-weight:bold; padding:3px; height:7px; text-align:left; vertical-align:middle;\">")
+                //                 .Append(RoomName)
+                //                 .Append("</td></tr>");
+
+                //            // Data Rows for each patient under that doctor
+                //            foreach (var dr in group)
+                //            {
+                //                j++;
+                //                count++;
+
+                //                items.Append("<tr style=\"text-align: center; padding: 4px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                //                     .Append("<td style=\"text-align: center;  padding: 4px;\">")
+                //                     .Append(j)
+                //                     .Append("</td>");
+
+                //                foreach (var colName in colList)
+                //                {
+                //                    items.Append("<td style=\"text-align: center;  padding: 4px;\">")
+                //                         .Append(dr[colName].ConvertToString())
+                //                         .Append("</td>");
+                //                }
+
+                //                items.Append("</tr>");
+                //            }
+
+                //            // Total Count Row for this doctor
+                //            //items.Append("<tr style=' color:black; background-color:white; font-family: Calibri,\"Helvetica Neue\",\"Helvetica\",Helvetica,Arial,sans-serif;'>")
+                //            //     .Append("<td colspan='12' style=\" padding:3px; height:10px; text-align:right; vertical-align:middle; margin-right:20px; font-weight:bold;\">Total Count</td>")
+                //            //     .Append("<td style=\" padding:3px; height:10px; text-align:center; vertical-align:middle\">")
+                //            //     .Append(count)
+                //            //     .Append("</td></tr>");
+                //        }
+                //    }
+                //    break;
 
                 //lab list
                 case "LabRegistrationListReport":
