@@ -615,7 +615,12 @@ namespace HIMS.Services.Common
 
                 objBill.RegNo = Convert.ToInt64(objRegistration.RegNo);
                 await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, currentUserName);
-
+                var tokenObj = new
+                {
+                    VisitId = Convert.ToInt32(VisitId)
+                };
+                odal1.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+                await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, currentUserName);
 
 
                 //objVisitDetail.RegId = objRegistration.RegId;

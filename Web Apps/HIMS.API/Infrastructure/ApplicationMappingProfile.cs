@@ -602,6 +602,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<TPayment, NewTPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPayment, PaymentCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<THomeCollectionPatientRegistartion, HomeCollectionPatientRegModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<THomeCollectionPatientRegistartion, HomeCollectionPatientRegistrationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<THomeCollectionPatientRegDetail, HomeCollectionPatientRegDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 

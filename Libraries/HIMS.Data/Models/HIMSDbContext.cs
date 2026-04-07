@@ -469,7 +469,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TGrnsupPayment> TGrnsupPayments { get; set; } = null!;
         public virtual DbSet<TGstadjustment> TGstadjustments { get; set; } = null!;
         public virtual DbSet<THlabRequest> THlabRequests { get; set; } = null!;
-        public virtual DbSet<THomeCollectPatientRegistartionDetail> THomeCollectPatientRegistartionDetails { get; set; } = null!;
+        public virtual DbSet<THomeCollectionPatientRegDetail> THomeCollectionPatientRegDetails { get; set; } = null!;
         public virtual DbSet<THomeCollectionPatientRegistartion> THomeCollectionPatientRegistartions { get; set; } = null!;
         public virtual DbSet<THomeCollectionRegistrationInfo> THomeCollectionRegistrationInfos { get; set; } = null!;
         public virtual DbSet<THomeCollectionServiceDetail> THomeCollectionServiceDetails { get; set; } = null!;
@@ -13612,13 +13612,19 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReqTime).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<THomeCollectPatientRegistartionDetail>(entity =>
+            modelBuilder.Entity<THomeCollectionPatientRegDetail>(entity =>
             {
-                entity.HasKey(e => e.PatientRegDetId);
+                entity.HasKey(e => e.PatientRegDetId)
+                    .HasName("PK_T_HomeCollectPatientRegistartionDetails");
 
-                entity.ToTable("T_HomeCollectPatientRegistartionDetails");
+                entity.ToTable("T_HomeCollectionPatientRegDetails");
 
                 entity.Property(e => e.Status).HasMaxLength(50);
+
+                entity.HasOne(d => d.PatientReg)
+                    .WithMany(p => p.THomeCollectionPatientRegDetails)
+                    .HasForeignKey(d => d.PatientRegId)
+                    .HasConstraintName("FK_T_HomeCollectionPatientRegDetails_T_HomeCollectionPatientRegistartion");
             });
 
             modelBuilder.Entity<THomeCollectionPatientRegistartion>(entity =>

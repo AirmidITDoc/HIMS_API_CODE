@@ -33,6 +33,8 @@ namespace HIMS.API.Controllers.Pathology
         }
         
         [HttpPost("Insert")]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+
         public async Task<ApiResponse> Insert(HomeCollectionPatientRegModel obj)
         {
             THomeCollectionPatientRegistartion model = obj.MapTo<THomeCollectionPatientRegistartion>();
@@ -49,6 +51,28 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status200OK,  "Record added successfully.",  model.PatientRegId);
         }
 
-       
+        [HttpPost("HomeCollectionPatientInsert")]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> HomeInsert(HomeCollectionPatientRegistrationModel obj)
+        {
+            THomeCollectionPatientRegistartion model = obj.MapTo<THomeCollectionPatientRegistartion>();
+            if (obj.PatientRegId == 0)
+            {
+                foreach (var q in model.THomeCollectionPatientRegDetails)
+                {
+                    //q.Createdby = CurrentUserId;
+                    //q.CreatedDate = AppTime.Now;
+
+                }
+               
+             await _IHomeCollectionPatientRegService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.PatientRegId);
+        }
+
+
+
     }
 }
