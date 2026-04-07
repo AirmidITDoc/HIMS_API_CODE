@@ -361,12 +361,12 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("NursingMedicationChartInsert")]
         [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
-        public ApiResponse InsertEDMX(NursingMedicationChartModel obj)
+        public async Task<ApiResponse> InsertEDMX(NursingMedicationChartModel obj)
         {
             List<TNursingMedicationChart1> model = obj.NursingMedicationChart.MapTo<List<TNursingMedicationChart1>>();
             if (model.Count > 0)
             {
-                _INursingNoteService.Insert(model, CurrentUserId, CurrentUserName);
+                await _INursingNoteService.Insert(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
