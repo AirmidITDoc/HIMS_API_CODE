@@ -591,6 +591,8 @@ namespace HIMS.Services.Common
                 }
                 string RegId = odal1.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
                 objRegistration.RegId = Convert.ToInt32(RegId);
+                objVisitDetail.RegId = objRegistration.RegId;
+
                 await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, currentUserName);
 
                 //  ( For RegNo fetch )
@@ -610,6 +612,7 @@ namespace HIMS.Services.Common
                 string VisitId = odal1.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
                 objVisitDetail.VisitId = Convert.ToInt32(VisitId);
                 objBill.OpdIpdId = objVisitDetail.VisitId;
+
                 objBill.RegNo = Convert.ToInt64(objRegistration.RegNo);
                 await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, currentUserName);
 

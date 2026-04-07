@@ -19,6 +19,7 @@
         public decimal BalAmt { get; set; }
         public long BillNo { get; set; }
         public object? ServiceWiseDisc { get; set; }
+        public bool IsSampleCollection { get; set; }
 
     }
 }
