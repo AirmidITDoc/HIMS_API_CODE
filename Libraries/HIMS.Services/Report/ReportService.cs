@@ -1214,6 +1214,22 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+                #region :: WardWiseAdmissionList ::
+                case "WardWiseAdmissionList":
+                    {
+
+                        model.RepoertName = "Appointment List";
+                        string[] headerList = { "Sr.No", "UHID", "Date", "IPDNo", "Patient Name", "Age", "Gender", /*"Ward",*/ "Bed", /*"AdmDoctor Name",*/ "RefDocName", "Company", "ChargesAmt", "AdvAmt", "BalAmt" };
+                        string[] colList = { "RegNo", "DOA", "IPDNo", "PatientName", "Age", "GenderName", /*"RoomName",*/ "BedName",/* "AdmittedDoctorName",*/ "RefDocName", "CompanyName", "ChargesAmount", "AdvanceAmount", "BalPayAmt", };
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("rptCurrentAdmittedListReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDCurrentAdmittedWardWise", "IPDCurrentAdmittedWardWise", Orientation.Landscape);
+                        break;
+                    }
+                #endregion
                 #region :: IpCasepaperReport ::
                 case "IpCasepaperReport":
                     {
@@ -8654,6 +8670,8 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
                             html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                             html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                            html = html.Replace("{{TokenNo}}", dt.GetColValue("TokenNo"));
+
 
 
                             html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName"));
@@ -8731,6 +8749,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
                             html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                             html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                            html = html.Replace("{{TokenNo}}", dt.GetColValue("TokenNo"));
 
 
                             html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName"));
@@ -8808,6 +8827,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                             html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
 
+                            html = html.Replace("{{TokenNo}}", dt.GetColValue("TokenNo"));
 
                             html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName"));
                             html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
@@ -9757,9 +9777,9 @@ namespace HIMS.Services.Report
                             if (dt.Rows.Count > 0 && dt.Rows.Count == i)
                             {
 
-                                items.Append("<tr style='border:1px solid #eee;font-weight:bold'><td colspan='5' style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px solid #eee;border-collapse: collapse;padding:3px;border-bottom:1px solid #eee;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">Grand Total Amount</td><td style=\"border-right:1px solid #eee;border-bottom:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">")
+                                items.Append("<tr style='border:1px solid #eee;font-weight:bold'><td colspan='5' style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px solid #eee;border-collapse: collapse;padding:3px;border-bottom:1px solid #eee;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">Group Wise Total</td><td style=\"border-right:1px solid #eee;border-bottom:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">")
                                     .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
-                                items.Append("<tr style='border:1px solid #eee;'><td colspan='5' style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border-right:1px solid #eee;border-top:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-center:20px;font-weight:bold;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">Total</td><td style=\"border-right:1px solid #eee;font-weight:bold;border-top:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">")
+                                items.Append("<tr style='border:1px solid #eee;'><td colspan='5' style=\"font-size:18px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border-right:1px solid #eee;border-top:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-center:20px;font-weight:bold;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">Grand Total</td><td style=\"border-right:1px solid #eee;font-weight:bold;border-top:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">")
                                 .Append(F_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
 
 
@@ -9921,9 +9941,9 @@ namespace HIMS.Services.Report
                             if (dt.Rows.Count > 0 && dt.Rows.Count == i)
                             {
 
-                                items.Append("<tr style='border:1px solid #eee;font-weight:bold'><td colspan='5' style=\"font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px solid #eee;border-collapse: collapse;padding:3px;border-bottom:1px solid #eee;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">Grand Total Amount</td><td style=\"border-right:1px solid #eee;border-bottom:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">")
+                                items.Append("<tr style='border:1px solid #eee;font-weight:bold'><td colspan='5' style=\"font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border:1px solid #eee;border-collapse: collapse;padding:3px;border-bottom:1px solid #eee;height:10px;text-align:right;vertical-align:middle;margin-right:20px;font-weight:bold;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">Group Wise Total </td><td style=\"border-right:1px solid #eee;border-bottom:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">")
                                     .Append(T_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
-                                items.Append("<tr style='border:1px solid #eee;'><td colspan='5' style=\"font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border-right:1px solid #eee;border-top:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-center:20px;font-weight:bold;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">Total</td><td style=\"border-right:1px solid #eee;font-weight:bold;border-top:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">")
+                                items.Append("<tr style='border:1px solid #eee;'><td colspan='5' style=\"font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;border-right:1px solid #eee;border-top:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;margin-center:20px;font-weight:bold;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">Grand Total</td><td style=\"border-right:1px solid #eee;font-weight:bold;border-top:1px solid #eee;padding:3px;height:10px;text-align:right;vertical-align:middle;font-size:15px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\">")
                                 .Append(F_TotalAmount.To2DecimalPlace()).Append("</td></tr>");
 
 
@@ -12396,6 +12416,67 @@ namespace HIMS.Services.Report
                                  .Append("<td style=\"border-right:1px solid #000; padding:3px; height:10px; text-align:center; vertical-align:middle\">")
                                  .Append(count)
                                  .Append("</td></tr>");
+                        }
+                    }
+                    break;
+
+                case "WardWiseAdmissionList":
+                    {
+                        // Build table headers
+                        HeaderItems.Append("<tr>");
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border: 1px solid #000; font-size:20px; padding: 6px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                                       .Append(hr.ConvertToString())
+                                       .Append("</th>");
+                        }
+                        HeaderItems.Append("</tr>");
+
+                        // Group data by AdmittedDoctorName
+                        var groupedData = dt.AsEnumerable()
+                                            .GroupBy(row => row["RoomName"].ConvertToString())
+                                            .ToList();
+
+                        // Loop through each doctor group
+                        foreach (var group in groupedData)
+                        {
+                            string RoomName = group.Key;
+                            int count = 0;
+                            int j = 0;
+
+                            // Doctor Header Row
+                            items.Append("<tr style=\"font-size:20px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                                 .Append("<td colspan=\"13\" style=\" font-weight:bold; padding:3px; height:7px; text-align:left; vertical-align:middle;\">")
+                                 .Append(RoomName)
+                                 .Append("</td></tr>");
+
+                            // Data Rows for each patient under that doctor
+                            foreach (var dr in group)
+                            {
+                                j++;
+                                count++;
+
+                                items.Append("<tr style=\"text-align: center; padding: 4px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;\">")
+                                     .Append("<td style=\"text-align: center;  padding: 4px;\">")
+                                     .Append(j)
+                                     .Append("</td>");
+
+                                foreach (var colName in colList)
+                                {
+                                    items.Append("<td style=\"text-align: center;  padding: 4px;\">")
+                                         .Append(dr[colName].ConvertToString())
+                                         .Append("</td>");
+                                }
+
+                                items.Append("</tr>");
+                            }
+
+                            // Total Count Row for this doctor
+                            //items.Append("<tr style=' color:black; background-color:white; font-family: Calibri,\"Helvetica Neue\",\"Helvetica\",Helvetica,Arial,sans-serif;'>")
+                            //     .Append("<td colspan='12' style=\" padding:3px; height:10px; text-align:right; vertical-align:middle; margin-right:20px; font-weight:bold;\">Total Count</td>")
+                            //     .Append("<td style=\" padding:3px; height:10px; text-align:center; vertical-align:middle\">")
+                            //     .Append(count)
+                            //     .Append("</td></tr>");
                         }
                     }
                     break;
