@@ -5620,7 +5620,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
                         html = html.Replace("{{TestName}}", dt.GetColValue("TestName"));
-
+                        html = html.Replace("{{CPName}}", dt.GetColValue("CPName"));
 
 
 
