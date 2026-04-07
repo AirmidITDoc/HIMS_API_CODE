@@ -8670,6 +8670,8 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
                             html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                             html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                            html = html.Replace("{{TokenNo}}", dt.GetColValue("TokenNo"));
+
 
 
                             html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName"));
@@ -8747,6 +8749,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
                             html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                             html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                            html = html.Replace("{{TokenNo}}", dt.GetColValue("TokenNo"));
 
 
                             html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName"));
@@ -8824,6 +8827,7 @@ namespace HIMS.Services.Report
                             html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                             html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
 
+                            html = html.Replace("{{TokenNo}}", dt.GetColValue("TokenNo"));
 
                             html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName"));
                             html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
