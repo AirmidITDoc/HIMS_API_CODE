@@ -21,7 +21,7 @@
                                 <tr style="font-size: 18px">
                                     <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; ">
                                         <b>
-                                            IP ESTIMATED BILL
+                                            IP DRAFT BILL
                                         </b>
                                     </td>
                                     <td style="border-bottom: 1px solid #d4c3c3; padding: 6px; text-align: right;">
@@ -49,15 +49,10 @@
                                         <span style="font-weight: bold;">UHID No:</span>
                                         <span>{{RegNo}}</span>
                                     </td>
-
                                     <td style="padding: 2px;">
                                         <span style="font-weight: bold;">IPD No :</span>
                                         <span>{{IPDNo}}</span>
                                     </td>
-                                    <!--<td style="padding: 2px;">
-            <span style="font-weight: bold;"> Date | Time:</span>
-            <span>{{BillDate}}</span>
-        </td>-->
                                     <td style="padding: 2px;">
                                         <span style="font-weight: bold;">DOA | Time:</span>
                                         <span>{{AdmissionDate}}</span>
@@ -69,33 +64,29 @@
                                         <span>{{PatientName}}</span>
                                     </td>
                                     <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Age | Gender:</span>
-                                        <span> {{AgeYear}} Y | {{AgeMonth}} M|{{AgeDay}}D | {{GenderName}}</span>
+                                        <span style="font-weight: bold;">Age :</span>
+                                        <span> {{AgeYear}} Y | {{AgeMonth}} M|{{AgeDay}}D </span>
                                     </td>
-                                    <!--<td style="padding: 2px;">
-            <span style="font-weight: bold;">DOA | Time:</span>
-            <span>{{AdmissionDate}}</span>
-        </td>-->
                                     <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Ward | Bed Name: </span>
-                                        <span>{{RoomName}} | {{BedName}}</span>
+                                        <span style="font-weight: bold;">Gender : </span>
+                                        <span>{{GenderName}}</span>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Department :</span>
-                                        <span>{{DepartmentName}} </span>
-                                    </td>
-
                                     <td style="padding: 2px;">
                                         <span style="font-weight: bold;">Doctor Name:</span>
                                         <span>{{DoctorName}}</span>
                                     </td>
 
                                     <td style="padding: 2px;">
-                                        <span style="font-weight: bold;">Ref.Doctor Name:</span>
-                                        <span>{{RefDocName}}</span>
+                                        <span style="font-weight: bold;">Department :</span>
+                                        <span>{{DepartmentName}} </span>
+                                    </td>
+
+                                    <td style="padding: 2px;">
+                                        <span style="font-weight: bold;">Ward | Bed Name: </span>
+                                        <span>{{RoomName}} | {{BedName}}</span>
                                     </td>
 
                                 </tr>
@@ -105,6 +96,10 @@
                                     <td style="padding: 2px;">
                                         <span style="font-weight: bold;">Patient Type:</span>
                                         <span>{{PatientType}}</span>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span style="font-weight: bold;">Ref.Doctor Name:</span>
+                                        <span>{{RefDocName}}</span>
                                     </td>
                                     <td style="padding-left:10px; display:{{chkCompanyNameflag}}">
                                         <b>Company Name :</b> {{CompanyName}}
