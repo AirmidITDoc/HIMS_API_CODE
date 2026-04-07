@@ -510,6 +510,15 @@ namespace HIMS.Services.Pathlogy
 
                         }
                     }
+                    if (objBill.BillNo > 0) 
+                    { 
+                             Dictionary<string, object> param = new() 
+                             { 
+                               ["BillNo"] = objBill.BillNo 
+                             }; 
+                         odal.ExecuteNonQuery("Cal_DiscAmount_Bill", CommandType.StoredProcedure, param); 
+                    }
+
                     string[] rPaymentEntity = { "PaymentId", "UnitId", "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount",
                         "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "SalesId", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "CompanyId" };
                     Payment objPay = new();
