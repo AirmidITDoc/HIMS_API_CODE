@@ -40,7 +40,6 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.City).NotNull().NotEmpty().WithMessage("City is required");
             RuleFor(x => x.Phone).NotNull().NotEmpty().WithMessage("Phone is required");
             RuleFor(x => x.EmailId).NotNull().NotEmpty().WithMessage("EmailId is required");
-            RuleFor(x => x.Header).NotNull().NotEmpty().WithMessage("Header is required");
 
 
         }

@@ -159,6 +159,21 @@ namespace HIMS.API.Controllers.NursingStation
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
 
+        [HttpPost("PrescriptionIsClosed")]
+        [Permission(PageCode = "NursingPrescription", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(PrescriptionCancel obj)
+        {
+            TIpPrescription model = new();
+            if (obj.IppreId != 0)
+            {
+                model.IppreId = obj.IppreId;
+                await _IPrescriptionService.CancelAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+
 
 
         [HttpPost("PrescriptionReturnInsert")]
