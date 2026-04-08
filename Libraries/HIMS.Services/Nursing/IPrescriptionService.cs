@@ -15,6 +15,8 @@ namespace HIMS.Services.Nursing
         Task PrescCancelAsync(TIpPrescription objTIpPrescription, int CurrentUserId, string CurrentUserName);
         Task PrescreturnCancelAsync(TIpprescriptionReturnH objIpprescriptionReturnH, int CurrentUserId, string CurrentUserName);
         Task<IPagedList<ItemNameBatchPOPIPPresReturnDto>> ItemNameBatchPOP(GridRequestModel objGrid);
+        Task CancelAsync(TIpPrescription objTIpPrescription, int CurrentUserId, string CurrentUserName);
+
 
 
 
