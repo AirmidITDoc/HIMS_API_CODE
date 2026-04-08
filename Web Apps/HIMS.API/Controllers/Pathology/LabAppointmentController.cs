@@ -141,7 +141,7 @@ namespace HIMS.API.Controllers.Pathology
         [HttpGet("get-Labappoinments")]
         [Permission]
         //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
-        public async Task<ApiResponse> GetLabAppoinments(int DocId, DateTime FromDate, DateTime ToDate, int? CategoryId)
+        public async Task<ApiResponse> GetLabAppoinments(int DocId, DateTime FromDate, DateTime ToDate, int CategoryId)
         {
             var data = await _ILabAppointmentService.GetLabAppoinments(DocId, FromDate, ToDate, CategoryId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Labappoinments Data.", data.Select(x => new

@@ -285,14 +285,6 @@ namespace HIMS.Services.Pathlogy
                             }
 
                         }
-                        if (objBill.BillNo > 0)
-                        {
-                            Dictionary<string, object> param = new()
-                            {
-                                ["BillNo"] = objBill.BillNo
-                            };
-                            odal.ExecuteNonQuery("Cal_DiscAmount_Bill", CommandType.StoredProcedure, param);
-                        }
                         foreach (var item in ObjTPayment)
                         {
                             string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
@@ -312,11 +304,21 @@ namespace HIMS.Services.Pathlogy
                             item.PaymentId = Convert.ToInt32(VPaymentId);
                             await _context.LogProcedureExecution(pentity, nameof(TPayment), Convert.ToInt32(item.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-
                         }
                     }
+
+                    if (objBill.BillNo > 0)
+                    {
+                        Dictionary<string, object> param = new()
+                        {
+                            ["BillNo"] = objBill.BillNo
+                        };
+                        odal.ExecuteNonQuery("Cal_DiscAmount_Bill", CommandType.StoredProcedure, param);
+                    }
+
                     scope.Complete();
-                }
+
+                }       
             }
 
 

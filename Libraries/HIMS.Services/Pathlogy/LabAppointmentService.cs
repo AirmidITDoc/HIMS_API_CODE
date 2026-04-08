@@ -82,9 +82,9 @@ namespace HIMS.Services.Pathlogy
                 scope.Complete();
             }
         }
-        public virtual async Task<List<TLabAppointment>> GetLabAppoinments(int DocId, DateTime FromDate, DateTime ToDate,int?CategoryId)
+        public virtual async Task<List<TLabAppointment>> GetLabAppoinments(int DocId, DateTime FromDate, DateTime ToDate,int CategoryId)
         {
-            return await this._context.TLabAppointments.Where(x => x.DoctorId == DocId && !x.IsCancelled.Value && x.AppDate >= FromDate && x.AppDate <= ToDate && (CategoryId == null || x.CategoryId == CategoryId) ).ToListAsync();
+            return await this._context.TLabAppointments.Where(x => (DocId == 0 || x.DoctorId == DocId)  && !x.IsCancelled.Value && x.AppDate >= FromDate && x.AppDate <= ToDate && (CategoryId == 0 || x.CategoryId == CategoryId) ).ToListAsync();
         }
         //public virtual async Task<List<LabAppointmentDto>> SearchLabApp(string str)
         //{
