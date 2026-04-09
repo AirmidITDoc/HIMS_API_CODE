@@ -144,7 +144,7 @@ namespace HIMS.Services.Report
 
         public virtual async Task<List<LoginManager>> SearchLoginUser(string str)
         {
-            return await this._context.LoginManagers.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(25).ToListAsync();
+            return await this._context.LoginManagers.Where(x => x.IsActive == true && (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(100).ToListAsync();
         }
         public virtual async Task<List<TLabPatientRegistration>> SearchPatient(string str)
         {
@@ -152,7 +152,7 @@ namespace HIMS.Services.Report
         }
         public virtual async Task<List<TLabPatientRegistration>> SearchRegNo(string str)
         {
-            return await this._context.TLabPatientRegistrations.Where(x => (x.LabRequestNo).ToLower().Contains(str)).Take(25).ToListAsync();
+            return await this._context.TLabPatientRegistrations.Where(x => (x.LabRequestNo).ToLower().Contains(str)).Take(100).ToListAsync();
         }
 
         public virtual async Task<List<PatientTypeMaster>> SearchPatientType(string str)
