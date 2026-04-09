@@ -29,10 +29,10 @@ namespace HIMS.Data.DTO.Pathology
     }
     public class UnitCategoryTestSummaryDto
     {
-        public string UnitBranchName { get; set; }
-        public string CategoryName { get; set; }
+        public string? UnitBranchName { get; set; }
+        public string? CategoryName { get; set; }
         public long TestCount { get; set; }
-        public decimal TotalAmount { get; set; }    
+        public decimal TotalAmount { get; set; }
         public long CategoryId { get; set; }
     }
     public class UnitDoctorTestSummaryDto
@@ -58,7 +58,7 @@ namespace HIMS.Data.DTO.Pathology
     {
         public string FullDate { get; set; }
         public double TestCount { get; set; }
-        public double TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public decimal DiscAmount { get; set; }
         public decimal NetAmount { get; set; }
     }
@@ -67,7 +67,7 @@ namespace HIMS.Data.DTO.Pathology
     {
         public string FullDate { get; set; }
         public long TestCount { get; set; }
-        public double TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public decimal DiscAmount { get; set; }
         public decimal NetAmount { get; set; }
     }
@@ -77,7 +77,7 @@ namespace HIMS.Data.DTO.Pathology
     {
         public string FullDate { get; set; }
         public long TestCount { get; set; }
-        public double TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public decimal DiscAmount { get; set; }
         public decimal NetAmount { get; set; }
     }
@@ -86,7 +86,7 @@ namespace HIMS.Data.DTO.Pathology
     {
         public string FullDate { get; set; }
         public long TestCount { get; set; }
-        public double TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public decimal DiscAmount { get; set; }
         public decimal NetAmount { get; set; }
     }
