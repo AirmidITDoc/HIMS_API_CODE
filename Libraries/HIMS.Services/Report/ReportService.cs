@@ -2976,6 +2976,8 @@ namespace HIMS.Services.Report
                                     items.Append("</tr>");
 
                                     subGross = subDisc = subNet = subReceipt = subDue = subRefund = 0;
+                                    billGross = billDisc = billNet = 0;
+                                    billReceipt = billDue = billRefund = 0;
                                 }
 
                                 items.Append("<tr class='groupHeader'>");
