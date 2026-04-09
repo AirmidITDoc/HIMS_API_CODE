@@ -31,8 +31,6 @@ namespace HIMS.API.Controllers.NursingStation
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = AppTime.Now;
                
                 await _IIpdDrugScheduleService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }

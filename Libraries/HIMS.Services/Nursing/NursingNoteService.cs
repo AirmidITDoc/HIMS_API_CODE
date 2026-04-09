@@ -157,6 +157,33 @@ namespace HIMS.Services.Nursing
         {
             _context.AddRange(ObjTNursingMedicationChart);
             await _context.SaveChangesAsync();
+            // Added by vimal on 09/04/2026 for store schedules based on routeid and totaldays from MTime.
+            List<IpdDrugSchedule> scheduleData = new();
+            var routes = await _context.MedicalRecordConfigs.Where(x => ObjTNursingMedicationChart.Select(x => x.RouteId).Contains(x.Id)).ToListAsync();
+            foreach (var item in ObjTNursingMedicationChart)
+            {
+                var route = routes.Find(x => x.Id == item.RouteId);
+                for (int i = 1; ; i++)
+                {
+                    if (DateTime.Now.AddHours(i * route.IntervalHours) > item.Mtime.Value.AddDays(item.Days.Value))
+                    {
+                        break;
+                    }
+                    scheduleData.Add(new()
+                    {
+                        CreatedBy = UserId,
+                        CreatedDate = DateTime.Now,
+                        DoseNo = i,
+                        IpdDrugScheduleId = 0,
+                        MedChartId = item.MedChartId,
+                        IsActive = true,
+                        Status = 0,
+                        DoseTime = DateTime.Now.AddHours(i * route.IntervalHours)
+                    });
+                }
+            }
+            _context.IpdDrugSchedules.AddRange(scheduleData);
+            await _context.SaveChangesAsync();
 
             //DatabaseHelper odal = new();
 
