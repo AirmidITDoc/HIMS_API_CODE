@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class TNursingMedicationChart1
     {
+        public TNursingMedicationChart1()
+        {
+            IpdDrugSchedules = new HashSet<IpdDrugSchedule>();
+        }
+
         public long MedChartId { get; set; }
         public long? AdmId { get; set; }
         public DateTime? Mdate { get; set; }
@@ -19,5 +24,7 @@ namespace HIMS.Data.Models
         public string? DoseName { get; set; }
         public long? RouteId { get; set; }
         public long? Days { get; set; }
+
+        public virtual ICollection<IpdDrugSchedule> IpdDrugSchedules { get; set; }
     }
 }
