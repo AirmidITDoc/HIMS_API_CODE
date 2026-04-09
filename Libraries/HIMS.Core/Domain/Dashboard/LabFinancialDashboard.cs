@@ -42,6 +42,7 @@ namespace HIMS.Core.Domain.Dashboard
 
     public class DepartmentWiseSales
     {
+        public long GroupId { get; set; }
         public string Department { get; set; }
         public long TestCount { get; set; }
         public decimal CenterSale { get; set; }

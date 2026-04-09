@@ -109,5 +109,12 @@ namespace HIMS.API.Controllers.Dashboard
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Lab Financial Dashboard", data);
         }
 
+        [HttpGet("Lab-Financial-Department-Summary")]
+        public async Task<ApiResponse> LabFinancialDepartmentSummary(int UnitId,int GroupId,DateTime FromDate,DateTime ToDate)
+        {
+            var data = await _IDashboardService.GetLabFinancialDepartmentSummary(UnitId, GroupId, FromDate, ToDate);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Lab Financial Department Summary",data);
+        }
     }
 }

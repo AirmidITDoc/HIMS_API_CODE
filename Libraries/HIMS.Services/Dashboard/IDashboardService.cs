@@ -16,5 +16,6 @@ namespace HIMS.Services.Dashboard
         Task<DailyDashboard> GetDailyDashboard(int UnitId, DateTime FromDate, DateTime ToDate);
         Task<CashlessDashboard> GetCashlessDashboard(int UnitId, DateTime FromDate, DateTime ToDate);
         Task<LabFinancialDashboard> GetLabFinancialDashboard(int UnitId, DateTime FromDate, DateTime ToDate);
+        Task<List<LabDepartmentSummary>> GetLabFinancialDepartmentSummary(int UnitId, int GroupId, DateTime FromDate, DateTime ToDate);
     }
 }

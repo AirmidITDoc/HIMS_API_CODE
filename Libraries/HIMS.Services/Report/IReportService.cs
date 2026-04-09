@@ -10,7 +10,7 @@ namespace HIMS.Services.Report
     {
         Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1);
         Task<Tuple<byte[], string>> GetReportSetByProcDB(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1, long StoreId = 2);
-        Tuple<byte[],string> GetNewReportSetByProc(ReportConfigDto model);
+        Tuple<byte[],string> GetNewReportSetByProc(ReportConfigDto model, long StoreId = 2);
         Task<List<DoctorMaster>> SearchDoctor(string str);
         Task<List<ServiceMasterDTO>> SearchService(string str);
         Task<List<MDepartmentMaster>> SearchDepartment(string str);

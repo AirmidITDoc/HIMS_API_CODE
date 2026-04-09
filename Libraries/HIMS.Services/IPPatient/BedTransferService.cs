@@ -22,7 +22,7 @@ namespace HIMS.Services.IPPatient
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { };
+            string[] rEntity = { "AdmissionId","FromDate","FromTime","FromWardId","FromBedId","FromClassId","ToDate","ToTime","ToWardId","ToBedId","ToClassId","Remark","AddedBy","IsCancelled","IsCancelledBy"};
             var Entity = objBedTransferDetail.ToDictionary();
             foreach (var rProperty in Entity.Keys.ToList())
             {
@@ -37,17 +37,17 @@ namespace HIMS.Services.IPPatient
 
             foreach (var rProperty in rbedentity.Keys.ToList())
             {
-                if (!rEntity.Contains(rProperty))
+                if (!rBedEntity.Contains(rProperty))
                     rbedentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_M_BedMasterTofreebed", CommandType.StoredProcedure, rbedentity);
 
-            string[] BedEntity = { "BedId"};
+            string[] BedEntity = {"BedId"};
             var bedentity = ObjBedMasterUpdate.ToDictionary();
 
             foreach (var rProperty in bedentity.Keys.ToList())
             {
-                if (!rEntity.Contains(rProperty))
+                if (!BedEntity.Contains(rProperty))
                     bedentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_BedMaster", CommandType.StoredProcedure, bedentity);
@@ -57,7 +57,7 @@ namespace HIMS.Services.IPPatient
 
             foreach (var rProperty in aentity.Keys.ToList())
             {
-                if (!rEntity.Contains(rProperty))
+                if (!AEntity.Contains(rProperty))
                     aentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_Update_AdmissionforBedMaster", CommandType.StoredProcedure, aentity);

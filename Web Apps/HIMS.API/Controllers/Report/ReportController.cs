@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using DocumentFormat.OpenXml.Wordprocessing;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -612,6 +613,9 @@ namespace HIMS.API.Controllers.Report
             objGrid.Filters.Add(new SearchGrid() { FieldName = "MenuId", FieldValue = "0" });
             objGrid.First = 0;
             objGrid.Rows = 0;
+
+          //  long StoreId = 2;
+            long StoreId = Context.StoreId;
             IPagedList<MReportListDto> MReportConfigList = await _reportService.MReportListDto(objGrid);
             if (MReportConfigList.Count > 0)
             {
@@ -632,7 +636,7 @@ namespace HIMS.API.Controllers.Report
                 model.vPageOrientation = MReportConfigList[0].ReportPageOrientation;
             }
             model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
-            var tuple = _reportService.GetNewReportSetByProc(model);
+            var tuple = _reportService.GetNewReportSetByProc(model, StoreId);
             string byteFile = Convert.ToBase64String(tuple.Item1);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
