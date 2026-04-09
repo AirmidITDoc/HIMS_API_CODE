@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prescription</title>
+</head>
+
+<body style="font-family: Arial, sans-serif; margin:0; background:#f5f5f5;">
+
+    <div style="width:980px; margin:20px auto; background:#fff; padding:20px; ">
+
+        <!-- HEADER -->
+        <div style="display:flex; justify-content:space-between; border-bottom:2px solid #0a5fa8; padding-bottom:10px;">
+            <div style="color:#0a5fa8; font-size:14px;">
+                <b>Prof.(Dr.) P.C. Dey</b><br>
+                Director & HOD - Orthopaedic<br>
+                Endospine, Arthroscopy & Joint Replacement Surgeon
+            </div>
+
+            <div style="text-align:right; font-size:14px; font-weight:bold;">
+                PURUSHOTTAM HOSPITAL<br>
+                & RESEARCH CENTRE Pvt. Ltd.<br>
+                Bhubaneswar - 751025
+            </div>
+        </div>
+
+        <!-- PATIENT DETAILS -->
+        <div style="margin-top:10px; font-size:18px;">
+            Patient Name:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:220px;">
+                {{PatientName}}
+            </span>
+
+            &nbsp;&nbsp; Age:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:80px;">
+                {{AgeYear}}
+            </span>
+
+            &nbsp;&nbsp; Sex:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:80px;">
+                {{GenderName}}
+            </span>
+        </div>
+
+        <div style="margin-top:10px; font-size:18px;">
+            UHID No:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:200px;">
+                {{RegNo}}
+            </span>
+
+            &nbsp;&nbsp; OP No:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:200px;">
+                {{OPDNo}}
+            </span>
+
+            &nbsp;&nbsp; Department:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:200px;">
+                {{DepartmentName}}
+            </span>
+        </div>
+
+        <div style="margin-top:10px; font-size:14px;">
+            Consultant Name:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:400px;">
+                {{ConsultantDocName}}
+            </span>
+        </div>
+
+        <!-- VITALS -->
+        <!-- VITALS -->
+        <div style="margin-top:10px; font-size:18px;">
+            BP:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:80px;">
+                {{BP}}
+            </span>
+
+            HR:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:80px;">
+                {{Pulse}}
+            </span>
+
+            SPO2:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:80px;">
+                {{SpO2}}
+            </span>
+
+            Temp:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:80px;">
+                {{Temp}}
+            </span>
+
+            Wt:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:80px;">
+                {{Weight}}
+            </span>
+
+            Height:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:80px;">
+                {{Height}}
+            </span>
+
+            BMI:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:80px;">
+                {{BMI}}
+            </span>
+        </div>
+
+        <!-- ADDRESS -->
+        <div style="margin-top:10px; font-size:18px;">
+            Resident of:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:600px;">
+                {{Address}}
+            </span>
+        </div>
+
+        <!-- CHIEF COMPLAINT -->
+        <div style="margin-top:10px; font-size:18px;">
+            Chief Complaint:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:600px;">
+                {{ChiefComplaint}}
+            </span>
+        </div>
+
+        <!-- HISTORY -->
+        <div style="margin-top:10px; font-size:18px;">
+            History:
+            <span style="border-bottom:1px dotted #000; display:inline-block; min-width:650px;">
+                {{RequestList}}
+            </span>
+        </div>
+        <!-- MAIN CONTENT -->
+        <table style="width:100%; margin-top:20px; border-collapse:collapse; page-break-inside:avoid;">
+            <tr>
+
+                <!-- LEFT SIDE (Investigations) -->
+                <td style="width:220px; vertical-align:top; border-right:2px solid green; padding-right:10px; font-size:16px;">
+                    <b>Investigations</b><br><br>
+
+                    ASO, RA, ESR, CRP<br><br>
+                    S. Uric Acid<br><br>
+                    S. Ca+<br><br>
+                    T3, T4, TSH<br><br>
+                    Vit D3<br><br>
+                    Vit B12<br><br>
+                    CBC, Hb%, BT, CT<br><br>
+                    RBS, FBS, HbA1C<br><br>
+                    LFT<br><br>
+                    RFT<br><br>
+                    PT-INR, APTT<br><br>
+                    Lipid Profile<br><br>
+                    ANA<br><br>
+                    HLA-B27<br><br>
+                    ECG, 2D Echo<br><br>
+                    CXR PA View<br><br>
+                    BMD (Whole Body)
+                </td>
+
+                <!-- RIGHT SIDE (Rx) -->
+                <td style="vertical-align:top; padding-left:20px;">
+                    <div style="color:green; font-size:28px; font-weight:bold;">Rx</div>
+
+                    <!-- Writing space -->
+                    <div style="height:500px;"></div>
+                </td>
+
+            </tr>
+        </table>
+        <!-- FOOTER -->
+        <div style="margin-top:220px; display:flex; justify-content:space-between;">
+            <div>
+                Follow up: {{FollowupDate}}
+            </div>
+
+            <div style="text-align: right;">
+                Signature (Stamp)<br><br>
+                Date: ___ &nbsp; Time: ___
+            </div>
+        </div>
+
+        <table style="width:100%; margin-top:20px; border-collapse:collapse;">
+            <tr>
+                <td style="background:#0a8f3c; color:white; padding:8px; font-size:13px; text-align:center;">
+                    Plot No: 3247/1598, Pandra, Rasulgarh, Bhubaneswar - 751025 |
+                    www.purushottamhospital.com
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+</body>
+</html>
