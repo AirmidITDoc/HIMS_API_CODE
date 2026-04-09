@@ -1331,6 +1331,37 @@ namespace HIMS.Data.DataProviders
             }
         }
 
+        public async Task<List<T>> Get1ResultFromSp<T>(string spName, SqlParameter[] parameters) where T : new()
+        {
+            Command.CommandType = CommandType.StoredProcedure;
+            Command.CommandText = spName;
+            Command.Parameters.Clear();
+            Command.Parameters.AddRange(parameters);
+
+            try
+            {
+                objConnection.Open();
+
+                using var reader = await Command.ExecuteReaderAsync();
+
+                var item1 = reader.MapToList<T>();
+
+                return item1;
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, spName);
+                throw;
+            }
+            finally
+            {
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+        }
+
 
         #endregion :: Multiple Result Sets ::
         public List<T> FetchListByQuery<T>(string Qry, SqlParameter[] para = null)

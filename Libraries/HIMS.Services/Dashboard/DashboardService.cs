@@ -366,5 +366,20 @@ namespace HIMS.Services.Dashboard
                 DepartmentSummary = data.Item9 ?? new List<DepartmentSummary>()
             };
         }
+
+        public async Task<List<LabDepartmentSummary>> GetLabFinancialDepartmentSummary(int UnitId, int GroupId, DateTime FromDate, DateTime ToDate)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para =
+            {
+                new SqlParameter("@Unitid", SqlDbType.BigInt) { Value = UnitId },
+                new SqlParameter("@GroupId", SqlDbType.BigInt) { Value = GroupId },
+                new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate },
+                new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate }
+            };
+
+            return await sql.Get1ResultFromSp<LabDepartmentSummary>("ps_LabFinacialDashboarddept", para) ?? new List<LabDepartmentSummary>();
+        }
     }
 }
