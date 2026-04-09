@@ -160,7 +160,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("PrescriptionIsClosed")]
-        [Permission(PageCode = "NursingPrescription", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "NursingPrescription", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(PrescriptionCancel obj)
         {
             TIpPrescription model = new();

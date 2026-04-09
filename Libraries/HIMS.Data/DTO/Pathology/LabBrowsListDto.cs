@@ -26,7 +26,7 @@ namespace HIMS.Data.DTO.Pathology
         public decimal? TotalAmt { get; set; }
         public double? ConcessionAmt { get; set; }
         public decimal? NetPayableAmt { get; set; }
-        public string? OPD_IPD_ID { get; set; }
+        public long? OpdIpdId { get; set; }
         public long IsVerifySign { get; set; }
         public string? PaidAmt { get; set; }
         public decimal? BalanceAmt { get; set; }
@@ -46,6 +46,8 @@ namespace HIMS.Data.DTO.Pathology
         public string? AadharCardNo { get; set; }
         public string? EmailId { get; set; }
         public long? IsCancelled { get; set; }
+        public long? LabPatRegId { get; set; }
+
 
     }
     public class LabResultCompletedListDto
