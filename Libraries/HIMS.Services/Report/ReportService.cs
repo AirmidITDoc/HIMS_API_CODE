@@ -12,6 +12,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Globalization;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using WkHtmlToPdfDotNet;
 using static LinqToDB.Common.Configuration;
@@ -200,14 +201,12 @@ namespace HIMS.Services.Report
             if (header == "PharmacyHeader.html")
             {
                 htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath, StoreId);
-              //  html = html.Replace("{{PharmacyHeader}}", htmlHeaderFilePath);
 
 
             }
             else
             {
                 htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, UnitId);
-             //   html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
             }
 
@@ -2774,7 +2773,7 @@ namespace HIMS.Services.Report
             font += "\nbody {font-family: " + fonts + " sans-serif;}";
             return html.Replace("{{LoadFont}}", font);
         }
-        public Tuple<byte[], string> GetNewReportSetByProc(ReportConfigDto model)
+        public Tuple<byte[], string> GetNewReportSetByProc(ReportConfigDto model, long StoreId = 2)
         {
 
             string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
@@ -2796,7 +2795,18 @@ namespace HIMS.Services.Report
             string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, model.htmlFilePath);
 
             string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, model.htmlHeaderFilePath);
-            htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+
+            var header = model.htmlHeaderFilePath;
+
+            if (header == "PharmacyHeader.html")
+            {
+                htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath,StoreId);
+            }
+            else
+            {
+                htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+            }
+
 
             var html = GetHTMLViewer(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, model.groupByLabel, model.columnWidths /*model.columnAlignments*/);
             //var html = GetHTMLViewerGroupBy(model.SPName, model, htmlFilePath, htmlHeaderFilePath, colList, headerList, totalList, groupbyList, model.groupByLabel);
