@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
+using HIMS.Api.Models.Common;
 using HIMS.API.Models;
 using HIMS.API.Utility;
 using Microsoft.AspNetCore.Http;
@@ -41,7 +42,17 @@ namespace HIMS.API.Controllers.RIS
             try
             {
                 var result = await _risHelper.CreateRadiologyOrderAsync(request);
-                return result.Status ? Ok(result) : BadRequest(result);
+               // return result.Status ? Ok(result) : BadRequest(result);
+
+                if (result.Status)
+                {
+                    return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiology order created successfully", result));
+                }
+                else
+                {
+                    return BadRequest(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, result.Message ?? "Failed to create radiology order", result));
+                }
+
             }
             catch (Exception ex)
             {
