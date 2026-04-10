@@ -57,5 +57,23 @@ namespace HIMS.API.Models.Masters
 
         }
     }
+    public class paymentpharmacyUpdateModel
+    {
+        public long PaymentId { get; set; }
+        public long Type { get; set; }
+        public decimal? CashPayAmount { get; set; }
+        public decimal? CardPayAmount { get; set; }
+        public string? CardNo { get; set; }
+        public string? CardBankName { get; set; }
+        public decimal? ChequePayAmount { get; set; }
+        public string? ChequeNo { get; set; }
+        public string? BankName { get; set; }
+        public decimal? NeftpayAmount { get; set; }
+        public string? Neftno { get; set; }
+        public string? NeftbankMaster { get; set; }
+        public decimal? PayTmamount { get; set; }
+        public string? PayTmtranNo { get; set; }
+    }
+
 
 }
