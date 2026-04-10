@@ -3343,6 +3343,115 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{SummaryHtml}}", summaryHtml);
                     }
                     break;
+
+                case "MarketingDoctorTestWiseSale.html":
+                    {
+                        string prevExec = "", prevDoctor = "";
+
+                        decimal docGross = 0, docDisc = 0, docNet = 0;
+                        decimal execGross = 0, execDisc = 0, execNet = 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            string exec = dr["ExecutiveName"].ToString();
+                            string doctor = dr["ReferringDoctor"].ToString();
+
+                            decimal gross = Convert.ToDecimal(dr["Gross"]);
+                            decimal disc = Convert.ToDecimal(dr["Discount"]);
+                            decimal net = Convert.ToDecimal(dr["Net"]);
+
+                            /* EXEC CHANGE */
+                            if (prevExec != exec)
+                            {
+                                if (prevExec != "")
+                                {
+                                    // last doctor total
+                                    items.Append("<tr class='docTotal'><td colspan='7'>Doctor Total</td><td>" + docGross + "</td><td>" + docDisc + "</td><td>" + docNet + "</td></tr>");
+
+                                    // exec total
+                                    items.Append("<tr class='execTotal'><td colspan='7'>Subtotal for " + prevExec + "</td><td>" + execGross + "</td><td>" + execDisc + "</td><td>" + execNet + "</td></tr>");
+
+                                    docGross = docDisc = docNet = 0;
+                                    execGross = execDisc = execNet = 0;
+                                }
+
+                                items.Append("<tr class='execHeader'><td colspan='10'>Executive Name : " + exec + "</td></tr>");
+
+                                prevExec = exec;
+                                prevDoctor = "";
+                            }
+
+                            /* DOCTOR CHANGE */
+                            if (prevDoctor != doctor)
+                            {
+                                if (prevDoctor != "")
+                                {
+                                    items.Append("<tr class='docTotal'><td colspan='7'>Doctor Total</td><td>" + docGross + "</td><td>" + docDisc + "</td><td>" + docNet + "</td></tr>");
+                                    docGross = docDisc = docNet = 0;
+                                }
+
+                                prevDoctor = doctor;
+                            }
+
+                            /* MAIN ROW (ALL DATA IN ONE LINE) */
+                            items.Append("<tr>");
+
+                            // Ref Doctor (only once)
+                            if (docGross == 0 && docDisc == 0 && docNet == 0)
+                                items.Append("<td>" + doctor + "</td>");
+                            else
+                                items.Append("<td></td>");
+
+                            items.Append("<td>" + dr["BillNo"] + "</td>");
+                            items.Append("<td>" + dr["PatientCode"] + "</td>");
+                            items.Append("<td>" + dr["PatientName"] + "</td>");
+                            items.Append("<td>" + dr["TestName"] + "</td>");
+                            items.Append("<td>" + dr["Rate"] + "</td>");
+                            items.Append("<td>" + dr["Cases"] + "</td>");
+                            items.Append("<td>" + gross + "</td>");
+                            items.Append("<td>" + disc + "</td>");
+                            items.Append("<td>" + net + "</td>");
+
+                            items.Append("</tr>");
+
+                            docGross += gross;
+                            docDisc += disc;
+                            docNet += net;
+
+                            execGross += gross;
+                            execDisc += disc;
+                            execNet += net;
+                        }
+
+                        /* LAST TOTALS */
+                        if (prevDoctor != "")
+                            items.Append("<tr class='docTotal'><td colspan='7'>Doctor Total</td><td>" + docGross + "</td><td>" + docDisc + "</td><td>" + docNet + "</td></tr>");
+
+                        if (prevExec != "")
+                            items.Append("<tr class='execTotal'><td colspan='7'>Subtotal for " + prevExec + "</td><td>" + execGross + "</td><td>" + execDisc + "</td><td>" + execNet + "</td></tr>");
+                    }
+                    break;
+
+                    /* HELPERS */
+                    string GetDoctorTotalRow(decimal g, decimal d, decimal n)
+                    {
+                        return "<tr class='docTotal'>" +
+                               "<td colspan='5'>Doctor Total</td>" +
+                               "<td>" + g + "</td>" +
+                               "<td>" + d + "</td>" +
+                               "<td>" + n + "</td>" +
+                               "</tr>";
+                    }
+
+                    string GetExecTotalRow(string name, decimal g, decimal d, decimal n)
+                    {
+                        return "<tr class='execTotal'>" +
+                               "<td colspan='5'>Subtotal for " + name + "</td>" +
+                               "<td>" + g + "</td>" +
+                               "<td>" + d + "</td>" +
+                               "<td>" + n + "</td>" +
+                               "</tr>";
+                    }
             }
 
             if (!string.IsNullOrEmpty(T_Count.ToString()))
