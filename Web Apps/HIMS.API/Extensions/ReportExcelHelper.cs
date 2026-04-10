@@ -438,6 +438,172 @@ namespace HIMS.API.Extensions
                         WriteSummary("Credit Balance", summary["CreditPatientBalance"]);
                     }
                     break;
+                case "MarketingDoctorTestWiseSale.html":
+                    {
+                        var headers = model.headerList.ToList();
+                        headers.Remove("ExecutiveName"); 
+
+                        AddHeader(workSheet, headers); 
+                        StyleHeaderRow(workSheet);
+
+                        int rowNo = 2;
+
+                        string prevExec = "";
+                        string prevDoctor = "";
+
+                        decimal docGross = 0, docDisc = 0, docNet = 0;
+                        decimal execGross = 0, execDisc = 0, execNet = 0;
+
+                        bool isFirstRowOfDoctor = false;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            string exec = dr["ExecutiveName"]?.ToString();
+                            string doctor = dr["ReferringDoctor"]?.ToString();
+
+                            decimal gross = Convert.ToDecimal(dr["Gross"]);
+                            decimal disc = Convert.ToDecimal(dr["Discount"]);
+                            decimal net = Convert.ToDecimal(dr["Net"]);
+                            if (prevExec != exec)
+                            {
+                                if (prevExec != "")
+                                {
+                                    if (prevDoctor != "")
+                                    {
+                                        workSheet.Cell(rowNo, 1).Value = "Doctor Total";
+                                        workSheet.Range(rowNo, 1, rowNo, 7).Merge();
+
+                                        workSheet.Cell(rowNo, 8).Value = docGross;
+                                        workSheet.Cell(rowNo, 9).Value = docDisc;
+                                        workSheet.Cell(rowNo, 10).Value = docNet;
+
+                                        workSheet.Range(rowNo, 1, rowNo, 10).Style
+                                            .Font.SetBold()
+                                            .Fill.SetBackgroundColor(XLColor.LightGray);
+
+                                        rowNo++;
+                                    }
+                                    workSheet.Cell(rowNo, 1).Value = "Subtotal for " + prevExec;
+                                    workSheet.Range(rowNo, 1, rowNo, 7).Merge();
+
+                                    workSheet.Cell(rowNo, 8).Value = execGross;
+                                    workSheet.Cell(rowNo, 9).Value = execDisc;
+                                    workSheet.Cell(rowNo, 10).Value = execNet;
+
+                                    var execRange = workSheet.Range(rowNo, 1, rowNo, 10);
+                                    execRange.Style.Font.SetBold();
+                                    execRange.Style.Border.TopBorder = XLBorderStyleValues.Thick;
+                                    execRange.Style.Border.BottomBorder = XLBorderStyleValues.Thick;
+
+                                    rowNo++;
+                                    docGross = docDisc = docNet = 0;
+                                    execGross = execDisc = execNet = 0;
+                                }
+                                workSheet.Cell(rowNo, 1).Value = "Executive Name : " + exec;
+                                workSheet.Range(rowNo, 1, rowNo, 10).Merge().Style
+                                    .Font.SetBold()
+                                    .Font.SetFontSize(14)
+                                    .Fill.SetBackgroundColor(XLColor.FromHtml("#f2f2f2"));
+
+                                rowNo++;
+
+                                prevExec = exec;
+                                prevDoctor = "";
+                            }
+                            if (prevDoctor != doctor)
+                            {
+                                if (prevDoctor != "")
+                                {
+                                    // Doctor Total
+                                    workSheet.Cell(rowNo, 1).Value = "Doctor Total";
+                                    workSheet.Range(rowNo, 1, rowNo, 7).Merge();
+
+                                    workSheet.Cell(rowNo, 8).Value = docGross;
+                                    workSheet.Cell(rowNo, 9).Value = docDisc;
+                                    workSheet.Cell(rowNo, 10).Value = docNet;
+
+                                    workSheet.Range(rowNo, 1, rowNo, 10).Style
+                                        .Font.SetBold()
+                                        .Fill.SetBackgroundColor(XLColor.FromHtml("#f9f9f9"));
+
+                                    rowNo++;
+
+                                    docGross = docDisc = docNet = 0;
+                                }
+
+                                prevDoctor = doctor;
+                                isFirstRowOfDoctor = true;
+                            }
+                            int col = 1;
+                            workSheet.Cell(rowNo, col++).Value = isFirstRowOfDoctor ? doctor : "";
+                            isFirstRowOfDoctor = false;
+
+                            workSheet.Cell(rowNo, col++).Value = dr["BillNo"]?.ToString();
+                            workSheet.Cell(rowNo, col++).Value = dr["PatientCode"]?.ToString();
+                            workSheet.Cell(rowNo, col++).Value = dr["PatientName"]?.ToString();
+                            workSheet.Cell(rowNo, col++).Value = dr["TestName"]?.ToString();
+                            workSheet.Cell(rowNo, col++).Value = Convert.ToDecimal(dr["Rate"]);
+                            workSheet.Cell(rowNo, col++).Value = Convert.ToInt32(dr["Cases"]);
+                            workSheet.Cell(rowNo, col++).Value = gross;
+                            workSheet.Cell(rowNo, col++).Value = disc;
+                            workSheet.Cell(rowNo, col++).Value = net;
+
+                            rowNo++;
+                            docGross += gross;
+                            docDisc += disc;
+                            docNet += net;
+
+                            execGross += gross;
+                            execDisc += disc;
+                            execNet += net;
+                        }
+                        if (prevDoctor != "")
+                        {
+                            workSheet.Cell(rowNo, 1).Value = "Doctor Total";
+                            workSheet.Range(rowNo, 1, rowNo, 7).Merge();
+
+                            workSheet.Cell(rowNo, 8).Value = docGross;
+                            workSheet.Cell(rowNo, 9).Value = docDisc;
+                            workSheet.Cell(rowNo, 10).Value = docNet;
+
+                            workSheet.Range(rowNo, 1, rowNo, 10).Style
+                                .Font.SetBold()
+                                .Fill.SetBackgroundColor(XLColor.FromHtml("#f9f9f9"));
+
+                            rowNo++;
+                        }
+
+                        if (prevExec != "")
+                        {
+                            workSheet.Cell(rowNo, 1).Value = "Subtotal for " + prevExec;
+                            workSheet.Range(rowNo, 1, rowNo, 7).Merge();
+
+                            workSheet.Cell(rowNo, 8).Value = execGross;
+                            workSheet.Cell(rowNo, 9).Value = execDisc;
+                            workSheet.Cell(rowNo, 10).Value = execNet;
+
+                            var execRange = workSheet.Range(rowNo, 1, rowNo, 10);
+                            execRange.Style.Font.SetBold();
+                            execRange.Style.Border.TopBorder = XLBorderStyleValues.Thick;
+                            execRange.Style.Border.BottomBorder = XLBorderStyleValues.Thick;
+
+                            rowNo++;
+                        }
+
+                        var usedRange = workSheet.RangeUsed();
+
+                        if (usedRange != null)
+                        {
+                            usedRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                            usedRange.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                        }
+                        workSheet.Row(1).Style.Fill.BackgroundColor = XLColor.FromHtml("#e6e6e6");
+                        workSheet.Row(1).Style.Font.Bold = true;
+
+                        workSheet.Columns().AdjustToContents();
+                        workSheet.SheetView.FreezeRows(1);
+                    }
+                    break;
             }
             return SaveToStream(excel);
         }
