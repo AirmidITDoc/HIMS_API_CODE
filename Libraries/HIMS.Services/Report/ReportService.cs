@@ -41,7 +41,7 @@ namespace HIMS.Services.Report
 
         public virtual async Task<List<DoctorMaster>> SearchDoctor(string str)
         {
-            return await this._context.DoctorMasters.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(25).ToListAsync();
+            return await this._context.DoctorMasters.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(800).ToListAsync();
         }
 
         public virtual async Task<List<ServiceMasterDTO>> SearchService(string str)
@@ -68,7 +68,7 @@ namespace HIMS.Services.Report
         //}
         public virtual async Task<List<CompanyMaster>> SearchCompany(string str)
         {
-            return await this._context.CompanyMasters.Where(x => (x.CompanyName).ToLower().Contains(str)).Take(25).ToListAsync();
+            return await this._context.CompanyMasters.Where(x => (x.CompanyName).ToLower().Contains(str)).Take(200).ToListAsync();
         }
 
         public virtual async Task<List<DischargeTypeMaster>> SearchDischargeType(string str)
@@ -134,12 +134,12 @@ namespace HIMS.Services.Report
 
         public virtual async Task<List<HospitalMaster>> SearchHospitalMaster(string str)
         {
-            return await this._context.HospitalMasters.Where(x => (x.HospitalName).ToLower().Contains(str)).Take(25).ToListAsync();
+            return await this._context.HospitalMasters.Where(x => (x.HospitalName).ToLower().Contains(str)).Take(30).ToListAsync();
         }
 
         public virtual async Task<List<MCompanyEmployeInfo>> SearchCompanyEmployeInfo(string str)
         {
-            return await this._context.MCompanyEmployeInfos.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(25).ToListAsync();
+            return await this._context.MCompanyEmployeInfos.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(100).ToListAsync();
         }
 
         public virtual async Task<List<LoginManager>> SearchLoginUser(string str)
@@ -152,7 +152,7 @@ namespace HIMS.Services.Report
         }
         public virtual async Task<List<TLabPatientRegistration>> SearchRegNo(string str)
         {
-            return await this._context.TLabPatientRegistrations.Where(x => (x.LabRequestNo).ToLower().Contains(str)).Take(100).ToListAsync();
+            return await this._context.TLabPatientRegistrations.Where(x => (x.LabRequestNo).ToLower().Contains(str)).Take(10000).ToListAsync();
         }
 
         public virtual async Task<List<PatientTypeMaster>> SearchPatientType(string str)
@@ -1938,7 +1938,7 @@ namespace HIMS.Services.Report
                         model.RepoertName = "PathologyReportWithHeader";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
-                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PathTestReportHospitalheader.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AIP_PathTestReportHospitalheader_AddAnnex.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
