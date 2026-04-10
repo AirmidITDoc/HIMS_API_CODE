@@ -10527,7 +10527,7 @@ namespace HIMS.Services.Report
                                  .Append(dr["ChargesDoctorName"].ConvertToString())
                                  .Append("</td>")
                                  .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>")
-                                 .Append(dr["Price"].ConvertToString())
+                                 .Append(Convert.ToDouble(dr["Price"]).ToString("0.00"))
                                  .Append("</td>")
                                  .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>")
                                  .Append(dr["Qty"].ConvertToString())
