@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Calibri;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #e6e6e6;
+            border: 1px solid #999;
+            padding: 6px;
+        }
+
+        td {
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        .execHeader {
+            font-size: 17px;
+            font-weight: bold;
+            background: #f2f2f2;
+        }
+
+        .docTotal {
+            background: #f9f9f9;
+            font-weight: bold;
+        }
+
+        .execTotal {
+            background: #e6e6e6;
+            font-weight: bold;
+            border-top: 2px solid black;
+            border-bottom: 2px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    {{HospitalHeader}}
+    <table style="width:100%;">
+
+        <tr style="font-size:20px">
+
+            <td style="border-bottom:1px solid #ccc;padding-bottom:10px">
+                <b>{{RepoertName}}</b>
+            </td>
+
+            <td style="border-bottom:1px solid #ccc;padding-bottom:10px;text-align:right">
+                <b>Print Date : {{CurrentDate}}</b>
+            </td>
+
+        </tr>
+        <tr>
+            <td style="padding-top:8px;padding-bottom:8px;font-size:17px;font-weight:bold">
+                From Date : {{FromDate}}  --  To Date : {{ToDate}}
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ref Doctor</th>
+                <th>Bill No</th>
+                <th>Patient Code</th>
+                <th>Patient Name</th>
+                <th>Test Name</th>
+                <th>Rate</th>
+                <th>Cases</th>
+                <th>Gross</th>
+                <th>Discount</th>
+                <th>Net</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {{Items}}
+        </tbody>
+
+    </table>
+
+</body>
+</html>
