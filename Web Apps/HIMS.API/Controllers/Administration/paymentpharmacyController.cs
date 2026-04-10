@@ -103,6 +103,23 @@ namespace HIMS.API.Controllers.Administration
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+        [HttpPut("NewPaymentPharmacy/{id:int}")]
+        //[Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(paymentpharmacyUpdateModel obj)
+        {
+            PaymentPharmacy model = obj.MapTo<PaymentPharmacy>();
+            if (obj.PaymentId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                
+                model.ModifiedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                await _paymentpharmacyService.NewUpdateAsync(model, (int)obj.Type, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
         [HttpPut("UpdatePharmSalesDate")]
         [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
         public ApiResponse Update(PharmSalesPaymentModel obj)
