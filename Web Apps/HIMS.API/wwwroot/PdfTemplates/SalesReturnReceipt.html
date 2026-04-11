@@ -13,15 +13,15 @@
                     (A Unit of Shri Siddeshwar Loka Kalyana Charitable
                     Trust)
                 </span>-->
-                <span style="text-transform: uppercase;font-weight: 500;margin-left:250px;width:50%;font-size:20px;font-weight:bold;">
-                    Tax Invoice (Return)
+                <span style="text-transform: uppercase;font-weight: 500;margin-left:300px;width:50%;font-size:20px;font-weight:bold;">
+                     Invoice (Return)
                 </span>
             </div>
 
             <table class="table" style="width: 100%;border-collapse: collapse;">
                 <tbody>
                     <tr>
-                        <td colspan="4"
+                        <td colspan="6"
                             style="vertical-align: top;border: 1px solid black;width:40%; padding:0 10px 10px;font-size:18px;">
                             <h3 style="margin-top:0;margin-bottom:5px;text-transform: uppercase;font-size: 16px;">
                                 {{StoreName}}
@@ -29,17 +29,17 @@
 
                             <div>{{StoreAddress}}</div>
                             <!-- <div>GST No. 29ABCTS6874R1Z8</div>
-                            <div>
-                                <span style="margin-right: 20px;">D.L.No. 123456789456123</span>
-                                <span>D.L.No. 123456789456123</span>
-                            </div> -->
+            <div>s
+                <span style="margin-right: 20px;">D.L.No. 123456789456123</span>
+                <span>D.L.No. 123456789456123</span>
+            </div> -->
                             <div>
                                 <a href="tel:08352259399"
                                    style="margin-right: 20px;">{{HospitalMobileNo}}</a>
                                 <a href="mailto:info@jsshospitals.com">{{HospitalEmailId}}</a>
                             </div>
                         </td>
-                        <td colspan="6" style="border: 1px solid black;width: 33.33%;vertical-align: top; padding: 0;">
+                        <td colspan="9" style="border: 1px solid black;width: 33.33%;vertical-align: top; padding: 0;">
                             <table style="width: 100%;border-collapse: collapse;font-size:14px;">
 
                                 <td style=" vertical-align: top; padding: 0 10px 10px">
@@ -50,7 +50,7 @@
                                     <span style="font-weight: bold;">
                                         Customer Name:
                                     </span>
-                                    <span>{{PatientName}} </span>  <br>
+                                    <span style="font-weight: bold">{{PatientName}} </span>  <br>
                                     <span style="font-weight: bold;">
                                         Customer Address:
                                     </span>
@@ -80,7 +80,7 @@
 
                     </tr>
                     <tr>
-                        <td colspan="4"
+                        <td colspan="6"
                             style=" vertical-align: top; border: 1px solid black; width: 40%; padding: 0 10px 10px; font-size: 14px;">
                             <div>
                                 <span style="font-weight: bold;">
@@ -89,22 +89,22 @@
                                 <span>{{GSTIN}}   </span>
                             </div>
                             <div>
-                                <span style="font-weight: bold; margin-right: 20px;">D.L.No. </span>
-                                <span>D.L.No. {{DL_NO}}</span>
+                                <span style="font-weight: bold;">D.L.No. </span>
+                                <span>{{DL_NO}}</span>
                             </div>
                         </td>
 
-                        <td colspan="6" style="border: 1px solid black; width: 33.33%; vertical-align: top; padding: 0;">
+                        <td colspan="8" style="border: 1px solid black; width: 33.33%; vertical-align: top; padding: 0;">
                             <table style="width: 100%;font-size:14px;">
                                 <!-- <tr> -->
                                 <td style="vertical-align: top;padding:0 10px 10px">
-                                    <span style="font-weight: bold; margin-left: 10px;">
+                                    <span style="font-weight: bold; ">
                                         Bill No:
                                     </span>
-                                    <span>
-                                        {{SalesNo}}
+                                    <span style="font-weight: bold">
+                                        {{SalesReturnNo}}
                                     </span>
-                                    <span style="font-weight: bold;">
+                                    <span style="font-weight: bold; margin-left: 10px;">
                                         Bill Date:
                                     </span>
                                     <span>
@@ -143,6 +143,18 @@
                         <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 15%;">
                             ExpDate
                         </td>
+                        <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 15%;">
+                            CGST%
+                        </td>
+                        <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 15%;">
+                            CGSTAmt
+                        </td>
+                        <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 15%;">
+                            SGST%
+                        </td>
+                        <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 15%;">
+                            SGSTAmt
+                        </td>
                         <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">
                             Qty
                         </td>
@@ -155,74 +167,64 @@
                     </tr>
                     {{Items}}
                     <tr>
-                        <td colspan="6" style="border: 1px solid black;vertical-align: top;
-                padding: 0 10px 10px;">
-                            <div style="font-weight: 400;font-size:20px">Terms & Conditions</div>
-                            <ul style="margin: 5px 0 0 0;
-                    font-size: 12px;
-                    padding-left: 17px;
-                    font-weight: 400;">
-                                <li>
-                                    Please check the item before leaving medical.
-                                </li>
-                                <li>
-                                    Please consult your doctor before consuming the medicine
-                                </li>
-                                <li>
-                                    All disputes are subject to Vijayapura jurisdiction only
-                                </li>
+                        <td colspan="7" style="border: 1px solid black;vertical-align: top;padding: 0 10px 10px;">
+                            <div style="font-weight: 500;">Terms & Conditions</div>
+                            <ul style="margin: 5px 0 0 0; font-size: 12px;
+                                padding-left: 17px;
+                               font-weight: 400;">
+                                <pre>{{TermsAndCondition}}</pre>
                             </ul>
                         </td>
                         <!-- <td colspan="5" style="border: 1px solid black;vertical-align: top;padding: 0;">
-                        </td> -->
-                        <td colspan="4" style="border: 1px solid black;vertical-align: top;
-                padding: 5px 1px 5px 0;font-size:18px;">
-                            <div style="margin-left:40px;">
+        </td> -->
+                        <td colspan="7" style="border: 1px solid black;vertical-align: top;
+                padding: 5px 1px 5px 0;font-size:17px;">
+                            <div style="margin-left:160px;">
                                 <span style="width:90px;display:inline-block;">Sub Total</span>
                                 <span style="margin:0 2px">:</span>
                                 <span>{{CurrSymbol}} {{HTotalAmount}}</span>
                             </div>
-                            <div style="margin-left:40px; ">
+                            <div style="margin-left:160px; ">
                                 <span style="width:90px;display:inline-block;">Discount</span>
                                 <span style="margin:0 2px">:</span>
                                 <span>{{CurrSymbol}} {{DiscAmount}}</span>
                             </div>
-                            <div style="margin-left:40px; ">
+                            <div style="margin-left:160px; ">
                                 <span style="width:90px;display:inline-block;">Total GST</span>
                                 <span style="margin:0 5px">:</span>
                                 <span>{{CurrSymbol}} {{TotalGST}}</span>
                             </div>
-                            <div style="margin-left:40px; ">
+                            <div style="margin-left:160px; ">
                                 <span style="width:90px;display:inline-block;">Round off</span>
                                 <span style="margin:0 5px">:</span>
-                                <span>{{CurrSymbol}} 0.00</span>
+                                <span>{{CurrSymbol}}{{RoundOff}}</span>
                             </div>
-                            <div style="margin-left:40px; font-size: 18px; font-weight: bold ">
-                                <span style="width: 110px; display: inline-block;">Grand Total</span>
+                            <div style="margin-left:160px; font-size: 18px; font-weight: bold ">
+                                <span style="width: 90px; display: inline-block;">Grand Total</span>
                                 <span style="margin:0 5px">:</span>
                                 <span>{{CurrSymbol}} {{NetAmount}}</span>
                             </div>
                         </td>
                     </tr>
                     <!-- <tr>
-                        <td colspan="9" style="border: 1px solid black;vertical-align: top;
-                        padding: 5px 10px;">
-                            <div style="font-size: 15px;font-weight: bold">
-                                Your Saved Amount: {{DiscAmount}}
-                            </div>
-                        </td>
-                        <td rowspan="2" style="border: 1px solid black;vertical-align: bottom;
-                        padding: 5px 10px;text-align: center;">
+        <td colspan="9" style="border: 1px solid black;vertical-align: top;
+        padding: 5px 10px;">
+            <div style="font-size: 15px;font-weight: bold">
+                Your Saved Amount: {{DiscAmount}}
+            </div>
+        </td>
+        <td rowspan="2" style="border: 1px solid black;vertical-align: bottom;
+        padding: 5px 10px;text-align: center;">
 
-                            <span style="font-size: 11px;opacity:.6;">For Shri Siddeshwar Medicals 24/7</span>
-                        </td>
-                    </tr> -->
+            <span style="font-size: 11px;opacity:.6;">For Shri Siddeshwar Medicals 24/7</span>
+        </td>
+    </tr> -->
                     <!-- <tr>
-                        <td colspan="9" style="border: 1px solid black;vertical-align: top;
-                        padding: 5px 10px;">
-                            Total Invoice Value in words:
-                        </td>
-                    </tr> -->
+        <td colspan="9" style="border: 1px solid black;vertical-align: top;
+        padding: 5px 10px;">
+            Total Invoice Value in words:
+        </td>
+    </tr> -->
                     <tr style="font-size: 14px;">
                         <td colspan="3">
                             Billed By: {{UserName}}
