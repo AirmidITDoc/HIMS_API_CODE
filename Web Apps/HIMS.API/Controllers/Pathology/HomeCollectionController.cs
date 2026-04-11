@@ -51,6 +51,15 @@ namespace HIMS.API.Controllers.Pathology
             IPagedList<homeCollectionDetListDto> homeCollectionDetList = await _IHomeCollectionService.GetListAsync(objGrid);
             return Ok(homeCollectionDetList.ToGridResponse(objGrid, "homeCollectionDet List"));
         }
+
+        [HttpPost("homeCollectionPatientCountList")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        public async Task<IActionResult> PatientList(GridRequestModel objGrid)
+        {
+            IPagedList<HomeCollectionPatientListDto> homeCollectionPatientList = await _IHomeCollectionService.HomeGetListAsync(objGrid);
+            return Ok(homeCollectionPatientList.ToGridResponse(objGrid, "homeCollectionPatient total Count List"));
+        }
+
         [HttpPost("HomeCollectionRegistrationInfoList")]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> ListHomeCollection(GridRequestModel objGrid)

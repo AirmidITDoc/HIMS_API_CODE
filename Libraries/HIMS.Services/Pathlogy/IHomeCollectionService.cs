@@ -17,6 +17,8 @@ namespace HIMS.Services.Pathlogy
         Task<IPagedList<homeCollectionDetListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<HomeCollectionRegistrationInfoListDto>> HomeCollectionListAsync(GridRequestModel objGrid);
         Task Cancel(THomeCollectionRegistrationInfo objTHomeCollectionRegistrationInfo, int UserId, string Username);
+        Task<IPagedList<HomeCollectionPatientListDto>> HomeGetListAsync(GridRequestModel objGrid);
+
 
 
 
