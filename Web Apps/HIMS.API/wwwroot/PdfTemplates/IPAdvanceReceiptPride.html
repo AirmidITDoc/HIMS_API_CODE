@@ -16,13 +16,13 @@
         <table style="width:100%; font-size:14px; margin-top:15px;">
             <tr>
                 <td><strong>Receipt No</strong> : {{ReceiptNo}}</td>
-                <td><strong>MR No</strong> : {{RegNo}}</td>
+                <td><strong>UHID </strong> : {{RegNo}}</td>
                 <td><strong>Date</strong> : {{PaymentTime}}</td>
             </tr>
             <tr>
                 <td><strong>Patient Name</strong> : {{PatientName}}</td>
                 <td colspan="2"><strong>DOA</strong> : {{AdmissionTime}}</td>
-               
+
             </tr>
             <tr>
                 <td><strong>Patient Type</strong> : {{PatientType}}</td>
@@ -45,34 +45,70 @@
                 <td>: {{AdvanceAmount}}</td>
             </tr>
 
-            <tr>
-                <td><strong>Amt in Words</strong></td>
-                <td>: {{finalamt}}</td>
-            </tr>
 
             <tr style="display: {{chkcashflag}};">
                 <td><strong>Cash Pay</strong></td>
                 <td>: {{CashPayAmount}}</td>
             </tr>
-
             <tr style="display: {{chkcardflag}};">
-                <td><strong>Card Pay</strong></td>
-                <td>: {{CardPayAmount}}</td>
-            </tr>
+                <td style="padding: 2px; font-weight:Bold">
+                    <span>Card Pay:</span>
 
+                </td>
+                <td>: <span>{{CurrSymbol}} {{CardPayAmount}}</span></td>
+
+                <td style="padding: 2px;">
+                    <span style="font-weight:Bold">Card No:</span>
+                    <span>{{CardNo}}</span>
+                </td>
+                <td style="padding: 2px;">
+                    <span style="font-weight:Bold">Card Bank Name :</span>
+                    <span>{{CardBankName}}</span>
+                </td>
+
+            </tr>
             <tr style="display: {{chkchequeflag}};">
-                <td><strong>Cheque Pay</strong></td>
-                <td>: {{ChequePayAmount}}</td>
-            </tr>
+                <td style="padding: 2px; font-weight:Bold">
+                    <span>Cheque Pay:</span>
 
+                </td>
+                <td>: <span>{{CurrSymbol}} {{ChequePayAmount}}</span></td>
+                <td style="padding: 2px;">
+                    <span style="font-weight:Bold">Cheque No:</span>
+                    <span>{{ChequeNo}}</span>
+                </td>
+                <td style="padding: 2px;">
+                    <span style="font-weight:Bold"> Bank Name :</span>
+                    <span>{{BankName}}</span>
+                </td>
+            </tr>
             <tr style="display: {{chkOnlineAmountflag}};">
-                <td><strong>Online Pay</strong></td>
-                <td>: {{PayTMPayAmount}}</td>
-            </tr>
+                <td style="padding: 2px; font-weight:Bold">
+                    <span>Online Pay:</span>
 
+                </td>
+                <td>:  <span>{{CurrSymbol}} {{PayTMPayAmount}}</span></td>
+                <td style="padding: 2px;" colspan="3">
+                    <div style="display: {{chkPayTMTxnFlag}};">
+                        <b>Tran No:</b> {{PayTMTranNo}}
+                    </div>
+                    <div style="display: {{chkNeftTxnFlag}};">
+                        <b>NEFT No:</b> {{NEFTNo}}
+                    </div>
+                </td>
+                <td style="padding: 2px;">
+                    <div style="display: {{chkNEFTBankFlag}};">
+                        <b>Bank Name:</b> {{NEFTBankMaster}}
+                    </div>
+                </td>
+            </tr>
             <tr>
                 <td><strong>Remark</strong></td>
-                <td>: {{Remark}}</td>
+                <td>: {{Reason}}</td>
+            </tr>
+            <tr>
+                <td><strong>Amt in Words</strong></td>
+                <td>: {{finalamt}}</td>
             </tr>
 
         </table>
