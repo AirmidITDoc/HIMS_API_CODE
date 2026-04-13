@@ -20,5 +20,6 @@ namespace HIMS.Data.Models
         public DateTime? ModifiedDate { get; set; }
         public bool? IsDbfunction { get; set; }
         public int? IsA5orA4page { get; set; }
+        public long? HeaderSpace { get; set; }
     }
 }

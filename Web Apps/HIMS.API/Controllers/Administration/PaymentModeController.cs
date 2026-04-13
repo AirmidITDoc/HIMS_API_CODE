@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.Administration
             IPagedList<OPBillListForPaymentModeChangeListBillNoWiseDto> OPBillListForPaymentModeChangeListBillNoWise = await _IPaymentModeService.GetBillListAsync(objGrid);
             return Ok(OPBillListForPaymentModeChangeListBillNoWise.ToGridResponse(objGrid, "OPBillListForPaymentModeChangeListBillNoWise List"));
         }
-
+        //Need To Delete This API 
         [HttpPut("Edit/{id:int}")]
         [Permission(PageCode = "Payment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PaymentModeModel obj)

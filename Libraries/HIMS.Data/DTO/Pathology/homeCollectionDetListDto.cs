@@ -68,4 +68,14 @@ namespace HIMS.Data.DTO.Pathology
         public string? Hospitallongitude { get; set; }
 
     }
+    public class HomeCollectionPatientListDto
+    {
+      
+        public int? TotalServiceCount { get; set; }
+        public decimal? TotalNetAmount { get; set; }
+
+
+
+    }
+
 }
