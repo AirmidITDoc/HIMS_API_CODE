@@ -254,6 +254,9 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<MCompanyExecutiveInfo, CompanyExecutiveInfoModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<HelpdeskPatientComplaint, HelpdeskPatientComplaintModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 
