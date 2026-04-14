@@ -219,7 +219,7 @@ namespace HIMS.Services.Report
             }
             else
             {
-                 html = GetHTMLView(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                 html = GetHTMLViewWithRender(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath);
             }
 
             html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -4938,6 +4938,19 @@ namespace HIMS.Services.Report
                 para[sp_Para] = param;
                 sp_Para++;
             }
+            return odal.FetchDataTableBySP(sp_Name, para);
+        }
+
+        public DataTable GetDataBySpRender(List<SearchGrid> searchFields, string sp_Name)
+        {
+            DatabaseHelper odal = new();
+
+            var para = searchFields.Select(x => new SqlParameter
+            {
+                ParameterName = "@" + x.FieldName,
+                Value = x.FieldValue ?? (object)DBNull.Value
+            }).ToArray();
+
             return odal.FetchDataTableBySP(sp_Name, para);
         }
 
@@ -20022,7 +20035,58 @@ namespace HIMS.Services.Report
 
         //    return Convert.ToBase64String(tuple.Item1);
         //}
+        //private string GetHTMLViewWithRender(string sp_Names, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath)
+        //{
+        //    var spList = sp_Names.Split(',');
 
+        //    // ✅ Split params using separator
+        //    var groupedParams = _pdfUtility.SplitBySeparator(model.SearchFields);
+
+        //    if (groupedParams.Count != spList.Length)
+        //        throw new Exception("SP count and parameter groups mismatch");
+
+        //    string finalHtml = "";
+        //    string template = File.ReadAllText(htmlFilePath);
+
+        //    for (int i = 0; i < spList.Length; i++)
+        //    {
+        //        var sp = spList[i].Trim();
+        //        var paramForSp = groupedParams[i];
+
+        //        var dt = GetDataBySpRender(paramForSp, sp);
+
+        //        string html = template;
+
+        //        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+        //        html = html.Replace("{{RepoertName}}", model.RepoertName);
+
+        //        html = _pdfUtility.Render(html, dt);
+
+        //        finalHtml += html;
+        //    }
+
+        //    return finalHtml;
+        //}
+        private string GetHTMLViewWithRender(string sp_Names, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath)
+        {
+            var spList = sp_Names.Split(',');
+            var groupedParams = _pdfUtility.SplitBySeparator(model.SearchFields);
+
+            if (groupedParams.Count != spList.Length)
+                throw new Exception("SP count and parameter groups mismatch");
+
+            string html = File.ReadAllText(htmlFilePath);
+            html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+            html = html.Replace("{{RepoertName}}", model.RepoertName);
+
+            for (int i = 0; i < spList.Length; i++)
+            {
+                var dt = GetDataBySpRender(groupedParams[i], spList[i].Trim());
+                html = _pdfUtility.Render(html, dt);
+            }
+
+            return html;
+        }
         public string GeneratePdfFromSpV1(ReportRequestModel model, string PdfFontPath = "")
         {
             byte[] pdfBytes = null;

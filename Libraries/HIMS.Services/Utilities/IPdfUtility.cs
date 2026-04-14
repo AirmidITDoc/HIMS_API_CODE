@@ -41,5 +41,7 @@ namespace HIMS.Services.Utilities
 
         string Render(string html, DataTable dt);
         public Tuple<byte[], string> GeneratePdfFromHtmlNew(string html, string storageBasePath, string FolderName,string FileName = "", Orientation PageOrientation = Orientation.Portrait,PaperKind PaperSize = PaperKind.A4,long HeaderSpace = 10);
+
+        List<List<SearchGrid>> SplitBySeparator(List<SearchGrid> fields);
     }
 }

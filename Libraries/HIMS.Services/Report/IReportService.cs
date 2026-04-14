@@ -50,6 +50,7 @@ namespace HIMS.Services.Report
         //string GeneratePdfFromSpV1(string sp, string StorageBaseUrl, long OPIPID, long ReservationId, long OPIPType);
 
         string GeneratePdfFromSpV1(ReportRequestModel model, string PdfFontPath = "");
+        DataTable GetDataBySpRender(List<SearchGrid> searchFields, string sp_Name);
     }
 
 }

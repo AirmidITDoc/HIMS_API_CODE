@@ -1080,6 +1080,31 @@ namespace HIMS.Services.Utilities
             }
             return html.Replace(m.Value, rows.ToString());
         }
+
+        public List<List<SearchGrid>> SplitBySeparator(List<SearchGrid> fields)
+        {
+            var result = new List<List<SearchGrid>>();
+            var current = new List<SearchGrid>();
+
+            foreach (var item in fields)
+            {
+                if (item.FieldName.Equals("SEPARATOR", StringComparison.OrdinalIgnoreCase))
+                {
+                    result.Add(current);
+                    current = new List<SearchGrid>();
+                }
+                else
+                {
+                    current.Add(item);
+                }
+            }
+
+            // add last group
+            if (current.Any())
+                result.Add(current);
+
+            return result;
+        }
     }
 }
 

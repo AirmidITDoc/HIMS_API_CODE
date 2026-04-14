@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>{{RepoertName}}</title>
+
+    <style>
+        body {
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 14px;
+            margin: 20px;
+        }
+
+        .header {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .date {
+            text-align: right;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 16px;
+            font-weight: bold;
+            background: #f2f2f2;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            border: 1px solid #000;
+            padding: 6px;
+        }
+
+        th {
+            border: 1px solid #000;
+            padding: 6px;
+            background: #eee;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        {{RepoertName}}
+    </div>
+
+    <div class="date">
+        Date: {{CurrentDate}}
+    </div>
+
+    <!-- ======================= -->
+    <!-- 🔹 SP 1 -->
+    <!-- ======================= -->
+    <div class="box">
+        <div class="title">SP1 - Details</div>
+
+        <table>
+            <tr>
+                <td>CommonId</td>
+                <td>{{CommonId}}</td>
+            </tr>
+            <tr>
+                <td>Patient Name</td>
+                <td>{{Col1}}</td>
+            </tr>
+            <tr>
+                <td>Value 2</td>
+                <td>{{Col2}}</td>
+            </tr>
+            <tr>
+                <td>Value 3</td>
+                <td>{{Col3}}</td>
+            </tr>
+            <tr>
+                <td>Value 4</td>
+                <td>{{Col4}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ======================= -->
+    <!-- 🔹 SP 2 -->
+    <!-- ======================= -->
+    <div class="box">
+        <div class="title">SP2 - Details</div>
+
+        <table>
+            <tr>
+                <td>CommonId</td>
+                <td>{{CommonId}}</td>
+            </tr>
+            <tr>
+                <td> Name</td>
+                <td>{{ColA}}</td>
+            </tr>
+            <tr>
+                <td>Value B</td>
+                <td>{{ColB}}</td>
+            </tr>
+            <tr>
+                <td>Value C</td>
+                <td>{{ColC}}</td>
+            </tr>
+            <tr>
+                <td>Value D</td>
+                <td>{{ColD}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ======================= -->
+    <!-- 🔹 SP 3 (LOOP DATA) -->
+    <!-- ======================= -->
+    <div class="box">
+        <div class="title">SP3 - Billing Details (Multi Row)</div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>CommonId</th>
+                    <th>Department</th>
+                    <th>X2</th>
+                    <th>X3</th>
+                    <th>X4</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!--ITEMS-->
+                <tr>
+                    <td>{{#}}</td>
+                    <td>{{CommonId}}</td>
+                    <td>{{X1}}</td>
+                    <td>{{X2}}</td>
+                    <td>{{X3}}</td>
+                    <td>{{X4}}</td>
+                </tr>
+                <!--/ITEMS-->
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
