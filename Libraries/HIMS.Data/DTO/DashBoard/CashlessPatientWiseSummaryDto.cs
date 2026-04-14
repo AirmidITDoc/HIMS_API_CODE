@@ -73,6 +73,9 @@ namespace HIMS.Data.DTO.DashBoard
         public string? SecondCompanyName { get; set; }
         public decimal? CompanyApprovedAmt { get; set; }
         public string? CompRefNo { get; set; }
+        public long? BillNo { get; set; }
+        public string? OPDIPDype { get; set; }
+
 
     }
 

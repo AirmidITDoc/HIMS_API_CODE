@@ -28,6 +28,7 @@
         public long CashCounterId { get; set; }
         public long StoreId { get; set; }
         public long OPDIPDType { get; set; }
+        public string RegNo { get; set; }
 
     }
 }

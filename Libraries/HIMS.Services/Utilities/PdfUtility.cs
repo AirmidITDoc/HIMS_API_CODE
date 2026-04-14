@@ -41,7 +41,7 @@ namespace HIMS.Services.Utilities
         {
             _context = HIMSDbContext;
             converter = _converter;
-           // _configuration = configuration;
+            // _configuration = configuration;
             //_hostingEnvironment = (Microsoft.AspNetCore.Hosting.IHostingEnvironment?)hostingEnvironment;
             //_pdfUtility = pdfUtility;
 
@@ -76,7 +76,7 @@ namespace HIMS.Services.Utilities
         //    htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
         //    htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
 
-                
+
         //    var HospitalLogo = GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName);
         //    htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
         //    //RS
@@ -148,97 +148,175 @@ namespace HIMS.Services.Utilities
             );
         }
 
+        //public string GetHeader(string filePath, long hospitalId = 1)
+        //{
+        //    if (hospitalId <= 0) hospitalId = 1;
+        //    string htmlHeader = System.IO.File.ReadAllText(filePath);
+        //    HospitalMaster objHospital = _context.HospitalMasters.Find(hospitalId);
+
+
+        //    //var chklogo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+        //    //var chklogo2 = _context.FileMasters.FirstOrDefault(x => x.RefType == 10 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+        //    //var chkinfoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+
+        //    //var vIsHeaderOption = _context.HospitalMasters.FirstOrDefault(x => x.HospitalId == objHospital.HospitalId);
+
+        //    if (objHospital.IsHeaderOption == 1)//With logo and hopital info 
+        //    {  
+        //        var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+        //        var logo2 = _context.FileMasters.FirstOrDefault(x => x.RefType == 10 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+
+        //        htmlHeader = htmlHeader.Replace("{{HospitalName}}", objHospital?.HospitalName ?? "");
+        //        htmlHeader = htmlHeader.Replace("{{Address}}", objHospital?.HospitalAddress ?? "");
+        //        htmlHeader = htmlHeader.Replace("{{City}}", objHospital?.City ?? "");
+        //        htmlHeader = htmlHeader.Replace("{{Pin}}", objHospital?.Pin ?? "");
+        //        htmlHeader = htmlHeader.Replace("{{Phone}}", objHospital?.Phone ?? "");
+        //        htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
+        //        htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
+        //        htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
+        //        bool hasHospitalShortName = !string.IsNullOrWhiteSpace(objHospital?.HospitalShortName);
+
+        //        htmlHeader = htmlHeader
+        //            .Replace("{{HospitalShortName}}", objHospital?.HospitalShortName ?? "")
+        //            .Replace("{{chkHospitalShortNameFlag}}", hasHospitalShortName ? "table-row" : "none");
+
+        //        var HospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
+        //        var HospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
+
+
+        //        htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
+        //        htmlHeader = htmlHeader.Replace("{{logo2}}", HospitalLogo2);
+        //        htmlHeader = htmlHeader.Replace("{{chklogo2flag}}", logo2 != null ? "block" : "none");
+        //    }
+        //    else if (objHospital.IsHeaderOption == 2)// With Hospital Image  
+        //    {
+        //        var infoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+        //        var hospitalInfo = infoImg != null ? GetBase64FromFolder("Upload\\Img_Upload", infoImg.DocSavedName) : "";
+        //        htmlHeader = htmlHeader.Replace("{{hospitalinfo}}", hospitalInfo);
+        //    }
+
+        //    else if (objHospital.IsHeaderOption == 3)// With  Template (Need to add Template Code) 
+        //    {
+        //        //var infoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+        //        //var hospitalInfo = infoImg != null ? GetBase64FromFolder("Upload\\Img_Upload", infoImg.DocSavedName) : "";
+        //        //htmlHeader = htmlHeader.Replace("{{hospitalinfo}}", hospitalInfo);
+
+
+        //        var html = objHospital.Header;
+        //        htmlHeader = htmlHeader.Replace("{{hospitalTemplate}}", html);
+
+        //        var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+        //        var logo2 = _context.FileMasters.FirstOrDefault(x => x.RefType == 10 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+        //        htmlHeader = htmlHeader.Replace("{{HospitalName}}", objHospital?.HospitalName ?? "");
+        //        htmlHeader = htmlHeader.Replace("{{Address}}", objHospital?.HospitalAddress ?? "");
+        //        htmlHeader = htmlHeader.Replace("{{City}}", objHospital?.City ?? "");
+        //        htmlHeader = htmlHeader.Replace("{{Pin}}", objHospital?.Pin ?? "");
+        //        htmlHeader = htmlHeader.Replace("{{Phone}}", objHospital?.Phone ?? "");
+        //        htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
+        //        htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
+        //        htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
+        //        bool hasHospitalShortName = !string.IsNullOrWhiteSpace(objHospital?.HospitalShortName);
+
+        //        htmlHeader = htmlHeader
+        //            .Replace("{{HospitalShortName}}", objHospital?.HospitalShortName ?? "")
+        //            .Replace("{{chkHospitalShortNameFlag}}", hasHospitalShortName ? "table-row" : "none");
+        //        var HospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
+        //        var HospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
+
+        //        htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
+        //        htmlHeader = htmlHeader.Replace("{{logo2}}", HospitalLogo2);
+
+        //    }
+
+        //    htmlHeader = htmlHeader.Replace("{{TextHeaderDisplay}}", (objHospital.IsHeaderOption == 1) ? "table-row" : "none");
+        //    htmlHeader = htmlHeader.Replace("{{ImageHeaderDisplay}}", (objHospital.IsHeaderOption == 2) ? "table-row" : "none");
+        //    htmlHeader = htmlHeader.Replace("{{TemplateHeaderDisplay}}", (objHospital.IsHeaderOption == 3) ? "table-row" : "none");
+        //    //htmlHeader = htmlHeader.Replace("{{TextHeaderDisplay}}", (chkinfoImg != null && chklogo != null && chklogo2 != null) ? "table-row" : "none");
+        //    return htmlHeader;
+        //}
         public string GetHeader(string filePath, long hospitalId = 1)
         {
-            if (hospitalId <= 0) hospitalId = 1;
-            string htmlHeader = System.IO.File.ReadAllText(filePath);
-            HospitalMaster objHospital = _context.HospitalMasters.Find(hospitalId);
+            hospitalId = hospitalId <= 0 ? 1 : hospitalId;
 
+            var hospital = _context.HospitalMasters.Find(hospitalId);
+            if (hospital == null) return string.Empty;
 
-            var chklogo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
-            var chklogo2 = _context.FileMasters.FirstOrDefault(x => x.RefType == 10 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
-            var chkinfoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+            string html = File.ReadAllText(filePath);
 
-            var vIsHeaderOption = _context.HospitalMasters.FirstOrDefault(x => x.HospitalId == objHospital.HospitalId);
+            // Fetch all required files in ONE DB call
+            var files = _context.FileMasters.Where(x => x.RefId == hospital.HospitalId && x.IsDelete == false && (x.RefType == 7 || x.RefType == 10 || x.RefType == 11)).ToList();
 
-            if (vIsHeaderOption.IsHeaderOption == 1)//With logo and hopital info 
-            {  
-                var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
-                var logo2 = _context.FileMasters.FirstOrDefault(x => x.RefType == 10 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
+            var logo = files.FirstOrDefault(x => x.RefType == 7);
+            var logo2 = files.FirstOrDefault(x => x.RefType == 10);
+            var infoImg = files.FirstOrDefault(x => x.RefType == 11);
 
-                htmlHeader = htmlHeader.Replace("{{HospitalName}}", objHospital?.HospitalName ?? "");
-                htmlHeader = htmlHeader.Replace("{{Address}}", objHospital?.HospitalAddress ?? "");
-                htmlHeader = htmlHeader.Replace("{{City}}", objHospital?.City ?? "");
-                htmlHeader = htmlHeader.Replace("{{Pin}}", objHospital?.Pin ?? "");
-                htmlHeader = htmlHeader.Replace("{{Phone}}", objHospital?.Phone ?? "");
-                htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
-                htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
-                htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
-                bool hasHospitalShortName = !string.IsNullOrWhiteSpace(objHospital?.HospitalShortName);
-
-                htmlHeader = htmlHeader
-                    .Replace("{{HospitalShortName}}", objHospital?.HospitalShortName ?? "")
-                    .Replace("{{chkHospitalShortNameFlag}}", hasHospitalShortName ? "table-row" : "none");
-
-                var HospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
-                var HospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
-
-
-                htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
-                htmlHeader = htmlHeader.Replace("{{logo2}}", HospitalLogo2);
-                htmlHeader = htmlHeader.Replace("{{chklogo2flag}}", logo2 != null ? "block" : "none");
-            }
-            else if (vIsHeaderOption.IsHeaderOption == 2)// With Hospital Image  
+            // Common replacements (used in multiple options)
+            var replacements = new Dictionary<string, string>
             {
-                var infoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
-                var hospitalInfo = infoImg != null ? GetBase64FromFolder("Upload\\Img_Upload", infoImg.DocSavedName) : "";
-                htmlHeader = htmlHeader.Replace("{{hospitalinfo}}", hospitalInfo);
-            }
+                ["{{HospitalName}}"] = hospital.HospitalName ?? "",
+                ["{{Address}}"] = hospital.HospitalAddress ?? "",
+                ["{{City}}"] = hospital.City ?? "",
+                ["{{Pin}}"] = hospital.Pin ?? "",
+                ["{{Phone}}"] = hospital.Phone ?? "",
+                ["{{HospitalHeaderLine}}"] = hospital.HospitalHeaderLine ?? "",
+                ["{{EmailID}}"] = hospital.EmailId ?? "",
+                ["{{WebSiteInfo}}"] = hospital.WebSiteInfo ?? "",
+                ["{{HospitalShortName}}"] = hospital.HospitalShortName ?? "",
+                ["{{chkHospitalShortNameFlag}}"] = !string.IsNullOrWhiteSpace(hospital.HospitalShortName) ? "table-row" : "none"
+            };
+            string DestinationPath = string.Empty; //_Sales.GetFilePath();
+            if (string.IsNullOrWhiteSpace(DestinationPath))
+                DestinationPath = $"file:///{(AppSettings.Settings.StorageBaseUrl.Trim('\\') + "\\").Replace("\\", "/")}";
 
-            else if (vIsHeaderOption.IsHeaderOption == 3)// With  Template (Need to add Template Code) 
+            switch (hospital.IsHeaderOption)
             {
-                //var infoImg = _context.FileMasters.FirstOrDefault(x => x.RefType == 11 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
-                //var hospitalInfo = infoImg != null ? GetBase64FromFolder("Upload\\Img_Upload", infoImg.DocSavedName) : "";
-                //htmlHeader = htmlHeader.Replace("{{hospitalinfo}}", hospitalInfo);
+                case 1: // Logo + Info
+                case 3: // Template (shares most logic)
+                    {
+                        if (hospital.IsHeaderOption == 3)
+                        {
+                            replacements["{{hospitalTemplate}}"] = hospital.Header ?? "";
+                        }
 
+                        //string hospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
+                        //string hospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
+                        string hospitalLogo = logo != null ? $"{DestinationPath}Hospital/Logo/{logo.DocSavedName}" : "";
+                        string hospitalLogo2 = logo2 != null ? $"{DestinationPath}NABHLogo/NABH/{logo2.DocSavedName}" : "";
+                        replacements["{{logo}}"] = hospitalLogo;
+                        replacements["{{logo2}}"] = hospitalLogo2;
+                        replacements["{{chklogo2flag}}"] = logo2 != null ? "block" : "none";
 
-                var html = vIsHeaderOption.Header;
-                htmlHeader = htmlHeader.Replace("{{hospitalTemplate}}", html);
+                        break;
+                    }
 
-                var logo = _context.FileMasters.FirstOrDefault(x => x.RefType == 7 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
-                var logo2 = _context.FileMasters.FirstOrDefault(x => x.RefType == 10 && x.RefId == objHospital.HospitalId && x.IsDelete == false);
-                htmlHeader = htmlHeader.Replace("{{HospitalName}}", objHospital?.HospitalName ?? "");
-                htmlHeader = htmlHeader.Replace("{{Address}}", objHospital?.HospitalAddress ?? "");
-                htmlHeader = htmlHeader.Replace("{{City}}", objHospital?.City ?? "");
-                htmlHeader = htmlHeader.Replace("{{Pin}}", objHospital?.Pin ?? "");
-                htmlHeader = htmlHeader.Replace("{{Phone}}", objHospital?.Phone ?? "");
-                htmlHeader = htmlHeader.Replace("{{HospitalHeaderLine}}", objHospital?.HospitalHeaderLine ?? "");
-                htmlHeader = htmlHeader.Replace("{{EmailID}}", objHospital?.EmailId ?? "");
-                htmlHeader = htmlHeader.Replace("{{WebSiteInfo}}", objHospital?.WebSiteInfo ?? "");
-                bool hasHospitalShortName = !string.IsNullOrWhiteSpace(objHospital?.HospitalShortName);
+                case 2: // Image header
+                    {
+                        string hospitalInfo = infoImg != null ? $"{DestinationPath}Upload/Img_Upload/{infoImg.DocSavedName}" : "";
 
-                htmlHeader = htmlHeader
-                    .Replace("{{HospitalShortName}}", objHospital?.HospitalShortName ?? "")
-                    .Replace("{{chkHospitalShortNameFlag}}", hasHospitalShortName ? "table-row" : "none");
-                var HospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
-                var HospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
-
-                htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
-                htmlHeader = htmlHeader.Replace("{{logo2}}", HospitalLogo2);
-
+                        replacements["{{hospitalinfo}}"] = hospitalInfo;
+                        break;
+                    }
             }
 
-            htmlHeader = htmlHeader.Replace("{{TextHeaderDisplay}}", (vIsHeaderOption.IsHeaderOption == 1) ? "table-row" : "none");
-            htmlHeader = htmlHeader.Replace("{{ImageHeaderDisplay}}", (vIsHeaderOption.IsHeaderOption == 2) ? "table-row" : "none");
-            htmlHeader = htmlHeader.Replace("{{TemplateHeaderDisplay}}", (vIsHeaderOption.IsHeaderOption == 3) ? "table-row" : "none");
-            //htmlHeader = htmlHeader.Replace("{{TextHeaderDisplay}}", (chkinfoImg != null && chklogo != null && chklogo2 != null) ? "table-row" : "none");
-            return htmlHeader;
+            // Apply all replacements efficiently
+            foreach (var item in replacements)
+            {
+                html = html.Replace(item.Key, item.Value);
+            }
+
+            // Final visibility flags
+            html = html
+                .Replace("{{TextHeaderDisplay}}", hospital.IsHeaderOption == 1 ? "table-row" : "none")
+                .Replace("{{ImageHeaderDisplay}}", hospital.IsHeaderOption == 2 ? "table-row" : "none")
+                .Replace("{{TemplateHeaderDisplay}}", hospital.IsHeaderOption == 3 ? "table-row" : "none");
+
+            return html;
         }
 
-        public string GetPatientHeader(ReportRequestModel model,string filePath)
+        public string GetPatientHeader(ReportRequestModel model, string filePath)
         {
             string htmlHeader = System.IO.File.ReadAllText(filePath);
-           
+
             var dt = GetDataBySp(model, "m_rptDischargeSummaryPrint_New");
 
             htmlHeader = htmlHeader.Replace("{{TemplateHeader}}", dt.GetColValue("TemplateHeader"));
@@ -269,11 +347,11 @@ namespace HIMS.Services.Utilities
 
 
             return htmlHeader;
-            
+
         }
 
 
-     
+
         public string GetHeaderfromtemplate(ReportRequestModel model, string filePath)
         {
             string htmlHeader = System.IO.File.ReadAllText(filePath);
@@ -332,7 +410,7 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
             htmlHeader = htmlHeader.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
 
-          
+
 
 
             return htmlHeader;
@@ -430,47 +508,14 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{PrintStoreUnitName}}", objStoreHospital?.PrintStoreUnitName ?? "");
             htmlHeader = htmlHeader.Replace("{{DL_NO}}", objStoreHospital?.DlNo ?? "");
             htmlHeader = htmlHeader.Replace("{{GSTIN}}", objStoreHospital?.Gstin ?? "");
-           
+
             htmlHeader = htmlHeader.Replace("{{logo}}", HospitalLogo);
             return htmlHeader.Replace("{{Display}}", (objStoreHospital?.StoreId ?? 0) > 0 ? "visible" : "hidden");
 
         }
-
         public Tuple<byte[], string> GeneratePdfFromHtml(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
         {
             html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
-
-            var doc = new HtmlToPdfDocument()
-            {
-                GlobalSettings = {
-                    ColorMode = ColorMode.Color,
-                    Orientation = PageOrientation,//Orientation.Portrait,
-                    PaperSize = PaperSize,//PaperKind.A4,
-                    Margins = new MarginSettings() { Top = 10, Bottom=10, Left=10, Right=10 },
-                    //Scale = 0.9f,  // Reduce size to 90% of the original content size
-                },
-                //Objects = {
-                //    new ObjectSettings() {
-                //        PagesCount = true,
-                //        HtmlContent = html,
-                //        WebSettings = { DefaultEncoding = "utf-8" },
-                //        FooterSettings = { FontSize = 9, Left = "AirmidTech Innovation Pvt. Ltd, India | Mobile No : +91 9970164262", Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
-                //    }
-                //}
-                Objects = {
-                    new ObjectSettings() {
-                        PagesCount = true,
-                        HtmlContent = html,
-                        WebSettings = { DefaultEncoding = "utf-8" },
-                        FooterSettings = {FontSize = 0,Left = "",Right = "",Line = false,Spacing = 0}
-                    }
-                }
-            };
-            byte[] bytes = converter.Convert(doc);
-            //var pdfStream = new System.IO.MemoryStream();
-            //pdfStream.Write(pdf, 0, pdf.Length);
-            //pdfStream.Position = 0;
-            //Byte[] bytes = pdfStream.ToArray();
             string DestinationPath = string.Empty; //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
                 DestinationPath = storageBasePath;// _configuration.GetValue<string>("StorageBasePath");
@@ -479,11 +524,201 @@ namespace HIMS.Services.Utilities
             if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy")))
                 Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy"));
             string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
-            if (File.Exists(NewFileName))
-                NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + FileName + "_" + (Guid.NewGuid()) + ".pdf";
-            System.IO.File.WriteAllBytes(NewFileName, bytes);
-            return new Tuple<byte[], string>(bytes, NewFileName);
+            // ✅ Write html to a temp file
+            string tempFile = NewFileName.Replace(".pdf", "_temp.html");
+            File.WriteAllText(tempFile, html, Encoding.UTF8);
+
+            try
+            {
+                var doc = new HtmlToPdfDocument()
+                {
+                    GlobalSettings = {
+                ColorMode = ColorMode.Color,
+                Orientation = PageOrientation,
+                PaperSize = PaperSize,
+                Margins = new MarginSettings() { Top = 10, Bottom = 10, Left = 10, Right = 10 },
+            },
+                    Objects = {
+                new ObjectSettings() {
+                    PagesCount = true,
+                    Page = tempFile,              // ✅ Use Page, not HtmlContent
+                    WebSettings = { DefaultEncoding = "utf-8",LoadImages=true },
+                    UseLocalLinks = true,         // ✅ Allow local file links
+                    LoadSettings = new LoadSettings
+            {
+                BlockLocalFileAccess = false   // 🔥 IMPORTANT
+            }
+                }
+            }
+                };
+
+                byte[] bytes = converter.Convert(doc);
+                System.IO.File.WriteAllBytes(NewFileName, bytes);
+                return new Tuple<byte[], string>(bytes, NewFileName);
+            }
+            finally
+            {
+                if (File.Exists(tempFile))
+                    File.Delete(tempFile);  // ✅ Always cleanup
+            }
         }
+
+        public Tuple<byte[], string> GeneratePdfFromHtmlNew(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4, long HeaderSpace = 10)
+        {
+            html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
+            string DestinationPath = string.Empty; //_Sales.GetFilePath();
+            if (string.IsNullOrWhiteSpace(DestinationPath))
+                DestinationPath = storageBasePath;// _configuration.GetValue<string>("StorageBasePath");
+            if (!Directory.Exists(DestinationPath))
+                Directory.CreateDirectory(DestinationPath);
+            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy")))
+                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy"));
+            string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
+            // ✅ Write html to a temp file
+            string tempFile = NewFileName.Replace(".pdf", "_temp.html");
+            File.WriteAllText(tempFile, html, Encoding.UTF8);
+
+            try
+            {
+                var doc = new HtmlToPdfDocument()
+                {
+                    GlobalSettings = {
+                ColorMode = ColorMode.Color,
+                Orientation = PageOrientation,
+                PaperSize = PaperSize,
+                Margins = new MarginSettings() {
+                Top = HeaderSpace,
+                Bottom = 10,
+                Left = 10,
+                Right = 10
+            },
+                },
+                    Objects = {
+                new ObjectSettings() {
+                    PagesCount = true,
+                    Page = tempFile,              // ✅ Use Page, not HtmlContent
+                    WebSettings = { DefaultEncoding = "utf-8",LoadImages=true },
+                    UseLocalLinks = true,         // ✅ Allow local file links
+                    LoadSettings = new LoadSettings
+            {
+                BlockLocalFileAccess = false   // 🔥 IMPORTANT
+            }
+                }
+            }
+                };
+
+                byte[] bytes = converter.Convert(doc);
+                System.IO.File.WriteAllBytes(NewFileName, bytes);
+                return new Tuple<byte[], string>(bytes, NewFileName);
+            }
+            finally
+            {
+                if (File.Exists(tempFile))
+                    File.Delete(tempFile);  // ✅ Always cleanup
+            }
+        }
+
+        //public Tuple<byte[], string> GeneratePdfFromHtmlNew(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait,PaperKind PaperSize = PaperKind.A4,long HeaderSpace = 10) 
+        //{
+        //    html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
+
+        //    var doc = new HtmlToPdfDocument()
+        //    {
+        //        GlobalSettings = {
+        //        ColorMode = ColorMode.Color,
+        //        Orientation = PageOrientation,
+        //        PaperSize = PaperSize,       
+        //        Margins = new MarginSettings() {
+        //        Top = HeaderSpace,      
+        //        Bottom = 10,
+        //        Left = 10,
+        //        Right = 10
+        //    },
+        //},
+        //        //Objects = {
+        //        //    new ObjectSettings() {
+        //        //        PagesCount = true,
+        //        //        HtmlContent = html,
+        //        //        WebSettings = { DefaultEncoding = "utf-8" },
+        //        //        FooterSettings = { FontSize = 9, Left = "AirmidTech Innovation Pvt. Ltd, India | Mobile No : +91 9970164262", Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
+        //        //    }
+        //        //}
+        //        Objects = {
+        //     new ObjectSettings() {
+        //         PagesCount = true,
+        //         HtmlContent = html,
+        //         WebSettings = { DefaultEncoding = "utf-8" },
+        //         FooterSettings = {FontSize = 0,Left = "",Right = "",Line = false,Spacing = 0}
+        //     }
+        // }
+        //    };
+        //    byte[] bytes = converter.Convert(doc);
+        //    //var pdfStream = new System.IO.MemoryStream();
+        //    //pdfStream.Write(pdf, 0, pdf.Length);
+        //    //pdfStream.Position = 0;
+        //    //Byte[] bytes = pdfStream.ToArray();
+        //    string DestinationPath = string.Empty; //_Sales.GetFilePath();
+        //    if (string.IsNullOrWhiteSpace(DestinationPath))
+        //        DestinationPath = storageBasePath;// _configuration.GetValue<string>("StorageBasePath");
+        //    if (!Directory.Exists(DestinationPath))
+        //        Directory.CreateDirectory(DestinationPath);
+        //    if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy")))
+        //        Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy"));
+        //    string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
+        //    if (File.Exists(NewFileName))
+        //        NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + FileName + "_" + (Guid.NewGuid()) + ".pdf";
+        //    System.IO.File.WriteAllBytes(NewFileName, bytes);
+        //    return new Tuple<byte[], string>(bytes, NewFileName);
+        //}
+
+        //public Tuple<byte[], string> GeneratePdfFromHtml(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
+        //{
+        //    html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
+
+        //    var doc = new HtmlToPdfDocument()
+        //    {
+        //        GlobalSettings = {
+        //            ColorMode = ColorMode.Color,
+        //            Orientation = PageOrientation,//Orientation.Portrait,
+        //            PaperSize = PaperSize,//PaperKind.A4,
+        //            Margins = new MarginSettings() { Top = 10, Bottom=10, Left=10, Right=10 },
+        //            //Scale = 0.9f,  // Reduce size to 90% of the original content size
+        //        },
+        //        //Objects = {
+        //        //    new ObjectSettings() {
+        //        //        PagesCount = true,
+        //        //        HtmlContent = html,
+        //        //        WebSettings = { DefaultEncoding = "utf-8" },
+        //        //        FooterSettings = { FontSize = 9, Left = "AirmidTech Innovation Pvt. Ltd, India | Mobile No : +91 9970164262", Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
+        //        //    }
+        //        //}
+        //        Objects = {
+        //            new ObjectSettings() {
+        //                PagesCount = true,
+        //                HtmlContent = html,
+        //                WebSettings = { DefaultEncoding = "utf-8" },
+        //                FooterSettings = {FontSize = 0,Left = "",Right = "",Line = false,Spacing = 0}
+        //            }
+        //        }
+        //    };
+        //    byte[] bytes = converter.Convert(doc);
+        //    //var pdfStream = new System.IO.MemoryStream();
+        //    //pdfStream.Write(pdf, 0, pdf.Length);
+        //    //pdfStream.Position = 0;
+        //    //Byte[] bytes = pdfStream.ToArray();
+        //    string DestinationPath = string.Empty; //_Sales.GetFilePath();
+        //    if (string.IsNullOrWhiteSpace(DestinationPath))
+        //        DestinationPath = storageBasePath;// _configuration.GetValue<string>("StorageBasePath");
+        //    if (!Directory.Exists(DestinationPath))
+        //        Directory.CreateDirectory(DestinationPath);
+        //    if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy")))
+        //        Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy"));
+        //    string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
+        //    if (File.Exists(NewFileName))
+        //        NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + FileName + "_" + (Guid.NewGuid()) + ".pdf";
+        //    System.IO.File.WriteAllBytes(NewFileName, bytes);
+        //    return new Tuple<byte[], string>(bytes, NewFileName);
+        //}
         public string GeneratePasswordProtectedPdf(byte[] bytes, string Password, string storageBasePath, string FolderName, string FileName)
         {
             byte[] encryptedBytes;
@@ -739,9 +974,9 @@ namespace HIMS.Services.Utilities
 
         public enum HeaderType
         {
-            None = 0,          
-            TextWithLogo = 1,  
-            ImageOnly = 2      
+            None = 0,
+            TextWithLogo = 1,
+            ImageOnly = 2
         }
 
 
@@ -788,7 +1023,7 @@ namespace HIMS.Services.Utilities
         {
             foreach (DataColumn col in row.Table.Columns)
             {
-                html = html.Replace("{{" + col.ColumnName + "}}",row[col]?.ToString() ?? "");
+                html = html.Replace("{{" + col.ColumnName + "}}", row[col]?.ToString() ?? "");
             }
             html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
             return html;
@@ -816,8 +1051,8 @@ namespace HIMS.Services.Utilities
             foreach (DataColumn col in row.Table.Columns)
             {
                 string value = row[col]?.ToString();
-                string display = (!string.IsNullOrEmpty(value) && value != "0")? "table-row": "none";
-                html = html.Replace("{{" + "chk" + col.ColumnName + "flag}}",display);
+                string display = (!string.IsNullOrEmpty(value) && value != "0") ? "table-row" : "none";
+                html = html.Replace("{{" + "chk" + col.ColumnName + "flag}}", display);
             }
             return html;
         }
@@ -839,7 +1074,7 @@ namespace HIMS.Services.Utilities
 
                 foreach (DataColumn col in dt.Columns)
                 {
-                    rowHtml = rowHtml.Replace("{{" + col.ColumnName + "}}",r[col]?.ToString() ?? "");
+                    rowHtml = rowHtml.Replace("{{" + col.ColumnName + "}}", r[col]?.ToString() ?? "");
                 }
                 rows.Append(rowHtml);
             }
