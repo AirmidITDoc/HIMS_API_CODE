@@ -14,8 +14,7 @@ namespace HIMS.Services.Administration
         Task PaymentPharmacyUpdateAsync(List<TPaymentPharmacy> ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName);
         Task NewPaymentUpdateAsync(List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName);
         Task Cancel(TPayment ObjTPayment, int UserId, string Username);
-
-
+        Task NewUpdateAsync(PaymentPharmacy objPaymentPharmacy, int type, int UserId, string Username, string[]? references);
 
     }
 }

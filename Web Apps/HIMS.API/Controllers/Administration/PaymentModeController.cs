@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Administration;
+using HIMS.API.Models.Masters;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -85,7 +86,7 @@ namespace HIMS.API.Controllers.Administration
         }
        
         [HttpPut("NewPaymentMode{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> PaymentUpdate(NewPaymentModel obj)
         {
             if (obj == null || obj.PaymentModel == null || !obj.PaymentModel.Any())
@@ -128,9 +129,25 @@ namespace HIMS.API.Controllers.Administration
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+        [HttpPut("PaymentModeChange/{id:int}")]
+        [Permission]
+        public async Task<ApiResponse> Edit(paymentpharmacyUpdateModel obj)
+        {
+            PaymentPharmacy model = obj.MapTo<PaymentPharmacy>();
+            if (obj.PaymentId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+
+                model.ModifiedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                await _IPaymentModeService.NewUpdateAsync(model, (int)obj.Type, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
 
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "Payment", Permission = PagePermission.Delete)]
+        [Permission]
         public ApiResponse Cancel(PaymentCancel obj)
         {
             TPayment model = obj.MapTo<TPayment>();

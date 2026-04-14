@@ -101,6 +101,59 @@ namespace HIMS.Services.Administration
 
             }
         }
+        public virtual async Task NewUpdateAsync(PaymentPharmacy objPaymentPharmacy, int type, int UserId, string Username, string[]? ignoreColumns = null)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+            if (type == 1) // PaymentPharmacy
+            {
+                var existing = await _context.PaymentPharmacies.FindAsync(objPaymentPharmacy.PaymentId);
+                if (existing == null) throw new Exception("PaymentPharmacy record not found");
+
+                UpdateEntity(existing, objPaymentPharmacy, ignoreColumns);
+            }
+            else if (type == 2) // Payment table
+            {
+                var existing = await _context.Payments.FindAsync(objPaymentPharmacy.PaymentId);
+                if (existing == null) throw new Exception("Payment record not found");
+
+                var mapped = new Payment();
+
+                foreach (var prop in typeof(Payment).GetProperties())
+                {
+                    var sourceProp = typeof(PaymentPharmacy).GetProperty(prop.Name);
+
+                    if (sourceProp != null)
+                    {
+                        var value = sourceProp.GetValue(objPaymentPharmacy);
+
+                        if (value != null) //null skip
+                            prop.SetValue(mapped, value);
+                    }
+                }
+
+                UpdateEntity(existing, mapped, ignoreColumns);
+            }
+
+            await _context.SaveChangesAsync();
+            scope.Complete();
+        }
+        private void UpdateEntity<T>(T existing, T updated, string[]? ignore = null)
+        {
+            foreach (var prop in typeof(T).GetProperties())
+            {
+                if (prop.Name == "PaymentId") continue;
+
+                if (ignore != null && ignore.Contains(prop.Name))
+                    continue;
+
+                var val = prop.GetValue(updated);
+
+                if (val != null)
+                    prop.SetValue(existing, val);
+            }
+        }
+
         public virtual async Task PaymentPharmacyUpdateAsync(List<TPaymentPharmacy> ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
