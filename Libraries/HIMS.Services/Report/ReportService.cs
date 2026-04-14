@@ -191,7 +191,7 @@ namespace HIMS.Services.Report
             var tuple = new Tuple<byte[], string>(null, string.Empty);
             string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
             var mrMode = model.Mode;
-            var mType = await _context.MReportSetupOperationals.Where(r => r.ReportMode == mrMode).Select(r => new { mReportHtmlName = r.ReportHtmlName, mReportHeaderHtmlName = r.ReportHeaderHtmlName, mProcedureName = r.ProcedureName, mFolderName = r.FolderName, mReportFileName = r.ReportFileName , mIsDBFunction =r.IsDbfunction, mIsA5orA4Page =r.IsA5orA4page }).FirstOrDefaultAsync();
+            var mType = await _context.MReportSetupOperationals.Where(r => r.ReportMode == mrMode).Select(r => new { mReportHtmlName = r.ReportHtmlName, mReportHeaderHtmlName = r.ReportHeaderHtmlName, mProcedureName = r.ProcedureName, mFolderName = r.FolderName, mReportFileName = r.ReportFileName , mIsDBFunction =r.IsDbfunction, mIsA5orA4Page =r.IsA5orA4page , mHeaderSpace = r.HeaderSpace }).FirstOrDefaultAsync();
 
             string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHtmlName);
             string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHeaderHtmlName);
@@ -233,8 +233,15 @@ namespace HIMS.Services.Report
             }
              else
              {
-                tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
-             }
+                if (mType.mHeaderSpace == 0)
+                {
+                    tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+                }
+                else
+                {
+                    tuple = _pdfUtility.GeneratePdfFromHtmlNew(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait, PaperKind.A4, (long)mType.mHeaderSpace);
+                }
+            }
 
             //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
 

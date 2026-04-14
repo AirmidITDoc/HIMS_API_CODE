@@ -562,6 +562,115 @@ namespace HIMS.Services.Utilities
                     File.Delete(tempFile);  // ✅ Always cleanup
             }
         }
+
+        public Tuple<byte[], string> GeneratePdfFromHtmlNew(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4, long HeaderSpace = 10)
+        {
+            html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
+            string DestinationPath = string.Empty; //_Sales.GetFilePath();
+            if (string.IsNullOrWhiteSpace(DestinationPath))
+                DestinationPath = storageBasePath;// _configuration.GetValue<string>("StorageBasePath");
+            if (!Directory.Exists(DestinationPath))
+                Directory.CreateDirectory(DestinationPath);
+            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy")))
+                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy"));
+            string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
+            // ✅ Write html to a temp file
+            string tempFile = NewFileName.Replace(".pdf", "_temp.html");
+            File.WriteAllText(tempFile, html, Encoding.UTF8);
+
+            try
+            {
+                var doc = new HtmlToPdfDocument()
+                {
+                    GlobalSettings = {
+                ColorMode = ColorMode.Color,
+                Orientation = PageOrientation,
+                PaperSize = PaperSize,
+                Margins = new MarginSettings() {
+                Top = HeaderSpace,
+                Bottom = 10,
+                Left = 10,
+                Right = 10
+            },
+                },
+                    Objects = {
+                new ObjectSettings() {
+                    PagesCount = true,
+                    Page = tempFile,              // ✅ Use Page, not HtmlContent
+                    WebSettings = { DefaultEncoding = "utf-8",LoadImages=true },
+                    UseLocalLinks = true,         // ✅ Allow local file links
+                    LoadSettings = new LoadSettings
+            {
+                BlockLocalFileAccess = false   // 🔥 IMPORTANT
+            }
+                }
+            }
+                };
+
+                byte[] bytes = converter.Convert(doc);
+                System.IO.File.WriteAllBytes(NewFileName, bytes);
+                return new Tuple<byte[], string>(bytes, NewFileName);
+            }
+            finally
+            {
+                if (File.Exists(tempFile))
+                    File.Delete(tempFile);  // ✅ Always cleanup
+            }
+        }
+
+        //public Tuple<byte[], string> GeneratePdfFromHtmlNew(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait,PaperKind PaperSize = PaperKind.A4,long HeaderSpace = 10) 
+        //{
+        //    html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
+
+        //    var doc = new HtmlToPdfDocument()
+        //    {
+        //        GlobalSettings = {
+        //        ColorMode = ColorMode.Color,
+        //        Orientation = PageOrientation,
+        //        PaperSize = PaperSize,       
+        //        Margins = new MarginSettings() {
+        //        Top = HeaderSpace,      
+        //        Bottom = 10,
+        //        Left = 10,
+        //        Right = 10
+        //    },
+        //},
+        //        //Objects = {
+        //        //    new ObjectSettings() {
+        //        //        PagesCount = true,
+        //        //        HtmlContent = html,
+        //        //        WebSettings = { DefaultEncoding = "utf-8" },
+        //        //        FooterSettings = { FontSize = 9, Left = "AirmidTech Innovation Pvt. Ltd, India | Mobile No : +91 9970164262", Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
+        //        //    }
+        //        //}
+        //        Objects = {
+        //     new ObjectSettings() {
+        //         PagesCount = true,
+        //         HtmlContent = html,
+        //         WebSettings = { DefaultEncoding = "utf-8" },
+        //         FooterSettings = {FontSize = 0,Left = "",Right = "",Line = false,Spacing = 0}
+        //     }
+        // }
+        //    };
+        //    byte[] bytes = converter.Convert(doc);
+        //    //var pdfStream = new System.IO.MemoryStream();
+        //    //pdfStream.Write(pdf, 0, pdf.Length);
+        //    //pdfStream.Position = 0;
+        //    //Byte[] bytes = pdfStream.ToArray();
+        //    string DestinationPath = string.Empty; //_Sales.GetFilePath();
+        //    if (string.IsNullOrWhiteSpace(DestinationPath))
+        //        DestinationPath = storageBasePath;// _configuration.GetValue<string>("StorageBasePath");
+        //    if (!Directory.Exists(DestinationPath))
+        //        Directory.CreateDirectory(DestinationPath);
+        //    if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy")))
+        //        Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy"));
+        //    string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
+        //    if (File.Exists(NewFileName))
+        //        NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + FileName + "_" + (Guid.NewGuid()) + ".pdf";
+        //    System.IO.File.WriteAllBytes(NewFileName, bytes);
+        //    return new Tuple<byte[], string>(bytes, NewFileName);
+        //}
+
         //public Tuple<byte[], string> GeneratePdfFromHtml(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
         //{
         //    html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
