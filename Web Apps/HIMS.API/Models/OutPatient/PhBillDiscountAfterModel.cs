@@ -7,6 +7,8 @@ namespace HIMS.API.Models.OutPatient
         public double? DiscAmount { get; set; }
         public double? BalanceAmount { get; set; }
         public long? ConcessionReasonId { get; set; }
+        public long? CreatedBy { get; set; }
+
 
     }
 

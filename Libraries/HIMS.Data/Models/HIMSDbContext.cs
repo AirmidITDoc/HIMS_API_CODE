@@ -75,6 +75,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<GetPrescriptionItemDet> GetPrescriptionItemDets { get; set; } = null!;
         public virtual DbSet<GetSalesDraftBillItemDet> GetSalesDraftBillItemDets { get; set; } = null!;
         public virtual DbSet<GroupMaster> GroupMasters { get; set; } = null!;
+        public virtual DbSet<HelpdeskPatientComplaint> HelpdeskPatientComplaints { get; set; } = null!;
         public virtual DbSet<HmsLog> HmsLogs { get; set; } = null!;
         public virtual DbSet<HospitalMaster> HospitalMasters { get; set; } = null!;
         public virtual DbSet<IndentDetial> IndentDetials { get; set; } = null!;
@@ -644,7 +645,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -3012,6 +3013,55 @@ namespace HIMS.Data.Models
                     .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<HelpdeskPatientComplaint>(entity =>
+            {
+                entity.HasKey(e => e.ComplaintId)
+                    .HasName("PK__Helpdesk__489708C1E5CC440D");
+
+                entity.ToTable("HelpdeskPatient_Complaints");
+
+                entity.Property(e => e.ComplaintId).HasColumnName("complaintId");
+
+                entity.Property(e => e.Address)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("address");
+
+                entity.Property(e => e.Complaint).HasColumnName("complaint");
+
+                entity.Property(e => e.ComplaintDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ComplaintTime).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DepartmentId).HasColumnName("departmentId");
+
+                entity.Property(e => e.EmailId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("emailId");
+
+                entity.Property(e => e.MobileNo)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("mobileNo");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OpdipdNo).HasColumnName("opdipdNo");
+
+                entity.Property(e => e.PatientName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("patientName");
+
+                entity.Property(e => e.RegId)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("regId");
             });
 
             modelBuilder.Entity<HmsLog>(entity =>

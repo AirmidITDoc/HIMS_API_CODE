@@ -835,7 +835,7 @@ namespace HIMS.Services.Users
         {
 
             DatabaseHelper odal = new();
-            string[] AEntity = { "SalesId", "NetAmount", "DiscAmount", "BalanceAmount", "ConcessionReasonId" };
+            string[] AEntity = { "SalesId", "NetAmount", "DiscAmount", "BalanceAmount", "ConcessionReasonId", "CreatedBy" };
             var entity = ObjTSalesHeader.ToDictionary();
 
             foreach (var rProperty in entity.Keys.ToList())
