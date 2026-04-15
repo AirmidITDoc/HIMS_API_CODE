@@ -18,6 +18,10 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<BedTransferDetailListDto>(model, "ps_Rtrv_BedTransferDetails");
         }
+        public virtual async Task<IPagedList<BedTransferInformationListDto>> BedTransferInformationList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BedTransferInformationListDto>(model, "ps_BedTransferInformation_list");
+        }
         public virtual void InsertSP(TBedTransferDetail objBedTransferDetail, Bedmaster ObjBedMaster, Bedmaster ObjBedMasterUpdate, Admission ObjAdmission, int CurrentUserId, string CurrentUserName)
         {
 

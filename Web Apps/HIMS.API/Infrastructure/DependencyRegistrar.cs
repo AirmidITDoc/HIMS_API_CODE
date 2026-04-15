@@ -197,6 +197,10 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IPatientFeedBackService, PatientFeedBackService>();
             services.AddScoped<IItemWiseSupplierRateService, ItemWiseSupplierRateService>();
             services.AddScoped<IHelpdeskPatientComplaintService, HelpdeskPatientComplaintService>();
+            services.AddScoped<IPharmacyRefundService, PharmacyRefundService>();
+            services.AddScoped<IPharmacyAdvanceService, PharmacyAdvanceService>();
+
+
 
 
 

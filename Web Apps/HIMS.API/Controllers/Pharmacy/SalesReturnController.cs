@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.NewPharmacy;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,20 @@ namespace HIMS.API.Controllers.Pharmacy
         {
             IPagedList<SalesRetrunCurrentSumryListDto> PharSalesList = await _ISalesReturnService.SalesReturnSummaryList(objGrid);
             return Ok(PharSalesList.ToGridResponse(objGrid, "Sales Return Summary   List"));
+        }
+        [HttpPost("IPPrescriptionReturnHList")]
+        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
+        public async Task<IActionResult> PrescriptionReturnHList(GridRequestModel objGrid)
+        {
+            IPagedList<PrescriptionReturnHListDto> IPPrescriptionReturnHList = await _ISalesReturnService.IPPrescriptionReturnHList(objGrid);
+            return Ok(IPPrescriptionReturnHList.ToGridResponse(objGrid, "IPPrescriptionReturnH List"));
+        }
+        [HttpPost("IPPrescriptionReturnDetailsList")]
+        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
+        public async Task<IActionResult> PrescriptionReturnDList(GridRequestModel objGrid)
+        {
+            IPagedList<PrescriptionReturnDetailsListDto> IPPrescriptionReturnHList = await _ISalesReturnService.IPPrescriptionReturnDList(objGrid);
+            return Ok(IPPrescriptionReturnHList.ToGridResponse(objGrid, "IPPrescriptionReturn Details List"));
         }
 
         [HttpPost("SalesReturnDetailsList")]

@@ -29,6 +29,13 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<BedTransferDetailListDto> BedTransferDetailList = await _IBedTransferService.BedTransferDetailList(objGrid);
             return Ok(BedTransferDetailList.ToGridResponse(objGrid, "BedTransferDetail  List"));
         }
+        [HttpPost("BedTransferInformationList")]
+        //[Permission(PageCode = "BedTransfer", Permission = PagePermission.View)]
+        public async Task<IActionResult> BedList(GridRequestModel objGrid)
+        {
+            IPagedList<BedTransferInformationListDto> BedTransferInformationList = await _IBedTransferService.BedTransferInformationList(objGrid);
+            return Ok(BedTransferInformationList.ToGridResponse(objGrid, "BedTransferInformation  List"));
+        }
 
         [HttpPost("InsertSP")]
         [Permission]

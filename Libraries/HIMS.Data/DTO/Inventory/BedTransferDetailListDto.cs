@@ -15,8 +15,22 @@
         public string ToClassName { get; set; }
         public string OrderNo { get; set; }
         public long TransferId { get; set; }
-
-
-
     }
-}
+    public class BedTransferInformationListDto
+    {
+            public DateTime FromDate { get; set; }
+            public DateTime FromTime { get; set; }
+            public string FromWardName { get; set; }
+            public string FromBedNo { get; set; }
+            public DateTime ToDate { get; set; }
+            public DateTime ToTime { get; set; }
+            public string? ToWardName { get; set; } 
+            public string? ToBedNo { get; set; } 
+            public string? Remark { get; set; }
+            public string? UserName { get; set; } 
+        }
+    }
+
+
+
+ 

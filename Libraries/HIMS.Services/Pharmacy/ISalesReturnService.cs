@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.NewPharmacy;
 using HIMS.Data.Models;
 
 namespace HIMS.Services.Pharmacy
@@ -16,6 +17,10 @@ namespace HIMS.Services.Pharmacy
         void InsertSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, List<TPaymentPharmacy> ObjTPaymentPharmacy, int UserId, string Username);
         void InsertSPCredit(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, int UserId, string Username);
         void InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, int UserId, string Username);
+        Task<IPagedList<PrescriptionReturnHListDto>> IPPrescriptionReturnHList(GridRequestModel objGrid);
+        Task<IPagedList<PrescriptionReturnDetailsListDto>> IPPrescriptionReturnDList(GridRequestModel objGrid);
+
+
 
 
     }

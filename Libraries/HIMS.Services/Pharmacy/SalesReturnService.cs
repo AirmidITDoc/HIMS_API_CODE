@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.NewPharmacy;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
@@ -44,6 +45,14 @@ namespace HIMS.Services.Pharmacy
         public virtual async Task<IPagedList<SalesBillReturnCreditListDto>> SalesBillReturnCreditList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<SalesBillReturnCreditListDto>(model, "Retrieve_SalesBill_Return_Credit");
+        }
+        public virtual async Task<IPagedList<PrescriptionReturnHListDto>> IPPrescriptionReturnHList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrescriptionReturnHListDto>(model, "ps_IPPrescriptionReturnHList");
+        }
+        public virtual async Task<IPagedList<PrescriptionReturnDetailsListDto>> IPPrescriptionReturnDList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PrescriptionReturnDetailsListDto>(model, "ps_IPPrescriptionReturnDetailsList");
         }
         //Changes Done By shilpa 12 dec 2025 
         public virtual void InsertSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, List<TPaymentPharmacy> ObjTPaymentPharmacy, int UserId, string Username)
