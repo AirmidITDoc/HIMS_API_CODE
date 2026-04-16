@@ -16,7 +16,12 @@ namespace HIMS.Data.DTO.DashBoard
         public decimal? BillAmount { get; set; }
         public double? DiscAmount { get; set; }
         public decimal? NetBillAmount { get; set; }
-        public decimal? PaidAmount { get; set; }
+        public decimal? PharSalesAmt { get; set; }
+        public decimal? BillPharNetAmount { get; set; }
+        public decimal? PaidAmtPaidByPaidGov { get; set; }
+        public decimal? BalAmount_ful { get; set; }
+        public decimal? Sys_BalanceAmt { get; set; }
+        public decimal? PaidByPatient { get; set; }
         public decimal? BalAmount { get; set; }
         public long? GovtCompanyId { get; set; }
         public string? FirstCompanyName { get; set; }
