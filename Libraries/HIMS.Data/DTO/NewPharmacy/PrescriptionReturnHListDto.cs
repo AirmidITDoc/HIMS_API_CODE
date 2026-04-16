@@ -11,8 +11,8 @@ namespace HIMS.Data.DTO.NewPharmacy
 
         public long PresReId { get; set; }
         public string? PresNo { get; set; }
-        public DateTime? PresDate { get; set; }
-        public DateTime? PresTime { get; set; }
+        public string? PresDate { get; set; }
+        public string? PresTime { get; set; }
         public long? ToStoreId { get; set; }
         public long? OpIpId { get; set; }
         public byte? OpIpType { get; set; }
@@ -22,8 +22,20 @@ namespace HIMS.Data.DTO.NewPharmacy
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? RegNo { get; set; }
-
+        public string? PatientName { get; set; }
+        public string? BedName { get; set; }
+        public string? RoomName { get; set; }
+        public string? IPDNo { get; set; }
+        public string? AdmissionDate { get; set; }
+        public long? CompanyId { get; set; }
+        public string? CompanyName { get; set; }
+        public string? TariffName { get; set; }
+        public string? Age { get; set; }
+        public string? GenderName { get; set; }
+        public long DoctorId { get; set; }
+        public string? DoctorName { get; set; }
     }
+      
     public class PrescriptionReturnDetailsListDto
     {
 
