@@ -52,9 +52,11 @@ namespace HIMS.Data.DTO.DashBoard
         public long? CompanyId { get; set; }
         public string? CompanyName { get; set; }
         public double PatientCount { get; set; }
-        public double DraftBill { get; set; }
-        public decimal FinalAmount { get; set; }
-        public double PharmacyAmount { get; set; }
+        public decimal? DraftBill { get; set; }
+        public decimal? FinalAmount { get; set; }
+        public decimal? PharmacyAmount { get; set; }
+        public decimal? ApprovedAmount { get; set; }
+        public decimal? RemainingAmount { get; set; }
 
     }
     public class CashlessPatientBillDto
