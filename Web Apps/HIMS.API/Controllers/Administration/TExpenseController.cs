@@ -89,5 +89,28 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record delete successfully.");
         }
+
+       
+        [HttpPut("NewTExpenseUpdate")]
+        [Permission]
+        public async Task<ApiResponse> Edit(List<ExpenseUpdateModel> objList)
+        {
+            if (objList == null || objList.Count == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+            foreach (var obj in objList)
+            {
+                if (obj.ExpId == 0)  continue; 
+
+                TExpense model = obj.MapTo<TExpense>();
+
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+
+                await _Texpenseservice.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records updated successfully." );
+        }
     }
 }

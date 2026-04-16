@@ -32,6 +32,13 @@ namespace HIMS.API.Models.Administration
 
         }
     }
-
+    public class ExpenseUpdateModel
+    {
+        public long ExpId { get; set; }
+        public bool IsApproval { get; set; }
+        public long ApprovalBy { get; set; }
+        public string ApprovalReason { get; set; } = null!;
+        public DateTime ApprovalDate { get; set; }
+    }
 }
 
