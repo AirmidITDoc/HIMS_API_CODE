@@ -253,6 +253,14 @@ namespace HIMS.API.Controllers.Report
             var data = await _reportService.SearchCompanyEmployeInfo(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyEmployeInfo Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.ExecutiveId }));
         }
+        [HttpGet("MItemCategorymaster/auto-complete")]
+        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetMItemCategorymasterAutoComplete(string Keyword)
+        {
+            var data = await _reportService.SearchMItemCategoryMaster(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemCategory Data.", data.Select(x => new { Text = x.ItemCategoryName, Value = x.ItemCategoryId }));
+        }
+
 
         [HttpGet("LoginUser/auto-complete")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
