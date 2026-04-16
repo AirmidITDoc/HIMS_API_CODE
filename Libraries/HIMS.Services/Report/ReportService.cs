@@ -142,6 +142,13 @@ namespace HIMS.Services.Report
             return await this._context.MCompanyEmployeInfos.Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(100).ToListAsync();
         }
 
+        public virtual async Task<List<MItemCategoryMaster>> SearchMItemCategoryMaster(string str)
+        {
+            return await this._context.MItemCategoryMasters.Where(x => (x.ItemCategoryName).ToLower().Contains(str)).Take(25).ToListAsync();
+        }
+
+       
+
         public virtual async Task<List<LoginManager>> SearchLoginUser(string str)
         {
             return await this._context.LoginManagers.Where(x => x.IsActive == true && (x.FirstName + " " + x.LastName).ToLower().Contains(str)).Take(100).ToListAsync();

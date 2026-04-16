@@ -31,6 +31,8 @@ namespace HIMS.Services.Report
         Task<List<MExpensesHeadMaster>> SearchMExpensesHeadMaster(string str);
         Task<List<HospitalMaster>> SearchHospitalMaster(string str);
         Task<List<MCompanyEmployeInfo>> SearchCompanyEmployeInfo(string str);
+        Task<List<MItemCategoryMaster>> SearchMItemCategoryMaster(string str);
+
 
         Task<List<LoginManager>> SearchLoginUser(string str);
         Task<List<TLabPatientRegistration>> SearchPatient(string str);
