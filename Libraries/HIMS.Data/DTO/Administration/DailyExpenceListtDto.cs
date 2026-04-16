@@ -20,7 +20,13 @@
         public string? Utrno { get; set; }
         public long? ExpCategoryId { get; set; }
         public string? ExpCategoryName { get; set; }
+        public bool IsApproval { get; set; }
+        public long ApprovalBy { get; set; }
+        public string? ApprovalReason { get; set; }
+        public DateTime ApprovalDate { get; set; }
+        public string? ApprovalUserName { get; set; }
 
+        
 
 
 

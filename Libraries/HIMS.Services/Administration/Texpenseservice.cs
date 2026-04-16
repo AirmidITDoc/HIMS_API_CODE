@@ -94,5 +94,23 @@ namespace HIMS.Services.Administration
 
 
         }
+
+        public virtual async Task UpdateAsync(TExpense ObjTExpense, int CurrentUserId, string UserName)
+        {
+
+            DatabaseHelper odal = new();
+            string[] AEntity = { "ExpId", "IsApproval", "ApprovalBy", "ApprovalReason", "ApprovalDate" };
+            var entity = ObjTExpense.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+
+            odal.ExecuteNonQuery("ps_ExpenseUpdate", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, nameof(TExpense), Convert.ToInt32(ObjTExpense.ExpId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, UserName);
+
+
+        }
     }
 }
