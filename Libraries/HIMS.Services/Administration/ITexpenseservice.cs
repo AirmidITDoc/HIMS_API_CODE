@@ -10,6 +10,8 @@ namespace HIMS.Services.Administration
         Task UpdateExpensesAsync(TExpense ObjTExpense, int UserId, string Username, string[]? references);
         void TExpenseCancel(TExpense ObjTExpense, int UserId, string Username);
         Task<IPagedList<DailyExpenceListtDto>> DailyExpencesList(GridRequestModel objGrid);
+        Task UpdateAsync(TExpense ObjTExpense, int UserId, string Username);
+
 
 
     }
