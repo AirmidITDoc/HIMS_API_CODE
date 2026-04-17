@@ -58,8 +58,11 @@ namespace HIMS.Data.DTO.Pathology
         public long? UnitId { get; set; }
         public string? HospitalName { get; set; }
         public DateTime? DateofBirth { get; set; }
+        public string? PatientNumber { get; set; }
 
         
+
+
 
 
 

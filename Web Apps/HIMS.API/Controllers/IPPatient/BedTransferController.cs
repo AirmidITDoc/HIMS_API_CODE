@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("InsertSP")]
-        [Permission]
+        //[Permission]
         //[Permission(PageCode = "BedTransfer", Permission = PagePermission.Add)]
         public ApiResponse Insert(BTransferModel obj)
         {

@@ -15,16 +15,7 @@
         public long AddedBy { get; set; }
         public bool? IsCancelled { get; set; }
         public decimal NetBalAmt { get; set; }
-        //public decimal? NetBalAmt { get; set; }
-        //public string UserName { get; set; }
-        //public DateTime? PaymentDate { get; set; }
-
-        //public decimal ChequePayAmount { get; set; }
-        //public decimal CardPayAmount { get; set; }
-        //public decimal NEFTPayAmount { get; set; }
-        //public decimal? PayTmamount { get; set; }
-        //public long? TransactionType { get; set; }
-
+      
 
     }
 }

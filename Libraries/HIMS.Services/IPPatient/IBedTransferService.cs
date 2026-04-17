@@ -8,7 +8,7 @@ namespace HIMS.Services.IPPatient
     {
         Task<IPagedList<BedTransferDetailListDto>> BedTransferDetailList(GridRequestModel objGrid);
         Task<IPagedList<BedTransferInformationListDto>> BedTransferInformationList(GridRequestModel objGrid);
-        void InsertSP(TBedTransferDetail objBedTransferDetail, Bedmaster ObjBedMaster, Bedmaster ObjBedMasterUpdate, Admission ObjAdmission, int CurrentUserId, string CurrentUserName);
+        Task InsertSP(TBedTransferDetail objBedTransferDetail, Bedmaster ObjBedMaster, Bedmaster ObjBedMasterUpdate, Admission ObjAdmission, int CurrentUserId, string CurrentUserName);
 
     }
 }
