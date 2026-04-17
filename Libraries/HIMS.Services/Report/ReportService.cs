@@ -3886,7 +3886,10 @@ namespace HIMS.Services.Report
             decimal overallTotal = 0;
 
             foreach (var col in validCols)
-            {
+            {           // Added by Ashu 16 April 2026 Remove Netamount from Summary Calculation Only   
+                if (col.Equals("NetAmount", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
                 decimal incomeTotal = dt.AsEnumerable()
                     .Where(r => r[groupCol[0]].ToString() == "Income")
                     .Sum(r => r.IsNull(col) ? 0 : Convert.ToDecimal(r[col]));
