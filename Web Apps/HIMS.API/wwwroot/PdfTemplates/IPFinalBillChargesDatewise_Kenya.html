@@ -108,7 +108,17 @@
                                             <b>Company Name :</b> {{CompanyName}}
                                         </span>
                                     </td>
+                                    <td style="padding:2px; display:{{chkPolicyFlag}};">
+                                        <span style="font-weight: bold;">POL/MEB :</span>
+                                        <span>{{PolicyNo}}</span>
+                                    </td>
 
+                                    <td style="padding:2px; display:{{chkAadharFlag}};">
+                                        <span style="font-weight: bold;">National Id:</span>
+                                        <span>{{AadharCardNo}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td style="padding:2px;">
                                         <span style="display:{{chkPolicyNoflag}}">
                                             <b>Policy No :</b> {{PolicyNoList}}
@@ -119,39 +129,15 @@
                                         <span style="display:{{chkApprovedAmountflag}}">
                                             <b>Policy Limit :</b> {{ApprovedAmount}}
                                     </td>
-                                </tr>
-
-                                <tr>
-                                <tr>
-                                    <td style="padding:2px; display:{{chkPolicyFlag}};">
-                                        <span style="font-weight: bold;">POL/MEB :</span>
-                                        <span>{{PolicyNo}}</span>
-                                    </td>
-
-                                    <td style="padding:2px; display:{{chkAadharFlag}};">
-                                        <b>National Id:</b> {{AadharCardNo}}
+                                    <td style="padding:2px; display:{{chkRefDocNameflag}}">
+                                        <b>Ref.Doctor Name  :</b> {{RefDocName}}
                                     </td>
                                 </tr>
-                                <td style="padding:2px; display:{{chkRefDocNameflag}}">
-                                    <b>Ref.Doctor Name  :</b> {{RefDocName}}
-                                </td>
-
+                               
+                            </table>
+                        </td>
                     </tr>
-                    <!--<tr>
-                        <td style="padding-left:10px; display:{{chkRefDocNameflag}};">
-                            <b>Ref. Doctor Name :</b> {{RefDocName}}
-                        </td>
-                        <td style="padding-left:10px; display:{{chkCompanyNameflag}};">
-                            <b>Company Name :</b> {{CompanyName}}
-                        </td>
-                        <td></td>
-                    </tr>-->
                 </table>
-                </td>
-                </tr>
-                <tr>
-                    </br>
-                </tr>
                 <tr class="bill-table-row" style="margin-top:10px;">
                     <td>
                         <table style="width: 100%; border-collapse: collapse;">
