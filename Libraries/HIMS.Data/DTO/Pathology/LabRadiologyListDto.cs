@@ -52,9 +52,14 @@ namespace HIMS.Data.DTO.Pathology
         public string? ReportTime { get; set; }
         public long? RadResultDr1 { get; set; }
         public string? GroupName { get; set; }
-        public string GenderName { get; set; }
+        public string? GenderName { get; set; }
         public bool? PaymentCompleted { get; set; }
         public bool? PaymentPending { get; set; }
+        public long? UnitId { get; set; }
+        public string? HospitalName { get; set; }
+        public DateTime? DateofBirth { get; set; }
+
+        
 
 
 
