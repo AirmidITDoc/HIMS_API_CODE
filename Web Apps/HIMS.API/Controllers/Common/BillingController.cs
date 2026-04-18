@@ -19,22 +19,12 @@ namespace HIMS.API.Controllers.Common
     [ApiVersion("1")]
     public class BillingController : BaseController
     {
-        private readonly IOPAddchargesService _IOPAddchargesService;
-        private readonly IOPBillingService _oPBillingService;
-        private readonly IOPSettlementCreditService _IOPCreditBillService;
+       
         private readonly IIPBillService _IPBillService;
-        private readonly IIPDraftBillSerive _iPDraftBillSerive;
-        private readonly IIPInterimBillSerive _iPInterimBillSerive;
-
-        public BillingController(IOPAddchargesService repository, IOPBillingService repository1, IOPSettlementCreditService repository2, IIPBillService iPBIllwithpay, IIPBILLCreditService iPBILLCreditService,
-            IIPInterimBillSerive iPInterimBill, IIPDraftBillSerive iPDraftBill)
+        public BillingController( IIPBillService iPBIllwithpay)
         {
-            _IOPAddchargesService = repository;
-            _oPBillingService = repository1;
-            _IOPCreditBillService = repository2;
-            _IPBillService = iPBIllwithpay;
-            _iPDraftBillSerive = iPDraftBill;
-            _iPInterimBillSerive = iPInterimBill;
+           _IPBillService = iPBIllwithpay;
+          
         }
 
 

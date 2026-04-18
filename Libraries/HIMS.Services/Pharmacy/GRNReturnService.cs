@@ -163,7 +163,7 @@ namespace HIMS.Services.Pharmacy
             }
             foreach (var item in ObjTGrndetails)
             {
-                string[] GGEntity = { "Grnid", "ItemId", "Uomid", "ReceiveQty", "FreeQty", "Mrp", "Rate", "TotalAmount", "ConversionFactor", "VatPercentage", "VatAmount", "DiscPercentage", "DiscAmount", "OtherTax", "LandedRate", "NetAmount", "GrossAmount", "TotalQty", "Pono", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId", "MrpStrip", "IsVerified", "IsVerifiedDatetime", "IsVerifiedUserId", "DiscPerc2", "DiscAmt2", "Grn" };
+                string[] GGEntity = { "Grnid", "ItemId", "Uomid", "ReceiveQty", "FreeQty", "Mrp", "Rate", "TotalAmount", "ConversionFactor", "VatPercentage", "VatAmount", "DiscPercentage", "DiscAmount", "OtherTax", "LandedRate", "NetAmount", "GrossAmount", "TotalQty", "Pono", "BatchNo", "BatchExpDate", "PurUnitRate", "PurUnitRateWf", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId", "MrpStrip", "IsVerified", "IsVerifiedDatetime", "IsVerifiedUserId", "DiscPerc2", "DiscAmt2", "Grn", "HmrpStrip","HmrpUnitPrice" };
                 var gentity = item.ToDictionary();
                 foreach (var rProperty in GGEntity)
                 {
