@@ -342,8 +342,8 @@ namespace HIMS.Services.IPPatient
                 // Update header table records
                 Admission objAdm = await _context.Admissions.FindAsync(OBJAdmission.AdmissionId);
                 objAdm.IsCancelled = OBJAdmission.IsCancelled;
-                //objind.IsCancelledBy = OBJAdmission.IsCancelledBy;
-                //objind.IsCancelledDateTime = OBJAdmission.IsCancelledDateTime;
+                objAdm.IsCancelledBy = OBJAdmission.IsCancelledBy;
+                objAdm.IsCancelledDateTime = OBJAdmission.IsCancelledDateTime;
 
                 _context.Admissions.Update(objAdm);
                 _context.Entry(objAdm).State = EntityState.Modified;

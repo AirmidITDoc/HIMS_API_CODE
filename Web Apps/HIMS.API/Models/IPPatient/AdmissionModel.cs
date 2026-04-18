@@ -151,6 +151,8 @@ namespace HIMS.API.Models.IPPatient
     {
         public long AdmissionId { get; set; }
         public long? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDateTime { get; set; }
     }
     public class AdmissionUpdate
     {
