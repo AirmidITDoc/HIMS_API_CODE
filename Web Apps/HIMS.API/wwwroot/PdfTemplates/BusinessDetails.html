@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Calibri;
+            font-size: 15px;
+            margin: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #aaa;
+            padding: 6px 10px;
+            text-align: center;
+        }
+
+        .center-name {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .header-row th {
+            background: #d9d9d9;
+            font-weight: bold;
+        }
+
+        .total-row td {
+            background: #d9d9d9;
+            font-weight: bold;
+        }
+
+        .report-title {
+            text-align: center;
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .chunk {
+            page-break-after: always;
+        }
+
+            .chunk:last-child {
+                page-break-after: avoid;
+            }
+    </style>
+</head>
+<body>
+    {{HospitalHeader}}
+    <div class="report-title">BUSINESS DETAILS. (Dt {{FromDate}} - {{ToDate}})</div>
+    {{ReportChunks}}
+</body>
+</html>
