@@ -16714,6 +16714,12 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ChequeNo}}", dt.GetColValue("ChequeNo"));
                         html = html.Replace("{{CategoryName}}", dt.GetColValue("CategoryName"));
 
+                        html = html.Replace("{{IsApproval}}", dt.GetColValue("IsApproval"));
+                        html = html.Replace("{{ApprovalBy}}", dt.GetColValue("ApprovalBy"));
+                        html = html.Replace("{{ApprovalReason}}", dt.GetColValue("ApprovalReason"));
+                        html = html.Replace("{{ApprovalDate}}", dt.GetColValue("ApprovalDate"));
+
+                        html = html.Replace("{{IsApproval1}}",dt.GetColValue("IsApproval").ConvertToDouble() == 1 ? "Yes" : "No");
 
 
                         html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount"));
@@ -16730,7 +16736,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkneftflag}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkOnlineAmountflag}}", dt.GetColValue("OnlineAmount").ConvertToDouble() > 0 ? "table-row " : "none");
-
+                        html = html.Replace("{{chkIsApprovalflag}}", dt.GetColValue("IsApproval").ConvertToDouble() > 0 ? "table-row " : "none");
 
 
 

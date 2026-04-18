@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin-top: 3cm;
+            margin-bottom: 6cm;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="font-size: 14px;line-height: 24px; font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #101828;">
+            <div>
+                <div>
+                    <div>
+                        <div>
+                            <table style="width: 100%;line-height: inherit;text-align: left;">
+                                <tr class="top-header-row">
+                                    {{NewHeader}}
+                                </tr>
+                                <tr class="title-date-row">
+                                    <td>
+                                        <table style="width: 100%; border-collapse: collapse;">
+
+                                            <tr style="font-size: 18px">
+                                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b> VOUCHER BOOK</b></td>
+                                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                                            </tr>
+
+                                        </table>
+
+                                    </td>
+                                </tr>
+
+                                <tr class="bill-info-row">
+                                    <td style="padding: 6px; border-bottom: 1px solid #d4c3c3">
+
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 20px;">
+                                            <tr>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">ID :</span>
+                                                    <span>{{ExpID}}</span>
+                                                </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Date|Time:</span>
+                                                    <span> {{ExpDate}}</span>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Person Name :</span>
+                                                    <span>{{PersonName}}</span>
+                                                </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Voucher No :</span>
+                                                    <span>{{VoucharNo}}</span>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Expenses Name : </span>
+                                                    <span> {{HeadName}}</span>
+                                                </td>
+
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Category Name : </span>
+                                                    <span> {{CategoryName}}</span>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">Description :</span>
+                                                    <span>{{Narration}}</span>
+                                                </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">IsApproved :</span>
+                                                    <span>{{IsApproval1}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr style="display: {{chkIsApprovalflag}};">
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">ApprovalBy :</span>
+                                                    <span>{{ApprovalBy}}</span>
+                                                </td>
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">ApprovalDate :</span>
+                                                    <span>{{ApprovalDate}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr style="display: {{chkIsApprovalflag}};">
+                                                <td style="padding: 2px;">
+                                                    <span style="font-weight:bold;">ApprovalReason :</span>
+                                                    <span>{{ApprovalReason}}</span>
+                                                </td>
+                                         
+                                            </tr>
+
+
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #d4c3c3" ;>
+                                    <th style=" text-align: left;">
+                                        <h4 style="margin: 1px 0px;font-size: 20px;">
+                                            Payment Info:-
+                                        </h4>
+                                    </th>
+                                </tr>
+                                <table style="width:100%; border-collapse:collapse; font-size:20px; margin-top:6px;">
+                                    <tr style="display: {{chkcashflag}};">
+                                        <td style="padding: 2px;">
+                                            <span><b>Cash Pay:</b></span>
+                                            <span>{{CurrSymbol}} {{CashPayAmount}}</span>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr style="display: {{chkchequeflag}};">
+                                        <td style="padding: 2px;">
+                                            <span><b>Cheque Pay:</b></span>
+                                            <span>{{CurrSymbol}} {{ChequePayAmount}}</span>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <span><b>UTR No:</b></span>
+                                            <span>{{ChequeNo}}</span>
+                                        </td>
+
+                                    </tr>
+                                    <tr style="display: {{chkOnlineAmountflag}};">
+                                        <td style="padding: 2px;">
+                                            <span><b>Online Pay:</b></span>
+                                            <span>{{CurrSymbol}} {{OnlineAmount}}</span>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <span><b>UTR No:</b></span>
+                                            <span>{{PayTMTranNo}}</span>
+                                        </td>
+                                    </tr>
+
+
+                                </table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{Items}}
+</body>
+
+
+<table style="width: 100%; border-collapse: collapse; margin-top: 50px; font-size: 20px; text-align:right; font-family: Calibri, 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+    <tr style="border-bottom: 1px solid #d4c3c3;">
+        <td style="padding: 2px;">
+            <span style="font-weight:bold;">Added Name</span>
+            <br />
+            <span>{{AddedName}}</span>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+
+
+</html>
+
+
