@@ -3446,6 +3446,66 @@ namespace HIMS.Services.Report
                     }
                     break;
 
+                case "BusinessDetails.html":
+                    {
+                        var dataMap = new Dictionary<string, Dictionary<DateTime, int>>();
+                        var allDates = new SortedSet<DateTime>();
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            string center = dr["CenterName"].ToString();
+                            DateTime date = Convert.ToDateTime(dr["BillDate"]);
+                            int tests = Convert.ToInt32(dr["TotalTests"]);
+
+                            allDates.Add(date);
+                            if (!dataMap.ContainsKey(center)) dataMap[center] = new Dictionary<DateTime, int>();
+                            dataMap[center][date] = dataMap[center].ContainsKey(date) ? dataMap[center][date] + tests : tests;
+                        }
+
+                        var centers = dataMap.Keys.OrderBy(x => x).ToList();
+                        var dates = allDates.ToList();
+                        string chunks = "";
+
+                        for (int i = 0; i < dates.Count; i += 15)
+                        {
+                            var chunk = dates.Skip(i).Take(15).ToList();
+
+                            // Wrap in div — this is what keeps each chunk on its own page
+                            string table = "<div class='chunk'><table>";
+
+                            // Header
+                            table += "<tr class='header-row'><th>Center Name</th>"
+                                   + string.Join("", chunk.Select(d => $"<th>{d:d-MMM}</th>"))
+                                   + "</tr>";
+
+                            // Data rows
+                            var totals = chunk.ToDictionary(d => d, d => 0);
+                            foreach (var center in centers)
+                            {
+                                table += $"<tr><td class='center-name'>{center}</td>";
+                                foreach (var d in chunk)
+                                {
+                                    int val = dataMap[center].ContainsKey(d) ? dataMap[center][d] : 0;
+                                    totals[d] += val;
+                                    table += $"<td>{val}</td>";
+                                }
+                                table += "</tr>";
+                            }
+
+                            // Total row
+                            table += "<tr class='total-row'><td>Total Case Amount</td>"
+                                   + string.Join("", chunk.Select(d => $"<td>{totals[d]}</td>"))
+                                   + "</tr></table></div>";  // close table AND div
+
+                            chunks += table;
+                        }
+
+                        html = html.Replace("{{ReportChunks}}", chunks);
+                        html = html.Replace("{{FromDate}}", dates.First().ToString("dd.MM.yyyy"));
+                        html = html.Replace("{{ToDate}}", dates.Last().ToString("dd.MM.yyyy"));
+                    }
+                    break;
+
                     /* HELPERS */
                     string GetDoctorTotalRow(decimal g, decimal d, decimal n)
                     {
@@ -16654,6 +16714,12 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ChequeNo}}", dt.GetColValue("ChequeNo"));
                         html = html.Replace("{{CategoryName}}", dt.GetColValue("CategoryName"));
 
+                        html = html.Replace("{{IsApproval}}", dt.GetColValue("IsApproval"));
+                        html = html.Replace("{{ApprovalBy}}", dt.GetColValue("ApprovalBy"));
+                        html = html.Replace("{{ApprovalReason}}", dt.GetColValue("ApprovalReason"));
+                        html = html.Replace("{{ApprovalDate}}", dt.GetColValue("ApprovalDate"));
+
+                        html = html.Replace("{{IsApproval1}}",dt.GetColValue("IsApproval").ConvertToDouble() == 1 ? "Yes" : "No");
 
 
                         html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount"));
@@ -16670,7 +16736,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkneftflag}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkOnlineAmountflag}}", dt.GetColValue("OnlineAmount").ConvertToDouble() > 0 ? "table-row " : "none");
-
+                        html = html.Replace("{{chkIsApprovalflag}}", dt.GetColValue("IsApproval").ConvertToDouble() > 0 ? "table-row " : "none");
 
 
 
