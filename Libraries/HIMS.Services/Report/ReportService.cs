@@ -11543,6 +11543,9 @@ namespace HIMS.Services.Report
                                  .Append("<td style='border:1px solid #eee;text-align:right;padding:2px;'>").Append(dr["ChargesTotalAmt"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
 
                             // ================= ACCUMULATE TOTALS =================
+
+                            F_TotalAmount = Math.Round(F_TotalAmount, 0, MidpointRounding.AwayFromZero);
+
                             T_TotalAmount += dr["ChargesTotalAmt"].ConvertToDouble();
                             F_TotalAmount += dr["ChargesTotalAmt"].ConvertToDouble();
                             ChargesTotalamt += dr["ChargesTotalAmt"].ConvertToDouble();
@@ -11573,6 +11576,9 @@ namespace HIMS.Services.Report
                         F_TotalAmount = Math.Round(F_TotalAmount, 0, MidpointRounding.AwayFromZero);
 
                         MedicineReturnamt = Math.Round(MedicineReturnamt, 0, MidpointRounding.AwayFromZero);
+
+                        TotalBillAmount = Math.Round(TotalBillAmount, 0, MidpointRounding.AwayFromZero);
+
 
 
                         TotalBillAmount = F_TotalAmount - MedicineReturnamt;
