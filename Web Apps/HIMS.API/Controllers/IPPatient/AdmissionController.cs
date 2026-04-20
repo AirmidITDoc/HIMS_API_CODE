@@ -160,17 +160,15 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         [HttpPost("Cancel")]
-        [Permission(PageCode = "Admission", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "Admission", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(AdmissionCancel obj)
         {
             Admission model = obj.MapTo<Admission>();
-            //Admission model = new();
 
 
             if (obj.AdmissionId != 0)
             {
                 model.AdmissionId = obj.AdmissionId;
-                model.IsCancelled = CurrentUserId;
                 await _IAdmissionService.CancelAsync(model, CurrentUserId, CurrentUserName);
             }
             else
