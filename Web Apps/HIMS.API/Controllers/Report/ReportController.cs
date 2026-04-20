@@ -253,14 +253,22 @@ namespace HIMS.API.Controllers.Report
             var data = await _reportService.SearchCompanyEmployeInfo(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CompanyEmployeInfo Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.ExecutiveId }));
         }
+
+
         [HttpGet("MItemCategorymaster/auto-complete")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetMItemCategorymasterAutoComplete(string Keyword)
         {
+            if (string.IsNullOrWhiteSpace(Keyword) || Keyword == "%")
+            {
+                Keyword = string.Empty;
+            }
             var data = await _reportService.SearchMItemCategoryMaster(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemCategory Data.", data.Select(x => new { Text = x.ItemCategoryName, Value = x.ItemCategoryId }));
         }
 
+
+     
 
         [HttpGet("LoginUser/auto-complete")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
@@ -622,8 +630,8 @@ namespace HIMS.API.Controllers.Report
             objGrid.First = 0;
             objGrid.Rows = 0;
 
-          //  long StoreId = 2;
-            long StoreId = Context.StoreId;
+          long StoreId = 2;
+            //long StoreId = Context.StoreId;
             IPagedList<MReportListDto> MReportConfigList = await _reportService.MReportListDto(objGrid);
             if (MReportConfigList.Count > 0)
             {
