@@ -13138,6 +13138,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ExpId).HasColumnName("ExpID");
 
+                entity.Property(e => e.ApprovalBy).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.ApprovalDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("('')");
@@ -13156,9 +13158,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ExpTime).HasColumnType("datetime");
 
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+                entity.Property(e => e.IsApproval).HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.Narration).HasMaxLength(255);
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PersonName).HasMaxLength(255);
 
