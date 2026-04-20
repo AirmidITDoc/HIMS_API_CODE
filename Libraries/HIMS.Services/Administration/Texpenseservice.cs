@@ -77,7 +77,7 @@ namespace HIMS.Services.Administration
                 scope.Complete();
             }
         }
-
+       
         public virtual void TExpenseCancel(TExpense ObjTExpense, int UserId, string UserName)
         {
 
