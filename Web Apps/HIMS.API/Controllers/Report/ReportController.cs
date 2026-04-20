@@ -630,8 +630,8 @@ namespace HIMS.API.Controllers.Report
             objGrid.First = 0;
             objGrid.Rows = 0;
 
-          long StoreId = 2;
-            //long StoreId = Context.StoreId;
+       //   long StoreId = 2;
+            long StoreId = Context.StoreId;
             IPagedList<MReportListDto> MReportConfigList = await _reportService.MReportListDto(objGrid);
             if (MReportConfigList.Count > 0)
             {

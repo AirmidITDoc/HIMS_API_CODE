@@ -11570,7 +11570,10 @@ namespace HIMS.Services.Report
                         }
 
 
-                        F_TotalAmount = Math.Ceiling(F_TotalAmount);
+                        F_TotalAmount = Math.Round(F_TotalAmount, 0, MidpointRounding.AwayFromZero);
+
+                        MedicineReturnamt = Math.Round(MedicineReturnamt, 0, MidpointRounding.AwayFromZero);
+
 
                         TotalBillAmount = F_TotalAmount - MedicineReturnamt;
 
