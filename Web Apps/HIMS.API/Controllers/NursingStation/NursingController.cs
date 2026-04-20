@@ -107,7 +107,7 @@ namespace HIMS.API.Controllers.NursingStation
             return Ok(MNursingTemplateList.ToGridResponse(objGrid, "MNursingTemplate List"));
         }
 
-         //List API Get By Id
+        //List API Get By Id
         [HttpGet("{id?}")]
         [Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
@@ -371,6 +371,14 @@ namespace HIMS.API.Controllers.NursingStation
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+
+        [HttpGet("nursing-schedules")]
+      //  [Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetNursingSchedules(DateTime date)
+        {
+            var data = await _INursingNoteService.GetSchedules(date);
+            return new ApiResponse() { Data = data, Message = "Nursing note schedule", StatusCode = 200 };
         }
 
     }
