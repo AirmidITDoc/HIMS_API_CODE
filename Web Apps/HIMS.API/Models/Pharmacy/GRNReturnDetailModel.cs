@@ -10,8 +10,8 @@
         public decimal? LandedRate { get; set; }
         public decimal? Mrp { get; set; }
         public decimal? UnitPurchaseRate { get; set; }
-        public float? GSTPercentage { get; set; }
-        public decimal? GSTAmount { get; set; }
+        public float? Gstpercentage { get; set; }
+        public decimal? Gstamount { get; set; }
         public decimal? LandedTotalAmount { get; set; }
         public decimal? MrptotalAmount { get; set; }
         public decimal? PurchaseTotalAmount { get; set; }
