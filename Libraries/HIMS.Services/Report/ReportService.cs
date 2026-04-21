@@ -753,10 +753,17 @@ namespace HIMS.Services.Report
                         {
                             int i = 0;
                             string tempHtml = objTemplate?.TemplateBody ?? "";
-                            tempHtml = tempHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["UHID"]?.ToString()));
+                            string qrData = $"{row["UHID"]?.ToString() ?? ""} | " +
+                                     $"{row["PatientName"]?.ToString() ?? ""} | " +
+                                     $"{row["SampleNo"]?.ToString() ?? ""}";
+
+                            tempHtml = tempHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(qrData));
+                            //tempHtml = tempHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["UHID"]?.ToString()));
                             tempHtml = tempHtml.Replace("{{UHID}}", row["UHID"]?.ToString());
                             tempHtml = tempHtml.Replace("{{PatientName}}", row["PatientName"]?.ToString());
                             tempHtml = tempHtml.Replace("{{ServiceName}}", row["ServiceName"]?.ToString());
+                            tempHtml = tempHtml.Replace("{{SampleNo}}", row["SampleNo"]?.ToString());
+
                             tempHtml = tempHtml.Replace("{{TestBarCodeName}}", row["TestBarCodeName"]?.ToString());
 
                             html += tempHtml;//+ "<div style='page-break-after:always'></div>";
