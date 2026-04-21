@@ -4,6 +4,7 @@ using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.Nursing;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Transactions;
@@ -227,7 +228,19 @@ namespace HIMS.Services.Nursing
         //}
 
 
-
+        public virtual async Task<List<IpdDrugScheduleDto>> GetSchedules(DateTime date)
+        {
+            List<IpdDrugScheduleDto> data = new();
+            var schedules = await _context.IpdDrugSchedules.Where(x => x.IsActive).ToListAsync();
+            SqlParameter sqlParameter = new()
+            {
+                ParameterName = "@Date",
+                SqlDbType = SqlDbType.DateTime,
+                Value = date
+            };
+            DatabaseHelper odal = new();
+            return await odal.Get1ResultFromSp<IpdDrugScheduleDto>("GET_IPD_DRUG_SCHEDULES", new[] { sqlParameter });
+        }
 
 
     }

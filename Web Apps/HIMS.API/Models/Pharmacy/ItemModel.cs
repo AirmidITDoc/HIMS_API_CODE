@@ -33,7 +33,7 @@ namespace HIMS.API.Models.Pharmacy
     {
         public long? ItemId { get; set; }
         public float? IssueQty { get; set; }
-        public long? IStkId { get; set; }
+        public long? IstkId { get; set; }
         public long? StoreId { get; set; }
     }
 

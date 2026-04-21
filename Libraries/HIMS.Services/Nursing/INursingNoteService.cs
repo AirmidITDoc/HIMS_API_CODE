@@ -29,7 +29,8 @@ namespace HIMS.Services.Nursing
         Task<IPagedList<NursingMedicationListDto>> NursingMedicationlist(GridRequestModel objGrid);
 
         Task Insert(List<TNursingMedicationChart1> ObjTNursingMedicationChart, int currentUserId, string currentUserName);
+        Task<List<IpdDrugScheduleDto>> GetSchedules(DateTime date);
 
-       
+
     }
 }

@@ -59,30 +59,29 @@ namespace HIMS.API.Models.Pharmacy
         public float? DiscPercentage { get; set; }
         public decimal? DiscAmount { get; set; }
     }
-    public class CurStockModels
-    {
+    //public class CurStockModels
+    //{
 
-        public long? ItemId { get; set; }
-        public float? IssueQty { get; set; }
-        public long? StoreId { get; set; }
-        public long? IstkId { get; set; }
+    //    public long? ItemId { get; set; }
+    //    public float? IssueQty { get; set; }
+    //    public long? StoreId { get; set; }
+    //    public long? IstkId { get; set; }
 
 
-    }
-    public class UpdateGrnReturnQty
-    {
-        public long GrndetId { get; set; }
-        public double? ReturnQty { get; set; }
-    }
+    //}
+    //public class UpdateGrnReturnQty
+    //{
+    //    public long GrndetId { get; set; }
+    //    public double? ReturnQty { get; set; }
+    //}
 
     public class GRNReturnUpdatereqDto
     {
         public GRNUpdatedModel GrnReturn { get; set; }
         public List<GRNReturnDetailsModel> tGrnreturnDetails { get; set; }
-        public List<CurStockModels> GrnReturnCurrentStock { get; set; }
-        public List<UpdateGrnReturnQty> GrnReturnReturnQt { get; set; }
+        public List<GRNReturnCurrentStock> GrnReturnCurrentStock { get; set; }
+        public List<GRNReturnReturnQty> GrnReturnReturnQt { get; set; }
 
-        //public List<GRNReturnReturnQty> GrnReturnReturnQt { get; set; }
     }
 }
 
