@@ -343,15 +343,19 @@ namespace HIMS.Services.IPPatient
                 Admission objAdm = await _context.Admissions.FindAsync(OBJAdmission.AdmissionId);
                 objAdm.IsCancelled = OBJAdmission.IsCancelled;
                 objAdm.IsCancelledBy = OBJAdmission.IsCancelledBy;
+                objAdm.IsCancelComment = OBJAdmission.IsCancelComment;
                 objAdm.IsCancelledDateTime = OBJAdmission.IsCancelledDateTime;
 
                 _context.Admissions.Update(objAdm);
                 _context.Entry(objAdm).State = EntityState.Modified;
+                _context.Entry(objAdm).Property(x => x.IsCancelComment).IsModified = true;
+
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
             }
         }
+      
 
     }
 }

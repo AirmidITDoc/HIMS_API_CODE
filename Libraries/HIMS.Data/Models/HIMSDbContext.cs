@@ -631,6 +631,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<UserMailSystemBlog> UserMailSystemBlogs { get; set; } = null!;
         public virtual DbSet<VAdmissionMsg> VAdmissionMsgs { get; set; } = null!;
         public virtual DbSet<VCheckingBalQty> VCheckingBalQties { get; set; } = null!;
+        public virtual DbSet<VInpatientSalesAmount> VInpatientSalesAmounts { get; set; } = null!;
         public virtual DbSet<VInpatientSalesreturnAmount> VInpatientSalesreturnAmounts { get; set; } = null!;
         public virtual DbSet<VPaymentBillwisesumAmount> VPaymentBillwisesumAmounts { get; set; } = null!;
         public virtual DbSet<VTPayment> VTPayments { get; set; } = null!;
@@ -18720,6 +18721,17 @@ namespace HIMS.Data.Models
                 entity.ToView("v_CheckingBalQty");
 
                 entity.Property(e => e.StockId).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<VInpatientSalesAmount>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_INPATIENT_SALES_AMOUNT");
+
+                entity.Property(e => e.NetAmount).HasColumnType("money");
+
+                entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
             });
 
             modelBuilder.Entity<VInpatientSalesreturnAmount>(entity =>
