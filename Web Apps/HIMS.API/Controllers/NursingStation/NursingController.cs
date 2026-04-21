@@ -374,7 +374,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpGet("nursing-schedules")]
-      //  [Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetNursingSchedules(DateTime date)
         {
             var data = await _INursingNoteService.GetSchedules(date);
