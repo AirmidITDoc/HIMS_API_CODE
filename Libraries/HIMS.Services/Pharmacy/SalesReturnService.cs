@@ -55,7 +55,7 @@ namespace HIMS.Services.Pharmacy
             return await DatabaseHelper.GetGridDataBySp<PrescriptionReturnDetailsListDto>(model, "ps_IPPrescriptionReturnDetailsList");
         }
         //Changes Done By shilpa 12 dec 2025 
-        public virtual void InsertSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, List<TPaymentPharmacy> ObjTPaymentPharmacy, int UserId, string Username)
+        public virtual async Task  InsertSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, List<TPaymentPharmacy> ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName)
         {
 
             // //Add header table records
@@ -70,6 +70,10 @@ namespace HIMS.Services.Pharmacy
             string vSalesReturnId = odal.ExecuteNonQuery("PS_insert_SalesReturnHeader_1", CommandType.StoredProcedure, "SalesReturnId", entity);
             ObjTSalesReturnHeader.SalesReturnId = Convert.ToInt32(vSalesReturnId);
             ObjPayment.RefundId = Convert.ToInt32(vSalesReturnId);
+            //await _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), Convert.ToInt32(ObjTSalesReturnHeader.SalesReturnId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), Convert.ToInt32(ObjTSalesReturnHeader.SalesReturnId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
+
 
 
             foreach (var item in ObjTSalesReturnDetail)
@@ -84,6 +88,9 @@ namespace HIMS.Services.Pharmacy
                         Aentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_SalesReturnDetails_1", CommandType.StoredProcedure, Aentity);
+                //await _context.LogProcedureExecution(entity, nameof(TSalesReturnDetail), Convert.ToInt32(item.SalesReturnDetId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TSalesReturnDetail), Convert.ToInt32(item.SalesReturnDetId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
             }
 
             foreach (var item in ObjTCurrentStock)
@@ -96,6 +103,9 @@ namespace HIMS.Services.Pharmacy
                         Pentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("Update_T_CurStk_SalesReturn_Id_1", CommandType.StoredProcedure, Pentity);
+                //await _context.LogProcedureExecution(entity, nameof(TCurrentStock), Convert.ToInt32(item.StockId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TCurrentStock), Convert.ToInt32(item.StockId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
 
             }
 
@@ -109,6 +119,9 @@ namespace HIMS.Services.Pharmacy
                         Pentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("Update_SalesReturnQty_SalesTbl_1", CommandType.StoredProcedure, Pentity);
+                //await _context.LogProcedureExecution(entity, nameof(TSalesDetail), Convert.ToInt32(item.SalesDetId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TSalesDetail), Convert.ToInt32(item.SalesDetId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
 
             }
             var SalesReturnIdObj = new
@@ -141,6 +154,9 @@ namespace HIMS.Services.Pharmacy
             }
             string PaymentId = odal.ExecuteNonQuery("insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", Sentity);
             ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
+            //await _context.LogProcedureExecution(entity, nameof(PaymentPharmacy), Convert.ToInt32(ObjPayment.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(PaymentPharmacy), Convert.ToInt32(ObjPayment.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
 
             foreach (var item in ObjTPaymentPharmacy)
             {
@@ -158,6 +174,9 @@ namespace HIMS.Services.Pharmacy
                 }
                 string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_PaymentPharmacy", CommandType.StoredProcedure, "PaymentId", pentity);
                 item.PaymentId = Convert.ToInt32(VPaymentId);
+                //await _context.LogProcedureExecution(entity, nameof(PaymentPharmacy), Convert.ToInt32(item.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(PaymentPharmacy), Convert.ToInt32(item.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
 
             }
 
@@ -242,12 +261,12 @@ namespace HIMS.Services.Pharmacy
         }
     
 
-        //    //Changes Done By Ashutosh 19 May 2025
-        public virtual void InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, int UserId, string Username)
+        //    //Changes Done By shilpa 22-04-2026
+        public virtual void InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, List<TIpprescriptionReturnH> ObjTIpprescriptionReturnH, int CurrentUserId, string CurrentUserName)
         {
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] Entity = { "SalesReturnId", "Date", "Time", "SalesId", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "IsSellted", "IsPrint", "IsFree", "UnitId", "AddedBy", "StoreId", "Narration", "IsPurBill"/* "MobileNo", "PatientName", "Address", "DoctorId", "DoctorName", "ReturnType"*/};
+            string[] Entity = { "SalesReturnId", "Date", "Time", "SalesId", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "IsSellted", "IsPrint", "IsFree", "UnitId", "AddedBy", "StoreId", "Narration", "IsPurBill", "IsPrescriptionReturn" };
             var entity = ObjTSalesReturnHeader.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
             {
@@ -256,6 +275,8 @@ namespace HIMS.Services.Pharmacy
             }
             string vSalesReturnId = odal.ExecuteNonQuery("ps_insert_T_SalesInPatientReturnHeader_1", CommandType.StoredProcedure, "SalesReturnId", entity);
             ObjTSalesReturnHeader.SalesReturnId = Convert.ToInt32(vSalesReturnId);
+            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TSalesInPatientReturnHeader), (int)ObjTSalesReturnHeader.SalesReturnId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
 
             foreach (var item in ObjTSalesReturnDetail)
             {
@@ -269,6 +290,8 @@ namespace HIMS.Services.Pharmacy
                         Aentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_insert_T_SalesInPatientReturnDetails_1", CommandType.StoredProcedure, Aentity);
+                _ = Task.Run(() => _context.LogProcedureExecution(Aentity, nameof(TSalesInPatientReturnDetail), (int)item.SalesReturnDetId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
             }
 
 
@@ -282,6 +305,8 @@ namespace HIMS.Services.Pharmacy
                         Pentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_Update_T_CurStk_SalesReturn_Id_1", CommandType.StoredProcedure, Pentity);
+                _ = Task.Run(() => _context.LogProcedureExecution(Pentity, nameof(TCurrentStock), (int)item.StockId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
 
             }
 
@@ -295,6 +320,8 @@ namespace HIMS.Services.Pharmacy
                         Pentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_Update_SalesInPatientReturnQty_SalesTbl_1", CommandType.StoredProcedure, Pentity);
+                _ = Task.Run(() => _context.LogProcedureExecution(Pentity, nameof(TSalesDetail), (int)item.SalesDetId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
 
             }
             var SalesReturnIdObj = new
@@ -317,6 +344,21 @@ namespace HIMS.Services.Pharmacy
 
             };
             odal.ExecuteNonQuery("ps_Insert_ItemMovementReport_InpatientReturnCursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
+
+            foreach (var item in ObjTIpprescriptionReturnH)
+            {
+                string[] PEntity = { "PresReId" };
+                var Pentity = item.ToDictionary();
+                foreach (var rProperty in Pentity.Keys.ToList())
+                {
+                    if (!PEntity.Contains(rProperty))
+                        Pentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_IPPrescriptionReturnUpdate", CommandType.StoredProcedure, Pentity);
+                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TIpprescriptionReturnH), (int)item.PresReId, Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
+
+
+            }
 
         }
     }

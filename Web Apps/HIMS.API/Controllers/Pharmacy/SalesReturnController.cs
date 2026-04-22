@@ -92,7 +92,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(salesbillwithcredit.ToGridResponse(objGrid, "salesbillwithcredit  List"));
         }
         [HttpPost("SalesReturnWithCash")]
-        [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
         public ApiResponse InsertSP(SalesReturnsModel obj)
         {
             TSalesReturnHeader model = obj.SalesReturn.MapTo<TSalesReturnHeader>();
@@ -136,19 +136,21 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("SalesReturnInPatient")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
         public ApiResponse Insert(SalesReturnsModels obj)
         {
             TSalesInPatientReturnHeader model = obj.SalesReturn.MapTo<TSalesInPatientReturnHeader>();
             List<TSalesInPatientReturnDetail> model1 = obj.SalesReturnDetails.MapTo<List<TSalesInPatientReturnDetail>>();
             List<TCurrentStock> model2 = obj.CurrentStock.MapTo<List<TCurrentStock>>();
             List<TSalesDetail> model3 = obj.SalesDetail.MapTo<List<TSalesDetail>>();
+            List<TIpprescriptionReturnH> model4 = obj.prescriptionReturn.MapTo<List<TIpprescriptionReturnH>>();
+
 
             if (obj.SalesReturn.SalesReturnId == 0)
             {
                 model.Date = Convert.ToDateTime(obj.SalesReturn.Date);
                 model.Time = Convert.ToDateTime(obj.SalesReturn.Time);
-                _ISalesReturnService.InsertInPatient(model, model1, model2, model3, CurrentUserId, CurrentUserName);
+                _ISalesReturnService.InsertInPatient(model, model1, model2, model3, model4, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

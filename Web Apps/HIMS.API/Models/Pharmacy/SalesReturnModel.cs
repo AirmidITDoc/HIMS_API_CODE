@@ -213,6 +213,8 @@ namespace HIMS.API.Models.Pharmacy
         public long? StoreId { get; set; }
         public string? Narration { get; set; }
         public bool? IsPurBill { get; set; }
+        public long? IsPrescriptionReturn { get; set; }
+
     }
     public class TSalesInPatientReturnHeaderModelValidator : AbstractValidator<TSalesInPatientReturnHeaderModel>
     {
@@ -262,6 +264,11 @@ namespace HIMS.API.Models.Pharmacy
 
         }
     }
+    public class TIpprescriptionReturnHModel
+    {
+        public long PresReId { get; set; }
+
+    }
     public class SalesReturnsModels
     {
         public TSalesInPatientReturnHeaderModel SalesReturn { get; set; }
@@ -269,7 +276,7 @@ namespace HIMS.API.Models.Pharmacy
         public List<CurrentStockModels> CurrentStock { get; set; }
         public List<SalesDetailsModel> SalesDetail { get; set; }
         public PaymentModels? Payment { get; set; }
-        public List<TPaymentpharModelS>? TPayments { get; set; }
+        public List<TIpprescriptionReturnHModel> prescriptionReturn { get; set; }
 
     }
 }

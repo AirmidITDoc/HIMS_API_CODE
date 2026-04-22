@@ -24,7 +24,6 @@ namespace HIMS.API.Models.Pharmacy
         public bool IsGrnTypeFlag { get; set; }
         public long GrnreturnId { get; set; }
         public long UnitId { get; set; }
-        //public List<GRNReturnDetailsModel> TGrnreturnDetails { get; set; }
 
     }
     public class GrnreturnUpdate
@@ -59,21 +58,7 @@ namespace HIMS.API.Models.Pharmacy
         public float? DiscPercentage { get; set; }
         public decimal? DiscAmount { get; set; }
     }
-    //public class CurStockModels
-    //{
-
-    //    public long? ItemId { get; set; }
-    //    public float? IssueQty { get; set; }
-    //    public long? StoreId { get; set; }
-    //    public long? IstkId { get; set; }
-
-
-    //}
-    //public class UpdateGrnReturnQty
-    //{
-    //    public long GrndetId { get; set; }
-    //    public double? ReturnQty { get; set; }
-    //}
+   
 
     public class GRNReturnUpdatereqDto
     {

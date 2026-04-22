@@ -40,6 +40,7 @@ namespace HIMS.Data.Models
         public long? DoctorId { get; set; }
         public string? DoctorName { get; set; }
         public long? ReturnType { get; set; }
+        public long? IsPrescriptionReturn { get; set; }
 
         public virtual ICollection<TSalesInPatientReturnDetail> TSalesInPatientReturnDetails { get; set; }
     }

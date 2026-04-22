@@ -111,20 +111,21 @@ namespace HIMS.Services.Pharmacy
             }
         }
 
-        public virtual void Verify(TGrnreturnHeader objGRN, int UserId, string UserName)
+        public virtual async Task Verify(TGrnreturnHeader objGRN, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = { "GrnreturnNo", "Grnid", "GrnreturnDate", "GrnreturnTime", "StoreId", "SupplierId", "TotalAmount", "GrnReturnAmount", "TotalDiscAmount", "TotalVatAmount", "TotalOtherTaxAmount", "TotalOctroiAmount", "NetAmount", "CashCredit",
-                "Remark","AddedBy","UpdatedBy","IsCancelled","IsClosed","Prefix","GrnType","IsGrnTypeFlag","TGrnreturnDetails", "CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","UnitId" };
+            string[] rEntity = { "GrnreturnId", "IsVerified" };
             var entity = objGRN.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("m_Update_GRNReturn_Verify_Status_1", CommandType.StoredProcedure, entity);
-
+            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), objGRN.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
         }
+
         //public virtual void Insertsp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int UserId, string UserName)
         //{
 
@@ -299,7 +300,7 @@ namespace HIMS.Services.Pharmacy
 
 
         //}
-        public virtual void Updatesp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int CurrentUserId, string CurrentUserName)
+        public virtual async Task  Updatesp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();

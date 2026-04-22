@@ -132,11 +132,11 @@ namespace HIMS.Services.Pharmacy
                 throw;
             }
         }
-        public virtual async Task  InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, List<TIpprescriptionReturnH> ObjTIpprescriptionReturnH, int CurrentUserId, string CurrentUserName)
         {
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] Entity = { "SalesReturnId", "Date", "Time", "SalesId", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "IsSellted", "IsPrint", "IsFree", "UnitId", "AddedBy", "StoreId", "Narration", "IsPurBill"/* "MobileNo", "PatientName", "Address", "DoctorId", "DoctorName", "ReturnType"*/};
+            string[] Entity = { "SalesReturnId", "Date", "Time", "SalesId", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "IsSellted", "IsPrint", "IsFree", "UnitId", "AddedBy", "StoreId", "Narration", "IsPurBill", "IsPrescriptionReturn" };
             var entity = ObjTSalesReturnHeader.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
             {
@@ -217,7 +217,20 @@ namespace HIMS.Services.Pharmacy
             odal.ExecuteNonQuery("ps_Insert_ItemMovementReport_InpatientReturnCursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
             _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TSalesInPatientReturnHeader), (int)ObjTSalesReturnHeader.SalesReturnId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
 
+            foreach (var item in ObjTIpprescriptionReturnH)
+            {
+                string[] PEntity = { "PresReId" };
+                var Pentity = item.ToDictionary();
+                foreach (var rProperty in Pentity.Keys.ToList())
+                {
+                    if (!PEntity.Contains(rProperty))
+                        Pentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_IPPrescriptionReturnUpdate", CommandType.StoredProcedure, Pentity);
+                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TIpprescriptionReturnH), (int)item.PresReId, Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
 
+
+            }
         }
     }
 }
