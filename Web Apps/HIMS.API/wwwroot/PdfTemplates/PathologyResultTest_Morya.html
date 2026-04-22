@@ -31,42 +31,41 @@
                     <table style="width:100%; border-collapse:collapse; border-top:1px solid #000; border-bottom:1px solid #000;">
                         <tr>
                             <td style="width:78%; vertical-align:top;">
-                                <table style="width:100%; border-collapse:collapse;" cellpadding="4">
+                                <table style="width:100%; border-collapse:collapse; table-layout:fixed;" cellpadding="4">
+                                    <colgroup>
+                                        <col style="width:18%;" />
+                                        <col style="width:32%;" />
+                                        <col style="width:20%;" />
+                                        <col style="width:30%;" />
+                                    </colgroup>
                                     <tr>
-                                        <td style="font-size:12px; font-weight:normal;">UHID</td>
-                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{RegNo}}</strong></td>
-                                        <td style="font-size:12px; font-weight:normal;">REGISTERED ON</td>
-                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{PathTime}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal; white-space:nowrap;">UHID</td>
+                                        <td style="font-size:12px; font-weight:normal; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">: <strong>{{RegNo}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal; white-space:nowrap;">REGISTERED ON</td>
+                                        <td style="font-size:12px; font-weight:normal; white-space:nowrap;">: <strong>{{PathTime}}</strong></td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size:12px; font-weight:normal;">PATIENT NAME</td>
-                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{PatientName}}</strong></td>
-                                        <td style="font-size:12px; font-weight:normal;">COLLECTED ON</td>
-                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{SampleCollectionTime}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal; white-space:nowrap; vertical-align:top;">PATIENT NAME</td>
+                                        <td style="font-size:12px; font-weight:normal; white-space:normal; word-break:break-word; vertical-align:top;">: <strong>{{PatientName}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal; white-space:nowrap; vertical-align:top;">COLLECTED ON</td>
+                                        <td style="font-size:12px; font-weight:normal; white-space:nowrap; vertical-align:top;">: <strong>{{SampleCollectionTime}}</strong></td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size:12px; font-weight:normal;">AGE</td>
-                                        <td style="font-size:12px; font-weight:normal;">: {{AgeYear}} Years</td>
-                                        <td style="font-size:12px; font-weight:normal;">REPORTED ON</td>
-                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{ReportTime}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal; white-space:nowrap;">AGE/Gender</td>
+                                        <td style="font-size:12px; font-weight:normal; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">: {{AgeYear}} Years/{{GenderName}}</td>
+                                        <td style="font-size:12px; font-weight:normal; white-space:nowrap;">REPORTED ON</td>
+                                        <td style="font-size:12px; font-weight:normal; white-space:nowrap;">: <strong>{{ReportTime}}</strong></td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size:12px; font-weight:normal;">SEX</td>
-                                        <td style="font-size:12px; font-weight:normal;">: {{GenderName}}</td>
-                                        <td style="font-size:12px; font-weight:normal;">SAMPLE NO</td>
-                                        <td style="font-size:12px; font-weight:normal;">: {{SampleNo}}</td>
+                                        <td style="font-size:12px; font-weight:normal; white-space:nowrap;">REFERRED DR</td>
+                                        <td style="font-size:12px; font-weight:normal; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">: {{ConsultantDocName}}</td>
+                                        <td style="font-size:12px; font-weight:normal; white-space:nowrap;">SAMPLE NO</td>
+                                        <td style="font-size:12px; font-weight:normal; white-space:nowrap;">: {{SampleNo}}</td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size:12px; font-weight:normal;">NATIONAL ID</td>
-                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{AdharCardNo}}</strong></td>
-                                        <td style="font-size:12px; font-weight:normal;">REFERRED BY</td>
-                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{ConsultantDocName}}</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-size:12px; font-weight:normal;">REPORT STATUS</td>
-                                        <td style="font-size:12px; font-weight:normal;">: <strong>Final</strong></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td style="font-size:12px; font-weight:normal; white-space:nowrap;">NATIONAL ID</td>
+                                        <td style="font-size:12px; font-weight:normal; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">: <strong>{{AdharCardNo}}</strong></td>
+
                                     </tr>
 
                                 </table>
