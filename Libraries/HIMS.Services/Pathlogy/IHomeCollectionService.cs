@@ -18,6 +18,8 @@ namespace HIMS.Services.Pathlogy
         Task<IPagedList<HomeCollectionRegistrationInfoListDto>> HomeCollectionListAsync(GridRequestModel objGrid);
         Task Cancel(THomeCollectionRegistrationInfo objTHomeCollectionRegistrationInfo, int UserId, string Username);
         Task<IPagedList<HomeCollectionPatientListDto>> HomeGetListAsync(GridRequestModel objGrid);
+        Task updatePhlebotomistAsynch(THomeCollectionRegistrationInfo objTHomeCollectionRegistrationInfo, int UserId, string Username);
+
 
 
 

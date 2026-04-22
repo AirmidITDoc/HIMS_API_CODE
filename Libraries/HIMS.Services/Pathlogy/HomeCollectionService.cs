@@ -117,7 +117,21 @@ namespace HIMS.Services.Pathlogy
             }
             odal.ExecuteNonQuery("PS_Cancel_HomeCollection", CommandType.StoredProcedure, HEntity);
         }
+        public virtual async Task updatePhlebotomistAsynch(THomeCollectionRegistrationInfo objTHomeCollectionRegistrationInfo, int CurrentUserId, string CurrentUserName)
+        {
+            //throw new NotImplementedException();
+            DatabaseHelper odal = new();
+            string[] Entity = { "HomeCollectionId", "Phlebotomist" };
+            var HEntity = objTHomeCollectionRegistrationInfo.ToDictionary();
+            foreach (var rProperty in HEntity.Keys.ToList())
+            {
+                if (!Entity.Contains(rProperty))
+                    HEntity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_updatePhlebotomist", CommandType.StoredProcedure, HEntity);
+            _ = Task.Run(() => _context.LogProcedureExecution(HEntity, nameof(THomeCollectionRegistrationInfo), (int)objTHomeCollectionRegistrationInfo.HomeCollectionId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
 
-        
+
+        }
     }
 }

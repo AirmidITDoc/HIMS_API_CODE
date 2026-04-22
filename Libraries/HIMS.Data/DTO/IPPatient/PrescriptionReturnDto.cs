@@ -6,5 +6,7 @@
         public string? ItemName { get; set; }
         public string? BatchNo { get; set; }
         public double? Qty { get; set; }
+        public bool? Isclosed { get; set; }
+
     }
 }

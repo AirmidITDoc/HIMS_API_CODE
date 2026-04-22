@@ -314,6 +314,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<MCompanyWiseServiceDiscount, CompanyWiseServiceDiscountModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MCompanyWiseServiceDiscount, CompanyWiseServiceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIpprescriptionReturnH, TIpprescriptionReturnHModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<THomeCollectionRegistrationInfo, HomeCollectionupdatePhlebotomistModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 

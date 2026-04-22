@@ -1,18 +1,19 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
-using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
-using HIMS.Core.Infrastructure;
+using HIMS.API.Models.OutPatient;
+using HIMS.API.Models.Pathology;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Pathlogy;
 using Microsoft.AspNetCore.Mvc;
-using HIMS.API.Models.Pathology;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.Pathology;
-using HIMS.Data;
 using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 
 namespace HIMS.API.Controllers.Pathology
@@ -134,6 +135,19 @@ namespace HIMS.API.Controllers.Pathology
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+        [HttpPut("updatePhlebotomist{id:int}")]
+        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Delete)]
+        public ApiResponse Update(HomeCollectionupdatePhlebotomistModel obj)
+        {
+            THomeCollectionRegistrationInfo model = obj.MapTo<THomeCollectionRegistrationInfo>();
+            if (obj.HomeCollectionId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                _IHomeCollectionService.updatePhlebotomistAsynch(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
     }

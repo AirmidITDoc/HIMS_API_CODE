@@ -60,4 +60,11 @@ namespace HIMS.API.Models.Pathology
         public string? CancelReason { get; set; }
 
     }
+    public class HomeCollectionupdatePhlebotomistModel
+
+    {
+        public long HomeCollectionId { get; set; }
+        public long? Phlebotomist { get; set; }
+
+    }
 }
