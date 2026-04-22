@@ -313,6 +313,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<AdvanceHeader, UpdateCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MCompanyWiseServiceDiscount, CompanyWiseServiceDiscountModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MCompanyWiseServiceDiscount, CompanyWiseServiceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TIpprescriptionReturnH, TIpprescriptionReturnHModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
