@@ -124,8 +124,16 @@ namespace HIMS.API.Extensions
                             {
                                 if (prevExec != "")
                                 {
+                                    if (prevBill != "")
+                                    {
+                                        WriteTotalRow(workSheet, rowNo++, "Bill Total",
+                                            billGross, billDisc, billNet,
+                                            billReceipt, billDue, billRefund);
+                                    }
                                     WriteTotalRow(workSheet, rowNo++, "Subtotal", subGross, subDisc, subNet, subReceipt, subDue, subRefund);
                                     subGross = subDisc = subNet = subReceipt = subDue = subRefund = 0;
+                                    billGross = billDisc = billNet = 0;
+                                    billReceipt = billDue = billRefund = 0;
                                 }
 
                                 workSheet.Cell(rowNo, 1).Value = $"CPName: {cp} : Executive Name: {exec}";

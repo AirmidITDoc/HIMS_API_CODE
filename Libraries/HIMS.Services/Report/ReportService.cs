@@ -2983,6 +2983,21 @@ namespace HIMS.Services.Report
                             {
                                 if (prevExec != "")
                                 {
+                                    if (prevBill != "")
+                                    {
+                                        items.Append("<tr class='billTotal'>");
+
+                                        items.Append("<td colspan='5' class='right'>Bill Total</td>");
+                                        items.Append("<td class='center'>" + billGross + "</td>");
+                                        items.Append("<td class='center'>" + billDisc + "</td>");
+                                        items.Append("<td class='center'>" + billNet + "</td>");
+                                        items.Append("<td class='center'>" + billReceipt + "</td>");
+                                        items.Append("<td class='center'>" + billDue + "</td>");
+                                        items.Append("<td class='center'>" + billRefund + "</td>");
+                                        items.Append("<td></td>");
+
+                                        items.Append("</tr>");
+                                    }
                                     items.Append("<tr class='subTotal'>");
 
                                     items.Append("<td colspan='5' class='right'>Subtotal</td>");
