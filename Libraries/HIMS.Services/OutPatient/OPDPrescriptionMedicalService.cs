@@ -213,6 +213,7 @@ namespace HIMS.Services.OutPatient
                     DescriptionType = d.DescriptionType,
                     DescriptionName = d.DescriptionName
                 })
+                .Take(400)
                 .ToListAsync();
 
             return data;
