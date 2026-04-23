@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Pathology;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
@@ -20,20 +21,30 @@ namespace HIMS.API.Controllers.Pathology
     {
 
         private readonly IHomeCollectionPatientRegService _IHomeCollectionPatientRegService;
-        private readonly IGenericService<THomeCollectPatientRegistartion> _repository;
+        private readonly IGenericService<THomeCollectionPatientRegistartion> _repository;
 
 
-        public HomeCollectionPatientRegController(IHomeCollectionPatientRegService repository, IGenericService<THomeCollectPatientRegistartion> repository1)
+        public HomeCollectionPatientRegController(IHomeCollectionPatientRegService repository, IGenericService<THomeCollectionPatientRegistartion> repository1)
         {
             _IHomeCollectionPatientRegService = repository;
             _repository = repository1;
-
-
-
         }
-        
+        //List API Get By Id
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.PatientRegId == id);
+            return data.ToSingleResponse<THomeCollectionPatientRegistartion, HomeCollectionPatientRegModel>("THomeCollectionPatientRegistartion");
+        }
+
+      
         [HttpPost("Insert")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Add)]
 
         public async Task<ApiResponse> Insert(HomeCollectionPatientRegModel obj)
         {
@@ -52,7 +63,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("HomeCollectionPatientInsert")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> HomeInsert(HomeCollectionPatientRegistrationModel obj)
         {
             THomeCollectionPatientRegistartion model = obj.MapTo<THomeCollectionPatientRegistartion>();
@@ -60,9 +71,7 @@ namespace HIMS.API.Controllers.Pathology
             {
                 foreach (var q in model.THomeCollectionPatientRegDetails)
                 {
-                    //q.Createdby = CurrentUserId;
-                    //q.CreatedDate = AppTime.Now;
-
+                  
                 }
                
              await _IHomeCollectionPatientRegService.InsertAsync(model, CurrentUserId, CurrentUserName);
