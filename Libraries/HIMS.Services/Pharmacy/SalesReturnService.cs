@@ -262,7 +262,7 @@ namespace HIMS.Services.Pharmacy
     
 
         //    //Changes Done By shilpa 22-04-2026
-        public virtual void InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, List<TIpprescriptionReturnH> ObjTIpprescriptionReturnH, int CurrentUserId, string CurrentUserName)
+        public virtual void InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, List<TIpprescriptionReturnH> ObjTIpprescriptionReturnH, TIpprescriptionReturnD ObjTIpprescriptionReturnD, int CurrentUserId, string CurrentUserName)
         {
             // //Add header table records
             DatabaseHelper odal = new();
@@ -347,13 +347,15 @@ namespace HIMS.Services.Pharmacy
 
             foreach (var item in ObjTIpprescriptionReturnH)
             {
-                string[] PEntity = { "PresReId" };
+                string[] PEntity = { "PresReId", "PresDetailsId" };
                 var Pentity = item.ToDictionary();
                 foreach (var rProperty in Pentity.Keys.ToList())
                 {
                     if (!PEntity.Contains(rProperty))
                         Pentity.Remove(rProperty);
                 }
+                Pentity["PresDetailsId"] = ObjTIpprescriptionReturnD.PresDetailsId;
+
                 odal.ExecuteNonQuery("ps_IPPrescriptionReturnUpdate", CommandType.StoredProcedure, Pentity);
                 _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TIpprescriptionReturnH), (int)item.PresReId, Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
 

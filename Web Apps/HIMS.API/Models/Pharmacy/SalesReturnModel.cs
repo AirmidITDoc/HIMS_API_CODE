@@ -267,7 +267,7 @@ namespace HIMS.API.Models.Pharmacy
     public class TIpprescriptionReturnHModel
     {
         public long PresReId { get; set; }
-
+        public long PresDetailsId { get; set; }
     }
     public class SalesReturnsModels
     {

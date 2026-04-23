@@ -46,5 +46,6 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool? IsSync { get; set; }
+        public long? HomeCollectionId { get; set; }
     }
 }

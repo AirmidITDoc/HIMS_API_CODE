@@ -68,6 +68,8 @@ namespace HIMS.Data.DTO.Pathology
         public int? IsPackage { get; set; }
         public int? IsAllOtherServicesVerified { get; set; }
         public bool? PaymentCompleted { get; set; }
+        public long? HomeCollectionId { get; set; }
+
 
 
 

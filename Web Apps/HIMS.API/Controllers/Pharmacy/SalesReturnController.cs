@@ -144,13 +144,16 @@ namespace HIMS.API.Controllers.Pharmacy
             List<TCurrentStock> model2 = obj.CurrentStock.MapTo<List<TCurrentStock>>();
             List<TSalesDetail> model3 = obj.SalesDetail.MapTo<List<TSalesDetail>>();
             List<TIpprescriptionReturnH> model4 = obj.prescriptionReturn.MapTo<List<TIpprescriptionReturnH>>();
-
-
+            TIpprescriptionReturnD model5 = new TIpprescriptionReturnD
+            {
+                PresDetailsId = obj.prescriptionReturn
+                                   .FirstOrDefault()?.PresDetailsId ?? 0
+            };
             if (obj.SalesReturn.SalesReturnId == 0)
             {
                 model.Date = Convert.ToDateTime(obj.SalesReturn.Date);
                 model.Time = Convert.ToDateTime(obj.SalesReturn.Time);
-                _ISalesReturnService.InsertInPatient(model, model1, model2, model3, model4, CurrentUserId, CurrentUserName);
+                _ISalesReturnService.InsertInPatient(model, model1, model2, model3, model4, model5,CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
