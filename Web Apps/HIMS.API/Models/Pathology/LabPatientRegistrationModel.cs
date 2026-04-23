@@ -115,6 +115,8 @@ namespace HIMS.API.Models.Pathology
         public string? ReferByName { get; set; }
         public long? CompanyExecutiveId { get; set; }
         public long? LabAppointmentId { get; set; }
+        public long? HomeCollectionId { get; set; }
+
 
 
     }
