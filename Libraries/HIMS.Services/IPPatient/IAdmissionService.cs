@@ -7,6 +7,8 @@ namespace HIMS.Services.IPPatient
     public partial interface IAdmissionService
     {
         Task<IPagedList<AdmissionListDto>> GetAdmissionListAsync(GridRequestModel objGrid);
+        Task<IPagedList<AdmissionCancelListDto>> CancelAdmissionListAsync(GridRequestModel objGrid);
+
         Task<IPagedList<AdmissionListDto>> GetAdmissionDischargeListAsync(GridRequestModel objGrid);
         Task InsertSP(Admission objAdmission, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName);
         Task InsertRegSP(Registration ObjRegistration, Admission objAdmission, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName);

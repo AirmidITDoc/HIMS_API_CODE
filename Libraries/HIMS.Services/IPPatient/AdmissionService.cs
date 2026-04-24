@@ -21,6 +21,10 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<AdmissionListDto>(model, "ps_rtrv_Admtd_Ptnt_Dtls");
         }
+        public virtual async Task<IPagedList<AdmissionCancelListDto>> CancelAdmissionListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<AdmissionCancelListDto>(model, "Rtrv_AdmissionCancle_List");
+        }
         public virtual async Task<IPagedList<RequestForIPListDto>> GetAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<RequestForIPListDto>(model, "ps_OPList_RequestForIP");
@@ -335,27 +339,42 @@ namespace HIMS.Services.IPPatient
 
         }
 
+        //public virtual async Task CancelAsync(Admission OBJAdmission, int CurrentUserId, string CurrentUserName)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // Update header table records
+        //        Admission objAdm = await _context.Admissions.FindAsync(OBJAdmission.AdmissionId);
+        //        objAdm.IsCancelled = OBJAdmission.IsCancelled;
+        //        objAdm.IsCancelledBy = OBJAdmission.IsCancelledBy;
+        //        objAdm.IsCancelComment = OBJAdmission.IsCancelComment;
+        //        objAdm.IsCancelledDateTime = OBJAdmission.IsCancelledDateTime;
+
+        //        _context.Admissions.Update(objAdm);
+        //        _context.Entry(objAdm).State = EntityState.Modified;
+        //        _context.Entry(objAdm).Property(x => x.IsCancelComment).IsModified = true;
+
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
         public virtual async Task CancelAsync(Admission OBJAdmission, int CurrentUserId, string CurrentUserName)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            DatabaseHelper odal = new();
+            string[] AEntity = { "AdmissionId", "IsCancelledBy", "IsCancelComment", "IsCancelledDateTime" };
+            var entity = OBJAdmission.ToDictionary();
+
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                // Update header table records
-                Admission objAdm = await _context.Admissions.FindAsync(OBJAdmission.AdmissionId);
-                objAdm.IsCancelled = OBJAdmission.IsCancelled;
-                objAdm.IsCancelledBy = OBJAdmission.IsCancelledBy;
-                objAdm.IsCancelComment = OBJAdmission.IsCancelComment;
-                objAdm.IsCancelledDateTime = OBJAdmission.IsCancelledDateTime;
-
-                _context.Admissions.Update(objAdm);
-                _context.Entry(objAdm).State = EntityState.Modified;
-                _context.Entry(objAdm).Property(x => x.IsCancelComment).IsModified = true;
-
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
+                if (!AEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
+            odal.ExecuteNonQuery("ps_Admission_Cancel", CommandType.StoredProcedure, entity);
+
         }
-      
+
+
 
     }
 }

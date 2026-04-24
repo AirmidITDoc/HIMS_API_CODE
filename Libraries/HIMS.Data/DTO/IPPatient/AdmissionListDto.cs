@@ -132,12 +132,27 @@
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
         public string? GenderName { get; set; }
-
         public string? PatientType { get; set; }
         public string? DepartmentName { get; set; }
-
         public string? RefDoctorName { get; set; }
-
         public string FormattedText { get { return this.FirstName + " " + this.MiddleName + " " + this.LastName + " | " + this.RegNo + " | " + this.MobileNo; } }
+    }
+    public class AdmissionCancelListDto
+    {
+        public long AdmissionID { get; set; }
+        public DateTime? AdmissionDate { get; set; }
+        public DateTime? AdmissionTime { get; set; }
+        public string? PatientName { get; set; }
+        public string? GenderName { get; set; }
+        public string? Address { get; set; }
+        public string? Age { get; set; }
+        public long? DepartmentId { get; set; }
+        public string? DepartmentName { get; set; }
+        public string? City { get; set; }
+        public string? MobileNo { get; set; }
+        public string? AadharCardNo { get; set; }
+        public string? IsCancelComment { get; set; }
+        public string? UserName { get; set; }
+        public DateTime? IsCancelledDateTime { get; set; }
     }
 }

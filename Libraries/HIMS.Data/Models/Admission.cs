@@ -20,7 +20,7 @@ namespace HIMS.Data.Models
         public byte? IsDischarged { get; set; }
         public byte? IsBillGenerated { get; set; }
         public string? Ipdno { get; set; }
-        public long? IsCancelled { get; set; }
+        public bool? IsCancelled { get; set; }
         public long? CompanyId { get; set; }
         public long? TariffId { get; set; }
         public long? ClassId { get; set; }
