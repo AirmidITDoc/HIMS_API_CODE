@@ -36,16 +36,16 @@ namespace HIMS.Services.Dashboard
                           });
 
             var query2 = (from M in _context.Admissions
-                          where M.IsDischarged == 0 && M.IsCancelled == 0
+                          where M.IsDischarged == 0 && M.IsCancelled == false
                           select new DailyDashboardSummaryModel()
                           {
                               Title = "IPD",
                               Label = "Currently Admitted",
                               Count = _context.Admissions.Count(),
                               SelfLbl = "Admission",
-                              SelfCnt = _context.Admissions.Where(sub => sub.IsCancelled == 0 && (sub.AdmissionDate.Value.Year == AppTime.Now.Year && sub.AdmissionDate.Value.Month == AppTime.Now.Month && sub.AdmissionDate.Value.Day == AppTime.Now.Day)).Count(),
+                              SelfCnt = _context.Admissions.Where(sub => sub.IsCancelled == false && (sub.AdmissionDate.Value.Year == AppTime.Now.Year && sub.AdmissionDate.Value.Month == AppTime.Now.Month && sub.AdmissionDate.Value.Day == AppTime.Now.Day)).Count(),
                               CompanyLbl = "Discharge",
-                              CompayCnt = _context.Admissions.Where(sub => sub.IsCancelled != 0 && (sub.AdmissionDate.Value.Year == AppTime.Now.Year && sub.AdmissionDate.Value.Month == AppTime.Now.Month && sub.AdmissionDate.Value.Day == AppTime.Now.Day)).Count()
+                              CompayCnt = _context.Admissions.Where(sub => sub.IsCancelled != false && (sub.AdmissionDate.Value.Year == AppTime.Now.Year && sub.AdmissionDate.Value.Month == AppTime.Now.Month && sub.AdmissionDate.Value.Day == AppTime.Now.Day)).Count()
                           });
 
 
@@ -150,12 +150,12 @@ namespace HIMS.Services.Dashboard
             IPAdemissionDischargeCountModel res = new()
             {
                 AppointmentCount = _context.VisitDetails.Where(M => M.VisitDate.Value.Year == AppTime.Now.Year && M.VisitDate.Value.Month == AppTime.Now.Month && M.VisitDate.Value.Day == AppTime.Now.Day).Count(),
-                SelfPatient = _context.Admissions.Where(M => M.IsDischarged == 0 && M.IsCancelled == 0 && M.PatientTypeId == 1).Count(),
-                CompnayPatient = _context.Admissions.Where(M => M.IsDischarged == 0 && M.IsCancelled == 0 && M.PatientTypeId > 1).Count(),
-                TodayAdmittedPatient = _context.Admissions.Where(M => M.AdmissionDate.Value.Year == AppTime.Now.Year && M.AdmissionDate.Value.Month == AppTime.Now.Month && M.AdmissionDate.Value.Day == AppTime.Now.Day && M.IsCancelled == 0).Count(),
+                SelfPatient = _context.Admissions.Where(M => M.IsDischarged == 0 && M.IsCancelled == false && M.PatientTypeId == 1).Count(),
+                CompnayPatient = _context.Admissions.Where(M => M.IsDischarged == 0 && M.IsCancelled == false && M.PatientTypeId > 1).Count(),
+                TodayAdmittedPatient = _context.Admissions.Where(M => M.AdmissionDate.Value.Year == AppTime.Now.Year && M.AdmissionDate.Value.Month == AppTime.Now.Month && M.AdmissionDate.Value.Day == AppTime.Now.Day && M.IsCancelled == false).Count(),
                 TodayDischargePatient = _context.Discharges.Where(M => M.DischargeDate.Value.Year == AppTime.Now.Year && M.DischargeDate.Value.Month == AppTime.Now.Month && M.DischargeDate.Value.Day == AppTime.Now.Day && M.IsCancelled == 0).Count(),
-                TodaySelfPatient = _context.Admissions.Where(M => M.AdmissionDate.Value.Year == AppTime.Now.Year && M.AdmissionDate.Value.Month == AppTime.Now.Month && M.AdmissionDate.Value.Day == AppTime.Now.Day && M.IsCancelled == 0 && M.PatientTypeId == 1).Count(),
-                TodayOtherPatient = _context.Admissions.Where(M => M.AdmissionDate.Value.Year == AppTime.Now.Year && M.AdmissionDate.Value.Month == AppTime.Now.Month && M.AdmissionDate.Value.Day == AppTime.Now.Day && M.IsCancelled == 0 && M.PatientTypeId > 1).Count()
+                TodaySelfPatient = _context.Admissions.Where(M => M.AdmissionDate.Value.Year == AppTime.Now.Year && M.AdmissionDate.Value.Month == AppTime.Now.Month && M.AdmissionDate.Value.Day == AppTime.Now.Day && M.IsCancelled == false && M.PatientTypeId == 1).Count(),
+                TodayOtherPatient = _context.Admissions.Where(M => M.AdmissionDate.Value.Year == AppTime.Now.Year && M.AdmissionDate.Value.Month == AppTime.Now.Month && M.AdmissionDate.Value.Day == AppTime.Now.Day && M.IsCancelled == false && M.PatientTypeId > 1).Count()
             };
             res.TotalAdmittedPatientCount = res.AppointmentCount + res.SelfPatient + res.CompnayPatient + res.TodayAdmittedPatient + res.TodayDischargePatient + res.TodaySelfPatient + res.TodayOtherPatient;
             return res;

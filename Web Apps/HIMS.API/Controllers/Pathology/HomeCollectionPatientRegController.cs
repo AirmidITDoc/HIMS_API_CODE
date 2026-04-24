@@ -8,8 +8,10 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Pathlogy;
+using HIMS.Services.Pharmacy;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Pathology
@@ -28,6 +30,13 @@ namespace HIMS.API.Controllers.Pathology
         {
             _IHomeCollectionPatientRegService = repository;
             _repository = repository1;
+        }
+        [HttpPost("HomeCollectionPatientRegistartionList")]
+        //[Permission(PageCode = "InPatient", Permission = PagePermission.View)]
+        public async Task<IActionResult> salesbrowselist(GridRequestModel objGrid)
+        {
+            IPagedList<HomeCollectionPatientRegistartionListDto> salesbrowselist = await _IHomeCollectionPatientRegService.GetListAsync(objGrid);
+            return Ok(salesbrowselist.ToGridResponse(objGrid, "HomeCollectionPatientRegistartion List"));
         }
         //List API Get By Id
         [HttpGet("{id?}")]
@@ -80,8 +89,5 @@ namespace HIMS.API.Controllers.Pathology
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.PatientRegId);
         }
-
-
-
     }
 }

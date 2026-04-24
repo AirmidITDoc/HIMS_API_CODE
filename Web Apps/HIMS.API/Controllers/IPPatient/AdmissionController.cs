@@ -36,6 +36,13 @@ namespace HIMS.API.Controllers.IPPatient
             IPagedList<AdmissionListDto> AdmissionListList = await _IAdmissionService.GetAdmissionListAsync(objGrid);
             return Ok(AdmissionListList.ToGridResponse(objGrid, "Admission List"));
         }
+        [HttpPost("AdmissionCancelList")]
+        //[Permission]
+        public async Task<IActionResult> AdmissionList(GridRequestModel objGrid)
+        {
+            IPagedList<AdmissionCancelListDto> AdmissionListList = await _IAdmissionService.CancelAdmissionListAsync(objGrid);
+            return Ok(AdmissionListList.ToGridResponse(objGrid, "Admission List"));
+        }
 
         [HttpPost("OPRequestListForIPAdmission")]
         [Permission(PageCode = "Admission", Permission = PagePermission.View)]
@@ -160,7 +167,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "Admission", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Admission", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(AdmissionCancel obj)
         {
             Admission model = obj.MapTo<Admission>();
