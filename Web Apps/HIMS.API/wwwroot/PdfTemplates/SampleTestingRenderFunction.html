@@ -42,14 +42,13 @@
             border-collapse: collapse;
         }
 
-        td {
+        td, th {
             border: 1px solid #000;
             padding: 6px;
+            text-align: left;
         }
 
         th {
-            border: 1px solid #000;
-            padding: 6px;
             background: #eee;
         }
     </style>
@@ -66,70 +65,78 @@
     </div>
 
     <!-- ======================= -->
-    <!-- 🔹 SP 1 -->
+    <!-- 🔹 SP 1 DATA -->
     <!-- ======================= -->
     <div class="box">
-        <div class="title">SP1 - Details</div>
+        <div class="title">SP1 - Data</div>
 
         <table>
-            <tr>
-                <td>CommonId</td>
-                <td>{{CommonId}}</td>
-            </tr>
-            <tr>
-                <td>Patient Name</td>
-                <td>{{Col1}}</td>
-            </tr>
-            <tr>
-                <td>Value 2</td>
-                <td>{{Col2}}</td>
-            </tr>
-            <tr>
-                <td>Value 3</td>
-                <td>{{Col3}}</td>
-            </tr>
-            <tr>
-                <td>Value 4</td>
-                <td>{{Col4}}</td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>CommonId</th>
+                    <th>Name</th>
+                    <th>Col2</th>
+                    <th>Col3</th>
+                    <th>Col4</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!--ITEMS_SP1-->
+                <tr>
+                    <td>{{#}}</td>
+                    <td>{{CommonId}}</td>
+                    <td>{{Col1}}</td>
+                    <td>{{Col2}}</td>
+                    <td>{{Col3}}</td>
+                    <td>{{Col4}}</td>
+                </tr>
+                <!--/ITEMS_SP1-->
+            </tbody>
         </table>
     </div>
 
     <!-- ======================= -->
-    <!-- 🔹 SP 2 -->
+    <!-- 🔹 SP 2 DATA -->
     <!-- ======================= -->
     <div class="box">
-        <div class="title">SP2 - Details</div>
+        <div class="title">SP2 - Data</div>
 
         <table>
-            <tr>
-                <td>CommonId</td>
-                <td>{{CommonId}}</td>
-            </tr>
-            <tr>
-                <td> Name</td>
-                <td>{{ColA}}</td>
-            </tr>
-            <tr>
-                <td>Value B</td>
-                <td>{{ColB}}</td>
-            </tr>
-            <tr>
-                <td>Value C</td>
-                <td>{{ColC}}</td>
-            </tr>
-            <tr>
-                <td>Value D</td>
-                <td>{{ColD}}</td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>CommonId</th>
+                    <th>Name</th>
+                    <th>ColB</th>
+                    <th>ColC</th>
+                    <th>ColD</th>
+                    <th>ColE</th> <!-- ✅ NEW -->
+                </tr>
+            </thead>
+
+            <tbody>
+                <!--ITEMS_SP2-->
+                <tr>
+                    <td>{{#}}</td>
+                    <td>{{CommonId}}</td>
+                    <td>{{ColA}}</td>
+                    <td>{{ColB}}</td>
+                    <td>{{ColC}}</td>
+                    <td>{{ColD}}</td>
+                    <td>{{ColE}}</td> <!-- ✅ NEW -->
+                </tr>
+                <!--/ITEMS_SP2-->
+            </tbody>
         </table>
     </div>
 
     <!-- ======================= -->
-    <!-- 🔹 SP 3 (LOOP DATA) -->
+    <!-- 🔹 SP 3 DATA -->
     <!-- ======================= -->
     <div class="box">
-        <div class="title">SP3 - Billing Details (Multi Row)</div>
+        <div class="title">SP3 - Data</div>
 
         <table>
             <thead>
@@ -144,7 +151,7 @@
             </thead>
 
             <tbody>
-                <!--ITEMS-->
+                <!--ITEMS_SP3-->
                 <tr>
                     <td>{{#}}</td>
                     <td>{{CommonId}}</td>
@@ -153,7 +160,7 @@
                     <td>{{X3}}</td>
                     <td>{{X4}}</td>
                 </tr>
-                <!--/ITEMS-->
+                <!--/ITEMS_SP3-->
             </tbody>
         </table>
     </div>
