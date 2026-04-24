@@ -39,7 +39,8 @@ namespace HIMS.Services.Utilities
         string GetHeaderWithImage(string filePath, long HospitalId = 0);
         //string GetHeaderByType(string filePath, long hospitalId = 1);
 
-        string Render(string html, DataTable dt);
+        //string Render(string html, DataTable dt);
+        string Render(string html, DataTable dt, string section);
         public Tuple<byte[], string> GeneratePdfFromHtmlNew(string html, string storageBasePath, string FolderName,string FileName = "", Orientation PageOrientation = Orientation.Portrait,PaperKind PaperSize = PaperKind.A4,long HeaderSpace = 10);
 
         List<List<SearchGrid>> SplitBySeparator(List<SearchGrid> fields);
