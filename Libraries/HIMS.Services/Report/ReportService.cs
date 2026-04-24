@@ -5720,16 +5720,16 @@ namespace HIMS.Services.Report
                     }
                     break;
 
-                case "OpBillReceiptTestingOnly":
-                    {
+                //case "OpBillReceiptTestingOnly":
+                //    {
                    
-                        html = _pdfUtility.Render(html, dt);
+                //        html = _pdfUtility.Render(html, dt);
 
-                        double net = dt.Compute("SUM(NetAmount)", "").ConvertToDouble();
-                        html = html.Replace("{{finalamt}}", conversion(Math.Round(net).ToString()).ToUpper());
+                //        double net = dt.Compute("SUM(NetAmount)", "").ConvertToDouble();
+                //        html = html.Replace("{{finalamt}}", conversion(Math.Round(net).ToString()).ToUpper());
 
-                        return html;
-                    }
+                //        return html;
+                //    }
 
                 case "LabBillReceipt":
                     {
@@ -20184,10 +20184,10 @@ namespace HIMS.Services.Report
         private string GetHTMLViewWithRender(string sp_Names, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath)
         {
             var spList = sp_Names.Split(',');
-            var groupedParams = _pdfUtility.SplitBySeparator(model.SearchFields);
+           // var groupedParams = _pdfUtility.SplitBySeparator(model.SearchFields);
 
-            if (groupedParams.Count != spList.Length)
-                throw new Exception("SP count and parameter groups mismatch");
+            //if (groupedParams.Count != spList.Length)
+               // throw new Exception("SP count and parameter groups mismatch");
 
             string html = File.ReadAllText(htmlFilePath);
             html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
@@ -20195,8 +20195,10 @@ namespace HIMS.Services.Report
 
             for (int i = 0; i < spList.Length; i++)
             {
-                var dt = GetDataBySpRender(groupedParams[i], spList[i].Trim());
-                html = _pdfUtility.Render(html, dt);
+                var dt = GetDataBySp(model, spList[i].Trim());
+                string section = $"ITEMS_SP{i + 1}"; 
+
+                html = _pdfUtility.Render(html, dt, section);
             }
 
             return html;
