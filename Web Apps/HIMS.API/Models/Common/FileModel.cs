@@ -48,6 +48,10 @@ namespace HIMS.API.Models.Common
         [Description("NABHLogo\\NABH")]
         NABH = 10,
         [Description("Upload\\Img_Upload")]
-        Img_Upload = 11
+        Img_Upload = 11,
+        [Description("Emp\\Emp_Files")]
+        Emp_Files = 12,
+        [Description("Emp\\Employee_Photo")]
+        Employee_Photo = 13
     }
 }
