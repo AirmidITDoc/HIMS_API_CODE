@@ -3657,9 +3657,12 @@ namespace HIMS.Services.Report
                                 card = -card;
                             }
 
+                            //summaryRows.Append($@"
+                            //<tr>
+                            //    <td>{grp.Key}</td>
                             summaryRows.Append($@"
-                            <tr>
-                                <td>{grp.Key}</td>
+<tr>
+    <td style='font-weight:bold'>{grp.Key}</td>
                                 <td class='num'>{N2(tot)}</td>
                                 <td class='num'>{N2(disc)}</td>
                                 <td class='num'>{N2(net)}</td>
@@ -3676,9 +3679,10 @@ namespace HIMS.Services.Report
                             gCash += cash; gCheq += cheq; gNeft += neft; gPaytm += paytm; gCard += card;
                         }
 
-                        // grand total row
+                        // grand total row     <tr style='font-weight:bold; background:#e6e6e6;'>
                         summaryRows.Append($@"
-                            <tr style='font-weight:bold; background:#e6e6e6;'>
+                         
+<tr class='grandTotal'>
                                 <td>Grand Total</td>
                                 <td class='num'>{N2(gTot)}</td>
                                 <td class='num'>{N2(gDisc)}</td>
@@ -3695,6 +3699,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{SummaryRows}}", summaryRows.ToString());
 
                         html = html.Replace("{{DetailRows}}", rows.ToString());
+                        decimal s_TotalPaymentModes = s_Cash + s_Cheq + s_Neft + s_PayTM + s_Card;
+                        decimal s_NetAfterReturn = s_Net - s_Ret;
                         html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yyyy"));
                         html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
 
@@ -3710,6 +3716,10 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{S_NeftTotal}}", N2(s_Neft));
                         html = html.Replace("{{S_PayTMTotal}}", N2(s_PayTM));
                         html = html.Replace("{{S_CardTotal}}", N2(s_Card));
+                        html = html.Replace("{{S_TotalPaymentModes}}", N2(s_TotalPaymentModes));
+                        html = html.Replace("{{S_NetAfterReturn}}", N2(s_NetAfterReturn));
+                        html = html.Replace("{{S_NetSale}}", N2(s_Net));
+                        html = html.Replace("{{S_NetReturn}}", N2(s_Ret));
                     }
                     break;
 
