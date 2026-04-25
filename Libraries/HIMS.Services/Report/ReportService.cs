@@ -3707,6 +3707,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{S_NetAmount}}", N2(s_Net));
                         html = html.Replace("{{S_AmountReceived}}", N2(s_Paid));
                         html = html.Replace("{{S_AmountReturned}}", N2(s_Ret));
+                        html = html.Replace("{{S_NetSalesAmount}}", N2(s_NetAfterReturn));
                         html = html.Replace("{{S_CorporateAmount}}", "0.00");
                         html = html.Replace("{{S_PendingAmtReceived}}", N2(s_Pending));
                         html = html.Replace("{{S_CashOnHand}}", N2(s_Cash));
@@ -3720,6 +3721,234 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{S_NetAfterReturn}}", N2(s_NetAfterReturn));
                         html = html.Replace("{{S_NetSale}}", N2(s_Net));
                         html = html.Replace("{{S_NetReturn}}", N2(s_Ret));
+                    }
+                    break;
+
+                case "SalesReturnGSTSummary.html":
+                    {
+                        decimal Dec(DataRow r, string c) =>
+                            r.Table.Columns.Contains(c) && r[c] != DBNull.Value ? Convert.ToDecimal(r[c]) : 0m;
+
+                        string Str(DataRow r, string c) =>
+                            r.Table.Columns.Contains(c) ? r[c]?.ToString() ?? "" : "";
+
+                        string N2(decimal v) => v.ToString("N2");
+
+                        var rows = new StringBuilder();
+                        int srNo = 0;
+
+                        var groups = dt.AsEnumerable()
+                                       .GroupBy(r => Str(r, "lbl"));
+
+                        foreach (var grp in groups)
+                        {
+                            rows.Append($"<tr class='subHeader'><td colspan='18'>{grp.Key}</td></tr>");
+
+                            decimal st_t0 = 0, st_t5 = 0, st_t6 = 0, st_t12 = 0, st_t18 = 0, st_t28 = 0;
+                            decimal st_tot = 0;
+                            decimal st_g0 = 0, st_g5 = 0, st_g6 = 0, st_g12 = 0, st_g18 = 0, st_g28 = 0;
+                            decimal st_gst = 0, st_grand = 0;
+
+                            foreach (DataRow dr in grp)
+                            {
+                                srNo++;
+
+                                decimal t0 = Dec(dr, "T 0%");
+                                decimal t5 = Dec(dr, "T 5%");
+                                decimal t6 = Dec(dr, "T 6%");
+                                decimal t12 = Dec(dr, "T 12%");
+                                decimal t18 = Dec(dr, "T 18%");
+                                decimal t28 = Dec(dr, "T 28%");
+                                decimal tot = Dec(dr, "Total");
+
+                                decimal g0 = Dec(dr, "0%");
+                                decimal g5 = Dec(dr, "5%");
+                                decimal g6 = Dec(dr, "6%");
+                                decimal g12 = Dec(dr, "12%");
+                                decimal g18 = Dec(dr, "18%");
+                                decimal g28 = Dec(dr, "28%");
+
+                                decimal gst = Dec(dr, "GSTTotal");
+                                decimal grand = Dec(dr, "G_Total");
+
+                                // accumulate
+                                st_t0 += t0; st_t5 += t5; st_t6 += t6;
+                                st_t12 += t12; st_t18 += t18; st_t28 += t28;
+                                st_tot += tot;
+
+                                st_g0 += g0; st_g5 += g5; st_g6 += g6;
+                                st_g12 += g12; st_g18 += g18; st_g28 += g28;
+
+                                st_gst += gst;
+                                st_grand += grand;
+
+                                rows.Append($@"
+<tr>
+    <td class='ctr'>{srNo}</td>
+    <td class='ctr'>{Str(dr, "Sales_Date")}</td>
+
+    <td class='num'>{N3(t0)}</td>
+    <td class='num'>{N3(t5)}</td>
+    <td class='num'>{N3(t6)}</td>
+    <td class='num'>{N3(t12)}</td>
+    <td class='num'>{N3(t18)}</td>
+    <td class='num'>{N3(t28)}</td>
+
+    <td class='num'>{N3(tot)}</td>
+
+    <td class='num'>{N3(g0)}</td>
+    <td class='num'>{N3(g5)}</td>
+    <td class='num'>{N3(g6)}</td>
+    <td class='num'>{N3(g12)}</td>
+    <td class='num'>{N3(g18)}</td>
+    <td class='num'>{N3(g28)}</td>
+
+    <td class='num'>{N3(gst)}</td>
+    <td class='num'>{N3(grand)}</td>
+</tr>");
+                            }
+
+                            // ✅ ADD SUBTOTAL ROW
+                            rows.Append($@"
+<tr class='subTotal'>
+    <td colspan='2' style='text-align:right'>Total : {grp.Key}</td>
+
+    <td class='num'>{N3(st_t0)}</td>
+    <td class='num'>{N3(st_t5)}</td>
+    <td class='num'>{N3(st_t6)}</td>
+    <td class='num'>{N3(st_t12)}</td>
+    <td class='num'>{N3(st_t18)}</td>
+    <td class='num'>{N3(st_t28)}</td>
+
+    <td class='num'>{N3(st_tot)}</td>
+
+    <td class='num'>{N3(st_g0)}</td>
+    <td class='num'>{N3(st_g5)}</td>
+    <td class='num'>{N3(st_g6)}</td>
+    <td class='num'>{N3(st_g12)}</td>
+    <td class='num'>{N3(st_g18)}</td>
+    <td class='num'>{N3(st_g28)}</td>
+
+    <td class='num'>{N3(st_gst)}</td>
+    <td class='num'>{N3(st_grand)}</td>
+</tr>");
+                        }
+
+                        // ================= SUMMARY =================
+
+                        string N3(decimal v) => v.ToString("0.000");
+
+                        var summaryRows = new StringBuilder();
+
+                        var summaryGroups = dt.AsEnumerable()
+                            .GroupBy(r => Str(r, "lbl"));
+
+                        decimal g_t0 = 0, g_t5 = 0, g_t6 = 0, g_t12 = 0, g_t18 = 0, g_t28 = 0;
+                        decimal g_tot = 0;
+                        decimal g_g0 = 0, g_g5 = 0, g_g6 = 0, g_g12 = 0, g_g18 = 0, g_g28 = 0;
+                        decimal g_gst = 0, g_grand = 0;
+
+                        foreach (var grp in summaryGroups)
+                        {
+                            decimal t0 = grp.Sum(r => Dec(r, "T 0%"));
+                            decimal t5 = grp.Sum(r => Dec(r, "T 5%"));
+                            decimal t6 = grp.Sum(r => Dec(r, "T 6%"));
+                            decimal t12 = grp.Sum(r => Dec(r, "T 12%"));
+                            decimal t18 = grp.Sum(r => Dec(r, "T 18%"));
+                            decimal t28 = grp.Sum(r => Dec(r, "T 28%"));
+
+                            decimal tot = grp.Sum(r => Dec(r, "Total"));
+
+                            decimal g0 = grp.Sum(r => Dec(r, "0%"));
+                            decimal g5 = grp.Sum(r => Dec(r, "5%"));
+                            decimal g6 = grp.Sum(r => Dec(r, "6%"));
+                            decimal g12 = grp.Sum(r => Dec(r, "12%"));
+                            decimal g18 = grp.Sum(r => Dec(r, "18%"));
+                            decimal g28 = grp.Sum(r => Dec(r, "28%"));
+
+                            decimal gst = grp.Sum(r => Dec(r, "GSTTotal"));
+                            decimal grand = grp.Sum(r => Dec(r, "G_Total"));
+
+                            bool isReturn = grp.Key.Contains("Return");
+
+                            // ✅ APPLY MINUS FOR RETURN
+                            if (isReturn)
+                            {
+                                t0 = -t0; t5 = -t5; t6 = -t6; t12 = -t12; t18 = -t18; t28 = -t28;
+                                tot = -tot;
+
+                                g0 = -g0; g5 = -g5; g6 = -g6; g12 = -g12; g18 = -g18; g28 = -g28;
+
+                                gst = -gst;
+                                grand = -grand;
+                            }
+
+                            summaryRows.Append($@"
+<tr>
+    <td style='font-weight:bold'>{grp.Key}</td>
+
+    <td class='num'>{N3(t0)}</td>
+    <td class='num'>{N3(t5)}</td>
+    <td class='num'>{N3(t6)}</td>
+    <td class='num'>{N3(t12)}</td>
+    <td class='num'>{N3(t18)}</td>
+    <td class='num'>{N3(t28)}</td>
+
+    <td class='num'>{N3(tot)}</td>
+
+    <td class='num'>{N3(g0)}</td>
+    <td class='num'>{N3(g5)}</td>
+    <td class='num'>{N3(g6)}</td>
+    <td class='num'>{N3(g12)}</td>
+    <td class='num'>{N3(g18)}</td>
+    <td class='num'>{N3(g28)}</td>
+
+    <td class='num'>{N3(gst)}</td>
+    <td class='num'>{N3(grand)}</td>
+</tr>");
+
+                            // accumulate grand totals
+                            g_t0 += t0; g_t5 += t5; g_t6 += t6;
+                            g_t12 += t12; g_t18 += t18; g_t28 += t28;
+                            g_tot += tot;
+
+                            g_g0 += g0; g_g5 += g5; g_g6 += g6;
+                            g_g12 += g12; g_g18 += g18; g_g28 += g28;
+
+                            g_gst += gst;
+                            g_grand += grand;
+                        }
+
+                        // ✅ FINAL GRAND TOTAL ROW
+                        summaryRows.Append($@"
+<tr class='grandTotal'>
+    <td>Grand Total</td>
+
+    <td class='num'>{N3(g_t0)}</td>
+    <td class='num'>{N3(g_t5)}</td>
+    <td class='num'>{N3(g_t6)}</td>
+    <td class='num'>{N3(g_t12)}</td>
+    <td class='num'>{N3(g_t18)}</td>
+    <td class='num'>{N3(g_t28)}</td>
+
+    <td class='num'>{N3(g_tot)}</td>
+
+    <td class='num'>{N3(g_g0)}</td>
+    <td class='num'>{N3(g_g5)}</td>
+    <td class='num'>{N3(g_g6)}</td>
+    <td class='num'>{N3(g_g12)}</td>
+    <td class='num'>{N3(g_g18)}</td>
+    <td class='num'>{N3(g_g28)}</td>
+
+    <td class='num'>{N3(g_gst)}</td>
+    <td class='num'>{N3(g_grand)}</td>
+</tr>");
+
+                        html = html.Replace("{{DetailRows}}", rows.ToString());
+                        html = html.Replace("{{SummaryRows}}", summaryRows.ToString());
+
+                        html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yyyy"));
+                        html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
                     }
                     break;
 
