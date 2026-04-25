@@ -3527,6 +3527,201 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ToDate}}", dates.Last().ToString("dd.MM.yyyy"));
                     }
                     break;
+                case "SalesWiseCollectionSummary.html":
+                    {
+                        decimal Dec(DataRow r, string c) => r.Table.Columns.Contains(c) && r[c] != DBNull.Value ? Convert.ToDecimal(r[c]) : 0m;
+                        string Str(DataRow r, string c) => r.Table.Columns.Contains(c) ? r[c]?.ToString() ?? "" : "";
+                        string Dt(DataRow r, string c) => r.Table.Columns.Contains(c) && r[c] != DBNull.Value && DateTime.TryParse(r[c].ToString(), out var d) ? d.ToString("dd/MM/yyyy") : "";
+                        string N2(decimal v) => v.ToString("N2");
+
+                        decimal s_Pending = 0;
+
+                        var rows = new StringBuilder();
+                        int srNo = 0;
+                        decimal gt_GST = 0, gt_Tot = 0, gt_Disc = 0, gt_Net = 0, gt_Paid = 0, gt_Bal = 0, gt_Cash = 0, gt_Cheq = 0, gt_Neft = 0, gt_PayTM = 0, gt_Card = 0;
+                        decimal s_Net = 0, s_Paid = 0, s_Ret = 0, s_Bal = 0, s_Cash = 0, s_Cheq = 0, s_Neft = 0, s_PayTM = 0, s_Card = 0;
+
+                        // Group by Lbl (Sales / Sales-Old payment / Sales Return)
+                        var groups = dt.AsEnumerable()
+                                       .GroupBy(r => Str(r, "Lbl"))
+                                       .OrderBy(g => g.Min(r => Str(r, "OrderNo")));
+
+                        foreach (var grp in groups)
+                        {
+                            rows.Append($"<tr class='subHeader'><td colspan='16'>{grp.Key}</td></tr>");
+                            decimal st_GST = 0, st_Tot = 0, st_Disc = 0, st_Net = 0, st_Paid = 0, st_Bal = 0, st_Cash = 0, st_Cheq = 0, st_Neft = 0, st_PayTM = 0, st_Card = 0;
+
+                            foreach (DataRow dr in grp)
+                            {
+                                srNo++;
+                                decimal gst = Dec(dr, "GST"), tot = Dec(dr, "TotalAmount"), disc = Dec(dr, "DiscAmount"),
+                                        net = Dec(dr, "NetAmount"), paid = Dec(dr, "PaidAmount"), bal = Dec(dr, "BalanceAmount"),
+                                        cash = Dec(dr, "CashPay"), cheq = Dec(dr, "ChequePay"), neft = Dec(dr, "NeftPay"),
+                                        paytm = Dec(dr, "PayTMPay"), card = Dec(dr, "CardPay");
+
+                                st_GST += gst; st_Tot += tot; st_Disc += disc; st_Net += net; st_Paid += paid; st_Bal += bal;
+                                st_Cash += cash; st_Cheq += cheq; st_Neft += neft; st_PayTM += paytm; st_Card += card;
+                                string lbl = Str(dr, "Lbl");
+                                bool isReturn = Str(dr, "ExpenseType") == "Expense";
+                                if (!isReturn) { s_Net += net; s_Paid += paid; s_Bal += bal;
+                                    if (lbl == "Sales - Pending Amount Received")
+                                        // s_Pending += paid;
+                                        s_Pending += cash + cheq + neft + paytm + card;
+                                } else { s_Ret += paid; }
+                               // s_Cash += cash; s_Cheq += cheq; s_Neft += neft; s_PayTM += paytm; s_Card += card;
+                                if (!isReturn)
+                                {
+                                    s_Cash += cash;
+                                    s_Cheq += cheq;
+                                    s_Neft += neft;
+                                    s_PayTM += paytm;
+                                    s_Card += card;
+                                }
+                                else
+                                {
+                                    // subtract return values
+                                    s_Cash -= cash;
+                                    s_Cheq -= cheq;
+                                    s_Neft -= neft;
+                                    s_PayTM -= paytm;
+                                    s_Card -= card;
+                                }
+
+                                rows.Append($@"<tr>
+                            <td class='ctr'>{srNo}</td>
+                            <td class='ctr'>{Dt(dr, "PaymentDate")}</td><td class='ctr'>{Dt(dr, "Date")}</td>
+                            <td class='ctr'>{Str(dr, "SalesNo")}</td><td>{Str(dr, "PatientName")}</td>
+                            <td class='num'>{N2(gst)}</td><td class='num'>{N2(tot)}</td><td class='num'>{N2(disc)}</td>
+                            <td class='num'>{N2(net)}</td><td class='num'>{N2(paid)}</td><td class='num'>{N2(bal)}</td>
+                            <td class='num'>{N2(cash)}</td><td class='num'>{N2(cheq)}</td><td class='num'>{N2(neft)}</td>
+                            <td class='num'>{N2(paytm)}</td><td class='num'>{N2(card)}</td></tr>");
+                            }
+
+                            rows.Append($@"<tr class='subTotal'>
+                        <td colspan='5' style='text-align:right'>Total : {grp.Key}</td>
+                        <td class='num'>{N2(st_GST)}</td><td class='num'>{N2(st_Tot)}</td><td class='num'>{N2(st_Disc)}</td>
+                        <td class='num'>{N2(st_Net)}</td><td class='num'>{N2(st_Paid)}</td><td class='num'>{N2(st_Bal)}</td>
+                        <td class='num'>{N2(st_Cash)}</td><td class='num'>{N2(st_Cheq)}</td><td class='num'>{N2(st_Neft)}</td>
+                        <td class='num'>{N2(st_PayTM)}</td><td class='num'>{N2(st_Card)}</td></tr>");
+
+                            gt_GST += st_GST; gt_Tot += st_Tot; gt_Disc += st_Disc; gt_Net += st_Net; gt_Paid += st_Paid; gt_Bal += st_Bal;
+                            gt_Cash += st_Cash; gt_Cheq += st_Cheq; gt_Neft += st_Neft; gt_PayTM += st_PayTM; gt_Card += st_Card;
+                        }
+
+                        rows.Append($@"<tr class='grandTotal'>
+                        <td colspan='5' style='text-align:right'>Grand Total</td>
+                        <td class='num'>{N2(gt_GST)}</td><td class='num'>{N2(gt_Tot)}</td><td class='num'>{N2(gt_Disc)}</td>
+                        <td class='num'>{N2(gt_Net)}</td><td class='num'>{N2(gt_Paid)}</td><td class='num'>{N2(gt_Bal)}</td>
+                        <td class='num'>{N2(gt_Cash)}</td><td class='num'>{N2(gt_Cheq)}</td><td class='num'>{N2(gt_Neft)}</td>
+                        <td class='num'>{N2(gt_PayTM)}</td><td class='num'>{N2(gt_Card)}</td></tr>");
+
+                        var summaryRows = new StringBuilder();
+
+                        // regroup (same as above)
+                        var summaryGroups = dt.AsEnumerable()
+                            .GroupBy(r => Str(r, "Lbl"));
+
+                        decimal gTot = 0, gDisc = 0, gNet = 0, gPaid = 0, gBal = 0,
+                                gCash = 0, gCheq = 0, gNeft = 0, gPaytm = 0, gCard = 0;
+
+                        foreach (var grp in summaryGroups)
+                        {
+                            decimal tot = grp.Sum(r => Dec(r, "TotalAmount"));
+                            decimal disc = grp.Sum(r => Dec(r, "DiscAmount"));
+                            decimal net = grp.Sum(r => Dec(r, "NetAmount"));
+                            decimal paid = grp.Sum(r => Dec(r, "PaidAmount"));
+                            decimal bal = grp.Sum(r => Dec(r, "BalanceAmount"));
+                            decimal cash = grp.Sum(r => Dec(r, "CashPay"));
+                            decimal cheq = grp.Sum(r => Dec(r, "ChequePay"));
+                            decimal neft = grp.Sum(r => Dec(r, "NeftPay"));
+                            decimal paytm = grp.Sum(r => Dec(r, "PayTMPay"));
+                            decimal card = grp.Sum(r => Dec(r, "CardPay"));
+
+                            // detect Expense (Sales Return)
+                            bool isReturn = grp.Any(r => Str(r, "ExpenseType") == "Expense");
+
+                            if (isReturn)
+                            {
+                                //  cash = -cash; cheq = -cheq; neft = -neft; paytm = -paytm; card = -card;
+                                //paid = -paid;
+                                tot = -tot;
+                                disc = -disc;
+                                net = -net;
+                                paid = -paid;
+                                bal = -bal;
+
+                                cash = -cash;
+                                cheq = -cheq;
+                                neft = -neft;
+                                paytm = -paytm;
+                                card = -card;
+                            }
+
+                            //summaryRows.Append($@"
+                            //<tr>
+                            //    <td>{grp.Key}</td>
+                            summaryRows.Append($@"
+<tr>
+    <td style='font-weight:bold'>{grp.Key}</td>
+                                <td class='num'>{N2(tot)}</td>
+                                <td class='num'>{N2(disc)}</td>
+                                <td class='num'>{N2(net)}</td>
+                                <td class='num'>{N2(paid)}</td>
+                                <td class='num'>{N2(bal)}</td>
+                                <td class='num'>{N2(cash)}</td>
+                                <td class='num'>{N2(cheq)}</td>
+                                <td class='num'>{N2(neft)}</td>
+                                <td class='num'>{N2(paytm)}</td>
+                                <td class='num'>{N2(card)}</td>
+                            </tr>");
+
+                            gTot += tot; gDisc += disc; gNet += net; gPaid += paid; gBal += bal;
+                            gCash += cash; gCheq += cheq; gNeft += neft; gPaytm += paytm; gCard += card;
+                        }
+
+                        // grand total row     <tr style='font-weight:bold; background:#e6e6e6;'>
+                        summaryRows.Append($@"
+                         
+<tr class='grandTotal'>
+                                <td>Grand Total</td>
+                                <td class='num'>{N2(gTot)}</td>
+                                <td class='num'>{N2(gDisc)}</td>
+                                <td class='num'>{N2(gNet)}</td>
+                                <td class='num'>{N2(gPaid)}</td>
+                                <td class='num'>{N2(gBal)}</td>
+                                <td class='num'>{N2(gCash)}</td>
+                                <td class='num'>{N2(gCheq)}</td>
+                                <td class='num'>{N2(gNeft)}</td>
+                                <td class='num'>{N2(gPaytm)}</td>
+                                <td class='num'>{N2(gCard)}</td>
+                            </tr>");
+
+                        html = html.Replace("{{SummaryRows}}", summaryRows.ToString());
+
+                        html = html.Replace("{{DetailRows}}", rows.ToString());
+                        decimal s_TotalPaymentModes = s_Cash + s_Cheq + s_Neft + s_PayTM + s_Card;
+                        decimal s_NetAfterReturn = s_Net - s_Ret;
+                        html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yyyy"));
+                        html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
+
+                        html = html.Replace("{{S_NetAmount}}", N2(s_Net));
+                        html = html.Replace("{{S_AmountReceived}}", N2(s_Paid));
+                        html = html.Replace("{{S_AmountReturned}}", N2(s_Ret));
+                        html = html.Replace("{{S_CorporateAmount}}", "0.00");
+                        html = html.Replace("{{S_PendingAmtReceived}}", N2(s_Pending));
+                        html = html.Replace("{{S_CashOnHand}}", N2(s_Cash));
+                        html = html.Replace("{{S_OutAmount}}", N2(s_Bal));
+                        html = html.Replace("{{S_CashTotal}}", N2(s_Cash));
+                        html = html.Replace("{{S_ChequeTotal}}", N2(s_Cheq));
+                        html = html.Replace("{{S_NeftTotal}}", N2(s_Neft));
+                        html = html.Replace("{{S_PayTMTotal}}", N2(s_PayTM));
+                        html = html.Replace("{{S_CardTotal}}", N2(s_Card));
+                        html = html.Replace("{{S_TotalPaymentModes}}", N2(s_TotalPaymentModes));
+                        html = html.Replace("{{S_NetAfterReturn}}", N2(s_NetAfterReturn));
+                        html = html.Replace("{{S_NetSale}}", N2(s_Net));
+                        html = html.Replace("{{S_NetReturn}}", N2(s_Ret));
+                    }
+                    break;
 
                     /* HELPERS */
                     string GetDoctorTotalRow(decimal g, decimal d, decimal n)
@@ -5720,16 +5915,16 @@ namespace HIMS.Services.Report
                     }
                     break;
 
-                case "OpBillReceiptTestingOnly":
-                    {
+                //case "OpBillReceiptTestingOnly":
+                //    {
                    
-                        html = _pdfUtility.Render(html, dt);
+                //        html = _pdfUtility.Render(html, dt);
 
-                        double net = dt.Compute("SUM(NetAmount)", "").ConvertToDouble();
-                        html = html.Replace("{{finalamt}}", conversion(Math.Round(net).ToString()).ToUpper());
+                //        double net = dt.Compute("SUM(NetAmount)", "").ConvertToDouble();
+                //        html = html.Replace("{{finalamt}}", conversion(Math.Round(net).ToString()).ToUpper());
 
-                        return html;
-                    }
+                //        return html;
+                //    }
 
                 case "LabBillReceipt":
                     {
@@ -20185,10 +20380,10 @@ namespace HIMS.Services.Report
         private string GetHTMLViewWithRender(string sp_Names, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath)
         {
             var spList = sp_Names.Split(',');
-            var groupedParams = _pdfUtility.SplitBySeparator(model.SearchFields);
+           // var groupedParams = _pdfUtility.SplitBySeparator(model.SearchFields);
 
-            if (groupedParams.Count != spList.Length)
-                throw new Exception("SP count and parameter groups mismatch");
+            //if (groupedParams.Count != spList.Length)
+               // throw new Exception("SP count and parameter groups mismatch");
 
             string html = File.ReadAllText(htmlFilePath);
             html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
@@ -20196,8 +20391,10 @@ namespace HIMS.Services.Report
 
             for (int i = 0; i < spList.Length; i++)
             {
-                var dt = GetDataBySpRender(groupedParams[i], spList[i].Trim());
-                html = _pdfUtility.Render(html, dt);
+                var dt = GetDataBySp(model, spList[i].Trim());
+                string section = $"ITEMS_SP{i + 1}"; 
+
+                html = _pdfUtility.Render(html, dt, section);
             }
 
             return html;

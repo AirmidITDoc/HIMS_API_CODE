@@ -17,7 +17,7 @@ namespace HIMS.Services.Pharmacy
         Task<IPagedList<SalesInPatientReturnDetailsListDto>> salesreturndetaillist(GridRequestModel objGrid);
         Task InsertSalesInPatientAsyncSPC(TSalesInpatientHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int CurrentUserId, string CurrentUserName);
         Task<float> GetStock(long StockId);
-        Task InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, List<TIpprescriptionReturnH> ObjTIpprescriptionReturnH, TIpprescriptionReturnD ObjTIpprescriptionReturnD, int UserId, string Username);
+        Task InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail,  List<TIpprescriptionReturnD> ObjTIpprescriptionReturnD, TIpprescriptionReturnH ObjTIpprescriptionReturnH, int UserId, string Username);
 
 
 

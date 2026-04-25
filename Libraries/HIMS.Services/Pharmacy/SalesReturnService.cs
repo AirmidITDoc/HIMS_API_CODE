@@ -182,7 +182,7 @@ namespace HIMS.Services.Pharmacy
 
         }
         //Changes Done By Ashutosh 19 May 2025 
-        public virtual void InsertSPCredit(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, int UserId, string Username)
+        public virtual async Task  InsertSPCredit(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, int CurrentUserId, string CurrentUserName)
         {
 
             // //Add header table records
@@ -196,6 +196,8 @@ namespace HIMS.Services.Pharmacy
             }
             string vSalesReturnId = odal.ExecuteNonQuery("PS_insert_SalesReturnHeader_1", CommandType.StoredProcedure, "SalesReturnId", entity);
             ObjTSalesReturnHeader.SalesReturnId = Convert.ToInt32(vSalesReturnId);
+            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TSalesReturnHeader), (int)ObjTSalesReturnHeader.SalesReturnId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
 
             foreach (var item in ObjTSalesReturnDetail)
             {
@@ -209,6 +211,8 @@ namespace HIMS.Services.Pharmacy
                         Aentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_SalesReturnDetails_1", CommandType.StoredProcedure, Aentity);
+                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TSalesReturnDetail), (int)item.SalesReturnDetId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
             }
 
 
@@ -222,7 +226,7 @@ namespace HIMS.Services.Pharmacy
                         Pentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("Update_T_CurStk_SalesReturn_Id_1", CommandType.StoredProcedure, Pentity);
-
+                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TCurrentStock), (int)item.StockId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
             }
 
             foreach (var item in ObjTSalesDetail)
@@ -235,6 +239,8 @@ namespace HIMS.Services.Pharmacy
                         Pentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("Update_SalesReturnQty_SalesTbl_1", CommandType.StoredProcedure, Pentity);
+                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TSalesDetail), (int)item.SalesDetId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
 
             }
             var SalesReturnIdObj = new
@@ -262,7 +268,7 @@ namespace HIMS.Services.Pharmacy
     
 
         //    //Changes Done By shilpa 22-04-2026
-        public virtual void InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, List<TIpprescriptionReturnH> ObjTIpprescriptionReturnH, TIpprescriptionReturnD ObjTIpprescriptionReturnD, int CurrentUserId, string CurrentUserName)
+        public virtual void InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, List<TIpprescriptionReturnD> ObjTIpprescriptionReturnD, TIpprescriptionReturnH ObjTIpprescriptionReturnH,  int CurrentUserId, string CurrentUserName)
         {
             // //Add header table records
             DatabaseHelper odal = new();
@@ -345,25 +351,37 @@ namespace HIMS.Services.Pharmacy
             };
             odal.ExecuteNonQuery("ps_Insert_ItemMovementReport_InpatientReturnCursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
 
-            foreach (var item in ObjTIpprescriptionReturnH)
+           
+            foreach (var item in ObjTIpprescriptionReturnD)
             {
-                string[] PEntity = { "PresReId", "PresDetailsId" };
-                var Pentity = item.ToDictionary();
-                foreach (var rProperty in Pentity.Keys.ToList())
+                string[] DEntity = {"PresDetailsId" };
+                var dentity = item.ToDictionary();
+                foreach (var rProperty in dentity.Keys.ToList())
                 {
-                    if (!PEntity.Contains(rProperty))
-                        Pentity.Remove(rProperty);
+                    if (!DEntity.Contains(rProperty))
+                        dentity.Remove(rProperty);
                 }
-                Pentity["PresDetailsId"] = ObjTIpprescriptionReturnD.PresDetailsId;
 
-                odal.ExecuteNonQuery("ps_IPPrescriptionReturnUpdate", CommandType.StoredProcedure, Pentity);
-                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TIpprescriptionReturnH), (int)item.PresReId, Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
+                odal.ExecuteNonQuery("ps_IPPrescriptionReturnDetailUpdate", CommandType.StoredProcedure, dentity);
+                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TIpprescriptionReturnD), (int)item.PresDetailsId, Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
 
+            }
+            
+                string[] HEntity = { "PresReId" };
+                var hentity = ObjTIpprescriptionReturnH.ToDictionary();
+                foreach (var rProperty in hentity.Keys.ToList())
+                {
+                    if (!HEntity.Contains(rProperty))
+                    hentity.Remove(rProperty);
+                }
+                //Pentity["PresDetailsId"] = ObjTIpprescriptionReturnD.PresDetailsId;
 
+                odal.ExecuteNonQuery("ps_IPPrescriptionReturnUpdate", CommandType.StoredProcedure, hentity);
+                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TIpprescriptionReturnH), (int)ObjTIpprescriptionReturnH.PresReId, Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
             }
 
         }
     }
-}
+
 
 

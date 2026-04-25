@@ -21,8 +21,7 @@
         public long? PresWardID { get; set; }
         public string? IPDNo { get; set; }
         public string? RoomName { get; set; }
-
-
+        public long PrescId { get; set; }
 
     }
 }

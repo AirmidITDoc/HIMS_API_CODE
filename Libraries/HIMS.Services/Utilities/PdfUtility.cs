@@ -1004,14 +1004,28 @@ namespace HIMS.Services.Utilities
         //    return new Tuple<byte[], string>(bytes, st); ;
         //}
 
-        public string Render(string html, DataTable dt)
+        //public string Render(string html, DataTable dt)
+        //{
+        //    if (dt == null || dt.Rows.Count == 0)
+        //        return html;
+
+        //    DataRow firstRow = dt.Rows[0];
+
+        //    html = ReplaceItemTable(html, dt);
+        //    html = ReplaceNormalValues(html, firstRow);
+        //    html = ReplaceDateFormats(html, firstRow);
+        //    html = ReplaceFlags(html, firstRow);
+
+        //    return html;
+        //}
+        public string Render(string html, DataTable dt, string section)
         {
             if (dt == null || dt.Rows.Count == 0)
                 return html;
 
             DataRow firstRow = dt.Rows[0];
 
-            html = ReplaceItemTable(html, dt);
+            html = ReplaceItemTable(html, dt, section);
             html = ReplaceNormalValues(html, firstRow);
             html = ReplaceDateFormats(html, firstRow);
             html = ReplaceFlags(html, firstRow);
@@ -1057,30 +1071,55 @@ namespace HIMS.Services.Utilities
             return html;
         }
 
-        private string ReplaceItemTable(string html, DataTable dt)
+        //private string ReplaceItemTable(string html, DataTable dt)
+        //{
+        //    Match m = Regex.Match(html, @"<!--ITEMS-->([\s\S]*?)<!--/ITEMS-->");
+        //    if (!m.Success)
+        //        return html;
+
+        //    string rowTemplate = m.Groups[1].Value;
+        //    StringBuilder rows = new StringBuilder();
+        //    int sr = 1;
+
+        //    foreach (DataRow r in dt.Rows)
+        //    {
+        //        string rowHtml = rowTemplate.Replace("{{#}}", sr.ToString());
+        //        sr++;
+
+        //        foreach (DataColumn col in dt.Columns)
+        //        {
+        //            rowHtml = rowHtml.Replace("{{" + col.ColumnName + "}}", r[col]?.ToString() ?? "");
+        //        }
+        //        rows.Append(rowHtml);
+        //    }
+        //    return html.Replace(m.Value, rows.ToString());
+        //}
+        private string ReplaceItemTable(string html, DataTable dt, string section)
         {
-            Match m = Regex.Match(html, @"<!--ITEMS-->([\s\S]*?)<!--/ITEMS-->");
-            if (!m.Success)
+            var match = Regex.Match(html, $@"<!--{section}-->([\s\S]*?)<!--/{section}-->");
+
+            if (!match.Success)
                 return html;
 
-            string rowTemplate = m.Groups[1].Value;
-            StringBuilder rows = new StringBuilder();
-            int sr = 1;
+            string template = match.Groups[1].Value;
+            StringBuilder output = new StringBuilder();
 
-            foreach (DataRow r in dt.Rows)
+            int index = 1;
+
+            foreach (DataRow row in dt.Rows)
             {
-                string rowHtml = rowTemplate.Replace("{{#}}", sr.ToString());
-                sr++;
+                string rowHtml = template.Replace("{{#}}", index++.ToString());
 
                 foreach (DataColumn col in dt.Columns)
                 {
-                    rowHtml = rowHtml.Replace("{{" + col.ColumnName + "}}", r[col]?.ToString() ?? "");
+                    rowHtml = rowHtml.Replace($"{{{{{col.ColumnName}}}}}", row[col]?.ToString() ?? "");
                 }
-                rows.Append(rowHtml);
-            }
-            return html.Replace(m.Value, rows.ToString());
-        }
 
+                output.Append(rowHtml);
+            }
+
+            return html.Replace(match.Value, output.ToString());
+        }
         public List<List<SearchGrid>> SplitBySeparator(List<SearchGrid> fields)
         {
             var result = new List<List<SearchGrid>>();

@@ -1,0 +1,290 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Calibri, Arial;
+            font-size: 13px;
+        }
+
+        #detailTable {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            #detailTable th {
+                border: 1px solid #777;
+                background: #e6e6e6;
+                padding: 7px;
+                text-align: center;
+                font-size: 12px;
+            }
+
+            #detailTable td {
+                border: 1px solid #c9c9c9;
+                padding: 5px;
+                font-size: 12px;
+            }
+
+        .subHeader td {
+            background: #f3f3f3;
+            font-weight: bold;
+            padding: 5px 7px;
+            border: 1px solid #c9c9c9;
+        }
+
+        .subTotal td {
+            background: #f3f3f3;
+            font-weight: bold;
+            border-top: 1px solid #777;
+        }
+
+        .grandTotal td {
+            background: #ececec;
+            font-weight: bold;
+            border-top: 2px solid #444;
+        }
+
+        .ctr {
+            text-align: center;
+        }
+
+        .num {
+            text-align: right;
+        }
+
+        .summary-wrapper {
+            display: flex;
+            gap: 40px;
+            margin-top: 18px;
+            flex-wrap: nowrap;
+            justify-content: space-between; /* ✅ better spacing */
+        }
+
+        .summary-box {
+            border-collapse: collapse;
+            white-space: nowrap;
+            width: 48%; /* ✅ force side-by-side */
+        }
+
+            .summary-box td {
+                border: 1px solid #c9c9c9;
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+
+                .summary-box td:first-child {
+                    font-weight: bold;
+                }
+
+                .summary-box td:last-child {
+                    text-align: right;
+                    min-width: 110px;
+                }
+
+            .summary-box .sh {
+                background: #e6e6e6;
+                font-weight: bold;
+                text-align: center;
+                border: 1px solid #777;
+            }
+
+        #detailTable thead {
+            display: table-header-group;
+        }
+
+        #detailTable tr {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+<body>
+    <table style="width:100%;">
+        {{HospitalHeader}}
+        <tr>
+            <td>
+                <table style="width:100%;">
+                    <tr style="font-size:20px">
+                        <td style="border-bottom:1px solid #ccc;padding-bottom:10px"><b>{{RepoertName}}</b></td>
+                        <td style="border-bottom:1px solid #ccc;padding-bottom:10px;text-align:right"><b>Print Date : {{CurrentDate}}</b></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:8px 0;font-size:17px;font-weight:bold">
+                From Date : {{FromDate}} &nbsp;--&nbsp; To Date : {{ToDate}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table id="detailTable">
+                    <thead>
+                        <tr>
+                            <th>Sr.No</th>
+                            <th>PaymentDate</th>
+                            <th>SalesDate</th>
+                            <th>SalesNo</th>
+                            <th>PatientName</th>
+                            <th>GST</th>
+                            <th>TotalAmt</th>
+                            <th>DiscAmt</th>
+                            <th>NetAmt</th>
+                            <th>PaidAmt</th>
+                            <th>BalAmt</th>
+                            <th>CashPay</th>
+                            <th>ChequePay</th>
+                            <th>NeftPay</th>
+                            <th>PayTMPay</th>
+                            <th>CardPay</th>
+                        </tr>
+                    </thead>
+                    <tbody>{{DetailRows}}</tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!--<div class="summary-wrapper">
+                <table class="summary-box">
+                    <tr><td>Net Amount</td>          <td>:</td><td>{{S_NetAmount}}</td></tr>
+                    <tr><td>Amount Received</td>     <td>:</td><td>{{S_AmountReceived}}</td></tr>
+                    <tr><td>Amount Returned</td>     <td>:</td><td>{{S_AmountReturned}}</td></tr>
+                    <tr><td>Corporate Amount</td>    <td>:</td><td>{{S_CorporateAmount}}</td></tr>
+                    <tr><td>Pen. Amt. Received</td>  <td>:</td><td>{{S_PendingAmtReceived}}</td></tr>
+                    <tr><td>Cash On Hand</td>        <td>:</td><td>{{S_CashOnHand}}</td></tr>
+                    <tr><td>Out. Amount</td>         <td>:</td><td>{{S_OutAmount}}</td></tr>
+                </table>
+                <table class="summary-box">
+                    <tr><td class="sh">Payment Type</td><td class="sh">Amount</td></tr>
+                    <tr><td>Cash</td>  <td>{{S_CashTotal}}</td></tr>
+                    <tr><td>Cheque</td><td>{{S_ChequeTotal}}</td></tr>
+                    <tr><td>NEFT</td>  <td>{{S_NeftTotal}}</td></tr>
+                    <tr><td>PayTM</td> <td>{{S_PayTMTotal}}</td></tr>
+                    <tr><td>Card</td>  <td>{{S_CardTotal}}</td></tr>
+                </table>
+            </div>-->
+            </td>
+        </tr>
+        <!--<table style="width:100%; margin-top:20px; border-collapse:collapse;">-->
+        <table id="detailTable" style="margin-top:20px;">
+            <tr style="background:#d9d9d9; font-weight:bold;">
+                <td colspan="11" style="border:1px solid #999; padding:6px;">
+                    Summary Report
+                    <span style="float:right;">From Date : {{FromDate}} &nbsp;--&nbsp; To Date : {{ToDate}}</span>
+                </td>
+            </tr>
+
+            <!--<tr style="background:#efefef; font-weight:bold; text-align:center;">
+        <td style="border:1px solid #999;">Header</td>
+        <td style="border:1px solid #999;">Total Sale</td>
+        <td style="border:1px solid #999;">Discount</td>
+        <td style="border:1px solid #999;">Net Sale</td>
+        <td style="border:1px solid #999;">PaidAmount</td>
+        <td style="border:1px solid #999;">BalanceAmount</td>
+        <td style="border:1px solid #999;">Cash</td>
+        <td style="border:1px solid #999;">Cheque</td>
+        <td style="border:1px solid #999;">NEFT</td>
+        <td style="border:1px solid #999;">UPI</td>
+        <td style="border:1px solid #999;">Card</td>
+    </tr>-->
+            <tr>
+                <th>Header</th>
+                <th>Total Sale</th>
+                <th>Discount</th>
+                <th>Net Sale</th>
+                <th>PaidAmount</th>
+                <th>BalanceAmount</th>
+                <th>Cash</th>
+                <th>Cheque</th>
+                <th>NEFT</th>
+                <th>UPI</th>
+                <th>Card</th>
+            </tr>
+
+            {{SummaryRows}}
+        </table>
+        <table style="width:100%; margin-top:18px;">
+            <tr>
+                <!--<td style="width:50%; vertical-align:top;">
+            <table class="summary-box">
+                <tr><td>Net Sale</td><td>:</td><td>{{S_NetAmount}}</td></tr>
+                <tr><td>Amount Received</td><td>:</td><td>{{S_AmountReceived}}</td></tr>
+                <tr><td>Amount Returned</td><td>:</td><td>{{S_AmountReturned}}</td></tr>
+                <tr><td>Pending Amount Received</td><td>:</td><td>{{S_PendingAmtReceived}}</td></tr>
+                <tr><td>Cash On Hand</td><td>:</td><td>{{S_CashOnHand}}</td></tr>
+                <tr><td>Outstanding Amount</td><td>:</td><td>{{S_OutAmount}}</td></tr>
+            </table>
+        </td>
+
+        <td style="width:50%; vertical-align:top; padding-left:20px;">
+            <table class="summary-box">
+                <tr><td class="sh">Payment Type</td><td class="sh">Amount</td></tr>
+                <tr><td>Cash</td><td>{{S_CashTotal}}</td></tr>
+                <tr><td>Cheque</td><td>{{S_ChequeTotal}}</td></tr>
+                <tr><td>NEFT</td><td>{{S_NeftTotal}}</td></tr>
+                <tr><td>PayTM</td><td>{{S_PayTMTotal}}</td></tr>
+                <tr><td>Card</td><td>{{S_CardTotal}}</td></tr>
+                <tr style="font-weight:bold; background:#e6e6e6;">
+                    <td>Total</td>
+                    <td>{{S_TotalPaymentModes}}</td>
+                </tr>
+            </table>
+        </td>-->
+            <tr>
+                <!--<td style="width:33%; vertical-align:top;">
+            <table class="summary-box">-->
+            <tr>
+                <!-- LEFT -->
+                <td style="width:33%; vertical-align:top; text-align:left;">
+                    <table class="summary-box" style="margin-right:auto;">
+                        <tr><td class="sh"> Description</td><td class="sh">Amount</td></tr>
+                        <tr><td>Amount Received</td><td>{{S_AmountReceived}}</td></tr>
+                        <tr><td>Amount Returned</td><td>-{{S_AmountReturned}}</td></tr>
+                        <tr><td>Pending Amount Received</td><<td>{{S_PendingAmtReceived}}</td></tr>
+                        <tr><td>Cash On Hand</td><td>{{S_CashOnHand}}</td></tr>
+                        <tr><td>Outstanding Amount</td><td>{{S_OutAmount}}</td></tr>
+                    </table>
+                </td>
+
+                <!-- ✅ NEW BOX -->
+                <!--<td style="width:33%; vertical-align:top; padding-left:20px;">
+    <table class="summary-box">-->
+                <td style="width:33%; vertical-align:top; text-align:center;">
+                    <table class="summary-box" style="margin:0 auto;">
+                        <tr><td class="sh"> Sales Summary</td><td class="sh">Amount</td></tr>
+                        <tr><td>Net Sale</td><td>{{S_NetSale}}</td></tr>
+                        <tr><td>Net Return</td><td>-{{S_NetReturn}}</td></tr>
+                        <tr style="font-weight:bold; background:#e6e6e6;">
+                            <td>Net After Return</td>
+                            <td>{{S_NetAfterReturn}}</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <!-- EXISTING PAYMENT BOX -->
+                <!--<td style="width:33%; vertical-align:top; padding-left:20px;">
+        <table class="summary-box">-->
+                <!-- RIGHT -->
+                <td style="width:33%; vertical-align:top; text-align:right;">
+                    <table class="summary-box" style="margin-left:auto;">
+                        <tr><td class="sh">Payment Type</td><td class="sh">Amount</td></tr>
+                        <tr><td>Cash</td><td>{{S_CashTotal}}</td></tr>
+                        <tr><td>Cheque</td><td>{{S_ChequeTotal}}</td></tr>
+                        <tr><td>NEFT</td><td>{{S_NeftTotal}}</td></tr>
+                        <tr><td>PayTM</td><td>{{S_PayTMTotal}}</td></tr>
+                        <tr><td>Card</td><td>{{S_CardTotal}}</td></tr>
+                        <tr style="font-weight:bold; background:#e6e6e6;">
+                            <td>Total</td>
+                            <td>{{S_TotalPaymentModes}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </tr>
+        </table>
+    </table>
+</body>
+</html>

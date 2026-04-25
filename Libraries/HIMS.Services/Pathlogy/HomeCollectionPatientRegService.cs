@@ -1,12 +1,16 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
+using HIMS.Services.Pharmacy;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Microsoft.EntityFrameworkCore;
 
 namespace HIMS.Services.Pathlogy
 {
@@ -16,6 +20,10 @@ namespace HIMS.Services.Pathlogy
         public HomeCollectionPatientRegService(HIMSDbContext HIMSDbContext)
         {
             _context = HIMSDbContext;
+        }
+        public virtual async Task<IPagedList<HomeCollectionPatientRegistartionListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<HomeCollectionPatientRegistartionListDto>(model, "ps_rtrv_HomeCollectionPatientRegistartion");
         }
         public virtual async Task InsertAsync(THomeCollectionPatientRegistartion ObjTHomeCollectPatientRegistartion, int UserId, string Username)
 
