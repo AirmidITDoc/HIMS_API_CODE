@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sales & Sales Return GST Summary</title>
+
+    <style>
+        body {
+            font-family: Calibri, Arial;
+            font-size: 13px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            border: 1px solid #777;
+            background: #e6e6e6;
+            padding: 6px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        td {
+            border: 1px solid #c9c9c9;
+            padding: 5px;
+            font-size: 12px;
+        }
+
+        .ctr {
+            text-align: center;
+        }
+
+        .num {
+            text-align: right;
+        }
+
+        .subHeader td {
+            background: #f3f3f3;
+            font-weight: bold;
+        }
+
+        .subTotal td {
+            background: #f3f3f3;
+            font-weight: bold;
+        }
+
+        .grandTotal td {
+            background: #ececec;
+            font-weight: bold;
+            border-top: 2px solid #444;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 8px;
+        }
+
+        .date {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .header-table *,
+        .header-table table,
+        .header-table tr,
+        .header-table td {
+            border: none !important;
+            border-top: none !important;
+            border-bottom: none !important;
+            border-left: none !important;
+            border-right: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-table">
+        {{HospitalHeader}}
+    </div>
+    <!-- HEADER -->
+    <table style="width:100%;">
+        <tr>
+            <td style="font-size:20px; padding-bottom:6px;">
+                <b>{{RepoertName}}</b>
+            </td>
+            <td style="font-size:20px; text-align:right; padding-bottom:6px;">
+                <b>Print Date : {{CurrentDate}}</b>
+            </td>
+        </tr>
+    </table>
+
+    <!-- DATE -->
+    <div class="date">
+        From Date : {{FromDate}} &nbsp;--&nbsp; To Date : {{ToDate}}
+    </div>
+
+    <!-- DETAIL TABLE -->
+    <table>
+        <thead>
+            <tr>
+                <th>Sr.No</th>
+                <th>Date</th>
+
+                <th>T 0%</th>
+                <th>T 5%</th>
+                <th>T 6%</th>
+                <th>T 12%</th>
+                <th>T 18%</th>
+                <th>T 28%</th>
+
+                <th>Total</th>
+
+                <th>0%</th>
+                <th>5%</th>
+                <th>6%</th>
+                <th>12%</th>
+                <th>18%</th>
+                <th>28%</th>
+
+                <th>GST</th>
+                <th>Grand Total</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {{DetailRows}}
+        </tbody>
+    </table>
+
+    <!-- SUMMARY TABLE -->
+    <table style="margin-top:20px;">
+        <tr style="background:#d9d9d9; font-weight:bold;">
+            <td colspan="17" style="padding:6px;">
+                Summary Report
+                <span style="float:right;">
+                    From Date : {{FromDate}} &nbsp;--&nbsp; To Date : {{ToDate}}
+                </span>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Type</th>
+
+            <th>T 0%</th>
+            <th>T 5%</th>
+            <th>T 6%</th>
+            <th>T 12%</th>
+            <th>T 18%</th>
+            <th>T 28%</th>
+
+            <th>Total</th>
+
+            <th>0%</th>
+            <th>5%</th>
+            <th>6%</th>
+            <th>12%</th>
+            <th>18%</th>
+            <th>28%</th>
+
+            <th>GST</th>
+            <th>Grand Total</th>
+        </tr>
+
+        {{SummaryRows}}
+    </table>
+
+</body>
+</html>
