@@ -992,7 +992,7 @@ namespace HIMS.Services.Common
             ObjTDrbill.Drbno = Convert.ToInt32(VDrbno);
             await _context.LogProcedureExecution(bentity, nameof(TDrbill), ObjTDrbill.Drbno.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-                foreach (var item in ObjTDraddCharge)
+            foreach (var item in ObjTDraddCharge)
             {
                 item.BillNo = Convert.ToInt32(VDrbno);
 

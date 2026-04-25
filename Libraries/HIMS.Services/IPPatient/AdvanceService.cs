@@ -151,6 +151,8 @@ namespace HIMS.Services.IPPatient
                 }
                 string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
                 item.PaymentId = Convert.ToInt32(VPaymentId);
+                await _context.LogProcedureExecution(PAdvanceEntity, nameof(TPayment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
             }
 

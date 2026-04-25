@@ -298,7 +298,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("SalesDraftBillSave")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public ApiResponse InsertSPD(SalesDraftHeadersModel obj)
         {
             TSalesDraftHeader model = obj.SalesDraft.MapTo<TSalesDraftHeader>();
@@ -308,11 +308,30 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.Date = Convert.ToDateTime(obj.SalesDraft.Date);
                 model.Time = Convert.ToDateTime(obj.SalesDraft.Time);
                 model.AddedBy = CurrentUserId;
-                _ISalesService.InsertSPD(model, modelTSales, CurrentUserId, CurrentUserName);
+                _ISalesService.InsertSD(model, modelTSales, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.DsalesId);
+        }
+        [HttpPost("SalesDraftBillUpdate")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> OPDraftBillUpdate(SalesDraftHeadersModel obj)
+        {
+            TSalesDraftHeader model = obj.SalesDraft.MapTo<TSalesDraftHeader>();
+            List<TSalesDraftDet> modelTSales = obj.SalesDraftDet.MapTo<List<TSalesDraftDet>>();
+
+            if (obj.SalesDraft.DsalesId != 0)
+            {
+                model.Date = Convert.ToDateTime(obj.SalesDraft.Date);
+                model.Time = Convert.ToDateTime(obj.SalesDraft.Time);
+                model.AddedBy = CurrentUserId;
+
+                await _ISalesService.UpdateAsyncSalesDraft(model, modelTSales, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  Update successfully.", model.DsalesId);
         }
 
         [HttpPost("SalesDraftbillcancel")]

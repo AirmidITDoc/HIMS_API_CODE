@@ -501,7 +501,7 @@ namespace HIMS.Services.Users
             }
         }
 
-        public virtual void InsertSPD(TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int UserId, string Username)
+        public virtual void InsertSD(TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int UserId, string Username)
         {
 
             // //Add header table records
@@ -527,6 +527,46 @@ namespace HIMS.Services.Users
                     Tentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_T_SalesDraftDet_1", CommandType.StoredProcedure, Tentity);
+            }
+        }
+        public virtual async Task UpdateAsyncSalesDraft(TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int CurrentUserId, string CurrentUserName)
+        {
+
+            DatabaseHelper odal = new();
+            var tokensObj = new
+            {
+                DsalesId = Convert.ToInt32(ObjDraftHeader.DsalesId)
+            };
+            odal.ExecuteNonQuery("Delete_SalesDraftBill", CommandType.StoredProcedure, tokensObj.ToDictionary());
+
+            string[] DEntity = { "DsalesId", "Date",  "Time", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount","ConcessionReasonId", "ConcessionAuthorizationId", "IsSellted",
+                    "IsPrint","UnitId","AddedBy","ExternalPatientName","DoctorName","StoreId","CreditReason","CreditReasonId","IsClosed","IsPrescription","WardId","BedId","ExtMobileNo", "ExtAddress"};
+            var bentity = ObjDraftHeader.ToDictionary();
+            foreach (var rProperty in bentity.Keys.ToList())
+            {
+                if (!DEntity.Contains(rProperty))
+                    bentity.Remove(rProperty);
+            }
+            odal.ExecuteNonQuery("ps_Update_TSalesDraftHeader", CommandType.StoredProcedure, bentity);
+            await _context.LogProcedureExecution(bentity, nameof(TSalesDraftHeader), ObjDraftHeader.DsalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+            foreach (var item in ObjTSalesDraftDet)
+            {
+                //item.DsalesId = Convert.ToInt32(DsalesId);
+
+                string[] CREntity = { "DsalesId", "ItemId", "BatchNo", "BatchExpDate", "UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount", "PurRateWf", "PurTotAmt" };
+                var centity = item.ToDictionary();
+                foreach (var rProperty in centity.Keys.ToList())
+                {
+                    if (!CREntity.Contains(rProperty))
+                        centity.Remove(rProperty);
+                }
+               odal.ExecuteNonQuery("insert_T_SalesDraftDet_1", CommandType.StoredProcedure, centity);
+               await _context.LogProcedureExecution(centity, nameof(TSalesDraftDet), item.SalDetId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+
             }
         }
 
