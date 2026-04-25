@@ -18,10 +18,10 @@
                 <td>
                     <table style="width:100%; border-collapse:collapse;">
                         <tr>
-                            <td style="font-weight:bold; font-size:12px; text-align:left;">
+                            <td style="font-weight:bold; font-size:15px; text-align:left;">
                                 Laboratory Report
                             </td>
-                            <td style="font-weight:bold; font-size:12px; text-align:right;">
+                            <td style="font-weight:bold; font-size:15px; text-align:right;">
                                 Print Date : {{CurrentDate}}
                             </td>
                         </tr>
@@ -34,63 +34,62 @@
                 <td style="padding-top:5px;">
                     <table style="width:100%; border-collapse:collapse; border-top:1px solid #000; border-bottom:1px solid #000;">
                         <tr>
-                            <td style="width:75%; vertical-align:top;">
-                                <table style="width:100%; border-collapse:collapse;" cellpadding="4">
+                            <td style="width:100%; vertical-align:top;">
+                                <table style="width:100%; border-collapse:collapse; table-layout:fixed;" cellpadding="4">
+                                    <colgroup>
+                                        <col style="width:18%;" />
+                                        <col style="width:32%;" />
+                                        <col style="width:20%;" />
+                                        <col style="width:30%;" />
+                                    </colgroup>
                                     <tr>
-                                        <td style="font-size:9px; font-weight:normal;">UHID</td>
-                                        <td style="font-size:9px; font-weight:normal;">: <strong>{{RegNo}}</strong></td>
-                                        <td style="font-size:9px; font-weight:normal;">REGISTERED ON</td>
-                                        <td style="font-size:9px; font-weight:normal;">: <strong>{{PathTime}}</strong></td>
+                                        <td style="font-size:15px; font-weight:normal; white-space:nowrap;"><b>UHID</b></td>
+                                        <td style="font-size:15px; font-weight:normal; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">: {{RegNo}}</td>
+                                        <td style="font-size:15px; font-weight:normal; white-space:nowrap;"> <b>REGISTERED ON</b> </td>
+                                        <td style="font-size:15px; font-weight:normal; white-space:nowrap;">: {{PathTime}}</td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size:9px; font-weight:normal;">PATIENT NAME</td>
-                                        <td style="font-size:9px; font-weight:normal;">: <strong>{{PatientName}}</strong></td>
-                                        <td style="font-size:9px; font-weight:normal;">COLLECTED ON</td>
-                                        <td style="font-size:9px; font-weight:normal;">: <strong>{{SampleCollectionTime}}</strong></td>
+                                        <td style="font-size:15px; font-weight:normal; white-space:nowrap; vertical-align:top;"><b>PATIENT NAME</b></td>
+                                        <td style="font-size:15px; font-weight:normal; white-space:normal; word-break:break-word; vertical-align:top;">: {{PatientName}}</td>
+                                        <td style="font-size:15px; font-weight:normal; white-space:nowrap; vertical-align:top;"><b>COLLECTED ON</b></td>
+                                        <td style="font-size:15px; font-weight:normal; white-space:nowrap; vertical-align:top;">: {{SampleCollectionTime}}</td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size:9px; font-weight:normal;">AGE</td>
-                                        <td style="font-size:9px; font-weight:normal;">: {{AgeYear}}</td>
-                                        <td style="font-size:9px; font-weight:normal;">REPORTED ON</td>
-                                        <td style="font-size:9px; font-weight:normal;">: <strong>{{ReportTime}}</strong></td>
+                                        <td style="font-size:15px; font-weight:normal; white-space:nowrap;"><b>AGE/Gender</b></td>
+                                        <td style="font-size:15px; font-weight:normal; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">: {{AgeYear}} Years/{{GenderName}}</td>
+                                        <td style="font-size:15px; font-weight:normal; white-space:nowrap;"><b>REPORTED ON</b></td>
+                                        <td style="font-size:15px; font-weight:normal; white-space:nowrap;">: {{ReportTime}}</td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size:9px; font-weight:normal;">SEX</td>
-                                        <td style="font-size:9px; font-weight:normal;">: {{GenderName}}</td>
-                                        <td style="font-size:9px; font-weight:normal;">SAMPLE NO</td>
-                                        <td style="font-size:9px; font-weight:normal;">: {{SampleNo}}</td>
+                                        <td style="font-size:15px; font-weight:normal; white-space:nowrap;"><b>REFERRED DR</b></td>
+                                        <td style="font-size:15px; font-weight:normal; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">: {{ConsultantDocName}}</td>
+                                        <td style="font-size:15px; font-weight:normal; white-space:nowrap;"><b>SAMPLE NO</b></td>
+                                        <td style="font-size:15px; font-weight:normal; white-space:nowrap;">: {{SampleNo}}</td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size:9px; font-weight:normal;">NATIONAL ID NO</td>
-                                        <td style="font-size:9px; font-weight:normal;">: <strong>{{AdharCardNo}}</strong></td>
-                                        <td style="font-size:9px; font-weight:normal;">REFERRED BY</td>
-                                        <td style="font-size:9px; font-weight:normal;">: <strong>{{ConsultantDocName}}</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-size:9px; font-weight:normal;">REPORT STATUS</td>
-                                        <td style="font-size:9px; font-weight:normal;">: <strong>FINAL</strong></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td style="font-size:15px; font-weight:normal; white-space:nowrap;"><b>NATIONAL ID</b></td>
+                                        <td style="font-size:15px; font-weight:normal; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">: {{AdharCardNo}}</td>
+
                                     </tr>
 
                                 </table>
                             </td>
 
-                            <td style="width:25%; text-align:center; vertical-align:top;">
-                                <!-- QR CODE -->
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{RegNo}}"
-                                     alt="QR Code"
-                                     style="width:80px; height:80px; margin:8px auto 4px; display:block; image-rendering:pixelated;" />
-
-                                <!-- BARCODE -->
-                                <img src="https://barcode.tec-it.com/barcode.ashx?data={{RegNo}}&code=Code128&dpi=300&modulewidth=0.4&imagetype=png&showtext=true"
-                                     alt="Barcode"
-                                     style="width:150px; height:30px; display:block; margin:6px auto 0; image-rendering:crisp-edges;" />
-                            </td>
+                            <!--<td style="width:22%; text-align:center; vertical-align:top;">-->
+                            <!-- QR CODE -->
+                            <!--<img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{RegNo}}"
+                         alt="QR Code"
+                         style="width:80px; height:80px; margin:8px auto 4px; display:block; image-rendering:pixelated;" />-->
+                            <!-- BARCODE -->
+                            <!--<img src="https://barcode.tec-it.com/barcode.ashx?data={{RegNo}}&code=Code128&dpi=300&modulewidth=0.4&imagetype=png&showtext=true"
+                             alt="Barcode"
+                             style="width:150px; height:30px; display:block; margin:6px auto 0; image-rendering:crisp-edges;" />
+                    </td>-->
                         </tr>
                     </table>
                 </td>
             </tr>
+
 
             <tr>
                 <td colspan="2" align="center" style="font-size: 20px; font-weight: bold;">
