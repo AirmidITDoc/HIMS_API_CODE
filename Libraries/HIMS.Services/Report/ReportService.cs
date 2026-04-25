@@ -3707,6 +3707,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{S_NetAmount}}", N2(s_Net));
                         html = html.Replace("{{S_AmountReceived}}", N2(s_Paid));
                         html = html.Replace("{{S_AmountReturned}}", N2(s_Ret));
+                        html = html.Replace("{{S_NetSalesAmount}}", N2(s_NetAfterReturn));
                         html = html.Replace("{{S_CorporateAmount}}", "0.00");
                         html = html.Replace("{{S_PendingAmtReceived}}", N2(s_Pending));
                         html = html.Replace("{{S_CashOnHand}}", N2(s_Cash));
