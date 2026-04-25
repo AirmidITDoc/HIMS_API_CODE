@@ -8,6 +8,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers
@@ -18,9 +19,13 @@ namespace HIMS.API.Controllers
     public class DoseMasterController : BaseController
     {
         private readonly IGenericService<MDoseMaster> _repository;
-        public DoseMasterController(IGenericService<MDoseMaster> repository)
+        private readonly IDoseMasterService _IDoseMasterService;
+
+        public DoseMasterController(IGenericService<MDoseMaster> repository, IDoseMasterService repository1)
         {
             _repository = repository;
+            _IDoseMasterService = repository1;
+
         }
 
         //List API
@@ -43,6 +48,14 @@ namespace HIMS.API.Controllers
             var data = await _repository.GetById(x => x.DoseId == id);
             return data.ToSingleResponse<MDoseMaster, DoseMasterModel>("DoseMaster");
         }
+
+        [HttpGet("GetDoseMasterList")]
+        public async Task<ApiResponse> GetItemListForPrescription( string DoseName)
+        {
+            var resultList = await _IDoseMasterService.GetDoseMasterList(DoseName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetDoseMaster List.", resultList);
+        }
+
         [HttpPost]
         [Permission(PageCode = "DoseMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(DoseMasterModel obj)
