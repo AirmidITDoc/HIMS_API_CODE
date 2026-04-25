@@ -1939,7 +1939,7 @@ namespace HIMS.Services.Report
                         model.RepoertName = "PathologyReport ";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
-                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PathologyResultTest.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PathologyResultTest_Morya.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -1959,7 +1959,7 @@ namespace HIMS.Services.Report
                         model.RepoertName = "PathologyReportWithHeader";
                         string[] headerList = Array.Empty<string>();
                         string[] colList = Array.Empty<string>();
-                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AIP_PathTestReportHospitalheader_AddAnnex.html");
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PathologyResultTestwithoutheaderMorya.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
@@ -17652,8 +17652,9 @@ namespace HIMS.Services.Report
                         OverallDiscount += BillDiscount;
                         OverallNet += BillNet;
 
+                       
 
-                        OverallNet = Math.Ceiling(OverallTotal - OverallDiscount);
+                        OverallNet = Math.Round(OverallTotal - OverallDiscount, 0, MidpointRounding.AwayFromZero);
 
                         double BalanceAmount = 0;
 
@@ -17692,7 +17693,7 @@ namespace HIMS.Services.Report
                         //html = html.Replace("{{GrandTotalAmount}}", OverallNet.ToString());
                         //html = html.Replace("{{FinalNetAmt}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
 
-                        html = html.Replace("{{TotalAmount}}", Math.Ceiling(OverallTotal).ToString("F2"));
+                        html = html.Replace("{{TotalAmount}}",Math.Round(OverallTotal, 0).ToString("F2"));
                         html = html.Replace("{{DiscAmount}}", OverallDiscount.ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{NetTotalAmount}}", OverallNet.ConvertToDouble().ToString("F2"));
 
