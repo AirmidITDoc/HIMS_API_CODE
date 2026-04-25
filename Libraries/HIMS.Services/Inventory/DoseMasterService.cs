@@ -28,6 +28,8 @@ namespace HIMS.Services.Inventory
                 {
                     DoseId = dose.DoseId, 
                     DoseName = dose.DoseName ?? string.Empty,
+                    IsActive = dose.IsActive,
+                    DoseQtyPerDay = dose.DoseQtyPerDay,
 
                 });
 
