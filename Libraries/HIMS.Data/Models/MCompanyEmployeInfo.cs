@@ -20,5 +20,16 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public long? Designation { get; set; }
+        public long? EmpDepartment { get; set; }
+        public DateTime? DateOfJoin { get; set; }
+        public long? UnitId { get; set; }
+        public long? AdharCardNo { get; set; }
+        public long? Pfno { get; set; }
+        public string? ExperienceYear { get; set; }
+        public string? PreviousSalary { get; set; }
+        public string? PreviousCompany { get; set; }
+        public string? PreviousDesignation { get; set; }
+        public bool? IsRepresentative { get; set; }
     }
 }

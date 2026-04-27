@@ -501,32 +501,38 @@ namespace HIMS.Services.Users
             }
         }
 
-        public virtual void InsertSD(TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int UserId, string Username)
+        public virtual async Task InsertSD(TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int CurrentUserId, string CurrentUserName)
         {
 
             // //Add header table records
             DatabaseHelper odal = new();
-            string[] rEntity = { "SalesNo", "CashCounterId", "UpdatedBy", "IsCancelled" };
+            string[] rEntity = { "DsalesId", "Date",  "Time", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount","ConcessionReasonId", "ConcessionAuthorizationId", "IsSellted",
+                    "IsPrint","UnitId","AddedBy","ExternalPatientName","DoctorName","StoreId","CreditReason","CreditReasonId","IsClosed","IsPrescription","WardId","BedId","ExtMobileNo", "ExtAddress"};
             var entity = ObjDraftHeader.ToDictionary();
-            foreach (var rProperty in rEntity)
+            foreach (var rProperty in entity.Keys.ToList())
             {
-                entity.Remove(rProperty);
+                if (!rEntity.Contains(rProperty))
+                    entity.Remove(rProperty);
             }
             string DsalesId = odal.ExecuteNonQuery("m_insert_T_SalesDraftHeader_1", CommandType.StoredProcedure, "DsalesId", entity);
             ObjDraftHeader.DsalesId = Convert.ToInt32(DsalesId);
+            await _context.LogProcedureExecution(entity, nameof(TSalesDraftHeader), ObjDraftHeader.DsalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
             foreach (var item in ObjTSalesDraftDet)
             {
                 item.DsalesId = Convert.ToInt32(DsalesId);
+                string[] PEntity = { "DsalesId", "ItemId", "BatchNo", "BatchExpDate", "UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount", "PurRateWf", "PurTotAmt" };
 
-
-                string[] pEntity = { "SalDetId" };
                 var Tentity = item.ToDictionary();
-                foreach (var rProperty in pEntity)
+                foreach (var rProperty in Tentity.Keys.ToList())
                 {
-                    Tentity.Remove(rProperty);
+                    if (!PEntity.Contains(rProperty))
+                        Tentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_T_SalesDraftDet_1", CommandType.StoredProcedure, Tentity);
+                await _context.LogProcedureExecution(Tentity, nameof(TSalesDraftDet), item.SalDetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
             }
         }
         public virtual async Task UpdateAsyncSalesDraft(TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int CurrentUserId, string CurrentUserName)
