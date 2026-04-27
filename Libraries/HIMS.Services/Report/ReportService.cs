@@ -3951,7 +3951,35 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
                     }
                     break;
+                case "NewMultiTotalReportWithSummary.html":
+                    {
+                        HeaderItems.Append(GetCommonHtmlTableHeader(dt, headerList, columnWidths));
 
+                        items.Append(GetCommonHtmlTableReports(
+                            dt,
+                            headerList,
+                            model.colList,
+                            totalColList,
+                            model.groupByLabel.Split(',').Where(x => x != "").ToArray()
+                        ));
+
+                        ItemsTotal.Append(CreateGrandTotal(
+                            dt,
+                            totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray(),
+                            model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray()
+                        ));
+
+                        string summaryHtml = CreateGenericSummary(
+                            dt,
+                            totalColList,
+                            model.groupByLabel.Split(',')
+                                .Where(x => !string.IsNullOrWhiteSpace(x))
+                                .ToArray()
+                        );
+
+                        html = html.Replace("{{SummarySection}}", summaryHtml);
+                    }
+                    break;
                     /* HELPERS */
                     string GetDoctorTotalRow(decimal g, decimal d, decimal n)
                     {
@@ -4467,6 +4495,72 @@ namespace HIMS.Services.Report
                 table.Append("</tr>");
             }
             return table.ToString();
+        }
+        public static string CreateGenericSummary(DataTable dt,string[] totalCols,string[] groupCols)
+        {
+            StringBuilder html = new();
+
+            var validCols = totalCols.Where(c => !string.IsNullOrWhiteSpace(c) && c != "space" && c != "lableTotal").ToList();
+
+            if (!validCols.Any() || groupCols.Length < 2)
+                return "";
+
+            string expCol = groupCols[0]; 
+            string typeCol = groupCols[1]; 
+
+            var types = dt.AsEnumerable().Select(r => r[typeCol].ToString()).Distinct().ToList();
+
+            html.Append("<table style='width:100%;border-collapse:collapse;font-family:Calibri;'>");
+            html.Append("<tr style='background:#e6e6e6;font-weight:bold;'>");
+            html.Append("<th style='border:1px solid #777;padding:6px;text-align:left;'>Type</th>");
+
+            foreach (var col in validCols)
+            {
+                html.Append($"<th style='border:1px solid #777;padding:6px;text-align:right;'>{col}</th>");
+            }
+
+            html.Append("</tr>");
+
+            decimal[] grandTotals = new decimal[validCols.Count];
+            foreach (var type in types)
+            {
+                html.Append("<tr>");
+                html.Append($"<td style='border:1px solid #ccc;padding:6px;font-weight:bold;'>{type}</td>");
+
+                for (int i = 0; i < validCols.Count; i++)
+                {
+                    string col = validCols[i];
+
+                    decimal val = dt.AsEnumerable()
+                        .Where(r => r[typeCol].ToString() == type)
+                        .Sum(r =>
+                        {
+                            decimal v = r.IsNull(col) ? 0 : Convert.ToDecimal(r[col]);
+                            if (r[expCol].ToString() == "Expense")
+                                v = -v;
+                            return v;
+                        });
+
+                    grandTotals[i] += val;
+
+                    html.Append($"<td style='border:1px solid #ccc;padding:6px;text-align:right;'>{val:N3}</td>");
+                }
+
+                html.Append("</tr>");
+            }
+
+            html.Append("<tr style='background:#ececec;font-weight:bold;border-top:3px solid #000;'>");
+            html.Append("<td style='border:1px solid #777;border-top:3px solid #000;padding:6px;'>Grand Total</td>");
+
+            foreach (var val in grandTotals)
+            {
+                html.Append($"<td style='border:1px solid #777;border-top:3px solid #000;padding:6px;text-align:right;'>{val:N3}</td>");
+            }
+
+            html.Append("</tr>");
+            html.Append("</table>");
+
+            return html.ToString();
         }
         private static string GetHTMLViewerGroupBy(string sp_Name, ReportConfigDto model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string[] groupbyList = null, string groupByLabel = "", string[] columnWidths = null, string[] columnAlignments = null)
         {
