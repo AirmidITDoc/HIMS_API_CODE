@@ -3976,6 +3976,16 @@ namespace HIMS.Services.Report
                                 .Where(x => !string.IsNullOrWhiteSpace(x))
                                 .ToArray()
                         );
+                        if (model.Mode == "PaymentModeSummary")
+                        {
+                            string paymentSummary = CreatePaymentModeNetSummary(dt,totalColList,model.groupByLabel.Split(',') .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray());
+                            html = html.Replace("{{PaymentSummary}}", paymentSummary);
+                            html = html.Replace("display:none;", "display:block;");
+                        }
+                        else
+                        {
+                            html = html.Replace("{{PaymentSummary}}", "");
+                        }
 
                         html = html.Replace("{{SummarySection}}", summaryHtml);
                     }
@@ -4558,6 +4568,77 @@ namespace HIMS.Services.Report
             }
 
             html.Append("</tr>");
+            html.Append("</table>");
+
+            return html.ToString();
+        }
+        public static string CreatePaymentModeNetSummary(DataTable dt,string[] totalCols,string[] groupCols)
+        {
+            StringBuilder html = new();
+
+            var validCols = totalCols
+                .Where(c => !string.IsNullOrWhiteSpace(c) &&
+                            c != "space" &&
+                            c != "lableTotal")
+                .ToList();
+
+            if (!validCols.Any() || groupCols.Length < 1)
+                return "";
+
+            string expCol = groupCols[0]; 
+            var paymentCols = validCols
+                .Where(c =>
+                    c.ToLower().Contains("cash") ||
+                    c.ToLower().Contains("card") ||
+                    c.ToLower().Contains("cheque") ||
+                    c.ToLower().Contains("neft") ||
+                    c.ToLower().Contains("paytm") ||
+                    c.ToLower().Contains("online"))
+                .ToList();
+
+            if (!paymentCols.Any())
+                return "";
+
+            html.Append("<table style='width:50%;border-collapse:collapse;font-family:Calibri;margin-top:10px;'>");
+            html.Append("<tr style='background:#e6e6e6;font-weight:bold;'>");
+            html.Append("<th style='border:1px solid #777;padding:6px;text-align:left;'>Payment Mode</th>");
+            html.Append("<th style='border:1px solid #777;padding:6px;text-align:right;'>Net Amount</th>");
+            html.Append("</tr>");
+
+            decimal grandTotal = 0;
+
+            foreach (var col in paymentCols)
+            {
+                decimal net = dt.AsEnumerable()
+                    .Sum(r =>
+                    {
+                        decimal v = r.IsNull(col) ? 0 : Convert.ToDecimal(r[col]);
+                        if (r[expCol].ToString().Equals("Expense", StringComparison.OrdinalIgnoreCase))
+                            v = -v;
+                        return v;
+                    });
+
+                grandTotal += net;
+
+                string label = col
+                    .Replace("PayAmount", "")
+                    .Replace("Amount", "")
+                    .Replace("Pay", "");
+
+                string display = net.ToString("N2"); 
+                html.Append($@"
+                <tr>
+                    <td style='border:1px solid #ccc;padding:6px;'>{label}</td>
+                    <td style='border:1px solid #ccc;padding:6px;text-align:right;'>{display}</td>
+                </tr>");
+            }
+            string grandDisplay = grandTotal.ToString("N2");
+            html.Append($@"
+            <tr style='background:#ececec;font-weight:bold;border-top:2px solid #000;'>
+                <td style='border:1px solid #777;padding:6px;'>Grand Total</td>
+                <td style='border:1px solid #777;padding:6px;text-align:right;'>{grandDisplay}</td>
+            </tr>");
+
             html.Append("</table>");
 
             return html.ToString();
