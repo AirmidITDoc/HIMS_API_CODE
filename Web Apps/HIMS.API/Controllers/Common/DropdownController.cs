@@ -113,12 +113,8 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MPathSpecimenPreservativeMaster> _MPathSpecimenPreservativeMaster;
         private readonly IGenericService<MPathSpecimenConditionMaster> _MPathSpecimenConditionMaster;
         private readonly IGenericService<MedicalRecordConfig> _MedicalRecordConfig;
-
-
-
-
-
-
+        private readonly IGenericService<MEmployeeDepartmentMaster> _MEmployeeDepartmentMaster;
+        private readonly IGenericService<MEmployeeDesignationMaster> _MEmployeeDesignationMaster;
 
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
                                   IGenericService<MMaritalStatusMaster> iMaritalStatusMaster, IGenericService<MReligionMaster> iMreligionMaster, IGenericService<PatientTypeMaster> iPatientTypeMaster, IGenericService<TariffMaster> tariffMaster,
@@ -169,12 +165,16 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MSubQuestionValuesMaster> MSubQuestionValuesMaster,
                               IGenericService<MPathSpecimenMaster> MPathSpecimenMaster,
                               IGenericService<MInstructionMaster> MInstructionMaster,
-                                IGenericService<MAdmissionType> MAdmissionType,
+                              IGenericService<MAdmissionType> MAdmissionType,
                               IGenericService<MPathSpecimenContainerMaster> MPathSpecimenContainerMaster,
                               IGenericService<MPathSpecimenCollectionMaster> MPathSpecimenCollectionMaster,
                               IGenericService<MPathSpecimenPreservativeMaster> MPathSpecimenPreservativeMaster,
                               IGenericService<MPathSpecimenConditionMaster> MPathSpecimenConditionMaster,
-                              IGenericService<MedicalRecordConfig> MedicalRecordConfig
+                              IGenericService<MedicalRecordConfig> MedicalRecordConfig,
+                              IGenericService<MEmployeeDepartmentMaster> MEmployeeDepartmentMaster,
+                              IGenericService<MEmployeeDesignationMaster> MEmployeeDesignationMaster
+
+
 
 
                              )
@@ -276,6 +276,10 @@ namespace HIMS.API.Controllers.Common
 
             _MPathSpecimenConditionMaster = MPathSpecimenConditionMaster;
             _MedicalRecordConfig = MedicalRecordConfig;
+            _MEmployeeDepartmentMaster = MEmployeeDepartmentMaster;
+            _MEmployeeDesignationMaster = MEmployeeDesignationMaster;
+
+
 
 
         }
@@ -486,6 +490,8 @@ namespace HIMS.API.Controllers.Common
 
                 "Daytypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "DayType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "Mealtypes" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "MealType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "EmployeeDepartmentMaster" => (await _MEmployeeDepartmentMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MEmployeeDepartmentMaster.EmpDepartmentId), nameof(MEmployeeDepartmentMaster.EmpDepartmentName)),
+                "EmployeeDesignationMaster" => (await _MEmployeeDesignationMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MEmployeeDesignationMaster.EmpDesignationId), nameof(MEmployeeDesignationMaster.EmpDesignationName)),
 
 
 

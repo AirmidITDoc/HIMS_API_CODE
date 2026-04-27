@@ -18,6 +18,8 @@ namespace HIMS.API.Models.Pathology
         public string? MobileNo { get; set; }
         public string? Address { get; set; }
         public long? PatRegId { get; set; }
+        public long? CityId { get; set; }
+
 
     }
     public class HomeCollectionPatientRegistrationModel

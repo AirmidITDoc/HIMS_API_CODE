@@ -224,6 +224,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<MDoseMaster> MDoseMasters { get; set; } = null!;
         public virtual DbSet<MDriverMaster> MDriverMasters { get; set; } = null!;
         public virtual DbSet<MDrugMaster> MDrugMasters { get; set; } = null!;
+        public virtual DbSet<MEmployeeDepartmentMaster> MEmployeeDepartmentMasters { get; set; } = null!;
+        public virtual DbSet<MEmployeeDesignationMaster> MEmployeeDesignationMasters { get; set; } = null!;
         public virtual DbSet<MExaminationMaster> MExaminationMasters { get; set; } = null!;
         public virtual DbSet<MExpensesCategoryMaster> MExpensesCategoryMasters { get; set; } = null!;
         public virtual DbSet<MExpensesHeadMaster> MExpensesHeadMasters { get; set; } = null!;
@@ -6712,7 +6714,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.DateOfJoin).HasColumnType("datetime");
+
                 entity.Property(e => e.EmailId).HasMaxLength(255);
+
+                entity.Property(e => e.ExperienceYear).HasMaxLength(30);
 
                 entity.Property(e => e.FirstName).HasMaxLength(50);
 
@@ -6721,6 +6727,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MiddleName).HasMaxLength(50);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Pfno).HasColumnName("PFNO");
+
+                entity.Property(e => e.PreviousSalary).HasMaxLength(30);
             });
 
             modelBuilder.Entity<MCompanyExecutiveInfo>(entity =>
@@ -7187,6 +7197,32 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.DrugName).HasMaxLength(200);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MEmployeeDepartmentMaster>(entity =>
+            {
+                entity.HasKey(e => e.EmpDepartmentId);
+
+                entity.ToTable("M_EmployeeDepartmentMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EmpDepartmentName).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MEmployeeDesignationMaster>(entity =>
+            {
+                entity.HasKey(e => e.EmpDesignationId);
+
+                entity.ToTable("M_EmployeeDesignationMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EmpDesignationName).HasMaxLength(255);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
