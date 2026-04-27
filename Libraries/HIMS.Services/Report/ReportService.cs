@@ -1789,6 +1789,44 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+              
+                //Ipsection
+                //#region :: AdmissionList ::
+                //case "AdmissionList":
+                //    {
+
+                //        model.RepoertName = "Appointment List";
+                //        string[] headerList = { "Sr.No", "UHID", "Date", "IPDNo", "Patient Name", "Age", "Gender", "Ward", "Bed", /*"AdmDoctor Name",*/ "RefDocName", "Company", "ChargesAmt", "AdvAmt", "BalAmt" };
+                //        string[] colList = { "RegNo", "DOA", "IPDNo", "PatientName", "Age", "GenderName", "RoomName", "BedName",/* "AdmittedDoctorName",*/ "RefDocName", "CompanyName", "ChargesAmount", "AdvanceAmount", "BalPayAmt", };
+                //        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
+                //        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                //        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                //        var html = GetHTMLView("rptCurrentAdmittedListReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                //        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                //        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDCurrentAdmittedDoctorWiseCharges", "IPDCurrentAdmittedDoctorWiseCharges", Orientation.Landscape);
+                //        break;
+                //    }
+                //#endregion
+
+                
+                #region :: AdmissionCancelReport ::
+                case "AdmissionCancelReport":
+                    {
+                        model.RepoertName = "Admission Cancel Report";
+
+                        string[] headerList = {  "Sr.No", "Admission ID", "Date", "Time", "Patient Name", "Gender", "Age", "Department", "City",  "Mobile", "Aadhar", "Cancel Reason",  "Cancelled By", "Cancelled Date" };
+                        string[] colList ={"AdmissionID", "AdmissionDate", "AdmissionTime", "PatientName",  "GenderName",  "Age", "DepartmentName", "City", "MobileNo", "AadharCardNo", "IsCancelComment", "UserName","IsCancelledDateTime"};
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AdmissionCancelReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("Rtrv_AdmissionCancle_Report", model, htmlFilePath, htmlHeaderFilePath, colList, headerList );
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(  html,  model.StorageBaseUrl,  "AdmissionCancelReport",  "AdmissionCancelReport",   Orientation.Landscape );
+
+                        break;
+                    }
+                #endregion
+
 
 
 
@@ -13707,6 +13745,47 @@ namespace HIMS.Services.Report
                              .Append("</td></tr>");
                     }
                     break;
+                case "AdmissionCancelReport":
+                    {
+                        HeaderItems.Append("<tr>");
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border-top: 1px solid #000;border-bottom: 1px solid #000;font-size:15px; padding: 6px;\">")
+                                       .Append(hr)
+                                       .Append("</th>");
+                        }
+                        HeaderItems.Append("</tr>");
+
+                        int i = 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr style=\"text-align:center;\">")
+                                 .Append("<td>").Append(i).Append("</td>");
+
+                            foreach (var col in colList)
+                            {
+                                string value = "";
+
+                                if (col == "AdmissionDate" || col == "IsCancelledDateTime")
+                                {
+                                    value = dr[col] == DBNull.Value ? "" : Convert.ToDateTime(dr[col]).ToString("dd-MM-yyyy");
+                                }
+                                else
+                                {
+                                    value = dr[col]?.ToString();
+                                }
+
+                                items.Append("<td>").Append(value).Append("</td>");
+                            }
+
+                            items.Append("</tr>");
+                        }
+                    }
+                    break;
+
 
                 //case "WardWiseAdmissionList":
                 //    {

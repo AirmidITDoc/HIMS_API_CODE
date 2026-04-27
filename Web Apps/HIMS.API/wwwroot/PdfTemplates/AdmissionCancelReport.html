@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admission Cancel Report</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="margin: 0 auto; font-size: 14px; line-height: 20px; font-family: Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif; color: #101828;">
+
+            <table style="width: 100%; border-collapse: collapse;">
+
+                {{NewHeader}}
+
+                <!-- Title Row -->
+                <tr>
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="border-bottom: 1px solid #ccc; padding: 6px; text-align: center; font-size:18px;">
+                                    <b>Admission Cancel Report</b>
+                                </td>
+                                <td style="border-bottom: 1px solid #ccc; padding: 6px; text-align: right;">
+                                    <b>Print Date : {{CurrentDate}}</b>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- Table -->
+                <tr>
+                    <td style="padding: 5px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+
+                            <!-- Header -->
+                            <thead style="background-color:#f2f2f2; text-align:center; font-size:15px;">
+                                {{HeaderItems}}
+                            </thead>
+
+                            <!-- Body -->
+                            <tbody style="font-size:14px; text-align:center;">
+                                {{Items}}
+                            </tbody>
+
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</body>
+</html>
