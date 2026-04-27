@@ -1789,6 +1789,44 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+              
+                //Ipsection
+                //#region :: AdmissionList ::
+                //case "AdmissionList":
+                //    {
+
+                //        model.RepoertName = "Appointment List";
+                //        string[] headerList = { "Sr.No", "UHID", "Date", "IPDNo", "Patient Name", "Age", "Gender", "Ward", "Bed", /*"AdmDoctor Name",*/ "RefDocName", "Company", "ChargesAmt", "AdvAmt", "BalAmt" };
+                //        string[] colList = { "RegNo", "DOA", "IPDNo", "PatientName", "Age", "GenderName", "RoomName", "BedName",/* "AdmittedDoctorName",*/ "RefDocName", "CompanyName", "ChargesAmount", "AdvanceAmount", "BalPayAmt", };
+                //        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
+                //        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                //        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                //        var html = GetHTMLView("rptCurrentAdmittedListReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                //        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                //        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDCurrentAdmittedDoctorWiseCharges", "IPDCurrentAdmittedDoctorWiseCharges", Orientation.Landscape);
+                //        break;
+                //    }
+                //#endregion
+
+                
+                #region :: AdmissionCancelReport ::
+                case "AdmissionCancelReport":
+                    {
+                        model.RepoertName = "Admission Cancel Report";
+
+                        string[] headerList = {  "Sr.No", "Admission ID", "Date", "Time", "Patient Name", "Gender", "Age", "Department", "City",  "Mobile", "Aadhar", "Cancel Reason",  "Cancelled By", "Cancelled Date" };
+                        string[] colList ={"AdmissionID", "AdmissionDate", "AdmissionTime", "PatientName",  "GenderName",  "Age", "DepartmentName", "City", "MobileNo", "AadharCardNo", "IsCancelComment", "UserName","IsCancelledDateTime"};
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AdmissionCancelReport.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("Rtrv_AdmissionCancle_Report", model, htmlFilePath, htmlHeaderFilePath, colList, headerList );
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        tuple = _pdfUtility.GeneratePdfFromHtml(  html,  model.StorageBaseUrl,  "AdmissionCancelReport",  "AdmissionCancelReport",   Orientation.Landscape );
+
+                        break;
+                    }
+                #endregion
+
 
 
 
@@ -3951,7 +3989,45 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
                     }
                     break;
+                case "NewMultiTotalReportWithSummary.html":
+                    {
+                        HeaderItems.Append(GetCommonHtmlTableHeader(dt, headerList, columnWidths));
 
+                        items.Append(GetCommonHtmlTableReports(
+                            dt,
+                            headerList,
+                            model.colList,
+                            totalColList,
+                            model.groupByLabel.Split(',').Where(x => x != "").ToArray()
+                        ));
+
+                        ItemsTotal.Append(CreateGrandTotal(
+                            dt,
+                            totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray(),
+                            model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray()
+                        ));
+
+                        string summaryHtml = CreateGenericSummary(
+                            dt,
+                            totalColList,
+                            model.groupByLabel.Split(',')
+                                .Where(x => !string.IsNullOrWhiteSpace(x))
+                                .ToArray()
+                        );
+                        if (model.Mode == "PaymentModeSummary")
+                        {
+                            string paymentSummary = CreatePaymentModeNetSummary(dt,totalColList,model.groupByLabel.Split(',') .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray());
+                            html = html.Replace("{{PaymentSummary}}", paymentSummary);
+                            html = html.Replace("display:none;", "display:block;");
+                        }
+                        else
+                        {
+                            html = html.Replace("{{PaymentSummary}}", "");
+                        }
+
+                        html = html.Replace("{{SummarySection}}", summaryHtml);
+                    }
+                    break;
                     /* HELPERS */
                     string GetDoctorTotalRow(decimal g, decimal d, decimal n)
                     {
@@ -4467,6 +4543,143 @@ namespace HIMS.Services.Report
                 table.Append("</tr>");
             }
             return table.ToString();
+        }
+        public static string CreateGenericSummary(DataTable dt,string[] totalCols,string[] groupCols)
+        {
+            StringBuilder html = new();
+
+            var validCols = totalCols.Where(c => !string.IsNullOrWhiteSpace(c) && c != "space" && c != "lableTotal").ToList();
+
+            if (!validCols.Any() || groupCols.Length < 2)
+                return "";
+
+            string expCol = groupCols[0]; 
+            string typeCol = groupCols[1]; 
+
+            var types = dt.AsEnumerable().Select(r => r[typeCol].ToString()).Distinct().ToList();
+
+            html.Append("<table style='width:100%;border-collapse:collapse;font-family:Calibri;'>");
+            html.Append("<tr style='background:#e6e6e6;font-weight:bold;'>");
+            html.Append("<th style='border:1px solid #777;padding:6px;text-align:left;'>Type</th>");
+
+            foreach (var col in validCols)
+            {
+                html.Append($"<th style='border:1px solid #777;padding:6px;text-align:right;'>{col}</th>");
+            }
+
+            html.Append("</tr>");
+
+            decimal[] grandTotals = new decimal[validCols.Count];
+            foreach (var type in types)
+            {
+                html.Append("<tr>");
+                html.Append($"<td style='border:1px solid #ccc;padding:6px;font-weight:bold;'>{type}</td>");
+
+                for (int i = 0; i < validCols.Count; i++)
+                {
+                    string col = validCols[i];
+
+                    decimal val = dt.AsEnumerable()
+                        .Where(r => r[typeCol].ToString() == type)
+                        .Sum(r =>
+                        {
+                            decimal v = r.IsNull(col) ? 0 : Convert.ToDecimal(r[col]);
+                            if (r[expCol].ToString() == "Expense")
+                                v = -v;
+                            return v;
+                        });
+
+                    grandTotals[i] += val;
+
+                    html.Append($"<td style='border:1px solid #ccc;padding:6px;text-align:right;'>{val:N3}</td>");
+                }
+
+                html.Append("</tr>");
+            }
+
+            html.Append("<tr style='background:#ececec;font-weight:bold;border-top:3px solid #000;'>");
+            html.Append("<td style='border:1px solid #777;border-top:3px solid #000;padding:6px;'>Grand Total</td>");
+
+            foreach (var val in grandTotals)
+            {
+                html.Append($"<td style='border:1px solid #777;border-top:3px solid #000;padding:6px;text-align:right;'>{val:N3}</td>");
+            }
+
+            html.Append("</tr>");
+            html.Append("</table>");
+
+            return html.ToString();
+        }
+        public static string CreatePaymentModeNetSummary(DataTable dt,string[] totalCols,string[] groupCols)
+        {
+            StringBuilder html = new();
+
+            var validCols = totalCols
+                .Where(c => !string.IsNullOrWhiteSpace(c) &&
+                            c != "space" &&
+                            c != "lableTotal")
+                .ToList();
+
+            if (!validCols.Any() || groupCols.Length < 1)
+                return "";
+
+            string expCol = groupCols[0]; 
+            var paymentCols = validCols
+                .Where(c =>
+                    c.ToLower().Contains("cash") ||
+                    c.ToLower().Contains("card") ||
+                    c.ToLower().Contains("cheque") ||
+                    c.ToLower().Contains("neft") ||
+                    c.ToLower().Contains("paytm") ||
+                    c.ToLower().Contains("online"))
+                .ToList();
+
+            if (!paymentCols.Any())
+                return "";
+
+            html.Append("<table style='width:50%;border-collapse:collapse;font-family:Calibri;margin-top:10px;'>");
+            html.Append("<tr style='background:#e6e6e6;font-weight:bold;'>");
+            html.Append("<th style='border:1px solid #777;padding:6px;text-align:left;'>Payment Mode</th>");
+            html.Append("<th style='border:1px solid #777;padding:6px;text-align:right;'>Net Amount</th>");
+            html.Append("</tr>");
+
+            decimal grandTotal = 0;
+
+            foreach (var col in paymentCols)
+            {
+                decimal net = dt.AsEnumerable()
+                    .Sum(r =>
+                    {
+                        decimal v = r.IsNull(col) ? 0 : Convert.ToDecimal(r[col]);
+                        if (r[expCol].ToString().Equals("Expense", StringComparison.OrdinalIgnoreCase))
+                            v = -v;
+                        return v;
+                    });
+
+                grandTotal += net;
+
+                string label = col
+                    .Replace("PayAmount", "")
+                    .Replace("Amount", "")
+                    .Replace("Pay", "");
+
+                string display = net.ToString("N2"); 
+                html.Append($@"
+                <tr>
+                    <td style='border:1px solid #ccc;padding:6px;'>{label}</td>
+                    <td style='border:1px solid #ccc;padding:6px;text-align:right;'>{display}</td>
+                </tr>");
+            }
+            string grandDisplay = grandTotal.ToString("N2");
+            html.Append($@"
+            <tr style='background:#ececec;font-weight:bold;border-top:2px solid #000;'>
+                <td style='border:1px solid #777;padding:6px;'>Grand Total</td>
+                <td style='border:1px solid #777;padding:6px;text-align:right;'>{grandDisplay}</td>
+            </tr>");
+
+            html.Append("</table>");
+
+            return html.ToString();
         }
         private static string GetHTMLViewerGroupBy(string sp_Name, ReportConfigDto model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string[] groupbyList = null, string groupByLabel = "", string[] columnWidths = null, string[] columnAlignments = null)
         {
@@ -13532,6 +13745,47 @@ namespace HIMS.Services.Report
                              .Append("</td></tr>");
                     }
                     break;
+                case "AdmissionCancelReport":
+                    {
+                        HeaderItems.Append("<tr>");
+                        foreach (var hr in headerList)
+                        {
+                            HeaderItems.Append("<th style=\"border-top: 1px solid #000;border-bottom: 1px solid #000;font-size:15px; padding: 6px;\">")
+                                       .Append(hr)
+                                       .Append("</th>");
+                        }
+                        HeaderItems.Append("</tr>");
+
+                        int i = 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr style=\"text-align:center;\">")
+                                 .Append("<td>").Append(i).Append("</td>");
+
+                            foreach (var col in colList)
+                            {
+                                string value = "";
+
+                                if (col == "AdmissionDate" || col == "IsCancelledDateTime")
+                                {
+                                    value = dr[col] == DBNull.Value ? "" : Convert.ToDateTime(dr[col]).ToString("dd-MM-yyyy");
+                                }
+                                else
+                                {
+                                    value = dr[col]?.ToString();
+                                }
+
+                                items.Append("<td>").Append(value).Append("</td>");
+                            }
+
+                            items.Append("</tr>");
+                        }
+                    }
+                    break;
+
 
                 //case "WardWiseAdmissionList":
                 //    {
