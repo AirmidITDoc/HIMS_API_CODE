@@ -684,8 +684,22 @@ namespace HIMS.API.Controllers.Report
                 model.FileName = MReportConfigList[0].ReportFileName;
                 model.vPageOrientation = MReportConfigList[0].ReportPageOrientation;
             }
+            //Uncomment this below line if the new code gives problem and comment the rest of code in this method from below to end of method
+            //return Ok(ReportExcelHelper.GetExcel(model, dt));
+
             DataTable dt = _reportService.GetReportDataBySp(model);
-            return Ok(ReportExcelHelper.GetExcel(model, dt));
+            var folderPath = AppSettings.Settings.StorageBaseUrl; 
+            Directory.CreateDirectory(folderPath);
+            var safeName = string.Join("_", model.RepoertName.Split(Path.GetInvalidFileNameChars()));
+            var fileName = $"{safeName}_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+            var fullPath = Path.Combine(folderPath, fileName);
+            var stream = ReportExcelHelper.GetExcel(model, dt);
+            using (var fileStream = new FileStream(fullPath, FileMode.Create))
+            {
+                stream.CopyTo(fileStream);
+            }
+            stream.Position = 0;
+            return File(stream,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",fileName);
         }
 
 
