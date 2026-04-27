@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style type="text/css">
+
+        body {
+            font-family: Calibri, Arial;
+            font-size: 15px;
+            color: #000;
+        }
+
+        #dataTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+
+            #dataTable th {
+                border: 1px solid #666;
+                background: #e6e6e6;
+                padding: 8px;
+                text-align: center;
+                font-size: 15px;
+                font-weight: bold;
+            }
+
+
+            #dataTable td {
+                border: 1px solid #bfbfbf;
+                padding: 6px;
+            }
+
+
+        .groupHeader {
+            background: #f2f2f2;
+            font-weight: bold;
+        }
+
+
+        .billTotal {
+            font-weight: bold;
+            border-top: 1px solid #666;
+        }
+
+        .subTotal {
+            background: #e6e6e6;
+            font-weight: bold;
+        }
+
+        .grandTotal {
+            background: #d9d9d9;
+            font-weight: bold;
+            border-top: 2px solid #000;
+        }
+
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+
+        #dataTable thead {
+            display: table-header-group;
+        }
+
+        #dataTable tfoot {
+            display: table-footer-group;
+        }
+
+        #dataTable tr {
+            page-break-inside: avoid;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="main-content-wrapper">
+
+        <div class="invoice-box" style="margin:0 auto;">
+
+            <table style="width:100%;">
+
+                {{HospitalHeader}}
+
+
+                <tr>
+                    <td>
+                        <table style="width:100%;">
+                            <tr style="font-size:18px">
+                                <td style="border-bottom:1px solid #ccc;padding-bottom:10px;">
+                                    <b>{{RepoertName}}</b>
+                                </td>
+                                <td style="border-bottom:1px solid #ccc;padding-bottom:10px;text-align:right;">
+                                    <b>Print Date : {{CurrentDate}}</b>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="padding:8px 0;font-size:16px;font-weight:bold;">
+                                    From Date : {{FromDate}}  --  To Date : {{ToDate}}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+
+                        <table id="dataTable">
+
+                            <thead>
+                                {{HeaderItems}}
+                            </thead>
+
+                            <tbody>
+                                {{Items}}
+                                {{ItemsTotal}}
+                            </tbody>
+
+                        </table>
+                        <!-- NEW PAGE -->
+                        <div style="page-break-before: always;"></div>
+
+                        <table style="width:100%; border-collapse:collapse; margin-bottom:10px; border:1px solid #777;">
+                            <tr style="background:#d9d9d9; font-weight:bold;">
+                                <td style="padding:10px; font-size:18px; text-align:left; border-right:1px solid #777;">
+                                    Summary Report For {{RepoertName}}
+                                </td>
+                                <td style="padding:10px; font-size:16px; text-align:right;">
+                                    From Date : {{FromDate}} &nbsp; -- &nbsp; To Date : {{ToDate}}
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+
+                        <!-- SUMMARY -->
+                        {{SummarySection}}
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
