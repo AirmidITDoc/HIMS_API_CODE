@@ -516,7 +516,7 @@ namespace HIMS.Services.Users
             }
             string DsalesId = odal.ExecuteNonQuery("m_insert_T_SalesDraftHeader_1", CommandType.StoredProcedure, "DsalesId", entity);
             ObjDraftHeader.DsalesId = Convert.ToInt32(DsalesId);
-            await _context.LogProcedureExecution(entity, nameof(TSalesDraftHeader), ObjDraftHeader.DsalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+           // await _context.LogProcedureExecution(entity, nameof(TSalesDraftHeader), ObjDraftHeader.DsalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
 
             foreach (var item in ObjTSalesDraftDet)
@@ -531,7 +531,7 @@ namespace HIMS.Services.Users
                         Tentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_T_SalesDraftDet_1", CommandType.StoredProcedure, Tentity);
-                await _context.LogProcedureExecution(Tentity, nameof(TSalesDraftDet), item.SalDetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+               // await _context.LogProcedureExecution(Tentity, nameof(TSalesDraftDet), item.SalDetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             }
         }
