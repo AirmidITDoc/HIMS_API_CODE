@@ -14,6 +14,7 @@ using System.Data;
 using System.Globalization;
 using System.Reflection.PortableExecutable;
 using System.Text;
+using System.Text.RegularExpressions;
 using WkHtmlToPdfDotNet;
 using static LinqToDB.Common.Configuration;
 
@@ -4027,6 +4028,16 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{SummarySection}}", summaryHtml);
                     }
+
+                    break;
+                case "MultiResultSetReport.html":
+                    {
+                        string resultSetHtml = RenderMultiResultSetReport(model.SPName, model.SearchFields);
+
+                        html = html.Replace("{{ResultSetTables}}", resultSetHtml);
+                        html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yyyy"));
+                        html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
+                    }
                     break;
                     /* HELPERS */
                     string GetDoctorTotalRow(decimal g, decimal d, decimal n)
@@ -4680,6 +4691,130 @@ namespace HIMS.Services.Report
             html.Append("</table>");
 
             return html.ToString();
+        }
+        private static string RenderMultiResultSetReport(string sPName, List<SearchGrid> searchFields)
+        {
+            var fields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(searchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+
+            SqlParameter[] para = fields.Select(kv =>
+            {
+                bool isDate = kv.Key.Equals("FromDate", StringComparison.OrdinalIgnoreCase)
+                           || kv.Key.Equals("ToDate", StringComparison.OrdinalIgnoreCase);
+
+                return new SqlParameter("@" + kv.Key,isDate? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture): (object)kv.Value);
+            }).ToArray();
+
+            List<DataTable> resultSets = FetchAllResultSets(sPName, para);
+
+            if (resultSets.Count == 0)
+                return "<p>No data found</p>";
+
+            var sb = new StringBuilder();
+
+            foreach (var dt in resultSets)
+            {
+                if (dt.Rows.Count == 0) continue;
+
+                var visibleCols = dt.Columns.Cast<DataColumn>().Where(c => !c.ColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase)).ToList();
+                int colCount = visibleCols.Count;
+
+                string headerFont = "18px";
+                string dataFont = "18px";
+
+                if (colCount <= 8) { headerFont = "18px"; dataFont = "18px"; }
+                else if (colCount <= 12) { headerFont = "14px"; dataFont = "14px"; }
+                else if (colCount <= 16) { headerFont = "14px"; dataFont = "14px"; }
+                else if (colCount <= 20) { headerFont = "12px"; dataFont = "12px"; }
+                else { headerFont = "10px"; dataFont = "10px"; }
+
+                sb.Append("<table class='data-table'>");
+                sb.Append("<colgroup>");
+                double colWidth = Math.Round(100.0 / colCount, 2);
+                foreach (var col in visibleCols)
+                {
+                    sb.Append($"<col style='width:{colWidth}%;'>");
+                }
+                sb.Append("</colgroup>");
+
+
+                sb.Append("<thead><tr>");
+                foreach (var col in visibleCols)
+                {
+                    sb.Append($"<th style='font-size:{headerFont}; white-space:nowrap;'>");
+                    sb.Append(col.ColumnName);
+                    sb.Append("</th>");
+                }
+                sb.Append("</tr></thead>");
+
+
+                sb.Append("<tbody>");
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    string type = dt.Columns.Contains("Type") ? dr["Type"]?.ToString() : "";
+                    string rowClass = type == "Total" ? "row-total" : "";
+
+                    sb.Append($"<tr class='{rowClass}'>");
+
+                    foreach (var col in visibleCols)
+                    {
+                        string val = FormatCellValue(dr[col]);
+                        sb.Append($"<td class='align-center' style='font-size:{dataFont};'>");
+                        sb.Append(val);
+                        sb.Append("</td>");
+                    }
+                    sb.Append("</tr>");
+                }
+                sb.Append("</tbody></table><br><br>");
+            }
+            return sb.ToString();
+        }
+        private static List<DataTable> FetchAllResultSets(string spName, SqlParameter[] para)
+        {
+            var tables = new List<DataTable>();
+
+            string connStr = AppSettings.Settings.CONNECTION_STRING; 
+
+            using var conn = new SqlConnection(connStr);
+            using var cmd = new SqlCommand(spName, conn)
+            {
+                CommandType = CommandType.StoredProcedure,
+                CommandTimeout = 120
+            };
+            cmd.Parameters.AddRange(para);
+            conn.Open();
+
+            using SqlDataReader reader = cmd.ExecuteReader();
+
+            do
+            {
+                var dt = new DataTable();
+                for (int i = 0; i < reader.FieldCount; i++)
+                    dt.Columns.Add(reader.GetName(i), reader.GetFieldType(i));
+                while (reader.Read())
+                {
+                    DataRow row = dt.NewRow();
+                    for (int i = 0; i < reader.FieldCount; i++)
+                        row[i] = reader.IsDBNull(i) ? DBNull.Value : reader.GetValue(i);
+                    dt.Rows.Add(row);
+                }
+
+                tables.Add(dt);
+            }
+            while (reader.NextResult());
+
+            return tables;
+        }
+        private static string FormatCellValue(object val)
+        {
+            if (val == null || val == DBNull.Value) return "";
+
+            if (val is decimal d) return d.ToString("N2");
+            if (val is double db) return Math.Round(db, 2).ToString("N2");
+            if (val is float f) return Math.Round((decimal)f, 2).ToString("N2");
+            if (val is DateTime dt) return dt.ToString("dd/MM/yyyy");
+
+            return System.Web.HttpUtility.HtmlEncode(val.ToString());
         }
         private static string GetHTMLViewerGroupBy(string sp_Name, ReportConfigDto model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string[] groupbyList = null, string groupByLabel = "", string[] columnWidths = null, string[] columnAlignments = null)
         {
