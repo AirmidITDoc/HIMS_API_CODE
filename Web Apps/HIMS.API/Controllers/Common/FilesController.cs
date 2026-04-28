@@ -1,4 +1,5 @@
-﻿using HIMS.Api.Controllers;
+﻿using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Common;
@@ -117,7 +118,8 @@ namespace HIMS.API.Controllers.Common
                     DocSavedName = _FileUtility.SaveImageFromBase64(objSignature.Base64, objSignature.RefType.ToDescription()),
                     CreatedById = CurrentUserId,
                     Id = 0,
-                    IsDelete = false,
+                    // IsDelete = false,
+                    IsDelete = objSignature.IsDelete,
                     RefId = objSignature.RefId,
                     RefType = (long)objSignature.RefType,
                     CreatedDate = AppTime.Now
@@ -130,7 +132,7 @@ namespace HIMS.API.Controllers.Common
         [Permission]
         public async Task<ApiResponse> GetSignature(int RefId, PageNames RefType)
         {
-            var result = (await _FileService.GetAll(x => x.RefId == RefId && x.RefType == (int)RefType)).FirstOrDefault();
+            var result = (await _FileService.GetAll(x => x.RefId == RefId && x.IsDelete == false && x.RefType == (int)RefType)).FirstOrDefault();
 
             if (result == null || result.RefType == null || string.IsNullOrEmpty(result.DocSavedName))
             {
