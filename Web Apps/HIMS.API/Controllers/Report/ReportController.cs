@@ -471,6 +471,8 @@ namespace HIMS.API.Controllers.Report
                 case "IpBillRefundReceipt":
                 case "IpDischargeReceipt":
                 case "BedTransferReceipt":
+                case "AdmissionCancleReport":
+
 
 
                 //DISCHARGE Summary Reports
