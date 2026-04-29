@@ -5,7 +5,7 @@ namespace HIMS.API.Models.OPPatient
     public class OpBillCancellationModel
     {
         public long BillNo { get; set; }
-        public long UserId { get; set; }
+        public long IsCancelledBy { get; set; }
         public string? DiscComments { get; set; }
 
 

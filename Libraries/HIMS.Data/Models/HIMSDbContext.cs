@@ -1170,6 +1170,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.BillYear).HasMaxLength(10);
 
+                entity.Property(e => e.CancelReason).HasMaxLength(500);
+
                 entity.Property(e => e.ChConcessionAmt)
                     .HasColumnType("money")
                     .HasColumnName("Ch_ConcessionAmt");
@@ -1215,6 +1217,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.IsBillShrHold).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsCancelledDatetime).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 

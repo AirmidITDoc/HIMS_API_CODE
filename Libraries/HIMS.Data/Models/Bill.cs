@@ -83,6 +83,9 @@ namespace HIMS.Data.Models
         public decimal? SalesAmount { get; set; }
         public decimal? Sramount { get; set; }
         public bool? IsSync { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDatetime { get; set; }
+        public string? CancelReason { get; set; }
 
         public virtual ICollection<AddCharge> AddCharges { get; set; }
         public virtual ICollection<BillDetail> BillDetails { get; set; }
