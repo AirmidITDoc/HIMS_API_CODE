@@ -12577,7 +12577,7 @@ namespace HIMS.Services.Report
 
                             // ================= ACCUMULATE TOTALS =================
 
-                            F_TotalAmount = Math.Round(F_TotalAmount, 0, MidpointRounding.AwayFromZero);
+                            //F_TotalAmount = Math.Round(F_TotalAmount, 0, MidpointRounding.AwayFromZero);
 
                             T_TotalAmount += dr["ChargesTotalAmt"].ConvertToDouble();
                             F_TotalAmount += dr["ChargesTotalAmt"].ConvertToDouble();
