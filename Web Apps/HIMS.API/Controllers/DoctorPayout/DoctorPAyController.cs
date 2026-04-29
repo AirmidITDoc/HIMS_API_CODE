@@ -54,6 +54,16 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
 
+        [HttpPost("DoctorPaymentList")]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> DotorPaymentList(GridRequestModel objGrid)
+        {
+            IPagedList<DoctprPaymentListDo> DoctorpayList = await _IDoctorPayService.DocPaymentList(objGrid);
+            return Ok(DoctorpayList.ToGridResponse(objGrid, "DoctorPaymentList"));
+        }
+
+
+
         [HttpPost("DoctorsharSummarydetail")]
         //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]r
         public async Task<IActionResult> Dotorshresummarydetail(GridRequestModel objGrid)

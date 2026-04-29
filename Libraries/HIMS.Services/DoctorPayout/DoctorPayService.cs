@@ -182,7 +182,10 @@ namespace HIMS.Services.DoctorPayout
         }
 
 
-
+        public virtual async Task<IPagedList<DoctprPaymentListDo>> DocPaymentList(GridRequestModel objGrid)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DoctprPaymentListDo>(objGrid, "Rtrv_DoctorPaymentList");
+        }
 
         //public virtual async Task InsertAsyncc(List<TPaymentDoctor> ObjTPaymentDoctor, int CurrentUserId, string CurrentUserName)
         //{
