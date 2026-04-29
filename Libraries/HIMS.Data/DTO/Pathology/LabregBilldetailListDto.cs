@@ -35,7 +35,7 @@ namespace HIMS.Data.DTO.Pathology
         public string PatientNumber { get; set; }
         public string AgeYear { get; set; }
         public string GenderName { get; set; }
-
+        public string CategoryName { get; set; }
     }
     public class LabResultListDto
     {
