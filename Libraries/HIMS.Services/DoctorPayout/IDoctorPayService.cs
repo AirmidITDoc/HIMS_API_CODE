@@ -17,6 +17,10 @@ namespace HIMS.Services.DoctorPayout
         Task<IPagedList<DoctorShareListDto>> GetLists(GridRequestModel objGrid);
         Task<IPagedList<DoctorShareLbyNameListDto>> GetList1(GridRequestModel objGrid);
         Task InsertAsync(AddCharge ObjAddCharge, int UserId, string Username);
+        Task InsertAsyncc( List<TPaymentDoctor> model,  int CurrentUserId, string CurrentUserName);
+
+
+
         void InsertSP(TDoctorPayoutProcessHeader ObjTDoctorPayoutProcessHeader, List<TDoctorPayoutProcessDetail> ObjTDoctorPayoutProcessDetail,  int UserId, string Username);
 
 

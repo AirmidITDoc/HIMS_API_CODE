@@ -568,6 +568,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPatientPolicyInformation> TPatientPolicyInformations { get; set; } = null!;
         public virtual DbSet<TPayment> TPayments { get; set; } = null!;
         public virtual DbSet<TPaymentCanteen> TPaymentCanteens { get; set; } = null!;
+        public virtual DbSet<TPaymentDoctor> TPaymentDoctors { get; set; } = null!;
         public virtual DbSet<TPaymentPharmacy> TPaymentPharmacies { get; set; } = null!;
         public virtual DbSet<TPaymentSync> TPaymentSyncs { get; set; } = null!;
         public virtual DbSet<TPhColHadOvToAcc> TPhColHadOvToAccs { get; set; } = null!;
@@ -648,7 +649,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -16658,6 +16659,51 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReceiptNo).HasMaxLength(50);
 
                 entity.Property(e => e.Remark).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<TPaymentDoctor>(entity =>
+            {
+                entity.HasKey(e => e.PaymentId);
+
+                entity.ToTable("T_PaymentDoctor");
+
+                entity.Property(e => e.AdvanceUsedAmount).HasColumnType("money");
+
+                entity.Property(e => e.BankName).HasMaxLength(100);
+
+                entity.Property(e => e.Comments).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsSelfOrcompany).HasColumnName("IsSelfORCompany");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OnlineTranNo).HasMaxLength(55);
+
+                entity.Property(e => e.OnlineTranResponse).HasMaxLength(255);
+
+                entity.Property(e => e.Opdipdtype).HasColumnName("OPDIPDType");
+
+                entity.Property(e => e.PayAmount).HasColumnType("money");
+
+                entity.Property(e => e.PayMode).HasMaxLength(20);
+
+                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PaymentTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ReceiptNo).HasMaxLength(50);
+
+                entity.Property(e => e.TranMode).HasMaxLength(55);
+
+                entity.Property(e => e.TranNo).HasMaxLength(50);
+
+                entity.Property(e => e.TransactionLabel).HasMaxLength(55);
+
+                entity.Property(e => e.ValidationDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TPaymentPharmacy>(entity =>

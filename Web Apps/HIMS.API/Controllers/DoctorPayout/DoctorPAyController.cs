@@ -3,14 +3,19 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.DoctorPayout;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OPPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
 using HIMS.Services.DoctorPayout;
 using HIMS.Services.OPPatient;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
 
 namespace HIMS.API.Controllers.DoctorPayout
 {
@@ -146,6 +151,59 @@ namespace HIMS.API.Controllers.DoctorPayout
             return Ok(DoctorProcessList.ToGridResponse(objGrid, "DoctorProcessList"));
         }
 
+
+        //[HttpPost("InsertEDMX")]
+        ////   [Permission(PageCode = "", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> InsertEDMX(DoctorPayyModel obj)
+        //{
+        //    TPaymentDoctor model = obj.MapTo<TPaymentDoctor>();
+        //    if (obj.PaymentId == 0)
+        //    {
+        //        model.CreatedDate = AppTime.Now;
+        //        model.CreatedBy = CurrentUserId;
+        //        model.ModifiedDate = AppTime.Now;
+        //        model.ModifiedBy = CurrentUserId;
+        //        await _IDoctorPayService.InsertAsyncc(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
+        //}
+
+        //[HttpPost("InsertEDMX")]
+        //public async Task<ApiResponse> Insert(DoctorPaymwntModel obj)
+        //{
+     
+        //    List<TPaymentDoctor> model = obj.MapTo<List<TPaymentDoctor>>();
+
+        //    if (obj.PaymentId == 0)
+        //    {
+
+        //        //model.CreatedDate = AppTime.Now;
+        //        //model.CreatedBy = CurrentUserId;
+        //        //model.ModifiedDate = AppTime.Now;
+        //        //model.ModifiedBy = CurrentUserId;
+        //        await _IDoctorPayService.InsertAsyncc( model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        //}
+
+        [HttpPost("TDoctorpaymentInsert")]
+        public async Task<ApiResponse> Insert(DoctorPaymwntModel obj)
+        {
+            List<TPaymentDoctor> model = obj.DoctorPayyModel.MapTo<List<TPaymentDoctor>>();
+
+            if (model.Count > 0)
+            {
+                await _IDoctorPayService.InsertAsyncc(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
 
 
     }

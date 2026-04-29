@@ -1,11 +1,14 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Linq;
 using System.Transactions;
 
 namespace HIMS.Services.DoctorPayout
@@ -90,7 +93,7 @@ namespace HIMS.Services.DoctorPayout
         {
 
             DatabaseHelper odal = new();
-            string[] rEntity = {  "DoctorId", "ProcessStartDate", "ProcessEndDate", "ProcessDate", "NetAmount", "DoctorAmount", "HospitalAmount", "Tdsamount", "CreatedBy" };
+            string[] rEntity = { "DoctorId", "ProcessStartDate", "ProcessEndDate", "ProcessDate", "NetAmount", "DoctorAmount", "HospitalAmount", "Tdsamount", "CreatedBy" };
 
             var dentity = ObjTDoctorPayoutProcessHeader.ToDictionary();
             foreach (var rProperty in dentity.Keys.ToList())
@@ -157,7 +160,7 @@ namespace HIMS.Services.DoctorPayout
         //    }
         //}
         public virtual async Task InsertAsync(AddCharge ObjAddCharge, int CurrentUserId, string CurrentUserName)
-            {
+        {
             DatabaseHelper odal = new();
             string[] AEntity = { "BillNo", "DoctorId" };
             var entity = ObjAddCharge.ToDictionary();
@@ -177,6 +180,94 @@ namespace HIMS.Services.DoctorPayout
         {
             return await DatabaseHelper.GetGridDataBySp<DoctorShareprocessListDto>(objGrid, "ps_Rtrv_T_DoctorPayoutProcesslist");
         }
+
+
+
+
+        //public virtual async Task InsertAsyncc(List<TPaymentDoctor> ObjTPaymentDoctor, int CurrentUserId, string CurrentUserName)
+        //{
+
+
+        //    DatabaseHelper odal = new();
+        //    foreach (var item in ObjTPaymentDoctor)
+        //    {
+        //        string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+        //                                   "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+
+        //        var pentity = item.ToDictionary();
+        //        foreach (var rProperty in pentity.Keys.ToList())
+        //        {
+        //            if (!PEntity.Contains(rProperty))
+        //                pentity.Remove(rProperty);
+        //        }
+        //        string VPaymentId = odal.ExecuteNonQuery("ps_Insert_TPaymentDoctor", CommandType.StoredProcedure, "PaymentId", pentity);
+        //        item.PaymentId = Convert.ToInt32(VPaymentId);
+
+
+        //    }
+        //}
+
+        public virtual async Task InsertAsyncc(List<TPaymentDoctor> ObjTPaymentDoctor, int CurrentUserId, string CurrentUserName)
+        {
+
+            DatabaseHelper odal = new();
+            foreach (var item in ObjTPaymentDoctor)
+            {
+                string[] rEntity = { "PaymentId","UnitId" ,"BillNo","OPDIPDType","ReceiptNo", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName",
+                "BankName", "ValidationDate", "AdvanceUsedAmount",
+        "Comments", "PayMode", "OnlineTranNo", "OnlineTranResponse","CompanyId", "AdvanceId", "RefundId", "CashCounterId",
+"TransactionType", "TransactionLabel", "IsSelfORCompany",
+"TranMode", "IsCancelled", "IsCancelledBy", "IsCancelledDate",
+"CreatedBy", "CreatedDate"};
+                var entity = item.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+                string PaymentId = odal.ExecuteNonQuery("ps_Insert_TPaymentDoctor", CommandType.StoredProcedure, "PaymentId", entity);
+                item.PaymentId = Convert.ToInt32(PaymentId);
+
+            }
+       
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+        }
+      
+
     }
 }
 
+
+
+
+        //public virtual async Task UpdateAsync(TIndentHeader objIndent, int UserId, string Username, string[]? ignoreColumns = null)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        _context.Attach(objIndent);
+        //        _context.Entry(objIndent).State = EntityState.Modified;
+        //        // 2. Ignore specific columns
+        //        if (ignoreColumns?.Length > 0)
+        //        {
+        //            foreach (var column in ignoreColumns)
+        //            {
+        //                _context.Entry(objIndent).Property(column).IsModified = false;
+        //            }
+        //        }
+        //        // Delete details table realted records
+        //        var lst = await _context.TIndentDetails.Where(x => x.IndentId == objIndent.IndentId).ToListAsync();
+        //        _context.TIndentDetails.RemoveRange(lst);
+
+        //        // Update header & detail table records
+        //        _context.TIndentHeaders.Update(objIndent);
+        //        _context.Entry(objIndent).State = EntityState.Modified;
+        //        _context.Entry(objIndent).Property(x => x.Addedby).IsModified = false;
+        //        _context.Entry(objIndent).Property(x => x.IndentNo).IsModified = false;
+        //        _context.Entry(objIndent).Property(x => x.Isverify).IsModified = false;
+        //        _context.Entry(objIndent).Property(x => x.IsInchargeVerify).IsModified = false;
+
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
