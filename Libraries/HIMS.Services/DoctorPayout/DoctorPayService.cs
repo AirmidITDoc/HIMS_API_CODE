@@ -213,12 +213,8 @@ namespace HIMS.Services.DoctorPayout
             DatabaseHelper odal = new();
             foreach (var item in ObjTPaymentDoctor)
             {
-                string[] rEntity = { "PaymentId","UnitId" ,"BillNo","OPDIPDType","ReceiptNo", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName",
-                "BankName", "ValidationDate", "AdvanceUsedAmount",
-        "Comments", "PayMode", "OnlineTranNo", "OnlineTranResponse","CompanyId", "AdvanceId", "RefundId", "CashCounterId",
-"TransactionType", "TransactionLabel", "IsSelfORCompany",
-"TranMode", "IsCancelled", "IsCancelledBy", "IsCancelledDate",
-"CreatedBy", "CreatedDate"};
+                string[] rEntity = {"UnitId","BillNo","Opdipdtype","ReceiptNo","PaymentDate","PaymentTime","PayAmount","TranNo","BankName","ValidationDate","AdvanceUsedAmount","Comments","PayMode",
+                    "OnlineTranNo","OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","TransactionLabel","IsSelfOrcompany","TranMode","IsCancelled","IsCancelledBy","IsCancelledDate","CreatedBy"};
                 var entity = item.ToDictionary();
                 foreach (var rProperty in entity.Keys.ToList())
                 {
@@ -227,13 +223,32 @@ namespace HIMS.Services.DoctorPayout
                 }
                 string PaymentId = odal.ExecuteNonQuery("ps_Insert_TPaymentDoctor", CommandType.StoredProcedure, "PaymentId", entity);
                 item.PaymentId = Convert.ToInt32(PaymentId);
-
             }
-       
+ 
             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
         }
-      
+        public virtual async Task UpdateAsyncc(List<TPaymentDoctor> ObjTPaymentDoctor, int CurrentUserId, string CurrentUserName)
+        {
+            DatabaseHelper odal = new();
+            foreach (var item in ObjTPaymentDoctor)
+            {
+                item.ModifiedBy = CurrentUserId;
+                item.ModifiedDate = DateTime.Now;
 
+                string[] rEntity = {"PaymentId","UnitId", "BillNo","Opdipdtype","ReceiptNo","PaymentDate","PaymentTime","PayAmount","TranNo","BankName","ValidationDate","AdvanceUsedAmount",
+                                     "Comments","PayMode","OnlineTranNo","OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","TransactionLabel","IsSelfOrcompany",
+                                     "TranMode","IsCancelled","IsCancelledBy","IsCancelledDate","ModifiedBy" };
+
+                var entity = item.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_Update_TPaymentDoctor", CommandType.StoredProcedure, entity);
+            }
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+        }
     }
 }
 
