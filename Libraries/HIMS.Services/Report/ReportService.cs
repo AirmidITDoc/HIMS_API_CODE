@@ -10210,7 +10210,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BillDate}}", dt.GetColValue("BillDateTime").ConvertToDateString("dd/MM/yyyy"));
                         html = html.Replace("{{BillTime}}", dt.GetColValue("BillTime").ConvertToDateString("hh:mm tt"));
                         html = html.Replace("{{PayMode}}", dt.GetColValue("PayMode"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
 
+                        
                         //html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
                         //html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
                         html = html.Replace("{{TotalBillAmount}}", dt.GetColValue("TotalAmt").ConvertToDouble().ToString("F2"));
@@ -10356,6 +10358,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BillDate}}", dt.GetColValue("BillDateTime").ConvertToDateString("dd/MM/yyyy"));
                         html = html.Replace("{{BillTime}}", dt.GetColValue("BillTime").ConvertToDateString("hh:mm tt"));
                         html = html.Replace("{{PayMode}}", dt.GetColValue("PayMode"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
 
                         //html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
                         //html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
