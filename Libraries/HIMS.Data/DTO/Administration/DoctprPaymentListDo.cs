@@ -14,11 +14,11 @@ namespace HIMS.Data.DTO.Administration
         public long UnitId { get; set; }
 
         public long? BillNo { get; set; }
-        public int? OPDIPDType { get; set; }
+        public byte? OPDIPDType { get; set; }
         public string? ReceiptNo { get; set; }
         public string? PaymentDate { get; set; }
       
-        public double? PayAmount { get; set; }
+        public decimal? PayAmount { get; set; }
         public string? TranNo { get; set; }
         public string? BankName { get; set; }
         public string? Comments { get; set; }

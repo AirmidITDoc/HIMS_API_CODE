@@ -54,6 +54,16 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
 
+        [HttpPost("DoctorPaymentList")]
+        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> DotorPaymentList(GridRequestModel objGrid)
+        {
+            IPagedList<DoctprPaymentListDo> DoctorpayList = await _IDoctorPayService.DocPaymentList(objGrid);
+            return Ok(DoctorpayList.ToGridResponse(objGrid, "DoctorPaymentList"));
+        }
+
+
+
         [HttpPost("DoctorsharSummarydetail")]
         //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]r
         public async Task<IActionResult> Dotorshresummarydetail(GridRequestModel objGrid)
@@ -203,6 +213,19 @@ namespace HIMS.API.Controllers.DoctorPayout
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
+
+        [HttpPut("TDoctorPaymentUpdate")]
+        public async Task<ApiResponse> Update(DoctorPaymwntModel obj)
+        {
+            List<TPaymentDoctor> model = obj.DoctorPayyModel.MapTo<List<TPaymentDoctor>>();
+
+            if (model == null || model.Count == 0 || model.Any(x => x.PaymentId == 0))
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+            await _IDoctorPayService.UpdateAsyncc(model, CurrentUserId, CurrentUserName);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
 
