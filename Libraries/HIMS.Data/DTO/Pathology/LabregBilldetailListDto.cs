@@ -24,6 +24,18 @@ namespace HIMS.Data.DTO.Pathology
         public long OPD_IPD_ID { get; set; }
         public long TestType { get; set; }
 
+        public long RadTestID { get; set; }
+        public long UnitId { get; set; }
+        public string HospitalName { get; set; }
+        public string LabRequestNo { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+        public DateTime DateofBirth { get; set; }
+        public string PatientNumber { get; set; }
+        public string AgeYear { get; set; }
+        public string GenderName { get; set; }
+
     }
     public class LabResultListDto
     {

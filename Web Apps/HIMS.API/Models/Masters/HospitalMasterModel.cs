@@ -30,6 +30,7 @@ namespace HIMS.API.Models.Masters
         public long? IpdRefundOfAdvanceCounterId { get; set; }
         public long? IpdRefundOfAdvanceReceiptCounterId { get; set; }
         public long? CityId { get; set; }
+        public int? IsHeaderOption { get; set; }
     }
     public class HospitalMasterModelModelValidator : AbstractValidator<HospitalMasterModel>
     {
