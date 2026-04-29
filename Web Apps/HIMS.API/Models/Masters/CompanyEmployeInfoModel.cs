@@ -14,6 +14,17 @@ namespace HIMS.API.Models.Masters
         public string? EmailId { get; set; }
         public string? Address { get; set; }
         public long? CityId { get; set; }
+        public long? Designation { get; set; }
+        public long? EmpDepartment { get; set; }
+        public DateTime? DateOfJoin { get; set; }
+        public long? UnitId { get; set; }
+        public long? AdharCardNo { get; set; }
+        public long? Pfno { get; set; }
+        public string? ExperienceYear { get; set; }
+        public string? PreviousSalary { get; set; }
+        public string? PreviousCompany { get; set; }
+        public string? PreviousDesignation { get; set; }
+        public bool? IsRepresentative { get; set; }
     }
     public class CompanyEmployeInfoModelValidator : AbstractValidator<CompanyEmployeInfoModel>
     {

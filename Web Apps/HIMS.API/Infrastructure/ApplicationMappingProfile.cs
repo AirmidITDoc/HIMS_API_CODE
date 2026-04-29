@@ -1,15 +1,20 @@
 ﻿using AutoMapper;
 using HIMS.API.Controllers.Pharmacy;
 using HIMS.API.Models.Administration;
+using HIMS.API.Models.Canteen;
 using HIMS.API.Models.Common;
 using HIMS.API.Models.Customer;
 using HIMS.API.Models.DoctorPayout;
+using HIMS.API.Models.Employee;
+using HIMS.API.Models.FeedBack;
+using HIMS.API.Models.GastrologyMasterModel;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Login;
 using HIMS.API.Models.Management;
 using HIMS.API.Models.Marketing;
 using HIMS.API.Models.Masters;
+using HIMS.API.Models.MRD;
 using HIMS.API.Models.Nursing;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OTManagement;
@@ -20,20 +25,16 @@ using HIMS.API.Models.Radiology;
 using HIMS.API.Models.Transaction;
 using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
-using static HIMS.API.Models.Masters.ConfigurationModelValidator;
-using static HIMS.API.Models.OTManagement.OTBookingRequestModel;
-using static HIMS.API.Models.Masters.ReportConfigModelModelValidator;
+using static HIMS.API.Models.Administration.NewTPaymentModel;
+using static HIMS.API.Models.GastrologyMasterModel.MSubQuestionMasterModel;
 using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 using static HIMS.API.Models.Masters.CompanyMasterModelValidator;
+using static HIMS.API.Models.Masters.ConfigurationModelValidator;
+using static HIMS.API.Models.Masters.ReportConfigModelModelValidator;
+using static HIMS.API.Models.OTManagement.OTBookingRequestModel;
 using static HIMS.API.Models.OutPatient.AppointmentBillModel;
 using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
 using static HIMS.API.Models.Pharmacy.TSalesInpatientHeaderModel;
-using HIMS.API.Models.GastrologyMasterModel;
-using static HIMS.API.Models.GastrologyMasterModel.MSubQuestionMasterModel;
-using HIMS.API.Models.MRD;
-using HIMS.API.Models.FeedBack;
-using HIMS.API.Models.Canteen;
-using static HIMS.API.Models.Administration.NewTPaymentModel;
 namespace HIMS.API.Infrastructure
 {
     public class ApplicationMappingProfile : Profile
@@ -316,6 +317,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIpprescriptionReturnH, TIpprescriptionReturnHModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<THomeCollectionRegistrationInfo, HomeCollectionupdatePhlebotomistModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIpprescriptionReturnD, TIpprescriptionReturnDModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MEmployeeDepartmentMaster, EmployeeDepartmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MEmployeeDesignationMaster, EmployeeDesignationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

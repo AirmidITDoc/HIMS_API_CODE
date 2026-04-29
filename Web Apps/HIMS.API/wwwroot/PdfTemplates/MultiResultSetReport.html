@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+
+    <style>
+        body {
+            font-family: Calibri, Arial;
+            font-size: 13px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        .report-wrapper {
+            padding: 4px;
+        }
+
+        .report-title-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 4px;
+        }
+
+        .report-title {
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 1px solid #aaa;
+            padding-bottom: 6px;
+        }
+
+        .report-print-date {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: right;
+            border-bottom: 1px solid #aaa;
+        }
+
+        .report-date-range {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 4px 0 6px 0;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; 
+        }
+
+            .data-table thead th {
+                background: #e6e6e6;
+                border: 1px solid #666;
+                padding: 5px;
+                text-align: center;
+                font-weight: bold;
+                white-space: nowrap; 
+            }
+
+            .data-table tbody td {
+                border: 1px solid #bfbfbf;
+                padding: 4px;
+                word-break: break-word;
+            }
+
+
+            .data-table th,
+            .data-table td {
+                min-width: 60px;
+            }
+
+
+        .row-total td {
+            font-weight: bold;
+            background: #efefef;
+            border-top: 2px solid #444 !important;
+        }
+
+
+        .align-right {
+            text-align: right;
+        }
+
+        .align-center {
+            text-align: center;
+        }
+
+        .align-left {
+            text-align: left;
+        }
+
+
+        .data-table thead {
+            display: table-header-group;
+        }
+
+        .data-table tr {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="report-wrapper">
+
+        <table style="width:100%;">
+            {{HospitalHeader}}
+        </table>
+
+        <table class="report-title-table">
+            <tr>
+                <td class="report-title">{{RepoertName}}</td>
+                <td class="report-print-date">Print Date : {{CurrentDate}}</td>
+            </tr>
+        </table>
+
+        <div class="report-date-range">
+            From Date : {{FromDate}} — To Date : {{ToDate}}
+        </div>
+
+     
+        {{ResultSetTables}}
+
+    </div>
+</body>
+</html>
