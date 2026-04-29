@@ -63,7 +63,7 @@ namespace HIMS.API.Models.DoctorPayout
         public long PaymentId { get; set; }
         public long? UnitId { get; set; }
         public long? BillNo { get; set; }
-        public int? Opdipdtype { get; set; }
+        public byte? Opdipdtype { get; set; }
         public string? ReceiptNo { get; set; }
         public DateTime? PaymentDate { get; set; }
         public string? PaymentTime { get; set; }
@@ -88,12 +88,8 @@ namespace HIMS.API.Models.DoctorPayout
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public long? CreatedBy { get; set; }
-
         public DateTime? CreatedDate { get; set; }
-
-        
-
-
+        public long? ModifiedBy { get; set; }
 
     }
     public class DoctorPaymwntModel

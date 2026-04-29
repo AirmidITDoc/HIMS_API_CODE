@@ -215,6 +215,19 @@ namespace HIMS.API.Controllers.DoctorPayout
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
+        [HttpPut("TDoctorPaymentUpdate")]
+        public async Task<ApiResponse> Update(DoctorPaymwntModel obj)
+        {
+            List<TPaymentDoctor> model = obj.DoctorPayyModel.MapTo<List<TPaymentDoctor>>();
+
+            if (model == null || model.Count == 0 || model.Any(x => x.PaymentId == 0))
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+            await _IDoctorPayService.UpdateAsyncc(model, CurrentUserId, CurrentUserName);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
 
     }
 }
