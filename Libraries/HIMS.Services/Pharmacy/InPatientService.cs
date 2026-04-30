@@ -3,19 +3,20 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
+using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Security.Principal;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace HIMS.Services.Pharmacy
 {
-    public  class InPatientService : IInPatientService
+    public class InPatientService : IInPatientService
     {
 
         private readonly Data.Models.HIMSDbContext _context;
@@ -91,9 +92,9 @@ namespace HIMS.Services.Pharmacy
                     }
 
                     odal.ExecuteNonQueryNew("ps_Update_T_CurStk_Sales_Id_1", CommandType.StoredProcedure, "", IIentity);
-                    await _context.LogProcedureExecution(IIentity,  nameof(TCurrentStock),  (int)items.StockId,   Core.Domain.Logging.LogAction.Add,   CurrentUserId, CurrentUserName );
+                    // await _context.LogProcedureExecution(IIentity,  nameof(TCurrentStock),  (int)items.StockId,   Core.Domain.Logging.LogAction.Add,   CurrentUserId, CurrentUserName );
                 }
-
+                await _context.LogProcedureExecution(ObjTCurrentStock, nameof(TCurrentStock), ObjSalesHeader.SalesId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                 var SalesIdObj = new { ObjSalesHeader.SalesId };
                 odal.ExecuteNonQueryNew("ps_Cal_DiscAmount_SalesInpatientHeader", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
                 odal.ExecuteNonQueryNew("ps_Cal_GSTAmount_SalesInpatientHeader", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
@@ -132,7 +133,7 @@ namespace HIMS.Services.Pharmacy
                 throw;
             }
         }
-        public virtual async Task InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail,  List<TIpprescriptionReturnD> ObjTIpprescriptionReturnD, TIpprescriptionReturnH ObjTIpprescriptionReturnH, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, List<TIpprescriptionReturnD> ObjTIpprescriptionReturnD, TIpprescriptionReturnH ObjTIpprescriptionReturnH, int CurrentUserId, string CurrentUserName)
         {
             // //Add header table records
             DatabaseHelper odal = new();

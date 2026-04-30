@@ -101,5 +101,25 @@ namespace HIMS.Data.Models
             await AuditLogs.AddAsync(objAdd);
             await base.SaveChangesAsync();
         }
+        public async Task LogProcedureExecution<T>(List<T> list, string EntityName, long? EntityId, LogAction logAction, int userId, string username)
+        {
+
+            AuditLog objAdd = new()
+            {
+                CreatedOn = AppTime.Now,
+                ActionId = (int)logAction,
+                ActionById = userId,
+                ActionByName = username,
+                Id = 0,
+                LogSourceId = (int)LogSource.API,
+                LogTypeId = (int)LogType.Audit,
+                AdditionalInfo = "Audit",
+                EntityId = EntityId.ToInt(),
+                EntityName = EntityName,
+                Description = JsonConvert.SerializeObject(list)
+            };
+            await AuditLogs.AddAsync(objAdd);
+            await base.SaveChangesAsync();
+        }
     }
 }

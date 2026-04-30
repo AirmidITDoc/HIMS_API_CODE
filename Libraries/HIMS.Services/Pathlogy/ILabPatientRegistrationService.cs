@@ -24,7 +24,7 @@ namespace HIMS.Services.Pathlogy
         Task InsertAsync(TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username);
         Task UpdateAsync(TLabPatientRegisteredMaster ObjTLabPatientRegistrationMaster, TLabPatientRegistration ObjTLabPatientRegistration, int UserId, string Username);
         Task InsertAsyncSP(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge,List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName);
-        Task InsertPaidBillAsync(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName);
+        Task InsertPaidBillAsync(TLabPatientRegistration ObjTLabPatientRegistration, Bill objBill, Payment objPayment, List<AddCharge> ObjaddCharge, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName, CancellationToken cancellationToken = default);
         List<LabVisitDetailsListSearchDto> SearchlabRegistration(long UnitId ,string Keyword );
         Task<IPagedList<PrevDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel objGrid);
         Task<List<TLabPatientRegistration>> SearchLabRegistration(string str);
