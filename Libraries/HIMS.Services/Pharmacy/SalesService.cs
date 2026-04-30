@@ -285,7 +285,7 @@ namespace HIMS.Services.Users
                     string[] Entity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
                                            "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
 
-                   
+
                     TPaymentPharmacy objTPay = new();
                     objTPay = item;
                     objTPay.BillNo = ObjPayment.BillNo;
@@ -312,96 +312,210 @@ namespace HIMS.Services.Users
             }
         }
 
-
-        
-        public virtual async Task InsertAsyncSPC(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncSPC(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int CurrentUserId, string CurrentUserName, CancellationToken cancellationToken = default)
         {
-            // Open transaction
-            using var transaction = await _context.Database.BeginTransactionAsync();
+            // Whitelists declared once
+            var headerWhitelist = new HashSet<string>(StringComparer.Ordinal)
+    {
+        "Date","Time","OpIpId","OpIpType","TotalAmount","VatAmount","DiscAmount","NetAmount",
+        "PaidAmount","BalanceAmount","ConcessionReasonId","ConcessionAuthorizationId","IsSellted",
+        "IsPrint","IsFree","UnitId","ExternalPatientName","DoctorName","StoreId","IsPrescription",
+        "AddedBy","CreditReason","CreditReasonId","WardId","BedId","DiscperH","IsPurBill",
+        "IsBillCheck","SalesHeadName","SalesTypeId","RegId","ExtMobileNo","RoundOff","ExtAddress","SalesId"
+    };
+
+            var stockWhitelist = new HashSet<string>(StringComparer.Ordinal) { "ItemId", "IssueQty", "IstkId", "StoreId" };
+            var prescriptionWhitelist = new HashSet<string>(StringComparer.Ordinal) { "OpIpId", "IsClosed" };
+            var draftWhitelist = new HashSet<string>(StringComparer.Ordinal) { "DsalesId", "IsClosed" };
+
+            // Manage connection lifecycle explicitly
+            var dbConnection = _context.Database.GetDbConnection();
+            var wasClosed = dbConnection.State != ConnectionState.Open;
+
+            if (wasClosed)
+                await dbConnection.OpenAsync(cancellationToken);
+
+            using var transaction = await _context.Database.BeginTransactionAsync(
+                System.Data.IsolationLevel.ReadCommitted, cancellationToken);
+
             try
             {
-                DatabaseHelper odal = new();
-                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
-                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+                var odal = new DatabaseHelper();
+                odal.SetConnection(dbConnection);
+                odal.SetTransaction(transaction.GetDbTransaction());
 
-                // 1️⃣ Insert Sales Header
-                string[] AEntity = { "Date", "Time", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "ConcessionReasonId", "ConcessionAuthorizationId", "IsSellted", "IsPrint", "IsFree", "UnitId", "ExternalPatientName", "DoctorName", "StoreId", "IsPrescription", "AddedBy", "CreditReason", "CreditReasonId", "WardId", "BedId", "DiscperH", "IsPurBill", "IsBillCheck", "SalesHeadName", "SalesTypeId", "RegId", "ExtMobileNo", "RoundOff", "ExtAddress", "SalesId" /*TSalesDetails*/ };
-                var entity = ObjSalesHeader.ToDictionary();
+                // 1) Insert Sales Header
+                var headerDict = ObjSalesHeader.ToDictionary();
+                FilterDict(headerDict, headerWhitelist);
 
-                foreach (var rProperty in entity.Keys.ToList())
+                string salesIdStr = odal.ExecuteNonQueryNew("ps_m_insert_Sales_1", CommandType.StoredProcedure, "SalesId", headerDict);
+
+                ObjSalesHeader.SalesId = Convert.ToInt32(salesIdStr);
+
+                await _context.LogProcedureExecution(headerDict, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+                // 2) Insert Sales Details (EF) — single SaveChanges
+                if (ObjSalesHeader.TSalesDetails?.Count > 0)
                 {
-                    if (!AEntity.Contains(rProperty))
-                        entity.Remove(rProperty);
+                    foreach (var item in ObjSalesHeader.TSalesDetails)
+                        item.SalesId = ObjSalesHeader.SalesId;
+
+                    _context.TSalesDetails.AddRange(ObjSalesHeader.TSalesDetails);
+                    await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
                 }
 
-                string SalesId = odal.ExecuteNonQueryNew("ps_m_insert_Sales_1", CommandType.StoredProcedure, "SalesId", entity);
-                ObjSalesHeader.SalesId = Convert.ToInt32(SalesId);
-                await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
-
-                // 2️⃣ Insert Sales Details (EF)
-                foreach (var item in ObjSalesHeader.TSalesDetails)
-                    item.SalesId = ObjSalesHeader.SalesId;
-
-                _context.TSalesDetails.AddRange(ObjSalesHeader.TSalesDetails);
-                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
-
-
-                // 3️⃣ Update Current Stock (SP)
-                foreach (var items in ObjTCurrentStock)
+                // 3) Update Current Stock (SP per row)
+                if (ObjTCurrentStock?.Count > 0)
                 {
-                    string[] SEntity = { "ItemId", "IssueQty", "IstkId", "StoreId" };
-                    var IIentity = items.ToDictionary();
-                    foreach (var rProperty in IIentity.Keys.ToList())
+                    List<Dictionary<string, object>> stockDicts = new();
+                    foreach (var stockItem in ObjTCurrentStock)
                     {
-                        if (!SEntity.Contains(rProperty))
-                            IIentity.Remove(rProperty);
+                        cancellationToken.ThrowIfCancellationRequested();
+
+                        var stockDict = stockItem.ToDictionary();
+                        FilterDict(stockDict, stockWhitelist);
+
+                        odal.ExecuteNonQueryNew("ps_Update_T_CurStk_Sales_Id_1", CommandType.StoredProcedure, null, stockDict);
+                        stockDicts.Add(stockDict);
                     }
-
-                    odal.ExecuteNonQueryNew("ps_Update_T_CurStk_Sales_Id_1", CommandType.StoredProcedure, "", IIentity);
-                    await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
+                    // FIXED: Log the stock dict, not the header dict
+                    if (stockDicts.Count > 0)
+                        await _context.LogProcedureExecution(stockDicts, nameof(TCurrentStock), ObjSalesHeader.SalesId, Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
                 }
 
-                var SalesIdObj = new { ObjSalesHeader.SalesId };
-                odal.ExecuteNonQueryNew("m_Cal_DiscAmount_Sales", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
-                odal.ExecuteNonQueryNew("m_Cal_GSTAmount_Sales", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
+                // 4) Discount + GST recalculation (build dict ONCE per call — ExecuteNonQueryNew may mutate)
+                odal.ExecuteNonQueryNew("m_Cal_DiscAmount_Sales", CommandType.StoredProcedure, null, new Dictionary<string, object> { ["SalesId"] = ObjSalesHeader.SalesId });
 
-                // 5️⃣ Update Prescription
-                string[] TEntity = { "OpIpId", "IsClosed" };
-                var Nentity = ObjPrescription.ToDictionary();
-                foreach (var rProperty in Nentity.Keys.ToList())
-                {
-                    if (!TEntity.Contains(rProperty))
-                        Nentity.Remove(rProperty);
-                }
+                odal.ExecuteNonQueryNew("m_Cal_GSTAmount_Sales", CommandType.StoredProcedure, null, new Dictionary<string, object> { ["SalesId"] = ObjSalesHeader.SalesId });
 
-                odal.ExecuteNonQueryNew("ps_Update_T_IPPrescription_Isclosed_Status_1", CommandType.StoredProcedure, "", Nentity);
-                await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                // 5) Update Prescription
+                var prescriptionDict = ObjPrescription.ToDictionary();
+                FilterDict(prescriptionDict, prescriptionWhitelist);
 
+                odal.ExecuteNonQueryNew("ps_Update_T_IPPrescription_Isclosed_Status_1", CommandType.StoredProcedure, null, prescriptionDict);
 
-                // 6️⃣ Update Draft Header
-                string[] DEntity = { "DsalesId", "IsClosed" };
-                var Hentity = ObjDraftHeader.ToDictionary();
-                foreach (var rProperty in Hentity.Keys.ToList())
-                {
-                    if (!DEntity.Contains(rProperty))
-                        Hentity.Remove(rProperty);
-                }
-                odal.ExecuteNonQueryNew("ps_Update_T_SalDraHeader_IsClosed_1", CommandType.StoredProcedure, "", Hentity);
-                await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                // FIXED: Log the prescription dict
+                await _context.LogProcedureExecution(prescriptionDict, nameof(TIpPrescription), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
+                // 6) Update Draft Header
+                var draftDict = ObjDraftHeader.ToDictionary();
+                FilterDict(draftDict, draftWhitelist);
 
-                //Commit if all good
-                await transaction.CommitAsync();
+                odal.ExecuteNonQueryNew("ps_Update_T_SalDraHeader_IsClosed_1", CommandType.StoredProcedure, null, draftDict);
+
+                // FIXED: Log the draft dict
+                await _context.LogProcedureExecution(draftDict, nameof(TSalesDraftHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+                // Commit
+                await transaction.CommitAsync(cancellationToken);
             }
-            catch (Exception ex)
+            catch
             {
-                //Rollback on error
-                await transaction.RollbackAsync();
+                try { await transaction.RollbackAsync(CancellationToken.None); } catch { /* swallow rollback errors */ }
                 throw;
             }
+            finally
+            {
+                if (wasClosed && dbConnection.State == ConnectionState.Open)
+                    await dbConnection.CloseAsync();
+            }
+
+            static void FilterDict(Dictionary<string, object> dict, HashSet<string> allowed)
+            {
+                foreach (var key in dict.Keys.ToList())
+                    if (!allowed.Contains(key))
+                        dict.Remove(key);
+            }
         }
+
+        //public virtual async Task InsertAsyncSPC(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int CurrentUserId, string CurrentUserName)
+        //{
+        //    // Open transaction
+        //    using var transaction = await _context.Database.BeginTransactionAsync();
+        //    try
+        //    {
+        //        DatabaseHelper odal = new();
+        //        odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+        //        odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
+        //        // 1️⃣ Insert Sales Header
+        //        string[] AEntity = { "Date", "Time", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "ConcessionReasonId", "ConcessionAuthorizationId", "IsSellted", "IsPrint", "IsFree", "UnitId", "ExternalPatientName", "DoctorName", "StoreId", "IsPrescription", "AddedBy", "CreditReason", "CreditReasonId", "WardId", "BedId", "DiscperH", "IsPurBill", "IsBillCheck", "SalesHeadName", "SalesTypeId", "RegId", "ExtMobileNo", "RoundOff", "ExtAddress", "SalesId" /*TSalesDetails*/ };
+        //        var entity = ObjSalesHeader.ToDictionary();
+
+        //        foreach (var rProperty in entity.Keys.ToList())
+        //        {
+        //            if (!AEntity.Contains(rProperty))
+        //                entity.Remove(rProperty);
+        //        }
+
+        //        string SalesId = odal.ExecuteNonQueryNew("ps_m_insert_Sales_1", CommandType.StoredProcedure, "SalesId", entity);
+        //        ObjSalesHeader.SalesId = Convert.ToInt32(SalesId);
+        //        await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+
+        //        // 2️⃣ Insert Sales Details (EF)
+        //        foreach (var item in ObjSalesHeader.TSalesDetails)
+        //            item.SalesId = ObjSalesHeader.SalesId;
+
+        //        _context.TSalesDetails.AddRange(ObjSalesHeader.TSalesDetails);
+        //        await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+
+
+        //        // 3️⃣ Update Current Stock (SP)
+        //        foreach (var items in ObjTCurrentStock)
+        //        {
+        //            string[] SEntity = { "ItemId", "IssueQty", "IstkId", "StoreId" };
+        //            var IIentity = items.ToDictionary();
+        //            foreach (var rProperty in IIentity.Keys.ToList())
+        //            {
+        //                if (!SEntity.Contains(rProperty))
+        //                    IIentity.Remove(rProperty);
+        //            }
+
+        //            odal.ExecuteNonQueryNew("ps_Update_T_CurStk_Sales_Id_1", CommandType.StoredProcedure, "", IIentity);
+        //            await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+        //        }
+
+        //        var SalesIdObj = new { ObjSalesHeader.SalesId };
+        //        odal.ExecuteNonQueryNew("m_Cal_DiscAmount_Sales", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
+        //        odal.ExecuteNonQueryNew("m_Cal_GSTAmount_Sales", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
+
+        //        // 5️⃣ Update Prescription
+        //        string[] TEntity = { "OpIpId", "IsClosed" };
+        //        var Nentity = ObjPrescription.ToDictionary();
+        //        foreach (var rProperty in Nentity.Keys.ToList())
+        //        {
+        //            if (!TEntity.Contains(rProperty))
+        //                Nentity.Remove(rProperty);
+        //        }
+
+        //        odal.ExecuteNonQueryNew("ps_Update_T_IPPrescription_Isclosed_Status_1", CommandType.StoredProcedure, "", Nentity);
+        //        await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+        //        // 6️⃣ Update Draft Header
+        //        string[] DEntity = { "DsalesId", "IsClosed" };
+        //        var Hentity = ObjDraftHeader.ToDictionary();
+        //        foreach (var rProperty in Hentity.Keys.ToList())
+        //        {
+        //            if (!DEntity.Contains(rProperty))
+        //                Hentity.Remove(rProperty);
+        //        }
+        //        odal.ExecuteNonQueryNew("ps_Update_T_SalDraHeader_IsClosed_1", CommandType.StoredProcedure, "", Hentity);
+        //        await _context.LogProcedureExecution(entity, nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+        //        //Commit if all good
+        //        await transaction.CommitAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Rollback on error
+        //        await transaction.RollbackAsync();
+        //        throw;
+        //    }
+        //}
 
         public virtual async Task InsertSalesInPatientAsyncSPC(TSalesInpatientHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int CurrentUserId, string CurrentUserName)
         {
@@ -414,8 +528,8 @@ namespace HIMS.Services.Users
                 odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
                 // 1️⃣ Insert Sales Header
-                string[] AEntity = { "Date", "Time", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "ConcessionReasonId", "ConcessionAuthorizationId", "IsSellted", "IsPrint", "IsFree", "UnitId", 
-                    "ExternalPatientName", "DoctorName", "StoreId", "IsPrescription", "AddedBy", "CreditReason", "CreditReasonId", "WardId", "BedId", "DiscperH", "IsPurBill", "IsBillCheck", "SalesHeadName", "SalesTypeId", "RegId", "ExtMobileNo", "RoundOff", 
+                string[] AEntity = { "Date", "Time", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "ConcessionReasonId", "ConcessionAuthorizationId", "IsSellted", "IsPrint", "IsFree", "UnitId",
+                    "ExternalPatientName", "DoctorName", "StoreId", "IsPrescription", "AddedBy", "CreditReason", "CreditReasonId", "WardId", "BedId", "DiscperH", "IsPurBill", "IsBillCheck", "SalesHeadName", "SalesTypeId", "RegId", "ExtMobileNo", "RoundOff",
                     "ExtAddress", "SalesId" /*TSalesDetails*/ };
                 var entity = ObjSalesHeader.ToDictionary();
 
@@ -516,7 +630,7 @@ namespace HIMS.Services.Users
             }
             string DsalesId = odal.ExecuteNonQuery("m_insert_T_SalesDraftHeader_1", CommandType.StoredProcedure, "DsalesId", entity);
             ObjDraftHeader.DsalesId = Convert.ToInt32(DsalesId);
-           // await _context.LogProcedureExecution(entity, nameof(TSalesDraftHeader), ObjDraftHeader.DsalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            // await _context.LogProcedureExecution(entity, nameof(TSalesDraftHeader), ObjDraftHeader.DsalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
 
             foreach (var item in ObjTSalesDraftDet)
@@ -531,7 +645,7 @@ namespace HIMS.Services.Users
                         Tentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_T_SalesDraftDet_1", CommandType.StoredProcedure, Tentity);
-               // await _context.LogProcedureExecution(Tentity, nameof(TSalesDraftDet), item.SalDetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                // await _context.LogProcedureExecution(Tentity, nameof(TSalesDraftDet), item.SalDetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             }
         }
@@ -568,8 +682,8 @@ namespace HIMS.Services.Users
                     if (!CREntity.Contains(rProperty))
                         centity.Remove(rProperty);
                 }
-               odal.ExecuteNonQuery("insert_T_SalesDraftDet_1", CommandType.StoredProcedure, centity);
-               await _context.LogProcedureExecution(centity, nameof(TSalesDraftDet), item.SalDetId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                odal.ExecuteNonQuery("insert_T_SalesDraftDet_1", CommandType.StoredProcedure, centity);
+                await _context.LogProcedureExecution(centity, nameof(TSalesDraftDet), item.SalDetId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
 
 
@@ -596,7 +710,7 @@ namespace HIMS.Services.Users
 
 
         //shilpa//26/05/2025
-        public virtual void InsertS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy,List<TPaymentPharmacy> ObjTPaymentPharmacy ,int UserId, string Username)
+        public virtual void InsertS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, List<TPaymentPharmacy> ObjTPaymentPharmacy, int UserId, string Username)
         {
 
             // //Add header table records
@@ -749,7 +863,7 @@ namespace HIMS.Services.Users
             foreach (var item in ObjTPhadvRefundDetail)
             {
 
-                string[] DEntity = { "AdvDetailId", "RefundDate", "RefundTime", "AdvRefundAmt"};
+                string[] DEntity = { "AdvDetailId", "RefundDate", "RefundTime", "AdvRefundAmt" };
                 var Dentity = item.ToDictionary();
                 foreach (var rProperty in Dentity.Keys.ToList())
                 {
@@ -801,7 +915,7 @@ namespace HIMS.Services.Users
 
             }
         }
-        public virtual void Insert(List<PaymentPharmacy> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, List<TPaymentPharmacy> ObjTPaymentPharmacy ,int UserId, string Username)
+        public virtual void Insert(List<PaymentPharmacy> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, List<TPaymentPharmacy> ObjTPaymentPharmacy, int UserId, string Username)
         {
 
             // //Add header table records
@@ -834,7 +948,7 @@ namespace HIMS.Services.Users
             foreach (var item in ObjAdvanceDetail)
             {
 
-                string[] Entity = { "AdvanceDetailId", "UsedAmount", "BalanceAmount"};
+                string[] Entity = { "AdvanceDetailId", "UsedAmount", "BalanceAmount" };
                 var Ientity = item.ToDictionary();
                 foreach (var rProperty in Ientity.Keys.ToList())
                 {
@@ -877,7 +991,7 @@ namespace HIMS.Services.Users
 
         }
 
-        public virtual async Task  InsertPhBillDiscount(TSalesHeader ObjTSalesHeader, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertPhBillDiscount(TSalesHeader ObjTSalesHeader, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
@@ -914,8 +1028,8 @@ namespace HIMS.Services.Users
             odal.ExecuteNonQuery("ps_SalesExtpatientDetUpdate", CommandType.StoredProcedure, entity);
 
         }
-        
-      
+
+
 
 
         public virtual async Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str)
@@ -924,10 +1038,10 @@ namespace HIMS.Services.Users
                .Where(x => x.ExternalPatientName.ToLower().StartsWith(str) || x.ExtMobileNo.ToLower().StartsWith(str))
               .Select(x => new SalesPatientAutoCompleteDto
               {
-                    ExternalPatientName = x.ExternalPatientName,
-                    ExtMobileNo = x.ExtMobileNo,
-                    DoctorName = x.DoctorName
-               })
+                  ExternalPatientName = x.ExternalPatientName,
+                  ExtMobileNo = x.ExtMobileNo,
+                  DoctorName = x.DoctorName
+              })
                 .ToListAsync();
 
             var drafts = await _context.TSalesDraftHeaders
@@ -941,7 +1055,7 @@ namespace HIMS.Services.Users
                 .ToListAsync();
 
             var result = headers.Union(drafts)
-                .DistinctBy(x => new { x.ExtMobileNo, x.ExternalPatientName }) 
+                .DistinctBy(x => new { x.ExtMobileNo, x.ExternalPatientName })
                 .OrderByDescending(x => x.ExtMobileNo == str ? 3 :
                                         x.ExtMobileNo.StartsWith(str) ? 2 :
                                         x.ExternalPatientName == str ? 1 : 0)
@@ -993,7 +1107,7 @@ namespace HIMS.Services.Users
             TCurrentStock objStock = await _context.TCurrentStocks.FirstOrDefaultAsync(x => x.StockId == StockId);
             return (objStock?.BalanceQty ?? 0) - (objStock?.GrnRetQty ?? 0);
         }
-        public virtual async Task Update(TSalesHeader ObjTSalesHeader,List<TSalesDetail> ObjTSalesDetail, List<TCurrentStock> ObjTCurrentStock, int CurrentUserId, string CurrentUserName)
+        public virtual async Task Update(TSalesHeader ObjTSalesHeader, List<TSalesDetail> ObjTSalesDetail, List<TCurrentStock> ObjTCurrentStock, int CurrentUserId, string CurrentUserName)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
