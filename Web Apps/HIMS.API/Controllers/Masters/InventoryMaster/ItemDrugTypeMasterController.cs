@@ -100,5 +100,12 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
 
+        [HttpGet]
+        [Route("get-ItemDrugType")] 
+        public async Task<ApiResponse> GetDropdown()
+        {
+            var MItemDrugTypeMasterList = await _repository.GetAll(x => x.IsActive.Value);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemDrugType dropdown", MItemDrugTypeMasterList.Select(x => new { x.DrugTypeName, x.ItemDrugTypeId }));
+        }
     }
 }
