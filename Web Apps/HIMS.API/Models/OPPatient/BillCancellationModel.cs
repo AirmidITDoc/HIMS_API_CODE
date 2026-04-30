@@ -6,7 +6,9 @@ namespace HIMS.API.Models.OPPatient
     {
         public long BillNo { get; set; }
         public long IsCancelledBy { get; set; }
-        public string? DiscComments { get; set; }
+        public DateTime IsCancelledDatetime { get; set; }
+
+        public string? CancelReason { get; set; }
 
 
 
