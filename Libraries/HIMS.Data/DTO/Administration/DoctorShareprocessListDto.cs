@@ -24,7 +24,9 @@ namespace HIMS.Data.DTO.Administration
         public string? ServiceName { get; set; }
         public decimal? Addcharges { get; set; }
 
-       
+        public long? BillNo { get; set; }
+
+
 
     }
 }
