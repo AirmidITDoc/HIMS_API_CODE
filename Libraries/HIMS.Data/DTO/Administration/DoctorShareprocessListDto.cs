@@ -19,17 +19,14 @@ namespace HIMS.Data.DTO.Administration
         public decimal? DoctorAmount { get; set; }
         public decimal? HospitalAmount { get; set; }
         public decimal? TDSAmount { get; set; }
-
         public byte? OPdIpdType { get; set; }
         public long? OpdIpdId { get; set; }
         public string? ServiceName { get; set; }
         public decimal? Addcharges { get; set; }
-
         public long? BillNo { get; set; }
-
         public long? PaymentId { get; set; }
-
-        
+        public decimal? PayAmount { get; set; }
+        public decimal? OutStandingAmount { get; set; }
 
     }
 }
