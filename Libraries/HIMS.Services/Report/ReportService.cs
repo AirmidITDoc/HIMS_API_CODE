@@ -4689,6 +4689,13 @@ namespace HIMS.Services.Report
             html.Append("</tr>");
             html.Append("</table>");
 
+            html.Append("<br/><br/>");
+            html.Append("<table style='width:100%;border-collapse:collapse;font-family:Calibri;'>");
+            html.Append("<tr style='background:#d9d9d9;font-weight:bold;'>");
+            html.Append("<td style='border:1px solid #777;padding:6px;'>Net Total</td>");
+            html.Append($"<td style='border:1px solid #777;padding:6px;text-align:right;'>{grandTotals.Sum():N3}</td>");
+            html.Append("</tr></table>");
+
             return html.ToString();
         }
         public static string CreatePaymentModeNetSummary(DataTable dt,string[] totalCols,string[] groupCols)
