@@ -47,6 +47,9 @@ namespace HIMS.Data.DTO.Pathology
         public string? EmailId { get; set; }
         public long? IsCancelled { get; set; }
         public long? LabPatRegId { get; set; }
+        public int? IsSampleCollection { get; set; }
+        public int? IsRadiologyComplete { get; set; }
+
 
 
     }
