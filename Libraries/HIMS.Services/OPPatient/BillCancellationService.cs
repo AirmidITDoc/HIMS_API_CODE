@@ -33,7 +33,7 @@ namespace HIMS.Services.OPPatient
         public virtual async Task UpdateAsyncLabBill(Bill objOpBillCancellation, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();
-            string[] AEntity = { "BillNo", "IsCancelledBy", "DiscComments" };
+            string[] AEntity = { "BillNo", "IsCancelledBy", "CancelReason", "IsCancelledDatetime" };
             var entity = objOpBillCancellation.ToDictionary();
 
             foreach (var rProperty in entity.Keys.ToList())
