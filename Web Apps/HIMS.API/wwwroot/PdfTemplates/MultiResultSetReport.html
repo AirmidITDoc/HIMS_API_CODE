@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Report</title>
-
     <style>
         body {
             font-family: Calibri, Arial;
@@ -47,7 +46,7 @@
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            table-layout: fixed; 
+            table-layout: fixed;
         }
 
             .data-table thead th {
@@ -56,7 +55,7 @@
                 padding: 5px;
                 text-align: center;
                 font-weight: bold;
-                white-space: nowrap; 
+                white-space: nowrap;
             }
 
             .data-table tbody td {
@@ -65,19 +64,15 @@
                 word-break: break-word;
             }
 
-
-            .data-table th,
-            .data-table td {
+            .data-table th, .data-table td {
                 min-width: 60px;
             }
-
 
         .row-total td {
             font-weight: bold;
             background: #efefef;
             border-top: 2px solid #444 !important;
         }
-
 
         .align-right {
             text-align: right;
@@ -91,7 +86,6 @@
             text-align: left;
         }
 
-
         .data-table thead {
             display: table-header-group;
         }
@@ -99,15 +93,73 @@
         .data-table tr {
             page-break-inside: avoid;
         }
+
+        /* Template 1 styles */
+        #dataTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+            #dataTable th {
+                border: 1px solid #666;
+                background: #e6e6e6;
+                padding: 8px;
+                text-align: center;
+                font-size: 15px;
+                font-weight: bold;
+            }
+
+            #dataTable td {
+                border: 1px solid #bfbfbf;
+                padding: 6px;
+            }
+
+        .groupHeader {
+            background: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .billTotal {
+            font-weight: bold;
+            border-top: 1px solid #666;
+        }
+
+        .subTotal {
+            background: #e6e6e6;
+            font-weight: bold;
+        }
+
+        .grandTotal {
+            background: #d9d9d9;
+            font-weight: bold;
+            border-top: 2px solid #000;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        #dataTable thead {
+            display: table-header-group;
+        }
+
+        #dataTable tfoot {
+            display: table-footer-group;
+        }
+
+        #dataTable tr {
+            page-break-inside: avoid;
+        }
     </style>
 </head>
-
 <body>
     <div class="report-wrapper">
-
-        <table style="width:100%;">
-            {{HospitalHeader}}
-        </table>
+        <table style="width:100%;">{{HospitalHeader}}</table>
 
         <table class="report-title-table">
             <tr>
@@ -116,13 +168,30 @@
             </tr>
         </table>
 
-        <div class="report-date-range">
-            From Date : {{FromDate}} — To Date : {{ToDate}}
-        </div>
+        <div class="report-date-range">From Date : {{FromDate}} — To Date : {{ToDate}}</div>
 
-     
+        <!-- TEMPLATE 1 SECTION (DailyCollectionSummaryMulti only) -->
+        <table id="dataTable">
+            <thead>{{HeaderItems}}</thead>
+            <tbody>{{Items}}{{ItemsTotal}}</tbody>
+        </table>
+
+        <!--<div style="page-break-before: always;"></div>
+
+    <table style="width:100%; border-collapse:collapse; margin-bottom:10px; border:1px solid #777;">
+        <tr style="background:#d9d9d9; font-weight:bold;">
+            <td style="padding:10px; font-size:18px; text-align:left; border-right:1px solid #777;">Summary Report For {{RepoertName}}</td>
+            <td style="padding:10px; font-size:16px; text-align:right;">From Date : {{FromDate}} &nbsp;--&nbsp; To Date : {{ToDate}}</td>
+        </tr>
+    </table>
+    <br />
+    {{SummarySection}}-->
+        {{SummaryBlock}}
+
+        <div id="paymentSummarySection" style="display:none;">{{PaymentSummary}}</div>
+
+        <!-- TEMPLATE 2 SECTION -->
         {{ResultSetTables}}
-
     </div>
 </body>
 </html>
