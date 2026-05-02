@@ -6705,12 +6705,18 @@ namespace HIMS.Services.Report
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++;
-                            items.Append("<tr>");
-                            items.Append("<td style='padding:6px; border:1px solid #ccc; text-align:left;'>").Append(i).Append("</td>");
-                            items.Append("<td style='padding:6px; border:1px solid #ccc; text-align:left;'>").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style='padding:6px; border:1px solid #ccc; text-align:center;'>").Append(dr["ConcessionAmount"].ConvertToString()).Append("</td>");
-                            items.Append("<td style='padding:6px; border:1px solid #ccc; text-align:right;'>").Append(dr["ChargeNetAmount"].ConvertToString()).Append("</td>");
-                            items.Append("</tr>");
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:15;\"><td style=\" border: 1px solid #d4c3c3;text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3;text-align: left; padding: 6px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
+                            //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3;text-align: center; padding: 6px;\">").Append(dr["ChargeNetAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
+
+                            //i++;
+                            //items.Append("<tr>");
+                            //items.Append("<td style='padding:6px; border:1px solid #ccc; text-align:left;'>").Append(i).Append("</td>");
+                            //items.Append("<td style='padding:6px; border:1px solid #ccc; text-align:left;'>").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
+                            //items.Append("<td style='padding:6px; border:1px solid #ccc; text-align:center;'>").Append(dr["ConcessionAmount"].ConvertToString()).Append("</td>");
+                            //items.Append("<td style='padding:6px; border:1px solid #ccc; text-align:right;'>").Append(dr["ChargeNetAmount"].ConvertToString()).Append("</td>");
+                            //items.Append("</tr>");
                         }
                         html = html.Replace("{{Items}}", items.ToString());
                         var payAmountValue = dt.GetColValue("PayAmount");
