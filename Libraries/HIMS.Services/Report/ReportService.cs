@@ -4726,13 +4726,19 @@ namespace HIMS.Services.Report
                 else if (colCount <= 16) { headerFont = "14px"; dataFont = "14px"; }
                 else if (colCount <= 20) { headerFont = "12px"; dataFont = "12px"; }
                 else { headerFont = "10px"; dataFont = "10px"; }
+                const int minCharWeight = 3;
+                var charCounts = visibleCols.Select(c => Math.Max(c.ColumnName.Length, minCharWeight)).ToList();
+                int totalChars = charCounts.Sum();
+                var colWidths = charCounts.Select(cc => Math.Round(cc * 100.0 / totalChars, 2)).ToList();
 
                 sb.Append("<table class='data-table'>");
                 sb.Append("<colgroup>");
-                double colWidth = Math.Round(100.0 / colCount, 2);
-                foreach (var col in visibleCols)
+                // double colWidth = Math.Round(100.0 / colCount, 2);
+                //foreach (var col in visibleCols)
+                for (int i = 0; i < visibleCols.Count; i++)
                 {
-                    sb.Append($"<col style='width:{colWidth}%;'>");
+                    // sb.Append($"<col style='width:{colWidth}%;'>");
+                    sb.Append($"<col style='width:{colWidths[i]}%;'>");
                 }
                 sb.Append("</colgroup>");
 
