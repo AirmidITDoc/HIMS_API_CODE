@@ -6675,6 +6675,44 @@ namespace HIMS.Services.Report
                     }
                     break;
 
+                case "rptDoctorPayoutPayServiceList":
+                    {
+
+
+                        int i = 0, j = 0;
+                        double Dcount = 0;
+                        string previousLabel = "";
+                        int k = 0;
+                        var dynamicVariable = new Dictionary<string, double>();
+
+                        html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{Mobile}}", dt.GetColValue("Mobile"));
+                        html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
+                        html = html.Replace("{{TDSAmount}}", dt.GetColValue("TDSAmount"));
+                        html = html.Replace("{{ProcessDate}}", dt.GetColValue("ProcessDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{PaymentDate}}", dt.GetColValue("PaymentDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{PayAmount}}", dt.GetColValue("PayAmount"));
+                        html = html.Replace("{{balanceAmt}}", dt.GetColValue("balanceAmt"));
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<td style=\" text-align: left ; padding: 6px; font-weight:bold;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\" text-align: left ; padding: 6px; font-weight:bold;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" text-align: right; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<td style=\" text-align: center; padding: 6px;\">").Append(dr["ChargeNetAmount"].ConvertToString()).Append("</td>");
+                            
+                        }
+
+                        html = html.Replace("{{Items}}", items.ToString());
+
+                        return html;
+
+                    }
+                    break;
 
 
                 case "LabMoneyReceipt":

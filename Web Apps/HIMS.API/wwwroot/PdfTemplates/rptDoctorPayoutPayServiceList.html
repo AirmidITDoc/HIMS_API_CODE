@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Payout Payment Summary</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin:0;">
+
+    <div style="width:800px; margin:0 auto;">
+
+        {{NewHeader}}
+
+        <hr style="margin:6px 0;">
+        <table style="width:100%; font-size:14px;">
+            <tr>
+                <td style="text-align:left;">
+                    <strong>Doctor Payout Payment Summary</strong>
+                </td>
+                <td style="text-align:right;">
+                    <strong>Print Date:</strong> {{CurrentDate}}
+                </td>
+            </tr>
+        </table>
+
+        <hr style="margin:6px 0;">
+
+        <table style="width:100%; font-size:14px;">
+            <tr>
+                <td><strong>Patient Name</strong> : {{DoctorName}}</td>
+                <td><strong>Process Date</strong> : {{ProcessDate}}</td>
+            </tr>
+        </table>
+
+
+
+
+        <table style="width:100%; border-collapse:collapse; font-size:14px; border-top:1px solid #000; border-bottom:1px solid #000;">
+            <tr style="border-bottom:1px solid #000;">
+                <th style="padding:6px; text-align:left;">Sr No.</th>
+                <th style="padding:6px; text-align:left;">Service Name</th>
+                <th style="padding:6px; text-align:center;">Disc Amount</th>
+                <th style="padding:6px; text-align:right;">Net Amount</th>
+            </tr>
+
+            {{Items}}
+        </table>
+
+        <div style="margin-top:20px; font-size:14px;">
+            <div style="display:flex; justify-content:space-between;">
+                <div><strong>Amt in Words:</strong> {{NetAmount}}</div>
+                <div style="text-align:right;">
+                    <div><strong>Net Amount:</strong> {{NetAmount}}</div>
+                    <div><strong>Paid Amount:</strong> {{PayAmount}}</div>
+                </div>
+            </div>
+        </div>
+
+        <hr style="margin:30px 0 10px 0;">
+
+
+        <div style="font-size:13px;">
+            <strong>Prepared By</strong><br>
+            {{UserName}}
+        </div>
+
+    </div>
+
+</body>
+</html>

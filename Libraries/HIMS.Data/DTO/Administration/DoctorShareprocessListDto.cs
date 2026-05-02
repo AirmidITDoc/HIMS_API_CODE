@@ -26,7 +26,8 @@ namespace HIMS.Data.DTO.Administration
         public long? BillNo { get; set; }
         public long? PaymentId { get; set; }
         public decimal? PayAmount { get; set; }
-        public decimal? OutStandingAmount { get; set; }
+        public decimal? balanceAmt { get; set; }
+        public DateTime? PaymentDate { get; set; }
 
     }
 }
