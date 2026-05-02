@@ -4,64 +4,86 @@
     <meta charset="UTF-8">
     <title>Doctor Payout Payment Summary</title>
 </head>
-<body style="font-family: Arial, sans-serif; margin:0;">
 
-    <div style="width:800px; margin:0 auto;">
+<body style="font-family: Calibri, Arial, sans-serif; margin:0; font-size:13px; color:#000;">
+
+    <div style="width:800px; margin:auto;">
 
         {{NewHeader}}
 
-        <hr style="margin:6px 0;">
-        <table style="width:100%; font-size:14px;">
-            <tr>
-                <td style="text-align:left;">
-                    <strong>Doctor Payout Payment Summary</strong>
+        <table style="width:100%; border-collapse:collapse;">
+            <tr style="font-size:18px;">
+                <td style="border-bottom:1px solid #ccc; padding:6px 0; font-weight:bold;">
+                    DOCTOR PAYOUT PAYMENT SUMMARY
                 </td>
-                <td style="text-align:right;">
-                    <strong>Print Date:</strong> {{CurrentDate}}
+                <td style="border-bottom:1px solid #ccc; padding:6px 0; text-align:right;">
+                    Print Date : {{CurrentDate}}
                 </td>
             </tr>
         </table>
 
-        <hr style="margin:6px 0;">
-
-        <table style="width:100%; font-size:14px;">
+        <table style="width:100%; margin-top:8px; border-collapse:collapse;">
             <tr>
-                <td><strong>Patient Name</strong> : {{DoctorName}}</td>
-                <td><strong>Process Date</strong> : {{ProcessDate}}</td>
+                <td style="padding:4px;">
+                    <strong>Doctor Name :</strong> {{DoctorName}}
+                </td>
+                <td style="padding:4px; text-align:right;">
+                    <strong>Process Date :</strong> {{ProcessDate}}
+                </td>
             </tr>
         </table>
 
-
-
-
-        <table style="width:100%; border-collapse:collapse; font-size:14px; border-top:1px solid #000; border-bottom:1px solid #000;">
-            <tr style="border-bottom:1px solid #000;">
-                <th style="padding:6px; text-align:left;">Sr No.</th>
-                <th style="padding:6px; text-align:left;">Service Name</th>
-                <th style="padding:6px; text-align:center;">Disc Amount</th>
-                <th style="padding:6px; text-align:right;">Net Amount</th>
+        <table style="width:100%; border-collapse:collapse; margin-top:10px;">
+            <tr>
+                <th style="padding:6px; border:1px solid #999; text-align:left;">Sr No.</th>
+                <th style="padding:6px; border:1px solid #999; text-align:left;">Service Name</th>
+                <th style="padding:6px; border:1px solid #999; text-align:center;">Disc Amount</th>
+                <th style="padding:6px; border:1px solid #999; text-align:right;">Net Amount</th>
             </tr>
 
             {{Items}}
         </table>
 
-        <div style="margin-top:20px; font-size:14px;">
-            <div style="display:flex; justify-content:space-between;">
-                <div><strong>Amt in Words:</strong> {{NetAmount}}</div>
-                <div style="text-align:right;">
-                    <div><strong>Net Amount:</strong> {{NetAmount}}</div>
-                    <div><strong>Paid Amount:</strong> {{PayAmount}}</div>
-                </div>
-            </div>
-        </div>
+        <table style="width:100%; margin-top:20px;">
+            <tr>
+          
+                <td style="vertical-align:top;">
+                    <strong>Amt in Words :</strong><br>
+                    {{finalamt}}
+                </td>
 
-        <hr style="margin:30px 0 10px 0;">
+                <td style="width:260px;">
+                    <table style="width:100%; border-collapse:collapse;">
+                        <tr>
+                            <td style="padding:6px;">Net Amount</td>
+                            <td style="padding:6px; text-align:right;">{{NetAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:6px;">Paid Amount</td>
+                            <td style="padding:6px; text-align:right;">{{PayAmount}}</td>
+                        </tr>
+                        <tr style="border-top:1px solid #999;">
+                            <td style="padding:6px; font-weight:bold;">Balance</td>
+                            <td style="padding:6px; text-align:right; font-weight:bold;">{{balanceAmt}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
 
+        <hr style="margin:25px 0 10px; border:0; border-top:1px solid #ccc;">
 
-        <div style="font-size:13px;">
-            <strong>Prepared By</strong><br>
-            {{UserName}}
-        </div>
+        <table style="width:100%;">
+            <tr>
+                <td style="font-size:12px;">
+                    This is computer generated report.
+                </td>
+                <td style="text-align:right;">
+                    <strong>{{UserName}}</strong><br>
+                    <span style="font-size:12px;">Prepared By</span>
+                </td>
+            </tr>
+        </table>
 
     </div>
 
