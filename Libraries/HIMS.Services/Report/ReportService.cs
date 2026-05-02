@@ -4032,9 +4032,79 @@ namespace HIMS.Services.Report
                     break;
                 case "MultiResultSetReport.html":
                     {
-                        string resultSetHtml = RenderMultiResultSetReport(model.SPName, model.SearchFields);
+                        if (model.Mode == "DailyCollectionSummaryMulti")
+                        {
+                            var dcFields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
 
-                        html = html.Replace("{{ResultSetTables}}", resultSetHtml);
+                            SqlParameter[] dcPara = dcFields.Select(kv =>
+                            {
+                                bool isDate = kv.Key.Equals("FromDate", StringComparison.OrdinalIgnoreCase)
+                                           || kv.Key.Equals("ToDate", StringComparison.OrdinalIgnoreCase);
+                                return new SqlParameter("@" + kv.Key,
+                                    isDate ? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                                           : (object)kv.Value);
+                            }).ToArray();
+
+                            List<DataTable> allSets = FetchAllResultSets(model.SPName, dcPara);
+
+                            if (allSets.Count > 0)
+                            {
+                                DataTable firstDt = allSets[0];
+
+                                string[] dcTotalCols = totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                                string[] dcGroupCols = model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+
+                                HeaderItems.Append(GetCommonHtmlTableHeader(firstDt, headerList, columnWidths));
+                                items.Append(GetCommonHtmlTableReports(firstDt, headerList, model.colList, totalColList, dcGroupCols));
+                                ItemsTotal.Append(CreateGrandTotal(firstDt, dcTotalCols, dcGroupCols));
+
+                                string summaryHtml = CreateGenericSummary(firstDt, totalColList, dcGroupCols);
+                                html = html.Replace("{{SummarySection}}", summaryHtml);
+
+                                if (model.Mode == "PaymentModeSummary")
+                                {
+                                    string paymentSummary = CreatePaymentModeNetSummary(firstDt, totalColList, dcGroupCols);
+                                    html = html.Replace("{{PaymentSummary}}", paymentSummary);
+                                    html = html.Replace("display:none;", "display:block;");
+                                }
+                                else
+                                {
+                                    html = html.Replace("{{PaymentSummary}}", "");
+                                }
+
+                                string extraTables = allSets.Count > 1 ? RenderMultiResultSetReport(allSets.Skip(1).ToList()) : "";
+                                html = html.Replace("{{ResultSetTables}}", extraTables);
+                                string summaryBlock = $@"
+                                <div style='page-break-before: always;'></div>
+                                <table style='width:100%; border-collapse:collapse; margin-bottom:10px; border:1px solid #777;'>
+                                    <tr style='background:#d9d9d9; font-weight:bold;'>
+                                        <td style='padding:10px; font-size:18px; text-align:left; border-right:1px solid #777;'>
+                                            Summary Report For {model.RepoertName}
+                                        </td>
+                                        <td style='padding:10px; font-size:16px; text-align:right;'>
+                                            From Date : {FromDate:dd/MM/yyyy} &nbsp;--&nbsp; To Date : {ToDate:dd/MM/yyyy}
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br/>
+                                {summaryHtml}
+                                <br/><br/>"";";
+
+                                html = html.Replace("{{SummaryBlock}}", summaryBlock);
+                            }                         
+                        }
+                        else
+                        {
+                            string resultSetHtml = RenderMultiResultSetReport(model.SPName, model.SearchFields);
+                            html = html.Replace("{{ResultSetTables}}", resultSetHtml);
+                            html = html.Replace("{{HeaderItems}}", "")
+                                       .Replace("{{Items}}", "")
+                                       .Replace("{{ItemsTotal}}", "")
+                                       .Replace("{{SummarySection}}", "")
+                                       .Replace("{{PaymentSummary}}", "");
+                            html = html.Replace("{{SummaryBlock}}", "");
+                        }
+
                         html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yyyy"));
                         html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
                     }
@@ -4619,6 +4689,13 @@ namespace HIMS.Services.Report
             html.Append("</tr>");
             html.Append("</table>");
 
+            html.Append("<br/><br/>");
+            html.Append("<table style='width:100%;border-collapse:collapse;font-family:Calibri;'>");
+            html.Append("<tr style='background:#d9d9d9;font-weight:bold;'>");
+            html.Append("<td style='border:1px solid #777;padding:6px;'>Net Total</td>");
+            html.Append($"<td style='border:1px solid #777;padding:6px;text-align:right;'>{grandTotals.Sum():N3}</td>");
+            html.Append("</tr></table>");
+
             return html.ToString();
         }
         public static string CreatePaymentModeNetSummary(DataTable dt,string[] totalCols,string[] groupCols)
@@ -4691,6 +4768,48 @@ namespace HIMS.Services.Report
             html.Append("</table>");
 
             return html.ToString();
+        }
+  
+        private static string RenderMultiResultSetReport(List<DataTable> resultSets)
+        {
+            var sb = new StringBuilder();
+            foreach (var dt in resultSets)
+            {
+                if (dt.Rows.Count == 0) continue;
+
+                var visibleCols = dt.Columns.Cast<DataColumn>()
+                    .Where(c => !c.ColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+                int colCount = visibleCols.Count;
+
+                string headerFont = colCount <= 8 ? "18px" : colCount <= 12 ? "14px" : colCount <= 16 ? "14px" : colCount <= 20 ? "12px" : "10px";
+                string dataFont = headerFont;
+
+                const int minCharWeight = 3;
+                var charCounts = visibleCols.Select(c => Math.Max(c.ColumnName.Length, minCharWeight)).ToList();
+                int totalChars = charCounts.Sum();
+                var colWidths = charCounts.Select(cc => Math.Round(cc * 100.0 / totalChars, 2)).ToList();
+
+                sb.Append("<table class='data-table'><colgroup>");
+                for (int i = 0; i < visibleCols.Count; i++)
+                    sb.Append($"<col style='width:{colWidths[i]}%;'>");
+                sb.Append("</colgroup><thead><tr>");
+
+                foreach (var col in visibleCols)
+                    sb.Append($"<th style='font-size:{headerFont}; white-space:nowrap;'>{col.ColumnName}</th>");
+                sb.Append("</tr></thead><tbody>");
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    string type = dt.Columns.Contains("Type") ? dr["Type"]?.ToString() : "";
+                    sb.Append($"<tr class='{(type == "Total" ? "row-total" : "")}'>");
+                    foreach (var col in visibleCols)
+                        sb.Append($"<td class='align-center' style='font-size:{dataFont};'>{FormatCellValue(dr[col])}</td>");
+                    sb.Append("</tr>");
+                }
+                sb.Append("</tbody></table><br><br>");
+            }
+            return sb.ToString();
         }
         private static string RenderMultiResultSetReport(string sPName, List<SearchGrid> searchFields)
         {
