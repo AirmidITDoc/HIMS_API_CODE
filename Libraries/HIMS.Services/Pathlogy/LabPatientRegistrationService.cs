@@ -5,6 +5,7 @@ using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.Pathology;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
@@ -407,6 +408,9 @@ namespace HIMS.Services.Pathlogy
                 string vLabPatientId = odal.ExecuteNonQueryNew("ps_Insert_LabPatientRegistration", CommandType.StoredProcedure, "LabPatientId", lentity);
 
                 ObjTLabPatientRegistration.LabPatientId = Convert.ToInt32(vLabPatientId);
+
+                await _context.LogProcedureExecution(lentity, nameof(TLabPatientRegistration), ObjTLabPatientRegistration.LabPatientId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
                 objBill.OpdIpdId = ObjTLabPatientRegistration.LabPatientId;
 
                 // ---------- 2) Insert Bill ----------
@@ -417,6 +421,7 @@ namespace HIMS.Services.Pathlogy
 
                 objBill.BillNo = Convert.ToInt32(vBillNo);
 
+                await _context.LogProcedureExecution(bentity, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                 // ---------- 3) Add Charges + Bill Details + Pathology/Radiology + Package ----------
                 // Stage all EF entities first, SaveChanges ONCE at the end of the EF block.
                 foreach (var objItem1 in objBill.AddCharges)
