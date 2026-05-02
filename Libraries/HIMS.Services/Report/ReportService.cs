@@ -6694,29 +6694,25 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
                         html = html.Replace("{{Mobile}}", dt.GetColValue("Mobile"));
-                        html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
+                        html = html.Replace("{{DoctorAmount}}", Convert.ToDecimal(dt.GetColValue("DoctorAmount")).ToString("F2"));  //dt.GetColValue("DoctorAmount"));
                         html = html.Replace("{{TDSAmount}}", dt.GetColValue("TDSAmount"));
-                        html = html.Replace("{{ProcessDate}}", dt.GetColValue("ProcessDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{ProcessDate}}", dt.GetColValue("ProcessDate").ConvertToDateString("dd/MM/yyyy"));
                         html = html.Replace("{{PaymentDate}}", dt.GetColValue("PaymentDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                        html = html.Replace("{{PayAmount}}", dt.GetColValue("PayAmount"));
-                        html = html.Replace("{{balanceAmt}}", dt.GetColValue("balanceAmt"));
+                        html = html.Replace("{{PayAmount}}", Convert.ToDecimal(dt.GetColValue("PayAmount")).ToString("F2"));  ///dt.GetColValue("DoctorAmount"));
+                        html = html.Replace("{{balanceAmt}}", Convert.ToDecimal(dt.GetColValue("balanceAmt")).ToString("F2"));  ///dt.GetColValue("DoctorAmount")); Convert.ToDecimal(dt.GetColValue("balanceAmt")).ToString("F2"));
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+                        html = html.Replace("{{PaymentMode}}", dt.GetColValue("PaymentMode"));
 
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++;
                             items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;font-size:15;\"><td style=\" border: 1px solid #d4c3c3;text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3;text-align: left; padding: 6px;\">").Append(dr["PatientName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3;text-align: left; padding: 6px;\">").Append(dr["PBillNo"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3;text-align: left; padding: 6px;\">").Append(dr["BillDate"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\" border: 1px solid #d4c3c3;text-align: left; padding: 6px;\">").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
-                            //items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["ConcessionAmount"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\" border: 1px solid #d4c3c3;text-align: center; padding: 6px;\">").Append(dr["ChargeNetAmount"].ConvertToDouble().ToString("F2")).Append("</td>");
-
-                            //i++;
-                            //items.Append("<tr>");
-                            //items.Append("<td style='padding:6px; border:1px solid #ccc; text-align:left;'>").Append(i).Append("</td>");
-                            //items.Append("<td style='padding:6px; border:1px solid #ccc; text-align:left;'>").Append(dr["ServiceName"].ConvertToString()).Append("</td>");
-                            //items.Append("<td style='padding:6px; border:1px solid #ccc; text-align:center;'>").Append(dr["ConcessionAmount"].ConvertToString()).Append("</td>");
-                            //items.Append("<td style='padding:6px; border:1px solid #ccc; text-align:right;'>").Append(dr["ChargeNetAmount"].ConvertToString()).Append("</td>");
-                            //items.Append("</tr>");
+                            items.Append("<td style=\" border: 1px solid #d4c3c3;text-align: center; padding: 6px;\">").Append(dr["DocAmt"].ConvertToDouble().ToString("F2")).Append("</td>");
                         }
                         html = html.Replace("{{Items}}", items.ToString());
                         var payAmountValue = dt.GetColValue("PayAmount");
