@@ -28,7 +28,7 @@ namespace HIMS.Data.DTO.DashBoard
         public decimal? GovtApprovedAmt { get; set; }
         public string? GovtRefNo { get; set; }
         public long? CompanyApprovedId { get; set; }
-        public string? SecondCompanyName { get; set; }
+        public string? SecondCompnayName { get; set; }
         public decimal? CompanyApprovedAmt { get; set; }
         public string? CompRefNo { get; set; }
         public string? BillCount { get; set; }
