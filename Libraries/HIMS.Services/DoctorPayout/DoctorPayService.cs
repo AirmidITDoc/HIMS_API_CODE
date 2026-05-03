@@ -48,9 +48,6 @@ namespace HIMS.Services.DoctorPayout
             return await DatabaseHelper.GetGridDataBySp<DoctorShareLbyNameListDto>(model, "PS_m_Rtrv_DoctorShareList_by_Name");
         }
 
-
-
-
         public virtual async Task InsertAsync(TAdditionalDocPay ObjTAdditionalDocPay, int CurrentUserId, string CurrentUserName)
         {
             DatabaseHelper odal = new();

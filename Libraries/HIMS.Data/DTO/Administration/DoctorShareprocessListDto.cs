@@ -28,6 +28,10 @@ namespace HIMS.Data.DTO.Administration
         public decimal? PayAmount { get; set; }
         public decimal? balanceAmt { get; set; }
         public DateTime? PaymentDate { get; set; }
+        public bool? IsCancelled {  get; set; }
+        public string? UnProcessStatus { get; set; }
+        public string? CreatedByName { get; set; }
+        public string? PayStatus { get; set; }
 
     }
 }
