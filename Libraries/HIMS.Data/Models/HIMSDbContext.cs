@@ -7,14 +7,14 @@ namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
-        //public HIMSDbContext()
-        //{
-        //}
+        ////public HIMSDbContext()
+        ////{
+        ////}
 
-        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
-        //    : base(options)
-        //{
-        //}
+        ////public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        ////    : base(options)
+        ////{
+        ////}
 
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -184,6 +184,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MAnaesthesiaTypeMaster> MAnaesthesiaTypeMasters { get; set; } = null!;
         public virtual DbSet<MAppWhatsAppDly> MAppWhatsAppDlies { get; set; } = null!;
         public virtual DbSet<MAreaMaster> MAreaMasters { get; set; } = null!;
+        public virtual DbSet<MAssignItemToDrug> MAssignItemToDrugs { get; set; } = null!;
         public virtual DbSet<MAssignItemToStore> MAssignItemToStores { get; set; } = null!;
         public virtual DbSet<MAssignSupplierToStore> MAssignSupplierToStores { get; set; } = null!;
         public virtual DbSet<MAutoServiceList> MAutoServiceLists { get; set; } = null!;
@@ -492,7 +493,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<TLabPatientAddress> TLabPatientAddresses { get; set; } = null!;
         public virtual DbSet<TLabPatientPersonInfo> TLabPatientPersonInfos { get; set; } = null!;
         public virtual DbSet<TLabPatientRegisteredMaster> TLabPatientRegisteredMasters { get; set; } = null!;
-        public virtual DbSet<TLabPatientRegisteredMasterSync> TLabPatientRegisteredMasterSyncs { get; set; } = null!;
         public virtual DbSet<TLabPatientRegistration> TLabPatientRegistrations { get; set; } = null!;
         public virtual DbSet<TLabPatientRegistrationSync> TLabPatientRegistrationSyncs { get; set; } = null!;
         public virtual DbSet<TLabTestRequest> TLabTestRequests { get; set; } = null!;
@@ -6543,6 +6543,23 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MAssignItemToDrug>(entity =>
+            {
+                entity.HasKey(e => e.AssignId);
+
+                entity.ToTable("M_AssignItemToDrug");
+
+                entity.HasOne(d => d.Drug)
+                    .WithMany(p => p.MAssignItemToDrugs)
+                    .HasForeignKey(d => d.DrugId)
+                    .HasConstraintName("FK_M_AssignItemToDrug_M_ItemDrugTypeMaster");
+
+                entity.HasOne(d => d.Item)
+                    .WithMany(p => p.MAssignItemToDrugs)
+                    .HasForeignKey(d => d.ItemId)
+                    .HasConstraintName("FK_M_AssignItemToDrug_M_ItemMaster");
             });
 
             modelBuilder.Entity<MAssignItemToStore>(entity =>
@@ -12664,7 +12681,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.DoctorAmount).HasColumnType("money");
 
+                entity.Property(e => e.DoctorPayoutNo).HasMaxLength(20);
+
                 entity.Property(e => e.HospitalAmount).HasColumnType("money");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
@@ -14226,43 +14247,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DateofBirth).HasColumnType("datetime");
 
                 entity.Property(e => e.FirstName).HasMaxLength(100);
-
-                entity.Property(e => e.LabRequestNo).HasMaxLength(50);
-
-                entity.Property(e => e.LastName).HasMaxLength(100);
-
-                entity.Property(e => e.MiddleName).HasMaxLength(100);
-
-                entity.Property(e => e.MobileNo).HasMaxLength(11);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.RegDate).HasColumnType("datetime");
-
-                entity.Property(e => e.RegTime).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<TLabPatientRegisteredMasterSync>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("T_LabPatientRegisteredMasterSync");
-
-                entity.Property(e => e.Address).HasMaxLength(255);
-
-                entity.Property(e => e.AgeDay).HasMaxLength(5);
-
-                entity.Property(e => e.AgeMonth).HasMaxLength(5);
-
-                entity.Property(e => e.AgeYear).HasMaxLength(5);
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DateofBirth).HasColumnType("datetime");
-
-                entity.Property(e => e.FirstName).HasMaxLength(100);
-
-                entity.Property(e => e.LabPatRegId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.LabRequestNo).HasMaxLength(50);
 
@@ -18904,8 +18888,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ChequeAmount).HasColumnType("money");
 
                 entity.Property(e => e.OnlineAmount).HasColumnType("money");
-
-                entity.Property(e => e.TransactionLabel).HasMaxLength(55);
 
                 entity.Property(e => e.UpitranNo)
                     .HasMaxLength(50)

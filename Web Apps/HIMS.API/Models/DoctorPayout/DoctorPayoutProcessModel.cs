@@ -17,8 +17,6 @@ namespace HIMS.API.Models.DoctorPayout
         public long DoctorPayoutId { get; set; }
 
 
-
-
     }
     public class DoctorPayoutProcessModelValidator : AbstractValidator<DoctorPayoutProcessModel>
     {
@@ -55,7 +53,6 @@ namespace HIMS.API.Models.DoctorPayout
         public List<DoctorPayoutProcessDetailsModel> DoctorPayoutProcessDetail { get; set; }
 
     }
-
 
 
     public class DoctorPayyModel
@@ -98,6 +95,25 @@ namespace HIMS.API.Models.DoctorPayout
 
     }
 
+    public class DoctorUnprocessModel
+    {
+        public long DoctorPayoutId { get; set; }
+        public int? IsCancelledBy { get; set; }
 
+    }
+    //public class DoctorPayoutUnprocessModel
+    //{
+    //    public DoctorUnprocessModel DoctorPayoutUnprocess { get; set; }
+
+    //}
+
+    //public class DoctorUnprocessModelValidator : AbstractValidator<DoctorUnprocessModel>
+    //{
+    //    public DoctorUnprocessModelValidator()
+    //    {
+    //        RuleFor(x => x.DoctorPayoutId).NotNull().NotEmpty().WithMessage("DoctorPayoutId is required");
+    //        RuleFor(x => x.CancelledBy).NotNull().NotEmpty().WithMessage("CancelledBy is required");
+    //    }
+    //}
 
 }

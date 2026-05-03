@@ -13,7 +13,6 @@ namespace HIMS.Data.Models
         public decimal? OnlineAmount { get; set; }
         public string? UpitranNo { get; set; }
         public long? TransactionType { get; set; }
-        public string? TransactionLabel { get; set; }
         public int? PayCount { get; set; }
     }
 }
