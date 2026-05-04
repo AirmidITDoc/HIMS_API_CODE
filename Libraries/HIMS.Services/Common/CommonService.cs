@@ -189,6 +189,7 @@ namespace HIMS.Services.Common
 
                 case "BankNameList": sp_Name = "ps_Rtrv_BankMaster"; break;
                 case "AdmissionCancleStaus": sp_Name = "Check_AdmissionCancleStaus"; break;
+                case "PharmacyAmtByAdminId": sp_Name = "Rtrv_PharmacyAmtByAdminId"; break;
 
 
 
