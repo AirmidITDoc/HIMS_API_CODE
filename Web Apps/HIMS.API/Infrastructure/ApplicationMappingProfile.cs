@@ -322,6 +322,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIpprescriptionReturnD, TIpprescriptionReturnDModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MEmployeeDepartmentMaster, EmployeeDepartmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MEmployeeDesignationMaster, EmployeeDesignationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TLabPatientAddress, LabPatientAddressModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

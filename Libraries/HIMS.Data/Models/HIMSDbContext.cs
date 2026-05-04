@@ -7,14 +7,14 @@ namespace HIMS.Data.Models
 {
     public partial class HIMSDbContext : DbContext
     {
-        ////public HIMSDbContext()
-        ////{
-        ////}
+        //public HIMSDbContext()
+        //{
+        //}
 
-        ////public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
-        ////    : base(options)
-        ////{
-        ////}
+        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        //    : base(options)
+        //{
+        //}
 
         public virtual DbSet<AddCharge> AddCharges { get; set; } = null!;
         public virtual DbSet<Admission> Admissions { get; set; } = null!;
@@ -494,7 +494,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<TLabPatientPersonInfo> TLabPatientPersonInfos { get; set; } = null!;
         public virtual DbSet<TLabPatientRegisteredMaster> TLabPatientRegisteredMasters { get; set; } = null!;
         public virtual DbSet<TLabPatientRegistration> TLabPatientRegistrations { get; set; } = null!;
-        public virtual DbSet<TLabPatientRegistrationSync> TLabPatientRegistrationSyncs { get; set; } = null!;
         public virtual DbSet<TLabTestRequest> TLabTestRequests { get; set; } = null!;
         public virtual DbSet<TLabTransactionHistory> TLabTransactionHistories { get; set; } = null!;
         public virtual DbSet<TLoginAccessDetail> TLoginAccessDetails { get; set; } = null!;
@@ -561,7 +560,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPathologyReportDetail> TPathologyReportDetails { get; set; } = null!;
         public virtual DbSet<TPathologyReportDetailsArch> TPathologyReportDetailsArches { get; set; } = null!;
         public virtual DbSet<TPathologyReportHeader> TPathologyReportHeaders { get; set; } = null!;
-        public virtual DbSet<TPathologyReportHeaderSync> TPathologyReportHeaderSyncs { get; set; } = null!;
         public virtual DbSet<TPathologyReportTemplateDetail> TPathologyReportTemplateDetails { get; set; } = null!;
         public virtual DbSet<TPatientDetail> TPatientDetails { get; set; } = null!;
         public virtual DbSet<TPatientFeedback> TPatientFeedbacks { get; set; } = null!;
@@ -589,7 +587,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPurchaseRequisitionDetail> TPurchaseRequisitionDetails { get; set; } = null!;
         public virtual DbSet<TPurchaseRequisitionHeader> TPurchaseRequisitionHeaders { get; set; } = null!;
         public virtual DbSet<TRadiologyReportHeader> TRadiologyReportHeaders { get; set; } = null!;
-        public virtual DbSet<TRadiologyReportHeaderSync> TRadiologyReportHeaderSyncs { get; set; } = null!;
         public virtual DbSet<TRefundDetail> TRefundDetails { get; set; } = null!;
         public virtual DbSet<TReportLog> TReportLogs { get; set; } = null!;
         public virtual DbSet<TReturnFromDepartmentDetail> TReturnFromDepartmentDetails { get; set; } = null!;
@@ -639,6 +636,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<VPaymentBillwisesumAmount> VPaymentBillwisesumAmounts { get; set; } = null!;
         public virtual DbSet<VTPayment> VTPayments { get; set; } = null!;
         public virtual DbSet<VTPaymentBillwisesumAmount> VTPaymentBillwisesumAmounts { get; set; } = null!;
+        public virtual DbSet<VTPaymentDoctorAmount> VTPaymentDoctorAmounts { get; set; } = null!;
         public virtual DbSet<VVisitMsg> VVisitMsgs { get; set; } = null!;
         public virtual DbSet<ViewDoctorshare> ViewDoctorshares { get; set; } = null!;
         public virtual DbSet<ViewTallyPharSalesReceiptNewOld> ViewTallyPharSalesReceiptNewOlds { get; set; } = null!;
@@ -649,7 +647,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -14206,11 +14204,17 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<TLabPatientAddress>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.AddressId);
 
                 entity.ToTable("T_LabPatientAddress");
 
                 entity.Property(e => e.Address).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.MobileNumber).HasMaxLength(20);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TLabPatientPersonInfo>(entity =>
@@ -14268,47 +14272,6 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.LabPatientId);
 
                 entity.ToTable("T_LabPatientRegistration");
-
-                entity.Property(e => e.Address).HasMaxLength(255);
-
-                entity.Property(e => e.AgeDay).HasMaxLength(5);
-
-                entity.Property(e => e.AgeMonth).HasMaxLength(5);
-
-                entity.Property(e => e.AgeYear).HasMaxLength(5);
-
-                entity.Property(e => e.Comments).HasMaxLength(255);
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DateofBirth).HasColumnType("datetime");
-
-                entity.Property(e => e.EmailId).HasMaxLength(255);
-
-                entity.Property(e => e.FirstName).HasMaxLength(100);
-
-                entity.Property(e => e.LabRequestNo).HasMaxLength(100);
-
-                entity.Property(e => e.LastName).HasMaxLength(100);
-
-                entity.Property(e => e.MiddleName).HasMaxLength(100);
-
-                entity.Property(e => e.MobileNo).HasMaxLength(11);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ReferByName).HasMaxLength(255);
-
-                entity.Property(e => e.RegDate).HasColumnType("datetime");
-
-                entity.Property(e => e.RegTime).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<TLabPatientRegistrationSync>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("T_LabPatientRegistrationSync");
 
                 entity.Property(e => e.Address).HasMaxLength(255);
 
@@ -16391,71 +16354,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UnVerifyDateTime).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<TPathologyReportHeaderSync>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("T_PathologyReportHeaderSync");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DoctorName).HasMaxLength(255);
-
-                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
-
-                entity.Property(e => e.IsVerifyedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
-
-                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
-
-                entity.Property(e => e.Opipnumber)
-                    .HasMaxLength(50)
-                    .HasColumnName("OPIPNumber");
-
-                entity.Property(e => e.OutSourceCreatedDateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.OutSourceLabName).HasMaxLength(255);
-
-                entity.Property(e => e.OutSourceModifiedDateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.OutSourceReportCollectedDateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.OutSourceSampleSentDateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.PathDate).HasColumnType("datetime");
-
-                entity.Property(e => e.PathReportId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("PathReportID");
-
-                entity.Property(e => e.PathTestId).HasColumnName("PathTestID");
-
-                entity.Property(e => e.PathTime).HasColumnType("datetime");
-
-                entity.Property(e => e.PatientName).HasMaxLength(255);
-
-                entity.Property(e => e.RefDoctorId).HasColumnName("RefDoctorID");
-
-                entity.Property(e => e.RegNo).HasMaxLength(50);
-
-                entity.Property(e => e.ReportDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ReportTime).HasColumnType("datetime");
-
-                entity.Property(e => e.SampleCollectionTime).HasColumnType("datetime");
-
-                entity.Property(e => e.SampleNo).HasMaxLength(50);
-
-                entity.Property(e => e.SampleReceviedDateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.UnVerifyComment).HasMaxLength(255);
-
-                entity.Property(e => e.UnVerifyDateTime).HasColumnType("datetime");
-            });
-
             modelBuilder.Entity<TPathologyReportTemplateDetail>(entity =>
             {
                 entity.HasKey(e => e.PathReportTemplateDetId);
@@ -17408,69 +17306,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UnVerifyDateTime).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<TRadiologyReportHeaderSync>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("T_RadiologyReportHeaderSync");
-
-                entity.Property(e => e.AdmVisitDoctorId).HasColumnName("AdmVisitDoctorID");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DoctorName).HasMaxLength(255);
-
-                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
-
-                entity.Property(e => e.IsVerifyedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.OpdIpdId).HasColumnName("OPD_IPD_ID");
-
-                entity.Property(e => e.OpdIpdType).HasColumnName("OPD_IPD_Type");
-
-                entity.Property(e => e.Opipnumber)
-                    .HasMaxLength(50)
-                    .HasColumnName("OPIPNumber");
-
-                entity.Property(e => e.OutSourceCreatedDateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.OutSourceLabName).HasMaxLength(255);
-
-                entity.Property(e => e.OutSourceModifiedDateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.OutSourceReportCollectedDateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.OutSourceSampleSentDateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.PatientName).HasMaxLength(255);
-
-                entity.Property(e => e.RadDate).HasColumnType("datetime");
-
-                entity.Property(e => e.RadReportId).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.RadTestId).HasColumnName("RadTestID");
-
-                entity.Property(e => e.RadTime).HasColumnType("datetime");
-
-                entity.Property(e => e.RefDoctorId).HasColumnName("RefDoctorID");
-
-                entity.Property(e => e.RegNo).HasMaxLength(50);
-
-                entity.Property(e => e.ReportDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ReportTime).HasColumnType("datetime");
-
-                entity.Property(e => e.ResultEntry).HasColumnType("text");
-
-                entity.Property(e => e.SuggestionNotes).HasMaxLength(500);
-
-                entity.Property(e => e.UnVerifyComment).HasMaxLength(255);
-
-                entity.Property(e => e.UnVerifyDateTime).HasColumnType("datetime");
-            });
-
             modelBuilder.Entity<TRefundDetail>(entity =>
             {
                 entity.HasKey(e => e.RefundDetId);
@@ -17890,6 +17725,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.NetAmount).HasColumnType("money");
 
+                entity.Property(e => e.NetPayAmt).HasColumnType("money");
+
                 entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
 
                 entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
@@ -18028,6 +17865,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.NetAmount).HasColumnType("money");
+
+                entity.Property(e => e.NetPayAmt).HasColumnType("money");
 
                 entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
 
@@ -18880,6 +18719,25 @@ namespace HIMS.Data.Models
                 entity.HasNoKey();
 
                 entity.ToView("V_T_PAYMENT_BILLWISESUM_AMOUNT");
+
+                entity.Property(e => e.CardAmount).HasColumnType("money");
+
+                entity.Property(e => e.CashAmount).HasColumnType("money");
+
+                entity.Property(e => e.ChequeAmount).HasColumnType("money");
+
+                entity.Property(e => e.OnlineAmount).HasColumnType("money");
+
+                entity.Property(e => e.UpitranNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("UPITranNo");
+            });
+
+            modelBuilder.Entity<VTPaymentDoctorAmount>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_T_PAYMENT_DOCTOR_AMOUNT");
 
                 entity.Property(e => e.CardAmount).HasColumnType("money");
 

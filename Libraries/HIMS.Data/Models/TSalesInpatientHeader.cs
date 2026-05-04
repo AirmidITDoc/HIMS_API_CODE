@@ -22,6 +22,7 @@ namespace HIMS.Data.Models
         public decimal? VatAmount { get; set; }
         public decimal? DiscAmount { get; set; }
         public decimal? NetAmount { get; set; }
+        public decimal? NetPayAmt { get; set; }
         public decimal? PaidAmount { get; set; }
         public decimal? BalanceAmount { get; set; }
         public decimal? RoundOff { get; set; }
