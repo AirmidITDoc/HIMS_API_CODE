@@ -40,8 +40,8 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
 
         //List API Get By Id
-        [HttpGet("{id?}")]
-            //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+            [HttpGet("{id?}")]
+            [Permission]
             public async Task<ApiResponse> Get(int id)
             {
                 if (id == 0)
@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             }
             //Add API
             [HttpPost]
-            //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+            [Permission]
             public async Task<ApiResponse> Post(ItemWiseSupplierRateModel obj)
             {
             MItemWiseSupplierRate model = obj.MapTo<MItemWiseSupplierRate>();
@@ -72,7 +72,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             }
             //Edit API
             [HttpPut("{id:int}")]
-            //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+            [Permission]
             public async Task<ApiResponse> Edit(ItemWiseSupplierRateModel obj)
             {
             MItemWiseSupplierRate model = obj.MapTo<MItemWiseSupplierRate>();
@@ -89,7 +89,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             }
             //Delete API
             [HttpDelete]
-            //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+            [Permission]
             public async Task<ApiResponse> Delete(int Id)
             {
             MItemWiseSupplierRate model = await _repository.GetById(x => x.DefId == Id);

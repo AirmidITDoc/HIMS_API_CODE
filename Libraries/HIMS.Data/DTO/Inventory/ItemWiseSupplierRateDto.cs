@@ -19,6 +19,8 @@ namespace HIMS.Data.DTO.Inventory
         public DateTime? ModifiedDate { get; set; }
         public string? ItemName { get; set; }
         public string? SupplierName { get; set; }
+        public string? UserName { get; set; }
+
 
     }
 }

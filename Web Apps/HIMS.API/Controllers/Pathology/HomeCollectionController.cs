@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(HomeCollectionModel obj)
         {
             THomeCollectionRegistrationInfo model = obj.MapTo<THomeCollectionRegistrationInfo>();
@@ -94,7 +94,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(HomeCollectionModel obj)
         {
             THomeCollectionRegistrationInfo model = obj.MapTo<THomeCollectionRegistrationInfo>();
@@ -123,7 +123,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.HomeCollectionId);
         }
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Delete)]
+        [Permission]
         public ApiResponse Cancel(HomeCollectionCancel obj)
         {
             THomeCollectionRegistrationInfo model = obj.MapTo<THomeCollectionRegistrationInfo>();
@@ -137,7 +137,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
         [HttpPut("updatePhlebotomist{id:int}")]
-        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Delete)]
+        [Permission]
         public ApiResponse Update(HomeCollectionupdatePhlebotomistModel obj)
         {
             THomeCollectionRegistrationInfo model = obj.MapTo<THomeCollectionRegistrationInfo>();
