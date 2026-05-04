@@ -7,6 +7,7 @@ namespace HIMS.Data.Models
     {
         public MItemMaster()
         {
+            MAssignItemToDrugs = new HashSet<MAssignItemToDrug>();
             MAssignItemToStores = new HashSet<MAssignItemToStore>();
         }
 
@@ -56,6 +57,7 @@ namespace HIMS.Data.Models
         public string? Content { get; set; }
         public bool IsValidContent { get; set; }
 
+        public virtual ICollection<MAssignItemToDrug> MAssignItemToDrugs { get; set; }
         public virtual ICollection<MAssignItemToStore> MAssignItemToStores { get; set; }
     }
 }

@@ -36,9 +36,12 @@
         <table style="width:100%; border-collapse:collapse; margin-top:10px;">
             <tr>
                 <th style="padding:6px; border:1px solid #999; text-align:left;">Sr No.</th>
+                <th style="padding:6px; border:1px solid #999; text-align:left;">Patient Name</th>
+                <th style="padding:6px; border:1px solid #999; text-align:left;">BillNo</th>
+                <th style="padding:6px; border:1px solid #999; text-align:left;">Bill Date</th>
                 <th style="padding:6px; border:1px solid #999; text-align:left;">Service Name</th>
-                <th style="padding:6px; border:1px solid #999; text-align:center;">Disc Amount</th>
-                <th style="padding:6px; border:1px solid #999; text-align:right;">Net Amount</th>
+                <th style="padding:6px; border:1px solid #999; text-align:center;">Net Amount</th>
+                <th style="padding:6px; border:1px solid #999; text-align:right;">Doctor Amount</th>
             </tr>
 
             {{Items}}
@@ -56,7 +59,7 @@
                     <table style="width:100%; border-collapse:collapse;">
                         <tr>
                             <td style="padding:6px;">Net Amount</td>
-                            <td style="padding:6px; text-align:right;">{{NetAmount}}</td>
+                            <td style="padding:6px; text-align:right;">{{DoctorAmount}}</td>
                         </tr>
                         <tr>
                             <td style="padding:6px;">Paid Amount</td>
@@ -68,6 +71,13 @@
                         </tr>
                     </table>
                 </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="padding:6px; font-weight:bold;">Payment Mode : </td>
+                <td style="padding:6px; text-align:right; font-weight:bold;">{{PaymentMode}}</td>
             </tr>
         </table>
 

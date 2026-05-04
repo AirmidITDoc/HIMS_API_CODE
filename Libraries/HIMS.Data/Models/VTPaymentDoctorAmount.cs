@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HIMS.Data.Models
 {
-    public partial class VTPaymentBillwisesumAmount
+    public partial class VTPaymentDoctorAmount
     {
         public long? BillNo { get; set; }
         public long? UnitId { get; set; }

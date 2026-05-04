@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.DoctorPayout
             _IDoctorPayService = repository;
         }
         [HttpPost("DoctorPayList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> salesdetaillist(GridRequestModel objGrid)
         {
             IPagedList<DoctorPayListDto> DoctorPayList = await _IDoctorPayService.GetList(objGrid);
@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPost("DoctorBilldetailList")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.ViewDoctorPAy
+        [Permission]
         public async Task<IActionResult> DotorbilldetailList(GridRequestModel objGrid)
         {
             IPagedList<DoctorBilldetailListDto> DoctorList = await _IDoctorPayService.GetBillDetailList(objGrid);
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPost("DoctorPaySummaryList")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> DotorPaysummaryList(GridRequestModel objGrid)
         {
             IPagedList<DcotorpaysummaryListDto> DoctorpayList = await _IDoctorPayService.GetDoctroSummaryList(objGrid);
@@ -55,31 +55,29 @@ namespace HIMS.API.Controllers.DoctorPayout
 
 
         [HttpPost("DoctorPaymentList")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> DotorPaymentList(GridRequestModel objGrid)
         {
             IPagedList<DoctprPaymentListDo> DoctorpayList = await _IDoctorPayService.DocPaymentList(objGrid);
             return Ok(DoctorpayList.ToGridResponse(objGrid, "DoctorPaymentList"));
         }
 
-
-
         [HttpPost("DoctorsharSummarydetail")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]r
+        [Permission]
         public async Task<IActionResult> Dotorshresummarydetail(GridRequestModel objGrid)
         {
             IPagedList<DoctorPaysummarydetailListDto> DoctorList = await _IDoctorPayService.GetDoctorsummaryDetailList(objGrid);
             return Ok(DoctorList.ToGridResponse(objGrid, "Doctor Pay Summary detail"));
         }
         [HttpPost("DoctorshareBillList")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> DotorshrebillList(GridRequestModel objGrid)
         {
             IPagedList<DoctorShareListDto> DoctorList = await _IDoctorPayService.GetLists(objGrid);
             return Ok(DoctorList.ToGridResponse(objGrid, "DoctorShareList"));
         }
         [HttpPost("DoctorshareListByName")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> DotorshreListbyname(GridRequestModel objGrid)
         {
             IPagedList<DoctorShareLbyNameListDto> DoctorList = await _IDoctorPayService.GetList1(objGrid);
@@ -87,7 +85,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> InsertSPD(DoctorPayModel obj)
         {
             TAdditionalDocPay model = obj.MapTo<TAdditionalDocPay>();
@@ -103,7 +101,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPut("ShareDocAddCharges")]
-        //[Permission(PageCode = "StockAdjustment", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> GSTUpdate(ShareDoctAddCharges obj)
         {
             List<AddCharge> model = obj.ShareDoctAddCharge.MapTo<List<AddCharge>>();
@@ -119,7 +117,7 @@ namespace HIMS.API.Controllers.DoctorPayout
       
 
         [HttpPost("DoctorPayoutProcess")]
-        //[Permission(PageCode = "Refund", Permission = PagePermission.Add)]
+        [Permission]
         public ApiResponse InsertSP(DoctorPayoutModel obj)
         {
             TDoctorPayoutProcessHeader model = obj.DoctorPayoutProcess.MapTo<TDoctorPayoutProcessHeader>();
@@ -127,10 +125,7 @@ namespace HIMS.API.Controllers.DoctorPayout
             if (obj.DoctorPayoutProcess.DoctorPayoutId == 0)
             {
                 model.ProcessStartDate = Convert.ToDateTime(obj.DoctorPayoutProcess.ProcessStartDate);
-
                 obj.DoctorPayoutProcess.DoctorPayoutId = obj.DoctorPayoutProcess.DoctorPayoutId;
-              
-
                 _IDoctorPayService.InsertSP(model, model1 , CurrentUserId, CurrentUserName);
             }
             else
@@ -139,6 +134,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPost("DoctorShrCalcAsPerReferDocVisitBillWise")]
+        [Permission]
         //[Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(CalcAsPerReferDocVisitBillWiseModel obj)
         {
@@ -160,45 +156,6 @@ namespace HIMS.API.Controllers.DoctorPayout
             IPagedList<DoctorShareprocessListDto> DoctorProcessList = await _IDoctorPayService.GetDoctorProcessList(objGrid);
             return Ok(DoctorProcessList.ToGridResponse(objGrid, "DoctorProcessList"));
         }
-
-
-        //[HttpPost("InsertEDMX")]
-        ////   [Permission(PageCode = "", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> InsertEDMX(DoctorPayyModel obj)
-        //{
-        //    TPaymentDoctor model = obj.MapTo<TPaymentDoctor>();
-        //    if (obj.PaymentId == 0)
-        //    {
-        //        model.CreatedDate = AppTime.Now;
-        //        model.CreatedBy = CurrentUserId;
-        //        model.ModifiedDate = AppTime.Now;
-        //        model.ModifiedBy = CurrentUserId;
-        //        await _IDoctorPayService.InsertAsyncc(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
-        //}
-
-        //[HttpPost("InsertEDMX")]
-        //public async Task<ApiResponse> Insert(DoctorPaymwntModel obj)
-        //{
-     
-        //    List<TPaymentDoctor> model = obj.MapTo<List<TPaymentDoctor>>();
-
-        //    if (obj.PaymentId == 0)
-        //    {
-
-        //        //model.CreatedDate = AppTime.Now;
-        //        //model.CreatedBy = CurrentUserId;
-        //        //model.ModifiedDate = AppTime.Now;
-        //        //model.ModifiedBy = CurrentUserId;
-        //        await _IDoctorPayService.InsertAsyncc( model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
-        //}
 
         [HttpPost("TDoctorpaymentInsert")]
         public async Task<ApiResponse> Insert(DoctorPaymwntModel obj)
@@ -226,6 +183,21 @@ namespace HIMS.API.Controllers.DoctorPayout
             await _IDoctorPayService.UpdateAsyncc(model, CurrentUserId, CurrentUserName);
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
+        [HttpPut("DoctorPayoutUnprocess")]
+        [Permission]
+        public async Task<ApiResponse> DoctorPayoutUnprocess(DoctorUnprocessModel obj)
+        {
+            TDoctorPayoutProcessHeader model = obj.MapTo<TDoctorPayoutProcessHeader>();
+            if (obj.DoctorPayoutId > 0)
+            {
+                await _IDoctorPayService.updateDoctorPayoutUnprocess(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+
         }
 
 
