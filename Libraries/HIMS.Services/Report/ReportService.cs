@@ -4109,6 +4109,72 @@ namespace HIMS.Services.Report
                 //        html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
                 //    }
                 //    break;
+
+                case "MultiResultSetReportCustomSummary.html":
+                    {
+                        var dcFields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+
+                        SqlParameter[] dcPara = dcFields.Select(kv =>
+                        {
+                            bool isDate = kv.Key.Equals("FromDate", StringComparison.OrdinalIgnoreCase)
+                                       || kv.Key.Equals("ToDate", StringComparison.OrdinalIgnoreCase);
+                            return new SqlParameter("@" + kv.Key,
+                                isDate ? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                                       : (object)kv.Value);
+                        }).ToArray();
+
+                        List<DataTable> allSets = FetchAllResultSets(model.SPName, dcPara);
+
+                        if (allSets.Count > 0)
+                        {
+                            DataTable firstDt = allSets[0];
+
+                            
+                            string[] dcTotalCols = totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+
+                            string[] dcGroupCols = model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+
+                            //HeaderItems.Append(GetCommonHtmlTableHeaderNew(firstDt, headerList, dynWidths, fontSize));
+
+                            //items.Append(GetCommonHtmlTableReportsNew(firstDt, headerList, model.colList, totalColList, dcGroupCols, fontSize));
+
+                            //ItemsTotal.Append(CreateGrandTotalNew(firstDt, dcTotalCols, dcGroupCols, fontSize));
+
+                            HeaderItems.Append(GetCommonHtmlTableHeader(firstDt, headerList, columnWidths));
+                            items.Append(GetCommonHtmlTableReports(firstDt, headerList, model.colList, totalColList, dcGroupCols));
+                            ItemsTotal.Append(CreateGrandTotal(firstDt, dcTotalCols, dcGroupCols));
+
+
+                            string summaryHtml = CreateGenericSummary(firstDt, totalColList, dcGroupCols);
+                            html = html.Replace("{{SummarySection}}", summaryHtml);
+
+                            string extraTables = allSets.Count > 1
+                                ? RenderMultiResultSetReport(allSets.Skip(1).ToList())
+                                : "";
+                            html = html.Replace("{{ResultSetTables}}", extraTables);
+
+                            string summaryBlock = $@"
+                            <div style='page-break-before: always;'></div>
+                            <table style='width:100%; border-collapse:collapse; margin-bottom:10px; border:1px solid #777;'>
+                                <tr style='background:#d9d9d9; font-weight:bold;'>
+                                    <td style='padding:10px; font-size:18px; text-align:left; border-right:1px solid #777;'>
+                                        Summary Report For {model.RepoertName}
+                                    </td>
+                                    <td style='padding:10px; font-size:16px; text-align:right;'>
+                                        From Date : {FromDate:dd/MM/yyyy} &nbsp;--&nbsp; To Date : {ToDate:dd/MM/yyyy}
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/><br/>";
+
+                            html = html.Replace("{{SummaryBlock}}", summaryBlock);
+                        }
+
+                        html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yyyy"));
+                        html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
+                    }
+                    break;
+
                 case "MultiResultSetReport.html":
                     {
                         if (model.Mode == "DailyCollectionSummaryMulti")
@@ -4531,6 +4597,7 @@ namespace HIMS.Services.Report
             return table.ToString();
         }
 
+        
         //public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
         //{
         //    StringBuilder table = new();
@@ -4608,7 +4675,7 @@ namespace HIMS.Services.Report
         //    }
         //    return table.ToString();
         //}
-      
+
         public static void CreateRows(IEnumerable<DataRow> group2Data, StringBuilder table, string[] headers, string[] columnDataNames, ref int RowNo)
         {
             foreach (var row in group2Data)
