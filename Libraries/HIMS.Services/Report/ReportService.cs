@@ -4129,21 +4129,29 @@ namespace HIMS.Services.Report
                         {
                             DataTable firstDt = allSets[0];
 
-                            
+                            string[] trimmedHeaders = model.headerList.Select(x => x.Trim()).ToArray();
+                            string[] trimmedColList = model.colList.Select(x => x.Trim()).ToArray();
+                            string[] trimmedWidths = (model.columnWidths ?? Array.Empty<string>()).Select(x => x.Trim()).ToArray();
+
+                            string[] alignedHeaders = trimmedHeaders.Where(x => !x.Equals("Sr.No", StringComparison.OrdinalIgnoreCase)).ToArray();
                             string[] dcTotalCols = totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                            string[] dcGroupCols = model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
 
-                            string[] dcGroupCols = model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                            string[] hiddenCols = { "ExpenseType", "Type" };
 
-                            //HeaderItems.Append(GetCommonHtmlTableHeaderNew(firstDt, headerList, dynWidths, fontSize));
+                            var allPairs = alignedHeaders.Zip(trimmedColList, (h, c) => new { h, c }).Select((x, i) => new { x.h, x.c, Width = i < trimmedWidths.Length ? trimmedWidths[i] : "" }).ToList();
+                            var visiblePairs = allPairs.Where(x => !hiddenCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
 
-                            //items.Append(GetCommonHtmlTableReportsNew(firstDt, headerList, model.colList, totalColList, dcGroupCols, fontSize));
+                            string[] visibleHeaders = visiblePairs.Select(x => x.h).ToArray();
+                            string[] visibleWidths = visiblePairs.Select(x => x.Width).ToArray();
 
-                            //ItemsTotal.Append(CreateGrandTotalNew(firstDt, dcTotalCols, dcGroupCols, fontSize));
+                            HeaderItems.Append(GetCommonHtmlTableHeaderNew(firstDt, visibleHeaders, visibleWidths));
 
-                            HeaderItems.Append(GetCommonHtmlTableHeader(firstDt, headerList, columnWidths));
-                            items.Append(GetCommonHtmlTableReports(firstDt, headerList, model.colList, totalColList, dcGroupCols));
-                            ItemsTotal.Append(CreateGrandTotal(firstDt, dcTotalCols, dcGroupCols));
+                            string[] adjustedtotalColList = totalColList.Skip(2).ToArray();
+                            items.Append(GetCommonHtmlTableReportsNew(firstDt, alignedHeaders, trimmedColList, adjustedtotalColList, dcGroupCols));
 
+                            string[] adjustedTotalCols = dcTotalCols.Skip(2).ToArray();
+                            ItemsTotal.Append(CreateGrandTotal(firstDt, adjustedTotalCols, dcGroupCols));
 
                             string summaryHtml = CreateGenericSummary(firstDt, totalColList, dcGroupCols);
                             html = html.Replace("{{SummarySection}}", summaryHtml);
@@ -4597,7 +4605,130 @@ namespace HIMS.Services.Report
             return table.ToString();
         }
 
-        
+
+        public static string GetCommonHtmlTableHeaderNew(DataTable dt, string[] headers, string[] columnWidths = null)
+        {
+            StringBuilder table = new();
+            table.Append("<tr>");
+            table.Append("<th style=\"border: 1px solid #d4c3c3; padding: 6px;\">Sr.No</th>");
+            for (int i = 0; i < headers.Length; i++)
+            {
+                string widthStyle = (columnWidths != null && i < columnWidths.Length && !string.IsNullOrWhiteSpace(columnWidths[i]))
+                    ? $"width: {columnWidths[i]}%;"
+                    : "";
+
+                table.Append($"<th style=\"border: 1px solid #d4c3c3; padding: 6px; {widthStyle}\">");
+                table.Append(headers[i]);
+                table.Append("</th>");
+            }
+            table.Append("</tr>");
+            return table.ToString();
+        }
+        public static string GetCommonHtmlTableReportsNew(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
+        {
+            StringBuilder table = new();
+
+            string[] hiddenCols = { "ExpenseType", "Type" }; 
+
+            var filtered = headers
+                .Zip(columnDataNames, (h, c) => new { Header = h, Column = c })
+                .Where(x => !groupBy.Contains(x.Column, StringComparer.OrdinalIgnoreCase))
+                .Where(x => !hiddenCols.Contains(x.Column, StringComparer.OrdinalIgnoreCase))
+                .ToList();
+
+            var filteredHeaders = filtered.Select(x => x.Header).ToArray();
+            var filteredColumns = filtered.Select(x => x.Column).ToArray();
+
+            int totalColSpan = filteredColumns.Length + 1; 
+
+            int RowNo = 1;
+            if (groupBy.Length > 0)
+            {
+                var groups1 = dt.AsEnumerable().Select(row => row.Field<string>(groupBy[0])).Distinct().ToList();
+                foreach (string group1 in groups1)
+                {
+                    var group1Data = dt.Select(groupBy[0] + "='" + group1 + "'");
+                    table.Append("<tr style='font-size:14px;color:black;background-color:#f9f9f9;'><th style='border:1px solid #000;padding:4px;text-align:left;' colspan='")
+                         .Append(totalColSpan).Append("'>").Append(group1).Append("</th></tr>");
+
+                    if (groupBy.Length > 1)
+                    {
+                        var groups2 = group1Data.AsEnumerable().Select(row => row.Field<string>(groupBy[1])).Distinct().ToList();
+                        foreach (string group2 in groups2)
+                        {
+                            var group2Data = group1Data.Where(x => x[groupBy[1]].ToString().ToLower() == group2.ToLower());
+                            table.Append("<tr style='font-size:13px;color:black;'><th style='border:1px solid #000;padding:4px;text-align:left;text-indent:10px;' colspan='")
+                                 .Append(totalColSpan).Append("'>").Append(group2).Append("</th></tr>");
+
+                            if (groupBy.Length > 2)
+                            {
+                                var groups3 = group2Data.AsEnumerable().Select(row => row.Field<string>(groupBy[2])).Distinct().ToList();
+                                foreach (string group3 in groups3)
+                                {
+                                    var group3Data = group2Data.Where(x => x[groupBy[2]].ToString().ToLower() == group3.ToLower());
+                                    table.Append("<tr style='font-size:12px;color:black;'><th style='border:1px solid #000;padding:4px;text-align:left;text-indent:20px;' colspan='")
+                                         .Append(totalColSpan).Append("'>").Append(group3).Append("</th></tr>");
+
+                                    if (groupBy.Length > 3)
+                                    {
+                                        var groups4 = group3Data.AsEnumerable().Select(row => row.Field<string>(groupBy[3])).Distinct().ToList();
+                                        foreach (string group4 in groups4)
+                                        {
+                                            table.Append("<tr style='font-size:11px;color:black;'><th style='border:1px solid #000;padding:4px;text-align:left;text-indent:30px;' colspan='")
+                                                 .Append(totalColSpan).Append("'>").Append(group4).Append("</th></tr>");
+                                            CreateRowsNew(group3Data.Where(x => x[groupBy[3]].ToString().ToLower() == group4.ToLower()), table, filteredHeaders, filteredColumns, ref RowNo);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        CreateRowsNew(group3Data, table, filteredHeaders, filteredColumns, ref RowNo); 
+                                    }
+                                    CreateFooterGroupBy(group3Data, table, footer, group3);
+                                }
+                            }
+                            else
+                            {
+                                CreateRowsNew(group2Data, table, filteredHeaders, filteredColumns, ref RowNo); 
+                            }
+                            CreateFooterGroupBy(group2Data, table, footer, group2);
+                        }
+                    }
+                    else
+                    {
+                        CreateRowsNew(group1Data, table, filteredHeaders, filteredColumns, ref RowNo); 
+                    }
+                }
+            }
+            else
+            {
+                CreateRowsNew(dt.AsEnumerable(), table, filteredHeaders, filteredColumns, ref RowNo); 
+            }
+            return table.ToString();
+        }
+
+        public static void CreateRowsNew(IEnumerable<DataRow> group2Data, StringBuilder table, string[] headers, string[] columnDataNames, ref int RowNo)
+        {
+            foreach (var row in group2Data)
+            {
+                table.Append("<tr style='text-align: center; border: 1px solid #d4c3c3;'>");
+
+                table.Append("<th style='border: 1px solid #d4c3c3; padding: 6px; font-family: Calibri, \"Helvetica Neue\", Helvetica, sans-serif; font-size:16px;'>");
+                table.Append(RowNo);
+                table.Append("</th>");
+                RowNo++;
+
+                foreach (var hr in columnDataNames)
+                {
+                    table.Append("<td style='border: 1px solid #d4c3c3; font-family: Calibri, \"Helvetica Neue\", Helvetica, sans-serif; font-size:16px; word-break: break-word; white-space: normal; padding: 4px;'>");
+                    table.Append(row.Table.Columns.Contains(hr) ? row[hr].ToString() : "");
+                    table.Append("</td>");
+                }
+
+                table.Append("</tr>");
+            }
+        }
+
+
         //public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
         //{
         //    StringBuilder table = new();

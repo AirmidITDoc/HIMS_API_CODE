@@ -8,7 +8,10 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
+using HIMS.Services.Pathlogy;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Pathology
@@ -19,11 +22,22 @@ namespace HIMS.API.Controllers.Pathology
     public class LabPatientAddressController : BaseController
     {
         private readonly IGenericService<TLabPatientAddress> _repository;
-        public LabPatientAddressController(IGenericService<TLabPatientAddress> repository)
+        private readonly ILabPatientAddresService _ILabPatientAddresService;
+
+        public LabPatientAddressController(ILabPatientAddresService repository1, IGenericService<TLabPatientAddress> repository)
         {
+            _ILabPatientAddresService = repository1;
+
             _repository = repository;
         }
-       
+        [HttpPost("LabPatientAddressList")]
+        //[Permission]
+        public async Task<IActionResult> salesdetaillist(GridRequestModel objGrid)
+        {
+            IPagedList<LabPatientAddressDto> LabPatientAddressList = await _ILabPatientAddresService.GetListAsync(objGrid);
+            return Ok(LabPatientAddressList.ToGridResponse(objGrid, "LabPatientAddress List"));
+        }
+
         //List API Get By Id
         [HttpGet("{id?}")]
         [Permission]

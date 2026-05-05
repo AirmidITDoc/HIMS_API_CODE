@@ -200,6 +200,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IPharmacyRefundService, PharmacyRefundService>();
             services.AddScoped<IPharmacyAdvanceService, PharmacyAdvanceService>();
             services.AddScoped<IDoseMasterService, DoseMasterService>();
+            services.AddScoped<ILabPatientAddresService, LabPatientAddresService>();
+
 
 
 
