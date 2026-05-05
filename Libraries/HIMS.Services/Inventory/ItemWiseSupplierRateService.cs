@@ -21,7 +21,7 @@ namespace HIMS.Services.Inventory
         }
         public virtual async Task<IPagedList<ItemWiseSupplierRateDto>> GetListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<ItemWiseSupplierRateDto>(model, "PS_ItemWiseSupplierRate");
+            return await DatabaseHelper.GetGridDataBySp<ItemWiseSupplierRateDto>(model, "ps_ItemWiseSupplierRate");
         }
 
 
