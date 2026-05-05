@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         //Add API
         [HttpPost]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Post(LabPatientAddressModel obj)
         {
             TLabPatientAddress model = obj.MapTo<TLabPatientAddress>();
@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(LabPatientAddressModel obj)
         {
             TLabPatientAddress model = obj.MapTo<TLabPatientAddress>();
@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         //Delete API
         [HttpDelete]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             TLabPatientAddress model = await _repository.GetById(x => x.AddressId == Id);

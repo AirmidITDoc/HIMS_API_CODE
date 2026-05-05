@@ -21,7 +21,7 @@ namespace HIMS.API.Controllers.Pharmacy
             _IPharmacyAdvanceService = repository;
         }
         [HttpPost("PharmacyAdvanceInsert")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public ApiResponse Insert(PharAdvanceModel obj)
         {
             TPhadvanceHeader model = obj.PharmacyAdvance.MapTo<TPhadvanceHeader>();
@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model1.AdvanceDetailId);
         }
         [HttpPut("PharmacyAdvanceUpdate")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public ApiResponse Update(PharmacyHeaderUpdate obj)
         {
             TPhadvanceHeader model = obj.PharmacyHeader.MapTo<TPhadvanceHeader>();

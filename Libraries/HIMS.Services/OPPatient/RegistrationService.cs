@@ -62,21 +62,33 @@ namespace HIMS.Services.OPPatient
 
         public virtual async Task InsertAsyncSP(Registration objRegistration, int CurrentUserId, string CurrentUserName)
         {
-            DatabaseHelper odal = new();
-            string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", "AgeMonth", "AgeDay", 
-                "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "ReligionId", "AreaId", "IsSeniorCitizen", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo", 
-                "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry", 
-                "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress","EmailId", "RegId" };
-            var entity = objRegistration.ToDictionary();
-            foreach (var rProperty in entity.Keys.ToList())
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-                if (!rEntity.Contains(rProperty))
-                    entity.Remove(rProperty);
+                DatabaseHelper odal = new();
+                string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", "AgeMonth", "AgeDay",
+                "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "ReligionId", "AreaId", "IsSeniorCitizen", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo",
+                "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry",
+                "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress","EmailId", "RegId" };
+                var entity = objRegistration.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+                string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+                objRegistration.RegId = Convert.ToInt32(RegId);
+                await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                await transaction.CommitAsync();
             }
-            string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
-            objRegistration.RegId = Convert.ToInt32(RegId);
-            await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            catch (Exception)
+            {
+                // ❌ Rollback on error
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
         public virtual async Task InsertAsync(Registration objregistration, int UserId, string Username)
         {
@@ -118,21 +130,33 @@ namespace HIMS.Services.OPPatient
         }
         public virtual async Task RegUpdateAsync(Registration ObjRegistration, int CurrentUserId, string CurrentUserName)
         {
-            DatabaseHelper odal = new();
-            string[] AEntity = { "RegId", "AadharCardNo", "MobileNo", "EmailId" };
-            var Rentity = ObjRegistration.ToDictionary();
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
-            foreach (var rProperty in Rentity.Keys.ToList())
+            try
             {
-                if (!AEntity.Contains(rProperty))
-                    Rentity.Remove(rProperty);
+                DatabaseHelper odal = new();
+                string[] AEntity = { "RegId", "AadharCardNo", "MobileNo", "EmailId" };
+                var Rentity = ObjRegistration.ToDictionary();
+
+                foreach (var rProperty in Rentity.Keys.ToList())
+                {
+                    if (!AEntity.Contains(rProperty))
+                        Rentity.Remove(rProperty);
+                }
+
+                odal.ExecuteNonQuery("ps_RegistrationUpdate", CommandType.StoredProcedure, Rentity);
+                await _context.LogProcedureExecution(Rentity, nameof(Registration), ObjRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                // SaveChanges (important)
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit
+                await transaction.CommitAsync();
             }
-
-            odal.ExecuteNonQuery("ps_RegistrationUpdate", CommandType.StoredProcedure, Rentity);
-            await _context.LogProcedureExecution(Rentity, nameof(Registration), ObjRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
+            catch (Exception)
+            {
+                // ❌ Rollback
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
-
-
     }
 }

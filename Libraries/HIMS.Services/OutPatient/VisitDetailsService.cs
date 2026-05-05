@@ -96,10 +96,14 @@ namespace HIMS.Services.OutPatient
             }
         }
        
-        public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
+    public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
+    {
+        using var transaction = await _context.Database.BeginTransactionAsync();
+
+        try
         {
-            // OLD CODE With SP
-            DatabaseHelper odal = new();
+                // OLD CODE With SP
+                DatabaseHelper odal = new();
             string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "ReligionId", "AreaId", "IsSeniorCitizen", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry", "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress","RegId", "EmailId" };
             var entity = objRegistration.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
@@ -144,12 +148,25 @@ namespace HIMS.Services.OutPatient
             };
             odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
             await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            //  Save & Commit 
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+
+            await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         public virtual async Task UpdateAsyncSP(VisitDetail objVisitDetail, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
-            // OLD CODE With SP
+            try
+            {
+                // OLD CODE With SP
             DatabaseHelper odal = new();
             string[] rVisitEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
             var visitentity = objVisitDetail.ToDictionary();
@@ -160,7 +177,7 @@ namespace HIMS.Services.OutPatient
             }
             string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
             objVisitDetail.VisitId = Convert.ToInt32(VisitId);
-            await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
             string[] PatientPolicyEntity = { "PatientPolicyId", "Opipid", "Opiptype", "PolicyNo", "PolicyValidateDate", "ApprovedAmount", "CreatedBy", "IsActive" };
            
@@ -174,18 +191,25 @@ namespace HIMS.Services.OutPatient
             string PatientPolicyId = odal.ExecuteNonQuery("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
             ObjTPatientPolicyInformation.PatientPolicyId = Convert.ToInt32(PatientPolicyId);
             //objVisitDetail.VisitId = Convert.ToInt32(VisitId);
-
-
-            await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
             var tokenObj = new
             {
                 VisitId = Convert.ToInt32(VisitId)
             };
             odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
-            await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-        }
+            await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            //  Save & Commit 
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
 
+            await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
 
         public virtual async Task<IPagedList<OPBillListDto>> GetBillListAsync(GridRequestModel model)
         {
@@ -413,6 +437,10 @@ namespace HIMS.Services.OutPatient
         }
         public virtual async Task InsertAsyncSP(VisitDetail objCrossConsultation, int CurrentUserId, string CurrentUserName)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
             DatabaseHelper odal = new();
             string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
             var entity = objCrossConsultation.ToDictionary();
@@ -423,19 +451,36 @@ namespace HIMS.Services.OutPatient
             }
             string VisitID = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", entity);
             objCrossConsultation.VisitId = Convert.ToInt32(VisitID);
+            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(VisitDetail), objCrossConsultation.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
 
             var tokenObj = new
             {
                 VisitId = Convert.ToInt32(VisitID)
             };
             odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
-            await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objCrossConsultation.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(VisitDetail), objCrossConsultation.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
+            // SaveChanges
             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
 
+            // Commit
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
+
+        
         public virtual async Task ConsultantDoctorUpdate(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
-            DatabaseHelper odal = new();
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                DatabaseHelper odal = new();
             string[] rEntity = { "ConsultantDocId", "DepartmentId", "VisitId"};
             var entity = objVisitDetail.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
@@ -445,8 +490,17 @@ namespace HIMS.Services.OutPatient
             }
             odal.ExecuteNonQuery("ps_Update_ConsultationDoctor_Visit", CommandType.StoredProcedure, entity);
             await _context.LogProcedureExecution(entity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
-
+            // SaveChanges
+             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            // Commit
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                //  Rollback
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
         public virtual async Task UpdateAsync(VisitDetail ObjVisitDetail, int CurrentUserId, string CurrentUserName)
         {
