@@ -35,26 +35,34 @@ namespace HIMS.Services.OPPatient
 
         public virtual async Task Update(VisitDetail objVisitDetail, int UserId, string Username)
         {
-            DatabaseHelper odal = new();
-            string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "Opdno", "TariffId", "CompanyId", "AddedBy", "UpdatedBy",
-            "IsCancelledBy","IsCancelled","IsCancelledDate","ClassId","PatientOldNew","FirstFollowupVisit","AppPurposeId","FollowupDate","IsMark","Comments","IsXray","CrossConsulFlag","PhoneAppId","Height","Pweight","Bmi","Bsl","SpO2","Temp","Pulse","Bp",
-            "CheckInTime","CheckOutTime","ConStartTime","ConEndTime","CampId","CrossConsultantDrId","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","ConsultantDocId","DepartmentId","IsConvertRequestForIp"};
-            var entity = objVisitDetail.ToDictionary();
-            foreach (var rProperty in rEntity)
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-                entity.Remove(rProperty);
+                DatabaseHelper odal = new();
+                string[] rEntity = { "RefDocId", "VisitId"};
+                var entity = objVisitDetail.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_Update_RefDoctor_Visit", CommandType.StoredProcedure, entity);
+                // Audit Log 
+                await _context.LogProcedureExecution(entity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, UserId, Username);
+                // Save
+                await _context.SaveChangesAsync(UserId, Username);
+                // Commit
+                await transaction.CommitAsync();
             }
-            odal.ExecuteNonQuery("ps_Update_RefDoctor_Visit", CommandType.StoredProcedure, entity);
-
-            await _context.SaveChangesAsync(UserId, Username);
-
-            //            await LogProcedureExecution("ps_Update_ConsultationDoctor_Visit",
-            //    entity, // your dictionary parameters
-            //    UserId,
-            //    Username
-            //);
-
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
+        
+        
     }
 }
 

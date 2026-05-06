@@ -242,13 +242,13 @@ namespace HIMS.API.Controllers.OPPatient
         //Edit EditVital
         [HttpPut("EditVital/{id:int}")]
         [Permission(PageCode = "Appointment", Permission = PagePermission.Edit)]
-        public ApiResponse Edit(UpdateVitalInfModel obj)
+        public async Task<ApiResponse> Edit(UpdateVitalInfModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
             if (obj.VisitId != 0)
             {
                 model.VisitId = obj.VisitId;
-                _visitDetailsService.UpdateVital(model, CurrentUserId, CurrentUserName);
+                await _visitDetailsService.UpdateVital(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -349,18 +349,18 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPut("UpdateVisitdatetime{id:int}")]
         [Permission(PageCode = "Appointment", Permission = PagePermission.Edit)]
-        public ApiResponse Update(VisitDateTimeModel obj)
+        public async Task<ApiResponse> Update(VisitDateTimeModel obj)
         {
             VisitDetail model = obj.MapTo<VisitDetail>();
             if (obj.VisitId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-
-                _visitDetailsService.VistDateTimeUpdateAsync(model, CurrentUserId, CurrentUserName);
+            await _visitDetailsService.VistDateTimeUpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+       
 
 
         [HttpPut("VisitUpdate")]
