@@ -19426,6 +19426,8 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkCompanyApprovedAmtflag}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkPaidAmtflag}}", dt.GetColValue("PaidAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+
                         html = html.Replace("{{Items}}", items.ToString());
                         html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
                         html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
