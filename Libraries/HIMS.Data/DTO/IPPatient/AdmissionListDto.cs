@@ -97,7 +97,9 @@
         public string? IsCancelComment { get; set; }
         public bool? IsMaterialReplacement { get; set; }
 
-        
+        public string? UserName { get; set; }
+
+
 
 
     }

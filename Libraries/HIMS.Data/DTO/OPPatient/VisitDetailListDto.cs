@@ -66,6 +66,8 @@
         public long EMRReady { get; set; }
         public long TokenNo { get; set; }
         public long? GenderId { get; set; }
+        public string UserName { get; set; }
+
 
 
 
