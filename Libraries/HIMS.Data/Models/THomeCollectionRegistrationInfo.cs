@@ -44,6 +44,9 @@ namespace HIMS.Data.Models
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
         public long? Status { get; set; }
+        public long? AddressId { get; set; }
+        public DateTime? CollectionTimeFrom { get; set; }
+        public DateTime? CollectionTimeTo { get; set; }
 
         public virtual ICollection<THomeCollectionServiceDetail> THomeCollectionServiceDetails { get; set; }
     }

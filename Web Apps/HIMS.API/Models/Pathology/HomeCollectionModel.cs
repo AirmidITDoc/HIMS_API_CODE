@@ -6,7 +6,6 @@ namespace HIMS.API.Models.Pathology
     {
         public long HomeCollectionId { get; set; }
         public long? UnitId { get; set; }
-        //public string? HomeSeqNo { get; set; }
         public long PrefixId { get; set; }
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
@@ -33,6 +32,9 @@ namespace HIMS.API.Models.Pathology
         public DateTime? IsCancelledDate { get; set; }
         public long? Status { get; set; }
         public long? PatientType { get; set; }
+        public long? AddressId { get; set; }
+        public string? CollectionTimeFrom { get; set; }
+        public string? CollectionTimeTo { get; set; }
 
         public List<HomeCollectionServiceDetailModel> THomeCollectionServiceDetails { get; set; }
 

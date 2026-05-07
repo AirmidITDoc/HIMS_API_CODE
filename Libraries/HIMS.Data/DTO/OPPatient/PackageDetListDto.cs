@@ -10,7 +10,7 @@
         public long? IsRadiology { get; set; }
         public double? Price { get; set; }
         public long? PackageId { get; set; }
-        public int DoctorId { get; set; }
+        public long DoctorId { get; set; }
         public string? DoctorName { get; set; }
         public bool? IsOtherService { get; set; }
 

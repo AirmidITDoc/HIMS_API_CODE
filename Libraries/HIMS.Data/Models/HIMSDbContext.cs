@@ -13780,6 +13780,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CollectionTime).HasColumnType("datetime");
 
+                entity.Property(e => e.CollectionTimeFrom).HasColumnType("datetime");
+
+                entity.Property(e => e.CollectionTimeTo).HasColumnType("datetime");
+
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.DateofBirth).HasColumnType("datetime");
@@ -17604,6 +17608,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.NetAmount).HasColumnType("money");
 
+                entity.Property(e => e.NetPayAmt).HasColumnType("money");
+
                 entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
 
                 entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
@@ -17988,6 +17994,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Narration).HasMaxLength(500);
 
                 entity.Property(e => e.NetAmount).HasColumnType("money");
+
+                entity.Property(e => e.NetPayAmt).HasColumnType("money");
 
                 entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
 
