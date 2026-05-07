@@ -316,7 +316,7 @@ namespace HIMS.Services.Users
         {
             // Whitelists declared once
             var headerWhitelist = new HashSet<string>(StringComparer.Ordinal)
-    {
+         {
         "Date","Time","OpIpId","OpIpType","TotalAmount","VatAmount","DiscAmount","NetAmount",
         "PaidAmount","BalanceAmount","ConcessionReasonId","ConcessionAuthorizationId","IsSellted",
         "IsPrint","IsFree","UnitId","ExternalPatientName","DoctorName","StoreId","IsPrescription",
@@ -617,9 +617,13 @@ namespace HIMS.Services.Users
 
         public virtual async Task InsertSD(TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int CurrentUserId, string CurrentUserName)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
-            // //Add header table records
-            DatabaseHelper odal = new();
+            try
+            {
+
+                // //Add header table records
+             DatabaseHelper odal = new();
             string[] rEntity = { "DsalesId", "Date",  "Time", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount","ConcessionReasonId", "ConcessionAuthorizationId", "IsSellted",
                     "IsPrint","UnitId","AddedBy","ExternalPatientName","DoctorName","StoreId","CreditReason","CreditReasonId","IsClosed","IsPrescription","WardId","BedId","ExtMobileNo", "ExtAddress"};
             var entity = ObjDraftHeader.ToDictionary();
@@ -630,7 +634,7 @@ namespace HIMS.Services.Users
             }
             string DsalesId = odal.ExecuteNonQuery("m_insert_T_SalesDraftHeader_1", CommandType.StoredProcedure, "DsalesId", entity);
             ObjDraftHeader.DsalesId = Convert.ToInt32(DsalesId);
-            // await _context.LogProcedureExecution(entity, nameof(TSalesDraftHeader), ObjDraftHeader.DsalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(entity, nameof(TSalesDraftHeader), ObjDraftHeader.DsalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
 
             foreach (var item in ObjTSalesDraftDet)
@@ -645,10 +649,22 @@ namespace HIMS.Services.Users
                         Tentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("insert_T_SalesDraftDet_1", CommandType.StoredProcedure, Tentity);
-                // await _context.LogProcedureExecution(Tentity, nameof(TSalesDraftDet), item.SalDetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                await _context.LogProcedureExecution(Tentity, nameof(TSalesDraftDet), item.SalDetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             }
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+
+                // ✅ Commit
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                // ❌ Rollback
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
+        
         public virtual async Task UpdateAsyncSalesDraft(TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int CurrentUserId, string CurrentUserName)
         {
 

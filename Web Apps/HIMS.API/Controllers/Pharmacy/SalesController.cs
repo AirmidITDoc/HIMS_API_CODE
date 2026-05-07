@@ -232,7 +232,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         // done by Ashu Date : 20-May-2025
         [HttpPost("SalesSaveWithCredit")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSPC(SaleReqModel obj)
         {
             TSalesHeader model = obj.Sales.MapTo<TSalesHeader>();
@@ -298,21 +298,44 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.SalesId);
         }
 
+        //[HttpPost("SalesDraftBillSave")]
+        ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        //public ApiResponse InsertSPD(SalesDraftHeadersModel obj)
+        //{
+        //    TSalesDraftHeader model = obj.SalesDraft.MapTo<TSalesDraftHeader>();
+        //    List<TSalesDraftDet> modelTSales = obj.SalesDraftDet.MapTo<List<TSalesDraftDet>>();
+        //    if (obj.SalesDraft.DsalesId == 0)
+        //    {
+        //        model.Date = Convert.ToDateTime(obj.SalesDraft.Date);
+        //        model.Time = Convert.ToDateTime(obj.SalesDraft.Time);
+        //        model.AddedBy = CurrentUserId;
+        //        _ISalesService.InsertSD(model, modelTSales, CurrentUserId, CurrentUserName);
+
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.DsalesId);
+        //}
         [HttpPost("SalesDraftBillSave")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public ApiResponse InsertSPD(SalesDraftHeadersModel obj)
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertSPD(SalesDraftHeadersModel obj)
         {
             TSalesDraftHeader model = obj.SalesDraft.MapTo<TSalesDraftHeader>();
             List<TSalesDraftDet> modelTSales = obj.SalesDraftDet.MapTo<List<TSalesDraftDet>>();
+
             if (obj.SalesDraft.DsalesId == 0)
             {
                 model.Date = Convert.ToDateTime(obj.SalesDraft.Date);
                 model.Time = Convert.ToDateTime(obj.SalesDraft.Time);
                 model.AddedBy = CurrentUserId;
-                _ISalesService.InsertSD(model, modelTSales, CurrentUserId, CurrentUserName);
+
+                await _ISalesService.InsertSD(model, modelTSales, CurrentUserId, CurrentUserName);
             }
             else
+            {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
+
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.DsalesId);
         }
         [HttpPost("SalesDraftBillUpdate")]

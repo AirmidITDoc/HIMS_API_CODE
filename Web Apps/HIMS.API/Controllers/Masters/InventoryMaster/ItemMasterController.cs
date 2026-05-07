@@ -163,16 +163,6 @@ namespace HIMS.API.Controllers.Inventory
         }
 
 
-
-        //[HttpPost("GetItemListForGRNOrPOBySp")]
-        ////[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
-        //public async Task<IActionResult> GetItemListForGRNOrPOBySp(GridRequestModel objGrid)
-        //{
-        //    IPagedList<ItemListForGRNOrPO> ItemMasterList = await _ItemMasterServices.GetItemMasterBySpListAsync(objGrid);
-        //    return Ok(ItemMasterList.ToGridResponse(objGrid, "Get Item List For GRN or PO List. "));
-        //}
-
-
         [HttpGet("search-GetItemListForIndent")]
         public ApiResponse ItemListForIndent(int StoreId, string ItemName)
         {

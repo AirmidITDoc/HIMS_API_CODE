@@ -6,6 +6,7 @@ using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using System.Transactions;
 
@@ -95,63 +96,63 @@ namespace HIMS.Services.OutPatient
 
             }
         }
-       
-    public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
-    {
-        using var transaction = await _context.Database.BeginTransactionAsync();
 
-        try
+        public virtual async Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
                 // OLD CODE With SP
                 DatabaseHelper odal = new();
-            string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "ReligionId", "AreaId", "IsSeniorCitizen", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry", "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress","RegId", "EmailId" };
-            var entity = objRegistration.ToDictionary();
-            foreach (var rProperty in entity.Keys.ToList())
-            {
-                if (!rEntity.Contains(rProperty))
-                    entity.Remove(rProperty);
-            }
-            string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
-            objRegistration.RegId = Convert.ToInt32(RegId);
-            objVisitDetail.RegId = Convert.ToInt32(RegId);
-            await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "ReligionId", "AreaId", "IsSeniorCitizen", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry", "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress", "RegId", "EmailId" };
+                var entity = objRegistration.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+                string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+                objRegistration.RegId = Convert.ToInt32(RegId);
+                objVisitDetail.RegId = Convert.ToInt32(RegId);
+                await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-            string[] rVisitEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
-            var visitentity = objVisitDetail.ToDictionary();
-            foreach (var rProperty in visitentity.Keys.ToList())
-            {
-                if (!rVisitEntity.Contains(rProperty))
-                    visitentity.Remove(rProperty);
-            }
-            string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
-            objVisitDetail.VisitId = Convert.ToInt32(VisitId);
-            await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                string[] rVisitEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
+                var visitentity = objVisitDetail.ToDictionary();
+                foreach (var rProperty in visitentity.Keys.ToList())
+                {
+                    if (!rVisitEntity.Contains(rProperty))
+                        visitentity.Remove(rProperty);
+                }
+                string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+                objVisitDetail.VisitId = Convert.ToInt32(VisitId);
+                await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-            string[] PatientPolicyEntity = { "PatientPolicyId", "Opipid", "Opiptype", "PolicyNo", "PolicyValidateDate", "ApprovedAmount", "CreatedBy", "IsActive" };
-            ObjTPatientPolicyInformation.Opipid = Convert.ToInt32(VisitId);
+                string[] PatientPolicyEntity = { "PatientPolicyId", "Opipid", "Opiptype", "PolicyNo", "PolicyValidateDate", "ApprovedAmount", "CreatedBy", "IsActive" };
+                ObjTPatientPolicyInformation.Opipid = Convert.ToInt32(VisitId);
 
-            var Patiententity = ObjTPatientPolicyInformation.ToDictionary();
-            foreach (var rProperty in Patiententity.Keys.ToList())
-            {
-                if (!PatientPolicyEntity.Contains(rProperty))
-                    Patiententity.Remove(rProperty);
-            }
-            string PatientPolicyId = odal.ExecuteNonQuery("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
-            ObjTPatientPolicyInformation.PatientPolicyId = Convert.ToInt32(PatientPolicyId);
+                var Patiententity = ObjTPatientPolicyInformation.ToDictionary();
+                foreach (var rProperty in Patiententity.Keys.ToList())
+                {
+                    if (!PatientPolicyEntity.Contains(rProperty))
+                        Patiententity.Remove(rProperty);
+                }
+                string PatientPolicyId = odal.ExecuteNonQuery("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
+                ObjTPatientPolicyInformation.PatientPolicyId = Convert.ToInt32(PatientPolicyId);
 
-            await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
 
-            var tokenObj = new
-            {
-                VisitId = Convert.ToInt32(VisitId)
-            };
-            odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
-            await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-            //  Save & Commit 
-            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                var tokenObj = new
+                {
+                    VisitId = Convert.ToInt32(VisitId)
+                };
+                odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+                await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                //  Save & Commit 
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
 
-            await transaction.CommitAsync();
+                await transaction.CommitAsync();
             }
             catch (Exception)
             {
@@ -167,42 +168,42 @@ namespace HIMS.Services.OutPatient
             try
             {
                 // OLD CODE With SP
-            DatabaseHelper odal = new();
-            string[] rVisitEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
-            var visitentity = objVisitDetail.ToDictionary();
-            foreach (var rProperty in visitentity.Keys.ToList())
-            {
-                if (!rVisitEntity.Contains(rProperty))
-                    visitentity.Remove(rProperty);
-            }
-            string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
-            objVisitDetail.VisitId = Convert.ToInt32(VisitId);
-            await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                DatabaseHelper odal = new();
+                string[] rVisitEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelledBy", "IsCancelled", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
+                var visitentity = objVisitDetail.ToDictionary();
+                foreach (var rProperty in visitentity.Keys.ToList())
+                {
+                    if (!rVisitEntity.Contains(rProperty))
+                        visitentity.Remove(rProperty);
+                }
+                string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+                objVisitDetail.VisitId = Convert.ToInt32(VisitId);
+                await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
-            string[] PatientPolicyEntity = { "PatientPolicyId", "Opipid", "Opiptype", "PolicyNo", "PolicyValidateDate", "ApprovedAmount", "CreatedBy", "IsActive" };
-           
-            ObjTPatientPolicyInformation.Opipid = Convert.ToInt32(VisitId);
-            var Patiententity = ObjTPatientPolicyInformation.ToDictionary();
-            foreach (var rProperty in Patiententity.Keys.ToList())
-            {
-                if (!PatientPolicyEntity.Contains(rProperty))
-                    Patiententity.Remove(rProperty);
-            }
-            string PatientPolicyId = odal.ExecuteNonQuery("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
-            ObjTPatientPolicyInformation.PatientPolicyId = Convert.ToInt32(PatientPolicyId);
-            //objVisitDetail.VisitId = Convert.ToInt32(VisitId);
-            await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                string[] PatientPolicyEntity = { "PatientPolicyId", "Opipid", "Opiptype", "PolicyNo", "PolicyValidateDate", "ApprovedAmount", "CreatedBy", "IsActive" };
 
-            var tokenObj = new
-            {
-                VisitId = Convert.ToInt32(VisitId)
-            };
-            odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
-            await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-            //  Save & Commit 
-            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                ObjTPatientPolicyInformation.Opipid = Convert.ToInt32(VisitId);
+                var Patiententity = ObjTPatientPolicyInformation.ToDictionary();
+                foreach (var rProperty in Patiententity.Keys.ToList())
+                {
+                    if (!PatientPolicyEntity.Contains(rProperty))
+                        Patiententity.Remove(rProperty);
+                }
+                string PatientPolicyId = odal.ExecuteNonQuery("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
+                ObjTPatientPolicyInformation.PatientPolicyId = Convert.ToInt32(PatientPolicyId);
+                //objVisitDetail.VisitId = Convert.ToInt32(VisitId);
+                await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
-            await transaction.CommitAsync();
+                var tokenObj = new
+                {
+                    VisitId = Convert.ToInt32(VisitId)
+                };
+                odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+                await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                //  Save & Commit 
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+
+                await transaction.CommitAsync();
             }
             catch (Exception)
             {
@@ -267,11 +268,11 @@ namespace HIMS.Services.OutPatient
             return sql.FetchListBySP<VisitDetailsListSearchDto>("ps_Rtrv_PatientVisitedListSearch", para);
         }
 
-        public List<ServiceMasterDTO> SearchGetServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId, string SrvcName )
+        public List<ServiceMasterDTO> SearchGetServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId, string SrvcName)
         {
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[5];
-           
+
             para[0] = new SqlParameter("@TariffId", TariffId);
             para[1] = new SqlParameter("@ClassId", ClassId);
             para[2] = new SqlParameter("@GroupId", GroupId);
@@ -376,7 +377,7 @@ namespace HIMS.Services.OutPatient
 
         }
 
-       
+
 
         public virtual async Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
         {
@@ -415,11 +416,11 @@ namespace HIMS.Services.OutPatient
 
         }
 
-        public virtual async Task  UpdateVital(VisitDetail objPara, int CurrentUserId, string CurrentUserName)
+        public virtual async Task UpdateVital(VisitDetail objPara, int CurrentUserId, string CurrentUserName)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-
                 DatabaseHelper odal = new();
                 string[] rEntity = { "VisitId", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp" };
                 var entity = objPara.ToDictionary();
@@ -429,10 +430,16 @@ namespace HIMS.Services.OutPatient
                         entity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_update_vitalInformation", CommandType.StoredProcedure, entity);
-                //await _context.LogProcedureExecution(entity, nameof(VisitDetail), objPara.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
-
-                scope.Complete();
+                await _context.LogProcedureExecution(entity, nameof(VisitDetail), objPara.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                //  Save & Commit 
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
             }
         }
         public virtual async Task InsertAsyncSP(VisitDetail objCrossConsultation, int CurrentUserId, string CurrentUserName)
@@ -441,29 +448,29 @@ namespace HIMS.Services.OutPatient
 
             try
             {
-            DatabaseHelper odal = new();
-            string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
-            var entity = objCrossConsultation.ToDictionary();
-            foreach (var rProperty in entity.Keys.ToList())
-            {
-                if (!rEntity.Contains(rProperty))
-                    entity.Remove(rProperty);
-            }
-            string VisitID = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", entity);
-            objCrossConsultation.VisitId = Convert.ToInt32(VisitID);
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(VisitDetail), objCrossConsultation.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                DatabaseHelper odal = new();
+                string[] rEntity = { "RegId", "VisitDate", "VisitTime", "UnitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "AddedBy", "UpdatedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "ClassId", "DepartmentId", "PatientOldNew", "FirstFollowupVisit", "AppPurposeId", "FollowupDate", "CrossConsulFlag", "PhoneAppId", "CampId", "CrossConsultantDrId", "VisitId" };
+                var entity = objCrossConsultation.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+                string VisitID = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", entity);
+                objCrossConsultation.VisitId = Convert.ToInt32(VisitID);
+                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(VisitDetail), objCrossConsultation.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
 
-            var tokenObj = new
-            {
-                VisitId = Convert.ToInt32(VisitID)
-            };
-            odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(VisitDetail), objCrossConsultation.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                var tokenObj = new
+                {
+                    VisitId = Convert.ToInt32(VisitID)
+                };
+                odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(VisitDetail), objCrossConsultation.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
 
-            // SaveChanges
-            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // SaveChanges
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
 
-            // Commit
+                // Commit
                 await transaction.CommitAsync();
             }
             catch (Exception)
@@ -473,7 +480,7 @@ namespace HIMS.Services.OutPatient
             }
         }
 
-        
+
         public virtual async Task ConsultantDoctorUpdate(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
@@ -481,18 +488,18 @@ namespace HIMS.Services.OutPatient
             try
             {
                 DatabaseHelper odal = new();
-            string[] rEntity = { "ConsultantDocId", "DepartmentId", "VisitId"};
-            var entity = objVisitDetail.ToDictionary();
-            foreach (var rProperty in entity.Keys.ToList())
-            {
-                if (!rEntity.Contains(rProperty))
-                    entity.Remove(rProperty);
-            }
-            odal.ExecuteNonQuery("ps_Update_ConsultationDoctor_Visit", CommandType.StoredProcedure, entity);
-            await _context.LogProcedureExecution(entity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-            // SaveChanges
-             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
-            // Commit
+                string[] rEntity = { "ConsultantDocId", "DepartmentId", "VisitId" };
+                var entity = objVisitDetail.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_Update_ConsultationDoctor_Visit", CommandType.StoredProcedure, entity);
+                await _context.LogProcedureExecution(entity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                // SaveChanges
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit
                 await transaction.CommitAsync();
             }
             catch (Exception)
@@ -527,58 +534,92 @@ namespace HIMS.Services.OutPatient
         }
         public virtual async Task RequestForOPTOIP(VisitDetail ObjVisitDetail, int CurrentUserId, string CurrentUserName)
         {
-            //throw new NotImplementedException();
-            DatabaseHelper odal = new();
-            string[] BEntity = { "VisitId", "IsConvertRequestForIp" };
-            var TEntity = ObjVisitDetail.ToDictionary();
-            foreach (var rProperty in TEntity.Keys.ToList())
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-                if (!BEntity.Contains(rProperty))
-                    TEntity.Remove(rProperty);
+                DatabaseHelper odal = new();
+                string[] BEntity = { "VisitId", "IsConvertRequestForIp" };
+                var TEntity = ObjVisitDetail.ToDictionary();
+                foreach (var rProperty in TEntity.Keys.ToList())
+                {
+                    if (!BEntity.Contains(rProperty))
+                        TEntity.Remove(rProperty);
+                }
+
+                odal.ExecuteNonQuery("ps_RequestForOPTOIP", CommandType.StoredProcedure, TEntity);
+                await _context.LogProcedureExecution(TEntity, nameof(VisitDetail), ObjVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                // SaveChanges (for log)
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit
+                await transaction.CommitAsync();
             }
-
-            odal.ExecuteNonQuery("ps_RequestForOPTOIP", CommandType.StoredProcedure, TEntity);
-            await _context.LogProcedureExecution(TEntity, nameof(VisitDetail), ObjVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
+
+
         public virtual async Task VistDateTimeUpdateAsync(VisitDetail ObjVisitDetail, int CurrentUserId, string CurrentUserName)
         {
-
-            DatabaseHelper odal = new();
-            string[] AEntity = { "VisitId", "VisitDate", "VisitTime" };
-            var Rentity = ObjVisitDetail.ToDictionary();
-            foreach (var rProperty in Rentity.Keys.ToList())
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                if (!AEntity.Contains(rProperty))
-                    Rentity.Remove(rProperty);
+                DatabaseHelper odal = new();
+                string[] AEntity = { "VisitId", "VisitDate", "VisitTime" };
+                var Rentity = ObjVisitDetail.ToDictionary();
+                foreach (var rProperty in Rentity.Keys.ToList())
+                {
+                    if (!AEntity.Contains(rProperty))
+                        Rentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_Update_VisitDateTime", CommandType.StoredProcedure, Rentity);
+                await _context.LogProcedureExecution(Rentity, nameof(VisitDetail), ObjVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                // SaveChanges (for log)
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+
+                // Commit
+                await transaction.CommitAsync();
             }
-            odal.ExecuteNonQuery("ps_Update_VisitDateTime", CommandType.StoredProcedure, Rentity);
-            await _context.LogProcedureExecution(Rentity, nameof(VisitDetail), ObjVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
-
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
+
+
         public virtual async Task VisitUpdateAsync(VisitDetail ObjVisitDetail, int CurrentUserId, string CurrentUserName)
         {
-
-            DatabaseHelper odal = new();
-            string[] AEntity = { "VisitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "ClassId", "DepartmentId" };
-            var Rentity = ObjVisitDetail.ToDictionary();
-            foreach (var rProperty in Rentity.Keys.ToList())
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                if (!AEntity.Contains(rProperty))
-                    Rentity.Remove(rProperty);
+                DatabaseHelper odal = new();
+                string[] AEntity = { "VisitId", "PatientTypeId", "ConsultantDocId", "RefDocId", "TariffId", "CompanyId", "ClassId", "DepartmentId" };
+                var Rentity = ObjVisitDetail.ToDictionary();
+                foreach (var rProperty in Rentity.Keys.ToList())
+                {
+                    if (!AEntity.Contains(rProperty))
+                        Rentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_Update_VisitDetails", CommandType.StoredProcedure, Rentity);
+                // SaveChanges 
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit
+                await transaction.CommitAsync();
             }
-            odal.ExecuteNonQuery("ps_Update_VisitDetails", CommandType.StoredProcedure, Rentity);
-            await _context.LogProcedureExecution(Rentity, nameof(VisitDetail), ObjVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
-
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
-
-
     }
 }
-
-
+        
+    
 
 
 

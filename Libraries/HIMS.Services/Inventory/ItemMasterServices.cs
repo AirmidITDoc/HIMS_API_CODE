@@ -47,9 +47,9 @@ namespace HIMS.Services.Inventory
 
         public virtual async Task<MItemMaster> GetById(int Id)
         {
-            return await this._context.MItemMasters.Include(x => x.MAssignItemToStores).FirstOrDefaultAsync(x => x.ItemId == Id);
+            return await this._context.MItemMasters.Include(x => x.MAssignItemToStores).Include(x => x.MAssignItemToDrugs).FirstOrDefaultAsync(x => x.ItemId == Id);
         }
-
+      
         public virtual async Task InsertAsyncSP(MItemMaster objItemMaster, int UserId, string Username)
         {
             try
