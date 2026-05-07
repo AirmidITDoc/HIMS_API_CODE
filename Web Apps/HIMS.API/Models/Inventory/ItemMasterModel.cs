@@ -44,9 +44,10 @@ namespace HIMS.API.Models.Inventory
         public string? Instruction { get; set; }
         public string? Content { get; set; }
         public bool IsValidContent { get; set; }
-        //  public DateTime? IsCreatedBy { get; set; }
-        // public DateTime? IsUpdatedBy { get; set; }
+
         public List<AssignItemToStoreModel> MAssignItemToStores { get; set; }
+        public List<MAssignItemToDrugModel> MAssignItemToDrugs { get; set; }
+
     }
     public class ItemMasterModelValidator : AbstractValidator<ItemMasterModel>
     {
@@ -77,9 +78,23 @@ namespace HIMS.API.Models.Inventory
             RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId is required");
         }
     }
-    public class DeleteAssignItemToStore
+    public class MAssignItemToDrugModel
     {
-        public long ItemId { get; set; }
+        public long AssignId { get; set; }
+        public long? DrugId { get; set; }
+        public long? ItemId { get; set; }
+
+        public class MAssignItemToDrugModelValidator : AbstractValidator<MAssignItemToDrugModel>
+        {
+            public MAssignItemToDrugModelValidator()
+            {
+                RuleFor(x => x.DrugId).NotNull().NotEmpty().WithMessage("DrugId is required");
+            }
+        }
+        public class DeleteAssignItemToStore
+        {
+            public long ItemId { get; set; }
+        }
     }
 }
 
