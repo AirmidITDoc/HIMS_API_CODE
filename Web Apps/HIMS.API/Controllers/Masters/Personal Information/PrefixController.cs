@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Masters
             return Ok(DocList.ToGridResponse(objGrid, "Prefix List"));
         }
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Prefix", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)

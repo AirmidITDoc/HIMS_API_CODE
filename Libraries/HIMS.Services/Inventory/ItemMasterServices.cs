@@ -102,40 +102,44 @@ namespace HIMS.Services.Inventory
             }
         }
 
+        
         public virtual async Task UpdateAsync(MItemMaster objItemMaster, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            // 1. Attach the entity without marking everything as modified
+            _context.Attach(objItemMaster);
+            _context.Entry(objItemMaster).State = EntityState.Modified;
+
+            // 2. Ignore specific columns
+            if (ignoreColumns?.Length > 0)
             {
-                // 1. Attach the entity without marking everything as modified
-                _context.Attach(objItemMaster);
-                _context.Entry(objItemMaster).State = EntityState.Modified;
-
-                // 2. Ignore specific columns
-                if (ignoreColumns?.Length > 0)
+                foreach (var column in ignoreColumns)
                 {
-                    foreach (var column in ignoreColumns)
-                    {
-                        _context.Entry(objItemMaster).Property(column).IsModified = false;
-                    }
+                    _context.Entry(objItemMaster).Property(column).IsModified = false;
                 }
-
-                // Delete details table realted records
-                var lst = await _context.MAssignItemToStores.Where(x => x.ItemId == objItemMaster.ItemId).ToListAsync();
-                if (lst.Count > 0)
-                {
-                    _context.MAssignItemToStores.RemoveRange(lst);
-                }
-                //await _context.SaveChangesAsync();
-
-                // Update header & detail table records
-                //_context.MItemMasters.Update(objItemMaster);
-                //_context.Entry(objItemMaster).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
             }
 
+            // Delete Store related records
+            var lst = await _context.MAssignItemToStores .Where(x => x.ItemId == objItemMaster.ItemId) .ToListAsync();
+
+            if (lst.Count > 0)
+            {
+                _context.MAssignItemToStores.RemoveRange(lst);
+            }
+
+            // Delete Drug related records
+            var lsts = await _context.MAssignItemToDrugs .Where(x => x.ItemId == objItemMaster.ItemId) .ToListAsync();
+
+            if (lsts.Count > 0)
+            {
+                _context.MAssignItemToDrugs.RemoveRange(lsts);
+            }
+
+            await _context.SaveChangesAsync();
+
+            scope.Complete();
         }
+
         //public virtual async Task UpdateAsync(MItemMaster objItemMaster, int UserId, string Username)
         //{
         //     using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
