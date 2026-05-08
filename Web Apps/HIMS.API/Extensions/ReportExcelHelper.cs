@@ -1,6 +1,11 @@
 ﻿using ClosedXML.Excel;
+using HIMS.Core.Domain.Common;
 using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using LinqToDB.SqlQuery;
+using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Globalization;
 using System.Text;
 
 namespace HIMS.API.Extensions
@@ -612,10 +617,150 @@ namespace HIMS.API.Extensions
                         workSheet.SheetView.FreezeRows(1);
                     }
                     break;
+                case "MultiResultSetReportCustomSummary.html":
+                    {
+                        AddHeader(workSheet, model.headerList.ToList());
+                        StyleHeaderRow(workSheet);
+
+                        int rowNo = 2;
+                        string[] cols = model.colList.Select(x => x.Trim()).ToArray();
+
+                        string[] groupCols = model.groupByLabel?.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray() ?? Array.Empty<string>();
+
+                        DataTable dtMain = dt;
+                        void WriteRows(IEnumerable<DataRow> rows, int indentLevel)
+                        {
+                            foreach (var r in rows)
+                            {
+                                int colNo = 1;
+
+                                foreach (var col in cols)
+                                {
+                                    object val = r.Table.Columns.Contains(col) ? r[col] : null;
+
+                                    var cell = workSheet.Cell(rowNo, colNo);
+
+                                    if (val == null || val == DBNull.Value)
+                                        cell.Value = "";
+                                    else if (val is DateTime d)
+                                        cell.Value = d;
+                                    else if (val is int || val is long)
+                                        cell.Value = Convert.ToInt64(val);
+                                    else if (val is decimal || val is double || val is float)
+                                        cell.Value = Convert.ToDouble(val);
+                                    else
+                                        cell.Value = val.ToString();
+
+                                    colNo++;
+                                }
+
+                                rowNo++;
+                            }
+                        }
+
+                        void RenderGroup(int level, IEnumerable<DataRow> data)
+                        {
+                            if (level >= groupCols.Length)
+                            {
+                                WriteRows(data, level);
+                                return;
+                            }
+
+                            var groups = data.Select(x => x[groupCols[level]]?.ToString()).Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList();
+
+                            foreach (var g in groups)
+                            {
+                                workSheet.Cell(rowNo, 1).Value = g;
+                                workSheet.Range(rowNo, 1, rowNo, cols.Length).Merge();
+                                workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                                workSheet.Cell(rowNo, 1).Style.Fill.BackgroundColor = XLColor.LightGray;
+
+                                rowNo++;
+
+                                var child = data.Where(x => (x[groupCols[level]]?.ToString() ?? "") == g);
+
+                                RenderGroup(level + 1, child);
+                            }
+                        }
+
+                        RenderGroup(0, dtMain.AsEnumerable());
+                        rowNo += 2;
+
+                        workSheet.Cell(rowNo, 1).Value = "SUMMARY REPORT";
+                        workSheet.Range(rowNo, 1, rowNo, cols.Length).Merge();
+                        workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+
+                        rowNo++;
+
+                        var dcFields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+
+                        Microsoft.Data.SqlClient.SqlParameter[] dcPara = dcFields.Select(kv =>
+                        {
+                            bool isDate = kv.Key.Equals("FromDate", StringComparison.OrdinalIgnoreCase)
+                                       || kv.Key.Equals("ToDate", StringComparison.OrdinalIgnoreCase);
+
+                            return new Microsoft.Data.SqlClient.SqlParameter("@" + kv.Key,
+                                isDate
+                                    ? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                                    : (object)kv.Value);
+                        }).ToArray();
+                        DatabaseHelper db = new DatabaseHelper();
+                        List<DataTable> summarySets = db.FetchAllResultSets(model.SPName, dcPara);
+                        for (int t = 1; t < summarySets.Count; t++)
+                        {
+                            DataTable table = summarySets[t];
+
+                            if (table == null || table.Rows.Count == 0)
+                                continue;
+
+                            workSheet.Cell(rowNo, 1).Value = $"SUMMARY SET {t}";
+                            workSheet.Range(rowNo, 1, rowNo, table.Columns.Count).Merge();
+                            workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                            rowNo++;
+                            int colNo = 1;
+                            foreach (DataColumn col in table.Columns)
+                            {
+                                workSheet.Cell(rowNo, colNo).Value = col.ColumnName;
+                                workSheet.Cell(rowNo, colNo).Style.Font.Bold = true;
+                                colNo++;
+                            }
+
+                            rowNo++;
+
+                            foreach (DataRow dr in table.Rows)
+                            {
+                                colNo = 1;
+
+                                foreach (DataColumn col in table.Columns)
+                                {
+                                    var val = dr[col];
+                                    var cell = workSheet.Cell(rowNo, colNo);
+
+                                    if (val == null || val == DBNull.Value)
+                                        cell.Value = "";
+                                    else if (val is DateTime d)
+                                        cell.Value = d;
+                                    else if (val is int || val is long)
+                                        cell.Value = Convert.ToInt64(val);
+                                    else if (val is decimal || val is double || val is float)
+                                        cell.Value = Convert.ToDouble(val);
+                                    else
+                                        cell.Value = val.ToString();
+
+                                    colNo++;
+                                }
+
+                                rowNo++;
+                            }
+
+                            rowNo++; 
+                        }
+                    }
+                        break;
             }
             return SaveToStream(excel);
         }
-
+  
         private static void WriteTotalRow(IXLWorksheet ws, int row, string label,
     decimal gross, decimal disc, decimal net,
     decimal receipt, decimal due, decimal refund)
