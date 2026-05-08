@@ -1566,6 +1566,55 @@ namespace HIMS.Data.DataProviders
         {
             Input, Output, InputOutput
         }
+        public List<DataTable> FetchAllResultSets(string spName, SqlParameter[] para)
+        {
+            var tables = new List<DataTable>();
+
+            Command.CommandText = spName;
+            Command.CommandType = CommandType.StoredProcedure;
+            Command.Parameters.Clear();
+            Command.Parameters.AddRange(para);
+
+            try
+            {
+                if (objConnection.State == ConnectionState.Closed)
+                    objConnection.Open();
+
+                using SqlDataReader reader = Command.ExecuteReader();
+
+                do
+                {
+                    var dt = new DataTable();
+
+                    for (int i = 0; i < reader.FieldCount; i++)
+                        dt.Columns.Add(reader.GetName(i), reader.GetFieldType(i));
+
+                    while (reader.Read())
+                    {
+                        DataRow row = dt.NewRow();
+
+                        for (int i = 0; i < reader.FieldCount; i++)
+                            row[i] = reader.IsDBNull(i) ? DBNull.Value : reader.GetValue(i);
+
+                        dt.Rows.Add(row);
+                    }
+
+                    tables.Add(dt);
+                }
+                while (reader.NextResult());
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, spName);
+            }
+            finally
+            {
+                if (Command.Transaction == null)
+                    objConnection.Close();
+            }
+
+            return tables;
+        }
     }
 }
 
