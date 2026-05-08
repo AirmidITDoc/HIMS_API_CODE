@@ -6,7 +6,6 @@ namespace HIMS.Services.Users
 {
     public partial interface ISalesService
     {
-        //Task InsertAsync(TSalesHeader user, PaymentPharmacy objPayment, int UserId, string Username);
         Task<IPagedList<PharSalesCurrentSumryListDto>> GetList(GridRequestModel objGrid);
         Task<IPagedList<PharCurrentDetListDto>> SalesDetailsList(GridRequestModel objGrid);
         Task<IPagedList<SalesDetailsListDto>> Getsalesdetaillist(GridRequestModel objGrid);
@@ -22,16 +21,13 @@ namespace HIMS.Services.Users
         Task<IPagedList<PhARefundOfAdvanceListDto>> PhARefundOfAdvanceList(GridRequestModel objGrid);
         Task<IPagedList<ItemNameBalanceQtyListDto>> BalqtysalesDraftlist(GridRequestModel objGrid);
         Task<IPagedList<ItemNameBalanceQtyListDtoKenya>> BalqtysalesDraftlistKenya(GridRequestModel objGrid);
-
         Task<IPagedList<GetRefundByAdvanceIdListDto>> GetRefundByAdvanceId(GridRequestModel objGrid);
         Task<IPagedList<SalesDraftBillItemListDto>> SalesDraftBillItemDet(GridRequestModel objGrid);
         Task<IPagedList<PrescriptionItemDetListDto>> PrescriptionItemDetList(GridRequestModel objGrid);
         Task<IPagedList<salespatientwiseListDto>> salespatientwiseList(GridRequestModel objGrid);
         Task<IPagedList<ItemGenericByNameListDto>> ItemGenericByNameList(GridRequestModel objGrid);
-
         Task InsertAsyncSP(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, PaymentPharmacy ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
         Task InsertSalesSaveWithPayment(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, PaymentPharmacy ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, List<TPaymentPharmacy> ObjTPaymentPharmacy ,int UserId, string Username);
-
         void InsertS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, List<TPaymentPharmacy> ObjTPaymentPharmacy, int UserId, string Username);
         void UpdateS(TPhadvanceHeader ObjTPhadvanceHeader, TPhadvanceDetail ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, List<TPaymentPharmacy> ObjTPaymentPharmacy,int UserId, string Username);
         void InsertR(TPhRefund ObjTPhRefund, TPhadvanceHeader ObjTPhadvanceHeader, List<TPhadvRefundDetail> ObjTPhadvRefundDetail, List<TPhadvanceDetail> ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, List<TPaymentPharmacy> ObjTPaymentPharmacy ,int UserId, string Username);
@@ -41,15 +37,12 @@ namespace HIMS.Services.Users
         void Insert(List<PaymentPharmacy> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, List<TPaymentPharmacy> ObjTPaymentPharmacy ,int UserId, string Username);
         Task InsertPhBillDiscount(TSalesHeader ObjTSalesHeader, int UserId, string Username);
         void InsertSP(TSalesHeader ObjTSalesHeader, int UserId, string Username);
-
         Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str);
         Task<List<SalesPatientAutoCompleteDto>> SearchExtDoctor(string str);
         Task<float> GetStock(long StockId);
-
         Task InsertSalesInPatientAsyncSPC(TSalesInpatientHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int CurrentUserId, string CurrentUserName);
         Task Update(TSalesHeader ObjTSalesHeader, List<TSalesDetail> ObjTSalesDetail, List<TCurrentStock> ObjTCurrentStock, int CurrentUserId, string CurrentUserName);
         Task SalesUpdate(TSalesInpatientHeader ObjTSalesHeader, List<TSalesInpatientDetail> ObjTSalesDetail, List<TCurrentStock> ObjTCurrentStock, int CurrentUserId, string CurrentUserName);
-        Task UpdateAsyncSalesDraft(TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int UserId, string Username);
 
 
     }
