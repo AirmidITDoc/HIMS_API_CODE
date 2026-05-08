@@ -6,5 +6,8 @@
         public double? QtyPerDay { get; set; }
         public int BalQty { get; set; }
         public bool? IsBatchRequired { get; set; }
+        public string ItemName { get; set; }
+
+        
     }
 }
