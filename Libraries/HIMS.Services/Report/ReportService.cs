@@ -20176,6 +20176,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
 
+                        html = html.Replace("{{SalesLabel}}", dt.GetColValue("SalesLabel"));
+
 
 
                         html = html.Replace("{{ExtMobileNo}}", dt.GetColValue("ExtMobileNo"));
@@ -20361,7 +20363,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{HTotalAmount}}", dt.GetColValue("HTotalAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{GrossAmount}}", dt.GetColValue("GrossAmount").ConvertToDouble().ToString("F2"));
 
-
+                        html = html.Replace("{{SalesLabel}}", dt.GetColValue("SalesLabel"));
 
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
                         html = html.Replace("{{GSTIN}}", dt.GetColValue("GSTIN"));
