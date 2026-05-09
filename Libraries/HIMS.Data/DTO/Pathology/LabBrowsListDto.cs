@@ -117,7 +117,7 @@ namespace HIMS.Data.DTO.Pathology
             public long opdipdid { get; set; }
             public long opdipdtype { get; set; }
             public string PatientType { get; set; }
-            public bool? IsTemplateTest { get; set; }
+            public long? IsTemplateTest { get; set; }
             public string? CategoryName { get; set; }
             public string? SampleNo { get; set; }
             public string? SampleCollectionTime { get; set; }
