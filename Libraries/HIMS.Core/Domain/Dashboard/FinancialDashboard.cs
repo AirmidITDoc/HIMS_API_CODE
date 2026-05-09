@@ -25,7 +25,6 @@ namespace HIMS.Core.Domain.Dashboard
         public List<FinancialOPExistingPatientCount> FinancialOPExistingPatientCount { get; set; }
         public List<FinancialIPExistingPatientCount> FinancialIPExistingPatientCount { get; set; }
         public List<IPRefDoctorCount> IPRefDoctorCount { get; set; }
-        //public List<PharmacyOPDPatientSale> PharmacyOPDPatientSale { get; set; }
         public List<PharmacySaleOP> PharmacySaleOP { get; set; }
         public List<PharmacySaleIP> PharmacySaleIP { get; set; }
         public List<FinancialAdvanceBalance> FinancialAdvanceBalance { get; set; }
@@ -47,10 +46,10 @@ namespace HIMS.Core.Domain.Dashboard
     public class ServiceCharges
     {
         public string? ServiceName { get; set; }
-        public double OPTotalAMT { get; set; }
+        public decimal OPTotalAMT { get; set; }
         public decimal OPDiscount { get; set; }
         public decimal OPCollection { get; set; }
-        public double IPTotalAMT { get; set; }
+        public decimal IPTotalAMT { get; set; }
         public decimal IPDiscount { get; set; }
         public decimal IPCollection { get; set; }
 
@@ -104,7 +103,7 @@ namespace HIMS.Core.Domain.Dashboard
         public string? DoctorName { get; set; }
         public long PatientCount { get; set; }
         public decimal? OPCollection { get; set; }
-        public double? DoctorShare{ get; set; }
+        public double? DoctorShare { get; set; }
 
     }
     public class DoctorWiseTotalBusiness
@@ -155,9 +154,7 @@ namespace HIMS.Core.Domain.Dashboard
         public decimal OPprofitamount { get; set; }
 
 
-        //public float OPTotalLandedAmount { get; set; }
-        //public float OPNetAmount { get; set; }
-        //public float OPprofitamount { get; set; }
+       
 
     }
     public class PharmacySaleIP
@@ -194,10 +191,7 @@ namespace HIMS.Core.Domain.Dashboard
     }
     public class InsuranceCaverageAdequacy
     {
-        //public decimal IPApprovedAmount { get; set; }
-        //public decimal IPUnpaidCharges { get; set; }
-        //public long UnadjestedAdvance { get; set; }
-        //public long InsuranceAdequancy { get; set; }
+       
         public decimal IP_ApprovedAmount { get; set; }
         public decimal IP_UnpaidCharges { get; set; }
         public long Unadjested_Advance { get; set; }
