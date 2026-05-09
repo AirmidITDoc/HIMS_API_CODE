@@ -21,5 +21,9 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<LabResultCompletedListDto>(model, "ps_Rtrv_LabResult_Completed_List");
         }
+        public virtual async Task<IPagedList<LabResultCompletedInvestigationListDto>> InvestigationGetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<LabResultCompletedInvestigationListDto>(model, "ps_Rtrv_LabResult_CompletedInvestigation_List");
+        }
     }
 }
