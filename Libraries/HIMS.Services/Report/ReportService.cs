@@ -209,15 +209,12 @@ namespace HIMS.Services.Report
             if (header == "PharmacyHeader.html")
             {
                 htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath, StoreId);
-
-
             }
             else
             {
                 htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, UnitId);
 
             }
-
 
             string html;
 
