@@ -4137,7 +4137,8 @@ namespace HIMS.Services.Report
                             string[] hiddenCols = { "ExpenseType", "Type" };
 
                             var allPairs = alignedHeaders.Zip(trimmedColList, (h, c) => new { h, c }).Select((x, i) => new { x.h, x.c, Width = i < trimmedWidths.Length ? trimmedWidths[i] : "" }).ToList();
-                            var visiblePairs = allPairs.Where(x => !hiddenCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
+                            //var visiblePairs = allPairs.Where(x => !hiddenCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
+                            var visiblePairs = allPairs.Where(x => !hiddenCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).Where(x => !dcGroupCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
 
                             string[] visibleHeaders = visiblePairs.Select(x => x.h).ToArray();
                             string[] visibleWidths = visiblePairs.Select(x => x.Width).ToArray();
