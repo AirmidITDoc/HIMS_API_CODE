@@ -27,6 +27,13 @@ namespace HIMS.API.Controllers.Pathology
             IPagedList<LabResultCompletedListDto> LabResultCompletedList = await _ILabApprovalService.GetListAsync(objGrid);
             return Ok(LabResultCompletedList.ToGridResponse(objGrid, "LabResultCompleted List"));
         }
-       
+        [HttpPost("LabResultCompletedInvestigationList")]
+        [Permission]
+        public async Task<IActionResult> InvestigationList(GridRequestModel objGrid)
+        {
+            IPagedList<LabResultCompletedInvestigationListDto> LabResultCompletedList = await _ILabApprovalService.InvestigationGetListAsync(objGrid);
+            return Ok(LabResultCompletedList.ToGridResponse(objGrid, "LabResultCompleted List"));
+        }
+
     }
 }

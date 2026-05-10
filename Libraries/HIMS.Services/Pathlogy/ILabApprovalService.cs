@@ -12,6 +12,8 @@ namespace HIMS.Services.Pathlogy
     public partial interface ILabApprovalService
     {
         Task<IPagedList<LabResultCompletedListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<LabResultCompletedInvestigationListDto>> InvestigationGetListAsync(GridRequestModel objGrid);
+
 
     }
 }
