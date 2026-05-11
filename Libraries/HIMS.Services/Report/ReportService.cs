@@ -4781,7 +4781,8 @@ namespace HIMS.Services.Report
                 foreach (var hr in columnDataNames)
                 {
                     table.Append("<td style='border: 1px solid #d4c3c3; font-family: Calibri, \"Helvetica Neue\", Helvetica, sans-serif; font-size:16px; word-break: break-word; white-space: normal; padding: 4px;'>");
-                    table.Append(row.Table.Columns.Contains(hr) ? row[hr].ToString() : "");
+                    //table.Append(row.Table.Columns.Contains(hr) ? row[hr].ToString() : "");
+                    table.Append(row.Table.Columns.Contains(hr) && decimal.TryParse(row[hr]?.ToString(), out decimal val) && row[hr].ToString().Contains(".") ? val.ToString("0.00") : row[hr].ToString());
                     table.Append("</td>");
                 }
 
@@ -4895,7 +4896,8 @@ namespace HIMS.Services.Report
                 if (isTotalCol)
                 {
                     decimal sum = rows.Sum(r => r.IsNull(col) ? 0m : Convert.ToDecimal(r[col]));
-                    table.Append($"<td style='border:1px solid #d4c3c3; padding:6px; text-align:center;'>{sum}</td>");
+                    //table.Append($"<td style='border:1px solid #d4c3c3; padding:6px; text-align:center;'>{sum}</td>");
+                    table.Append($"<td style='border:1px solid #d4c3c3; padding:6px; text-align:center;'>{sum.ToString("0.00")}</td>");
                 }
                 else
                 {
@@ -5281,7 +5283,8 @@ namespace HIMS.Services.Report
                     {
                         string grandTotal = dt.AsEnumerable()
                                               .Sum(row => row.IsNull(colName) ? 0 : Convert.ToDecimal(row[colName]))
-                                              .ToString();
+                                              //.ToString();
+                                              .ToString("0.00");
                         table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'>" + grandTotal + "</td>");
                     }
                     col++;
