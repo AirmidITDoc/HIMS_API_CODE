@@ -3274,6 +3274,7 @@ namespace HIMS.Services.Report
 
                         decimal totalCash = 0, totalNonCash = 0;
                         decimal refundCash = 0, refundNonCash = 0;
+                        int srNo = 1;
 
                         foreach (DataRow dr in dt.Rows)
                         {
@@ -3281,7 +3282,9 @@ namespace HIMS.Services.Report
 
                             if (rowType == "DETAIL")
                             {
-                                detailRows += "<tr>";
+                                //detailRows += "<tr>";
+                                //detailRows += "<tr><td>" + srNo++ + "</td>";
+                                detailRows += "<tr><td style='background:#e6e6e6;font-weight:bold;'>" + srNo++ + "</td>";
                                 detailRows += "<td>" + dr["PrintBillNo"] + "</td>";
                                 detailRows += "<td>" + dr["PatientName"] + "</td>";
                                 detailRows += "<td>" + dr["RefDoctor"] + "</td>";
@@ -3351,12 +3354,12 @@ namespace HIMS.Services.Report
 
                         if (dt.Rows.Count == 0)
                             break;
+                        int srNo = 1;
 
-               
                         foreach (DataRow dr in dt.Select("RowType = 'DETAIL'"))
                         {
-                            detailRows += "<tr>";
-
+                            // detailRows += "<tr>";
+                            detailRows += "<tr><td style='background:#e6e6e6;font-weight:bold; width:50px;'>" + srNo++ + "</td>";
                             detailRows += $"<td>{dr["BillDate"]}</td>";
                             detailRows += $"<td>{dr["PrintBillNo"]}</td>";
                             detailRows += $"<td>{dr["LabRequestNo"]}</td>";

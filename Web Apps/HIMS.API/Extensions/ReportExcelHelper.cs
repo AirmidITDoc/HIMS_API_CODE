@@ -219,19 +219,29 @@ namespace HIMS.API.Extensions
                 case "DailyCollectionWithSummary.html":
                     {
                         int rowNo = 1;
+                        int srNo = 1;
 
                         // 🔹 TITLE
                         workSheet.Cell(rowNo, 1).Value = "Daily Collection With Summary";
-                        workSheet.Range(rowNo, 1, rowNo, 6).Merge().Style.Font.Bold = true;
+
+                        // workSheet.Range(rowNo, 1, rowNo, 6).Merge().Style.Font.Bold = true;
+                        workSheet.Range(rowNo, 1, rowNo, 7).Merge().Style.Font.Bold = true;
                         rowNo += 2;
 
                         // 🔹 MAIN TABLE HEADER
-                        workSheet.Cell(rowNo, 1).Value = "Bill No";
-                        workSheet.Cell(rowNo, 2).Value = "Patient Name";
-                        workSheet.Cell(rowNo, 3).Value = "Ref Doctor";
-                        workSheet.Cell(rowNo, 4).Value = "Mode";
-                        workSheet.Cell(rowNo, 5).Value = "Payment";
-                        workSheet.Cell(rowNo, 6).Value = "Refund";
+                        //workSheet.Cell(rowNo, 1).Value = "Bill No";
+                        //workSheet.Cell(rowNo, 2).Value = "Patient Name";
+                        //workSheet.Cell(rowNo, 3).Value = "Ref Doctor";
+                        //workSheet.Cell(rowNo, 4).Value = "Mode";
+                        //workSheet.Cell(rowNo, 5).Value = "Payment";
+                        //workSheet.Cell(rowNo, 6).Value = "Refund";
+                        workSheet.Cell(rowNo, 1).Value = "Sr.No";
+                        workSheet.Cell(rowNo, 2).Value = "Bill No";
+                        workSheet.Cell(rowNo, 3).Value = "Patient Name";
+                        workSheet.Cell(rowNo, 4).Value = "Ref Doctor";
+                        workSheet.Cell(rowNo, 5).Value = "Mode";
+                        workSheet.Cell(rowNo, 6).Value = "Payment";
+                        workSheet.Cell(rowNo, 7).Value = "Refund";
                         workSheet.Row(rowNo).Style.Font.Bold = true;
                         rowNo++;
 
@@ -243,16 +253,24 @@ namespace HIMS.API.Extensions
                         {
                             if (dr["RowType"].ToString() != "DETAIL") continue;
 
-                            workSheet.Cell(rowNo, 1).Value = dr["PrintBillNo"]?.ToString();
-                            workSheet.Cell(rowNo, 2).Value = dr["PatientName"]?.ToString();
-                            workSheet.Cell(rowNo, 3).Value = dr["RefDoctor"]?.ToString();
-                            workSheet.Cell(rowNo, 4).Value = dr["PayMode"]?.ToString();
+                            //workSheet.Cell(rowNo, 1).Value = dr["PrintBillNo"]?.ToString();
+                            //workSheet.Cell(rowNo, 2).Value = dr["PatientName"]?.ToString();
+                            //workSheet.Cell(rowNo, 3).Value = dr["RefDoctor"]?.ToString();
+                            //workSheet.Cell(rowNo, 4).Value = dr["PayMode"]?.ToString();
+
+                            workSheet.Cell(rowNo, 1).Value = srNo++;
+                            workSheet.Cell(rowNo, 2).Value = dr["PrintBillNo"]?.ToString();
+                            workSheet.Cell(rowNo, 3).Value = dr["PatientName"]?.ToString();
+                            workSheet.Cell(rowNo, 4).Value = dr["RefDoctor"]?.ToString();
+                            workSheet.Cell(rowNo, 5).Value = dr["PayMode"]?.ToString();
 
                             decimal cash = Convert.ToDecimal(dr["Cash"]);
                             decimal nonCash = Convert.ToDecimal(dr["NonCash"]);
 
-                            workSheet.Cell(rowNo, 5).Value = cash;
-                            workSheet.Cell(rowNo, 6).Value = nonCash;
+                            //workSheet.Cell(rowNo, 5).Value = cash;
+                            //workSheet.Cell(rowNo, 6).Value = nonCash;
+                            workSheet.Cell(rowNo, 6).Value = cash;
+                            workSheet.Cell(rowNo, 7).Value = nonCash;
 
                             rowNo++;
                         }
@@ -357,12 +375,12 @@ namespace HIMS.API.Extensions
 
                         // 🔹 TITLE
                         workSheet.Cell(rowNo, 1).Value = "Daily Collection Details With Summary";
-                        workSheet.Range(rowNo, 1, rowNo, 17).Merge().Style.Font.Bold = true;
+                        workSheet.Range(rowNo, 1, rowNo, 18).Merge().Style.Font.Bold = true;
                         rowNo += 2;
 
                         // 🔹 HEADER
                         string[] headers = {
-        "Bill Date","Bill No","Lab No","Patient","Tests",
+         "Sr.No","Bill Date","Bill No","Lab No","Patient","Tests",
         "Total","Discount","Gross","Net Payable","Paid",
         "Cash Balance","Credit Balance","Refund",
         "Cash","UPI","Card","User"
@@ -377,28 +395,28 @@ namespace HIMS.API.Extensions
                         // 🔹 DETAIL ROWS
                         foreach (DataRow dr in dt.Select("RowType = 'DETAIL'"))
                         {
-                            workSheet.Cell(rowNo, 1).Value = dr["BillDate"]?.ToString();
-                            workSheet.Cell(rowNo, 2).Value = dr["PrintBillNo"]?.ToString();
-                            workSheet.Cell(rowNo, 3).Value = dr["LabRequestNo"]?.ToString();
-                            workSheet.Cell(rowNo, 4).Value = dr["PatientName"]?.ToString();
-                            workSheet.Cell(rowNo, 5).Value = dr["TestNames"]?.ToString();
+                            workSheet.Cell(rowNo, 1).Value = rowNo - 3;
+                            workSheet.Cell(rowNo, 2).Value = dr["BillDate"]?.ToString();
+                            workSheet.Cell(rowNo, 3).Value = dr["PrintBillNo"]?.ToString();
+                            workSheet.Cell(rowNo, 4).Value = dr["LabRequestNo"]?.ToString();
+                            workSheet.Cell(rowNo, 5).Value = dr["PatientName"]?.ToString();
+                            workSheet.Cell(rowNo, 6).Value = dr["TestNames"]?.ToString();
 
-                            workSheet.Cell(rowNo, 6).Value = Convert.ToDecimal(dr["TotalAmt"]);
-                            workSheet.Cell(rowNo, 7).Value = Convert.ToDecimal(dr["ConcessionAmt"]);
-                            workSheet.Cell(rowNo, 8).Value = Convert.ToDecimal(dr["GrossAmt"]);
-                            workSheet.Cell(rowNo, 9).Value = Convert.ToDecimal(dr["NetPayableAmt"]);
+                            workSheet.Cell(rowNo, 7).Value = Convert.ToDecimal(dr["TotalAmt"]);
+                            workSheet.Cell(rowNo, 8).Value = Convert.ToDecimal(dr["ConcessionAmt"]);
+                            workSheet.Cell(rowNo, 9).Value = Convert.ToDecimal(dr["GrossAmt"]);
+                            workSheet.Cell(rowNo, 10).Value = Convert.ToDecimal(dr["NetPayableAmt"]);
 
-                            workSheet.Cell(rowNo, 10).Value = Convert.ToDecimal(dr["TotalMoneyReceived"]);
-                            workSheet.Cell(rowNo, 11).Value = Convert.ToDecimal(dr["CashPatientBalance"]);
-                            workSheet.Cell(rowNo, 12).Value = Convert.ToDecimal(dr["CreditPatientBalance"]);
+                            workSheet.Cell(rowNo, 11).Value = Convert.ToDecimal(dr["TotalMoneyReceived"]);
+                            workSheet.Cell(rowNo, 12).Value = Convert.ToDecimal(dr["CashPatientBalance"]);
+                            workSheet.Cell(rowNo, 13).Value = Convert.ToDecimal(dr["CreditPatientBalance"]);
+                            workSheet.Cell(rowNo, 14).Value = Convert.ToDecimal(dr["LessRefundAmt"]);
 
-                            workSheet.Cell(rowNo, 13).Value = Convert.ToDecimal(dr["LessRefundAmt"]);
+                            workSheet.Cell(rowNo, 15).Value = Convert.ToDecimal(dr["NetCashCollection"]);
+                            workSheet.Cell(rowNo, 16).Value = Convert.ToDecimal(dr["NetUpiCollection"]);
+                            workSheet.Cell(rowNo, 17).Value = Convert.ToDecimal(dr["NetCardCollection"]);
 
-                            workSheet.Cell(rowNo, 14).Value = Convert.ToDecimal(dr["NetCashCollection"]);
-                            workSheet.Cell(rowNo, 15).Value = Convert.ToDecimal(dr["NetUpiCollection"]);
-                            workSheet.Cell(rowNo, 16).Value = Convert.ToDecimal(dr["NetCardCollection"]);
-
-                            workSheet.Cell(rowNo, 17).Value = dr["UserName"]?.ToString();
+                            workSheet.Cell(rowNo, 18).Value = dr["UserName"]?.ToString();
 
                             rowNo++;
                         }
