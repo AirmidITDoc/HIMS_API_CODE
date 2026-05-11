@@ -757,6 +757,185 @@ namespace HIMS.API.Extensions
                         }
                     }
                         break;
+                case "SimpleMultiResultSetReportCustomSummary.html":
+                    {
+                        var dcFields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields)
+                            .ToDictionary(e => e.FieldName, e => e.FieldValueString);
+
+                        Microsoft.Data.SqlClient.SqlParameter[] dcPara = dcFields.Select(kv =>
+                        {
+                            bool isDate = kv.Key.Equals("FromDate", StringComparison.OrdinalIgnoreCase)
+                                       || kv.Key.Equals("ToDate", StringComparison.OrdinalIgnoreCase);
+                            return new Microsoft.Data.SqlClient.SqlParameter("@" + kv.Key,
+                                isDate ? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                                       : (object)kv.Value);
+                        }).ToArray();
+
+                        DatabaseHelper db = new DatabaseHelper();
+                        List<DataTable> allSets = db.FetchAllResultSets(model.SPName, dcPara);
+
+                        if (allSets.Count == 0) break;
+
+                        DataTable firstDt = allSets[0];
+
+                        string[] trimmedColList = model.colList.Select(x => x.Trim()).ToArray();
+                        string[] trimmedHeaders = model.headerList.Select(x => x.Trim()).ToArray();
+                        string[] dcTotalCols = (model.totalFieldList ?? Array.Empty<string>()).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                        string[] dcGroupCols = model.groupByLabel?.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray()?? Array.Empty<string>();
+
+                        var visiblePairs = trimmedHeaders.Zip(trimmedColList, (h, c) => new { h, c }).Where(x => !x.h.Equals("Sr.No", StringComparison.OrdinalIgnoreCase) && !dcGroupCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
+
+                        string[] visibleHeaders = visiblePairs.Select(x => x.h).ToArray();
+                        string[] visibleCols = visiblePairs.Select(x => x.c).ToArray();
+
+                        for (int i = 0; i < visibleHeaders.Length; i++)
+                        {
+                            workSheet.Cell(1, i + 1).Value = visibleHeaders[i];
+                            workSheet.Cell(1, i + 1).Style.Font.Bold = true;
+                            workSheet.Cell(1, i + 1).Style.Fill.BackgroundColor = XLColor.LightBlue;
+                        }
+                        StyleHeaderRow(workSheet);
+
+                        int rowNo = 2;
+
+                        void WriteRows(IEnumerable<DataRow> rows)
+                        {
+                            foreach (var r in rows)
+                            {
+                                int colNo = 1;
+                                foreach (var col in visibleCols)
+                                {
+                                    object val = r.Table.Columns.Contains(col) ? r[col] : null;
+                                    var cell = workSheet.Cell(rowNo, colNo);
+
+                                    if (val == null || val == DBNull.Value) cell.Value = "";
+                                    else if (val is DateTime d) cell.Value = d;
+                                    else if (val is int || val is long) cell.Value = Convert.ToInt64(val);
+                                    else if (val is decimal || val is double || val is float) cell.Value = Convert.ToDouble(val);
+                                    else cell.Value = val.ToString();
+
+                                    colNo++;
+                                }
+                                rowNo++;
+                            }
+                        }
+
+                        void RenderGroup(int level, IEnumerable<DataRow> data)
+                        {
+                            if (level >= dcGroupCols.Length)
+                            {
+                                WriteRows(data);
+                                return;
+                            }
+
+                            var groups = data.Select(x => x[dcGroupCols[level]]?.ToString()).Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList();
+
+                            foreach (var g in groups)
+                            {
+                                workSheet.Cell(rowNo, 1).Value = g;
+                                workSheet.Range(rowNo, 1, rowNo, visibleCols.Length).Merge();
+                                workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                                workSheet.Cell(rowNo, 1).Style.Fill.BackgroundColor = XLColor.LightGray;
+                                rowNo++;
+
+                                var child = data.Where(x => (x[dcGroupCols[level]]?.ToString() ?? "") == g).ToList();
+                                RenderGroup(level + 1, child);
+
+                                if (dcTotalCols.Length > 0)
+                                {
+                                    workSheet.Cell(rowNo, 1).Value = $"Total - {g}";
+                                    workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                                    workSheet.Cell(rowNo, 1).Style.Fill.BackgroundColor = XLColor.LightYellow;
+
+                                    for (int i = 0; i < visibleCols.Length; i++)
+                                    {
+                                        if (dcTotalCols.Contains(visibleCols[i], StringComparer.OrdinalIgnoreCase))
+                                        {
+                                            double subTotal = child
+                                                .Where(r => r.Table.Columns.Contains(visibleCols[i]) && r[visibleCols[i]] != DBNull.Value)
+                                                .Sum(r => Convert.ToDouble(r[visibleCols[i]]));
+
+                                            workSheet.Cell(rowNo, i + 1).Value = subTotal;
+                                            workSheet.Cell(rowNo, i + 1).Style.Font.Bold = true;
+                                            workSheet.Cell(rowNo, i + 1).Style.Fill.BackgroundColor = XLColor.LightYellow;
+                                        }
+                                    }
+                                    rowNo++;
+                                }
+                            }
+                        }
+
+                        RenderGroup(0, firstDt.AsEnumerable());
+
+                        if (dcTotalCols.Length > 0)
+                        {
+                            rowNo++;
+                            workSheet.Cell(rowNo, 1).Value = "Grand Total";
+                            workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+
+                            for (int i = 0; i < visibleCols.Length; i++)
+                            {
+                                if (dcTotalCols.Contains(visibleCols[i], StringComparer.OrdinalIgnoreCase))
+                                {
+                                    double total = firstDt.AsEnumerable()
+                                        .Sum(r => r.Table.Columns.Contains(visibleCols[i]) && r[visibleCols[i]] != DBNull.Value
+                                                  ? Convert.ToDouble(r[visibleCols[i]]) : 0);
+                                    workSheet.Cell(rowNo, i + 1).Value = total;
+                                    workSheet.Cell(rowNo, i + 1).Style.Font.Bold = true;
+                                }
+                            }
+                            rowNo++;
+                        }
+
+                        rowNo += 2;
+                        workSheet.Cell(rowNo, 1).Value = $"SUMMARY REPORT - {model.RepoertName}";
+                        workSheet.Range(rowNo, 1, rowNo, visibleCols.Length).Merge();
+                        workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                        workSheet.Cell(rowNo, 1).Style.Fill.BackgroundColor = XLColor.LightGray;
+                        rowNo++;
+
+                        for (int t = 1; t < allSets.Count; t++)
+                        {
+                            DataTable table = allSets[t];
+                            if (table == null || table.Rows.Count == 0) continue;
+
+                            workSheet.Cell(rowNo, 1).Value = $"SUMMARY SET {t}";
+                            workSheet.Range(rowNo, 1, rowNo, table.Columns.Count).Merge();
+                            workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                            rowNo++;
+
+                            int colNo = 1;
+                            foreach (DataColumn col in table.Columns)
+                            {
+                                workSheet.Cell(rowNo, colNo).Value = col.ColumnName;
+                                workSheet.Cell(rowNo, colNo).Style.Font.Bold = true;
+                                colNo++;
+                            }
+                            rowNo++;
+
+                            foreach (DataRow dr in table.Rows)
+                            {
+                                colNo = 1;
+                                foreach (DataColumn col in table.Columns)
+                                {
+                                    var val = dr[col];
+                                    var cell = workSheet.Cell(rowNo, colNo);
+
+                                    if (val == null || val == DBNull.Value) cell.Value = "";
+                                    else if (val is DateTime d) cell.Value = d;
+                                    else if (val is int || val is long) cell.Value = Convert.ToInt64(val);
+                                    else if (val is decimal || val is double || val is float) cell.Value = Convert.ToDouble(val);
+                                    else cell.Value = val.ToString();
+
+                                    colNo++;
+                                }
+                                rowNo++;
+                            }
+
+                            rowNo++; 
+                        }
+                    }
+                    break;
             }
             return SaveToStream(excel);
         }
