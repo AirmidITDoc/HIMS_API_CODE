@@ -4180,6 +4180,69 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
                     }
                     break;
+                case "SimpleMultiResultSetReportCustomSummary.html":
+                    {
+                        var dcFields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+
+                        SqlParameter[] dcPara = dcFields.Select(kv =>
+                        {
+                            bool isDate = kv.Key.Equals("FromDate", StringComparison.OrdinalIgnoreCase)
+                                       || kv.Key.Equals("ToDate", StringComparison.OrdinalIgnoreCase);
+                            return new SqlParameter("@" + kv.Key,
+                                isDate ? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                                       : (object)kv.Value);
+                        }).ToArray();
+
+                        List<DataTable> allSets = FetchAllResultSets(model.SPName, dcPara);
+
+                        if (allSets.Count > 0)
+                        {
+                            DataTable firstDt = allSets[0];
+
+                            string[] trimmedHeaders = model.headerList.Select(x => x.Trim()).ToArray();
+                            string[] trimmedColList = model.colList.Select(x => x.Trim()).ToArray();
+                            string[] trimmedWidths = (model.columnWidths ?? Array.Empty<string>()).Select(x => x.Trim()).ToArray();
+                            string[] dcTotalCols = totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                            string[] dcGroupCols = model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
+
+                            var allPairs = trimmedHeaders.Where(x => !x.Equals("Sr.No", StringComparison.OrdinalIgnoreCase)).Zip(trimmedColList, (h, c) => new { h, c }).Select((x, i) => new { x.h, x.c, Width = i < trimmedWidths.Length ? trimmedWidths[i] : "" }).ToList();
+
+                            var visiblePairs = allPairs.Where(x => !dcGroupCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
+
+                            string[] visibleHeaders = visiblePairs.Select(x => x.h).ToArray();
+                            string[] visibleCols = visiblePairs.Select(x => x.c).ToArray();
+                            string[] visibleWidths = visiblePairs.Select(x => x.Width).ToArray();
+
+                            HeaderItems.Append(GetCommonHtmlTableHeaderNew(firstDt, visibleHeaders, visibleWidths));
+                            items.Append(BuildSimpleGroupedBody(firstDt, visibleHeaders, visibleCols, dcTotalCols, dcGroupCols));
+                            ItemsTotal.Append(CreateGrandTotal(firstDt, dcTotalCols, dcGroupCols));
+
+                            string extraTables = allSets.Count > 1
+                                ? RenderMultiResultSetReport(allSets.Skip(1).ToList())
+                                : "";
+                            html = html.Replace("{{ResultSetTables}}", extraTables);
+
+                            string summaryBlock = $@"
+                            <div style='page-break-before: always;'></div>
+                            <table style='width:100%; border-collapse:collapse; margin-bottom:10px; border:1px solid #777;'>
+                                <tr style='background:#d9d9d9; font-weight:bold;'>
+                                    <td style='padding:10px; font-size:18px; text-align:left; border-right:1px solid #777;'>
+                                        Summary Report For {model.RepoertName}
+                                    </td>
+                                    <td style='padding:10px; font-size:16px; text-align:right;'>
+                                        From Date : {FromDate:dd/MM/yyyy} &nbsp;--&nbsp; To Date : {ToDate:dd/MM/yyyy}
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/><br/>";
+
+                            html = html.Replace("{{SummaryBlock}}", summaryBlock);
+                        }
+
+                        html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yyyy"));
+                        html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
+                    }
+                    break;
 
                 case "MultiResultSetReport.html":
                     {
@@ -4726,6 +4789,122 @@ namespace HIMS.Services.Report
             }
         }
 
+        public static string BuildSimpleGroupedBody(DataTable dt,string[] visibleHeaders,string[] visibleCols,string[] totalCols,string[] groupBy)
+        {
+            StringBuilder table = new();
+            int totalColSpan = visibleCols.Length + 1; 
+            int rowNo = 1;
+
+            if (groupBy.Length == 0)
+            {
+                CreateRowsNew(dt.AsEnumerable(), table, visibleHeaders, visibleCols, ref rowNo);
+                return table.ToString();
+            }
+
+            var level1Groups = dt.AsEnumerable().Select(r => r.Field<string>(groupBy[0])).Distinct().ToList();
+
+            foreach (string g1 in level1Groups)
+            {
+                var g1Rows = dt.Select($"{groupBy[0]} = '{g1}'").AsEnumerable();
+
+                AppendGroupHeader(table, g1, totalColSpan, indent: 0, fontSize: 14);
+
+                if (groupBy.Length > 1)
+                {
+                    var level2Groups = g1Rows.Select(r => r.Field<string>(groupBy[1])).Distinct().ToList();
+
+                    foreach (string g2 in level2Groups)
+                    {
+                        var g2Rows = g1Rows.Where(r => r[groupBy[1]].ToString().Equals(g2, StringComparison.OrdinalIgnoreCase));
+
+                        AppendGroupHeader(table, g2, totalColSpan, indent: 10, fontSize: 13);
+
+                        if (groupBy.Length > 2)
+                        {
+                            var level3Groups = g2Rows.Select(r => r.Field<string>(groupBy[2])).Distinct().ToList();
+
+                            foreach (string g3 in level3Groups)
+                            {
+                                var g3Rows = g2Rows.Where(r => r[groupBy[2]].ToString().Equals(g3, StringComparison.OrdinalIgnoreCase));
+
+                                AppendGroupHeader(table, g3, totalColSpan, indent: 20, fontSize: 12);
+
+                                if (groupBy.Length > 3)
+                                {
+                                    var level4Groups = g3Rows.Select(r => r.Field<string>(groupBy[3])).Distinct().ToList();
+
+                                    foreach (string g4 in level4Groups)
+                                    {
+                                        var g4Rows = g3Rows.Where(r => r[groupBy[3]].ToString().Equals(g4, StringComparison.OrdinalIgnoreCase));
+                                        AppendGroupHeader(table, g4, totalColSpan, indent: 30, fontSize: 11);
+                                        CreateRowsNew(g4Rows, table, visibleHeaders, visibleCols, ref rowNo);
+                                    }
+                                }
+                                else
+                                {
+                                    CreateRowsNew(g3Rows, table, visibleHeaders, visibleCols, ref rowNo);
+                                }
+
+                                AppendGroupSubTotal(table, g3Rows, totalCols, g3, totalColSpan, visibleCols);
+                            }
+                        }
+                        else
+                        {
+                            CreateRowsNew(g2Rows, table, visibleHeaders, visibleCols, ref rowNo);
+                        }
+
+                        AppendGroupSubTotal(table, g2Rows, totalCols, g2, totalColSpan, visibleCols);
+                    }
+                }
+                else
+                {
+                    CreateRowsNew(g1Rows, table, visibleHeaders, visibleCols, ref rowNo);
+                }
+
+                AppendGroupSubTotal(table, g1Rows, totalCols, g1, totalColSpan, visibleCols);
+            }
+
+            return table.ToString();
+        }
+
+        private static void AppendGroupHeader(StringBuilder table, string label, int colSpan, int indent, int fontSize)
+        {
+            table.Append($"<tr style='font-size:{fontSize}px; color:black; background-color:#f0f0f0;'>")
+                 .Append($"<th style='border:1px solid #000; padding:4px; text-align:left; text-indent:{indent}px;' colspan='{colSpan}'>")
+                 .Append(label)
+                 .Append("</th></tr>");
+        }
+
+        private static void AppendGroupSubTotal(StringBuilder table,IEnumerable<DataRow> groupRows,string[] totalCols, string label,int totalColSpan,string[] visibleCols)
+        {
+            if (totalCols == null || totalCols.Length == 0) return;
+            var rows = groupRows.ToList();
+            if (rows.Count == 0) return;
+
+            DataTable schema = rows[0].Table;
+
+            table.Append("<tr style='font-weight:bold; background-color:#e8e8e8; border-top:1px solid #555;'>");
+
+            table.Append($"<td style='border:1px solid #d4c3c3; padding:6px; text-align:left;' colspan='1'>Total </td>");
+
+            foreach (string col in visibleCols)
+            {
+                bool isTotalCol = totalCols.Contains(col, StringComparer.OrdinalIgnoreCase)
+                               && schema.Columns.Contains(col);
+
+                if (isTotalCol)
+                {
+                    decimal sum = rows.Sum(r => r.IsNull(col) ? 0m : Convert.ToDecimal(r[col]));
+                    table.Append($"<td style='border:1px solid #d4c3c3; padding:6px; text-align:center;'>{sum}</td>");
+                }
+                else
+                {
+                    table.Append("<td style='border:1px solid #d4c3c3; padding:6px;'></td>");
+                }
+            }
+
+            table.Append("</tr>");
+        }
 
         //public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
         //{
