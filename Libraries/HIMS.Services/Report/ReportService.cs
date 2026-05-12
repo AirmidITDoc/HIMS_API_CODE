@@ -196,6 +196,8 @@ namespace HIMS.Services.Report
 
         public async Task<Tuple<byte[], string>> GetReportSetByProcDB(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1,long StoreId = 2)
         {
+            try
+            {
             var tuple = new Tuple<byte[], string>(null, string.Empty);
             string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
             var mrMode = model.Mode;
@@ -247,10 +249,15 @@ namespace HIMS.Services.Report
                     tuple = _pdfUtility.GeneratePdfFromHtmlNew(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait, PaperKind.A4, (long)mType.mHeaderSpace);
                 }
             }
+                return tuple;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
 
             //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
-
-            return tuple;
+        
         }
 
         public async Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1)
