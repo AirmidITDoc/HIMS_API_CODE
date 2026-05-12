@@ -3,6 +3,7 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,8 +27,15 @@ namespace HIMS.Services.Pharmacy
         public virtual async Task Insert(TPhRefund ObjTPhRefund, TPhadvanceHeader ObjTPhadvanceHeader, List<TPhadvRefundDetail> ObjTPhadvRefundDetail, List<TPhadvanceDetail> ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, List<TPaymentPharmacy> ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName)
         {
 
-            // //Add header table records
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                // //Add header table records
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] rEntity = { "RefundDate", "RefundTime", "BillId", "AdvanceId", "OpdIpdType", "OpdIpdId", "RefundAmount", "Remark", "TransactionId", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "StrId", "RefundId" };
             var entity = ObjTPhRefund.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
@@ -38,10 +46,9 @@ namespace HIMS.Services.Pharmacy
             string VRefundId = odal.ExecuteNonQuery("PS_insert_T_PhAdvRefund_1", CommandType.StoredProcedure, "RefundId", entity);
             ObjTPhRefund.RefundId = Convert.ToInt32(VRefundId);
             ObjPaymentPharmacy.RefundId = Convert.ToInt32(VRefundId);
-            //await _context.LogProcedureExecution(entity, nameof(TPhRefund), Convert.ToInt32(ObjTPhRefund.RefundId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TPhRefund), Convert.ToInt32(ObjTPhRefund.RefundId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+            await _context.LogProcedureExecution(entity, nameof(TPhRefund), Convert.ToInt32(ObjTPhRefund.RefundId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-            string[] AEntity = { "AdvanceId", "AdvanceUsedAmount", "BalanceAmount" };
+                string[] AEntity = { "AdvanceId", "AdvanceUsedAmount", "BalanceAmount" };
             var Aentity = ObjTPhadvanceHeader.ToDictionary();
             foreach (var rProperty in Aentity.Keys.ToList())
             {
@@ -49,8 +56,7 @@ namespace HIMS.Services.Pharmacy
                     Aentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("m_update_PhAdvanceHeader_1", CommandType.StoredProcedure, Aentity);
-            //await _context.LogProcedureExecution(entity, nameof(TPhadvanceHeader), Convert.ToInt32(ObjTPhadvanceHeader.AdvanceId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-            _ = Task.Run(() => _context.LogProcedureExecution(Aentity, nameof(TPhadvanceHeader), Convert.ToInt32(ObjTPhadvanceHeader.AdvanceId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+            await _context.LogProcedureExecution(entity, nameof(TPhadvanceHeader), Convert.ToInt32(ObjTPhadvanceHeader.AdvanceId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             foreach (var item in ObjTPhadvRefundDetail)
             {
@@ -63,8 +69,7 @@ namespace HIMS.Services.Pharmacy
                         Dentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("m_insert_T_PHAdvRefundDetail_1", CommandType.StoredProcedure, Dentity);
-                //await _context.LogProcedureExecution(entity, nameof(TPhadvRefundDetail), Convert.ToInt32(item.AdvRefId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-                _ = Task.Run(() => _context.LogProcedureExecution(Dentity, nameof(TPhadvRefundDetail), Convert.ToInt32(item.AdvRefId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                await _context.LogProcedureExecution(entity, nameof(TPhadvRefundDetail), Convert.ToInt32(item.AdvRefId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             }
 
@@ -79,8 +84,7 @@ namespace HIMS.Services.Pharmacy
                         Pentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("m_update_T_PHAdvanceDetailBalAmount_1", CommandType.StoredProcedure, Pentity);
-                //await _context.LogProcedureExecution(entity, nameof(TPhadvanceDetail), Convert.ToInt32(item.AdvanceDetailId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-                _ = Task.Run(() => _context.LogProcedureExecution(Pentity, nameof(TPhadvanceDetail), Convert.ToInt32(item.AdvanceDetailId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                await _context.LogProcedureExecution(entity, nameof(TPhadvanceDetail), Convert.ToInt32(item.AdvanceDetailId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             }
             string[] PHEntity = { "BillNo", "UnitId", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType",
@@ -92,8 +96,7 @@ namespace HIMS.Services.Pharmacy
                     Entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("insert_I_PHPayment_1", CommandType.StoredProcedure, Entity);
-            //await _context.LogProcedureExecution(entity, nameof(PaymentPharmacy), Convert.ToInt32(ObjPaymentPharmacy.PaymentId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-            _ = Task.Run(() => _context.LogProcedureExecution(Entity, nameof(PaymentPharmacy), Convert.ToInt32(ObjPaymentPharmacy.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+            await _context.LogProcedureExecution(entity, nameof(PaymentPharmacy), Convert.ToInt32(ObjPaymentPharmacy.PaymentId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
 
 
@@ -110,9 +113,19 @@ namespace HIMS.Services.Pharmacy
                 }
                 string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_PaymentPharmacy", CommandType.StoredProcedure, "PaymentId", pentity);
                 item.PaymentId = Convert.ToInt32(VPaymentId);
-                //await _context.LogProcedureExecution(entity, nameof(TPaymentPharmacy), Convert.ToInt32(item.PaymentId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-                _ = Task.Run(() => _context.LogProcedureExecution(pentity, nameof(TPaymentPharmacy), Convert.ToInt32(item.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                await _context.LogProcedureExecution(entity, nameof(TPaymentPharmacy), Convert.ToInt32(item.PaymentId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
+            }
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+
+                await transaction.CommitAsync();
+
+            }
+            catch (Exception)
+            {
+                // ❌ Rollback if anything fails
+                await transaction.RollbackAsync();
+                throw;
             }
         }
     }
