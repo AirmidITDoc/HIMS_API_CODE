@@ -31,7 +31,7 @@ namespace HIMS.Services.Utilities
     public class PdfUtility : IPdfUtility
     {
         private readonly Data.Models.HIMSDbContext _context;
-        private static IConverter converter = new SynchronizedConverter(new PdfTools());
+        private readonly IConverter converter;
         //public readonly IConfiguration _configuration;
         //private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
         //public readonly IPdfUtility _pdfUtility;
@@ -544,10 +544,11 @@ namespace HIMS.Services.Utilities
                     Page = tempFile,              // ✅ Use Page, not HtmlContent
                     WebSettings = { DefaultEncoding = "utf-8",LoadImages=true },
                     UseLocalLinks = true,         // ✅ Allow local file links
-                    LoadSettings = new LoadSettings
-            {
-                BlockLocalFileAccess = false   // 🔥 IMPORTANT
-            }
+                     LoadSettings = new LoadSettings
+    {
+        JSDelay = 1500,
+        StopSlowScript = false
+    }
                 }
             }
                 };
@@ -599,10 +600,11 @@ namespace HIMS.Services.Utilities
                     Page = tempFile,              // ✅ Use Page, not HtmlContent
                     WebSettings = { DefaultEncoding = "utf-8",LoadImages=true },
                     UseLocalLinks = true,         // ✅ Allow local file links
-                    LoadSettings = new LoadSettings
-            {
-                BlockLocalFileAccess = false   // 🔥 IMPORTANT
-            }
+                     LoadSettings = new LoadSettings
+    {
+        JSDelay = 1500,
+        StopSlowScript = false
+    }
                 }
             }
                 };
@@ -814,7 +816,12 @@ namespace HIMS.Services.Utilities
                     Right = "Page [page] of [toPage]",
                     Line = true,
                     Spacing = 2.812
-                }
+                },
+                 LoadSettings = new LoadSettings
+    {
+        JSDelay = 1500,
+        StopSlowScript = false
+    }
             }
         }
             };
@@ -872,6 +879,11 @@ namespace HIMS.Services.Utilities
                 //    Line = true,
                 //    Spacing = 1.5
                 //}
+                 LoadSettings = new LoadSettings
+    {
+        JSDelay = 1500,
+        StopSlowScript = false
+    }
             }
         }
             };
@@ -928,7 +940,12 @@ namespace HIMS.Services.Utilities
                     new ObjectSettings() {
                         PagesCount = true,
                         HtmlContent = html,
-                        WebSettings = { DefaultEncoding = "utf-8" }
+                        WebSettings = { DefaultEncoding = "utf-8" },
+                         LoadSettings = new LoadSettings
+    {
+        JSDelay = 1500,
+        StopSlowScript = false
+    }
                        // FooterSettings = { FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
                     }
                 }

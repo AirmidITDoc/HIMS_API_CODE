@@ -268,7 +268,7 @@ namespace HIMS.API.Controllers.Report
         }
 
 
-     
+
 
         [HttpGet("LoginUser/auto-complete")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
@@ -364,7 +364,7 @@ namespace HIMS.API.Controllers.Report
                 case "AppointmentReceiptWithoutHeader":
 
                 case "AppointmentReceiptWithTemplate":
-                    
+
                 case "OpBillReceipt":
                 case "OpBillReceiptT":
                 case "OPBillWithPackagePrint":
@@ -577,7 +577,7 @@ namespace HIMS.API.Controllers.Report
                 case "LabStickerPrint":
                 case "IPStickerPrintV1":
 
-                    //MRD?
+                //MRD?
                 case "MrdPatinetFileView":
 
 
@@ -588,7 +588,7 @@ namespace HIMS.API.Controllers.Report
                     break;
             }
             // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
-          long UnitId = 1;
+            long UnitId = 1;
             //long UnitId = Context.UnitId;
             model.BaseUrl = AppSettings.Settings.BaseUrl;
             model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
@@ -599,7 +599,8 @@ namespace HIMS.API.Controllers.Report
         [HttpPost("ViewReportFromDB")]
         public async Task<IActionResult> ViewReportFromDB(ReportRequestModel model)
         {
-            try {
+            try
+            {
                 // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
                 // long UnitId = 1;
                 //  long StoreId = 2;
@@ -610,8 +611,9 @@ namespace HIMS.API.Controllers.Report
                 model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
                 var byteFile = await _reportService.GetReportSetByProcDB(model, AppSettings.Settings.PdfFontPath, UnitId, StoreId);
                 return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = Convert.ToBase64String(byteFile.Item1) }));
+                // return File(byteFile.Item1, "application/pdf", "report.pdf");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -637,7 +639,7 @@ namespace HIMS.API.Controllers.Report
             objGrid.First = 0;
             objGrid.Rows = 0;
 
-       //   long StoreId = 2;
+            //   long StoreId = 2;
             long StoreId = Context.StoreId;
             IPagedList<MReportListDto> MReportConfigList = await _reportService.MReportListDto(objGrid);
             if (MReportConfigList.Count > 0)
@@ -695,7 +697,7 @@ namespace HIMS.API.Controllers.Report
             //return Ok(ReportExcelHelper.GetExcel(model, dt));
 
             DataTable dt = _reportService.GetReportDataBySp(model);
-            var folderPath = AppSettings.Settings.StorageBaseUrl; 
+            var folderPath = AppSettings.Settings.StorageBaseUrl;
             Directory.CreateDirectory(folderPath);
             var safeName = string.Join("_", model.RepoertName.Split(Path.GetInvalidFileNameChars()));
             var fileName = $"{safeName}_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
@@ -706,7 +708,7 @@ namespace HIMS.API.Controllers.Report
                 stream.CopyTo(fileStream);
             }
             stream.Position = 0;
-            return File(stream,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",fileName);
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
 

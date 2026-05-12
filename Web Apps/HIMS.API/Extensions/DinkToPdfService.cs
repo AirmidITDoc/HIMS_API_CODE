@@ -24,7 +24,11 @@ namespace HIMS.API.Extensions
                         Orientation = Orientation.Landscape,
                         PaperSize = PaperKind.A4,
                     },
-                    Objects = { new ObjectSettings() { HtmlContent = htmlContent } }
+                    Objects = { new ObjectSettings() { HtmlContent = htmlContent, LoadSettings = new LoadSettings
+    {
+        JSDelay = 1500,
+        StopSlowScript = false
+    } } }
                 };
 
                 return _converter.Convert(doc);
