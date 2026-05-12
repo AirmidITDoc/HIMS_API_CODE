@@ -193,7 +193,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         // done by Ashu Date : 20-May-2025
         [HttpPost("SalesSaveWithPayment")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(SaleReqModel obj)
         {
             TSalesHeader model = obj.Sales.MapTo<TSalesHeader>();
@@ -232,7 +232,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         // done by Ashu Date : 20-May-2025
         [HttpPost("SalesSaveWithCredit")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSPC(SaleReqModel obj)
         {
             TSalesHeader model = obj.Sales.MapTo<TSalesHeader>();
@@ -321,38 +321,24 @@ namespace HIMS.API.Controllers.Pharmacy
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.DsalesId);
         }
-        //[HttpPost("SalesDraftBillUpdate")]
-        ////[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> OPDraftBillUpdate(SalesDraftHeadersModel obj)
-        //{
-        //    TSalesDraftHeader model = obj.SalesDraft.MapTo<TSalesDraftHeader>();
-        //    List<TSalesDraftDet> modelTSales = obj.SalesDraftDet.MapTo<List<TSalesDraftDet>>();
-
-        //    if (obj.SalesDraft.DsalesId != 0)
-        //    {
-        //        model.Date = Convert.ToDateTime(obj.SalesDraft.Date);
-        //        model.Time = Convert.ToDateTime(obj.SalesDraft.Time);
-        //        model.AddedBy = CurrentUserId;
-
-        //        await _ISalesService.UpdateAsyncSalesDraft(model, modelTSales, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  Update successfully.", model.DsalesId);
-        //}
-
+       
+        
         [HttpPost("SalesDraftbillcancel")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public ApiResponse Delete(TSalesDraftsHeaderModel obj)
+        public async Task<ApiResponse> Delete(TSalesDraftsHeaderModel obj)
         {
             TSalesDraftHeader model = obj.MapTo<TSalesDraftHeader>();
+
             if (obj.DsalesId != 0)
             {
-                _ISalesService.Delete(model, CurrentUserId, CurrentUserName);
+                await _ISalesService.Delete( model, CurrentUserId, CurrentUserName);
             }
             else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Cancelled successfully.");
+            {
+                return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status500InternalServerError,  "Invalid params");
+            }
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Record Cancelled successfully.");
         }
 
 
@@ -426,7 +412,8 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("PaymentSettlement")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public ApiResponse Insert(PharmacyModel obj)
+        public async Task<ApiResponse> Insert(PharmacyModel obj)
+
         {
             List<PaymentPharmacy> model = obj.Payment.MapTo<List<PaymentPharmacy>>();
             List<TSalesHeader> model1 = obj.Saless.MapTo<List<TSalesHeader>>();
@@ -434,11 +421,9 @@ namespace HIMS.API.Controllers.Pharmacy
             AdvanceHeader model3 = obj.AdvanceHeader.MapTo<AdvanceHeader>();
             List<TPaymentPharmacy> TPayments = obj.TPayments.MapTo<List<TPaymentPharmacy>>();
 
-
-
             if (model.Count > 0)
             {
-                _ISalesService.Insert(model, model1, model2, model3, TPayments, CurrentUserId, CurrentUserName);
+                await _ISalesService.Insert(model, model1, model2, model3, TPayments, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -446,13 +431,14 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpPost("PhBillDiscountAfter")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Edit)]
-        public ApiResponse InsertSP(PhBillDiscountAfterModel obj)
+        public async Task<ApiResponse> InsertSP(PhBillDiscountAfterModel obj)
+
         {
 
             TSalesHeader Model = obj.MapTo<TSalesHeader>();
             if (obj.SalesId != 0)
             {
-                _ISalesService.InsertPhBillDiscount(Model, CurrentUserId, CurrentUserName);
+                await _ISalesService.InsertPhBillDiscount(Model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -461,19 +447,19 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("ExtpatientDetUpdate")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Edit)]
-        public ApiResponse InsertSP(ExtpatientDetModel obj)
+        public async Task<ApiResponse> InsertSP(ExtpatientDetModel obj)
         {
 
             TSalesHeader Model = obj.MapTo<TSalesHeader>();
             if (obj.SalesId != 0)
             {
-                _ISalesService.InsertSP(Model, CurrentUserId, CurrentUserName);
+                await _ISalesService.InsertSP(Model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated Successfully.");
         }
-
+       
 
         [HttpGet("External-auto-complete")]
         [Permission(PageCode = "Sales", Permission = PagePermission.View)]

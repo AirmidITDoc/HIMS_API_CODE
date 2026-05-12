@@ -33,10 +33,10 @@ namespace HIMS.Services.Users
         void InsertR(TPhRefund ObjTPhRefund, TPhadvanceHeader ObjTPhadvanceHeader, List<TPhadvRefundDetail> ObjTPhadvRefundDetail, List<TPhadvanceDetail> ObjTPhadvanceDetail, PaymentPharmacy ObjPaymentPharmacy, List<TPaymentPharmacy> ObjTPaymentPharmacy ,int UserId, string Username);
         Task InsertAsyncSPC(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int CurrentUserId, string CurrentUserName, CancellationToken cancellationToken = default);
         Task InsertSD(TSalesDraftHeader ObjDraftHeader, List<TSalesDraftDet> ObjTSalesDraftDet, int UserId, string Username);
-        void Delete(TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
-        void Insert(List<PaymentPharmacy> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, List<TPaymentPharmacy> ObjTPaymentPharmacy ,int UserId, string Username);
+        Task Delete(TSalesDraftHeader ObjDraftHeader, int UserId, string Username);
+        Task Insert(List<PaymentPharmacy> ObjPayment, List<TSalesHeader> ObjTSalesHeader, List<AdvanceDetail> ObjAdvanceDetail, AdvanceHeader ObjAdvanceHeader, List<TPaymentPharmacy> ObjTPaymentPharmacy ,int UserId, string Username);
         Task InsertPhBillDiscount(TSalesHeader ObjTSalesHeader, int UserId, string Username);
-        void InsertSP(TSalesHeader ObjTSalesHeader, int UserId, string Username);
+        Task InsertSP(TSalesHeader ObjTSalesHeader, int UserId, string Username);
         Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str);
         Task<List<SalesPatientAutoCompleteDto>> SearchExtDoctor(string str);
         Task<float> GetStock(long StockId);

@@ -6,7 +6,7 @@ namespace HIMS.API.Models.Pharmacy
     {
 
         public DateTime Date { get; set; }
-        public string Time { get; set; }
+        public string? Time { get; set; }
         public long? OpIpId { get; set; }
         public long? OpIpType { get; set; }
         public decimal? TotalAmount { get; set; }
@@ -51,6 +51,14 @@ namespace HIMS.API.Models.Pharmacy
         {
             RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId is required");
             RuleFor(x => x.OpIpId).NotNull().NotEmpty().WithMessage("OpIpId is required");
+            RuleFor(x => x.Date).NotNull().NotEmpty().WithMessage("Date is required");
+            RuleFor(x => x.Time).NotNull().NotEmpty().WithMessage("Time is required");
+            RuleFor(x => x.TotalAmount).NotNull().NotEmpty().WithMessage("TotalAmount is required");
+            RuleFor(x => x.DiscAmount).NotNull().NotEmpty().WithMessage("DiscAmount is required");
+            RuleFor(x => x.NetAmount).NotNull().NotEmpty().WithMessage("NetAmount is required");
+            RuleFor(x => x.PaidAmount).NotNull().NotEmpty().WithMessage("PaidAmount is required");
+            RuleFor(x => x.BalanceAmount).NotNull().NotEmpty().WithMessage("BalanceAmount is required");
+
         }
     }
     public class CurrentStocksModel
@@ -65,15 +73,14 @@ namespace HIMS.API.Models.Pharmacy
     {
         public CurrentStocksModelValidator()
         {
-            //RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId is required");
-            //RuleFor(x => x.IssueQty).NotNull().NotEmpty().WithMessage("IssueQty is required");
+            RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId is required");
+            RuleFor(x => x.IstkId).NotNull().NotEmpty().WithMessage("IstkId is required");
         }
     }
     public class PaymentpharModelSS
     {
         public long? BillNo { get; set; }
         public long? UnitId { get; set; }
-
         public DateTime? PaymentDate { get; set; }
         public string? PaymentTime { get; set; }
         public decimal? CashPayAmount { get; set; }
@@ -113,6 +120,15 @@ namespace HIMS.API.Models.Pharmacy
         {
             RuleFor(x => x.BillNo).NotNull().NotEmpty().WithMessage("BillNo is required");
             RuleFor(x => x.CashPayAmount).NotNull().NotEmpty().WithMessage("CashPayAmount is required");
+            RuleFor(x => x.PaymentDate).NotNull().NotEmpty().WithMessage("PaymentDate is required");
+            RuleFor(x => x.PaymentTime).NotNull().NotEmpty().WithMessage("PaymentTime is required");
+            RuleFor(x => x.ChequeDate).NotNull().NotEmpty().WithMessage("ChequeDate is required");
+            RuleFor(x => x.CardDate).NotNull().NotEmpty().WithMessage("CardDate is required");
+            RuleFor(x => x.IsCancelledDate).NotNull().NotEmpty().WithMessage("IsCancelledDate is required");
+            RuleFor(x => x.Neftdate).NotNull().NotEmpty().WithMessage("Neftdate is required");
+            RuleFor(x => x.PayTmdate).NotNull().NotEmpty().WithMessage("PayTmdate is required");
+
+
         }
     }
     public class TPaymentpharModelS
@@ -142,6 +158,16 @@ namespace HIMS.API.Models.Pharmacy
         public long? CreatedBy { get; set; }
         public string? TransactionLabel { get; set; }
 
+    }
+    public class TPaymentpharModelSValidator : AbstractValidator<TPaymentpharModelS>
+    {
+        public TPaymentpharModelSValidator()
+        {
+            RuleFor(x => x.PaymentDate).NotNull().NotEmpty().WithMessage("PaymentDate is required");
+            RuleFor(x => x.ValidationDate).NotNull().NotEmpty().WithMessage("ValidationDate is required");
+
+
+        }
     }
 
     public class IPPrescriptionsModel
@@ -281,6 +307,18 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? BalanceAmount { get; set; }
 
     }
+    public class SalesHederUpdateModelValidator : AbstractValidator<SalesHederUpdateModel>
+    {
+        public SalesHederUpdateModelValidator()
+        {
+            RuleFor(x => x.SalesId).NotNull().NotEmpty().WithMessage("SalesId is required");
+            RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId is required");
+            RuleFor(x => x.TotalAmount).NotNull().NotEmpty().WithMessage("TotalAmount is required");
+            RuleFor(x => x.VatAmount).NotNull().NotEmpty().WithMessage("VatAmount is required");
+            RuleFor(x => x.NetAmount).NotNull().NotEmpty().WithMessage("NetAmount is required");
+            RuleFor(x => x.BalanceAmount).NotNull().NotEmpty().WithMessage("BalanceAmount is required");
+        }
+    }
     public class SalesDetailsUpdateModel
 
     {
@@ -291,6 +329,16 @@ namespace HIMS.API.Models.Pharmacy
         public double? Qty { get; set; }
         public decimal? TotalAmount { get; set; }
     }
+    public class SalesDetailsUpdateModelValidator : AbstractValidator<SalesDetailsUpdateModel>
+    {
+        public SalesDetailsUpdateModelValidator()
+        {
+            RuleFor(x => x.SalesId).NotNull().NotEmpty().WithMessage("SalesId is required");
+            RuleFor(x => x.SalesDetId).NotNull().NotEmpty().WithMessage("SalesDetId is required");
+            RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId is required");
+            RuleFor(x => x.TotalAmount).NotNull().NotEmpty().WithMessage("TotalAmount is required");
+        }
+    }
     public class CurrentStockUpdateModels
     {
         public long? ItemId { get; set; }
@@ -298,6 +346,16 @@ namespace HIMS.API.Models.Pharmacy
         public long? StoreId { get; set; }
         public long? IstkId { get; set; }
 
+    }
+    public class CurrentStockUpdateModelsValidator : AbstractValidator<CurrentStockUpdateModels>
+    {
+        public CurrentStockUpdateModelsValidator()
+        {
+            RuleFor(x => x.ItemId).NotNull().NotEmpty().WithMessage("ItemId is required");
+            RuleFor(x => x.IssueQty).NotNull().NotEmpty().WithMessage("IssueQty is required");
+            RuleFor(x => x.StoreId).NotNull().NotEmpty().WithMessage("StoreId is required");
+            RuleFor(x => x.IstkId).NotNull().NotEmpty().WithMessage("IstkId is required");
+        }
     }
     public class SalesUpdate
     {
