@@ -109,6 +109,7 @@ namespace HIMS.API.Extensions
 
                         decimal grandGross = 0, grandDisc = 0, grandNet = 0;
                         decimal grandReceipt = 0, grandDue = 0, grandRefund = 0;
+                        int srNo = 1;
 
                         foreach (DataRow dr in dt.Rows)
                         {
@@ -142,7 +143,7 @@ namespace HIMS.API.Extensions
                                 }
 
                                 workSheet.Cell(rowNo, 1).Value = $"CPName: {cp} : Executive Name: {exec}";
-                                workSheet.Range(rowNo, 1, rowNo, 12).Merge().Style.Font.Bold = true;
+                                workSheet.Range(rowNo, 1, rowNo, 13).Merge().Style.Font.Bold = true;
                                 rowNo++;
 
                                 prevCP = cp;
@@ -160,12 +161,12 @@ namespace HIMS.API.Extensions
                                     billReceipt = billDue = billRefund = 0;
                                 }
 
-                                workSheet.Cell(rowNo, 1).Value = bill;
-                                workSheet.Cell(rowNo, 2).Value = dr["BillDate"] == DBNull.Value ? "" : Convert.ToDateTime(dr["BillDate"]);
-
-                                workSheet.Cell(rowNo, 3).Value = dr["LabRequestNo"]?.ToString();
-                                workSheet.Cell(rowNo, 4).Value = dr["PatientName"]?.ToString();
-                                workSheet.Cell(rowNo, 5).Value = dr["CompanyOrDoctorName"]?.ToString();
+                                workSheet.Cell(rowNo, 1).Value = srNo++;
+                                workSheet.Cell(rowNo, 2).Value = bill;
+                                workSheet.Cell(rowNo, 3).Value = dr["BillDate"] == DBNull.Value ? "" : Convert.ToDateTime(dr["BillDate"]);
+                                workSheet.Cell(rowNo, 4).Value = dr["LabRequestNo"]?.ToString();
+                                workSheet.Cell(rowNo, 5).Value = dr["PatientName"]?.ToString();
+                                workSheet.Cell(rowNo, 6).Value = dr["CompanyOrDoctorName"]?.ToString();
                                 rowNo++;
 
                                 billReceipt = receipt;
@@ -184,10 +185,10 @@ namespace HIMS.API.Extensions
                             }
 
                             /* TEST ROW */
-                            workSheet.Cell(rowNo, 1).Value = dr["ServiceName"]?.ToString();
-                            workSheet.Cell(rowNo, 6).Value = gross;
-                            workSheet.Cell(rowNo, 7).Value = disc;
-                            workSheet.Cell(rowNo, 8).Value = net;
+                            workSheet.Cell(rowNo, 2).Value = dr["ServiceName"]?.ToString();
+                            workSheet.Cell(rowNo, 7).Value = gross;
+                            workSheet.Cell(rowNo, 8).Value = disc;
+                            workSheet.Cell(rowNo, 9).Value = net;
                             rowNo++;
 
                             billGross += gross;
@@ -962,16 +963,28 @@ namespace HIMS.API.Extensions
     decimal gross, decimal disc, decimal net,
     decimal receipt, decimal due, decimal refund)
         {
-            ws.Cell(row, 1).Value = label;
-            ws.Range(row, 1, row, 5).Merge();
+            //ws.Cell(row, 1).Value = label;
+            //ws.Range(row, 1, row, 5).Merge();
 
-            ws.Cell(row, 6).Value = gross;
-            ws.Cell(row, 7).Value = disc;
-            ws.Cell(row, 8).Value = net;
+            //ws.Cell(row, 6).Value = gross;
+            //ws.Cell(row, 7).Value = disc;
+            //ws.Cell(row, 8).Value = net;
 
-            ws.Cell(row, 9).Value = receipt;
-            ws.Cell(row, 10).Value = due;
-            ws.Cell(row, 11).Value = refund;
+            //ws.Cell(row, 9).Value = receipt;
+            //ws.Cell(row, 10).Value = due;
+            //ws.Cell(row, 11).Value = refund;
+
+            //ws.Row(row).Style.Font.Bold = true;
+            ws.Cell(row, 2).Value = label;          // shifted
+            ws.Range(row, 2, row, 6).Merge();       // shifted merge
+
+            ws.Cell(row, 7).Value = gross;          // shifted
+            ws.Cell(row, 8).Value = disc;
+            ws.Cell(row, 9).Value = net;
+
+            ws.Cell(row, 10).Value = receipt;
+            ws.Cell(row, 11).Value = due;
+            ws.Cell(row, 12).Value = refund;
 
             ws.Row(row).Style.Font.Bold = true;
         }

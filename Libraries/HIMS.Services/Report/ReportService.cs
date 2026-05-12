@@ -2998,6 +2998,7 @@ namespace HIMS.Services.Report
                         decimal grandReceipt = 0;
                         decimal grandDue = 0;
                         decimal grandRefund = 0;
+                        int srNo = 1;
 
                         foreach (DataRow dr in dt.Rows)
                         {
@@ -3023,7 +3024,7 @@ namespace HIMS.Services.Report
                                     {
                                         items.Append("<tr class='billTotal'>");
 
-                                        items.Append("<td colspan='5' class='right'>Bill Total</td>");
+                                        items.Append("<td colspan='6' class='right'>Bill Total</td>");
                                         items.Append("<td class='center'>" + billGross + "</td>");
                                         items.Append("<td class='center'>" + billDisc + "</td>");
                                         items.Append("<td class='center'>" + billNet + "</td>");
@@ -3036,7 +3037,7 @@ namespace HIMS.Services.Report
                                     }
                                     items.Append("<tr class='subTotal'>");
 
-                                    items.Append("<td colspan='5' class='right'>Subtotal</td>");
+                                    items.Append("<td colspan='6' class='right'>Subtotal</td>");
                                     items.Append("<td class='center'>" + subGross + "</td>");
                                     items.Append("<td class='center'>" + subDisc + "</td>");
                                     items.Append("<td class='center'>" + subNet + "</td>");
@@ -3053,7 +3054,7 @@ namespace HIMS.Services.Report
                                 }
 
                                 items.Append("<tr class='groupHeader'>");
-                                items.Append("<td colspan='12'>CPName: " + cp + " : Executive Name: " + exec + "</td>");
+                                items.Append("<td colspan='13'>CPName: " + cp + " : Executive Name: " + exec + "</td>");
                                 items.Append("</tr>");
 
                                 prevCP = cp;
@@ -3069,7 +3070,7 @@ namespace HIMS.Services.Report
                                 {
                                     items.Append("<tr class='billTotal'>");
 
-                                    items.Append("<td colspan='5' class='right'>Bill Total</td>");
+                                    items.Append("<td colspan='6' class='right'>Bill Total</td>");
 
                                     items.Append("<td class='center'>" + billGross + "</td>");
                                     items.Append("<td class='center'>" + billDisc + "</td>");
@@ -3080,15 +3081,15 @@ namespace HIMS.Services.Report
                                     items.Append("<td class='center'>" + billRefund + "</td>");
 
                                     items.Append("<td></td>");
-
+                                   //items.Append("<td></td>");
                                     items.Append("</tr>");
 
                                     billGross = billDisc = billNet = 0;
                                     billReceipt = billDue = billRefund = 0;
                                 }
 
-                                items.Append("<tr>");
-
+                               // items.Append("<tr>");
+                                items.Append("<tr><td style='background:#e6e6e6;font-weight:bold;text-align:center;'>" + srNo++ + "</td>");
                                 items.Append("<td>" + bill + "</td>");
                                 items.Append("<td class='center'>" + dr["BillDate"] + "</td>");
                                 items.Append("<td>" + dr["LabRequestNo"] + "</td>");
@@ -3102,6 +3103,7 @@ namespace HIMS.Services.Report
                                 items.Append("<td></td>");
                                 items.Append("<td></td>");
                                 items.Append("<td></td>");
+                               // items.Append("<td></td>");
 
                                 items.Append("</tr>");
 
@@ -3122,7 +3124,8 @@ namespace HIMS.Services.Report
 
                             /* TEST ROW */
 
-                            items.Append("<tr>");
+                            // items.Append("<tr>");
+                            items.Append("<tr><td></td>");
 
                             items.Append("<td colspan='5'>" + dr["ServiceName"] + "</td>");
 
@@ -3156,7 +3159,7 @@ namespace HIMS.Services.Report
                         {
                             items.Append("<tr class='billTotal'>");
 
-                            items.Append("<td colspan='5' class='right'>Bill Total</td>");
+                            items.Append("<td colspan='6' class='right'>Bill Total</td>");
 
                             items.Append("<td class='center'>" + billGross + "</td>");
                             items.Append("<td class='center'>" + billDisc + "</td>");
@@ -3177,7 +3180,7 @@ namespace HIMS.Services.Report
                         {
                             items.Append("<tr class='subTotal'>");
 
-                            items.Append("<td colspan='5' class='right'>Subtotal</td>");
+                            items.Append("<td colspan='6' class='right'>Subtotal</td>");
                             items.Append("<td class='center'>" + subGross + "</td>");
                             items.Append("<td class='center'>" + subDisc + "</td>");
                             items.Append("<td class='center'>" + subNet + "</td>");
@@ -3193,7 +3196,7 @@ namespace HIMS.Services.Report
 
                         items.Append("<tr class='grandTotal'>");
 
-                        items.Append("<td colspan='5' class='right'>GRAND TOTAL</td>");
+                        items.Append("<td colspan='6' class='right'>GRAND TOTAL</td>");
 
                         items.Append("<td class='center'>" + grandGross + "</td>");
                         items.Append("<td class='center'>" + grandDisc + "</td>");

@@ -90,7 +90,7 @@ namespace HIMS.API.Controllers.Administration
             MReportConfig model = await _repository1.GetById(x => x.ReportId == Id);
             if ((model?.ReportId ?? 0) > 0)
             {
-                model.IsActive = false;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.UpdateBy = CurrentUserId;
                 model.UpdatedOn = AppTime.Now;
                 await _repository1.SoftDelete(model, CurrentUserId, CurrentUserName);
