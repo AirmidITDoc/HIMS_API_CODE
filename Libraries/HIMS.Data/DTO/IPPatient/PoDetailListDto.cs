@@ -41,9 +41,8 @@
         public string? HSNcode { get; set; }
         public string? ConversionFactor { get; set; }
         public string? SupplierName { get; set; }
-
-
-
+        public float? FreeQty { get; set; }
+        public float? TotalQty { get; set; }
 
     }
 }
