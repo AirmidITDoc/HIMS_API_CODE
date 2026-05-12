@@ -100,12 +100,57 @@ namespace HIMS.Data.DTO.Pathology
         public bool? PaymentCompleted { get; set; }
         public bool? PaymentPending { get; set; }
 
-        
-
-
-
 
     }
-}
+   
+     public class LabResultCompletedInvestigationListDto
+      {
+            public long PathTestID { get; set; }
+            public string? ServiceName { get; set; }
+            public bool IsPathOutSource { get; set; }
+            public bool IsRadOutSource { get; set; }
+            public long PathReportID { get; set; }
+            public long ServiceId { get; set; }
+            public string? DOA { get; set; }
+            public bool IsCompleted { get; set; }
+            public bool IsPrinted { get; set; }
+            public long opdipdid { get; set; }
+            public long opdipdtype { get; set; }
+            public string PatientType { get; set; }
+            public long? IsTemplateTest { get; set; }
+            public string? CategoryName { get; set; }
+            public string? SampleNo { get; set; }
+            public string? SampleCollectionTime { get; set; }
+            public bool IsSampleCollection { get; set; }
+            public bool IsVerifySign { get; set; }
+            public long? IsVerifyid { get; set; }
+            public string? IsVerifyedDate { get; set; }
+            public long? OutSourceId { get; set; }
+            public string? OutSourceLabName { get; set; }
+            public string? OutSourceSampleSentDateTime { get; set; }
+            public string? OutSourceStatus { get; set; }
+            public string? OutSourceReportCollectedDateTime { get; set; }
+            public long? OutSourceCreatedBy { get; set; }
+            public string? OutSourceCreatedDateTime { get; set; }
+            public long? OutSourceModifiedby { get; set; }
+            public string? OutSourceModifiedDateTime { get; set; }
+            public string? UserName { get; set; }
+            public string? VerifiedUserName { get; set; }
+            public long AddedBy { get; set; }
+            public string? ReportCompletedUser { get; set; }
+            public string?PatientName { get; set; }
+            public string? DoctorName { get; set; }
+            public bool PaymentPending { get; set; }
+            public bool PaymentCompleted { get; set; }
+            public string? AgeYear { get; set; }
+            public string? AgeMonth { get; set; }
+            public string? AgeDay { get; set; }
+            public long GenderId { get; set; }
+            public string? SuggestionNotes { get; set; }
+            public string? LabRequestNo { get; set; }
+        }
+    }
+
+
     
 

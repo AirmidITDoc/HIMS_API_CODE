@@ -23,8 +23,9 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("PharmacyRefundInsert")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public ApiResponse InsertSP(PharRefundModel obj)
+        //[Permission]
+        public async Task<ApiResponse> InsertSP(PharRefundModel obj)
+
         {
             TPhRefund model = obj.PharmacyRefund.MapTo<TPhRefund>();
             TPhadvanceHeader model1 = obj.PhAdvanceHeader.MapTo<TPhadvanceHeader>();
@@ -36,7 +37,7 @@ namespace HIMS.API.Controllers.Pharmacy
             if (obj.PharmacyRefund.RefundId == 0)
             {
                 model.AddBy = CurrentUserId;
-                _IPharmacyRefundService.Insert(model, model1, model3, model4, model5, TPayments, CurrentUserId, CurrentUserName);
+                await _IPharmacyRefundService.Insert(model, model1, model3, model4, model5, TPayments, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

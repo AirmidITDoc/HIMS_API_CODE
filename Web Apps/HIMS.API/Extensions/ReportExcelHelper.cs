@@ -109,6 +109,7 @@ namespace HIMS.API.Extensions
 
                         decimal grandGross = 0, grandDisc = 0, grandNet = 0;
                         decimal grandReceipt = 0, grandDue = 0, grandRefund = 0;
+                        int srNo = 1;
 
                         foreach (DataRow dr in dt.Rows)
                         {
@@ -142,7 +143,7 @@ namespace HIMS.API.Extensions
                                 }
 
                                 workSheet.Cell(rowNo, 1).Value = $"CPName: {cp} : Executive Name: {exec}";
-                                workSheet.Range(rowNo, 1, rowNo, 12).Merge().Style.Font.Bold = true;
+                                workSheet.Range(rowNo, 1, rowNo, 13).Merge().Style.Font.Bold = true;
                                 rowNo++;
 
                                 prevCP = cp;
@@ -160,12 +161,12 @@ namespace HIMS.API.Extensions
                                     billReceipt = billDue = billRefund = 0;
                                 }
 
-                                workSheet.Cell(rowNo, 1).Value = bill;
-                                workSheet.Cell(rowNo, 2).Value = dr["BillDate"] == DBNull.Value ? "" : Convert.ToDateTime(dr["BillDate"]);
-
-                                workSheet.Cell(rowNo, 3).Value = dr["LabRequestNo"]?.ToString();
-                                workSheet.Cell(rowNo, 4).Value = dr["PatientName"]?.ToString();
-                                workSheet.Cell(rowNo, 5).Value = dr["CompanyOrDoctorName"]?.ToString();
+                                workSheet.Cell(rowNo, 1).Value = srNo++;
+                                workSheet.Cell(rowNo, 2).Value = bill;
+                                workSheet.Cell(rowNo, 3).Value = dr["BillDate"] == DBNull.Value ? "" : Convert.ToDateTime(dr["BillDate"]);
+                                workSheet.Cell(rowNo, 4).Value = dr["LabRequestNo"]?.ToString();
+                                workSheet.Cell(rowNo, 5).Value = dr["PatientName"]?.ToString();
+                                workSheet.Cell(rowNo, 6).Value = dr["CompanyOrDoctorName"]?.ToString();
                                 rowNo++;
 
                                 billReceipt = receipt;
@@ -184,10 +185,10 @@ namespace HIMS.API.Extensions
                             }
 
                             /* TEST ROW */
-                            workSheet.Cell(rowNo, 1).Value = dr["ServiceName"]?.ToString();
-                            workSheet.Cell(rowNo, 6).Value = gross;
-                            workSheet.Cell(rowNo, 7).Value = disc;
-                            workSheet.Cell(rowNo, 8).Value = net;
+                            workSheet.Cell(rowNo, 2).Value = dr["ServiceName"]?.ToString();
+                            workSheet.Cell(rowNo, 7).Value = gross;
+                            workSheet.Cell(rowNo, 8).Value = disc;
+                            workSheet.Cell(rowNo, 9).Value = net;
                             rowNo++;
 
                             billGross += gross;
@@ -219,19 +220,29 @@ namespace HIMS.API.Extensions
                 case "DailyCollectionWithSummary.html":
                     {
                         int rowNo = 1;
+                        int srNo = 1;
 
                         // 🔹 TITLE
                         workSheet.Cell(rowNo, 1).Value = "Daily Collection With Summary";
-                        workSheet.Range(rowNo, 1, rowNo, 6).Merge().Style.Font.Bold = true;
+
+                        // workSheet.Range(rowNo, 1, rowNo, 6).Merge().Style.Font.Bold = true;
+                        workSheet.Range(rowNo, 1, rowNo, 7).Merge().Style.Font.Bold = true;
                         rowNo += 2;
 
                         // 🔹 MAIN TABLE HEADER
-                        workSheet.Cell(rowNo, 1).Value = "Bill No";
-                        workSheet.Cell(rowNo, 2).Value = "Patient Name";
-                        workSheet.Cell(rowNo, 3).Value = "Ref Doctor";
-                        workSheet.Cell(rowNo, 4).Value = "Mode";
-                        workSheet.Cell(rowNo, 5).Value = "Payment";
-                        workSheet.Cell(rowNo, 6).Value = "Refund";
+                        //workSheet.Cell(rowNo, 1).Value = "Bill No";
+                        //workSheet.Cell(rowNo, 2).Value = "Patient Name";
+                        //workSheet.Cell(rowNo, 3).Value = "Ref Doctor";
+                        //workSheet.Cell(rowNo, 4).Value = "Mode";
+                        //workSheet.Cell(rowNo, 5).Value = "Payment";
+                        //workSheet.Cell(rowNo, 6).Value = "Refund";
+                        workSheet.Cell(rowNo, 1).Value = "Sr.No";
+                        workSheet.Cell(rowNo, 2).Value = "Bill No";
+                        workSheet.Cell(rowNo, 3).Value = "Patient Name";
+                        workSheet.Cell(rowNo, 4).Value = "Ref Doctor";
+                        workSheet.Cell(rowNo, 5).Value = "Mode";
+                        workSheet.Cell(rowNo, 6).Value = "Payment";
+                        workSheet.Cell(rowNo, 7).Value = "Refund";
                         workSheet.Row(rowNo).Style.Font.Bold = true;
                         rowNo++;
 
@@ -243,16 +254,24 @@ namespace HIMS.API.Extensions
                         {
                             if (dr["RowType"].ToString() != "DETAIL") continue;
 
-                            workSheet.Cell(rowNo, 1).Value = dr["PrintBillNo"]?.ToString();
-                            workSheet.Cell(rowNo, 2).Value = dr["PatientName"]?.ToString();
-                            workSheet.Cell(rowNo, 3).Value = dr["RefDoctor"]?.ToString();
-                            workSheet.Cell(rowNo, 4).Value = dr["PayMode"]?.ToString();
+                            //workSheet.Cell(rowNo, 1).Value = dr["PrintBillNo"]?.ToString();
+                            //workSheet.Cell(rowNo, 2).Value = dr["PatientName"]?.ToString();
+                            //workSheet.Cell(rowNo, 3).Value = dr["RefDoctor"]?.ToString();
+                            //workSheet.Cell(rowNo, 4).Value = dr["PayMode"]?.ToString();
+
+                            workSheet.Cell(rowNo, 1).Value = srNo++;
+                            workSheet.Cell(rowNo, 2).Value = dr["PrintBillNo"]?.ToString();
+                            workSheet.Cell(rowNo, 3).Value = dr["PatientName"]?.ToString();
+                            workSheet.Cell(rowNo, 4).Value = dr["RefDoctor"]?.ToString();
+                            workSheet.Cell(rowNo, 5).Value = dr["PayMode"]?.ToString();
 
                             decimal cash = Convert.ToDecimal(dr["Cash"]);
                             decimal nonCash = Convert.ToDecimal(dr["NonCash"]);
 
-                            workSheet.Cell(rowNo, 5).Value = cash;
-                            workSheet.Cell(rowNo, 6).Value = nonCash;
+                            //workSheet.Cell(rowNo, 5).Value = cash;
+                            //workSheet.Cell(rowNo, 6).Value = nonCash;
+                            workSheet.Cell(rowNo, 6).Value = cash;
+                            workSheet.Cell(rowNo, 7).Value = nonCash;
 
                             rowNo++;
                         }
@@ -357,12 +376,12 @@ namespace HIMS.API.Extensions
 
                         // 🔹 TITLE
                         workSheet.Cell(rowNo, 1).Value = "Daily Collection Details With Summary";
-                        workSheet.Range(rowNo, 1, rowNo, 17).Merge().Style.Font.Bold = true;
+                        workSheet.Range(rowNo, 1, rowNo, 18).Merge().Style.Font.Bold = true;
                         rowNo += 2;
 
                         // 🔹 HEADER
                         string[] headers = {
-        "Bill Date","Bill No","Lab No","Patient","Tests",
+         "Sr.No","Bill Date","Bill No","Lab No","Patient","Tests",
         "Total","Discount","Gross","Net Payable","Paid",
         "Cash Balance","Credit Balance","Refund",
         "Cash","UPI","Card","User"
@@ -377,28 +396,28 @@ namespace HIMS.API.Extensions
                         // 🔹 DETAIL ROWS
                         foreach (DataRow dr in dt.Select("RowType = 'DETAIL'"))
                         {
-                            workSheet.Cell(rowNo, 1).Value = dr["BillDate"]?.ToString();
-                            workSheet.Cell(rowNo, 2).Value = dr["PrintBillNo"]?.ToString();
-                            workSheet.Cell(rowNo, 3).Value = dr["LabRequestNo"]?.ToString();
-                            workSheet.Cell(rowNo, 4).Value = dr["PatientName"]?.ToString();
-                            workSheet.Cell(rowNo, 5).Value = dr["TestNames"]?.ToString();
+                            workSheet.Cell(rowNo, 1).Value = rowNo - 3;
+                            workSheet.Cell(rowNo, 2).Value = dr["BillDate"]?.ToString();
+                            workSheet.Cell(rowNo, 3).Value = dr["PrintBillNo"]?.ToString();
+                            workSheet.Cell(rowNo, 4).Value = dr["LabRequestNo"]?.ToString();
+                            workSheet.Cell(rowNo, 5).Value = dr["PatientName"]?.ToString();
+                            workSheet.Cell(rowNo, 6).Value = dr["TestNames"]?.ToString();
 
-                            workSheet.Cell(rowNo, 6).Value = Convert.ToDecimal(dr["TotalAmt"]);
-                            workSheet.Cell(rowNo, 7).Value = Convert.ToDecimal(dr["ConcessionAmt"]);
-                            workSheet.Cell(rowNo, 8).Value = Convert.ToDecimal(dr["GrossAmt"]);
-                            workSheet.Cell(rowNo, 9).Value = Convert.ToDecimal(dr["NetPayableAmt"]);
+                            workSheet.Cell(rowNo, 7).Value = Convert.ToDecimal(dr["TotalAmt"]);
+                            workSheet.Cell(rowNo, 8).Value = Convert.ToDecimal(dr["ConcessionAmt"]);
+                            workSheet.Cell(rowNo, 9).Value = Convert.ToDecimal(dr["GrossAmt"]);
+                            workSheet.Cell(rowNo, 10).Value = Convert.ToDecimal(dr["NetPayableAmt"]);
 
-                            workSheet.Cell(rowNo, 10).Value = Convert.ToDecimal(dr["TotalMoneyReceived"]);
-                            workSheet.Cell(rowNo, 11).Value = Convert.ToDecimal(dr["CashPatientBalance"]);
-                            workSheet.Cell(rowNo, 12).Value = Convert.ToDecimal(dr["CreditPatientBalance"]);
+                            workSheet.Cell(rowNo, 11).Value = Convert.ToDecimal(dr["TotalMoneyReceived"]);
+                            workSheet.Cell(rowNo, 12).Value = Convert.ToDecimal(dr["CashPatientBalance"]);
+                            workSheet.Cell(rowNo, 13).Value = Convert.ToDecimal(dr["CreditPatientBalance"]);
+                            workSheet.Cell(rowNo, 14).Value = Convert.ToDecimal(dr["LessRefundAmt"]);
 
-                            workSheet.Cell(rowNo, 13).Value = Convert.ToDecimal(dr["LessRefundAmt"]);
+                            workSheet.Cell(rowNo, 15).Value = Convert.ToDecimal(dr["NetCashCollection"]);
+                            workSheet.Cell(rowNo, 16).Value = Convert.ToDecimal(dr["NetUpiCollection"]);
+                            workSheet.Cell(rowNo, 17).Value = Convert.ToDecimal(dr["NetCardCollection"]);
 
-                            workSheet.Cell(rowNo, 14).Value = Convert.ToDecimal(dr["NetCashCollection"]);
-                            workSheet.Cell(rowNo, 15).Value = Convert.ToDecimal(dr["NetUpiCollection"]);
-                            workSheet.Cell(rowNo, 16).Value = Convert.ToDecimal(dr["NetCardCollection"]);
-
-                            workSheet.Cell(rowNo, 17).Value = dr["UserName"]?.ToString();
+                            workSheet.Cell(rowNo, 18).Value = dr["UserName"]?.ToString();
 
                             rowNo++;
                         }
@@ -757,6 +776,185 @@ namespace HIMS.API.Extensions
                         }
                     }
                         break;
+                case "SimpleMultiResultSetReportCustomSummary.html":
+                    {
+                        var dcFields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields)
+                            .ToDictionary(e => e.FieldName, e => e.FieldValueString);
+
+                        Microsoft.Data.SqlClient.SqlParameter[] dcPara = dcFields.Select(kv =>
+                        {
+                            bool isDate = kv.Key.Equals("FromDate", StringComparison.OrdinalIgnoreCase)
+                                       || kv.Key.Equals("ToDate", StringComparison.OrdinalIgnoreCase);
+                            return new Microsoft.Data.SqlClient.SqlParameter("@" + kv.Key,
+                                isDate ? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                                       : (object)kv.Value);
+                        }).ToArray();
+
+                        DatabaseHelper db = new DatabaseHelper();
+                        List<DataTable> allSets = db.FetchAllResultSets(model.SPName, dcPara);
+
+                        if (allSets.Count == 0) break;
+
+                        DataTable firstDt = allSets[0];
+
+                        string[] trimmedColList = model.colList.Select(x => x.Trim()).ToArray();
+                        string[] trimmedHeaders = model.headerList.Select(x => x.Trim()).ToArray();
+                        string[] dcTotalCols = (model.totalFieldList ?? Array.Empty<string>()).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                        string[] dcGroupCols = model.groupByLabel?.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray()?? Array.Empty<string>();
+
+                        var visiblePairs = trimmedHeaders.Zip(trimmedColList, (h, c) => new { h, c }).Where(x => !x.h.Equals("Sr.No", StringComparison.OrdinalIgnoreCase) && !dcGroupCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
+
+                        string[] visibleHeaders = visiblePairs.Select(x => x.h).ToArray();
+                        string[] visibleCols = visiblePairs.Select(x => x.c).ToArray();
+
+                        for (int i = 0; i < visibleHeaders.Length; i++)
+                        {
+                            workSheet.Cell(1, i + 1).Value = visibleHeaders[i];
+                            workSheet.Cell(1, i + 1).Style.Font.Bold = true;
+                            workSheet.Cell(1, i + 1).Style.Fill.BackgroundColor = XLColor.LightBlue;
+                        }
+                        StyleHeaderRow(workSheet);
+
+                        int rowNo = 2;
+
+                        void WriteRows(IEnumerable<DataRow> rows)
+                        {
+                            foreach (var r in rows)
+                            {
+                                int colNo = 1;
+                                foreach (var col in visibleCols)
+                                {
+                                    object val = r.Table.Columns.Contains(col) ? r[col] : null;
+                                    var cell = workSheet.Cell(rowNo, colNo);
+
+                                    if (val == null || val == DBNull.Value) cell.Value = "";
+                                    else if (val is DateTime d) cell.Value = d;
+                                    else if (val is int || val is long) cell.Value = Convert.ToInt64(val);
+                                    else if (val is decimal || val is double || val is float) cell.Value = Convert.ToDouble(val);
+                                    else cell.Value = val.ToString();
+
+                                    colNo++;
+                                }
+                                rowNo++;
+                            }
+                        }
+
+                        void RenderGroup(int level, IEnumerable<DataRow> data)
+                        {
+                            if (level >= dcGroupCols.Length)
+                            {
+                                WriteRows(data);
+                                return;
+                            }
+
+                            var groups = data.Select(x => x[dcGroupCols[level]]?.ToString()).Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList();
+
+                            foreach (var g in groups)
+                            {
+                                workSheet.Cell(rowNo, 1).Value = g;
+                                workSheet.Range(rowNo, 1, rowNo, visibleCols.Length).Merge();
+                                workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                                workSheet.Cell(rowNo, 1).Style.Fill.BackgroundColor = XLColor.LightGray;
+                                rowNo++;
+
+                                var child = data.Where(x => (x[dcGroupCols[level]]?.ToString() ?? "") == g).ToList();
+                                RenderGroup(level + 1, child);
+
+                                if (dcTotalCols.Length > 0)
+                                {
+                                    workSheet.Cell(rowNo, 1).Value = $"Total - {g}";
+                                    workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                                    workSheet.Cell(rowNo, 1).Style.Fill.BackgroundColor = XLColor.LightYellow;
+
+                                    for (int i = 0; i < visibleCols.Length; i++)
+                                    {
+                                        if (dcTotalCols.Contains(visibleCols[i], StringComparer.OrdinalIgnoreCase))
+                                        {
+                                            double subTotal = child
+                                                .Where(r => r.Table.Columns.Contains(visibleCols[i]) && r[visibleCols[i]] != DBNull.Value)
+                                                .Sum(r => Convert.ToDouble(r[visibleCols[i]]));
+
+                                            workSheet.Cell(rowNo, i + 1).Value = subTotal;
+                                            workSheet.Cell(rowNo, i + 1).Style.Font.Bold = true;
+                                            workSheet.Cell(rowNo, i + 1).Style.Fill.BackgroundColor = XLColor.LightYellow;
+                                        }
+                                    }
+                                    rowNo++;
+                                }
+                            }
+                        }
+
+                        RenderGroup(0, firstDt.AsEnumerable());
+
+                        if (dcTotalCols.Length > 0)
+                        {
+                            rowNo++;
+                            workSheet.Cell(rowNo, 1).Value = "Grand Total";
+                            workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+
+                            for (int i = 0; i < visibleCols.Length; i++)
+                            {
+                                if (dcTotalCols.Contains(visibleCols[i], StringComparer.OrdinalIgnoreCase))
+                                {
+                                    double total = firstDt.AsEnumerable()
+                                        .Sum(r => r.Table.Columns.Contains(visibleCols[i]) && r[visibleCols[i]] != DBNull.Value
+                                                  ? Convert.ToDouble(r[visibleCols[i]]) : 0);
+                                    workSheet.Cell(rowNo, i + 1).Value = total;
+                                    workSheet.Cell(rowNo, i + 1).Style.Font.Bold = true;
+                                }
+                            }
+                            rowNo++;
+                        }
+
+                        rowNo += 2;
+                        workSheet.Cell(rowNo, 1).Value = $"SUMMARY REPORT - {model.RepoertName}";
+                        workSheet.Range(rowNo, 1, rowNo, visibleCols.Length).Merge();
+                        workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                        workSheet.Cell(rowNo, 1).Style.Fill.BackgroundColor = XLColor.LightGray;
+                        rowNo++;
+
+                        for (int t = 1; t < allSets.Count; t++)
+                        {
+                            DataTable table = allSets[t];
+                            if (table == null || table.Rows.Count == 0) continue;
+
+                            workSheet.Cell(rowNo, 1).Value = $"SUMMARY SET {t}";
+                            workSheet.Range(rowNo, 1, rowNo, table.Columns.Count).Merge();
+                            workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                            rowNo++;
+
+                            int colNo = 1;
+                            foreach (DataColumn col in table.Columns)
+                            {
+                                workSheet.Cell(rowNo, colNo).Value = col.ColumnName;
+                                workSheet.Cell(rowNo, colNo).Style.Font.Bold = true;
+                                colNo++;
+                            }
+                            rowNo++;
+
+                            foreach (DataRow dr in table.Rows)
+                            {
+                                colNo = 1;
+                                foreach (DataColumn col in table.Columns)
+                                {
+                                    var val = dr[col];
+                                    var cell = workSheet.Cell(rowNo, colNo);
+
+                                    if (val == null || val == DBNull.Value) cell.Value = "";
+                                    else if (val is DateTime d) cell.Value = d;
+                                    else if (val is int || val is long) cell.Value = Convert.ToInt64(val);
+                                    else if (val is decimal || val is double || val is float) cell.Value = Convert.ToDouble(val);
+                                    else cell.Value = val.ToString();
+
+                                    colNo++;
+                                }
+                                rowNo++;
+                            }
+
+                            rowNo++; 
+                        }
+                    }
+                    break;
             }
             return SaveToStream(excel);
         }
@@ -765,16 +963,28 @@ namespace HIMS.API.Extensions
     decimal gross, decimal disc, decimal net,
     decimal receipt, decimal due, decimal refund)
         {
-            ws.Cell(row, 1).Value = label;
-            ws.Range(row, 1, row, 5).Merge();
+            //ws.Cell(row, 1).Value = label;
+            //ws.Range(row, 1, row, 5).Merge();
 
-            ws.Cell(row, 6).Value = gross;
-            ws.Cell(row, 7).Value = disc;
-            ws.Cell(row, 8).Value = net;
+            //ws.Cell(row, 6).Value = gross;
+            //ws.Cell(row, 7).Value = disc;
+            //ws.Cell(row, 8).Value = net;
 
-            ws.Cell(row, 9).Value = receipt;
-            ws.Cell(row, 10).Value = due;
-            ws.Cell(row, 11).Value = refund;
+            //ws.Cell(row, 9).Value = receipt;
+            //ws.Cell(row, 10).Value = due;
+            //ws.Cell(row, 11).Value = refund;
+
+            //ws.Row(row).Style.Font.Bold = true;
+            ws.Cell(row, 2).Value = label;          // shifted
+            ws.Range(row, 2, row, 6).Merge();       // shifted merge
+
+            ws.Cell(row, 7).Value = gross;          // shifted
+            ws.Cell(row, 8).Value = disc;
+            ws.Cell(row, 9).Value = net;
+
+            ws.Cell(row, 10).Value = receipt;
+            ws.Cell(row, 11).Value = due;
+            ws.Cell(row, 12).Value = refund;
 
             ws.Row(row).Style.Font.Bold = true;
         }

@@ -196,6 +196,8 @@ namespace HIMS.Services.Report
 
         public async Task<Tuple<byte[], string>> GetReportSetByProcDB(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1,long StoreId = 2)
         {
+            try
+            {
             var tuple = new Tuple<byte[], string>(null, string.Empty);
             string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
             var mrMode = model.Mode;
@@ -209,15 +211,12 @@ namespace HIMS.Services.Report
             if (header == "PharmacyHeader.html")
             {
                 htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath, StoreId);
-
-
             }
             else
             {
                 htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, UnitId);
 
             }
-
 
             string html;
 
@@ -250,10 +249,15 @@ namespace HIMS.Services.Report
                     tuple = _pdfUtility.GeneratePdfFromHtmlNew(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait, PaperKind.A4, (long)mType.mHeaderSpace);
                 }
             }
+                return tuple;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
 
             //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
-
-            return tuple;
+        
         }
 
         public async Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1)
@@ -3001,6 +3005,7 @@ namespace HIMS.Services.Report
                         decimal grandReceipt = 0;
                         decimal grandDue = 0;
                         decimal grandRefund = 0;
+                        int srNo = 1;
 
                         foreach (DataRow dr in dt.Rows)
                         {
@@ -3026,7 +3031,7 @@ namespace HIMS.Services.Report
                                     {
                                         items.Append("<tr class='billTotal'>");
 
-                                        items.Append("<td colspan='5' class='right'>Bill Total</td>");
+                                        items.Append("<td colspan='6' class='right'>Bill Total</td>");
                                         items.Append("<td class='center'>" + billGross + "</td>");
                                         items.Append("<td class='center'>" + billDisc + "</td>");
                                         items.Append("<td class='center'>" + billNet + "</td>");
@@ -3039,7 +3044,7 @@ namespace HIMS.Services.Report
                                     }
                                     items.Append("<tr class='subTotal'>");
 
-                                    items.Append("<td colspan='5' class='right'>Subtotal</td>");
+                                    items.Append("<td colspan='6' class='right'>Subtotal</td>");
                                     items.Append("<td class='center'>" + subGross + "</td>");
                                     items.Append("<td class='center'>" + subDisc + "</td>");
                                     items.Append("<td class='center'>" + subNet + "</td>");
@@ -3056,7 +3061,7 @@ namespace HIMS.Services.Report
                                 }
 
                                 items.Append("<tr class='groupHeader'>");
-                                items.Append("<td colspan='12'>CPName: " + cp + " : Executive Name: " + exec + "</td>");
+                                items.Append("<td colspan='13'>CPName: " + cp + " : Executive Name: " + exec + "</td>");
                                 items.Append("</tr>");
 
                                 prevCP = cp;
@@ -3072,7 +3077,7 @@ namespace HIMS.Services.Report
                                 {
                                     items.Append("<tr class='billTotal'>");
 
-                                    items.Append("<td colspan='5' class='right'>Bill Total</td>");
+                                    items.Append("<td colspan='6' class='right'>Bill Total</td>");
 
                                     items.Append("<td class='center'>" + billGross + "</td>");
                                     items.Append("<td class='center'>" + billDisc + "</td>");
@@ -3083,15 +3088,15 @@ namespace HIMS.Services.Report
                                     items.Append("<td class='center'>" + billRefund + "</td>");
 
                                     items.Append("<td></td>");
-
+                                   //items.Append("<td></td>");
                                     items.Append("</tr>");
 
                                     billGross = billDisc = billNet = 0;
                                     billReceipt = billDue = billRefund = 0;
                                 }
 
-                                items.Append("<tr>");
-
+                               // items.Append("<tr>");
+                                items.Append("<tr><td style='background:#e6e6e6;font-weight:bold;text-align:center;'>" + srNo++ + "</td>");
                                 items.Append("<td>" + bill + "</td>");
                                 items.Append("<td class='center'>" + dr["BillDate"] + "</td>");
                                 items.Append("<td>" + dr["LabRequestNo"] + "</td>");
@@ -3105,6 +3110,7 @@ namespace HIMS.Services.Report
                                 items.Append("<td></td>");
                                 items.Append("<td></td>");
                                 items.Append("<td></td>");
+                               // items.Append("<td></td>");
 
                                 items.Append("</tr>");
 
@@ -3125,7 +3131,8 @@ namespace HIMS.Services.Report
 
                             /* TEST ROW */
 
-                            items.Append("<tr>");
+                            // items.Append("<tr>");
+                            items.Append("<tr><td></td>");
 
                             items.Append("<td colspan='5'>" + dr["ServiceName"] + "</td>");
 
@@ -3159,7 +3166,7 @@ namespace HIMS.Services.Report
                         {
                             items.Append("<tr class='billTotal'>");
 
-                            items.Append("<td colspan='5' class='right'>Bill Total</td>");
+                            items.Append("<td colspan='6' class='right'>Bill Total</td>");
 
                             items.Append("<td class='center'>" + billGross + "</td>");
                             items.Append("<td class='center'>" + billDisc + "</td>");
@@ -3180,7 +3187,7 @@ namespace HIMS.Services.Report
                         {
                             items.Append("<tr class='subTotal'>");
 
-                            items.Append("<td colspan='5' class='right'>Subtotal</td>");
+                            items.Append("<td colspan='6' class='right'>Subtotal</td>");
                             items.Append("<td class='center'>" + subGross + "</td>");
                             items.Append("<td class='center'>" + subDisc + "</td>");
                             items.Append("<td class='center'>" + subNet + "</td>");
@@ -3196,7 +3203,7 @@ namespace HIMS.Services.Report
 
                         items.Append("<tr class='grandTotal'>");
 
-                        items.Append("<td colspan='5' class='right'>GRAND TOTAL</td>");
+                        items.Append("<td colspan='6' class='right'>GRAND TOTAL</td>");
 
                         items.Append("<td class='center'>" + grandGross + "</td>");
                         items.Append("<td class='center'>" + grandDisc + "</td>");
@@ -3277,6 +3284,7 @@ namespace HIMS.Services.Report
 
                         decimal totalCash = 0, totalNonCash = 0;
                         decimal refundCash = 0, refundNonCash = 0;
+                        int srNo = 1;
 
                         foreach (DataRow dr in dt.Rows)
                         {
@@ -3284,7 +3292,9 @@ namespace HIMS.Services.Report
 
                             if (rowType == "DETAIL")
                             {
-                                detailRows += "<tr>";
+                                //detailRows += "<tr>";
+                                //detailRows += "<tr><td>" + srNo++ + "</td>";
+                                detailRows += "<tr><td style='background:#e6e6e6;font-weight:bold;'>" + srNo++ + "</td>";
                                 detailRows += "<td>" + dr["PrintBillNo"] + "</td>";
                                 detailRows += "<td>" + dr["PatientName"] + "</td>";
                                 detailRows += "<td>" + dr["RefDoctor"] + "</td>";
@@ -3354,12 +3364,12 @@ namespace HIMS.Services.Report
 
                         if (dt.Rows.Count == 0)
                             break;
+                        int srNo = 1;
 
-               
                         foreach (DataRow dr in dt.Select("RowType = 'DETAIL'"))
                         {
-                            detailRows += "<tr>";
-
+                            // detailRows += "<tr>";
+                            detailRows += "<tr><td style='background:#e6e6e6;font-weight:bold; width:50px;'>" + srNo++ + "</td>";
                             detailRows += $"<td>{dr["BillDate"]}</td>";
                             detailRows += $"<td>{dr["PrintBillNo"]}</td>";
                             detailRows += $"<td>{dr["LabRequestNo"]}</td>";
@@ -3425,6 +3435,7 @@ namespace HIMS.Services.Report
 
                         decimal docGross = 0, docDisc = 0, docNet = 0;
                         decimal execGross = 0, execDisc = 0, execNet = 0;
+                        int srNo = 1;
 
                         foreach (DataRow dr in dt.Rows)
                         {
@@ -3441,16 +3452,17 @@ namespace HIMS.Services.Report
                                 if (prevExec != "")
                                 {
                                     // last doctor total
-                                    items.Append("<tr class='docTotal'><td colspan='7'>Doctor Total</td><td>" + docGross + "</td><td>" + docDisc + "</td><td>" + docNet + "</td></tr>");
+                                    // items.Append("<tr class='docTotal'><td colspan='7'>Doctor Total</td><td>" + docGross + "</td><td>" + docDisc + "</td><td>" + docNet + "</td></tr>");
+                                    items.Append("<tr class='docTotal'><td colspan='8'>Doctor Total</td><td>" + docGross + "</td><td>" + docDisc + "</td><td>" + docNet + "</td></tr>");
 
                                     // exec total
-                                    items.Append("<tr class='execTotal'><td colspan='7'>Subtotal for " + prevExec + "</td><td>" + execGross + "</td><td>" + execDisc + "</td><td>" + execNet + "</td></tr>");
-
+                                    //items.Append("<tr class='execTotal'><td colspan='7'>Subtotal for " + prevExec + "</td><td>" + execGross + "</td><td>" + execDisc + "</td><td>" + execNet + "</td></tr>");
+                                    items.Append("<tr class='execTotal'><td colspan='8'>Subtotal for " + prevExec + "</td><td>" + execGross + "</td><td>" + execDisc + "</td><td>" + execNet + "</td></tr>");
                                     docGross = docDisc = docNet = 0;
                                     execGross = execDisc = execNet = 0;
                                 }
 
-                                items.Append("<tr class='execHeader'><td colspan='10'>Executive Name : " + exec + "</td></tr>");
+                                items.Append("<tr class='execHeader'><td colspan='11'>Executive Name : " + exec + "</td></tr>");
 
                                 prevExec = exec;
                                 prevDoctor = "";
@@ -3461,7 +3473,8 @@ namespace HIMS.Services.Report
                             {
                                 if (prevDoctor != "")
                                 {
-                                    items.Append("<tr class='docTotal'><td colspan='7'>Doctor Total</td><td>" + docGross + "</td><td>" + docDisc + "</td><td>" + docNet + "</td></tr>");
+                                    // items.Append("<tr class='docTotal'><td colspan='7'>Doctor Total</td><td>" + docGross + "</td><td>" + docDisc + "</td><td>" + docNet + "</td></tr>");
+                                    items.Append("<tr class='docTotal'><td colspan='8'>Doctor Total</td><td>" + docGross + "</td><td>" + docDisc + "</td><td>" + docNet + "</td></tr>");
                                     docGross = docDisc = docNet = 0;
                                 }
 
@@ -3470,6 +3483,11 @@ namespace HIMS.Services.Report
 
                             /* MAIN ROW (ALL DATA IN ONE LINE) */
                             items.Append("<tr>");
+
+                            if (docGross == 0 && docDisc == 0 && docNet == 0)
+                                items.Append("<td style='background:#e6e6e6;font-weight:bold;text-align:center;'>" + srNo++ + "</td>");
+                            else
+                                items.Append("<td></td>");
 
                             // Ref Doctor (only once)
                             if (docGross == 0 && docDisc == 0 && docNet == 0)
@@ -3500,10 +3518,11 @@ namespace HIMS.Services.Report
 
                         /* LAST TOTALS */
                         if (prevDoctor != "")
-                            items.Append("<tr class='docTotal'><td colspan='7'>Doctor Total</td><td>" + docGross + "</td><td>" + docDisc + "</td><td>" + docNet + "</td></tr>");
-
+                            // items.Append("<tr class='docTotal'><td colspan='7'>Doctor Total</td><td>" + docGross + "</td><td>" + docDisc + "</td><td>" + docNet + "</td></tr>");
+                            items.Append("<tr class='docTotal'><td colspan='8'>Doctor Total</td><td>" + docGross + "</td><td>" + docDisc + "</td><td>" + docNet + "</td></tr>");
                         if (prevExec != "")
-                            items.Append("<tr class='execTotal'><td colspan='7'>Subtotal for " + prevExec + "</td><td>" + execGross + "</td><td>" + execDisc + "</td><td>" + execNet + "</td></tr>");
+                            //items.Append("<tr class='execTotal'><td colspan='7'>Subtotal for " + prevExec + "</td><td>" + execGross + "</td><td>" + execDisc + "</td><td>" + execNet + "</td></tr>");
+                            items.Append("<tr class='execTotal'><td colspan='8'>Subtotal for " + prevExec + "</td><td>" + execGross + "</td><td>" + execDisc + "</td><td>" + execNet + "</td></tr>");
                     }
                     break;
 
@@ -4140,7 +4159,8 @@ namespace HIMS.Services.Report
                             string[] hiddenCols = { "ExpenseType", "Type" };
 
                             var allPairs = alignedHeaders.Zip(trimmedColList, (h, c) => new { h, c }).Select((x, i) => new { x.h, x.c, Width = i < trimmedWidths.Length ? trimmedWidths[i] : "" }).ToList();
-                            var visiblePairs = allPairs.Where(x => !hiddenCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
+                            //var visiblePairs = allPairs.Where(x => !hiddenCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
+                            var visiblePairs = allPairs.Where(x => !hiddenCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).Where(x => !dcGroupCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
 
                             string[] visibleHeaders = visiblePairs.Select(x => x.h).ToArray();
                             string[] visibleWidths = visiblePairs.Select(x => x.Width).ToArray();
@@ -4155,6 +4175,69 @@ namespace HIMS.Services.Report
 
                             string summaryHtml = CreateGenericSummary(firstDt, totalColList, dcGroupCols);
                             html = html.Replace("{{SummarySection}}", summaryHtml);
+
+                            string extraTables = allSets.Count > 1
+                                ? RenderMultiResultSetReport(allSets.Skip(1).ToList())
+                                : "";
+                            html = html.Replace("{{ResultSetTables}}", extraTables);
+
+                            string summaryBlock = $@"
+                            <div style='page-break-before: always;'></div>
+                            <table style='width:100%; border-collapse:collapse; margin-bottom:10px; border:1px solid #777;'>
+                                <tr style='background:#d9d9d9; font-weight:bold;'>
+                                    <td style='padding:10px; font-size:18px; text-align:left; border-right:1px solid #777;'>
+                                        Summary Report For {model.RepoertName}
+                                    </td>
+                                    <td style='padding:10px; font-size:16px; text-align:right;'>
+                                        From Date : {FromDate:dd/MM/yyyy} &nbsp;--&nbsp; To Date : {ToDate:dd/MM/yyyy}
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/><br/>";
+
+                            html = html.Replace("{{SummaryBlock}}", summaryBlock);
+                        }
+
+                        html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yyyy"));
+                        html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
+                    }
+                    break;
+                case "SimpleMultiResultSetReportCustomSummary.html":
+                    {
+                        var dcFields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+
+                        SqlParameter[] dcPara = dcFields.Select(kv =>
+                        {
+                            bool isDate = kv.Key.Equals("FromDate", StringComparison.OrdinalIgnoreCase)
+                                       || kv.Key.Equals("ToDate", StringComparison.OrdinalIgnoreCase);
+                            return new SqlParameter("@" + kv.Key,
+                                isDate ? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                                       : (object)kv.Value);
+                        }).ToArray();
+
+                        List<DataTable> allSets = FetchAllResultSets(model.SPName, dcPara);
+
+                        if (allSets.Count > 0)
+                        {
+                            DataTable firstDt = allSets[0];
+
+                            string[] trimmedHeaders = model.headerList.Select(x => x.Trim()).ToArray();
+                            string[] trimmedColList = model.colList.Select(x => x.Trim()).ToArray();
+                            string[] trimmedWidths = (model.columnWidths ?? Array.Empty<string>()).Select(x => x.Trim()).ToArray();
+                            string[] dcTotalCols = totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                            string[] dcGroupCols = model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
+
+                            var allPairs = trimmedHeaders.Where(x => !x.Equals("Sr.No", StringComparison.OrdinalIgnoreCase)).Zip(trimmedColList, (h, c) => new { h, c }).Select((x, i) => new { x.h, x.c, Width = i < trimmedWidths.Length ? trimmedWidths[i] : "" }).ToList();
+
+                            var visiblePairs = allPairs.Where(x => !dcGroupCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
+
+                            string[] visibleHeaders = visiblePairs.Select(x => x.h).ToArray();
+                            string[] visibleCols = visiblePairs.Select(x => x.c).ToArray();
+                            string[] visibleWidths = visiblePairs.Select(x => x.Width).ToArray();
+
+                            HeaderItems.Append(GetCommonHtmlTableHeaderNew(firstDt, visibleHeaders, visibleWidths));
+                            items.Append(BuildSimpleGroupedBody(firstDt, visibleHeaders, visibleCols, dcTotalCols, dcGroupCols));
+                            ItemsTotal.Append(CreateGrandTotal(firstDt, dcTotalCols, dcGroupCols));
 
                             string extraTables = allSets.Count > 1
                                 ? RenderMultiResultSetReport(allSets.Skip(1).ToList())
@@ -4720,7 +4803,8 @@ namespace HIMS.Services.Report
                 foreach (var hr in columnDataNames)
                 {
                     table.Append("<td style='border: 1px solid #d4c3c3; font-family: Calibri, \"Helvetica Neue\", Helvetica, sans-serif; font-size:16px; word-break: break-word; white-space: normal; padding: 4px;'>");
-                    table.Append(row.Table.Columns.Contains(hr) ? row[hr].ToString() : "");
+                    //table.Append(row.Table.Columns.Contains(hr) ? row[hr].ToString() : "");
+                    table.Append(row.Table.Columns.Contains(hr) && decimal.TryParse(row[hr]?.ToString(), out decimal val) && row[hr].ToString().Contains(".") ? val.ToString("0.00") : row[hr].ToString());
                     table.Append("</td>");
                 }
 
@@ -4728,6 +4812,123 @@ namespace HIMS.Services.Report
             }
         }
 
+        public static string BuildSimpleGroupedBody(DataTable dt,string[] visibleHeaders,string[] visibleCols,string[] totalCols,string[] groupBy)
+        {
+            StringBuilder table = new();
+            int totalColSpan = visibleCols.Length + 1; 
+            int rowNo = 1;
+
+            if (groupBy.Length == 0)
+            {
+                CreateRowsNew(dt.AsEnumerable(), table, visibleHeaders, visibleCols, ref rowNo);
+                return table.ToString();
+            }
+
+            var level1Groups = dt.AsEnumerable().Select(r => r.Field<string>(groupBy[0])).Distinct().ToList();
+
+            foreach (string g1 in level1Groups)
+            {
+                var g1Rows = dt.Select($"{groupBy[0]} = '{g1}'").AsEnumerable();
+
+                AppendGroupHeader(table, g1, totalColSpan, indent: 0, fontSize: 14);
+
+                if (groupBy.Length > 1)
+                {
+                    var level2Groups = g1Rows.Select(r => r.Field<string>(groupBy[1])).Distinct().ToList();
+
+                    foreach (string g2 in level2Groups)
+                    {
+                        var g2Rows = g1Rows.Where(r => r[groupBy[1]].ToString().Equals(g2, StringComparison.OrdinalIgnoreCase));
+
+                        AppendGroupHeader(table, g2, totalColSpan, indent: 10, fontSize: 13);
+
+                        if (groupBy.Length > 2)
+                        {
+                            var level3Groups = g2Rows.Select(r => r.Field<string>(groupBy[2])).Distinct().ToList();
+
+                            foreach (string g3 in level3Groups)
+                            {
+                                var g3Rows = g2Rows.Where(r => r[groupBy[2]].ToString().Equals(g3, StringComparison.OrdinalIgnoreCase));
+
+                                AppendGroupHeader(table, g3, totalColSpan, indent: 20, fontSize: 12);
+
+                                if (groupBy.Length > 3)
+                                {
+                                    var level4Groups = g3Rows.Select(r => r.Field<string>(groupBy[3])).Distinct().ToList();
+
+                                    foreach (string g4 in level4Groups)
+                                    {
+                                        var g4Rows = g3Rows.Where(r => r[groupBy[3]].ToString().Equals(g4, StringComparison.OrdinalIgnoreCase));
+                                        AppendGroupHeader(table, g4, totalColSpan, indent: 30, fontSize: 11);
+                                        CreateRowsNew(g4Rows, table, visibleHeaders, visibleCols, ref rowNo);
+                                    }
+                                }
+                                else
+                                {
+                                    CreateRowsNew(g3Rows, table, visibleHeaders, visibleCols, ref rowNo);
+                                }
+
+                                AppendGroupSubTotal(table, g3Rows, totalCols, g3, totalColSpan, visibleCols);
+                            }
+                        }
+                        else
+                        {
+                            CreateRowsNew(g2Rows, table, visibleHeaders, visibleCols, ref rowNo);
+                        }
+
+                        AppendGroupSubTotal(table, g2Rows, totalCols, g2, totalColSpan, visibleCols);
+                    }
+                }
+                else
+                {
+                    CreateRowsNew(g1Rows, table, visibleHeaders, visibleCols, ref rowNo);
+                }
+
+                AppendGroupSubTotal(table, g1Rows, totalCols, g1, totalColSpan, visibleCols);
+            }
+
+            return table.ToString();
+        }
+
+        private static void AppendGroupHeader(StringBuilder table, string label, int colSpan, int indent, int fontSize)
+        {
+            table.Append($"<tr style='font-size:{fontSize}px; color:black; background-color:#f0f0f0;'>")
+                 .Append($"<th style='border:1px solid #000; padding:4px; text-align:left; text-indent:{indent}px;' colspan='{colSpan}'>")
+                 .Append(label)
+                 .Append("</th></tr>");
+        }
+
+        private static void AppendGroupSubTotal(StringBuilder table,IEnumerable<DataRow> groupRows,string[] totalCols, string label,int totalColSpan,string[] visibleCols)
+        {
+            if (totalCols == null || totalCols.Length == 0) return;
+            var rows = groupRows.ToList();
+            if (rows.Count == 0) return;
+
+            DataTable schema = rows[0].Table;
+
+            table.Append("<tr style='font-weight:bold; background-color:#e8e8e8; border-top:1px solid #555;'>");
+
+            table.Append($"<td style='border:1px solid #d4c3c3; padding:6px; text-align:left;' colspan='1'>Total </td>");
+
+            foreach (string col in visibleCols)
+            {
+                bool isTotalCol = totalCols.Contains(col, StringComparer.OrdinalIgnoreCase)
+                               && schema.Columns.Contains(col);
+
+                if (isTotalCol)
+                {
+                    decimal sum = rows.Sum(r => r.IsNull(col) ? 0m : Convert.ToDecimal(r[col]));
+                    //table.Append($"<td style='border:1px solid #d4c3c3; padding:6px; text-align:center;'>{sum}</td>");
+                    table.Append($"<td style='border:1px solid #d4c3c3; padding:6px; text-align:center;'>{sum.ToString("0.00")}</td>");
+                }
+                else
+                {
+                    table.Append("<td style='border:1px solid #d4c3c3; padding:6px;'></td>");
+                }
+            }
+
+            table.Append("</tr>");
+        }
 
         //public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
         //{
@@ -5104,7 +5305,8 @@ namespace HIMS.Services.Report
                     {
                         string grandTotal = dt.AsEnumerable()
                                               .Sum(row => row.IsNull(colName) ? 0 : Convert.ToDecimal(row[colName]))
-                                              .ToString();
+                                              //.ToString();
+                                              .ToString("0.00");
                         table.Append("<td style='text-align:center; border:1px solid #d4c3c3; padding:6px;'>" + grandTotal + "</td>");
                     }
                     col++;

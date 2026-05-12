@@ -21,8 +21,9 @@ namespace HIMS.API.Controllers.Pharmacy
             _IPharmacyAdvanceService = repository;
         }
         [HttpPost("PharmacyAdvanceInsert")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public ApiResponse Insert(PharAdvanceModel obj)
+        [Permission(PageCode = "Pharmacy", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Insert(PharAdvanceModel obj)
+
         {
             TPhadvanceHeader model = obj.PharmacyAdvance.MapTo<TPhadvanceHeader>();
             TPhadvanceDetail model1 = obj.PharmacyAdvanceDetails.MapTo<TPhadvanceDetail>();
@@ -34,15 +35,16 @@ namespace HIMS.API.Controllers.Pharmacy
             {
                 model.Date = Convert.ToDateTime(obj.PharmacyAdvance.Date);
                 model.AddedBy = CurrentUserId;
-                _IPharmacyAdvanceService.Insert(model, model1, model3, TPayments, CurrentUserId, CurrentUserName);
+                await _IPharmacyAdvanceService.Insert(model, model1, model3, TPayments, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model1.AdvanceDetailId);
         }
         [HttpPut("PharmacyAdvanceUpdate")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public ApiResponse Update(PharmacyHeaderUpdate obj)
+        [Permission(PageCode = "Pharmacy", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Update(PharmacyHeaderUpdate obj)
+
         {
             TPhadvanceHeader model = obj.PharmacyHeader.MapTo<TPhadvanceHeader>();
             TPhadvanceDetail model1 = obj.PharmacyAdvanceDetails.MapTo<TPhadvanceDetail>();
@@ -51,7 +53,7 @@ namespace HIMS.API.Controllers.Pharmacy
             if (obj.PharmacyHeader.AdvanceId != 0)
             {
                 model.AddedBy = CurrentUserId;
-                _IPharmacyAdvanceService.Update(model, model1, model3, TPayments, CurrentUserId, CurrentUserName);
+                await _IPharmacyAdvanceService.Update(model, model1, model3, TPayments, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
