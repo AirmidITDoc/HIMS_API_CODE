@@ -236,7 +236,9 @@ namespace HIMS.Services.Utilities
         //}
         public string GetHeader(string filePath, long hospitalId = 1)
         {
-            hospitalId = hospitalId <= 0 ? 1 : hospitalId;
+            try
+            {
+             hospitalId = hospitalId <= 0 ? 1 : hospitalId;
 
             var hospital = _context.HospitalMasters.Find(hospitalId);
             if (hospital == null) return string.Empty;
@@ -311,6 +313,11 @@ namespace HIMS.Services.Utilities
                 .Replace("{{TemplateHeaderDisplay}}", hospital.IsHeaderOption == 3 ? "table-row" : "none");
 
             return html;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public string GetPatientHeader(ReportRequestModel model, string filePath)
