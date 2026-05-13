@@ -246,7 +246,7 @@ namespace HIMS.Services.IPPatient
                     Aentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_Admission_DischareInfo_3", CommandType.StoredProcedure, Aentity);
-            _ = Task.Run(() => _context.LogProcedureExecution(Dentity, nameof(Admission), ObjAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
+            _ = Task.Run(() => _context.LogProcedureExecution(Aentity, nameof(Admission), ObjAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
 
         }
 
