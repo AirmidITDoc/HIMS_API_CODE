@@ -565,13 +565,16 @@ namespace HIMS.Services.Users
                     }
 
                     odal.ExecuteNonQueryNew("ps_Update_T_CurStk_Sales_Id_1", CommandType.StoredProcedure, "", IIentity);
-                    await _context.LogProcedureExecution(entity, nameof(TSalesInpatientHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                    await _context.LogProcedureExecution(IIentity, nameof(TCurrentStock), items.StockId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                 }
 
                 var SalesIdObj = new { ObjSalesHeader.SalesId };
                 odal.ExecuteNonQueryNew("ps_Cal_DiscAmount_SalesInpatientHeader", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
+                await _context.LogProcedureExecution( SalesIdObj.ToDictionary(), nameof(TSalesInpatientHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
                 odal.ExecuteNonQueryNew("ps_Cal_GSTAmount_SalesInpatientHeader", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
+                await _context.LogProcedureExecution( SalesIdObj.ToDictionary(), nameof(TSalesInpatientHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId,CurrentUserName);
 
                 // 5️⃣ Update Prescription
                 string[] TEntity = { "OpIpId", "IsClosed" };
@@ -583,7 +586,7 @@ namespace HIMS.Services.Users
                 }
 
                 odal.ExecuteNonQueryNew("ps_Update_T_IPPrescription_Isclosed_Status_1", CommandType.StoredProcedure, "", Nentity);
-                await _context.LogProcedureExecution(entity, nameof(TSalesInpatientHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                await _context.LogProcedureExecution(Nentity, nameof(TIpPrescription), ObjPrescription.IppreId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
 
                 // 6️⃣ Update Draft Header
@@ -595,16 +598,9 @@ namespace HIMS.Services.Users
                         Hentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQueryNew("ps_Update_T_SalDraHeader_IsClosed_1", CommandType.StoredProcedure, "", Hentity);
-                await _context.LogProcedureExecution(entity, nameof(TSalesInpatientHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                await _context.LogProcedureExecution(Hentity, nameof(TSalesDraftHeader), ObjDraftHeader.DsalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
-                //var SalesReturnObj = new
-                //{
-                //    Id = Convert.ToInt32(ObjSalesHeader.SalesId),
-                //    TypeId = 1
-
-                //};
-                //odal.ExecuteNonQuery("ps_Insert_ItemMovementReport_InpatientIssueCursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
-
+              
                 //Commit if all good
                 await transaction.CommitAsync();
             }
