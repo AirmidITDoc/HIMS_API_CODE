@@ -190,7 +190,7 @@ namespace HIMS.Services.Users
                 throw;
             }
         }
-        public virtual async Task InsertSalesSaveWithPayment(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, PaymentPharmacy ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, List<TPaymentPharmacy> ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName)
+        public virtual async Task  InsertSalesSaveWithPayment(TSalesHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, PaymentPharmacy ObjPayment, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, List<TPaymentPharmacy> ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName)
         {
             // Open transaction
             using var transaction = await _context.Database.BeginTransactionAsync();
@@ -242,10 +242,10 @@ namespace HIMS.Services.Users
 
                 var SalesIdObj = new { ObjSalesHeader.SalesId };
                 odal.ExecuteNonQueryNew("ps_Cal_DiscAmount_Sales", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
-                await _context.LogProcedureExecution(SalesIdObj.ToDictionary(),nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-                odal.ExecuteNonQueryNew("ps_Cal_GSTAmount_Sales", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
-                await _context.LogProcedureExecution(SalesIdObj.ToDictionary(), nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                await _context.LogProcedureExecution( SalesIdObj.ToDictionary(),  "ps_Cal_DiscAmount_Sales", ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
+                odal.ExecuteNonQueryNew("ps_Cal_GSTAmount_Sales", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
+                await _context.LogProcedureExecution( SalesIdObj.ToDictionary(), "ps_Cal_GSTAmount_Sales", ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId,CurrentUserName);
                 // 4️⃣ Insert Payment
                 string[] PEntity = { "PaymentId", "BillNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "Opdipdtype", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "UnitId" };
                 var SSentity = ObjPayment.ToDictionary();

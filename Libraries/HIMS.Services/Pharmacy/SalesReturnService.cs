@@ -4,7 +4,10 @@ using HIMS.Data.DTO.NewPharmacy;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
+using System.Security.Principal;
 //using static LinqToDB.Sql;
 //using static LinqToDB.SqlQuery.SqlPredicate;
 
@@ -55,333 +58,379 @@ namespace HIMS.Services.Pharmacy
             return await DatabaseHelper.GetGridDataBySp<PrescriptionReturnDetailsListDto>(model, "ps_IPPrescriptionReturnDetailsList");
         }
         //Changes Done By shilpa 12 dec 2025 
-        public virtual async Task  InsertSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, List<TPaymentPharmacy> ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertSP(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, PaymentPharmacy ObjPayment, List<TPaymentPharmacy> ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName)
         {
-
-            // //Add header table records
-            DatabaseHelper odal = new();
-            string[] Entity = { "SalesReturnId", "Date", "Time", "SalesId", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "IsSellted", "IsPrint", "IsFree", "UnitId", "AddedBy", "StoreId", "Narration", "IsPurBill"/* "MobileNo", "PatientName", "Address", "DoctorId", "DoctorName", "ReturnType"*/};
-            var entity = ObjTSalesReturnHeader.ToDictionary();
-            foreach (var rProperty in entity.Keys.ToList())
+            // Open transaction
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                if (!Entity.Contains(rProperty))
-                    entity.Remove(rProperty);
-            }
-            string vSalesReturnId = odal.ExecuteNonQuery("PS_insert_SalesReturnHeader_1", CommandType.StoredProcedure, "SalesReturnId", entity);
-            ObjTSalesReturnHeader.SalesReturnId = Convert.ToInt32(vSalesReturnId);
-            ObjPayment.RefundId = Convert.ToInt32(vSalesReturnId);
-            //await _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), Convert.ToInt32(ObjTSalesReturnHeader.SalesReturnId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), Convert.ToInt32(ObjTSalesReturnHeader.SalesReturnId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-
-
-
-
-            foreach (var item in ObjTSalesReturnDetail)
-            {
-                item.SalesReturnId = Convert.ToInt32(vSalesReturnId);
-
-                string[] TEntity = { "SalesReturnId", "ItemId", "BatchNo", "BatchExpDate", "UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount", "PurRate", "PurTot", "SalesId", "SalesDetId", "IsCashOrCredit", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId" };
-                var Aentity = item.ToDictionary();
-                foreach (var rProperty in Aentity.Keys.ToList())
+                // //Add header table records
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+                string[] Entity = { "SalesReturnId", "Date", "Time", "SalesId", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "IsSellted", "IsPrint", "IsFree", "UnitId", "AddedBy", "StoreId", "Narration", "IsPurBill"/* "MobileNo", "PatientName", "Address", "DoctorId", "DoctorName", "ReturnType"*/};
+                var entity = ObjTSalesReturnHeader.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
                 {
-                    if (!TEntity.Contains(rProperty))
-                        Aentity.Remove(rProperty);
+                    if (!Entity.Contains(rProperty))
+                        entity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("insert_SalesReturnDetails_1", CommandType.StoredProcedure, Aentity);
-                //await _context.LogProcedureExecution(entity, nameof(TSalesReturnDetail), Convert.ToInt32(item.SalesReturnDetId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TSalesReturnDetail), Convert.ToInt32(item.SalesReturnDetId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                string vSalesReturnId = odal.ExecuteNonQuery("PS_insert_SalesReturnHeader_1", CommandType.StoredProcedure, "SalesReturnId", entity);
+                ObjTSalesReturnHeader.SalesReturnId = Convert.ToInt32(vSalesReturnId);
+                ObjPayment.RefundId = Convert.ToInt32(vSalesReturnId);
+                await _context.LogProcedureExecution(entity, nameof(TSalesReturnHeader), Convert.ToInt32(ObjTSalesReturnHeader.SalesReturnId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-            }
-
-            foreach (var item in ObjTCurrentStock)
-            {
-                string[] REntity = { "ItemId", "IssueQty", "StoreId", "IstkId" };
-                var Pentity = item.ToDictionary();
-                foreach (var rProperty in Pentity.Keys.ToList())
+                foreach (var item in ObjTSalesReturnDetail)
                 {
-                    if (!REntity.Contains(rProperty))
-                        Pentity.Remove(rProperty);
+                    item.SalesReturnId = Convert.ToInt32(vSalesReturnId);
+
+                    string[] TEntity = { "SalesReturnId", "ItemId", "BatchNo", "BatchExpDate", "UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount", "PurRate", "PurTot", "SalesId", "SalesDetId", "IsCashOrCredit", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId" };
+                    var Aentity = item.ToDictionary();
+                    foreach (var rProperty in Aentity.Keys.ToList())
+                    {
+                        if (!TEntity.Contains(rProperty))
+                            Aentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("insert_SalesReturnDetails_1", CommandType.StoredProcedure, Aentity);
+                    await _context.LogProcedureExecution(Aentity, nameof(TSalesReturnDetail), Convert.ToInt32(item.SalesReturnDetId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
                 }
-                odal.ExecuteNonQuery("Update_T_CurStk_SalesReturn_Id_1", CommandType.StoredProcedure, Pentity);
-                //await _context.LogProcedureExecution(entity, nameof(TCurrentStock), Convert.ToInt32(item.StockId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TCurrentStock), Convert.ToInt32(item.StockId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
 
-
-            }
-
-            foreach (var item in ObjTSalesDetail)
-            {
-                string[] REntity = { "SalesDetId", "ReturnQty" };
-                var Pentity = item.ToDictionary();
-                foreach (var rProperty in Pentity.Keys.ToList())
+                foreach (var item in ObjTCurrentStock)
                 {
-                    if (!REntity.Contains(rProperty))
-                        Pentity.Remove(rProperty);
+                    string[] REntity = { "ItemId", "IssueQty", "StoreId", "IstkId" };
+                    var Pentity = item.ToDictionary();
+                    foreach (var rProperty in Pentity.Keys.ToList())
+                    {
+                        if (!REntity.Contains(rProperty))
+                            Pentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("Update_T_CurStk_SalesReturn_Id_1", CommandType.StoredProcedure, Pentity);
+                    await _context.LogProcedureExecution(Pentity, nameof(TCurrentStock), Convert.ToInt32(item.StockId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
                 }
-                odal.ExecuteNonQuery("Update_SalesReturnQty_SalesTbl_1", CommandType.StoredProcedure, Pentity);
-                //await _context.LogProcedureExecution(entity, nameof(TSalesDetail), Convert.ToInt32(item.SalesDetId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TSalesDetail), Convert.ToInt32(item.SalesDetId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
 
-
-            }
-            var SalesReturnIdObj = new
-            {
-                SalesReturnId = Convert.ToInt32(vSalesReturnId)
-            };
-            odal.ExecuteNonQuery("Update_SalesRefundAmt_SalesHeader", CommandType.StoredProcedure, SalesReturnIdObj.ToDictionary());
-
-            var SalesReturnsIdObj = new
-            {
-                SalesReturnId = Convert.ToInt32(vSalesReturnId)
-            };
-            odal.ExecuteNonQuery("Cal_GSTAmount_SalesReturn", CommandType.StoredProcedure, SalesReturnsIdObj.ToDictionary());
-
-
-            var SalesReturnObj = new
-            {
-                Id = Convert.ToInt32(vSalesReturnId),
-                TypeId = 2
-
-            };
-            odal.ExecuteNonQuery("Insert_ItemMovementReport_Cursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
-
-            string[] PEntity = { "PaymentId", "BillNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "Opdipdtype", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "UnitId" };
-            var Sentity = ObjPayment.ToDictionary();
-            foreach (var rProperty in Sentity.Keys.ToList())
-            {
-                if (!PEntity.Contains(rProperty))
-                    Sentity.Remove(rProperty);
-            }
-            string PaymentId = odal.ExecuteNonQuery("insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", Sentity);
-            ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
-            //await _context.LogProcedureExecution(entity, nameof(PaymentPharmacy), Convert.ToInt32(ObjPayment.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(PaymentPharmacy), Convert.ToInt32(ObjPayment.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-
-
-            foreach (var item in ObjTPaymentPharmacy)
-            {
-                item.RefundId = Convert.ToInt32(vSalesReturnId);
-
-
-                string[] SEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
-                                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
-
-                var pentity = item.ToDictionary();
-                foreach (var rProperty in pentity.Keys.ToList())
+                foreach (var item in ObjTSalesDetail)
                 {
-                    if (!SEntity.Contains(rProperty))
-                        pentity.Remove(rProperty);
+                    string[] REntity = { "SalesDetId", "ReturnQty" };
+                    var Pentity = item.ToDictionary();
+                    foreach (var rProperty in Pentity.Keys.ToList())
+                    {
+                        if (!REntity.Contains(rProperty))
+                            Pentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("Update_SalesReturnQty_SalesTbl_1", CommandType.StoredProcedure, Pentity);
+                    await _context.LogProcedureExecution(Pentity, nameof(TSalesDetail), Convert.ToInt32(item.SalesDetId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
                 }
-                string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_PaymentPharmacy", CommandType.StoredProcedure, "PaymentId", pentity);
-                item.PaymentId = Convert.ToInt32(VPaymentId);
-                //await _context.LogProcedureExecution(entity, nameof(PaymentPharmacy), Convert.ToInt32(item.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(PaymentPharmacy), Convert.ToInt32(item.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                var SalesReturnIdObj = new
+                {
+                    SalesReturnId = Convert.ToInt32(vSalesReturnId)
+                };
+                odal.ExecuteNonQuery("Update_SalesRefundAmt_SalesHeader", CommandType.StoredProcedure, SalesReturnIdObj.ToDictionary());
+                // ADDED LOG
+                await _context.LogProcedureExecution(SalesReturnIdObj.ToDictionary(), "Update_SalesRefundAmt_SalesHeader", Convert.ToInt32(vSalesReturnId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+                var SalesReturnsIdObj = new
+                {
+                    SalesReturnId = Convert.ToInt32(vSalesReturnId)
+                };
+                odal.ExecuteNonQuery("Cal_GSTAmount_SalesReturn", CommandType.StoredProcedure, SalesReturnsIdObj.ToDictionary());
+                // ADDED LOG
+                await _context.LogProcedureExecution(SalesReturnsIdObj.ToDictionary(), "Cal_GSTAmount_SalesReturn", Convert.ToInt32(vSalesReturnId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
 
+                var SalesReturnObj = new
+                {
+                    Id = Convert.ToInt32(vSalesReturnId),
+                    TypeId = 2
+
+                };
+                odal.ExecuteNonQuery("Insert_ItemMovementReport_Cursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
+                await _context.LogProcedureExecution(SalesReturnObj.ToDictionary(), "Insert_ItemMovementReport_Cursor", Convert.ToInt32(vSalesReturnId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+                string[] PEntity = { "PaymentId", "BillNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "Opdipdtype", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "UnitId" };
+                var Sentity = ObjPayment.ToDictionary();
+                foreach (var rProperty in Sentity.Keys.ToList())
+                {
+                    if (!PEntity.Contains(rProperty))
+                        Sentity.Remove(rProperty);
+                }
+                string PaymentId = odal.ExecuteNonQuery("insert_Payment_Pharmacy_New_1", CommandType.StoredProcedure, "PaymentId", Sentity);
+                ObjPayment.PaymentId = Convert.ToInt32(PaymentId);
+                await _context.LogProcedureExecution(Sentity, nameof(PaymentPharmacy), Convert.ToInt32(ObjPayment.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+
+                foreach (var item in ObjTPaymentPharmacy)
+                {
+                    item.RefundId = Convert.ToInt32(vSalesReturnId);
+                    string[] SEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+
+                    var pentity = item.ToDictionary();
+                    foreach (var rProperty in pentity.Keys.ToList())
+                    {
+                        if (!SEntity.Contains(rProperty))
+                            pentity.Remove(rProperty);
+                    }
+                    string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_PaymentPharmacy", CommandType.StoredProcedure, "PaymentId", pentity);
+                    item.PaymentId = Convert.ToInt32(VPaymentId);
+                    await _context.LogProcedureExecution(pentity, nameof(TPaymentPharmacy), Convert.ToInt32(item.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+                }
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                //Commit if all good
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                //Rollback on error
+                await transaction.RollbackAsync();
+                throw;
             }
 
         }
         //Changes Done By Ashutosh 19 May 2025 
-        public virtual async Task  InsertSPCredit(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertSPCredit(TSalesReturnHeader ObjTSalesReturnHeader, List<TSalesReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, int CurrentUserId, string CurrentUserName)
         {
-
-            // //Add header table records
-            DatabaseHelper odal = new();
-            string[] Entity = { "SalesReturnId", "Date", "Time", "SalesId", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "IsSellted", "IsPrint", "IsFree", "UnitId", "AddedBy", "StoreId", "Narration", "IsPurBill"/* "MobileNo", "PatientName", "Address", "DoctorId", "DoctorName", "ReturnType"*/};
-            var entity = ObjTSalesReturnHeader.ToDictionary();
-            foreach (var rProperty in entity.Keys.ToList())
+            // Open transaction
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                if (!Entity.Contains(rProperty))
-                    entity.Remove(rProperty);
-            }
-            string vSalesReturnId = odal.ExecuteNonQuery("PS_insert_SalesReturnHeader_1", CommandType.StoredProcedure, "SalesReturnId", entity);
-            ObjTSalesReturnHeader.SalesReturnId = Convert.ToInt32(vSalesReturnId);
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TSalesReturnHeader), (int)ObjTSalesReturnHeader.SalesReturnId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-
-
-            foreach (var item in ObjTSalesReturnDetail)
-            {
-                item.SalesReturnId = Convert.ToInt32(vSalesReturnId);
-
-                string[] TEntity = { "SalesReturnId", "ItemId", "BatchNo", "BatchExpDate", "UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount", "PurRate", "PurTot", "SalesId", "SalesDetId", "IsCashOrCredit", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId" };
-                var Aentity = item.ToDictionary();
-                foreach (var rProperty in Aentity.Keys.ToList())
+                // //Add header table records
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+                string[] Entity = { "SalesReturnId", "Date", "Time", "SalesId", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "IsSellted", "IsPrint", "IsFree", "UnitId", "AddedBy", "StoreId", "Narration", "IsPurBill"/* "MobileNo", "PatientName", "Address", "DoctorId", "DoctorName", "ReturnType"*/};
+                var entity = ObjTSalesReturnHeader.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
                 {
-                    if (!TEntity.Contains(rProperty))
-                        Aentity.Remove(rProperty);
+                    if (!Entity.Contains(rProperty))
+                        entity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("insert_SalesReturnDetails_1", CommandType.StoredProcedure, Aentity);
-                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TSalesReturnDetail), (int)item.SalesReturnDetId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                string vSalesReturnId = odal.ExecuteNonQuery("PS_insert_SalesReturnHeader_1", CommandType.StoredProcedure, "SalesReturnId", entity);
+                ObjTSalesReturnHeader.SalesReturnId = Convert.ToInt32(vSalesReturnId);
+                await _context.LogProcedureExecution(entity, nameof(TSalesReturnHeader), Convert.ToInt32(ObjTSalesReturnHeader.SalesReturnId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-            }
 
-
-            foreach (var item in ObjTCurrentStock)
-            {
-                string[] REntity = { "ItemId", "IssueQty", "StoreId", "IstkId" };
-                var Pentity = item.ToDictionary();
-                foreach (var rProperty in Pentity.Keys.ToList())
+                foreach (var item in ObjTSalesReturnDetail)
                 {
-                    if (!REntity.Contains(rProperty))
-                        Pentity.Remove(rProperty);
-                }
-                odal.ExecuteNonQuery("Update_T_CurStk_SalesReturn_Id_1", CommandType.StoredProcedure, Pentity);
-                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TCurrentStock), (int)item.StockId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-            }
+                    item.SalesReturnId = Convert.ToInt32(vSalesReturnId);
 
-            foreach (var item in ObjTSalesDetail)
-            {
-                string[] REntity = { "SalesDetId", "ReturnQty" };
-                var Pentity = item.ToDictionary();
-                foreach (var rProperty in Pentity.Keys.ToList())
+                    string[] TEntity = { "SalesReturnId", "ItemId", "BatchNo", "BatchExpDate", "UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount", "PurRate", "PurTot", "SalesId", "SalesDetId", "IsCashOrCredit", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId" };
+                    var Aentity = item.ToDictionary();
+                    foreach (var rProperty in Aentity.Keys.ToList())
+                    {
+                        if (!TEntity.Contains(rProperty))
+                            Aentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("insert_SalesReturnDetails_1", CommandType.StoredProcedure, Aentity);
+                    await _context.LogProcedureExecution(Aentity, nameof(TSalesReturnDetail), Convert.ToInt32(item.SalesReturnDetId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+                }
+
+
+                foreach (var item in ObjTCurrentStock)
                 {
-                    if (!REntity.Contains(rProperty))
-                        Pentity.Remove(rProperty);
+                    string[] REntity = { "ItemId", "IssueQty", "StoreId", "IstkId" };
+                    var Pentity = item.ToDictionary();
+                    foreach (var rProperty in Pentity.Keys.ToList())
+                    {
+                        if (!REntity.Contains(rProperty))
+                            Pentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("Update_T_CurStk_SalesReturn_Id_1", CommandType.StoredProcedure, Pentity);
+                    await _context.LogProcedureExecution(Pentity, nameof(TCurrentStock), Convert.ToInt32(item.StockId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
                 }
-                odal.ExecuteNonQuery("Update_SalesReturnQty_SalesTbl_1", CommandType.StoredProcedure, Pentity);
-                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TSalesDetail), (int)item.SalesDetId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+
+                foreach (var item in ObjTSalesDetail)
+                {
+                    string[] REntity = { "SalesDetId", "ReturnQty" };
+                    var Pentity = item.ToDictionary();
+                    foreach (var rProperty in Pentity.Keys.ToList())
+                    {
+                        if (!REntity.Contains(rProperty))
+                            Pentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("Update_SalesReturnQty_SalesTbl_1", CommandType.StoredProcedure, Pentity);
+                    await _context.LogProcedureExecution(Pentity, nameof(TSalesDetail), Convert.ToInt32(item.SalesDetId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
 
+                }
+                var SalesReturnIdObj = new
+                {
+                    SalesReturnId = Convert.ToInt32(vSalesReturnId)
+                };
+                odal.ExecuteNonQuery("Update_SalesRefundAmt_SalesHeader", CommandType.StoredProcedure, SalesReturnIdObj.ToDictionary());
+                await _context.LogProcedureExecution(SalesReturnIdObj.ToDictionary(), "Update_SalesRefundAmt_SalesHeader", Convert.ToInt32(vSalesReturnId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+                var SalesReturnsIdObj = new
+                {
+                    SalesReturnId = Convert.ToInt32(vSalesReturnId)
+                };
+                odal.ExecuteNonQuery("Cal_GSTAmount_SalesReturn", CommandType.StoredProcedure, SalesReturnsIdObj.ToDictionary());
+                await _context.LogProcedureExecution(SalesReturnsIdObj.ToDictionary(), "Cal_GSTAmount_SalesReturn", Convert.ToInt32(vSalesReturnId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+                var SalesReturnObj = new
+                {
+                    Id = Convert.ToInt32(vSalesReturnId),
+                    TypeId = 2
+
+                };
+                odal.ExecuteNonQuery("Insert_ItemMovementReport_Cursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
+                await _context.LogProcedureExecution(SalesReturnObj.ToDictionary(), "Insert_ItemMovementReport_Cursor", Convert.ToInt32(vSalesReturnId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                //Commit if all good
+                await transaction.CommitAsync();
             }
-            var SalesReturnIdObj = new
+            catch (Exception ex)
             {
-                SalesReturnId = Convert.ToInt32(vSalesReturnId)
-            };
-            odal.ExecuteNonQuery("Update_SalesRefundAmt_SalesHeader", CommandType.StoredProcedure, SalesReturnIdObj.ToDictionary());
-
-            var SalesReturnsIdObj = new
-            {
-                SalesReturnId = Convert.ToInt32(vSalesReturnId)
-            };
-            odal.ExecuteNonQuery("Cal_GSTAmount_SalesReturn", CommandType.StoredProcedure, SalesReturnsIdObj.ToDictionary());
-
-
-            var SalesReturnObj = new
-            {
-                Id = Convert.ToInt32(vSalesReturnId),
-                TypeId = 2
-
-            };
-            odal.ExecuteNonQuery("Insert_ItemMovementReport_Cursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
-
+                //Rollback on error
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
-    
+
 
         //    //Changes Done By shilpa 22-04-2026
-        public virtual void InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, List<TIpprescriptionReturnD> ObjTIpprescriptionReturnD, TIpprescriptionReturnH ObjTIpprescriptionReturnH,  int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertInPatient(TSalesInPatientReturnHeader ObjTSalesReturnHeader, List<TSalesInPatientReturnDetail> ObjTSalesReturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TSalesDetail> ObjTSalesDetail, List<TIpprescriptionReturnD> ObjTIpprescriptionReturnD, TIpprescriptionReturnH ObjTIpprescriptionReturnH, int CurrentUserId, string CurrentUserName)
         {
-            // //Add header table records
-            DatabaseHelper odal = new();
-            string[] Entity = { "SalesReturnId", "Date", "Time", "SalesId", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "IsSellted", "IsPrint", "IsFree", "UnitId", "AddedBy", "StoreId", "Narration", "IsPurBill", "IsPrescriptionReturn" };
-            var entity = ObjTSalesReturnHeader.ToDictionary();
-            foreach (var rProperty in entity.Keys.ToList())
+            // Begin Transaction
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-                if (!Entity.Contains(rProperty))
-                    entity.Remove(rProperty);
-            }
-            string vSalesReturnId = odal.ExecuteNonQuery("ps_insert_T_SalesInPatientReturnHeader_1", CommandType.StoredProcedure, "SalesReturnId", entity);
-            ObjTSalesReturnHeader.SalesReturnId = Convert.ToInt32(vSalesReturnId);
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TSalesInPatientReturnHeader), (int)ObjTSalesReturnHeader.SalesReturnId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection());
+                odal.SetTransaction(transaction.GetDbTransaction());
 
-
-            foreach (var item in ObjTSalesReturnDetail)
-            {
-                item.SalesReturnId = Convert.ToInt32(vSalesReturnId);
-
-                string[] TEntity = { "SalesReturnId", "ItemId", "BatchNo", "BatchExpDate", "UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount", "PurRate", "PurTot", "SalesId", "SalesDetId", "IsCashOrCredit", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId" };
-                var Aentity = item.ToDictionary();
-                foreach (var rProperty in Aentity.Keys.ToList())
+                string[] Entity = { "SalesReturnId", "Date", "Time", "SalesId", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "IsSellted", "IsPrint", "IsFree", "UnitId", "AddedBy", "StoreId", "Narration", "IsPurBill", "IsPrescriptionReturn" };
+                var entity = ObjTSalesReturnHeader.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
                 {
-                    if (!TEntity.Contains(rProperty))
-                        Aentity.Remove(rProperty);
+                    if (!Entity.Contains(rProperty))
+                        entity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("ps_insert_T_SalesInPatientReturnDetails_1", CommandType.StoredProcedure, Aentity);
-                _ = Task.Run(() => _context.LogProcedureExecution(Aentity, nameof(TSalesInPatientReturnDetail), (int)item.SalesReturnDetId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                string vSalesReturnId = odal.ExecuteNonQuery("ps_insert_T_SalesInPatientReturnHeader_1", CommandType.StoredProcedure, "SalesReturnId", entity);
+                ObjTSalesReturnHeader.SalesReturnId = Convert.ToInt32(vSalesReturnId);
+                await _context.LogProcedureExecution(  entity,  nameof(TSalesInPatientReturnHeader),  Convert.ToInt32(ObjTSalesReturnHeader.SalesReturnId),  Core.Domain.Logging.LogAction.Add,CurrentUserId, CurrentUserName);
 
-            }
-
-
-            foreach (var item in ObjTCurrentStock)
-            {
-                string[] REntity = { "ItemId", "IssueQty", "StoreId", "IstkId" };
-                var Pentity = item.ToDictionary();
-                foreach (var rProperty in Pentity.Keys.ToList())
+                foreach (var item in ObjTSalesReturnDetail)
                 {
-                    if (!REntity.Contains(rProperty))
-                        Pentity.Remove(rProperty);
-                }
-                odal.ExecuteNonQuery("ps_Update_T_CurStk_SalesReturn_Id_1", CommandType.StoredProcedure, Pentity);
-                _ = Task.Run(() => _context.LogProcedureExecution(Pentity, nameof(TCurrentStock), (int)item.StockId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                    item.SalesReturnId = Convert.ToInt32(vSalesReturnId);
 
+                    string[] TEntity = { "SalesReturnId", "ItemId", "BatchNo", "BatchExpDate", "UnitMrp", "Qty", "TotalAmount", "VatPer", "VatAmount", "DiscPer", "DiscAmount", "GrossAmount", "LandedPrice", "TotalLandedAmount", "PurRate", "PurTot", "SalesId", "SalesDetId", "IsCashOrCredit", "Cgstper", "Cgstamt", "Sgstper", "Sgstamt", "Igstper", "Igstamt", "StkId" };
+                    var Aentity = item.ToDictionary();
+                    foreach (var rProperty in Aentity.Keys.ToList())
+                    {
+                        if (!TEntity.Contains(rProperty))
+                            Aentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("ps_insert_T_SalesInPatientReturnDetails_1", CommandType.StoredProcedure, Aentity);
+                    await _context.LogProcedureExecution(Aentity, nameof(TSalesInPatientReturnDetail), Convert.ToInt32(item.SalesReturnDetId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-            }
-
-            foreach (var item in ObjTSalesDetail)
-            {
-                string[] REntity = { "SalesDetId", "ReturnQty" };
-                var Pentity = item.ToDictionary();
-                foreach (var rProperty in Pentity.Keys.ToList())
-                {
-                    if (!REntity.Contains(rProperty))
-                        Pentity.Remove(rProperty);
-                }
-                odal.ExecuteNonQuery("ps_Update_SalesInPatientReturnQty_SalesTbl_1", CommandType.StoredProcedure, Pentity);
-                _ = Task.Run(() => _context.LogProcedureExecution(Pentity, nameof(TSalesDetail), (int)item.SalesDetId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-
-
-            }
-            var SalesReturnIdObj = new
-            {
-                SalesReturnId = Convert.ToInt32(vSalesReturnId)
-            };
-            odal.ExecuteNonQuery("ps_Update_SalesInPatientRefundAmt_SalesInPatientHeader", CommandType.StoredProcedure, SalesReturnIdObj.ToDictionary());
-
-            var SalesReturnsIdObj = new
-            {
-                SalesReturnId = Convert.ToInt32(vSalesReturnId)
-            };
-            odal.ExecuteNonQuery("ps_Cal_GSTAmount_SalesInPatientReturn", CommandType.StoredProcedure, SalesReturnsIdObj.ToDictionary());
-
-
-            var SalesReturnObj = new
-            {
-                Id = Convert.ToInt32(vSalesReturnId),
-                TypeId = 2
-
-            };
-            odal.ExecuteNonQuery("ps_Insert_ItemMovementReport_InpatientReturnCursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
-
-           
-            foreach (var item in ObjTIpprescriptionReturnD)
-            {
-                string[] DEntity = {"PresDetailsId" };
-                var dentity = item.ToDictionary();
-                foreach (var rProperty in dentity.Keys.ToList())
-                {
-                    if (!DEntity.Contains(rProperty))
-                        dentity.Remove(rProperty);
                 }
 
-                odal.ExecuteNonQuery("ps_IPPrescriptionReturnDetailUpdate", CommandType.StoredProcedure, dentity);
-                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TIpprescriptionReturnD), (int)item.PresDetailsId, Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
 
-            }
-            
+                foreach (var item in ObjTCurrentStock)
+                {
+                    string[] REntity = { "ItemId", "IssueQty", "StoreId", "IstkId" };
+                    var Pentity = item.ToDictionary();
+                    foreach (var rProperty in Pentity.Keys.ToList())
+                    {
+                        if (!REntity.Contains(rProperty))
+                            Pentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("ps_Update_T_CurStk_SalesReturn_Id_1", CommandType.StoredProcedure, Pentity);
+                    await _context.LogProcedureExecution(Pentity, nameof(TCurrentStock), Convert.ToInt32(item.StockId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+                }
+
+                foreach (var item in ObjTSalesDetail)
+                {
+                    string[] REntity = { "SalesDetId", "ReturnQty" };
+                    var Pentity = item.ToDictionary();
+                    foreach (var rProperty in Pentity.Keys.ToList())
+                    {
+                        if (!REntity.Contains(rProperty))
+                            Pentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("ps_Update_SalesInPatientReturnQty_SalesTbl_1", CommandType.StoredProcedure, Pentity);
+                    await _context.LogProcedureExecution(Pentity, nameof(TSalesDetail), Convert.ToInt32(item.SalesDetId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+                }
+                var SalesReturnIdObj = new
+                {
+                    SalesReturnId = Convert.ToInt32(vSalesReturnId)
+                };
+                odal.ExecuteNonQuery("ps_Update_SalesInPatientRefundAmt_SalesInPatientHeader", CommandType.StoredProcedure, SalesReturnIdObj.ToDictionary());
+                await _context.LogProcedureExecution(  SalesReturnIdObj.ToDictionary(),  "ps_Update_SalesInPatientRefundAmt_SalesInPatientHeader",  Convert.ToInt32(vSalesReturnId),  Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                var SalesReturnsIdObj = new
+                {
+                    SalesReturnId = Convert.ToInt32(vSalesReturnId)
+                };
+                odal.ExecuteNonQuery("ps_Cal_GSTAmount_SalesInPatientReturn", CommandType.StoredProcedure, SalesReturnsIdObj.ToDictionary());
+                await _context.LogProcedureExecution( SalesReturnsIdObj.ToDictionary(),"ps_Cal_GSTAmount_SalesInPatientReturn", Convert.ToInt32(vSalesReturnId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+                var SalesReturnObj = new
+                {
+                    Id = Convert.ToInt32(vSalesReturnId),
+                    TypeId = 2
+
+                };
+                odal.ExecuteNonQuery("ps_Insert_ItemMovementReport_InpatientReturnCursor", CommandType.StoredProcedure, SalesReturnObj.ToDictionary());
+                await _context.LogProcedureExecution( SalesReturnObj.ToDictionary(), "ps_Insert_ItemMovementReport_InpatientReturnCursor", Convert.ToInt32(vSalesReturnId), Core.Domain.Logging.LogAction.Add, CurrentUserId,CurrentUserName);
+
+                foreach (var item in ObjTIpprescriptionReturnD)
+                {
+                    string[] DEntity = { "PresDetailsId" };
+                    var dentity = item.ToDictionary();
+                    foreach (var rProperty in dentity.Keys.ToList())
+                    {
+                        if (!DEntity.Contains(rProperty))
+                            dentity.Remove(rProperty);
+                    }
+
+                    odal.ExecuteNonQuery("ps_IPPrescriptionReturnDetailUpdate", CommandType.StoredProcedure, dentity);
+                    await _context.LogProcedureExecution(dentity, nameof(TIpprescriptionReturnD), Convert.ToInt32(item.PresDetailsId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                }
+
                 string[] HEntity = { "PresReId" };
                 var hentity = ObjTIpprescriptionReturnH.ToDictionary();
                 foreach (var rProperty in hentity.Keys.ToList())
                 {
                     if (!HEntity.Contains(rProperty))
-                    hentity.Remove(rProperty);
+                        hentity.Remove(rProperty);
                 }
                 //Pentity["PresDetailsId"] = ObjTIpprescriptionReturnD.PresDetailsId;
 
                 odal.ExecuteNonQuery("ps_IPPrescriptionReturnUpdate", CommandType.StoredProcedure, hentity);
-                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TIpprescriptionReturnH), (int)ObjTIpprescriptionReturnH.PresReId, Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
+                await _context.LogProcedureExecution(hentity, nameof(TIpprescriptionReturnH), Convert.ToInt32(ObjTIpprescriptionReturnH.PresReId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+                // Save Changes
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+
+                // Commit Transaction
+                await transaction.CommitAsync();
             }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
+
 
         }
     }
+}
 
 
 
