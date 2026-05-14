@@ -575,10 +575,10 @@ namespace HIMS.Services.Users
 
                 var SalesIdObj = new { ObjSalesHeader.SalesId };
                 odal.ExecuteNonQueryNew("ps_Cal_DiscAmount_SalesInpatientHeader", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
-                await _context.LogProcedureExecution( SalesIdObj.ToDictionary(), nameof(TSalesInpatientHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                await _context.LogProcedureExecution(SalesIdObj.ToDictionary(), "ps_Cal_DiscAmount_SalesInpatientHeader", Convert.ToInt32(SalesId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
                 odal.ExecuteNonQueryNew("ps_Cal_GSTAmount_SalesInpatientHeader", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
-                await _context.LogProcedureExecution( SalesIdObj.ToDictionary(), nameof(TSalesInpatientHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId,CurrentUserName);
+                await _context.LogProcedureExecution(SalesIdObj.ToDictionary(), "ps_Cal_GSTAmount_SalesInpatientHeader", Convert.ToInt32(SalesId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
                 // 5️⃣ Update Prescription
                 string[] TEntity = { "OpIpId", "IsClosed" };
