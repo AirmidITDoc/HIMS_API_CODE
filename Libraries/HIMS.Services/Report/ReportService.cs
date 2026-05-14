@@ -19518,108 +19518,381 @@ namespace HIMS.Services.Report
 
 
 
+                //case "PatientBillStatement":
+                //    {
+
+                //        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+                //        StringBuilder item = new("");
+                //        double BillTotal = 0;
+                //        double BillDiscount = 0;
+                //        double BillNet = 0;
+                //        double BillPaidAmt = 0;
+                //        double OverallPaidAmt = 0;
+                //        int i = 0;
+                //        double OverallTotal = 0;
+                //        double OverallDiscount = 0;
+                //        double OverallNet = 0;
+                //        double GovtApprovedAmt = 0, CompanyApprovedAmt = 0;
+
+                //        string previousSalesType = "";
+                //        string previousSalesDate = "";
+                //        string previousSalesNo = "";
+
+                //        var sortedBills = dt.AsEnumerable().OrderBy(dr =>
+                //                {
+                //                    var lbl = dr["Lbl"].ToString().Trim();
+
+                //                    if (lbl == "Bill") return 0;
+                //                    if (lbl == "Pharmacy") return 1;
+                //                    return 2; // all other labels
+                //                })
+                //                .ThenBy(dr => dr["BillDate"])
+                //                .ThenBy(dr => dr["PBillNo"])
+                //                .ToList();
+
+                //        foreach (DataRow dr in sortedBills)
+                //        {
+                //            i++;
+
+                //            string currentSalesType = dr["Lbl"].ToString();
+                //            string currentSalesDate = dr["BillDate"].ConvertToDateString("dd-MM-yyyy");
+                //            string currentSalesNo = dr["PBillNo"].ToString();
+                //            GovtApprovedAmt = dr["GovtApprovedAmt"].ConvertToDouble();
+                //            CompanyApprovedAmt = dr["CompanyApprovedAmt"].ConvertToDouble();
+
+                //            // ================= BILL CHANGE =================
+                //            if (previousSalesNo != currentSalesNo)
+                //            {
+                //                // Close previous bill
+                //                if (!string.IsNullOrEmpty(previousSalesNo))
+                //                {
+                //                    AppendBillFooter(items, BillTotal, BillDiscount, BillNet, BillPaidAmt);
+
+                //                    OverallTotal += BillTotal;
+                //                    OverallDiscount += BillDiscount;
+                //                    OverallNet += BillNet;
+                //                    OverallPaidAmt += BillPaidAmt;
+
+                //                    BillTotal = BillDiscount = BillNet = 0;
+                //                }
+
+                //                // ✅ ASSIGN BILL VALUES ONCE
+                //                BillDiscount = dr["BillDiscAmt"].ConvertToDouble();
+                //                BillNet = dr["NetPayableAmt"].ConvertToDouble();
+
+                //                // Print bill header
+                //                items.Append($@"
+                //                        <tr style='font-size:18px;font-weight:bold;'>
+                //                            <td colspan='5' style='border:1px solid #000;padding:4px;'>
+                //                                Bill Date: {currentSalesDate} | Bill No: {currentSalesNo}
+                //                            </td>
+                //                        </tr>");
+                //            }
+
+                //            // ================= ITEM ROW =================
+                //            double lineAmount = dr["BillTotalAmt"].ConvertToDouble();
+
+                //            items.Append($@"
+                //                    <tr style='font-size:15px;'>
+                //                        <td style='border:1px solid #000;text-align:center;'>{i}</td>
+                //                        <td style='border:1px solid #000;'>{dr["ServiceName"]}</td>
+                //                        <td style='border:1px solid #000;text-align:right;'>{dr["Price"]}</td>
+                //                        <td style='border:1px solid #000;text-align:center;'>{dr["Qty"]}</td>
+                //                        <td style='border:1px solid #000;text-align:right;'>{lineAmount:0.00}</td>
+                //                    </tr>");
+
+                //            // ✅ ONLY TOTAL ITEMS
+                //            BillTotal += lineAmount;
+
+                //            previousSalesNo = currentSalesNo;
+                //        }
+
+
+                //        // ================= LAST CLOSINGS =================
+                //        AppendBillFooter(items, BillTotal, BillDiscount, BillNet, BillPaidAmt);
+
+                //        OverallTotal += BillTotal;
+                //        OverallDiscount += BillDiscount;
+                //        OverallNet += BillNet;
+                //        OverallPaidAmt += BillPaidAmt;
+
+                //        BillTotal = 0;
+                //        BillDiscount = 0;
+                //        BillNet = 0;
+                //        BillPaidAmt = 0;
+
+
+
+                //        OverallNet = Math.Round(OverallTotal - OverallDiscount, 0, MidpointRounding.AwayFromZero);
+
+                //        double BalanceAmount = 0;
+
+                //        BalanceAmount = OverallNet - GovtApprovedAmt - CompanyApprovedAmt;
+
+
+                //        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                //        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                //        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                //        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                //        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                //        html = html.Replace("{{SalesType}}", dt.GetColValue("SalesType"));
+                //        html = html.Replace("{{DateApproved}}", dt.GetColValue("DateApproved"));
+                //        html = html.Replace("{{OPD_IPD_ID}}", dt.GetColValue("OPD_IPD_ID").ToString());
+                //        html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
+                //        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                //        html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
+                //        html = html.Replace("{{PaidAmt}}", dt.GetColValue("PaidAmt"));
+                //        html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
+                //        html = html.Replace("{{invoiceNo}}", dt.GetColValue("invoiceNo"));
+                //        html = html.Replace("{{PBillNo}}", dt.GetColValue("PBillNo"));
+                //        html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+                //        html = html.Replace("{{PayMode}}", dt.GetColValue("PayMode"));
+
+
+
+
+
+
+
+                //        html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
+
+                //        html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
+                //        html = html.Replace("{{CompanyApprovedAmt}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble().ToString("F2"));
+                //        html = html.Replace("{{GovtApprovedName}}", dt.GetColValue("GovtApprovedName").ToString());
+                //        html = html.Replace("{{GovtRefNo}}", dt.GetColValue("GovtRefNo").ToString());
+                //        html = html.Replace("{{CompanyApprovedName}}", dt.GetColValue("CompanyApprovedName").ToString());
+                //        html = html.Replace("{{CompRefNo}}", dt.GetColValue("CompRefNo").ToString());
+
+                //        //html = html.Replace("{{GrandTotalAmount}}", OverallNet.ToString());
+                //        //html = html.Replace("{{FinalNetAmt}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
+
+                //        html = html.Replace("{{TotalAmount}}",Math.Round(OverallTotal, 0).ToString("F2"));
+                //        html = html.Replace("{{DiscAmount}}", OverallDiscount.ConvertToDouble().ToString("F2"));
+                //        html = html.Replace("{{NetTotalAmount}}", OverallNet.ConvertToDouble().ToString("F2"));
+
+                //        html = html.Replace("{{BalanceAmount}}", BalanceAmount.ConvertToDouble().ToString("F2"));
+
+
+                //        html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+                //        html = html.Replace("{{chkCompanyApprovedAmtflag}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+                //        html = html.Replace("{{chkPaidAmtflag}}", dt.GetColValue("PaidAmt").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                //        html = html.Replace("{{Items}}", items.ToString());
+                //        html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
+                //        html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
+
+
+                //        return html;
+
+
+                //    }
+                //    break;
+
+                //    void AppendBillFooter(StringBuilder items, double total, double discount, double net, double paidAmt)
+                //    {
+                //        net = total - discount;
+
+                //        items.Append($@"
+                //                <tr style='font-weight:bold;'>
+                //                    <td colspan='4' style='text-align:right;'>Total Amt :</td>
+                //                    <td style='text-align:right;'>{total:0.00}</td>
+                //                </tr>
+                //                <tr style='font-weight:bold;'>
+                //                    <td colspan='4' style='text-align:right;'>Dis Amt :</td>
+                //                    <td style='text-align:right;'>{discount:0.00}</td>
+                //                </tr>
+                //                <tr style='font-weight:bold;'>
+                //                    <td colspan='4' style='text-align:right;'>Net Amount :</td>
+                //                    <td style='text-align:right;'>{net:0.00}</td>
+                //                </tr>
+                //                     <tr style='font-weight:bold;'>
+                //                    <td colspan='4' style='text-align:right;'>Paid Amount :</td>
+                //                    <td style='text-align:right;'>{paidAmt:0.00}</td>
+                //                </tr>");
+
+
+
+                //    }
+
                 case "PatientBillStatement":
                     {
+                        html = html.Replace("{{CurrentDate}}",
+                            DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
 
-                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
                         StringBuilder item = new("");
+
                         double BillTotal = 0;
                         double BillDiscount = 0;
                         double BillNet = 0;
+                        double BillPaid = 0;
+                        double OverallPaid = 0;
+
                         int i = 0;
+
                         double OverallTotal = 0;
                         double OverallDiscount = 0;
                         double OverallNet = 0;
-                        double GovtApprovedAmt = 0, CompanyApprovedAmt = 0;
 
-                        string previousSalesType = "";
-                        string previousSalesDate = "";
+                        double GovtApprovedAmt = 0;
+                        double CompanyApprovedAmt = 0;
+
                         string previousSalesNo = "";
+                        string previousPayMode = "";
 
-                        var sortedBills = dt.AsEnumerable().OrderBy(dr =>
-                                {
-                                    var lbl = dr["Lbl"].ToString().Trim();
+                        var sortedBills = dt.AsEnumerable()
+                            .OrderBy(dr =>
+                            {
+                                var lbl = dr["Lbl"].ToString().Trim();
 
-                                    if (lbl == "Bill") return 0;
-                                    if (lbl == "Pharmacy") return 1;
-                                    return 2; // all other labels
-                                })
-                                .ThenBy(dr => dr["BillDate"])
-                                .ThenBy(dr => dr["PBillNo"])
-                                .ToList();
+                                if (lbl == "Bill") return 0;
+                                if (lbl == "Pharmacy") return 1;
+
+                                return 2;
+                            })
+                            .ThenBy(dr => dr["BillDate"])
+                            .ThenBy(dr => dr["PBillNo"])
+                            .ToList();
 
                         foreach (DataRow dr in sortedBills)
                         {
-                            i++;
+                            string currentSalesDate =
+                                dr["BillDate"].ConvertToDateString("dd-MM-yyyy");
 
-                            string currentSalesType = dr["Lbl"].ToString();
-                            string currentSalesDate = dr["BillDate"].ConvertToDateString("dd-MM-yyyy");
-                            string currentSalesNo = dr["PBillNo"].ToString();
-                            GovtApprovedAmt = dr["GovtApprovedAmt"].ConvertToDouble();
-                            CompanyApprovedAmt = dr["CompanyApprovedAmt"].ConvertToDouble();
+                            string currentSalesNo =
+                                dr["PBillNo"].ToString();
+                            string currentUserName = dr["UserName"].ToString();
 
-                            // ================= BILL CHANGE =================
+
+                            GovtApprovedAmt =
+                                dr["GovtApprovedAmt"].ConvertToDouble();
+
+                            CompanyApprovedAmt =
+                                dr["CompanyApprovedAmt"].ConvertToDouble();
+
+                            // ================= NEW BILL =================
+
                             if (previousSalesNo != currentSalesNo)
                             {
-                                // Close previous bill
+                                // CLOSE PREVIOUS BILL
                                 if (!string.IsNullOrEmpty(previousSalesNo))
                                 {
-                                    AppendBillFooter(items, BillTotal, BillDiscount, BillNet);
+                                    AppendBillFooter(
+                                        items,
+                                        BillTotal,
+                                        BillDiscount,
+                                        BillNet,
+                                        BillPaid,
+                                        previousPayMode,
+                                        OverallPaid
+                                    );
 
                                     OverallTotal += BillTotal;
                                     OverallDiscount += BillDiscount;
                                     OverallNet += BillNet;
-
-                                    BillTotal = BillDiscount = BillNet = 0;
+                                    OverallPaid += BillPaid;
+                                    BillTotal = 0;
+                                    BillDiscount = 0;
+                                    BillNet = 0;
+                                    BillPaid = 0;
                                 }
 
-                                // ✅ ASSIGN BILL VALUES ONCE
-                                BillDiscount = dr["BillDiscAmt"].ConvertToDouble();
-                                BillNet = dr["NetPayableAmt"].ConvertToDouble();
+                                // RESET SERIAL NO
+                                i = 0;
 
-                                // Print bill header
+                                // BILL VALUES
+                                BillDiscount =
+                                    dr["BillDiscAmt"].ConvertToDouble();
+
+                                BillNet =
+                                    dr["NetPayableAmt"].ConvertToDouble();
+
+                                BillPaid =
+                                    dr["PaidAmt"].ConvertToDouble();
+
+                                previousPayMode =
+                                    dr["PayMode"].ToString();
+
+                                // BILL HEADER
                                 items.Append($@"
-                                        <tr style='font-size:18px;font-weight:bold;'>
-                                            <td colspan='5' style='border:1px solid #000;padding:4px;'>
-                                                Bill Date: {currentSalesDate} | Bill No: {currentSalesNo}
-                                            </td>
-                                        </tr>");
+
+<tr style='font-size:18px;font-weight:bold;background:#f2f2f2;'>
+
+    <td colspan='5'
+        style='border:1px solid #000;padding:6px;'>
+
+        Bill Date : {currentSalesDate}
+
+        &nbsp;&nbsp; | &nbsp;&nbsp;
+
+        Bill No : {currentSalesNo}
+
+        &nbsp;&nbsp; | &nbsp;&nbsp;
+
+        UserName : {currentUserName}
+
+    </td>
+
+</tr>
+
+");
                             }
 
+                            i++;
+
                             // ================= ITEM ROW =================
-                            double lineAmount = dr["NetAmount"].ConvertToDouble();
+
+                            double lineAmount =
+                                dr["NetAmount"].ConvertToDouble();
 
                             items.Append($@"
-                                    <tr style='font-size:15px;'>
-                                        <td style='border:1px solid #000;text-align:center;'>{i}</td>
-                                        <td style='border:1px solid #000;'>{dr["ServiceName"]}</td>
-                                        <td style='border:1px solid #000;text-align:right;'>{dr["Price"]}</td>
-                                        <td style='border:1px solid #000;text-align:center;'>{dr["Qty"]}</td>
-                                        <td style='border:1px solid #000;text-align:right;'>{lineAmount:0.00}</td>
-                                    </tr>");
+<tr style='font-size:15px;font-weight:bold;text-align:center;vertical-align:middle;'>
+    <td style='border:1px solid #000;text-align:center;vertical-align:middle;padding:4px;'>{i}</td>
+    <td style='border:1px solid #000;text-align:left;vertical-align:middle;padding:4px;'>{dr["ServiceName"]}</td>
+    <td style='border:1px solid #000;text-align:right;vertical-align:middle;padding:4px;'>{dr["Price"].ConvertToDouble():0.00}</td>
+    <td style='border:1px solid #000;text-align:center;vertical-align:middle;padding:4px;'>{dr["Qty"]}</td>
+    <td style='border:1px solid #000;text-align:right;vertical-align:middle;padding:4px;'>{lineAmount:0.00}</td>
+</tr>
+");
 
-                            // ✅ ONLY TOTAL ITEMS
                             BillTotal += lineAmount;
 
                             previousSalesNo = currentSalesNo;
                         }
 
+                        // ================= LAST BILL FOOTER =================
 
-                        // ================= LAST CLOSINGS =================
-                        AppendBillFooter(items, BillTotal, BillDiscount, BillNet);
+                        if (!string.IsNullOrEmpty(previousSalesNo))
+                        {
+                            AppendBillFooter(
+                                items,
+                                BillTotal,
+                                BillDiscount,
+                                BillNet,
+                                BillPaid,
+                                previousPayMode,
+                                OverallPaid
+                            );
 
-                        OverallTotal += BillTotal;
-                        OverallDiscount += BillDiscount;
-                        OverallNet += BillNet;
+                            OverallTotal += BillTotal;
+                            OverallDiscount += BillDiscount;
+                            OverallNet += BillNet;
+                            OverallPaid += BillPaid;
+                        }
 
-                       
+                        // ================= FINAL TOTAL =================
 
-                        OverallNet = Math.Round(OverallTotal - OverallDiscount, 0, MidpointRounding.AwayFromZero);
+                        OverallNet = Math.Round(
+                            OverallTotal - OverallDiscount,
+                            0,
+                            MidpointRounding.AwayFromZero
+                        );
 
-                        double BalanceAmount = 0;
+                        double BalanceAmount =
+                            OverallNet
+                            - GovtApprovedAmt
+                            - CompanyApprovedAmt;
 
-                        BalanceAmount = OverallNet - GovtApprovedAmt - CompanyApprovedAmt;
-
+                        // ================= HTML REPLACE =================
 
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
@@ -19632,73 +19905,405 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
+                        html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt"));
                         html = html.Replace("{{PaidAmt}}", dt.GetColValue("PaidAmt"));
+                        html = html.Replace("{{OverallPaid}}", OverallPaid.ToString("F2"));
                         html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
                         html = html.Replace("{{invoiceNo}}", dt.GetColValue("invoiceNo"));
                         html = html.Replace("{{PBillNo}}", dt.GetColValue("PBillNo"));
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
                         html = html.Replace("{{PayMode}}", dt.GetColValue("PayMode"));
-
-
-
-
-
-
-
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
-
                         html = html.Replace("{{GovtApprovedAmt}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{CompanyApprovedAmt}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{GovtApprovedName}}", dt.GetColValue("GovtApprovedName").ToString());
                         html = html.Replace("{{GovtRefNo}}", dt.GetColValue("GovtRefNo").ToString());
                         html = html.Replace("{{CompanyApprovedName}}", dt.GetColValue("CompanyApprovedName").ToString());
                         html = html.Replace("{{CompRefNo}}", dt.GetColValue("CompRefNo").ToString());
-
-                        //html = html.Replace("{{GrandTotalAmount}}", OverallNet.ToString());
-                        //html = html.Replace("{{FinalNetAmt}}", FinalNetAmt.ConvertToDouble().ToString("0.00"));
-
-                        html = html.Replace("{{TotalAmount}}",Math.Round(OverallTotal, 0).ToString("F2"));
-                        html = html.Replace("{{DiscAmount}}", OverallDiscount.ConvertToDouble().ToString("F2"));
-                        html = html.Replace("{{NetTotalAmount}}", OverallNet.ConvertToDouble().ToString("F2"));
-
-                        html = html.Replace("{{BalanceAmount}}", BalanceAmount.ConvertToDouble().ToString("F2"));
-
-
-                        html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
-                        html = html.Replace("{{chkCompanyApprovedAmtflag}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble() > 0 ? "table-row " : "none");
-                        html = html.Replace("{{chkPaidAmtflag}}", dt.GetColValue("PaidAmt").ConvertToDouble() > 0 ? "table-row " : "none");
-
+                        html = html.Replace("{{TotalAmount}}", Math.Round(OverallTotal, 0).ToString("F2"));
+                        html = html.Replace("{{DiscAmount}}", OverallDiscount.ToString("F2"));
+                        html = html.Replace("{{NetTotalAmount}}", OverallNet.ToString("F2"));
+                        html = html.Replace("{{BalanceAmount}}", BalanceAmount.ToString("F2"));
+                        html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row" : "none");
+                        html = html.Replace("{{chkCompanyApprovedAmtflag}}", dt.GetColValue("CompanyApprovedAmt").ConvertToDouble() > 0 ? "table-row" : "none");
+                        html = html.Replace("{{chkPaidAmtflag}}", OverallPaid > 0 ? "table-row" : "none");
                         html = html.Replace("{{Items}}", items.ToString());
                         html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yy"));
                         html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yy"));
 
-
                         return html;
-
-
                     }
                     break;
 
-                    void AppendBillFooter(StringBuilder items, double total, double discount, double net)
+
+
+                    // ================= FOOTER METHOD =================
+
+                    void AppendBillFooter(
+                        StringBuilder items,
+                        double total,
+                        double discount,
+                        double net,
+                        double paidAmt,
+                        string payMode,
+                            double overallPaid
+
+                    )
                     {
                         net = total - discount;
 
                         items.Append($@"
-                                <tr style='font-weight:bold;'>
-                                    <td colspan='4' style='text-align:right;'>Total Amt :</td>
-                                    <td style='text-align:right;'>{total:0.00}</td>
-                                </tr>
-                                <tr style='font-weight:bold;'>
-                                    <td colspan='4' style='text-align:right;'>Dis Amt :</td>
-                                    <td style='text-align:right;'>{discount:0.00}</td>
-                                </tr>
-                                <tr style='font-weight:bold;'>
-                                    <td colspan='4' style='text-align:right;'>Net Amount :</td>
-                                    <td style='text-align:right;'>{net:0.00}</td>
-                                </tr>");
-                    }
+
+<tr style='font-weight:bold;font-size:15px;'>
+
+    <td colspan='4'
+        style='text-align:right;
+               border:1px solid #000;
+               padding:4px;'>
+
+        Total Amt :
+
+    </td>
+
+    <td style='text-align:right;
+               border:1px solid #000;
+               padding:4px;'>
+
+        {total:0.00}
+
+    </td>
+
+</tr>
+
+<tr style='font-weight:bold;font-size:15px;'>
+
+    <td colspan='4'
+        style='text-align:right;
+               border:1px solid #000;
+               padding:4px;'>
+
+        Dis Amt :
+
+    </td>
+
+    <td style='text-align:right;
+               border:1px solid #000;
+               padding:4px;'>
+
+        {discount:0.00}
+
+    </td>
+
+</tr>
+
+<tr style='font-weight:bold;font-size:15px;'>
+
+    <td colspan='4'
+        style='text-align:right;
+               border:1px solid #000;
+               padding:4px;'>
+
+        Net Amount :
+
+    </td>
+
+    <td style='text-align:right;
+               border:1px solid #000;
+               padding:4px;'>
+
+        {net:0.00}
+
+    </td>
+
+</tr>
+
+<tr style='font-weight:bold;font-size:15px;'>
+
+    <td colspan='4'
+        style='text-align:right;
+               border:1px solid #000;
+               padding:4px;'>
+
+        Paid Amount :
+
+    </td>
+
+    <td style='text-align:right;border:1px solid #000;padding:4px;'>
+        {paidAmt:0.00} - {payMode}
+    </td>
+
+</tr>
+");
+
+                    
+            }
+
+                //            case "PatientBillStatement":
+                //                {
+                //                    html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
+
+                //                         StringBuilder item = new("");
+
+                //                    double BillTotal = 0;
+                //                    double BillDiscount = 0;
+                //                    double BillNet = 0;
+                //                    double BillPaidAmt = 0;
+
+                //                    int i = 0;
+
+                //                    double OverallTotal = 0;
+                //                    double OverallDiscount = 0;
+                //                    double OverallNet = 0;
+                //                    double OverallPaidAmt = 0;
+
+                //                    double GovtApprovedAmt = 0;
+                //                    double CompanyApprovedAmt = 0;
+
+                //                    string previousSalesNo = "";
+
+                //                    var sortedBills = dt.AsEnumerable()
+                //                        .OrderBy(dr =>
+                //                        {
+                //                            var lbl = dr["Lbl"].ToString().Trim();
+
+                //                            if (lbl == "Bill") return 0;
+                //                            if (lbl == "Pharmacy") return 1;
+
+                //                            return 2;
+                //                        })
+                //                        .ThenBy(dr => dr["BillDate"])
+                //                        .ThenBy(dr => dr["PBillNo"])
+                //                        .ToList();
+
+                //                    foreach (DataRow dr in sortedBills)
+                //                    {
+                //                        i++;
+
+                //                        string currentSalesDate = dr["BillDate"].ConvertToDateString("dd-MM-yyyy");
+                //                        string currentSalesNo = dr["PBillNo"].ToString();
+
+                //                        GovtApprovedAmt = dr["GovtApprovedAmt"].ConvertToDouble();
+                //                        CompanyApprovedAmt = dr["CompanyApprovedAmt"].ConvertToDouble();
+
+                //                        // ================= BILL CHANGE =================
+                //                        if (previousSalesNo != currentSalesNo)
+                //                        {
+                //                            // Previous Bill Footer
+                //                            if (!string.IsNullOrEmpty(previousSalesNo))
+                //                            {
+                //                                AppendBillFooter(items, BillTotal, BillDiscount, BillNet, BillPaidAmt);
+
+                //                                OverallTotal += BillTotal;
+                //                                OverallDiscount += BillDiscount;
+                //                                OverallNet += BillNet;
+                //                                OverallPaidAmt += BillPaidAmt;
+
+                //                                BillTotal = 0;
+                //                                BillDiscount = 0;
+                //                                BillNet = 0;
+                //                                BillPaidAmt = 0;
+                //                            }
+
+                //                            // Current Bill Values
+                //                            BillDiscount = dr["BillDiscAmt"].ConvertToDouble();
+                //                            BillNet = dr["NetPayableAmt"].ConvertToDouble();
+                //                            BillPaidAmt = dr["PaidAmt"].ConvertToDouble();
+
+                //                            // Bill Header
+                //                            items.Append($@"
+                //            <tr style='font-size:18px;font-weight:bold;background-color:#f2f2f2;'>
+                //                <td colspan='5' style='border:1px solid #000;padding:6px;'>
+                //                    Bill Date : {currentSalesDate}
+                //                    &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
+                //                    Bill No : {currentSalesNo}
+                //                </td>
+                //            </tr>");
+                //                        }
+
+                //                        // ================= ITEM ROW =================
+                //                        double lineAmount = dr["TotalAmt"].ConvertToDouble();
+
+                //                        items.Append($@"
+                //        <tr style='font-size:15px;'>
+                //            <td style='border:1px solid #000;text-align:center;padding:4px;'>{i}</td>
+
+                //            <td style='border:1px solid #000;padding:4px;'>
+                //                {dr["ServiceName"]}
+                //            </td>
+
+                //            <td style='border:1px solid #000;text-align:right;padding:4px;'>
+                //                {dr["Price"].ConvertToDouble():0.00}
+                //            </td>
+
+                //            <td style='border:1px solid #000;text-align:center;padding:4px;'>
+                //                {dr["Qty"]}
+                //            </td>
+
+                //            <td style='border:1px solid #000;text-align:right;padding:4px;'>
+                //                {lineAmount:0.00}
+                //            </td>
+                //        </tr>");
+
+                //                        BillTotal += lineAmount;
+
+                //                        previousSalesNo = currentSalesNo;
+                //                    }
+
+                //                    // ================= LAST BILL FOOTER =================
+                //                    AppendBillFooter(items, BillTotal, BillDiscount, BillNet, BillPaidAmt);
+
+                //                    OverallTotal += BillTotal;
+                //                    OverallDiscount += BillDiscount;
+                //                    OverallNet += BillNet;
+                //                    OverallPaidAmt += BillPaidAmt;
+
+                //                    OverallNet = Math.Round(
+                //                        OverallTotal - OverallDiscount,
+                //                        0,
+                //                        MidpointRounding.AwayFromZero);
+
+                //                    double BalanceAmount =
+                //                        OverallNet - GovtApprovedAmt - CompanyApprovedAmt;
+
+                //                    // ================= HTML REPLACE =================
+
+                //                    html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                //                    html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                //                    html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                //                    html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                //                    html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                //                    html = html.Replace("{{SalesType}}", dt.GetColValue("SalesType"));
+                //                    html = html.Replace("{{DateApproved}}", dt.GetColValue("DateApproved"));
+                //                    html = html.Replace("{{OPD_IPD_ID}}", dt.GetColValue("OPD_IPD_ID"));
+                //                    html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
+                //                    html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                //                    html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
+                //                    html = html.Replace("{{PaidAmt}}", dt.GetColValue("PaidAmt"));
+                //                    html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
+                //                    html = html.Replace("{{invoiceNo}}", dt.GetColValue("invoiceNo"));
+                //                    html = html.Replace("{{PBillNo}}", dt.GetColValue("PBillNo"));
+                //                    html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
+                //                    html = html.Replace("{{PayMode}}", dt.GetColValue("PayMode"));
+
+                //                    html = html.Replace("{{ApprovedAmount}}",
+                //                        dt.GetColValue("ApprovedAmount")
+                //                        .ConvertToDouble()
+                //                        .ToString("F2"));
+
+                //                    html = html.Replace("{{GovtApprovedAmt}}",
+                //                        GovtApprovedAmt.ToString("F2"));
+
+                //                    html = html.Replace("{{CompanyApprovedAmt}}",
+                //                        CompanyApprovedAmt.ToString("F2"));
+
+                //                    html = html.Replace("{{GovtApprovedName}}",
+                //                        dt.GetColValue("GovtApprovedName"));
+
+                //                    html = html.Replace("{{GovtRefNo}}",
+                //                        dt.GetColValue("GovtRefNo"));
+
+                //                    html = html.Replace("{{CompanyApprovedName}}",
+                //                        dt.GetColValue("CompanyApprovedName"));
+
+                //                    html = html.Replace("{{CompRefNo}}",
+                //                        dt.GetColValue("CompRefNo"));
+
+                //                    html = html.Replace("{{TotalAmount}}",
+                //                        Math.Round(OverallTotal, 0).ToString("F2"));
+
+                //                    html = html.Replace("{{DiscAmount}}",
+                //                        OverallDiscount.ToString("F2"));
+
+                //                    html = html.Replace("{{NetTotalAmount}}",
+                //                        OverallNet.ToString("F2"));
+
+                //                    html = html.Replace("{{OverallPaidAmt}}",
+                //                        OverallPaidAmt.ToString("F2"));
+
+                //                    html = html.Replace("{{BalanceAmount}}",
+                //                        BalanceAmount.ToString("F2"));
+
+                //                    html = html.Replace("{{chkGovtApprovedAmtflag}}",
+                //                        GovtApprovedAmt > 0 ? "table-row" : "none");
+
+                //                    html = html.Replace("{{chkCompanyApprovedAmtflag}}",
+                //                        CompanyApprovedAmt > 0 ? "table-row" : "none");
+
+                //                    html = html.Replace("{{chkPaidAmtflag}}",
+                //                        OverallPaidAmt > 0 ? "table-row" : "none");
+
+                //                    html = html.Replace("{{Items}}", items.ToString());
+
+                //                    html = html.Replace("{{FromDate}}",
+                //                        FromDate.ToString("dd/MM/yy"));
+
+                //                    html = html.Replace("{{ToDate}}",
+                //                        ToDate.ToString("dd/MM/yy"));
+
+                //                    return html;
+                //                }
+                //                break;
 
 
+                //                // ================= FOOTER METHOD =================
+
+                //                void AppendBillFooter(
+                //                    StringBuilder items,
+                //                    double total,
+                //                    double discount,
+                //                    double net,
+                //                    double paidAmt)
+                //                {
+                //                    net = total - discount;
+
+                //                    items.Append($@"
+
+                //    <tr style='font-weight:bold;font-size:15px;'>
+                //        <td colspan='4'
+                //            style='text-align:right;border:1px solid #000;padding:4px;'>
+                //            Total Amt :
+                //        </td>
+
+                //        <td style='text-align:right;border:1px solid #000;padding:4px;'>
+                //            {total:0.00}
+                //        </td>
+                //    </tr>
+
+                //    <tr style='font-weight:bold;font-size:15px;'>
+                //        <td colspan='4'
+                //            style='text-align:right;border:1px solid #000;padding:4px;'>
+                //            Dis Amt :
+                //        </td>
+
+                //        <td style='text-align:right;border:1px solid #000;padding:4px;'>
+                //            {discount:0.00}
+                //        </td>
+                //    </tr>
+
+                //    <tr style='font-weight:bold;font-size:15px;'>
+                //        <td colspan='4'
+                //            style='text-align:right;border:1px solid #000;padding:4px;'>
+                //            Net Amount :
+                //        </td>
+
+                //        <td style='text-align:right;border:1px solid #000;padding:4px;'>
+                //            {net:0.00}
+                //        </td>
+                //    </tr>
+
+                //    <tr style='font-weight:bold;font-size:15px;'>
+                //        <td colspan='4'
+                //            style='text-align:right;border:1px solid #000;padding:4px;'>
+                //            Paid Amount :
+                //        </td>
+
+                //        <td style='text-align:right;border:1px solid #000;padding:4px;'>
+                //            {paidAmt:0.00}
+                //        </td>
+                //    </tr>
+
+                //");
+                //                }
 
 
                 case "OpDraftPatientStatement":
