@@ -4349,6 +4349,275 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
                     }
                     break;
+
+
+                case "MultiHierarchyReport.html":
+                    {
+                        string[] cols = colList.Select(x => x.Trim()).ToArray();
+                        string[] hdrs = headerList.Select(x => x.Trim()).ToArray();
+                        string[] grpFlags = (model.groupByLabel ?? "").Split(',').Select(x => x.Trim()).ToArray();
+                        string[] totalFlags = totalColList.Select(x => (x ?? "").Trim()).ToArray();
+                        string summaryLbl = (model.summaryLabel ?? "").Trim();
+
+                        int hdrOffset = hdrs.Length > cols.Length ? 1 : 0;
+
+                        // ───────── GROUP COLUMNS ─────────
+                        var groupIdxs = new List<int>();
+
+                        string[] groupNames = (model.groupByLabel ?? "").Split(',').Select(x => x.Trim()).Where(x =>!string.IsNullOrWhiteSpace(x) && x != "0" && x != "1").ToArray();
+
+                        if (groupNames.Length > 0)
+                        {
+                            foreach (string g in groupNames)
+                            {
+                                int idx = Array.FindIndex(cols,x => x.Equals(g, StringComparison.OrdinalIgnoreCase));
+                                if (idx >= 0)
+                                    groupIdxs.Add(idx);
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < cols.Length; i++)
+                            {
+                                int pos = (grpFlags.Length == hdrs.Length && hdrOffset == 1) ? i + 1 : i;
+                                if (pos < grpFlags.Length && grpFlags[pos] == "1")
+                                    groupIdxs.Add(i);
+                            }
+                        }
+
+                        // ───────── SUMMARY ─────────
+                        int summaryIdx = Array.FindIndex(cols,x => x.Equals(summaryLbl, StringComparison.OrdinalIgnoreCase));
+
+                        // ───────── TOTAL COLUMNS ─────────
+                        var totalIdxs = new List<int>();
+
+                        foreach (string tf in totalFlags)
+                        {
+                            string name = (tf ?? "").Trim();
+
+                            if (string.IsNullOrWhiteSpace(name)) continue;
+                            if (name.Equals("space", StringComparison.OrdinalIgnoreCase)) continue;
+                            if (name.Equals("lableTotal", StringComparison.OrdinalIgnoreCase)) continue;
+                            if (name == "0") continue;
+                            if (name == "1") continue;
+
+                            int idx = Array.FindIndex(cols,x => x.Equals(name, StringComparison.OrdinalIgnoreCase));
+                            if (idx >= 0 && !totalIdxs.Contains(idx))
+                                totalIdxs.Add(idx);
+                        }
+
+                        // ───────── VISIBLE COLUMNS (remove groups) ─────────
+                        var visibleIdxs = cols.Select((v, i) => i).Where(i => !groupIdxs.Contains(i)).ToList();
+                        int visibleCount = visibleIdxs.Count + hdrOffset;
+                        int labelColspan = visibleIdxs.Count(x => x != summaryIdx && !totalIdxs.Contains(x)) + hdrOffset;
+
+                        // ───────── HEADER ─────────
+                        var thRow = new StringBuilder();
+
+                        if (hdrOffset == 1)
+                            thRow.Append("<th>Sr.No</th>");
+
+                        foreach (int i in visibleIdxs)
+                        {
+                            bool isTotal = totalIdxs.Contains(i);
+                            thRow.Append("<th" + (isTotal ? " class='center'" : "") + ">");
+                            thRow.Append(hdrs[i + hdrOffset]);
+                            thRow.Append("</th>");
+                        }
+
+                        html = html.Replace("{{TableHeaders}}", thRow.ToString());
+
+                        // ───────── TOTAL ROW ─────────
+                        string TotalsRow(string cssClass, string label, decimal[] sums)
+                        {
+                            var sb = new StringBuilder();
+                            sb.Append("<tr class='" + cssClass + "'>");
+                            if (hdrOffset == 1)
+                                sb.Append("<td></td>");
+
+                            int totalPos = 0;
+                            bool labelShown = false;
+
+                            foreach (int ci in visibleIdxs)
+                            {
+                                if (ci == summaryIdx && !labelShown)
+                                {
+                                    sb.Append("<td class='right'><b>" + label + "</b></td>");
+                                    labelShown = true;
+                                }
+                                else if (totalIdxs.Contains(ci))
+                                {
+                                    sb.Append("<td class='center'><b>" + sums[totalPos++].ToString("0.##") +  "</b></td>");
+                                }
+                                else
+                                {
+                                    sb.Append("<td></td>");
+                                }
+                            }
+
+                            sb.Append("</tr>");
+                            return sb.ToString();
+                        }
+
+                        decimal[] billSum = new decimal[totalIdxs.Count];
+                        decimal[] grpSum = new decimal[totalIdxs.Count];
+                        decimal[] grandSum = new decimal[totalIdxs.Count];
+
+                        string prevGroupKey = "";
+                        string prevBillKey = "";
+                        int srNo = 1;
+
+                        int billKeyColIdx = Array.FindIndex(cols,x => x.Equals("BillKeyLabel", StringComparison.OrdinalIgnoreCase));
+
+                        if (billKeyColIdx < 0)
+                            billKeyColIdx = Array.FindIndex(cols, x => x.Equals("PrintBillNo", StringComparison.OrdinalIgnoreCase));
+
+                        if (billKeyColIdx < 0)
+                            billKeyColIdx = Array.FindIndex(cols,x => x.Equals("BillNo", StringComparison.OrdinalIgnoreCase));
+
+                        bool hasBillGrouping = billKeyColIdx >= 0;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            string groupKey = string.Join("|", groupIdxs.Select(i => dr[cols[i]].ToString()));
+                            string billKey = hasBillGrouping ? dr[cols[billKeyColIdx]].ToString() : "";
+
+                            // ───────── GROUP BREAK ─────────
+                            if (prevGroupKey != groupKey)
+                            {
+                                if (prevGroupKey != "")
+                                {
+                                    if (hasBillGrouping && prevBillKey != "")
+                                        items.Append(TotalsRow("billTotal", "Total", billSum));
+
+                                    items.Append(TotalsRow("groupTotal", "Group Total", grpSum));
+
+                                    billSum = new decimal[totalIdxs.Count];
+                                    grpSum = new decimal[totalIdxs.Count];
+                                }
+
+                                string grpText = string.Join(" | ", groupIdxs.Select(i =>  "<b>" + hdrs[i + hdrOffset] + "</b> : " + dr[cols[i]].ToString()));
+
+                                items.Append("<tr class='groupHeader'>");
+                                items.Append("<td colspan='" + visibleCount + "'>" + grpText + "</td>");
+                                items.Append("</tr>");
+
+                                prevGroupKey = groupKey;
+                                prevBillKey = "";
+                            }
+
+                            // ───────── BILL BREAK ─────────
+                            if (hasBillGrouping && prevBillKey != billKey)
+                            {
+                                if (prevBillKey != "")
+                                {
+                                    items.Append(TotalsRow("billTotal", "Total", billSum));
+                                    billSum = new decimal[totalIdxs.Count];
+                                }
+
+                                items.Append("<tr class='billHeader'>");
+
+                                if (hdrOffset == 1)
+                                    items.Append("<td class='center'><b>" + srNo++ + "</b></td>");
+
+                                foreach (int ci in visibleIdxs)
+                                {
+                                    if (ci == summaryIdx || totalIdxs.Contains(ci))
+                                        items.Append("<td></td>");
+                                    else
+                                        items.Append("<td>" + dr[cols[ci]].ToString() + "</td>");
+                                }
+
+                                items.Append("</tr>");
+
+                                prevBillKey = billKey;
+                            }
+
+                            // ───────── SERVICE ROW ─────────
+                            items.Append("<tr class='serviceRow'>");
+
+                            if (hdrOffset == 1)
+                                items.Append("<td></td>");
+
+                            foreach (int ci in visibleIdxs)
+                            {
+                                string rawVal = dr[cols[ci]].ToString();
+
+                                if (ci == summaryIdx)
+                                {
+                                    items.Append("<td>" + rawVal + "</td>");
+                                }
+                                else if (totalIdxs.Contains(ci))
+                                {
+                                    decimal val;
+                                    bool isNumeric = decimal.TryParse(rawVal, out val);
+
+                                    if (isNumeric)
+                                    {
+                                        items.Append("<td class='center'>" + val.ToString("0.##") + "</td>");
+
+                                        int pos = totalIdxs.IndexOf(ci);
+
+                                        billSum[pos] += val;
+                                        grpSum[pos] += val;
+                                        grandSum[pos] += val;
+                                    }
+                                    else
+                                    {
+                                        items.Append("<td>" + rawVal + "</td>");
+                                    }
+                                }
+                                else
+                                {
+                                    items.Append("<td></td>");
+                                }
+                            }
+                            items.Append("</tr>");
+                        }
+
+                        if (hasBillGrouping && prevBillKey != "")
+                            items.Append(TotalsRow("billTotal", "Total", billSum));
+                        items.Append(TotalsRow("billTotal", "Total", billSum));
+
+                        if (prevGroupKey != "")
+                            items.Append(TotalsRow("groupTotal", "Group Total", grpSum));
+
+                        items.Append(TotalsRow("grandTotal", "GRAND TOTAL", grandSum));
+                        var dcFields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+
+                        SqlParameter[] dcPara = dcFields.Select(kv =>
+                        {
+                            bool isDate = kv.Key.Equals("FromDate", StringComparison.OrdinalIgnoreCase)
+                                       || kv.Key.Equals("ToDate", StringComparison.OrdinalIgnoreCase);
+                            return new SqlParameter("@" + kv.Key,
+                                isDate ? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                                       : (object)kv.Value);
+                        }).ToArray();
+
+                        List<DataTable> allSets = FetchAllResultSets(model.SPName, dcPara);
+                        string extraTables = allSets.Count > 1
+                            ? RenderMultiResultSetReport(allSets.Skip(1).ToList())
+                            : "";
+                        html = html.Replace("{{ResultSetTables}}", extraTables);
+
+                        string summaryBlock = $@"
+                         <div style='page-break-before: always;'></div>
+                         <table style='width:100%; border-collapse:collapse; margin-bottom:10px; border:1px solid #777;'>
+                             <tr style='background:#d9d9d9; font-weight:bold;'>
+                                 <td style='padding:10px; font-size:18px; text-align:left; border-right:1px solid #777;'>
+                                     Summary Report For {model.RepoertName}
+                                 </td>
+                                 <td style='padding:10px; font-size:16px; text-align:right;'>
+                                     From Date : {FromDate:dd/MM/yyyy} &nbsp;--&nbsp; To Date : {ToDate:dd/MM/yyyy}
+                                 </td>
+                             </tr>
+                         </table>
+                         <br/><br/>";
+
+                        html = html.Replace("{{SummaryBlock}}", summaryBlock);
+                    }
+                    break;
+
                     /* HELPERS */
                     string GetDoctorTotalRow(decimal g, decimal d, decimal n)
                     {

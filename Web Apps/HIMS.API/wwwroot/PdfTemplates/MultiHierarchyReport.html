@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+        body {
+            font-family: Calibri, Arial;
+            font-size: 15px;
+            color: #000;
+        }
+
+        #dataTable {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            /* ── HEADER TH ── */
+            #dataTable th {
+                border: 1px solid #666;
+                background: #e6e6e6;
+                padding: 7px 8px;
+                text-align: center;
+                font-size: 15px;
+            }
+
+            /* ── ALL TD ── */
+            #dataTable td {
+                border: 1px solid #bfbfbf;
+                padding: 5px 7px;
+            }
+
+            /* ── GROUP HEADER ROW ──
+           Full-width row, blue tint, bold
+           Shows: GroupFieldName : Value  |  GroupFieldName : Value
+           No data columns on this row at all                        */
+            #dataTable tr.groupHeader td {
+                background: #d6e4f0;
+                font-weight: bold;
+                font-size: 16px;
+                padding: 8px 12px;
+                border-top: 2px solid #4472c4;
+                border-bottom: 1px solid #4472c4;
+            }
+
+            /* ── BILL HEADER ROW ──
+           Light grey, bold
+           Only non-total fields shown, rest empty                   */
+            #dataTable tr.billHeader td {
+                background: #f2f2f2;
+                font-weight: bold;
+            }
+
+            /* ── SERVICE / DETAIL ROW ──
+           White, normal
+           Only summary label + total fields shown, non-total empty  */
+            #dataTable tr.serviceRow td {
+                background: #fff;
+            }
+
+            /* ── BILL TOTAL ── */
+            #dataTable tr.billTotal td {
+                font-weight: bold;
+                border-top: 1px solid #999;
+                background: #fafafa;
+            }
+
+            /* ── GROUP TOTAL ── */
+            #dataTable tr.groupTotal td {
+                background: #e6e6e6;
+                font-weight: bold;
+                border-top: 1px solid #888;
+            }
+
+            /* ── GRAND TOTAL ── */
+            #dataTable tr.grandTotal td {
+                background: #d9d9d9;
+                font-weight: bold;
+                border-top: 3px solid #000;
+            }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        #dataTable thead {
+            display: table-header-group;
+        }
+
+        #dataTable tr {
+            page-break-inside: avoid;
+        }
+
+/**/
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+            .data-table thead th {
+                background: #e6e6e6;
+                border: 1px solid #666;
+                padding: 5px;
+                text-align: center;
+                font-weight: bold;
+                white-space: nowrap;
+            }
+
+            .data-table tbody td {
+                border: 1px solid #bfbfbf;
+                padding: 4px;
+                word-break: break-word;
+            }
+
+            .data-table th,
+            .data-table td {
+                min-width: 60px;
+            }
+
+        .row-total td {
+            font-weight: bold;
+            background: #efefef;
+            border-top: 2px solid #444 !important;
+        }
+
+        .align-center {
+            text-align: center;
+        }
+
+        .data-table thead {
+            display: table-header-group;
+        }
+
+        .data-table tr {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+<body>
+
+    <div style="margin:0 auto; color:#000;">
+        <table style="width:100%;">
+
+            {{HospitalHeader}}
+
+            <!-- Report Name + Print Date -->
+            <tr>
+                <td>
+                    <table style="width:100%;">
+                        <tr style="font-size:20px;">
+                            <td style="border-bottom:1px solid #ccc; padding-bottom:10px;">
+                                <b>{{RepoertName}}</b>
+                            </td>
+                            <td style="border-bottom:1px solid #ccc; padding-bottom:10px; text-align:right;">
+                                <b>Print Date : {{CurrentDate}}</b>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- Date Range -->
+            <tr>
+                <td>
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="padding:8px 0; font-size:16px; font-weight:bold;">
+                                From Date : {{FromDate}} &nbsp;&nbsp;--&nbsp;&nbsp; To Date : {{ToDate}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- Data Table -->
+            <tr>
+                <td>
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                {{TableHeaders}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{Items}}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+        </table>
+        {{SummaryBlock}}
+
+
+        <!-- TEMPLATE 2 SECTION -->
+        {{ResultSetTables}}
+    </div>
+
+</body>
+</html>
