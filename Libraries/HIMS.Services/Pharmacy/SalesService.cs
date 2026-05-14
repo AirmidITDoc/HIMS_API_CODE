@@ -242,7 +242,9 @@ namespace HIMS.Services.Users
 
                 var SalesIdObj = new { ObjSalesHeader.SalesId };
                 odal.ExecuteNonQueryNew("ps_Cal_DiscAmount_Sales", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
+                await _context.LogProcedureExecution(SalesIdObj.ToDictionary(),nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
                 odal.ExecuteNonQueryNew("ps_Cal_GSTAmount_Sales", CommandType.StoredProcedure, "", SalesIdObj.ToDictionary());
+                await _context.LogProcedureExecution(SalesIdObj.ToDictionary(), nameof(TSalesHeader), ObjSalesHeader.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
                 // 4️⃣ Insert Payment
                 string[] PEntity = { "PaymentId", "BillNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "Opdipdtype", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "UnitId" };
@@ -299,6 +301,8 @@ namespace HIMS.Services.Users
                     }
                     string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_PaymentPharmacy", CommandType.StoredProcedure, "PaymentId", pentity);
                     item.PaymentId = Convert.ToInt32(VPaymentId);
+                    await _context.LogProcedureExecution( pentity, nameof(TPaymentPharmacy), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId,  CurrentUserName);
+
                 }
 
 
