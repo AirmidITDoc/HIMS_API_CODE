@@ -19841,8 +19841,7 @@ namespace HIMS.Services.Report
 
                             // ================= ITEM ROW =================
 
-                            double lineAmount =
-                                dr["NetAmount"].ConvertToDouble();
+                            double lineAmount = dr["TotalAmt"].ConvertToDouble();
 
                             items.Append($@"
 <tr style='font-size:15px;font-weight:bold;text-align:center;vertical-align:middle;'>
