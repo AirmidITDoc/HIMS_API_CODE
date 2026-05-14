@@ -95,6 +95,51 @@
         #dataTable tr {
             page-break-inside: avoid;
         }
+
+/**/
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+            .data-table thead th {
+                background: #e6e6e6;
+                border: 1px solid #666;
+                padding: 5px;
+                text-align: center;
+                font-weight: bold;
+                white-space: nowrap;
+            }
+
+            .data-table tbody td {
+                border: 1px solid #bfbfbf;
+                padding: 4px;
+                word-break: break-word;
+            }
+
+            .data-table th,
+            .data-table td {
+                min-width: 60px;
+            }
+
+        .row-total td {
+            font-weight: bold;
+            background: #efefef;
+            border-top: 2px solid #444 !important;
+        }
+
+        .align-center {
+            text-align: center;
+        }
+
+        .data-table thead {
+            display: table-header-group;
+        }
+
+        .data-table tr {
+            page-break-inside: avoid;
+        }
     </style>
 </head>
 <body>
@@ -150,6 +195,11 @@
             </tr>
 
         </table>
+        {{SummaryBlock}}
+
+
+        <!-- TEMPLATE 2 SECTION -->
+        {{ResultSetTables}}
     </div>
 
 </body>
