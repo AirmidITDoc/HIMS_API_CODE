@@ -342,11 +342,11 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
 
-        //shilpa 26/05/2025//
+        //shilpa 15/05/2026//
 
         [HttpPost("PharmacyAdvanceInsert")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public ApiResponse Insert(PharAdvanceModel obj)
+        public async Task<ApiResponse> Insert(PharAdvanceModel obj)
         {
             TPhadvanceHeader model = obj.PharmacyAdvance.MapTo<TPhadvanceHeader>();
             TPhadvanceDetail model1 = obj.PharmacyAdvanceDetails.MapTo<TPhadvanceDetail>();
@@ -358,7 +358,7 @@ namespace HIMS.API.Controllers.Pharmacy
             {
                 model.Date = Convert.ToDateTime(obj.PharmacyAdvance.Date);
                 model.AddedBy = CurrentUserId;
-                _ISalesService.InsertS(model, model1, model3, TPayments, CurrentUserId, CurrentUserName);
+                await _ISalesService.InsertS(model, model1, model3, TPayments, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -366,20 +366,17 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpPut("PharmacyAdvanceUpdate")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
-        public ApiResponse Update(PharmacyHeaderUpdate obj)
+        public async Task<ApiResponse> Update(PharmacyHeaderUpdate obj)
         {
             TPhadvanceHeader model = obj.PharmacyHeader.MapTo<TPhadvanceHeader>();
             TPhadvanceDetail model1 = obj.PharmacyAdvanceDetails.MapTo<TPhadvanceDetail>();
             PaymentPharmacy model3 = obj.PaymentPharmacy.MapTo<PaymentPharmacy>();
             List<TPaymentPharmacy> TPayments = obj.TPayments.MapTo<List<TPaymentPharmacy>>();
 
-
-
-
-            if (obj.PharmacyHeader.AdvanceId != 0)
+        if (obj.PharmacyHeader.AdvanceId != 0)
             {
                 model.AddedBy = CurrentUserId;
-                _ISalesService.UpdateS(model, model1, model3, TPayments, CurrentUserId, CurrentUserName);
+                await _ISalesService.UpdateS(model, model1, model3, TPayments, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
