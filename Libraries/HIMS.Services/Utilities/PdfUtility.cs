@@ -1028,28 +1028,15 @@ namespace HIMS.Services.Utilities
         //    return new Tuple<byte[], string>(bytes, st); ;
         //}
 
-        //public string Render(string html, DataTable dt)
-        //{
-        //    if (dt == null || dt.Rows.Count == 0)
-        //        return html;
 
-        //    DataRow firstRow = dt.Rows[0];
-
-        //    html = ReplaceItemTable(html, dt);
-        //    html = ReplaceNormalValues(html, firstRow);
-        //    html = ReplaceDateFormats(html, firstRow);
-        //    html = ReplaceFlags(html, firstRow);
-
-        //    return html;
-        //}
         public string Render(string html, DataTable dt, string section)
         {
+            html = ReplaceItemTable(html, dt, section);
             if (dt == null || dt.Rows.Count == 0)
                 return html;
 
             DataRow firstRow = dt.Rows[0];
-
-            html = ReplaceItemTable(html, dt, section);
+   
             html = ReplaceNormalValues(html, firstRow);
             html = ReplaceDateFormats(html, firstRow);
             html = ReplaceFlags(html, firstRow);
@@ -1095,35 +1082,15 @@ namespace HIMS.Services.Utilities
             return html;
         }
 
-        //private string ReplaceItemTable(string html, DataTable dt)
-        //{
-        //    Match m = Regex.Match(html, @"<!--ITEMS-->([\s\S]*?)<!--/ITEMS-->");
-        //    if (!m.Success)
-        //        return html;
-
-        //    string rowTemplate = m.Groups[1].Value;
-        //    StringBuilder rows = new StringBuilder();
-        //    int sr = 1;
-
-        //    foreach (DataRow r in dt.Rows)
-        //    {
-        //        string rowHtml = rowTemplate.Replace("{{#}}", sr.ToString());
-        //        sr++;
-
-        //        foreach (DataColumn col in dt.Columns)
-        //        {
-        //            rowHtml = rowHtml.Replace("{{" + col.ColumnName + "}}", r[col]?.ToString() ?? "");
-        //        }
-        //        rows.Append(rowHtml);
-        //    }
-        //    return html.Replace(m.Value, rows.ToString());
-        //}
         private string ReplaceItemTable(string html, DataTable dt, string section)
         {
             var match = Regex.Match(html, $@"<!--{section}-->([\s\S]*?)<!--/{section}-->");
 
             if (!match.Success)
                 return html;
+
+            if (dt == null || dt.Rows.Count == 0)
+                return html.Replace(match.Value, "");
 
             string template = match.Groups[1].Value;
             StringBuilder output = new StringBuilder();
