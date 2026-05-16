@@ -20155,10 +20155,9 @@ namespace HIMS.Services.Report
                             MidpointRounding.AwayFromZero
                         );
 
-                        double BalanceAmount =
-                            OverallNet
-                            - GovtApprovedAmt
-                            - CompanyApprovedAmt;
+                        double BalanceAmount = OverallNet   - GovtApprovedAmt - CompanyApprovedAmt- OverallPaid;
+                        double BalanceAmt = OverallNet - OverallPaid;
+                         
 
                         // ================= HTML REPLACE =================
 
@@ -20173,7 +20172,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
                         html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                         html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount"));
-                        html = html.Replace("{{BalanceAmt}}", dt.GetColValue("BalanceAmt"));
+                        html = html.Replace("{{BalanceAmt}}", BalanceAmt.ToString("F2"));
+
                         html = html.Replace("{{PaidAmt}}", dt.GetColValue("PaidAmt"));
                         html = html.Replace("{{OverallPaid}}", OverallPaid.ToString("F2"));
                         html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
@@ -20226,7 +20226,7 @@ namespace HIMS.Services.Report
 
     <td colspan='4'
         style='text-align:right;
-               border:1px solid #000;
+               border:px solid #000;
                padding:4px;'>
 
         Total Amt :
@@ -20234,7 +20234,7 @@ namespace HIMS.Services.Report
     </td>
 
     <td style='text-align:right;
-               border:1px solid #000;
+               border:px solid #000;
                padding:4px;'>
 
         {total:0.00}
@@ -20247,7 +20247,7 @@ namespace HIMS.Services.Report
 
     <td colspan='4'
         style='text-align:right;
-               border:1px solid #000;
+               border:px solid #000;
                padding:4px;'>
 
         Dis Amt :
@@ -20255,7 +20255,7 @@ namespace HIMS.Services.Report
     </td>
 
     <td style='text-align:right;
-               border:1px solid #000;
+               border:px solid #000;
                padding:4px;'>
 
         {discount:0.00}
@@ -20268,7 +20268,7 @@ namespace HIMS.Services.Report
 
     <td colspan='4'
         style='text-align:right;
-               border:1px solid #000;
+               border:px solid #000;
                padding:4px;'>
 
         Net Amount :
@@ -20276,7 +20276,7 @@ namespace HIMS.Services.Report
     </td>
 
     <td style='text-align:right;
-               border:1px solid #000;
+               border:px solid #000;
                padding:4px;'>
 
         {net:0.00}
@@ -20289,14 +20289,14 @@ namespace HIMS.Services.Report
 
     <td colspan='4'
         style='text-align:right;
-               border:1px solid #000;
+               border:px solid #000;
                padding:4px;'>
 
         Paid Amount :
 
     </td>
 
-    <td style='text-align:right;border:1px solid #000;padding:4px;'>
+    <td style='text-align:right;border:px solid #000;padding:4px;'>
         {paidAmt:0.00} - {payMode}
     </td>
 
