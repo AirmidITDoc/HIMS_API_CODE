@@ -53,6 +53,7 @@ namespace HIMS.Services.Report
 
         string GeneratePdfFromSpV1(ReportRequestModel model, string PdfFontPath = "");
         DataTable GetDataBySpRender(List<SearchGrid> searchFields, string sp_Name);
+        Task<string> GetReportPlaceholders(ReportRequestModel model);
     }
 
 }
