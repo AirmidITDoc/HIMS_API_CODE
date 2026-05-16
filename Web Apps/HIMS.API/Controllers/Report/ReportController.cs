@@ -602,8 +602,8 @@ namespace HIMS.API.Controllers.Report
             try
             {
                 // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
-                // long UnitId = 1;
-                //  long StoreId = 2;
+               // long UnitId = 1;
+               //long StoreId = 2;
                 long UnitId = Context.UnitId;
                 long StoreId = Context.StoreId;
 
@@ -775,6 +775,11 @@ namespace HIMS.API.Controllers.Report
             var byteFile = _reportService.GeneratePdfFromSpV1(model, AppSettings.Settings.PdfFontPath);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
-
+        [HttpPost("GetReportPlaceholders")]
+        public async Task<IActionResult> GetReportPlaceholders(ReportRequestModel model)
+        {
+            var result = await _reportService.GetReportPlaceholders(model);
+            return Ok(result);
+        }
     }
 }
