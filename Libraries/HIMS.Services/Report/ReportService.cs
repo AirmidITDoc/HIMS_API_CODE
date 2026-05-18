@@ -23844,6 +23844,64 @@ namespace HIMS.Services.Report
             return new Tuple<string, string>(html, title);
 
         }
+        public async Task<string> GetReportPlaceholders(ReportRequestModel model)
+        {
+            var report = await _context.MReportSetupOperationals
+                .Where(x => x.ReportMode == model.Mode)
+                .FirstOrDefaultAsync();
+
+            if (report == null)
+                return "Report not found";
+
+            var spList = report.ProcedureName.Split(',');
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < spList.Length; i++)
+            {
+                var spName = spList[i].Trim();
+                var dt = GetDataBySp(model, spName);
+
+                sb.AppendLine("=================================");
+                sb.AppendLine("Procedure : " + spName);
+                sb.AppendLine("=================================");
+
+                if (dt == null || dt.Columns.Count == 0)
+                {
+                    sb.AppendLine("No data");
+                    continue;
+                }
+
+                sb.AppendLine("");
+                sb.AppendLine("Normal Placeholders:");
+                foreach (DataColumn col in dt.Columns)
+                {
+                    sb.AppendLine("{{" + col.ColumnName + "}}");
+                }
+
+                sb.AppendLine("");
+                sb.AppendLine("Date Placeholders:");
+                foreach (DataColumn col in dt.Columns)
+                {
+                    if (col.DataType == typeof(DateTime))
+                    {
+                        sb.AppendLine("{{" + col.ColumnName + "|dd/MM/yyyy}}");
+                    }
+                }
+
+                sb.AppendLine("");
+                sb.AppendLine("Check Placeholders:");
+                foreach (DataColumn col in dt.Columns)
+                {
+                    sb.AppendLine("{{chk" + col.ColumnName + "flag}}");
+                }
+
+                sb.AppendLine("");
+                sb.AppendLine("");
+            }
+
+            return sb.ToString();
+        }
     }
 }
 
