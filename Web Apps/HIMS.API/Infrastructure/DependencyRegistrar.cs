@@ -234,7 +234,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IAuditService, AuditService>();
             services.AddScoped<IRisApiHelper, RisApiHelper>();
             services.AddHttpContextAccessor();
-            services.AddMemoryCache();
+            services.AddMemoryCache(opts => opts.SizeLimit = 1024);
         }
     }
 }
