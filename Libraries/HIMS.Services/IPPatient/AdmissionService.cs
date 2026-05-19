@@ -5,8 +5,10 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using System.Transactions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HIMS.Services.IPPatient
 {
@@ -50,9 +52,14 @@ namespace HIMS.Services.IPPatient
       
         public virtual async Task InsertSP(Admission objAdmission, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
         {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            // OLD CODE With SP
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] rVisitEntity = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "WardId", "BedId", "DischargeDate",
             "DischargeTime","IsDischarged","IsBillGenerated","CompanyId","TariffId","ClassId","DepartmentId","RelativeName","RelativeAddress","PhoneNo","MobileNo","RelationshipId","AddedBy","IsMlc",
             "MotherName","AdmittedDoctor1","AdmittedDoctor2","RefByTypeId","RefByName","SubTpaComId","PolicyNo","AprovAmount","CompDod","ConvertId","IsOpToIpconv","RefDoctorDept","AdmissionType","AdmissionId","Ischarity","IsReimbursement"};
@@ -65,8 +72,7 @@ namespace HIMS.Services.IPPatient
             }
             string VAdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", admientity);
             objAdmission.AdmissionId = Convert.ToInt32(VAdmissionId);
-            //await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-            _ = Task.Run(() => _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+            await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             string[] PatientPolicyEntity = { "PatientPolicyId", "Opipid", "Opiptype", "PolicyNo", "PolicyValidateDate", "ApprovedAmount", "CreatedBy", "IsActive" };
             ObjTPatientPolicyInformation.Opipid = Convert.ToInt32(VAdmissionId);
@@ -79,8 +85,7 @@ namespace HIMS.Services.IPPatient
             }
             string PatientPolicyId = odal.ExecuteNonQuery("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
             ObjTPatientPolicyInformation.PatientPolicyId = Convert.ToInt32(PatientPolicyId);
-            //await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-            _ = Task.Run(() => _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+            await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             var tokenObj = new
             {
@@ -88,8 +93,19 @@ namespace HIMS.Services.IPPatient
                 RoomId = Convert.ToInt32(objAdmission.WardId)
             };
             odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
-            _ = Task.Run(() => _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+            await _context.LogProcedureExecution( tokenObj.ToDictionary(), "ps_Update_AdmissionBedstatus",   objAdmission.AdmissionId.ToInt(),Core.Domain.Logging.LogAction.Edit,CurrentUserId,  CurrentUserName );
+            // Save audit log changes
+            await _context.SaveChangesAsync();
 
+            // Commit transaction
+            await transaction.CommitAsync();
+            }
+            catch
+            {
+                // Rollback transaction on error
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
 
@@ -97,7 +113,14 @@ namespace HIMS.Services.IPPatient
         //UPDATE SHILPA 09-08-2025//
         public virtual async Task InsertRegSP(Registration ObjRegistration, Admission objAdmission, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
         {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear",
                 "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "ReligionId", "AreaId", "IsSeniorCitizen", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId",
                 "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship",
@@ -112,7 +135,7 @@ namespace HIMS.Services.IPPatient
             string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
             ObjRegistration.RegId = Convert.ToInt64(RegId);
             objAdmission.RegId = Convert.ToInt64(RegId);
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(Registration), ObjRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+            await _context.LogProcedureExecution(entity, nameof(Registration), ObjRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
 
             string[] rVisitEntity = { "RegId", "AdmissionDate", "AdmissionTime", "PatientTypeId", "HospitalId", "DocNameId", "RefDocNameId", "WardId", "BedId", "DischargeDate",
@@ -127,7 +150,7 @@ namespace HIMS.Services.IPPatient
             }
             string VAdmissionId = odal.ExecuteNonQuery("ps_insert_Admission_1", CommandType.StoredProcedure, "AdmissionId", admientity);
             objAdmission.AdmissionId = Convert.ToInt32(VAdmissionId);
-            _ = Task.Run(() => _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+            await _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             string[] BEntity = { "BedName", "RoomId", "IsAvailible", "IsActive", "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate" };
             var tokenObj = new
@@ -136,8 +159,7 @@ namespace HIMS.Services.IPPatient
                 RoomId = Convert.ToInt32(objAdmission.WardId)
             };
             odal.ExecuteNonQuery("ps_Update_AdmissionBedstatus", CommandType.StoredProcedure, tokenObj.ToDictionary());
-            _ = Task.Run(() => _context.LogProcedureExecution(admientity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-
+            await _context.LogProcedureExecution( tokenObj.ToDictionary(),  "ps_Update_AdmissionBedstatus",  objAdmission.BedId.ToInt(),  Core.Domain.Logging.LogAction.Edit,  CurrentUserId, CurrentUserName);
 
             string[] PatientPolicyEntity = { "PatientPolicyId", "Opipid", "Opiptype", "PolicyNo", "PolicyValidateDate", "ApprovedAmount", "CreatedBy", "IsActive" };
             ObjTPatientPolicyInformation.Opipid = Convert.ToInt32(VAdmissionId);
@@ -150,26 +172,55 @@ namespace HIMS.Services.IPPatient
             }
             string PatientPolicyId = odal.ExecuteNonQuery("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
             ObjTPatientPolicyInformation.PatientPolicyId = Convert.ToInt32(PatientPolicyId);
-            _ = Task.Run(() => _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+            await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            // Save audit log changes
+            await _context.SaveChangesAsync();
 
+            // Commit transaction
+            await transaction.CommitAsync();
+            }
+            catch
+            {
+                // Rollback transaction on error
+                await transaction.RollbackAsync();
+                throw;
+            }
 
 
         }
 
         public virtual async Task UpdateAdmissionAsyncSP(Admission objAdmission, int CurrentUserId, string CurrentUserName)
         {
-            //throw new NotImplementedException();
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+                                                                         
             string[] rAdmissEntity = {"AdmissionId", "AdmissionDate", "AdmissionTime", "HospitalId", "PatientTypeId", "CompanyId", "TariffId", "DepartmentId", "DocNameId", "RefDocNameId",
                "RelativeName" , "RelativeAddress", "PhoneNo", "RelationshipId", "IsMlc", "MotherName", "AdmittedDoctor1" ,"AdmittedDoctor2", "RefByTypeId","RefByName","IsUpdatedBy","SubTpaComId","IsOpToIpconv","ConvertId","Ischarity","IsReimbursement"};
-            var rAdmissentity1 = objAdmission.ToDictionary();
-            foreach (var rProperty in rAdmissentity1.Keys.ToList())
+            var rAdmissentity = objAdmission.ToDictionary();
+            foreach (var rProperty in rAdmissentity.Keys.ToList())
             {
                 if (!rAdmissEntity.Contains(rProperty))
-                    rAdmissentity1.Remove(rProperty);
+                     rAdmissentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_update_Admission_1", CommandType.StoredProcedure, rAdmissentity1);
-            await _context.LogProcedureExecution(rAdmissentity1, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            odal.ExecuteNonQuery("ps_update_Admission_1", CommandType.StoredProcedure, rAdmissentity);
+            await _context.LogProcedureExecution(rAdmissentity, nameof(Admission), objAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            // Save audit log changes
+            await _context.SaveChangesAsync();
+
+            // Commit transaction
+            await transaction.CommitAsync();
+        }
+            catch
+            {
+                // Rollback transaction on error
+                await transaction.RollbackAsync();
+                throw;
+            }
 
         }
 
@@ -323,9 +374,15 @@ namespace HIMS.Services.IPPatient
             return await qry.Take(25).ToListAsync();
         }
 
-        public virtual async Task UpdateAsyncInfo(Admission OBJAdmission, int UserId, string Username)
+        public virtual async Task UpdateAsyncInfo(Admission OBJAdmission, int CurrentUserId, string CurrentUserName)
+        {
+        await using var transaction = await _context.Database.BeginTransactionAsync();
+
+        try
         {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // Share same DbTransaction
             string[] AEntity = { "PolicyNo", "ApprovedAmount", "AdmissionId" };
             var entity = OBJAdmission.ToDictionary();
 
@@ -335,8 +392,19 @@ namespace HIMS.Services.IPPatient
                     entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_CompanyInfoPatient", CommandType.StoredProcedure, entity);
-            await _context.LogProcedureExecution(entity, "Admission-CompanyInfo", OBJAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Edit, UserId, Username);
+            await _context.LogProcedureExecution(entity, nameof(Admission), OBJAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+             // Save audit log changes
+             await _context.SaveChangesAsync();
 
+            // Commit transaction
+            await transaction.CommitAsync();
+        }
+            catch
+            {
+                // Rollback transaction on error
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         //public virtual async Task CancelAsync(Admission OBJAdmission, int CurrentUserId, string CurrentUserName)
@@ -361,7 +429,13 @@ namespace HIMS.Services.IPPatient
         //}
         public virtual async Task CancelAsync(Admission OBJAdmission, int CurrentUserId, string CurrentUserName)
         {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // Share same DbTransaction
             string[] AEntity = { "AdmissionId", "IsCancelledBy", "IsCancelComment", "IsCancelledDateTime" };
             var entity = OBJAdmission.ToDictionary();
 
@@ -371,10 +445,20 @@ namespace HIMS.Services.IPPatient
                     entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_Admission_Cancel", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution( entity, nameof(Admission), OBJAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName );
+                // Save audit log changes
+            await _context.SaveChangesAsync();
+
+                // Commit transaction
+            await transaction.CommitAsync();
+            }
+            catch
+            {
+                // Rollback transaction on error
+                await transaction.RollbackAsync();
+                throw;
+            }
 
         }
-
-
-
     }
 }

@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.IPPatient;
+using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
@@ -77,7 +78,8 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPost("AdmissionInsertSP")]
         [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
-        public ApiResponse InsertSP(AdmissionRegistered obj)
+        public async Task<ApiResponse> InsertSP(AdmissionRegistered obj)
+
         {
             Admission model = obj.Admission.MapTo<Admission>();
             TPatientPolicyInformation PatientPolicy = obj.PatientPolicy.MapTo<TPatientPolicyInformation>();
@@ -86,7 +88,7 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 model.AdmissionTime = Convert.ToDateTime(model.AdmissionTime);
                 model.AddedBy = CurrentUserId;
-                _IAdmissionService.InsertSP(model, PatientPolicy, CurrentUserId, CurrentUserName);
+                await _IAdmissionService.InsertSP(model, PatientPolicy, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -96,7 +98,8 @@ namespace HIMS.API.Controllers.IPPatient
         //UPDATE SHILPA 09-08-2025//
         [HttpPost("AdmissionRegInsertSP")]
         [Permission(PageCode = "Admission", Permission = PagePermission.Add)]
-        public ApiResponse Insert(NewAdmission obj)
+        public async Task<ApiResponse> Insert(NewAdmission obj)
+
         {
             Registration model = obj.AdmissionReg.MapTo<Registration>();
             Admission objAdmission = obj.Admission.MapTo<Admission>();
@@ -107,7 +110,7 @@ namespace HIMS.API.Controllers.IPPatient
             {
                 objAdmission.AdmissionTime = Convert.ToDateTime(objAdmission.AdmissionTime);
                 objAdmission.AddedBy = CurrentUserId;
-                _IAdmissionService.InsertRegSP(model, objAdmission, PatientPolicy ,CurrentUserId, CurrentUserName);
+                await _IAdmissionService.InsertRegSP(model, objAdmission, PatientPolicy ,CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
