@@ -22,10 +22,10 @@
         public bool? IsGrnTypeFlag { get; set; }
         public decimal? TotalAmount { get; set; }
         public long Grnid { get; set; }
-
-
         public string? Mobile { get; set; }
         public string? Email { get; set; }
+        public long? ReturnTypeId { get; set; }
+
 
     }
 }

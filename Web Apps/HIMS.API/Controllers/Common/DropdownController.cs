@@ -435,6 +435,7 @@ namespace HIMS.API.Controllers.Common
                 "LabPatientType" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "LabPatientType")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "PathSpecimenMaster" => (await _MPathSpecimenMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MPathSpecimenMaster.SpecimenId), nameof(MPathSpecimenMaster.SpecimenName)),
                 "LabDispatchModeList" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "LabDispatchMode")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "GRN_RETURN_TYPE" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "GRN_RETURN_TYPE")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
 
                 "ExpensesCategory" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ExpensesCategory")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),

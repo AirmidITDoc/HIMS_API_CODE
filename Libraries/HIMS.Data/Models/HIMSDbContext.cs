@@ -3002,6 +3002,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DsalesId).HasColumnName("DSalesId");
 
                 entity.Property(e => e.ItemId).HasColumnName("ItemID");
+
+                entity.Property(e => e.ItemName).HasMaxLength(200);
             });
 
             modelBuilder.Entity<GroupMaster>(entity =>
@@ -10962,6 +10964,8 @@ namespace HIMS.Data.Models
             modelBuilder.Entity<ServiceDetail>(entity =>
             {
                 entity.ToTable("ServiceDetail");
+
+                entity.HasIndex(e => new { e.TariffId, e.ServiceId, e.ClassId }, "IX_ServiceDetail_Tariff");
 
                 entity.Property(e => e.ClassRate).HasColumnType("money");
 

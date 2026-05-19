@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -65,11 +66,9 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(List1.ToGridResponse(objGrid, "getGRNReturnWithoutGRNBySupplierID List"));
         }
 
-
-      
         [HttpPost("Insert")]
         [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
-        public ApiResponse Insert(GRNReturnReqDto obj)
+        public async Task<ApiResponse> Insert(GRNReturnReqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
             List<TGrnreturnDetail> model1 = obj.tGrnreturnDetails.MapTo<List<TGrnreturnDetail>>();
@@ -81,7 +80,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.GrnreturnTime = Convert.ToDateTime(obj.GrnReturn.GrnreturnTime);
                 model.AddedBy = CurrentUserId;
                 model.UpdatedBy = 0;
-                _gRNReturnService.Insertsp(model, model1, objCStock, objReturnQty, CurrentUserId, CurrentUserName);
+                await _gRNReturnService.Insertsp(model, model1, objCStock, objReturnQty, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -90,7 +89,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPut("UpdateGRNReturn")]
         [Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
-        public ApiResponse Update(GRNReturnUpdatereqDto obj)
+        public async Task <ApiResponse> Update(GRNReturnUpdatereqDto obj)
         {
             TGrnreturnHeader model = obj.GrnReturn.MapTo<TGrnreturnHeader>();
             List<TGrnreturnDetail> model1 = obj.tGrnreturnDetails.MapTo<List<TGrnreturnDetail>>();
@@ -105,7 +104,7 @@ namespace HIMS.API.Controllers.Pharmacy
                 model.GrnreturnDate = Convert.ToDateTime(obj.GrnReturn.GrnreturnDate);
                 model.GrnreturnTime = Convert.ToDateTime(obj.GrnReturn.GrnreturnTime);
 
-                _gRNReturnService.Updatesp(model, model1, model2, model3, CurrentUserId, CurrentUserName);
+                await _gRNReturnService.Updatesp(model, model1, model2, model3, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
