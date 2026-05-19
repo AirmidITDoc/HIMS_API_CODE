@@ -1,6 +1,9 @@
 using Asp.Versioning;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using HIMS.API.ABHA.Configuration;
+using HIMS.API.ABHA.Interface;
+using HIMS.API.ABHA.Services;
 using HIMS.API.Extensions;
 using HIMS.API.Hubs;
 using HIMS.API.Infrastructure;
@@ -12,8 +15,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Polly;
+using Polly.Extensions.Http;
 using System;
 using System.Text;
 using System.Text.Json;
@@ -178,6 +184,32 @@ builder.Services.AddCors(options =>
             .WithExposedHeaders("Content-Disposition");
         });
 });
+// Bind ABDM settings
+builder.Services.Configure<ABDMSettings>(builder.Configuration.GetSection("ABDMSettings"));
+
+var abdmSettings = builder.Configuration
+    .GetSection("ABDMSettings")
+    .Get<ABDMSettings>() ?? new ABDMSettings();
+
+// Retry policy
+var retryPolicy = HttpPolicyExtensions
+    .HandleTransientHttpError()
+    .WaitAndRetryAsync(
+        abdmSettings.RetryCount,
+        attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt)));
+
+// Typed HttpClients
+builder.Services.AddHttpClient<IAbdmTokenService, AbdmTokenService>(c =>
+{
+    c.Timeout = TimeSpan.FromSeconds(abdmSettings.RequestTimeoutSeconds);
+}).AddPolicyHandler(retryPolicy);
+
+builder.Services.AddHttpClient<IAbhaService, AbhaService>(c =>
+{
+    c.Timeout = TimeSpan.FromSeconds(abdmSettings.RequestTimeoutSeconds);
+}).AddPolicyHandler(retryPolicy);
+
+
 var app = builder.Build();
 app.UseStaticFiles();
 app.UseSwagger();

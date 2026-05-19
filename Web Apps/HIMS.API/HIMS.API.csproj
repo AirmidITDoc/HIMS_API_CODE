@@ -9,22 +9,18 @@
   <ItemGroup>
     <Compile Remove="Controllers\InPatient\**" />
     <Compile Remove="Models\InPatient\**" />
-    <Compile Remove="Models\NewFolder\**" />
     <Compile Remove="Models\OutPatient\NewFolder\**" />
     <Compile Remove="Models\Users\**" />
     <Content Remove="Controllers\InPatient\**" />
     <Content Remove="Models\InPatient\**" />
-    <Content Remove="Models\NewFolder\**" />
     <Content Remove="Models\OutPatient\NewFolder\**" />
     <Content Remove="Models\Users\**" />
     <EmbeddedResource Remove="Controllers\InPatient\**" />
     <EmbeddedResource Remove="Models\InPatient\**" />
-    <EmbeddedResource Remove="Models\NewFolder\**" />
     <EmbeddedResource Remove="Models\OutPatient\NewFolder\**" />
     <EmbeddedResource Remove="Models\Users\**" />
     <None Remove="Controllers\InPatient\**" />
     <None Remove="Models\InPatient\**" />
-    <None Remove="Models\NewFolder\**" />
     <None Remove="Models\OutPatient\NewFolder\**" />
     <None Remove="Models\Users\**" />
   </ItemGroup>
@@ -51,6 +47,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="10.0.8" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />
     <PackageReference Include="QRCoder" Version="1.7.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
