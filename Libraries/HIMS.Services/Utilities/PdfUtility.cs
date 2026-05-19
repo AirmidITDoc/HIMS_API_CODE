@@ -1071,16 +1071,30 @@ namespace HIMS.Services.Utilities
             });
         }
 
+        //private string ReplaceFlags(string html, DataRow row)
+        //{
+        //    foreach (DataColumn col in row.Table.Columns)
+        //    {
+        //        string value = row[col]?.ToString();
+        //        string display = (!string.IsNullOrEmpty(value) && value != "0") ? "table-row" : "none";
+        //        html = html.Replace("{{" + "chk" + col.ColumnName + "flag}}", display);
+        //    }
+        //    return html;
+        //}
         private string ReplaceFlags(string html, DataRow row)
         {
             foreach (DataColumn col in row.Table.Columns)
             {
-                string value = row[col]?.ToString();
-                string display = (!string.IsNullOrEmpty(value) && value != "0") ? "table-row" : "none";
-                html = html.Replace("{{" + "chk" + col.ColumnName + "flag}}", display);
+                string value = row[col]?.ToString()?.Trim();
+                bool show = !string.IsNullOrWhiteSpace(value) &&
+                            value.Split(',').Any(x => !string.IsNullOrWhiteSpace(x) &&
+                            (!double.TryParse(x, out double n) || n > 0));
+
+                html = html.Replace("{{chk" + col.ColumnName + "flag}}", show ? "table-row" : "none");
             }
             return html;
         }
+
 
         private string ReplaceItemTable(string html, DataTable dt, string section)
         {

@@ -266,6 +266,34 @@ namespace HIMS.Services.Report
             var tuple = new Tuple<byte[], string>(null, string.Empty);
             string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
 
+            try
+            {
+                var mrMode = model.Mode;
+                var mType = await _context.MReportSetupOperationals.Where(r => r.ReportMode == mrMode).Select(r => new { mReportHtmlName = r.ReportHtmlName, mReportHeaderHtmlName = r.ReportHeaderHtmlName, mProcedureName = r.ProcedureName, mFolderName = r.FolderName, mReportFileName = r.ReportFileName, mIsDBFunction = r.IsDbfunction, mIsA5orA4Page = r.IsA5orA4page, mHeaderSpace = r.HeaderSpace }).FirstOrDefaultAsync();
+
+                if (mType.mIsDBFunction == true)
+                {
+                    string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHtmlName);
+                    string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHeaderHtmlName);
+
+                    var header = mType.mReportHeaderHtmlName;
+                    htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, UnitId);
+
+                    string html;
+                    html = GetHTMLViewWithRender(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath);
+
+                    html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                    html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
+
+                    tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+                    return tuple;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+
             switch (model.Mode)
             {
 

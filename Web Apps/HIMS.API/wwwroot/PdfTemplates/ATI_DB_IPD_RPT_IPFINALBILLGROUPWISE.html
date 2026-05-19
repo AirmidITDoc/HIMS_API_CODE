@@ -1,0 +1,385 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Final Bill Group Wise</title>
+</head>
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="font-size:10px;line-height:24px;font-family:Tahoma,Calibri;color:#101828;">
+            <div>
+                <table style="width:100%;line-height:inherit;text-align:left;">
+
+                    <!-- HEADER -->
+                    <tr class="top-header-row">
+                        {{NewHeader}}
+                    </tr>
+
+                    <!-- TITLE -->
+                    <tr class="title-date-row">
+                        <td>
+                            <table style="width:100%;border-collapse:collapse;">
+                                <tr style="font-size:20px;font-weight:bold;">
+                                    <td style="border-bottom:1px solid #d4c3c3;padding:6px;"><b>IP Final Bill Group Wise (DB Function)</b></td>
+                                    <td style="border-bottom:1px solid #d4c3c3;padding:6px;text-align:right;"><b>Print Date : {{CurrentDate}}</b></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- PATIENT INFO -->
+                    <tr class="bill-info-row">
+                        <td>
+                            <table style="width:100%;border-collapse:collapse;font-size:15px;table-layout:fixed;">
+                                <colgroup>
+                                    <col style="width:40%;">
+                                    <col style="width:25%;">
+                                    <col style="width:35%;">
+                                </colgroup>
+                                <tr>
+                                    <td style="padding:2px;"><b>Bill No :</b> {{PBillNo}}</td>
+                                    <td style="padding:2px;"><b>IPD No :</b> {{IPDNo}}</td>
+                                    <td style="padding:2px;"><b>Bill Date|Time :</b> {{BillTime|dd/MM/yyyy hh:mm tt}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:2px;"><b>UHID No :</b> {{RegNo}}</td>
+                                    <td style="padding:2px;"><b>Age|Gender :</b> {{Age}} | {{GenderName}}</td>
+                                    <td style="padding:2px;"><b>DOA|Time :</b> {{AdmissionTime|dd/MM/yyyy hh:mm tt}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:2px;"><b>Patient Name :</b> {{PatientName}}</td>
+                                    <td style="padding:2px;"><b>Patient Type :</b> {{PatientType}}</td>
+                                    <td style="padding:2px;"><b>DOD|Time :</b> {{DischargeTime|dd/MM/yyyy hh:mm tt}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:2px;"><b>Doctor Name :</b> {{DoctorName}}</td>
+                                    <td style="padding:2px;"><b>Department :</b> {{DepartmentName}}</td>
+                                    <td style="padding:2px;"><b>Ward|Bed :</b> {{RoomName}} | {{BedName}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:2px;">
+                                        <span style="display:{{chkCompanyNameflag}}"><b>Company Name :</b> {{CompanyName}}</span>
+                                    </td>
+                                    <td style="padding:2px;">
+                                        <span style="display:{{chkPolicyNoListflag}}"><b>Policy No :</b> {{PolicyNoList}}</span>
+                                    </td>
+                                    <td style="padding:2px;">
+                                        <span style="display:{{chkApprovedAmountflag}}"><b>Policy Limit :</b> {{ApprovedAmount}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:2px;display:{{chkRefDocNameflag}}">
+                                        <b>Ref.Doctor Name :</b> {{RefDocName}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- CHARGES TABLE -->
+                    <tr class="bill-table-row" style="margin-top:10px;">
+                        <td>
+                            <table style="width:100%;border-collapse:collapse;">
+                                <thead>
+                                    <tr style="font-weight:bold;font-size:15px;">
+                                        <td style="border:1px solid #000;text-align:center;padding:6px;">Sr.No</td>
+                                        <td style="border:1px solid #000;text-align:left;padding:6px;">Service Name</td>
+                                        <td style="border:1px solid #000;text-align:left;padding:6px;">Doctor Name</td>
+                                        <td style="border:1px solid #000;text-align:right;padding:6px;">Price</td>
+                                        <td style="border:1px solid #000;text-align:right;padding:6px;">Qty</td>
+                                        <td style="border:1px solid #000;text-align:right;padding:6px;">Net Amount</td>
+                                    </tr>
+                                </thead>
+                                <tbody id="chargeRows">
+                                    <!--ITEMS_SP1-->
+                                    <tr class="charge-data-row"
+                                        data-group="{{GroupName}}"
+                                        data-amt="{{ChargesTotalAmt}}"
+                                        data-net="{{NetPayableAmt}}"
+                                        data-adv="{{AdvanceUsedAmount}}"
+                                        data-paid="{{PaidAmount}}"
+                                        style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:14px;line-height:2;">
+                                        <td style="text-align:center;padding:0;line-height:1.5;">{{#}}</td>
+                                        <td style="text-align:left;font-size:14px;padding:0;line-height:1.5;">{{ServiceName}}</td>
+                                        <td style="text-align:left;font-size:14px;padding:0;line-height:1.5;">{{ChargesDoctorName}}</td>
+                                        <td style="text-align:center;padding:0;line-height:1.5;">{{Price}}</td>
+                                        <td style="text-align:center;font-size:14px;padding:0;line-height:1.5;">{{Qty}}</td>
+                                        <td style="text-align:right;font-size:14px;padding:0;line-height:1.5;">{{ChargesTotalAmt}}</td>
+                                    </tr>
+                                    <!--/ITEMS_SP1-->
+                                </tbody>
+
+                                <!-- TOTALS -->
+                                <tbody>
+                                    <tr>
+                                        <td colspan="6">
+                                            <table style="width:100%;border-collapse:collapse;font-size:15px;font-weight:bold;">
+                                                <tr>
+                                                    <td style="padding:6px;">Total Amount</td>
+                                                    <td style="padding:6px;"></td>
+                                                    <td style="padding:6px;text-align:right;" id="spanFTotal">0.00</td>
+                                                </tr>
+                                                <tr style="display:{{chkTaxAmountflag}}">
+                                                    <td style="padding:6px;">Admin Charges</td>
+                                                    <td style="padding:6px;"></td>
+                                                    <td style="padding:6px;text-align:right;">{{TaxAmount}}</td>
+                                                </tr>
+                                                <tr style="display:{{chkTDSAmountflag}}">
+                                                    <td style="padding:6px;">TDS Amount</td>
+                                                    <td style="padding:6px;"></td>
+                                                    <td style="padding:6px;text-align:right;">{{TDSAmount}}</td>
+                                                </tr>
+                                                <tr style="display:{{chkConcessionAmtflag}}">
+                                                    <td style="padding:6px;">Concession Amount/Reason :- {{ConcessionReason}}</td>
+                                                    <td style="padding:6px;"></td>
+                                                    <td style="padding:6px;text-align:right;">{{ConcessionAmt}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding:6px;">Net Amount</td>
+                                                    <td style="padding:6px;"></td>
+                                                    <td style="padding:6px;text-align:right;font-weight:bold;">{{NetPayableAmt}}</td>
+                                                </tr>
+                                                <tr style="display:{{chkGovtApprovedAmtflag}}">
+                                                    <td style="padding:6px;">Gov. Amount :</td>
+                                                    <td style="padding:6px;"></td>
+                                                    <td style="padding:6px;text-align:right;">{{GovtApprovedAmt}}</td>
+                                                </tr>
+                                                <tr style="display:{{chkAdvanceUsedAmountflag}}">
+                                                    <td style="padding:6px;">Advance Amount</td>
+                                                    <td style="padding:6px;"></td>
+                                                    <td style="padding:6px;text-align:right;">{{AdvanceUsedAmount}}</td>
+                                                </tr>
+                                                <tr style="display:{{chkPaidAmountflag}}">
+                                                    <td style="padding:6px;">Paid Amount</td>
+                                                    <td style="padding:6px;"></td>
+                                                    <td style="padding:6px;text-align:right;">{{PaidAmount}}</td>
+                                                </tr>
+                                                <tr style="display:{{chkBillRefAmtflag}}">
+                                                    <td style="padding:6px;">Bill Refund Amount</td>
+                                                    <td style="padding:6px;"></td>
+                                                    <td style="padding:6px;text-align:right;">{{BillRefAmt}}</td>
+                                                </tr>
+                                                <tr style="display:{{chkDiscCommentsflag}}">
+                                                    <td style="padding:6px;">Remark :</td>
+                                                    <td style="padding:6px;"></td>
+                                                    <td style="padding:6px;text-align:left;">{{DiscComments}}</td>
+                                                </tr>
+                                                <tr style="display:{{chkBalanceafterGovflag}}">
+                                                    <td style="padding:6px;">Bal Amount :</td>
+                                                    <td style="padding:6px;"></td>
+                                                    <td style="padding:6px;text-align:right;" id="spanBalwduc">0.00</td>
+                                                </tr>
+                                            </table>
+
+                                            <table style="width:100%;border-collapse:collapse;margin-top:20px;font-size:15px;">
+                                                <tr>
+                                                    <td style="padding:6px;">
+                                                        <table style="width:100%;border-collapse:collapse;font-weight:bold;">
+                                                            <tr>
+                                                                <td>Amount in words :- <span id="spanNetWords"></span></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- PAYMENT INFORMATION -->
+                    <tr>
+                        <th style="text-align:left;" colspan="5">
+                            <h4 style="margin:12px 0px;font-size:15px;">Payment Information</h4>
+                        </th>
+                    </tr>
+                    <td colspan="2">
+                        <table style="text-align:center;border-collapse:collapse;width:100%;">
+                            <thead style="font-size:15px;">
+                                <tr>
+                                    <th style="border:1px solid #000;text-align:center;padding:6px;">Cash Amount</th>
+                                    <th style="border:1px solid #000;text-align:center;padding:6px;">Card Amount</th>
+                                    <th style="border:1px solid #000;text-align:center;padding:6px;">Cheque Amount</th>
+                                    <th style="border:1px solid #000;text-align:center;padding:6px;">Online Amount</th>
+                                    <th style="border:1px solid #000;text-align:center;padding:6px;">Adv Used Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size:15px;">
+                                <tr>
+                                    <td style="border:1px solid #000;text-align:right;padding:6px;">{{CashPayAmount}}</td>
+                                    <td style="border:1px solid #000;text-align:right;padding:6px;">{{CardPayAmount}}</td>
+                                    <td style="border:1px solid #000;text-align:right;padding:6px;">{{ChequePayAmount}}</td>
+                                    <td style="border:1px solid #000;text-align:right;padding:6px;">{{OnlinePayAmount}}</td>
+                                    <td style="border:1px solid #000;text-align:right;padding:6px;">{{AdvanceUsedAmount}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+
+                    <!-- ADVANCE INFORMATION -->
+                    <tr>
+                        <th style="text-align:center;">
+                            <h4 style="margin:12px 0px;font-size:14px;">Advance Information</h4>
+                        </th>
+                    </tr>
+                    <table style="width:100%;font-size:14px;border-collapse:collapse;font-family:Calibri;">
+                        <thead>
+                            <tr style="font-weight:bold;border-top:1px solid #000;border-bottom:1px solid #000;">
+                                <td style="padding:5px;width:40%;">Date</td>
+                                <td style="padding:5px;width:30%;">Payment Mode</td>
+                                <td style="padding:5px;width:30%;text-align:right;">Amount</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--ITEMS_SP2-->
+                            <tr style="border-bottom:1px solid #dcdcdc;">
+                                <td style="padding:1px;">{{PaymentDate}}</td>
+                                <td style="padding:1px;">{{Mode}}</td>
+                                <td style="padding:1px;text-align:right;">{{Amount}}</td>
+                            </tr>
+                            <!--/ITEMS_SP2-->
+                        </tbody>
+                        <tfoot>
+                            <tr style="border-top:1px solid #000;border-bottom:1px solid #000;font-weight:bold;">
+                                <td colspan="2" style="padding:5px;text-align:right;">Total :</td>
+                                <td style="padding:5px;text-align:right;">{{CurrSymbol}} {{TotalAdvanceAmount}}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <br />
+                    <br />
+
+                    <!-- ADVANCE DETAIL BOX -->
+                    <div style="width:50%;margin-left:auto;">
+                        <table style="width:100%;border-collapse:collapse;font-size:14px;font-weight:bold;">
+                            <tr>
+                                <th colspan="2" style="border:1px solid #000;padding:8px;text-align:center;">Advance Detail</th>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #000;padding:8px;">Advance Amount</td>
+                                <td style="border:1px solid #000;padding:8px;text-align:right;">{{TotalAdvanceAmount}}</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #000;padding:8px;">Advance Used Amount</td>
+                                <td style="border:1px solid #000;padding:8px;text-align:right;">{{AdvanceUsedAmount}}</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #000;padding:8px;">Advance Balance Amount</td>
+                                <td style="border:1px solid #000;padding:8px;text-align:right;">{{AdvanceBalAmount}}</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #000;padding:8px;">Advance Refund Amount</td>
+                                <td style="border:1px solid #000;padding:8px;text-align:right;">{{AdvanceRefundAmount}}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- FOOTER -->
+                    <tr>
+                        <table style="width:100%;border-collapse:collapse;margin-top:20px;">
+                            <tr>
+                                <td style="padding:6px;font-size:12px;">This is Computer generated invoice hence doesn't require signature</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:6px;text-align:right;font-size:15px;"><span>{{UserName}}</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:6px;text-align:right;font-weight:bold;font-size:15px;"><span>Authorized By</span></td>
+                            </tr>
+                        </table>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+
+            var rows = document.querySelectorAll('#chargeRows tr.charge-data-row');
+            if (rows.length === 0) return;
+
+            // Read totals from first row (same value on all rows)
+            var netPayable = parseFloat(rows[0].getAttribute('data-net')) || 0;
+            var advUsed = parseFloat(rows[0].getAttribute('data-adv')) || 0;
+            var paidAmt = parseFloat(rows[0].getAttribute('data-paid')) || 0;
+
+            // Loop all rows: add group headers, subtotal rows, fix serial numbers
+            var prevGroup = '', groupTotal = 0, grandTotal = 0, serial = 1;
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                var group = row.getAttribute('data-group') || '';
+                var amt = parseFloat(row.getAttribute('data-amt')) || 0;
+
+                // New group started — print subtotal for previous group, then new group header
+                if (group !== prevGroup) {
+                    if (prevGroup !== '') insertRow(row, 'subtotal', groupTotal); // subtotal of finished group
+                    insertRow(row, 'header', group);                              // header of new group
+                    groupTotal = 0;
+                    serial = 1;
+                }
+
+                row.cells[0].innerText = serial;   // fix Sr.No
+                groupTotal += amt;
+                grandTotal += amt;
+                prevGroup = group;
+                serial++;
+            }
+            // Subtotal for the last group (no next row to trigger it)
+            insertRow(rows[rows.length - 1].nextSibling, 'subtotal', groupTotal);
+
+            // Fill Grand Total
+            document.getElementById('spanFTotal').innerText = grandTotal.toFixed(2);
+
+            // Balance = NetPayable - AdvUsed - Paid  (only when AdvUsed < NetPayable)
+            var bal = (advUsed < netPayable) ? netPayable - advUsed - paidAmt : 0;
+            document.getElementById('spanBalwduc').innerText = bal.toFixed(2);
+
+            // Amount in words (Indian system)
+            document.getElementById('spanNetWords').innerText = toWords(Math.floor(netPayable)).toUpperCase() + ' ONLY';
+        };
+
+        // Insert a group-header row or a subtotal row before 'refNode' (null = append)
+        function insertRow(refNode, type, value) {
+            var tr = document.createElement('tr');
+            tr.style.fontSize = '17px';
+            tr.style.fontFamily = 'Helvetica Neue, Helvetica, Arial, sans-serif';
+            if (type === 'header') {
+                tr.style.fontWeight = 'bold';
+                tr.innerHTML = '<td colspan="6" style="padding:3px;">' + value + '</td>';
+            } else {
+                tr.innerHTML = '<td colspan="5" style="padding:3px;text-align:right;font-weight:bold;">Group Wise Total</td>'
+                    + '<td style="padding:3px;text-align:right;font-weight:bold;border-right:1px solid #eee;">' + value.toFixed(2) + '</td>';
+            }
+            var tbody = document.getElementById('chargeRows');
+            refNode ? tbody.insertBefore(tr, refNode) : tbody.appendChild(tr);
+        }
+
+        // Number to Indian words (Crore, Lakh, Thousand)
+        function toWords(n) {
+            var ones = ['', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE',
+                'TEN', 'ELEVEN', 'TWELVE', 'THIRTEEN', 'FOURTEEN', 'FIFTEEN', 'SIXTEEN',
+                'SEVENTEEN', 'EIGHTEEN', 'NINETEEN'];
+            var tens = ['', '', 'TWENTY', 'THIRTY', 'FORTY', 'FIFTY', 'SIXTY', 'SEVENTY', 'EIGHTY', 'NINETY'];
+            function w(n) {
+                if (n === 0) return '';
+                if (n < 20) return ones[n] + ' ';
+                if (n < 100) return tens[Math.floor(n / 10)] + ' ' + (n % 10 ? ones[n % 10] + ' ' : '');
+                return ones[Math.floor(n / 100)] + ' HUNDRED ' + w(n % 100);
+            }
+            if (n === 0) return 'ZERO';
+            var r = '';
+            if (n >= 10000000) { r += w(Math.floor(n / 10000000)) + 'CRORE '; n %= 10000000; }
+            if (n >= 100000) { r += w(Math.floor(n / 100000)) + 'LAKH '; n %= 100000; }
+            if (n >= 1000) { r += w(Math.floor(n / 1000)) + 'THOUSAND '; n %= 1000; }
+            return (r + w(n)).trim();
+        }
+    </script>
+
+</body>
+</html>
