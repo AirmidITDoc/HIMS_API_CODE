@@ -238,81 +238,81 @@ namespace HIMS.Services.Utilities
         {
             try
             {
-             hospitalId = hospitalId <= 0 ? 1 : hospitalId;
+                hospitalId = hospitalId <= 0 ? 1 : hospitalId;
 
-            var hospital = _context.HospitalMasters.Find(hospitalId);
-            if (hospital == null) return string.Empty;
+                var hospital = _context.HospitalMasters.Find(hospitalId);
+                if (hospital == null) return string.Empty;
 
-            string html = File.ReadAllText(filePath);
+                string html = File.ReadAllText(filePath);
 
-            // Fetch all required files in ONE DB call
-            var files = _context.FileMasters.Where(x => x.RefId == hospital.HospitalId && x.IsDelete == false && (x.RefType == 7 || x.RefType == 10 || x.RefType == 11)).ToList();
+                // Fetch all required files in ONE DB call
+                var files = _context.FileMasters.Where(x => x.RefId == hospital.HospitalId && x.IsDelete == false && (x.RefType == 7 || x.RefType == 10 || x.RefType == 11)).ToList();
 
-            var logo = files.FirstOrDefault(x => x.RefType == 7);
-            var logo2 = files.FirstOrDefault(x => x.RefType == 10);
-            var infoImg = files.FirstOrDefault(x => x.RefType == 11);
+                var logo = files.FirstOrDefault(x => x.RefType == 7);
+                var logo2 = files.FirstOrDefault(x => x.RefType == 10);
+                var infoImg = files.FirstOrDefault(x => x.RefType == 11);
 
-            // Common replacements (used in multiple options)
-            var replacements = new Dictionary<string, string>
-            {
-                ["{{HospitalName}}"] = hospital.HospitalName ?? "",
-                ["{{Address}}"] = hospital.HospitalAddress ?? "",
-                ["{{City}}"] = hospital.City ?? "",
-                ["{{Pin}}"] = hospital.Pin ?? "",
-                ["{{Phone}}"] = hospital.Phone ?? "",
-                ["{{HospitalHeaderLine}}"] = hospital.HospitalHeaderLine ?? "",
-                ["{{EmailID}}"] = hospital.EmailId ?? "",
-                ["{{WebSiteInfo}}"] = hospital.WebSiteInfo ?? "",
-                ["{{HospitalShortName}}"] = hospital.HospitalShortName ?? "",
-                ["{{chkHospitalShortNameFlag}}"] = !string.IsNullOrWhiteSpace(hospital.HospitalShortName) ? "table-row" : "none"
-            };
-            string DestinationPath = string.Empty; //_Sales.GetFilePath();
-            if (string.IsNullOrWhiteSpace(DestinationPath))
-                DestinationPath = $"file:///{(AppSettings.Settings.StorageBaseUrl.Trim('\\') + "\\").Replace("\\", "/")}";
+                // Common replacements (used in multiple options)
+                var replacements = new Dictionary<string, string>
+                {
+                    ["{{HospitalName}}"] = hospital.HospitalName ?? "",
+                    ["{{Address}}"] = hospital.HospitalAddress ?? "",
+                    ["{{City}}"] = hospital.City ?? "",
+                    ["{{Pin}}"] = hospital.Pin ?? "",
+                    ["{{Phone}}"] = hospital.Phone ?? "",
+                    ["{{HospitalHeaderLine}}"] = hospital.HospitalHeaderLine ?? "",
+                    ["{{EmailID}}"] = hospital.EmailId ?? "",
+                    ["{{WebSiteInfo}}"] = hospital.WebSiteInfo ?? "",
+                    ["{{HospitalShortName}}"] = hospital.HospitalShortName ?? "",
+                    ["{{chkHospitalShortNameFlag}}"] = !string.IsNullOrWhiteSpace(hospital.HospitalShortName) ? "table-row" : "none"
+                };
+                string DestinationPath = string.Empty; //_Sales.GetFilePath();
+                if (string.IsNullOrWhiteSpace(DestinationPath))
+                    DestinationPath = $"file:///{(AppSettings.Settings.StorageBaseUrl.Trim('\\') + "\\").Replace("\\", "/")}";
 
-            switch (hospital.IsHeaderOption)
-            {
-                case 1: // Logo + Info
-                case 3: // Template (shares most logic)
-                    {
-                        if (hospital.IsHeaderOption == 3)
+                switch (hospital.IsHeaderOption)
+                {
+                    case 1: // Logo + Info
+                    case 3: // Template (shares most logic)
                         {
-                            replacements["{{hospitalTemplate}}"] = hospital.Header ?? "";
+                            if (hospital.IsHeaderOption == 3)
+                            {
+                                replacements["{{hospitalTemplate}}"] = hospital.Header ?? "";
+                            }
+
+                            //string hospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
+                            //string hospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
+                            string hospitalLogo = logo != null ? $"{DestinationPath}Hospital/Logo/{logo.DocSavedName}" : "";
+                            string hospitalLogo2 = logo2 != null ? $"{DestinationPath}NABHLogo/NABH/{logo2.DocSavedName}" : "";
+                            replacements["{{logo}}"] = hospitalLogo;
+                            replacements["{{logo2}}"] = hospitalLogo2;
+                            replacements["{{chklogo2flag}}"] = logo2 != null ? "block" : "none";
+
+                            break;
                         }
 
-                        //string hospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
-                        //string hospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
-                        string hospitalLogo = logo != null ? $"{DestinationPath}Hospital/Logo/{logo.DocSavedName}" : "";
-                        string hospitalLogo2 = logo2 != null ? $"{DestinationPath}NABHLogo/NABH/{logo2.DocSavedName}" : "";
-                        replacements["{{logo}}"] = hospitalLogo;
-                        replacements["{{logo2}}"] = hospitalLogo2;
-                        replacements["{{chklogo2flag}}"] = logo2 != null ? "block" : "none";
+                    case 2: // Image header
+                        {
+                            string hospitalInfo = infoImg != null ? $"{DestinationPath}Upload/Img_Upload/{infoImg.DocSavedName}" : "";
 
-                        break;
-                    }
+                            replacements["{{hospitalinfo}}"] = hospitalInfo;
+                            break;
+                        }
+                }
 
-                case 2: // Image header
-                    {
-                        string hospitalInfo = infoImg != null ? $"{DestinationPath}Upload/Img_Upload/{infoImg.DocSavedName}" : "";
+                // Apply all replacements efficiently
+                foreach (var item in replacements)
+                {
+                    html = html.Replace(item.Key, item.Value);
+                }
 
-                        replacements["{{hospitalinfo}}"] = hospitalInfo;
-                        break;
-                    }
-            }
+                // Final visibility flags
+                html = html
+                    .Replace("{{TextHeaderDisplay}}", hospital.IsHeaderOption == 1 ? "table-row" : "none")
+                    .Replace("{{ImageHeaderDisplay}}", hospital.IsHeaderOption == 2 ? "table-row" : "none")
+                    .Replace("{{TemplateHeaderDisplay}}", hospital.IsHeaderOption == 3 ? "table-row" : "none");
 
-            // Apply all replacements efficiently
-            foreach (var item in replacements)
-            {
-                html = html.Replace(item.Key, item.Value);
-            }
-
-            // Final visibility flags
-            html = html
-                .Replace("{{TextHeaderDisplay}}", hospital.IsHeaderOption == 1 ? "table-row" : "none")
-                .Replace("{{ImageHeaderDisplay}}", hospital.IsHeaderOption == 2 ? "table-row" : "none")
-                .Replace("{{TemplateHeaderDisplay}}", hospital.IsHeaderOption == 3 ? "table-row" : "none");
-
-            return html;
+                return html;
             }
             catch (Exception ex)
             {
@@ -532,7 +532,8 @@ namespace HIMS.Services.Utilities
                 Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy"));
             string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
             // ✅ Write html to a temp file
-            string tempFile = NewFileName.Replace(".pdf", "_temp.html");
+            string tempFile = NewFileName.Replace(".pdf", $"{Guid.NewGuid():N}_temp.html");
+
             File.WriteAllText(tempFile, html, Encoding.UTF8);
 
             try
@@ -583,7 +584,7 @@ namespace HIMS.Services.Utilities
                 Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy"));
             string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
             // ✅ Write html to a temp file
-            string tempFile = NewFileName.Replace(".pdf", "_temp.html");
+            string tempFile = NewFileName.Replace(".pdf", $"{Guid.NewGuid():N}_temp.html");
             File.WriteAllText(tempFile, html, Encoding.UTF8);
 
             try
@@ -1036,7 +1037,7 @@ namespace HIMS.Services.Utilities
                 return html;
 
             DataRow firstRow = dt.Rows[0];
-   
+
             html = ReplaceNormalValues(html, firstRow);
             html = ReplaceDateFormats(html, firstRow);
             html = ReplaceFlags(html, firstRow);
