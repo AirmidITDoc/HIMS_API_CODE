@@ -68,7 +68,8 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPost("DischargeSummaryInsert")]
         [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
-        public ApiResponse InsertSP(DischargeSumModel obj)
+        public async Task<ApiResponse> InsertSP(DischargeSumModel obj)
+
         {
             DischargeSummary model = obj.DischargModel.MapTo<DischargeSummary>();
             List<TIpPrescriptionDischarge> Prescription = obj.PrescriptionDischarge.MapTo<List<TIpPrescriptionDischarge>>();
@@ -79,7 +80,7 @@ namespace HIMS.API.Controllers.IPPatient
                 model.AddedBy = CurrentUserId;
                 Prescription.ForEach(x => { x.OpdIpdId = obj.DischargModel.AdmissionId; x.CreatedBy = CurrentUserId; x.ModifiedBy = CurrentUserId; });
 
-                _IDischargeSummaryService.InsertSP(model, Prescription, CurrentUserId, CurrentUserName);
+                await _IDischargeSummaryService.InsertAsync(model, Prescription, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -87,7 +88,8 @@ namespace HIMS.API.Controllers.IPPatient
         }
         [HttpPut("DischargeSummaryUpdate")]
         [Permission(PageCode = "DischargeSum", Permission = PagePermission.Edit)]
-        public ApiResponse UPDATESP(DischargeUpdate obj)
+        public async Task<ApiResponse> UPDATESP(DischargeUpdate obj)
+
         {
             DischargeSummary model = obj.DischargModel.MapTo<DischargeSummary>();
             List<TIpPrescriptionDischarge> Prescription = obj.PrescriptionDischarge.MapTo<List<TIpPrescriptionDischarge>>();
@@ -98,7 +100,7 @@ namespace HIMS.API.Controllers.IPPatient
                 model.Optime = Convert.ToDateTime(obj.DischargModel.Optime);
                 model.AddedBy = CurrentUserId;
 
-                _IDischargeSummaryService.UpdateSP(model, Prescription, CurrentUserId, CurrentUserName);
+                await _IDischargeSummaryService.UpdateSP(model, Prescription, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
