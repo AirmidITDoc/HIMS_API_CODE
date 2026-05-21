@@ -246,6 +246,16 @@ namespace HIMS.API.ABHA.Models
     {
         public string PublicKey { get; set; } = string.Empty;
     }
+    public class AbdmErrorResponse
+    {
+        public AbdmError Error { get; set; }
+    }
+
+    public class AbdmError
+    {
+        public string Code { get; set; }
+        public string Message { get; set; }
+    }
 
 
     // DTOs for controller

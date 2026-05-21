@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace HIMS.API.ABHA.Helper
 {
@@ -42,6 +43,37 @@ namespace HIMS.API.ABHA.Helper
             // ABDM expects OAEP with SHA-1
             var encrypted = rsa.Encrypt(data, RSAEncryptionPadding.OaepSHA1);
             return Convert.ToBase64String(encrypted);
+        }
+    }
+    public static class AbhaHelper
+    {
+        public static string GetErrorMessage(string jsonString)
+        {
+            try
+            {
+                var root = JsonSerializer.Deserialize<JsonElement>(jsonString);
+
+                // Case 1: { "error": { "code": "...", "message": "..." } }
+                if (root.TryGetProperty("error", out var errorObj))
+                {
+                    if (errorObj.TryGetProperty("message", out var msg))
+                        return msg.GetString();
+                }
+
+                // Case 2: { "loginId": "Invalid LoginId", "timestamp": "..." }
+                // Return first property value that isn't "timestamp"
+                foreach (var prop in root.EnumerateObject())
+                {
+                    if (!prop.Name.Equals("timestamp", StringComparison.OrdinalIgnoreCase))
+                        return prop.Value.GetString();
+                }
+
+                return "An unknown error occurred.";
+            }
+            catch
+            {
+                return "Failed to parse error response.";
+            }
         }
     }
 }
