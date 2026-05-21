@@ -13,6 +13,7 @@ using System.Data;
 using System.Security.Principal;
 using System.Transactions;
 using System.Xml;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HIMS.Services.IPPatient
 {
@@ -51,6 +52,7 @@ namespace HIMS.Services.IPPatient
             DatabaseHelper odal = new();
             odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
             odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] rEntity = { "AdmissionId", "DischargeId", "History", "Diagnosis", "Investigation", "ClinicalFinding", "OpertiveNotes", "TreatmentGiven", "TreatmentAdvisedAfterDischarge", "Followupdate", "Remark", "DischargeSummaryDate", "OpDate", "Optime", "DischargeDoctor1", "DischargeDoctor2", "DischargeDoctor3", "DischargeSummaryTime", "DoctorAssistantName", "ClaimNumber", "PreOthNumber", "AddedBy", "UpdatedBy", "SurgeryProcDone", "Icd10code", "ClinicalConditionOnAdmisssion", "OtherConDrOpinions", "ConditionAtTheTimeOfDischarge", "PainManagementTechnique", "LifeStyle", "WarningSymptoms", "Radiology", "IsNormalOrDeath", "DischargeSummaryId" };
             var entity = ObjDischargeSummary.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
@@ -100,6 +102,7 @@ namespace HIMS.Services.IPPatient
             DatabaseHelper odal = new();
             odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
             odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] rEntity = { "DischargeSummaryId", "DischargeId", "History", "Diagnosis", "Investigation", "ClinicalFinding", "OpertiveNotes", "TreatmentGiven", "TreatmentAdvisedAfterDischarge", "Followupdate", "Remark", "OpDate", "Optime", "DischargeDoctor1", "DischargeDoctor2", "DischargeDoctor3", "DoctorAssistantName", "ClaimNumber", "PreOthNumber", "AddedBy", "UpdatedBy", "SurgeryProcDone", "Icd10code", "ClinicalConditionOnAdmisssion", "OtherConDrOpinions", "ConditionAtTheTimeOfDischarge", "PainManagementTechnique", "LifeStyle", "WarningSymptoms", "Radiology", "IsNormalOrDeath" };
             var Uentity = ObjDischargeSummary.ToDictionary();
             foreach (var rProperty in Uentity.Keys.ToList())
@@ -148,9 +151,17 @@ namespace HIMS.Services.IPPatient
 
         }
 
-        public virtual void InsertTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int CurrentUserId, string CurrentUserName)
         {
+            // Open transaction
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                // //Add header table records
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] rEntity = { "AdmissionId", "DischargeId", "Followupdate", "DischargeDoctor1", "DischargeDoctor2", "DischargeDoctor3", "AddedBy", "UpdatedBy", "IsNormalOrDeath", "DischargeSummaryId", "TemplateDescriptionHtml" };
             var Tentity = ObjDischargeTemplate.ToDictionary();
             foreach (var rProperty in Tentity.Keys.ToList())
@@ -160,7 +171,7 @@ namespace HIMS.Services.IPPatient
             }
             string TDischargeSummaryId = odal.ExecuteNonQuery("ps_insert_DischargeSummaryTemplate", CommandType.StoredProcedure, "DischargeSummaryId", Tentity);
             ObjDischargeTemplate.DischargeSummaryId = Convert.ToInt32(TDischargeSummaryId);
-            _ = Task.Run(() => _context.LogProcedureExecution(Tentity, nameof(DischargeSummary), ObjDischargeTemplate.DischargeSummaryId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+            await _context.LogProcedureExecution(Tentity, nameof(DischargeSummary), Convert.ToInt32(ObjDischargeTemplate.DischargeSummaryId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
 
             foreach (var item in ObjTIpPrescriptionTemplate)
@@ -173,13 +184,31 @@ namespace HIMS.Services.IPPatient
                         pentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
-                _ = Task.Run(() => _context.LogProcedureExecution(pentity, nameof(TIpPrescriptionDischarge), item.PrecriptionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                await _context.LogProcedureExecution(pentity, nameof(TIpPrescriptionDischarge), Convert.ToInt32(item.PrecriptionId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             }
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            //Commit if all good
+            await transaction.CommitAsync();
         }
-        public virtual void UpdateTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int CurrentUserId, string CurrentUserName)
+            catch (Exception ex)
+            {
+                //Rollback on error
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+        public virtual async Task  UpdateTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int CurrentUserId, string CurrentUserName)
         {
+            // Open transaction
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                // //Add header table records
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] rEntity = {"DischargeSummaryId", "AdmissionId", "DischargeId", "Followupdate", "DischargeDoctor1", "DischargeDoctor2", "DischargeDoctor3", "AddedBy", "UpdatedBy", "IsNormalOrDeath", "TemplateDescriptionHtml"};
             var Sentity = ObjDischargeTemplate.ToDictionary();
             foreach (var rProperty in Sentity.Keys.ToList())
@@ -188,15 +217,18 @@ namespace HIMS.Services.IPPatient
                     Sentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_DischargeSummaryTemplate", CommandType.StoredProcedure, Sentity);
-            _ = Task.Run(() => _context.LogProcedureExecution(Sentity, nameof(DischargeSummary), ObjDischargeTemplate.DischargeSummaryId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-
+            await _context.LogProcedureExecution(Sentity, nameof(DischargeSummary), Convert.ToInt32(ObjDischargeTemplate.DischargeSummaryId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
             var tokensObj = new
             {
                 OPDIPDID = Convert.ToInt32(ObjDischargeTemplate.AdmissionId)
             };
+       
             odal.ExecuteNonQuery("ps_Delete_T_IP_Prescription_Discharge", CommandType.StoredProcedure, tokensObj.ToDictionary());
-            foreach (var item in ObjTIpPrescriptionTemplate)
+            await _context.LogProcedureExecution(tokensObj.ToDictionary(), "ps_Delete_T_IP_Prescription_Discharge", ObjDischargeTemplate.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
+
+
+                foreach (var item in ObjTIpPrescriptionTemplate)
             {
                 string[] DEntity = { "OpdIpdId", "OpdIpdType", "Date", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "InstructionId", "QtyPerDay", "TotalQty", "Instruction", "Remark", "IsEnglishOrIsMarathi", "StoreId", "CreatedBy" };
                 var pentity = item.ToDictionary();
@@ -206,16 +238,30 @@ namespace HIMS.Services.IPPatient
                         pentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
-                _ = Task.Run(() => _context.LogProcedureExecution(pentity, nameof(TIpPrescriptionDischarge), item.PrecriptionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-
-
-
+                await _context.LogProcedureExecution(pentity, nameof(TIpPrescriptionDischarge), Convert.ToInt32(item.PrecriptionId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            }
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                //Commit if all good
+            await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                //Rollback on error
+                await transaction.RollbackAsync();
+                throw;
             }
         }
         public virtual async Task  InsertDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, Bedmaster ObjBedmaster, int CurrentUserId, string CurrentUserName)
         {
-            // throw new NotImplementedException();
+            // Open transaction
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                // //Add header table records
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] rEntity = { "AdmissionId", "DischargeDate", "DischargeTime", "DischargeTypeId", "DischargedDocId", "DischargedRmoid", "ModeOfDischargeId", "AddedBy", "ModifiedBy", "DischargeId" };
             var entity = ObjDischarge.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
@@ -225,9 +271,7 @@ namespace HIMS.Services.IPPatient
             }
             string DischargeId = odal.ExecuteNonQuery("ps_insert_Discharge_1", CommandType.StoredProcedure, "DischargeId", entity);
             ObjDischarge.DischargeId = Convert.ToInt32(DischargeId);
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(Discharge), ObjDischarge.DischargeId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-
-
+            await _context.LogProcedureExecution(entity, nameof(Discharge), Convert.ToInt32(ObjDischarge.DischargeId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             string[] AEntity = { "AdmissionId", "DischargeDate", "DischargeTime", "IsDischarged" };
             var Admientity = ObjAdmission.ToDictionary();
@@ -237,8 +281,7 @@ namespace HIMS.Services.IPPatient
                     Admientity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_Admission_DischareInfo_3", CommandType.StoredProcedure, Admientity);
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(Admission), ObjAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-
+            await _context.LogProcedureExecution(Admientity, nameof(Admission), Convert.ToInt32(ObjAdmission.AdmissionId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
             string[] BEntity = { "BedId"};
             var Bentity = ObjBedmaster.ToDictionary();
@@ -248,15 +291,32 @@ namespace HIMS.Services.IPPatient
                     Bentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_Update_DischargeBedRelease", CommandType.StoredProcedure, Bentity);
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(Bedmaster), ObjBedmaster.BedId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+            await _context.LogProcedureExecution(Bentity, nameof(Bedmaster), Convert.ToInt32(ObjBedmaster.BedId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            //Commit if all good
+            await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                //Rollback on error
+                await transaction.RollbackAsync();
+                throw;
+            }
 
         }
 
         public virtual async Task UpdateDischargeSP(Discharge ObjDischarge, Admission ObjAdmission, int CurrentUserId, string CurrentUserName)
         {
-            // throw new NotImplementedException();
+            // Open transaction
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                // //Add header table records
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] rEntity = { "AdmissionId", "DischargeId", "DischargeDate", "DischargeTime", "DischargeTypeId", "DischargedDocId", "DischargedRmoid", "AddedBy", "ModeOfDischargeId", "ModifiedBy" };
             var Dentity = ObjDischarge.ToDictionary();
             foreach (var rProperty in Dentity.Keys.ToList())
@@ -265,7 +325,7 @@ namespace HIMS.Services.IPPatient
                     Dentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_Discharge_1", CommandType.StoredProcedure, Dentity);
-            _ = Task.Run(() => _context.LogProcedureExecution(Dentity, nameof(Discharge), ObjDischarge.DischargeId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
+            await _context.LogProcedureExecution(Dentity, nameof(Discharge), ObjDischarge.DischargeId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
 
             string[] AEntity = { "AdmissionId", "DischargeDate", "DischargeTime", "IsDischarged" };
@@ -276,8 +336,17 @@ namespace HIMS.Services.IPPatient
                     Aentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_Admission_DischareInfo_3", CommandType.StoredProcedure, Aentity);
-            _ = Task.Run(() => _context.LogProcedureExecution(Aentity, nameof(Admission), ObjAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
-
+            await _context.LogProcedureExecution(Aentity, nameof(Admission), ObjAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                //Commit if all good
+            await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                //Rollback on error
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
 

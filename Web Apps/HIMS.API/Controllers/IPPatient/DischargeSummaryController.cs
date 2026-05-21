@@ -110,7 +110,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPost("DischargeTemplateInsert")]
         [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
-        public ApiResponse DischargeTemplateInsert(DischargeTemplate obj)
+        public  async Task<ApiResponse> DischargeTemplateInsert(DischargeTemplate obj)
         {
             DischargeSummary model = obj.Discharge.MapTo<DischargeSummary>();
             List<TIpPrescriptionDischarge> Prescription = obj.PrescriptionTemplate.MapTo<List<TIpPrescriptionDischarge>>();
@@ -120,7 +120,7 @@ namespace HIMS.API.Controllers.IPPatient
                 model.AddedBy = CurrentUserId;
                 Prescription.ForEach(x => { x.OpdIpdId = obj.Discharge.AdmissionId; x.CreatedBy = CurrentUserId; x.ModifiedBy = CurrentUserId; });
 
-                _IDischargeSummaryService.InsertTemplate(model, Prescription, CurrentUserId, CurrentUserName);
+                await _IDischargeSummaryService.InsertTemplate(model, Prescription, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -129,7 +129,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPut("DischargeTemplateUpdate")]
         [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
-        public ApiResponse DischargeTemplateUpdate(DischargeTemUpdate obj)
+        public async Task<ApiResponse> DischargeTemplateUpdate(DischargeTemUpdate obj)
         {
             DischargeSummary model = obj.Discharge.MapTo<DischargeSummary>();
             List<TIpPrescriptionDischarge> Prescription = obj.PrescriptionTemplate.MapTo<List<TIpPrescriptionDischarge>>();
@@ -140,7 +140,7 @@ namespace HIMS.API.Controllers.IPPatient
 
                 Prescription.ForEach(x => { x.OpdIpdId = model.AdmissionId; x.CreatedBy = CurrentUserId; x.ModifiedBy = CurrentUserId; });
 
-                _IDischargeSummaryService.UpdateTemplate(model, Prescription, CurrentUserId, CurrentUserName);
+                await _IDischargeSummaryService.UpdateTemplate(model, Prescription, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -150,7 +150,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPost("DischargeInsert")]
         [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
-        public ApiResponse IPDischargeInsert(DischargeModels obj)
+        public async Task<ApiResponse> IPDischargeInsert(DischargeModels obj)
         {
             Discharge model = obj.Discharge.MapTo<Discharge>();
             Admission ObjAdmission = obj.Admission.MapTo<Admission>();
@@ -168,7 +168,7 @@ namespace HIMS.API.Controllers.IPPatient
                     ObjAdmission.AddedBy = CurrentUserId;
                     ObjBed.CreatedBy = CurrentUserId;
                 }
-                _IDischargeSummaryService.InsertDischargeSP(model, ObjAdmission, ObjBed, CurrentUserId, CurrentUserName);
+                await _IDischargeSummaryService.InsertDischargeSP(model, ObjAdmission, ObjBed, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -177,7 +177,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPut("DischargeUpdate")]
         [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
-        public ApiResponse DischargeUpdate(DischargUpdate obj)
+        public async Task<ApiResponse> DischargeUpdate(DischargUpdate obj)
         {
             Discharge model = obj.Discharge.MapTo<Discharge>();
             Admission ObjAdmission = obj.Admission.MapTo<Admission>();
@@ -193,7 +193,7 @@ namespace HIMS.API.Controllers.IPPatient
                     ObjAdmission.DischargeTime = Convert.ToDateTime(obj.Admission.DischargeTime);
                     ObjAdmission.AddedBy = CurrentUserId;
                 }
-                _IDischargeSummaryService.UpdateDischargeSP(model, ObjAdmission, CurrentUserId, CurrentUserName);
+                await _IDischargeSummaryService.UpdateDischargeSP(model, ObjAdmission, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -226,7 +226,7 @@ namespace HIMS.API.Controllers.IPPatient
             else
             {
                 model.ModifiedDate = AppTime.Now;
-                model.ModifiedBy = CurrentUserId;
+                model.ModifiedBy = CurrentUserId;           
                 await _IDischargeSummaryService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
