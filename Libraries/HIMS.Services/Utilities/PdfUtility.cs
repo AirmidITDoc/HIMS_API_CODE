@@ -1039,6 +1039,7 @@ namespace HIMS.Services.Utilities
             DataRow firstRow = dt.Rows[0];
 
             html = ReplaceNormalValues(html, firstRow);
+            html = ApplyOnlyN2Formatting(html, firstRow);
             html = ReplaceDateFormats(html, firstRow);
             html = ReplaceFlags(html, firstRow);
 
@@ -1125,6 +1126,43 @@ namespace HIMS.Services.Utilities
             }
 
             return html.Replace(match.Value, output.ToString());
+        }
+        private string ApplyOnlyN2Formatting(string html, DataRow row)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(html) || row == null)
+                    return html;
+
+                return Regex.Replace(html, @"\{\{(\w+)\|N2\}\}", m =>
+                {
+                    try
+                    {
+                        string column = m.Groups[1].Value;
+
+                        if (!row.Table.Columns.Contains(column))
+                            return m.Value;
+
+                        var value = row[column];
+
+                        if (value == null || value == DBNull.Value)
+                            return "";
+
+                        if (double.TryParse(value.ToString(), out double num))
+                            return num.ToString("0.00");
+
+                        return value.ToString() ?? m.Value;
+                    }
+                    catch
+                    {
+                        return m.Value; // safe fallback per match
+                    }
+                });
+            }
+            catch
+            {
+                return html; // absolute safety: never break rendering
+            }
         }
         public List<List<SearchGrid>> SplitBySeparator(List<SearchGrid> fields)
         {
