@@ -549,6 +549,7 @@ namespace HIMS.Services.Utilities
                     UseLocalLinks = true,         // ✅ Allow local file links
                      LoadSettings = new LoadSettings
     {
+                         BlockLocalFileAccess = false,
         JSDelay = 1500,
         StopSlowScript = false
     }
