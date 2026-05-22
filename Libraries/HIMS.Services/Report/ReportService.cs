@@ -14,6 +14,7 @@ using System.Data;
 using System.Globalization;
 using System.Reflection.PortableExecutable;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using WkHtmlToPdfDotNet;
 using static LinqToDB.Common.Configuration;
@@ -4638,6 +4639,238 @@ namespace HIMS.Services.Report
                          <br/><br/>";
 
                         html = html.Replace("{{SummaryBlock}}", summaryBlock);
+                    }
+                    break;
+                case "MultiResultSetReportFormulaSummary.html":
+                    {
+                        var dcFields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+
+                        SqlParameter[] dcPara = dcFields.Select(kv =>
+                        {
+                            bool isDate = kv.Key.Equals("FromDate", StringComparison.OrdinalIgnoreCase)
+                                       || kv.Key.Equals("ToDate", StringComparison.OrdinalIgnoreCase);
+                            return new SqlParameter("@" + kv.Key,
+                                isDate ? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                                       : (object)kv.Value);
+                        }).ToArray();
+
+                        List<DataTable> allSets = FetchAllResultSets(model.SPName, dcPara);
+
+                        if (allSets.Count > 0)
+                        {
+                            DataTable firstDt = allSets[0];
+
+                            string[] trimmedHeaders = model.headerList.Select(x => x.Trim()).ToArray();
+                            string[] trimmedColList = model.colList.Select(x => x.Trim()).ToArray();
+                            string[] trimmedWidths = (model.columnWidths ?? Array.Empty<string>()).Select(x => x.Trim()).ToArray();
+
+                            string[] alignedHeaders = trimmedHeaders.Where(x => !x.Equals("Sr.No", StringComparison.OrdinalIgnoreCase)).ToArray();
+                            string[] dcTotalCols = totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                            string[] dcGroupCols = model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
+
+                            string[] hiddenCols = { "ExpenseType", "Type" };
+
+                            var allPairs = alignedHeaders.Zip(trimmedColList, (h, c) => new { h, c }).Select((x, i) => new { x.h, x.c, Width = i < trimmedWidths.Length ? trimmedWidths[i] : "" }).ToList();
+                            //var visiblePairs = allPairs.Where(x => !hiddenCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
+                            var visiblePairs = allPairs.Where(x => !hiddenCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).Where(x => !dcGroupCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
+
+                            string[] visibleHeaders = visiblePairs.Select(x => x.h).ToArray();
+                            string[] visibleWidths = visiblePairs.Select(x => x.Width).ToArray();
+
+                            HeaderItems.Append(GetCommonHtmlTableHeaderNew(firstDt, visibleHeaders, visibleWidths));
+
+                            string[] adjustedtotalColList = totalColList.Skip(2).ToArray();
+                            items.Append(GetCommonHtmlTableReportsNew(firstDt, alignedHeaders, trimmedColList, adjustedtotalColList, dcGroupCols));
+
+                            string[] adjustedTotalCols = dcTotalCols.Skip(2).ToArray();
+                            ItemsTotal.Append(CreateGrandTotal(firstDt, adjustedTotalCols, dcGroupCols));
+
+                            
+                            string summaryL = "";
+
+                            if (allSets.Count > 1 && allSets[1].Rows.Count > 0)
+                            {
+                                summaryL = Convert.ToString(allSets[1].Rows[0]["summaryLabel"]);
+                            }
+
+                            string summaryHtml = "";
+
+                            if (!string.IsNullOrWhiteSpace(summaryL))
+                            {
+                                // Calculate totals by ExpenseType
+                                Dictionary<string, Dictionary<string, decimal>> totals =
+                                    new Dictionary<string, Dictionary<string, decimal>>(StringComparer.OrdinalIgnoreCase);
+
+                                foreach (DataRow row in firstDt.Rows)
+                                {
+                                    string type = Convert.ToString(row["ExpenseType"]);
+
+                                    if (string.IsNullOrWhiteSpace(type))
+                                        continue;
+
+                                    if (!totals.ContainsKey(type))
+                                        totals[type] = new Dictionary<string, decimal>(StringComparer.OrdinalIgnoreCase);
+
+                                    foreach (string col in dcTotalCols)
+                                    {
+                                        if (!firstDt.Columns.Contains(col))
+                                            continue;
+
+                                        decimal val = 0;
+                                        decimal.TryParse(Convert.ToString(row[col]), out val);
+
+                                        if (!totals[type].ContainsKey(col))
+                                            totals[type][col] = 0;
+
+                                        totals[type][col] += val;
+                                    }
+                                }
+
+                                var boxes = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(summaryL);
+
+                                int boxCount = boxes.Count;
+
+                                string width = boxCount == 1 ? "100%" :
+                                               boxCount == 2 ? "50%" :
+                                               "33.33%";
+
+                                summaryHtml += @"
+                                <div style='page-break-before:always;margin-top:25px;'>
+                                <table style='width:100%;border-collapse:separate;border-spacing:14px 0;table-layout:fixed;'>
+                                <tr>";
+
+                                foreach (var box in boxes)
+                                {
+                                    summaryHtml += $@"
+                                        <td style='width:{width};vertical-align:top;'>
+
+                                            <table style='
+                                                width:100%;
+                                                border-collapse:separate;
+                                                border-spacing:0;
+                                                overflow:hidden;
+                                                border-radius:14px;
+                                                border:1px solid #dbe4f0;
+                                                font-family:Calibri,Arial;
+                                                background:#ffffff;
+                                                box-shadow:0 4px 14px rgba(0,0,0,0.08);
+                                            '>
+
+                                                <thead>
+                                        <tr>
+                                            <th colspan='2'
+                                                style='
+                                                background:#4f8dfd;
+                                                color:white;
+                                                padding:16px;
+                                                font-size:18px;
+                                                font-weight:bold;
+                                                text-align:center;
+                                                letter-spacing:0.5px;
+                                                border:none;'>
+                                                {box.Key.ToUpper()}
+                                            </th>
+                                        </tr>
+
+                                        <tr>
+                                            <th style='
+                                                background:#f4f7fb;
+                                                color:#1f2937;
+                                                padding:10px;
+                                                font-size:15px;
+                                                border-bottom:1px solid #dbe4f0;
+                                                text-align:left;'>
+                                                Particular
+                                            </th>
+
+                                            <th style='
+                                                background:#f4f7fb;
+                                                color:#1f2937;
+                                                padding:10px;
+                                                font-size:15px;
+                                                border-bottom:1px solid #dbe4f0;
+                                                text-align:right;'>
+                                                Amount
+                                            </th>
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>";
+
+                                    foreach (var item in box.Value)
+                                    {
+                                        string formula = item.Value;
+
+                                        foreach (var type in totals.Keys)
+                                        {
+                                            foreach (var col in totals[type].Keys)
+                                            {
+                                                formula = formula.Replace(
+                                                    type + "." + col,
+                                                    totals[type][col].ToString(System.Globalization.CultureInfo.InvariantCulture),
+                                                    StringComparison.OrdinalIgnoreCase
+                                                );
+                                            }
+                                        }
+
+                                        decimal finalValue = 0;
+
+                                        try
+                                        {
+                                            finalValue = Convert.ToDecimal(new System.Data.DataTable().Compute(formula, ""));
+                                        }
+                                        catch { }
+
+                                        summaryHtml += $@"
+                                        <tr>
+
+                                            <td style='
+                                                padding:12px;
+                                                font-size:14px;
+                                                color:#111827;
+                                                border-bottom:1px solid #eef2f7;
+                                                font-weight:600;'>
+                                                {item.Key}
+                                            </td>
+
+                                            <td style='
+                                                padding:12px;
+                                                font-size:18px;
+                                                color:#0d6efd;
+                                                border-bottom:1px solid #eef2f7;
+                                                text-align:right;
+                                                font-weight:bold;'>
+                                                {finalValue:N2}
+                                            </td>
+
+                                        </tr>";
+                                    }
+
+                                    summaryHtml += @"
+                                        </tbody>
+                                    </table>
+                                </td>";
+                                }
+
+                                // Empty box if only 2 boxes
+                                if (boxCount == 2)
+                                {
+                                    summaryHtml += @"
+                                    <td style='width:50%;'></td>";
+                                }
+
+                                summaryHtml += @"
+                                    </tr>
+                                    </table>
+
+                                    </div>";
+                            }
+
+                            html = html.Replace("{{SummaryBlock}}", summaryHtml);
+                        }
+                        html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yyyy"));
+                        html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
                     }
                     break;
 
