@@ -21,7 +21,7 @@
             <table class="table" style="width: 100%;border-collapse: collapse;">
                 <tbody>
                     <tr>
-                        <td colspan="6"
+                        <td colspan="4"
                             style="vertical-align: top;border: 1px solid black;width:40%; padding:0 10px 10px;font-size:18px;">
                             <h3 style="margin-top:0;margin-bottom:5px;text-transform: uppercase;font-size: 16px;">
                                 {{StoreName}}
@@ -39,7 +39,7 @@
                                 <a href="mailto:info@jsshospitals.com">{{HospitalEmailId}}</a>
                             </div>
                         </td>
-                        <td colspan="9" style="border: 1px solid black;width: 33.33%;vertical-align: top; padding: 0;">
+                        <td colspan="8" style="border: 1px solid black;width: 33.33%;vertical-align: top; padding: 0;">
                             <table style="width: 100%;border-collapse: collapse;font-size:14px;">
 
                                 <td style=" vertical-align: top; padding: 0 10px 10px">
@@ -80,7 +80,7 @@
 
                     </tr>
                     <tr>
-                        <td colspan="6"
+                        <td colspan="4"
                             style=" vertical-align: top; border: 1px solid black; width: 40%; padding: 0 10px 10px; font-size: 14px;">
                             <div>
                                 <span style="font-weight: bold;">
@@ -95,7 +95,7 @@
                         </td>
 
                         <td colspan="8" style="border: 1px solid black; width: 33.33%; vertical-align: top; padding: 0;">
-                            <table style="width: 100%;font-size:14px;">
+                            <table style="width: 100%;font-size:16px;">
                                 <!-- <tr> -->
                                 <td style="vertical-align: top;padding:0 10px 10px">
                                     <span style="font-weight: bold; ">
@@ -125,17 +125,17 @@
                         <td style="border: 1px solid black;font-weight:bold;text-align:center;vertical-align: middle;padding:5px 5px;width:5%;">
                             Sr No.
                         </td>
-                        <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">
-                            HSN
-                        </td>
-                        <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 7%;">
-                            MFR
-                        </td>
+                        <!--<td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">
+            HSN
+        </td>
+        <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 7%;">
+            MFR
+        </td>-->
                         <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 30%;">
                             Product Name
                         </td>
-                        <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 5%;">
-                            Pack
+                        <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">
+                            Qty
                         </td>
                         <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">
                             Batch No.
@@ -155,9 +155,7 @@
                         <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 15%;">
                             SGSTAmt
                         </td>
-                        <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">
-                            Qty
-                        </td>
+
                         <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 20%;">
                             MRP
                         </td>
@@ -167,7 +165,7 @@
                     </tr>
                     {{Items}}
                     <tr>
-                        <td colspan="7" style="border: 1px solid black;vertical-align: top;padding: 0 10px 10px;">
+                        <td colspan="6" style="border: 1px solid black;vertical-align: top;padding: 0 10px 10px;">
                             <div style="font-weight: 500;">Terms & Conditions</div>
                             <ul style="margin: 5px 0 0 0; font-size: 12px;
                                 padding-left: 17px;
@@ -175,34 +173,44 @@
                                 <pre>{{TermsAndCondition}}</pre>
                             </ul>
                         </td>
-                        <!-- <td colspan="5" style="border: 1px solid black;vertical-align: top;padding: 0;">
-        </td> -->
-                        <td colspan="7" style="border: 1px solid black;vertical-align: top;
-                padding: 5px 1px 5px 0;font-size:17px;">
-                            <div style="margin-left:160px;">
+
+                        <td colspan="9" style="border: 1px solid black;vertical-align: top;
+                          padding: 0 10px 10px;width: 300px;font-size:14px;">
+                            <div style="display:flex;align-items:center;">
                                 <span style="width:90px;display:inline-block;">Sub Total</span>
                                 <span style="margin:0 2px">:</span>
                                 <span>{{CurrSymbol}} {{HTotalAmount}}</span>
                             </div>
-                            <div style="margin-left:160px; ">
+                            <div style="display:flex;align-items: center;">
                                 <span style="width:90px;display:inline-block;">Discount</span>
                                 <span style="margin:0 2px">:</span>
                                 <span>{{CurrSymbol}} {{DiscAmount}}</span>
                             </div>
-                            <div style="margin-left:160px; ">
+                            <div style="display:flex;align-items: center;">
                                 <span style="width:90px;display:inline-block;">Total GST</span>
                                 <span style="margin:0 5px">:</span>
                                 <span>{{CurrSymbol}} {{TotalGST}}</span>
                             </div>
-                            <div style="margin-left:160px; ">
+                            <div style="display:flex;align-items: center;">
                                 <span style="width:90px;display:inline-block;">Round off</span>
                                 <span style="margin:0 5px">:</span>
                                 <span>{{CurrSymbol}}{{RoundOff}}</span>
                             </div>
-                            <div style="margin-left:160px; font-size: 18px; font-weight: bold ">
+                            <div style="display:flex;align-items: center;">
                                 <span style="width: 90px; display: inline-block;">Grand Total</span>
                                 <span style="margin:0 5px">:</span>
                                 <span>{{CurrSymbol}} {{NetAmount}}</span>
+                            </div>
+                            <div style="display:{{chkPaidflag}};align-items:center;">
+                                <span style="width:90px;display:inline-block;">Paid Amount</span>
+                                <span style="margin:0 5px">:</span>
+                                <span>{{CurrSymbol}} {{PaidAmount}}</span>
+                            </div>
+
+                            <div style="display:{{chkBalanceflag}};align-items:center;">
+                                <span style="width:90px;display:inline-block;">Bal Amount</span>
+                                <span style="margin:0 5px">:</span>
+                                <span>{{CurrSymbol}} {{BalanceAmount}}</span>
                             </div>
                         </td>
                     </tr>
@@ -231,6 +239,14 @@
                         </td>
                         <td colspan="10" style="text-align: right;font-size:14px;">
                             This is Computer generated invoice hence doesn’t require signature
+                        </td>
+                    </tr>
+                    <tr style="font-size: 14px;">
+                        <td colspan="12" style="text-align: right;">
+                            <span style="display:inline-block; text-align:center;">
+                                {{StoreName}}<br>
+                                <span style="display:block;">PHARMACIST</span>
+                            </span>
                         </td>
                     </tr>
                 </tbody>

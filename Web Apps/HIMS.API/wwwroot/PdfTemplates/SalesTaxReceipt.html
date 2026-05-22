@@ -187,22 +187,26 @@
                             <span style="margin:0 5px">:</span>
                             <span>{{CurrSymbol}} {{DiscAmount}}</span>
                         </div>
-                        <!--<div style="display:flex;align-items: center;">
-                            <span style="width:90px;display:inline-block;">Total GST</span>
-                            <span style="margin:0 5px">:</span>
-                            <span>
-                                {{CurrSymbol}} {{TotalGST}}
-                            </span>
-                        </div>-->
                         <div style="display:flex;align-items: center;">
                             <span style="width:90px;display:inline-block;">Round off</span>
                             <span style="margin:0 5px">:</span>
                             <span>{{CurrSymbol}} {{RoundOff}}</span>
                         </div>
-                        <div style="display:flex;align-items: center;font-size: 14px;font-weight: bold">
-                            <span style="display:inline-block;">Grand Total</span>
+                        <div style="display:flex;align-items: center;">
+                            <span style="width:90px;display:inline-block;">Grand Total</span>
                             <span style="margin:0 5px">:</span>
                             <span>{{CurrSymbol}} {{NetAmount}}</span>
+                        </div>
+                        <div style="display:{{chkPaidflag}};align-items:center;">
+                            <span style="width:90px;display:inline-block;">Paid Amount</span>
+                            <span style="margin:0 5px">:</span>
+                            <span>{{CurrSymbol}} {{PaidAmount}}</span>
+                        </div>
+
+                        <div style="display:{{chkBalanceflag}};align-items:center;">
+                            <span style="width:90px;display:inline-block;">Bal Amount</span>
+                            <span style="margin:0 5px">:</span>
+                            <span>{{CurrSymbol}} {{BalanceAmount}}</span>
                         </div>
                     </td>
                 </tr>

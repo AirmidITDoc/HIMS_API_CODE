@@ -21561,12 +21561,17 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{HTotalAmount}}", T_HTotalAmount.To2DecimalPlace());
                         html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{BalanceAmount}}", dt.GetColValue("BalanceAmount").ConvertToDouble().ToString("F2"));
+
                         html = html.Replace("{{RoundOff}}", dt.GetColValue("RoundOff").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{DiscAmount}}", dt.GetColValue("DiscAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{HTotalAmount}}", dt.GetColValue("T_HTotalAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{CGSTAmt}}", dt.GetColValue("CGSTAmt").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{SGSTAmt}}", dt.GetColValue("SGSTAmt").ConvertToDouble().ToString("F2"));
 
+
+                        html = html.Replace("{{chkPaidflag}}", dt.GetColValue("PaidAmount").ConvertToDouble() > 0 ? "flex" : "none");
+                        html = html.Replace("{{chkBalanceflag}}", dt.GetColValue("BalanceAmount").ConvertToDouble() > 0 ? "flex" : "none");
 
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
                         html = html.Replace("{{GSTIN}}", dt.GetColValue("GSTIN"));
@@ -21685,17 +21690,17 @@ namespace HIMS.Services.Report
                             i++;
 
                             items.Append("<tr style=\"font-size:15px;\"><td style=\"border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center\">").Append(i).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;text-align:center;vertical-align:middle\">").Append(dr["HSNcode"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;text-align:center;vertical-align:middle\">").Append("</td>");
+                            //items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;text-align:center;vertical-align:middle\">").Append(dr["HSNcode"].ConvertToString()).Append("</td>");
+                            //items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;text-align:center;vertical-align:middle\">").Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: left;padding-left:10px;\">").Append(dr["ItemName"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: left;padding-left:10px;\">").Append(dr["ConversionFactor"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border-left:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: left;padding-left:10px;\">").Append(dr["Qty"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["BatchNo"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["BatchExpDate"].ConvertToString()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["CGSTPer"].ConvertToDouble()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["CGSTAmt"].ConvertToDouble()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["SGSTPer"].ConvertToDouble()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["SGSTAmt"].ConvertToDouble()).Append("</td>");
-                            items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: center;\">").Append(dr["Qty"].ConvertToDouble()).Append("</td>");
+                            //items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: center;\">").Append(dr["Qty"].ConvertToDouble()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;\">").Append(dr["UnitMRP"].ConvertToDouble().To2DecimalPlace()).Append("</td>");
                             items.Append("<td style=\"border-left:1px solid #000;border-right:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: center;\">").Append(dr["TotalAmount"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
 
@@ -21735,9 +21740,13 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NetAmount}}", dt.GetColValue("NetAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{RoundOff}}", dt.GetColValue("RoundOff").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{BalanceAmount}}", dt.GetColValue("BalanceAmount").ConvertToDouble().ToString("F2"));
+
                         html = html.Replace("{{HTotalAmount}}", dt.GetColValue("HTotalAmount").ConvertToDouble().ToString("F2"));
                         html = html.Replace("{{GrossAmount}}", dt.GetColValue("GrossAmount").ConvertToDouble().ToString("F2"));
 
+                        html = html.Replace("{{chkPaidflag}}", dt.GetColValue("PaidAmount").ConvertToDouble() > 0 ? "flex" : "none");
+                        html = html.Replace("{{chkBalanceflag}}", dt.GetColValue("BalanceAmount").ConvertToDouble() > 0 ? "flex" : "none");
                         html = html.Replace("{{SalesLabel}}", dt.GetColValue("SalesLabel"));
 
                         html = html.Replace("{{UserName}}", dt.GetColValue("UserName"));
