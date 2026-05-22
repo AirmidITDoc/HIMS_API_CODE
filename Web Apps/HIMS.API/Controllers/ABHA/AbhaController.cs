@@ -1,8 +1,11 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
+using HIMS.Api.Models.Common;
+using HIMS.API.ABHA.Helper;
 using HIMS.API.ABHA.Interface;
 using HIMS.API.ABHA.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace HIMS.API.Controllers.ABHA
 {
@@ -20,74 +23,99 @@ namespace HIMS.API.Controllers.ABHA
 
         // ===== Aadhaar flow =====
         [HttpPost("aadhaar/request-otp")]
-        public async Task<IActionResult> RequestAadhaarOtp([FromBody] AadhaarOtpDto dto)
+        public async Task<ApiResponse> RequestAadhaarOtp([FromBody] AadhaarOtpDto dto)
         {
             if (string.IsNullOrWhiteSpace(dto.AadhaarNumber) || dto.AadhaarNumber.Length != 12)
-                return BadRequest(new { error = "Valid 12-digit Aadhaar number required" });
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Valid 12-digit Aadhaar number required");
 
             var result = await _abhaService.RequestAadhaarOtpAsync(dto.AadhaarNumber);
-            return result.Success ? Ok(result.Data) : StatusCode(result.StatusCode == 0 ? 500 : result.StatusCode, result);
+            if (result.Success)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Otp Sent successfully.", result.Data);
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
         [HttpPost("aadhaar/verify-otp")]
-        public async Task<IActionResult> VerifyAadhaarOtp([FromBody] VerifyOtpDto dto)
+        public async Task<ApiResponse> VerifyAadhaarOtp([FromBody] VerifyOtpDto dto)
         {
             var result = await _abhaService.VerifyAadhaarOtpAsync(dto.TxnId, dto.Otp, dto.Mobile);
-            return result.Success ? Ok(result.Data) : StatusCode(result.StatusCode == 0 ? 500 : result.StatusCode, result);
+            if (result.Success)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Otp Sent successfully.", result.Data);
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
         // ===== Mobile flow =====
         [HttpPost("mobile/request-otp")]
-        public async Task<IActionResult> RequestMobileOtp([FromBody] MobileOtpDto dto)
+        public async Task<ApiResponse> RequestMobileOtp([FromBody] MobileOtpDto dto)
         {
             var result = await _abhaService.RequestMobileOtpAsync(dto.TxnId, dto.Mobile);
-            return result.Success ? Ok(result.Data) : StatusCode(result.StatusCode == 0 ? 500 : result.StatusCode, result);
+            if (result.Success)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Otp Sent successfully.", result.Data);
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
         [HttpPost("mobile/verify-otp")]
-        public async Task<IActionResult> VerifyMobileOtp([FromBody] VerifyOtpDto dto)
+        public async Task<ApiResponse> VerifyMobileOtp([FromBody] VerifyOtpDto dto)
         {
             var result = await _abhaService.VerifyMobileOtpAsync(dto.TxnId, dto.Otp);
-            return result.Success ? Ok(result.Data) : StatusCode(result.StatusCode == 0 ? 500 : result.StatusCode, result);
+            if (result.Success)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Otp Sent successfully.", result.Data);
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
         // ===== ABHA address =====
         [HttpGet("address/suggestions/{txnId}")]
-        public async Task<IActionResult> GetSuggestions(string txnId)
+        public async Task<ApiResponse> GetSuggestions(string txnId)
         {
             var result = await _abhaService.GetAbhaAddressSuggestionsAsync(txnId);
-            return result.Success ? Ok(result.Data) : StatusCode(result.StatusCode == 0 ? 500 : result.StatusCode, result);
+            if (result.Success)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Suggestions retrieved successfully.", result.Data);
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
         [HttpPost("address/create")]
-        public async Task<IActionResult> CreateAddress([FromBody] CreateAddressDto dto)
+        public async Task<ApiResponse> CreateAddress([FromBody] CreateAddressDto dto)
         {
             var result = await _abhaService.CreateAbhaAddressAsync(dto.TxnId, dto.AbhaAddress);
-            return result.Success ? Ok(result.Data) : StatusCode(result.StatusCode == 0 ? 500 : result.StatusCode, result);
+            if (result.Success)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Address created successfully.", result.Data);
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
         // ===== Profile / Card / QR =====
         [HttpGet("profile")]
-        public async Task<IActionResult> GetProfile([FromHeader(Name = "X-Token")] string xToken)
+        public async Task<ApiResponse> GetProfile([FromHeader(Name = "X-Token")] string xToken)
         {
             var result = await _abhaService.GetAbhaProfileAsync(xToken);
-            return result.Success ? Ok(result.Data) : StatusCode(result.StatusCode == 0 ? 500 : result.StatusCode, result);
+            if (result.Success)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Profile retrieved successfully.", result.Data);
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
         [HttpGet("card")]
-        public async Task<IActionResult> GetCard([FromHeader(Name = "X-Token")] string xToken)
+        public async Task<ApiResponse> GetCard([FromHeader(Name = "X-Token")] string xToken)
         {
             var result = await _abhaService.GetAbhaCardAsync(xToken);
-            if (!result.Success) return StatusCode(result.StatusCode == 0 ? 500 : result.StatusCode, result);
-            return File(result.Data!, "application/pdf", "abha-card.pdf");
+            if (result.Success)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Card retrieved successfully.", result.Data);
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
         [HttpGet("qr")]
-        public async Task<IActionResult> GetQr([FromHeader(Name = "X-Token")] string xToken)
+        public async Task<ApiResponse> GetQr([FromHeader(Name = "X-Token")] string xToken)
         {
             var result = await _abhaService.GetAbhaQrCodeAsync(xToken);
-            if (!result.Success) return StatusCode(result.StatusCode == 0 ? 500 : result.StatusCode, result);
-            return File(result.Data!, "image/png", "abha-qr.png");
+            if (result.Success)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "QR code retrieved successfully.", result.Data);
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
     }
 }
