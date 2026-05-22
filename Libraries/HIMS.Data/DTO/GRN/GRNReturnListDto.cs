@@ -6,9 +6,9 @@
         public long? GRNReturnDetailId { get; set; }
         public long? GRNId { get; set; }
         public long? ItemId { get; set; }
-        public String? ItemName { get; set; }
-        public String? BatchNo { get; set; }
-        public String? BatchExpiryDate { get; set; }
+        public string? ItemName { get; set; }
+        public string? BatchNo { get; set; }
+        public string? BatchExpiryDate { get; set; }
         public float? ReturnQty { get; set; }
         public decimal? LandedRate { get; set; }
         public decimal? MRP { get; set; }
@@ -19,7 +19,7 @@
         public decimal? MRPTotalAmount { get; set; }
         public decimal? PurchaseTotalAmount { get; set; }
         public short? Conversion { get; set; }
-        public String? Remarks { get; set; }
+        public string? Remarks { get; set; }
         public long? StoreId { get; set; }
         public long? SupplierId { get; set; }
         public long? StkId { get; set; }
@@ -32,6 +32,8 @@
         public float? Igstper { get; set; }
         public float? BalanceQty { get; set; }
         public float? GrnRetQty { get; set; }
+        public float? ReceivedQty { get; set; }
+
 
     }
 }
