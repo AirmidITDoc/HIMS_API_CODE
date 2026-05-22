@@ -54,8 +54,7 @@ namespace HIMS.API.Controllers.Radiology
         [HttpPut("RadiologyUpdate/{id:int}")]
         //[Permission(PageCode = "Radiology", Permission = PagePermission.Edit)]
         [Permission]
-
-        public ApiResponse Update(TRadiologyReportModel obj)
+        public async Task <ApiResponse> Update(TRadiologyReportModel obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();
             if (obj.RadReportId == 0)
@@ -65,7 +64,7 @@ namespace HIMS.API.Controllers.Radiology
                 model.RadDate = AppTime.Now;
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                _RadilogyService.RadiologyUpdate(model, CurrentUserId, CurrentUserName);
+                await _RadilogyService.RadiologyUpdate(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
@@ -106,7 +105,7 @@ namespace HIMS.API.Controllers.Radiology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record verify successfully.");
         }
         [HttpPost("RadiologyUnverify")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UnVerify(RadiologyUnVerifyModel obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();

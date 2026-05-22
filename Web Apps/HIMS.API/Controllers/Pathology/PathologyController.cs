@@ -65,9 +65,35 @@ namespace HIMS.API.Controllers.Pathology
 
         }
 
+        [HttpGet]
+        [Route("get-PathologyTemplates")]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown()
+        {
+            var MMasterList = await _radiorepository.GetAll();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pathology Template dropdown", MMasterList.Select(x => new { x.TemplateId, x.TemplateName, x.TemplateDesc }));
+        }
+        [HttpGet]
+        [Route("get-DoctorNotesTemplateMaster")]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown1()
+        {
+            var MMasterList = await _radiorepository1.GetAll();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorNotes Template dropdown", MMasterList.Select(x => new { x.DocNoteTempId, x.DocsTempName, x.TemplateDesc }));
+        }
+        [HttpGet]
+        [Route("get-NursingTemplateMaster")]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown2()
+        {
+            var MMasterList = await _radiorepository2.GetAll();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorNotes Template dropdown", MMasterList.Select(x => new { x.NursingId, x.NursTempName, x.TemplateDesc }));
+        }
+
+
 
         [HttpPost("InsertResultEntry")]
-        //[Permission]
+        [Permission]
         //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyResultModel obj)
         {
@@ -100,25 +126,8 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
-     //   [HttpPost("PathPrintResultentryInsert")]
-     //   //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
-     ////   [Permission]
-
-     //   public ApiResponse Insert(PathPrintResultentry obj)
-     //   {
-     //       List<TempPathReportId> model = obj.PathPrintResultEntry.MapTo<List<TempPathReportId>>();
-     //       if (model.Count > 0)
-     //       {
-     //            _IPathlogyService.InsertPathPrintResultentry(model, CurrentUserId, CurrentUserName);
-     //       }
-     //       else
-     //           return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-     //       return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathPrintResultentry  added successfully.");
-     //   }
-
-
         [HttpPost("PathPrintResultentryInsert")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Insert(PathPrintResultentry obj)
         {
             List<TempPathReportId> model = obj.PathPrintResultEntry.MapTo<List<TempPathReportId>>();
@@ -130,15 +139,12 @@ namespace HIMS.API.Controllers.Pathology
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathPrintResultentry added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
-
-
 
         [HttpPost("PathologyTemplateSave")]
         //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         [Permission]
-
         public async Task<ApiResponse> Insert(PathologyTemplatesModel obj)
         {
             TPathologyReportTemplateDetail model = obj.PathologyReportTemplate.MapTo<TPathologyReportTemplateDetail>();
@@ -154,33 +160,6 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
-
-        [HttpGet]
-        [Route("get-PathologyTemplates")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
-        public async Task<ApiResponse> GetDropdown()
-        {
-            var MMasterList = await _radiorepository.GetAll();
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pathology Template dropdown", MMasterList.Select(x => new { x.TemplateId, x.TemplateName, x.TemplateDesc }));
-        }
-        [HttpGet]
-        [Route("get-DoctorNotesTemplateMaster")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
-        public async Task<ApiResponse> GetDropdown1()
-        {
-            var MMasterList = await _radiorepository1.GetAll();
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorNotes Template dropdown", MMasterList.Select(x => new { x.DocNoteTempId, x.DocsTempName, x.TemplateDesc }));
-        }
-        [HttpGet]
-        [Route("get-NursingTemplateMaster")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
-        public async Task<ApiResponse> GetDropdown2()
-        {
-            var MMasterList = await _radiorepository2.GetAll();
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorNotes Template dropdown", MMasterList.Select(x => new { x.NursingId, x.NursTempName, x.TemplateDesc }));
-        }
-
-
         [HttpPost("PathResultentryrollback")]
         //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         [Permission]
@@ -191,8 +170,6 @@ namespace HIMS.API.Controllers.Pathology
 
             if (obj.PathReportID != 0)
             {
-
-                //   Model.AddedBy = CurrentUserId;
                 await _IPathlogyService.DeleteAsync(Model, CurrentUserId, CurrentUserName);
             }
             else
@@ -228,6 +205,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("PathologyUnverify")]
         //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Verify(PathologyUnverifyModel obj)
         {
             TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();
@@ -240,6 +218,5 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Unverify successfully.");
         }
 
-      
     }
 }

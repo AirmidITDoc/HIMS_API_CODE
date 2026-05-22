@@ -5,8 +5,10 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using System.Transactions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 namespace HIMS.Services.Radiology
@@ -35,17 +37,32 @@ namespace HIMS.Services.Radiology
         }
         public virtual async Task RadiologyUpdate(TRadiologyReportHeader ObjTRadiologyReportHeader, int CurrentUserId, string CurrentUserName)
         {
-            //throw new NotImplementedException();
-            DatabaseHelper odal = new();
-            string[] REntity = { "RadReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "RadResultDr1", "RadResultDr2", "RadResultDr3", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "ResultEntry" };
-            var Dentity = ObjTRadiologyReportHeader.ToDictionary();
-            foreach (var rProperty in Dentity.Keys.ToList())
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-                if (!REntity.Contains(rProperty))
-                    Dentity.Remove(rProperty);
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
+                string[] REntity = { "RadReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "RadResultDr1", "RadResultDr2", "RadResultDr3", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "ResultEntry" };
+                var Dentity = ObjTRadiologyReportHeader.ToDictionary();
+                foreach (var rProperty in Dentity.Keys.ToList())
+                {
+                    if (!REntity.Contains(rProperty))
+                        Dentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("update_T_RadiologyReportHeader_1", CommandType.StoredProcedure, Dentity);
+                await _context.LogProcedureExecution(Dentity, nameof(TRadiologyReportHeader), Convert.ToInt32(ObjTRadiologyReportHeader.RadReportId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                // ✅ Commit
+                await transaction.CommitAsync();
             }
-            odal.ExecuteNonQuery("update_T_RadiologyReportHeader_1", CommandType.StoredProcedure, Dentity);
-            await _context.LogProcedureExecution(Dentity, nameof(TRadiologyReportHeader), Convert.ToInt32(ObjTRadiologyReportHeader.RadReportId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            catch (Exception)
+            {
+                // ❌ Rollback
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
         public virtual async Task UpdateAsync(TRadiologyReportHeader ObjTRadiologyReportHeader, int CurrentUserId, string CurrentUserName)
         {
@@ -90,18 +107,34 @@ namespace HIMS.Services.Radiology
         }
         public virtual async Task UnVerifyAsync(TRadiologyReportHeader ObjTRadiologyReportHeader, int CurrentUserId, string CurrentUserName)
         {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            DatabaseHelper odal = new();
-            string[] rEntity = { "RadReportId", "UnVerifyId", "UnVerifyComment", "UnVerifyDateTime", "TestType" };
-            var entity = ObjTRadiologyReportHeader.ToDictionary();
-            foreach (var rProperty in entity.Keys.ToList())
+            try
             {
-                if (!rEntity.Contains(rProperty))
-                    entity.Remove(rProperty);
-            }
-            odal.ExecuteNonQuery("ps_RadiologyReportHeaderUnverify", CommandType.StoredProcedure, entity);
-            await _context.LogProcedureExecution(entity, nameof(TRadiologyReportHeader), ObjTRadiologyReportHeader.RadReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-        }
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
+                string[] rEntity = { "RadReportId", "UnVerifyId", "UnVerifyComment", "UnVerifyDateTime", "TestType" };
+                var entity = ObjTRadiologyReportHeader.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_RadiologyReportHeaderUnverify", CommandType.StoredProcedure, entity);
+                await _context.LogProcedureExecution(entity, nameof(TRadiologyReportHeader), ObjTRadiologyReportHeader.RadReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // ✅ Commit
+
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                // ❌ Rollback
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
     }
 }

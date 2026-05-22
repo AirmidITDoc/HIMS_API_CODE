@@ -9,6 +9,7 @@ using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using System.Transactions;
 
@@ -52,82 +53,77 @@ namespace HIMS.Services.Pathlogy
             return data;
         }
 
-        public virtual async Task InsertAsyncResultEntry(List<TPathologyReportDetail> ObjPathologyReportDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string UserName)
+        public virtual async Task InsertAsyncResultEntry(List<TPathologyReportDetail> ObjPathologyReportDetail, TPathologyReportHeader ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)
         {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            DatabaseHelper odal = new();
-            foreach (var item in ObjPathologyReportDetail)
+            try
             {
-                var tokensObj = new
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
+                foreach (var item in ObjPathologyReportDetail)
                 {
-                    PathReportID = Convert.ToInt32(item.PathReportId)
-                };
+                    var tokensObj = new
+                    {
+                        PathReportID = Convert.ToInt32(item.PathReportId)
+                    };
 
-                odal.ExecuteNonQuery("ps_Delete_T_PathologyReportDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
-            }
-
-            foreach (var item in ObjPathologyReportDetail)
-            {
-
-                string[] rEntity = { "PathReportId", "CategoryId", "TestId", "SubTestId", "ParameterId", "ResultValue", "UnitId", "NormalRange", "PrintOrder", "PisNumeric", "Opdipdid", "Opdipdtype", "CategoryName", "TestName", "SubTestName", "ParameterName", "UnitName", "PatientName", "RegNo", "SampleId", "ParaBoldFlag", "MinValue", "MaxValue", "Opipnumber", "AgeY", "AgeM", "AgeD", "GenderId", "SampleNo", "SuggestionNotes" };
-                var entity = item.ToDictionary();
-
-                foreach (var rProperty in entity.Keys.ToList())
-                {
-                    if (!rEntity.Contains(rProperty))
-                        entity.Remove(rProperty);
+                    odal.ExecuteNonQuery("ps_Delete_T_PathologyReportDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
+                    await _context.LogProcedureExecution( tokensObj.ToDictionary(),  "ps_Delete_T_PathologyReportDetails",  item.PathReportId.ToInt(),  Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
                 }
-                odal.ExecuteNonQuery("ps_insert_PathRrptDet_1", CommandType.StoredProcedure, entity);
-                await _context.LogProcedureExecution(entity, "PathologyTemplate", item.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
 
+                foreach (var item in ObjPathologyReportDetail)
+                {
+
+                    string[] rEntity = { "PathReportId", "CategoryId", "TestId", "SubTestId", "ParameterId", "ResultValue", "UnitId", "NormalRange", "PrintOrder", "PisNumeric", "Opdipdid", "Opdipdtype", "CategoryName", "TestName", "SubTestName", "ParameterName", "UnitName", "PatientName", "RegNo", "SampleId", "ParaBoldFlag", "MinValue", "MaxValue", "Opipnumber", "AgeY", "AgeM", "AgeD", "GenderId", "SampleNo", "SuggestionNotes" };
+                    var entity = item.ToDictionary();
+
+                    foreach (var rProperty in entity.Keys.ToList())
+                    {
+                        if (!rEntity.Contains(rProperty))
+                            entity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("ps_insert_PathRrptDet_1", CommandType.StoredProcedure, entity);
+                    await _context.LogProcedureExecution(entity, nameof(TPathologyReportDetail), item.PathReportDetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                }
+
+                string[] Entity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "AddedBy" };
+                var Hentity = ObjTPathologyReportHeader.ToDictionary();
+                foreach (var rProperty in Hentity.Keys.ToList())
+                {
+                    if (!Entity.Contains(rProperty))
+                        Hentity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, Hentity);
+                await _context.LogProcedureExecution(Hentity, nameof(TPathologyReportHeader), ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+
+                // ✅ Commit
+                await transaction.CommitAsync();
             }
-
-            string[] Entity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "AddedBy" };
-            var Hentity = ObjTPathologyReportHeader.ToDictionary();
-            foreach (var rProperty in Hentity.Keys.ToList())
+            catch (Exception)
             {
-                if (!Entity.Contains(rProperty))
-                    Hentity.Remove(rProperty);
+                // ❌ Rollback
+                await transaction.RollbackAsync();
+                throw;
             }
-            odal.ExecuteNonQuery("ps_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, Hentity);
-
-            await _context.LogProcedureExecution(Hentity, "PathologyTemplate", ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, UserId, UserName);
 
         }
-        //public virtual async Task InsertPathPrintResultentry(List<TempPathReportId> ObjTempPathReportId, int CurrentUserId, string CurrentUserName)
-        //{
-
-        //    DatabaseHelper odal = new();
-        //    foreach (var item in ObjTempPathReportId)
-        //    {
-
-        //        var tokensObj = new
-        //        {
-        //            PathReportId = Convert.ToInt32(item.PathReportId)
-        //        };
-
-        //        odal.ExecuteNonQuery("m_truncate_Temp_PathReportId", CommandType.StoredProcedure, tokensObj.ToDictionary());
-        //    }
-        //    foreach (var item in ObjTempPathReportId)
-        //    {
-
-        //        string[] rEntity = Array.Empty<string>();
-        //        var entity = item.ToDictionary();
-        //        foreach (var rProperty in rEntity)
-        //        {
-        //            entity.Remove(rProperty);
-        //        }
-        //        odal.ExecuteNonQuery("m_Insert_Temp_PathReportId", CommandType.StoredProcedure, entity);
-        //        await _context.LogProcedureExecution(entity, nameof(TempPathReportId), item.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
-        //    }
-
-        //}
+            
         public virtual async Task InsertPathPrintResultentry(List<TempPathReportId> ObjTempPathReportId, int CurrentUserId, string CurrentUserName)
         {
+             await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
             odal.ExecuteNonQuery("m_truncate_Temp_PathReportId", CommandType.StoredProcedure);
+            await _context.LogProcedureExecution( new Dictionary<string, object>(), "m_truncate_Temp_PathReportId", 0, Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
 
             foreach (var item in ObjTempPathReportId)
             {
@@ -135,21 +131,38 @@ namespace HIMS.Services.Pathlogy
 
                 odal.ExecuteNonQuery("m_Insert_Temp_PathReportId", CommandType.StoredProcedure, entity);
 
-                await _context.LogProcedureExecution( entity,nameof(TempPathReportId),item.PathReportId.ToInt(),Core.Domain.Logging.LogAction.Add,  CurrentUserId, CurrentUserName
-                );
+                await _context.LogProcedureExecution( entity,nameof(TempPathReportId),item.PathReportId.ToInt(),Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+            }
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+
+                // ✅ Commit
+            await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                // ❌ Rollback
+                await transaction.RollbackAsync();
+                throw;
             }
         }
 
-        public virtual async Task InsertAsyncResultEntry1(TPathologyReportTemplateDetail ObjTPathologyReportTemplateDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string UserName)
+        public virtual async Task InsertAsyncResultEntry1(TPathologyReportTemplateDetail ObjTPathologyReportTemplateDetail, TPathologyReportHeader ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)
         {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
             var tokensObj = new
             {
                 PathReportID = Convert.ToInt32(ObjTPathologyReportTemplateDetail.PathReportId)
             };
             odal.ExecuteNonQuery("ps_Delete_T_PathologyReportTemplateDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
-            await _context.LogProcedureExecution(tokensObj.ToDictionary(), "PathologyTemplate", tokensObj.PathReportID.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
+            await _context.LogProcedureExecution(tokensObj.ToDictionary(), "PathologyTemplate", tokensObj.PathReportID.ToInt(), Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
 
             string[] rEntity = { "PathReportId", "PathTemplateId", "PathTemplateDetailsResult", "TestId", "TemplateResultInHtml", "SuggestionNotes", "PathResultDr1" };
             var entity = ObjTPathologyReportTemplateDetail.ToDictionary();
@@ -159,9 +172,9 @@ namespace HIMS.Services.Pathlogy
                     entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("PS_insert_PathologyReportTemplateDetails_1", CommandType.StoredProcedure, entity);
-            await _context.LogProcedureExecution(entity, "PathologyTemplate", ObjTPathologyReportTemplateDetail.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
+            await _context.LogProcedureExecution(entity, nameof(TPathologyReportTemplateDetail), ObjTPathologyReportTemplateDetail.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-            string[] AEntity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "AddedBy" };
+                string[] AEntity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "AddedBy" };
             var PathHeaderentity = ObjTPathologyReportHeader.ToDictionary();
             foreach (var rProperty in PathHeaderentity.Keys.ToList())
             {
@@ -169,13 +182,30 @@ namespace HIMS.Services.Pathlogy
                     PathHeaderentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, PathHeaderentity);
-            await _context.LogProcedureExecution(PathHeaderentity, "PathologyTemplate", ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, UserId, UserName);
+            await _context.LogProcedureExecution(PathHeaderentity, nameof(TPathologyReportHeader), ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
 
+            // ✅ Commit
+            await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                // ❌ Rollback
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
-        public virtual async Task DeleteAsync(TPathologyReportDetail ObjTPathologyReportDetail, int UserId, string UserName)
-        {
 
+        public virtual async Task DeleteAsync(TPathologyReportDetail ObjTPathologyReportDetail, int CurrentUserId, string CurrentUserName)
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] AEntity = { "PathReportId" };
             var entity = ObjTPathologyReportDetail.ToDictionary();
 
@@ -185,8 +215,18 @@ namespace HIMS.Services.Pathlogy
                     entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_RollBack_TestForResult", CommandType.StoredProcedure, entity);
-            await _context.LogProcedureExecution(entity, "PathTestRollback", ObjTPathologyReportDetail.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
+            await _context.LogProcedureExecution(entity, "PathTestRollback", ObjTPathologyReportDetail.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
 
+            // ✅ Commit
+            await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                // ❌ Rollback
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
         public virtual async Task UpdateAsync(TPathologyReportHeader ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)
         {
@@ -244,8 +284,13 @@ namespace HIMS.Services.Pathlogy
         }
         public virtual async Task UnVerifyAsyncSp(TPathologyReportHeader ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)
         {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
             string[] rEntity = { "PathReportId", "UnVerifyId", "UnVerifyComment", "UnVerifyDateTime" };
             var entity = ObjTPathologyReportHeader.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
@@ -254,8 +299,19 @@ namespace HIMS.Services.Pathlogy
                     entity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_PathologyReportHeaderUnverify", CommandType.StoredProcedure, entity);
-            await _context.LogProcedureExecution(entity, nameof(TGrnheader), ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(entity, nameof(TPathologyReportHeader), ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+             // ✅ Commit
+             await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                // ❌ Rollback
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
+
       
     }
 }
