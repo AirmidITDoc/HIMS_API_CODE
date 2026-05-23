@@ -6,6 +6,8 @@ using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 
 namespace HIMS.Services.OPPatient
@@ -42,91 +44,114 @@ namespace HIMS.Services.OPPatient
             return await DatabaseHelper.GetGridDataBySp<IPBillForRefundListDto>(model, "ps_Rtrv_IPBill_For_Refund");
         }
 
-
-
-      
-        public virtual async Task  InsertIP(Refund objRefund, List<TRefundDetail> objTRefundDetail, List<AddCharge> objAddCharge, Payment objPayment, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
+        public virtual async Task<IPagedList<LabRefundApprovedListDto>> LabRefundApprovedListAsync(GridRequestModel model)
         {
+            return await DatabaseHelper.GetGridDataBySp<LabRefundApprovedListDto>(model, "ps_Rtrv_LabRefundApprovedList");
+        }
 
-            DatabaseHelper odal = new();
-            string[] rEntity = { "RefundDate", "RefundTime", "RefundNo", "BillId", "AdvanceId", "OpdIpdType", "OpdIpdId", "RefundAmount", "Remark", "TransactionId", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "RefundId", "UnitId", "CashCounterId", "IsApproval", "ApprovedBy", "ApprovalDatetime", "Comment" };
 
-            var entity = objRefund.ToDictionary();
-            foreach (var rProperty in entity.Keys.ToList())
+        public virtual async Task InsertIP(Refund objRefund, List<TRefundDetail> objTRefundDetail, List<AddCharge> objAddCharge, Payment objPayment, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
+                string[] rEntity = { "RefundDate", "RefundTime", "RefundNo", "BillId", "AdvanceId", "OpdIpdType", "OpdIpdId", "RefundAmount", "Remark", "TransactionId", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "RefundId", "UnitId", "CashCounterId", "IsApproval", "ApprovedBy", "ApprovalDatetime", "Comment" };
+
+                var entity = objRefund.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
                 if (!rEntity.Contains(rProperty))
                     entity.Remove(rProperty);
-            }
-            string vRefundId = odal.ExecuteNonQuery("ps_insert_Refund_1", CommandType.StoredProcedure, "RefundId", entity);
-            objRefund.RefundId = Convert.ToInt32(vRefundId);
-            objPayment.RefundId = Convert.ToInt32(vRefundId);
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(Refund), objRefund.RefundId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-
-            foreach (var item in objTRefundDetail)
-            {
-                item.RefundId = Convert.ToInt32(vRefundId);
-                string[] rRefundEntity = { "RefundId", "ServiceId", "ServiceAmount", "RefundAmount", "DoctorId", "Remark", "AddBy", "ChargesId" };
-                var RefundEntity = item.ToDictionary();
-                foreach (var rProperty in RefundEntity.Keys.ToList())
-                {
-                    if (!rRefundEntity.Contains(rProperty))
-                        RefundEntity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("ps_insert_T_RefundDetails_1", CommandType.StoredProcedure, RefundEntity);
-                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TRefundDetail), item.RefundId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                string vRefundId = odal.ExecuteNonQuery("ps_insert_Refund_1", CommandType.StoredProcedure, "RefundId", entity);
+                objRefund.RefundId = Convert.ToInt32(vRefundId);
+                objPayment.RefundId = Convert.ToInt32(vRefundId);
+                await _context.LogProcedureExecution(entity, nameof(Refund), Convert.ToInt32(objRefund.RefundId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-            }
-
-            foreach (var item in objAddCharge)
-            {
-                string[] rChargeEntity = { "ChargesId", "RefundAmount" };
-                var ChargeEntity = item.ToDictionary();
-                foreach (var rProperty in ChargeEntity.Keys.ToList())
+                foreach (var item in objTRefundDetail)
                 {
-                    if (!rChargeEntity.Contains(rProperty))
-                        ChargeEntity.Remove(rProperty);
+                    item.RefundId = Convert.ToInt32(vRefundId);
+                    string[] rRefundEntity = { "RefundId", "ServiceId", "ServiceAmount", "RefundAmount", "DoctorId", "Remark", "AddBy", "ChargesId" };
+                    var RefundEntity = item.ToDictionary();
+                    foreach (var rProperty in RefundEntity.Keys.ToList())
+                    {
+                        if (!rRefundEntity.Contains(rProperty))
+                            RefundEntity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("ps_insert_T_RefundDetails_1", CommandType.StoredProcedure, RefundEntity);
+                    await _context.LogProcedureExecution(RefundEntity, nameof(TRefundDetail), Convert.ToInt32(item.RefundDetId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
                 }
-                odal.ExecuteNonQuery("ps_Update_AddCharges_RefundAmt", CommandType.StoredProcedure, ChargeEntity);
-                _ = Task.Run(() => _context.LogProcedureExecution(ChargeEntity, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-            }
 
+                foreach (var item in objAddCharge)
+                {
+                    string[] rChargeEntity = { "ChargesId", "RefundAmount" };
+                    var ChargeEntity = item.ToDictionary();
+                    foreach (var rProperty in ChargeEntity.Keys.ToList())
+                    {
+                        if (!rChargeEntity.Contains(rProperty))
+                            ChargeEntity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("ps_Update_AddCharges_RefundAmt", CommandType.StoredProcedure, ChargeEntity);
+                    await _context.LogProcedureExecution(ChargeEntity, nameof(AddCharge), Convert.ToInt32(item.ChargesId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
-            string[] rPayEntity = { "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId","RefundId","TransactionType","Remark","AddBy","IsCancelled","IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "UnitId" };
-            var PayEntity = objPayment.ToDictionary();
-            foreach (var rProperty in PayEntity.Keys.ToList())
-            {
-                if (!rPayEntity.Contains(rProperty))
-                    PayEntity.Remove(rProperty);
-            }
-            odal.ExecuteNonQuery("ps_insert_Payment_1", CommandType.StoredProcedure, PayEntity);
-            _ = Task.Run(() => _context.LogProcedureExecution(PayEntity, nameof(Payment), objPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                }
+                string[] rPayEntity = { "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "UnitId" };
+                var PayEntity = objPayment.ToDictionary();
+                foreach (var rProperty in PayEntity.Keys.ToList())
+                {
+                    if (!rPayEntity.Contains(rProperty))
+                        PayEntity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_insert_Payment_1", CommandType.StoredProcedure, PayEntity);
+                await _context.LogProcedureExecution(PayEntity, nameof(Payment), Convert.ToInt32(objPayment.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
+                foreach (var item in ObjTPayment)
+                {
+                    item.RefundId = Convert.ToInt32(vRefundId);
 
-            foreach (var item in ObjTPayment)
-            {
-                item.RefundId = Convert.ToInt32(vRefundId);
-
-                string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                    string[] PEntity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
                                            "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy", "TransactionLabel"};
-                var pentity = item.ToDictionary();
-                foreach (var rProperty in pentity.Keys.ToList())
-                {
-                    if (!PEntity.Contains(rProperty))
-                        pentity.Remove(rProperty);
+                    var pentity = item.ToDictionary();
+                    foreach (var rProperty in pentity.Keys.ToList())
+                    {
+                        if (!PEntity.Contains(rProperty))
+                            pentity.Remove(rProperty);
+                    }
+                    string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
+                    item.PaymentId = Convert.ToInt32(VPaymentId);
+                    await _context.LogProcedureExecution(pentity, nameof(TPayment), Convert.ToInt32(item.PaymentId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
                 }
-                string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
-                item.PaymentId = Convert.ToInt32(VPaymentId);
-                _ = Task.Run(() => _context.LogProcedureExecution(pentity, nameof(Payment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-
-
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                //Commit if all good
+                await transaction.CommitAsync();
             }
-            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
-
+            catch (Exception ex)
+            {
+                //Rollback on error
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
+           
+
+        
         public virtual async Task DraftInsertIP(Refund objRefund, List<TRefundDetail> objTRefundDetail,int CurrentUserId, string CurrentUserName)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] rEntity = { "RefundDate", "RefundTime", "RefundNo", "BillId", "AdvanceId", "OpdIpdType", "OpdIpdId", "RefundAmount", "Remark", "TransactionId", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "RefundId", "UnitId", "CashCounterId", "IsApproval", "ApprovedBy", "ApprovalDatetime", "Comment" };
 
             var entity = objRefund.ToDictionary();
@@ -137,7 +162,7 @@ namespace HIMS.Services.OPPatient
             }
             string vRefundId = odal.ExecuteNonQuery("ps_insert_DraftRefund", CommandType.StoredProcedure, "RefundId", entity);
             objRefund.RefundId = Convert.ToInt32(vRefundId);
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(Refund), objRefund.RefundId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+            await _context.LogProcedureExecution(entity, nameof(Refund), objRefund.RefundId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             foreach (var item in objTRefundDetail)
             {
@@ -150,14 +175,30 @@ namespace HIMS.Services.OPPatient
                         RefundEntity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_insert_T_DraftRefundDetail", CommandType.StoredProcedure, RefundEntity);
-                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TRefundDetail), item.RefundId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                await _context.LogProcedureExecution(RefundEntity, nameof(TRefundDetail), item.RefundId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
+            }
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                //Commit if all good
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                //Rollback on error
+                await transaction.RollbackAsync();
+                throw;
             }
         }
         public virtual async Task InsertOP(Refund objRefund, List<TRefundDetail> objTRefundDetail, List<AddCharge> objAddCharge, Payment objPayment, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] rEntity = { "RefundDate", "RefundTime", "RefundNo", "BillId", "AdvanceId", "OpdIpdType", "OpdIpdId", "RefundAmount", "Remark", "TransactionId", "AddedBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "RefundId", "UnitId", "CashCounterId", "IsApproval", "ApprovedBy", "ApprovalDatetime", "Comment" };
 
             var entity = objRefund.ToDictionary();
@@ -169,8 +210,7 @@ namespace HIMS.Services.OPPatient
             string vRefundId = odal.ExecuteNonQuery("ps_insert_Refund_1", CommandType.StoredProcedure, "RefundId", entity);
             objRefund.RefundId = Convert.ToInt32(vRefundId);
             objPayment.RefundId = Convert.ToInt32(vRefundId);
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(Refund), objRefund.RefundId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-
+            await _context.LogProcedureExecution(entity, nameof(Refund), objRefund.RefundId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             foreach (var item in objTRefundDetail)
             {
@@ -183,11 +223,10 @@ namespace HIMS.Services.OPPatient
                         RefundEntity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_insert_T_RefundDetails_1", CommandType.StoredProcedure, RefundEntity);
-                _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TRefundDetail), item.RefundId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                await _context.LogProcedureExecution(RefundEntity, nameof(TRefundDetail), item.RefundDetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
 
             }
-
             foreach (var item in objAddCharge)
             {
                 string[] rChargeEntity = { "ChargesId", "RefundAmount"};
@@ -198,9 +237,7 @@ namespace HIMS.Services.OPPatient
                         ChargeEntity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_Update_AddCharges_RefundAmt", CommandType.StoredProcedure, ChargeEntity);
-                _ = Task.Run(() => _context.LogProcedureExecution(ChargeEntity, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
-
-
+                await _context.LogProcedureExecution(ChargeEntity, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
             }
 
             string[] rPayEntity = { "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "UnitId" };
@@ -211,7 +248,7 @@ namespace HIMS.Services.OPPatient
                     PayEntity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_insert_Payment_Refund_1", CommandType.StoredProcedure, PayEntity);
-            _ = Task.Run(() => _context.LogProcedureExecution(PayEntity, nameof(Payment), objPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+            await _context.LogProcedureExecution(PayEntity, nameof(Payment), objPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             foreach (var items in ObjTPayment)
             {
@@ -227,9 +264,18 @@ namespace HIMS.Services.OPPatient
                 }
                 string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_Payment", CommandType.StoredProcedure, "PaymentId", pentity);
                 items.PaymentId = Convert.ToInt32(VPaymentId);
-                _ = Task.Run(() => _context.LogProcedureExecution(pentity, nameof(Payment), items.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
+                await _context.LogProcedureExecution(pentity, nameof(TPayment), items.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-
+            }
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            //Commit if all good
+            await transaction.CommitAsync();
+        }
+            catch (Exception ex)
+            {
+                //Rollback on error
+                await transaction.RollbackAsync();
+                throw;
             }
 
         }
@@ -306,8 +352,14 @@ namespace HIMS.Services.OPPatient
         }
         public virtual async Task Update(Refund ObjRefund, int CurrentUserId, string CurrentUserName)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] AEntity = { "RefundId", "IsApproval", "ApprovedBy","ApprovalDatetime", "Comment" };
             var pentity = ObjRefund.ToDictionary();
             foreach (var rProperty in pentity.Keys.ToList())
@@ -318,14 +370,20 @@ namespace HIMS.Services.OPPatient
 
             odal.ExecuteNonQuery("ps_UpdateRefundApproval", CommandType.StoredProcedure, pentity);
             await _context.LogProcedureExecution(pentity, nameof(Refund), ObjRefund.RefundId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            //Commit if all good
+            await transaction.CommitAsync();
+        }
+            catch (Exception ex)
+            {
+                //Rollback on error
+                await transaction.RollbackAsync();
+                throw;
+            }
 
         }
 
-        public virtual async Task<IPagedList<LabRefundApprovedListDto>> LabRefundApprovedListAsync(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<LabRefundApprovedListDto>(model, "ps_Rtrv_LabRefundApprovedList");
-        }
+       
 
     }
 }

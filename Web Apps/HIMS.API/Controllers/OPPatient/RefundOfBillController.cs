@@ -54,8 +54,6 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         //IP// 
-
-
         [HttpPost("IPBillListforRefundList")]
         //[Permission(PageCode = "Refund", Permission = PagePermission.View)]
         public async Task<IActionResult> IPBillGetListAsync(GridRequestModel objGrid)
@@ -72,11 +70,18 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(RequestList.ToGridResponse(objGrid, "IP Bill For Refund List"));
         }
 
+        [HttpPost("LabRefundApprovedList")]
+        //[Permission(PageCode = "Refund", Permission = PagePermission.View)]
+        public async Task<IActionResult> LabRefundApprovedList(GridRequestModel objGrid)
+        {
+            IPagedList<LabRefundApprovedListDto> LabRefundApprovedList = await _IRefundOfBillService.LabRefundApprovedListAsync(objGrid);
+            return Ok(LabRefundApprovedList.ToGridResponse(objGrid, "Lab Refund Approved List"));
+        }
+
         [HttpPost("IPRefundOfBILLInsert")]
         //[Permission(PageCode = "Refund", Permission = PagePermission.Add)]
         [Permission]
-
-        public ApiResponse InsertSP(RefundBillModel obj)
+        public async Task<ApiResponse> InsertSP(RefundBillModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
             List<TRefundDetail> objTRefundDetail = obj.TRefundDetails.MapTo<List<TRefundDetail>>();
@@ -99,17 +104,18 @@ namespace HIMS.API.Controllers.OPPatient
                 objPayment.AddBy = CurrentUserId;
                 objPayment.IsCancelledBy = CurrentUserId;
 
-                _IRefundOfBillService.InsertIP(model, objTRefundDetail, objAddCharge, objPayment, ObjTPayment, CurrentUserId, CurrentUserName);
+                await _IRefundOfBillService.InsertIP(model, objTRefundDetail, objAddCharge, objPayment, ObjTPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.RefundId);
         }
+
         [HttpPost("DraftRefundOfBiLLInsert")]
         //[Permission(PageCode = "Refund", Permission = PagePermission.Add)]
         [Permission]
 
-        public ApiResponse DraftInsertSP(RefundBillModels obj)
+        public async Task<ApiResponse> DraftInsertSP(RefundBillModels obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
             List<TRefundDetail> objTRefundDetail = obj.TRefundDetails.MapTo<List<TRefundDetail>>();
@@ -124,8 +130,8 @@ namespace HIMS.API.Controllers.OPPatient
 
                 objTRefundDetail.ForEach(x => { x.RefundId = obj.Refund.RefundId; x.AddBy = CurrentUserId; x.UpdatedBy = CurrentUserId; });
 
-               
-                _IRefundOfBillService.DraftInsertIP(model, objTRefundDetail, CurrentUserId, CurrentUserName);
+
+                await _IRefundOfBillService.DraftInsertIP(model, objTRefundDetail, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -135,7 +141,7 @@ namespace HIMS.API.Controllers.OPPatient
         [HttpPost("InsertOPRefundOfBill")]
         //[Permission(PageCode = "Refund", Permission = PagePermission.Add)]
         [Permission]
-        public ApiResponse Insert(RefundBillModel obj)
+        public async Task<ApiResponse> Insert(RefundBillModel obj)
         {
             Refund model = obj.Refund.MapTo<Refund>();
             List<TRefundDetail> objTRefundDetail = obj.TRefundDetails.MapTo<List<TRefundDetail>>();
@@ -156,7 +162,7 @@ namespace HIMS.API.Controllers.OPPatient
                 objPayment.AddBy = CurrentUserId;
                 objPayment.IsCancelledBy = CurrentUserId;
 
-                _IRefundOfBillService.InsertOP(model, objTRefundDetail, objAddCharge, objPayment, ObjTPayment, CurrentUserId, CurrentUserName);
+                await _IRefundOfBillService.InsertOP(model, objTRefundDetail, objAddCharge, objPayment, ObjTPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -165,25 +171,18 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPut("UpdateRefundApproval{id:int}")]
         [Permission]
-        public ApiResponse UpdateRefundApproval(RefundUpdateModel obj)
+        public async Task <ApiResponse> UpdateRefundApproval(RefundUpdateModel obj)
         {
             Refund model = obj.MapTo<Refund>();
             if (obj.RefundId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                _IRefundOfBillService.Update(model, CurrentUserId, CurrentUserName);
+                await _IRefundOfBillService.Update(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
-        [HttpPost("LabRefundApprovedList")]
-        //[Permission(PageCode = "Refund", Permission = PagePermission.View)]
-        public async Task<IActionResult> LabRefundApprovedList(GridRequestModel objGrid)
-        {
-            IPagedList<LabRefundApprovedListDto> LabRefundApprovedList = await _IRefundOfBillService.LabRefundApprovedListAsync(objGrid);
-            return Ok(LabRefundApprovedList.ToGridResponse(objGrid, "Lab Refund Approved List"));
-        }
     }
 }
 
