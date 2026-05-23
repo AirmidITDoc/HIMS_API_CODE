@@ -32,7 +32,7 @@
         public float? Igstper { get; set; }
         public float? BalanceQty { get; set; }
         public float? GrnRetQty { get; set; }
-        public float? ReceiveQty { get; set; }
+        public float ReceiveQty { get; set; }
 
 
     }
