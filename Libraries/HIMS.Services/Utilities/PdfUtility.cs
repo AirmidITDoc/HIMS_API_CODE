@@ -1040,9 +1040,10 @@ namespace HIMS.Services.Utilities
 
             html = ReplaceNormalValues(html, firstRow);
             html = ApplyOnlyN2Formatting(html, firstRow);
+            html = ApplyAmountInWordsFormatting(html, firstRow);
             html = ReplaceDateFormats(html, firstRow);
             html = ReplaceFlags(html, firstRow);
-
+        
             return html;
         }
 
@@ -1163,6 +1164,78 @@ namespace HIMS.Services.Utilities
             {
                 return html; // absolute safety: never break rendering
             }
+        }
+        private string ApplyAmountInWordsFormatting(string html, DataRow row)
+        {
+            return Regex.Replace(html, @"\{\{(\w+)\|AmountInWords\}\}", m =>
+            {
+                string column = m.Groups[1].Value;
+                if (!row.Table.Columns.Contains(column)) return "";
+                var value = row[column];
+                if (value == null || value == DBNull.Value) return "";
+                return conversion(value.ToString());
+            });
+        }
+        public static string conversion(string amount)
+        {
+            var Currencysymbol = CurrencyHelper.CurrencySymbol;
+            double m = Convert.ToInt64(Math.Floor(Convert.ToDouble(amount)));
+            double l = Convert.ToDouble(amount);
+
+            double j = (l - m) * 100;
+            //string Word = " ";
+
+            var beforefloating = ConvertNumbertoWords(Convert.ToInt64(m));
+            ConvertNumbertoWords(Convert.ToInt64(j));
+
+            var Content = beforefloating + ' ' + Currencysymbol.ToString() + ' ' + "Only";
+            return Content;
+        }
+
+        public static string ConvertNumbertoWords(long number)
+        {
+            if (number == 0) return "ZERO";
+            if (number < 0) return "minus " + ConvertNumbertoWords(Math.Abs(number));
+            string words = "";
+            if ((number / 1000000) > 0)
+            {
+                words += ConvertNumbertoWords(number / 100000) + " LAKH  ";
+                number %= 1000000;
+            }
+            if ((number / 1000) > 0)
+            {
+                words += ConvertNumbertoWords(number / 1000) + " THOUSAND ";
+                number %= 1000;
+            }
+            if ((number / 100) > 0)
+            {
+                words += ConvertNumbertoWords(number / 100) + " HUNDRED ";
+                number %= 100;
+            }
+            //if ((number / 10) > 0)  
+            //{  
+            // words += ConvertNumbertoWords(number / 10) + " RUPEES ";  
+            // number %= 10;  
+            //}  
+            if (number > 0)
+            {
+                if (words != "") words += "AND ";
+                var unitsMap = new[]
+           {
+            "ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN", "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN"
+        };
+                var tensMap = new[]
+           {
+            "ZERO", "TEN", "TWENTY", "THIRTY", "FORTY", "FIFTY", "SIXTY", "SEVENTY", "EIGHTY", "NINETY"
+        };
+                if (number < 20) words += unitsMap[number];
+                else
+                {
+                    words += tensMap[number / 10];
+                    if ((number % 10) > 0) words += " " + unitsMap[number % 10];
+                }
+            }
+            return words;
         }
         public List<List<SearchGrid>> SplitBySeparator(List<SearchGrid> fields)
         {

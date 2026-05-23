@@ -8074,10 +8074,16 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkBalanceafterGovflag}}", dt.GetColValue("BalanceafterGov").ConvertToDouble() > 0 ? "table-row " : "none");
 
 
+                        double NetPayableAmt = dt.GetColValue("NetPayableAmt").ConvertToDouble();
 
+                        string finalamt = conversion(NetPayableAmt.ToString());
 
-                        string finalamt = conversion(T_NetAmount.ToString());
-                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                        html = html.Replace("{{finalamt}}", finalamt.ToUpper());
+
+                        html = html.Replace("{{NetPayableAmt}}", NetPayableAmt.ToString("F2"));
+
+                        //string finalamt = conversion(NetPayableAmt.ToString());
+                        //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
 
                         return html;
@@ -20291,9 +20297,9 @@ namespace HIMS.Services.Report
 
                             string currentSalesNo =
                                 dr["PBillNo"].ToString();
-                            string currentUserName = dr["UserName"].ToString();
+                            //string currentUserName = dr["UserName"].ToString();
 
-
+                            string currentUserName = dt.Columns.Contains("UserName")? dr["UserName"].ToString(): "";
                             GovtApprovedAmt =
                                 dr["GovtApprovedAmt"].ConvertToDouble();
 
@@ -20343,7 +20349,6 @@ namespace HIMS.Services.Report
                                 previousPayMode =
                                     dr["PayMode"].ToString();
 
-                                // BILL HEADER
                                 items.Append($@"
 
 <tr style='font-size:18px;font-weight:bold;background:#f2f2f2;'>
@@ -20357,9 +20362,9 @@ namespace HIMS.Services.Report
 
         Bill No : {currentSalesNo}
 
-        &nbsp;&nbsp; | &nbsp;&nbsp;
-
-        UserName : {currentUserName}
+        {(dt.Columns.Contains("UserName") && !string.IsNullOrWhiteSpace(currentUserName)
+                ? $"&nbsp;&nbsp; | &nbsp;&nbsp; UserName : {currentUserName}"
+                : "")}
 
     </td>
 
@@ -23309,11 +23314,11 @@ namespace HIMS.Services.Report
             for (int i = 0; i < spList.Length; i++)
             {
                 var dt = GetDataBySp(model, spList[i].Trim());
-                string section = $"ITEMS_SP{i + 1}"; 
+                string section = $"ITEMS_SP{i + 1}";
 
-                html = _pdfUtility.Render(html, dt, section);
+                html = _pdfUtility.Render(html, dt, section);      
             }
-
+            html = Regex.Replace(html, @"\{\{(?!NewHeader|PharmacyHeader|CurrSymbol)[^}]+(\|[^}]+)?\}\}", "");
             return html;
         }
         public string GeneratePdfFromSpV1(ReportRequestModel model, string PdfFontPath = "")
