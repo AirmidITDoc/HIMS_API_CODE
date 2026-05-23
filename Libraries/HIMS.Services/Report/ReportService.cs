@@ -23309,11 +23309,11 @@ namespace HIMS.Services.Report
             for (int i = 0; i < spList.Length; i++)
             {
                 var dt = GetDataBySp(model, spList[i].Trim());
-                string section = $"ITEMS_SP{i + 1}"; 
+                string section = $"ITEMS_SP{i + 1}";
 
-                html = _pdfUtility.Render(html, dt, section);
+                html = _pdfUtility.Render(html, dt, section);      
             }
-
+            html = Regex.Replace(html, @"\{\{(?!NewHeader|PharmacyHeader|CurrSymbol)[^}]+(\|[^}]+)?\}\}", "");
             return html;
         }
         public string GeneratePdfFromSpV1(ReportRequestModel model, string PdfFontPath = "")
