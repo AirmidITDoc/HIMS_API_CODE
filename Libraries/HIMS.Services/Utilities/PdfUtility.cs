@@ -606,6 +606,7 @@ namespace HIMS.Services.Utilities
                     UseLocalLinks = true,         // ✅ Allow local file links
                      LoadSettings = new LoadSettings
     {
+                            BlockLocalFileAccess = false,
         JSDelay = 1500,
         StopSlowScript = false
     }
@@ -823,6 +824,7 @@ namespace HIMS.Services.Utilities
                 },
                  LoadSettings = new LoadSettings
     {
+                        BlockLocalFileAccess = false,
         JSDelay = 1500,
         StopSlowScript = false
     }
@@ -885,6 +887,7 @@ namespace HIMS.Services.Utilities
                 //}
                  LoadSettings = new LoadSettings
     {
+                        BlockLocalFileAccess = false,
         JSDelay = 1500,
         StopSlowScript = false
     }
@@ -947,6 +950,7 @@ namespace HIMS.Services.Utilities
                         WebSettings = { DefaultEncoding = "utf-8" },
                          LoadSettings = new LoadSettings
     {
+                                BlockLocalFileAccess = false,
         JSDelay = 1500,
         StopSlowScript = false
     }
