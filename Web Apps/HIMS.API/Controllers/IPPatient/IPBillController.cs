@@ -253,12 +253,14 @@ namespace HIMS.API.Controllers.IPPatient
         [HttpPost("IPInterimBillInsertWithCashCounter")]
         [Permission]
         //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
-        public ApiResponse IPInterimBillCashCounterAsyncSp(IPBillModel obj)
+        public async Task <ApiResponse> IPInterimBillCashCounterAsyncSp(IPBillModel obj)
         {
             AddCharge AddChargeModel = obj.AddChargeM.MapTo<AddCharge>();
             Bill Model = obj.IPBillling.MapTo<Bill>();
             List<BillDetail> BillDetailModel = obj.BillingDetails.MapTo<List<BillDetail>>();
             Payment paymentModel = obj.payments.MapTo<Payment>();
+            List<AdvanceDetail> objAdvanceDetail = obj.Advancesupdate.MapTo<List<AdvanceDetail>>();
+            AdvanceHeader objAdvanceHeader = obj.advancesHeaderupdate.MapTo<AdvanceHeader>();
             List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
 
 
@@ -273,7 +275,7 @@ namespace HIMS.API.Controllers.IPPatient
                 Model.CreatedDate = AppTime.Now;
                 Model.ModifiedBy = CurrentUserId;
                 Model.ModifiedDate = AppTime.Now;
-                _IPBillService.IPInterimBillCashCounterSp(AddChargeModel, Model, BillDetailModel, paymentModel ,ObjTPayment, CurrentUserId, CurrentUserName);
+                await _IPBillService.IPInterimBillCashCounterSp(AddChargeModel, Model, BillDetailModel, paymentModel , objAdvanceDetail, objAdvanceHeader ,ObjTPayment, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

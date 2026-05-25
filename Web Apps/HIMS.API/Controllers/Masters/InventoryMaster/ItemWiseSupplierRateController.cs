@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
         }
         [HttpPost("ItemWiseSupplierRateList")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ItemWiseSupplierRateDto> ItemWiseSupplierRateList = await _IItemWiseSupplierRateService.GetListAsync(objGrid);

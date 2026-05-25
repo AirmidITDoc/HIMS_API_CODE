@@ -5,6 +5,8 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using System.Security.Principal;
 using System.Transactions;
@@ -218,8 +220,15 @@ namespace HIMS.Services.Common
 
         public virtual async Task InsertAsync(AddCharge objAddCharge, List<AddCharge> objAddCharges, int CurrentUserId, string CurrentUserName)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            // Begin Transaction
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
                 _context.AddCharges.Add(objAddCharge);
                 await _context.SaveChangesAsync();
                 if (objAddCharge.IsPathology == 1)
@@ -269,7 +278,6 @@ namespace HIMS.Services.Common
                 {
                     foreach (var item in objAddCharges)
                     {
-                        DatabaseHelper odal = new();
 
                         string[] AEntity = {  "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price","Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DocPercentage", "DocAmt", "HospitalAmt","IsGenerated",
                                               "AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","ServiceCode","IsInclusionExclusion","IsSelfOrCompanyService","PackageId","WardId","BedId","PackageMainChargeId","CreatedBy","ChargesTime","UnitId","ClassId","TariffId","ServiceName","ChargesId"};
@@ -288,11 +296,20 @@ namespace HIMS.Services.Common
                     }
 
                 }
+                // Save Log
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit Transaction
+                await transaction.CommitAsync();
 
-
-                scope.Complete();
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
             }
         }
+        
         public virtual async Task IPAddchargesdelete(AddCharge ObjaddCharge, int CurrentUserId, string CurrentUserName)
         {
 
@@ -645,10 +662,15 @@ namespace HIMS.Services.Common
 
 
 
-        public virtual async Task IPInterimBillCashCounterSp(AddCharge ObjAddCharge, Bill ObjBill, List<BillDetail> ObjBillDetails, Payment Objpayment, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
+        public virtual async Task IPInterimBillCashCounterSp(AddCharge ObjAddCharge, Bill ObjBill, List<BillDetail> ObjBillDetails, Payment Objpayment, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
         {
-
+            // Begin Transaction
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
             string[] AEntity = { "ChargesId" };
 
@@ -659,10 +681,12 @@ namespace HIMS.Services.Common
                     yentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("ps_Update_InterimBillCharges_1", CommandType.StoredProcedure, yentity);
+            await _context.LogProcedureExecution( yentity, nameof(AddCharge),  ObjAddCharge.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
+                // Insert Bill
             string[] rEntity = { "BillNo", "OpdIpdId", "RegNo", "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId", "PatientType", "CompanyName", "CompanyAmt", "PatientAmt", "TotalAmt", "ConcessionAmt", 
-                "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "AddedBy", "TotalAdvanceAmount", "BillTime", "ConcessionReasonId", "IsSettled", "IsPrinted", "IsFree", "CompanyId", "TariffId", "UnitId", "InterimOrFinal", "CompanyRefNo", 
-                "ConcessionAuthorizationName", "SpeTaxPer", "SpeTaxAmt", "DiscComments", "CompDiscAmt", "CashCounterId", "CreatedBy", "GovtApprovedAmt" };
+                   "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "AddedBy", "TotalAdvanceAmount", "BillTime", "ConcessionReasonId", "IsSettled", "IsPrinted", "IsFree", "CompanyId", "TariffId", "UnitId", "InterimOrFinal", "CompanyRefNo", 
+                   "ConcessionAuthorizationName", "SpeTaxPer", "SpeTaxAmt", "DiscComments", "CompDiscAmt", "CashCounterId", "CreatedBy", "GovtApprovedAmt" };
             var entity = ObjBill.ToDictionary();
             foreach (var rProperty in entity.Keys.ToList())
             {
@@ -673,6 +697,7 @@ namespace HIMS.Services.Common
             ObjBill.BillNo = Convert.ToInt32(vBillNo);
             //    ObjBillDetails.BillNo = Convert.ToInt32(vBillNo);
             Objpayment.BillNo = Convert.ToInt32(vBillNo);
+            await _context.LogProcedureExecution(entity,  nameof(Bill),  ObjBill.BillNo.ToInt(),  Core.Domain.Logging.LogAction.Add,  CurrentUserId,  CurrentUserName);
 
             foreach (var item in ObjBillDetails)
             {
@@ -685,17 +710,44 @@ namespace HIMS.Services.Common
                         Bentity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_insert_BillDetails_1", CommandType.StoredProcedure, Bentity);
-            }
-            string[] PEntity = { "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", 
+                await _context.LogProcedureExecution(Bentity, nameof(BillDetail), item.BillDetailId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+                }
+                string[] PEntity = { "BillNo", "ReceiptNo", "PaymentDate", "PaymentTime", "CashPayAmount", "ChequePayAmount", "ChequeNo", "BankName", "ChequeDate", "CardPayAmount", "CardNo", "CardBankName", "CardDate", "AdvanceUsedAmount", "AdvanceId", "RefundId", 
                 "TransactionType", "Remark", "AddBy", "IsCancelled", "IsCancelledBy", "IsCancelledDate", "NeftpayAmount", "Neftno", "NeftbankMaster", "Neftdate", "PayTmamount", "PayTmtranNo", "PayTmdate", "Tdsamount", "Wfamount", "UnitId" };
-            var entity1 = Objpayment.ToDictionary();
-            foreach (var rProperty in entity1.Keys.ToList())
-            {
+                var entity1 = Objpayment.ToDictionary();
+                foreach (var rProperty in entity1.Keys.ToList())
+                {
                 if (!PEntity.Contains(rProperty))
                     entity1.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_insert_Payment_IPInterim_1", CommandType.StoredProcedure, entity1);
+                await _context.LogProcedureExecution(entity1, nameof(Payment), Objpayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+            foreach (var item in ObjadvanceDetailList)
+            {
+
+                string[] ADetailEntity = { "AdvanceDetailId", "UsedAmount", "BalanceAmount" };
+                var AdvanceDetailEntity = item.ToDictionary();
+                foreach (var rProperty in AdvanceDetailEntity.Keys.ToList())
+                {
+                    if (!ADetailEntity.Contains(rProperty))
+                        AdvanceDetailEntity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_update_AdvanceDetail_1", CommandType.StoredProcedure, AdvanceDetailEntity);
+                await _context.LogProcedureExecution(AdvanceDetailEntity, nameof(AdvanceDetail), item.AdvanceDetailId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
             }
-            odal.ExecuteNonQuery("ps_insert_Payment_IPInterim_1", CommandType.StoredProcedure, entity1);
-            await _context.LogProcedureExecution(entity1, nameof(Payment), Objpayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+                string[] AHeaderEntity = { "AdvanceId", "AdvanceUsedAmount", "BalanceAmount" };
+                var AdvanceHeaderEntity = ObjadvanceHeader.ToDictionary();
+                foreach (var rProperty in AdvanceHeaderEntity.Keys.ToList())
+                {
+                if (!AHeaderEntity.Contains(rProperty))
+                    AdvanceHeaderEntity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("ps_update_AdvanceHeader_1", CommandType.StoredProcedure, AdvanceHeaderEntity);
+                await _context.LogProcedureExecution(AdvanceHeaderEntity, nameof(AdvanceHeader), ObjadvanceHeader.AdvanceId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
             foreach (var item in ObjTPayment)
             {
@@ -714,6 +766,19 @@ namespace HIMS.Services.Common
                 await _context.LogProcedureExecution(pentity, nameof(TPayment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             }
+                // Save Log
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit Transaction
+                await transaction.CommitAsync();
+
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
+
 
         }
         public virtual void IPDraftBill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int UserId, string UserName)
