@@ -1043,6 +1043,7 @@ namespace HIMS.Services.Utilities
             html = ApplyAmountInWordsFormatting(html, firstRow);
             html = ReplaceDateFormats(html, firstRow);
             html = ReplaceFlags(html, firstRow);
+            html = ReplaceImageSource(html, firstRow);
         
             return html;
         }
@@ -1167,14 +1168,21 @@ namespace HIMS.Services.Utilities
         }
         private string ApplyAmountInWordsFormatting(string html, DataRow row)
         {
-            return Regex.Replace(html, @"\{\{(\w+)\|AmountInWords\}\}", m =>
+            try
             {
-                string column = m.Groups[1].Value;
-                if (!row.Table.Columns.Contains(column)) return "";
-                var value = row[column];
-                if (value == null || value == DBNull.Value) return "";
-                return conversion(value.ToString());
-            });
+                return Regex.Replace(html, @"\{\{(\w+)\|AmountInWords\}\}", m =>
+                {
+                    string column = m.Groups[1].Value;
+                    if (!row.Table.Columns.Contains(column)) return "";
+                    var value = row[column];
+                    if (value == null || value == DBNull.Value) return "";
+                    return conversion(value.ToString());
+                });
+            }
+            catch
+            {
+                return html; 
+            }
         }
         public static string conversion(string amount)
         {
@@ -1236,6 +1244,51 @@ namespace HIMS.Services.Utilities
                 }
             }
             return words;
+        }
+        public string ReplaceImageSource(string html, DataRow row)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(html) || row == null || row.Table == null)
+                    return html;
+
+                string imageFileName = string.Empty;
+                string imageFolderName = string.Empty;
+
+                if (row.Table.Columns.Contains("Image") && row["Image"] != DBNull.Value)
+                {
+                    imageFileName = Convert.ToString(row["Image"])?.Trim() ?? "";
+                }
+
+                if (row.Table.Columns.Contains("ImageFolder") && row["ImageFolder"] != DBNull.Value)
+                {
+                    imageFolderName = Convert.ToString(row["ImageFolder"])?.Trim() ?? "";
+                }
+
+                string image = string.Empty;
+
+                if (!string.IsNullOrWhiteSpace(imageFileName) && !string.IsNullOrWhiteSpace(imageFolderName))
+                {
+                    try
+                    {
+                        image = GetBase64FromFolder(imageFolderName, imageFileName) ?? "";
+                    }
+                    catch
+                    {
+                        image = string.Empty;
+                    }
+                }
+
+                html = html.Replace("{{Image}}", image);
+
+                html = html.Replace("{{chkImgFlag}}",string.IsNullOrWhiteSpace(imageFileName) ? "none" : "inline-block"
+                );
+                return html;
+            }
+            catch
+            {
+                return html;
+            }
         }
         public List<List<SearchGrid>> SplitBySeparator(List<SearchGrid> fields)
         {
