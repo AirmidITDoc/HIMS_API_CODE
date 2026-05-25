@@ -131,7 +131,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
       
         [HttpPut("UpdateReg{id:int}")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> BilldatetimeUpdate(RegistrationUpdate obj)
         {
             Registration model = obj.MapTo<Registration>();

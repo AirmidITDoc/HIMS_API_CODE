@@ -24,6 +24,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("PharmacyRefundInsert")]
         //[Permission]
+        [Permission(PageCode = "Pharmacy", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(PharRefundModel obj)
 
         {
