@@ -23302,23 +23302,47 @@ namespace HIMS.Services.Report
         private string GetHTMLViewWithRender(string sp_Names, ReportRequestModel model, string htmlFilePath, string htmlHeaderFilePath)
         {
             var spList = sp_Names.Split(',');
-           // var groupedParams = _pdfUtility.SplitBySeparator(model.SearchFields);
-
-            //if (groupedParams.Count != spList.Length)
-               // throw new Exception("SP count and parameter groups mismatch");
-
+ 
             string html = File.ReadAllText(htmlFilePath);
             html = html.Replace("{{CurrentDate}}", AppTime.Now.ToString("dd/MM/yyyy hh:mm tt"));
             html = html.Replace("{{RepoertName}}", model.RepoertName);
 
             for (int i = 0; i < spList.Length; i++)
             {
-                var dt = GetDataBySp(model, spList[i].Trim());
-                string section = $"ITEMS_SP{i + 1}";
+                try
+                {
+                    var dt = GetDataBySp(model, spList[i].Trim());
+                    string section = $"ITEMS_SP{i + 1}";
 
-                html = _pdfUtility.Render(html, dt, section);      
+                    html = _pdfUtility.Render(html, dt, section);
+                    html = RenderCustomCustomLogic(html, dt);
+                }
+                catch
+                { }
             }
             html = Regex.Replace(html, @"\{\{(?!NewHeader|PharmacyHeader|CurrSymbol)[^}]+(\|[^}]+)?\}\}", "");
+            return html;
+        }
+        public string RenderCustomCustomLogic(string html, DataTable dt)
+        {
+            if (string.IsNullOrWhiteSpace(html))
+                return html;
+
+            if (dt == null || dt.Rows.Count == 0)
+                return html;
+
+            try
+            {
+                string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
+                var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
+                html = html.Replace("{{SignatureImg}}", signature);
+                html = html.Replace("{{chkSignatureImgFlag}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
+            }
+            catch 
+            {
+                return html;
+            }
+
             return html;
         }
         public string GeneratePdfFromSpV1(ReportRequestModel model, string PdfFontPath = "")
