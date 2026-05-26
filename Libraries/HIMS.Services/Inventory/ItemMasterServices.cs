@@ -544,6 +544,16 @@ namespace HIMS.Services.Inventory
             );
             return await qry.Take(50).ToListAsync();
         }
+        public virtual async Task<List<NewItemListForSalesPageDTO>> NewGetItemListForSalesPage(int StoreId, string ItemName)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[2];
+            para[0] = new SqlParameter("@StoreId", StoreId);
+            para[1] = new SqlParameter("@ItemName", ItemName);
+
+            List<NewItemListForSalesPageDTO> lstServiceList = sql.FetchListBySP<NewItemListForSalesPageDTO>("ps_GetItemListForSalesPage", para);
+            return lstServiceList;
+        }
 
         public List<ItemListForBatchPopDTO> SearchGetItemListForSalesBatchPop(int StoreId, int ItemId, int PatientTypeId)
         {

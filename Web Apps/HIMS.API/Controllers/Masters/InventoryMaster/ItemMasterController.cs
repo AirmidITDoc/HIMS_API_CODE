@@ -193,10 +193,17 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpGet("GetItemListforSalesPage")]
-        public async Task<ApiResponse> GetItemListforSalesPage(int StoreId, String ItemName)
+        public async Task<ApiResponse> GetItemListforSalesPage(int StoreId, string ItemName)
         {
             var resultList = await _ItemMasterServices.GetItemListForSalesPage(StoreId, ItemName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List Sales Page", resultList);
+        }
+        [HttpGet("NewGetItemListforSalesPage")]
+        [Permission]
+        public async Task<ApiResponse> NewGetItemListforSalesPage(int StoreId, string ItemName)
+        {
+            var resultList = await _ItemMasterServices.NewGetItemListForSalesPage(StoreId, ItemName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " NEW Get ItemList Sales Page", resultList);
         }
     }
 }
