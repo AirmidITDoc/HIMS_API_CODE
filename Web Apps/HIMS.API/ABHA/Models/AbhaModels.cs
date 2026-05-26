@@ -164,51 +164,103 @@ namespace HIMS.API.ABHA.Models
         [JsonPropertyName("refreshExpiresIn")]
         public int RefreshExpiresIn { get; set; }
     }
+    public class LocalizedDetails
+    {
+        public string name { get; set; }
+        public string stateName { get; set; }
+        public string districtName { get; set; }
+        public string villageName { get; set; }
+        public string townName { get; set; }
+        public string gender { get; set; }
+        public LocalizedLabels localizedLabels { get; set; }
+    }
+
+    public class LocalizedLabels
+    {
+        public string name { get; set; }
+        public string abhaNumber { get; set; }
+        public string abhaAddress { get; set; }
+        public string gender { get; set; }
+        public string dob { get; set; }
+        public string mobile { get; set; }
+    }
 
     public class AbhaProfile
     {
-        [JsonPropertyName("firstName")]
-        public string? FirstName { get; set; }
-
-        [JsonPropertyName("middleName")]
-        public string? MiddleName { get; set; }
-
-        [JsonPropertyName("lastName")]
-        public string? LastName { get; set; }
-
-        [JsonPropertyName("dob")]
-        public string? Dob { get; set; }
-
-        [JsonPropertyName("gender")]
-        public string? Gender { get; set; }
-
-        [JsonPropertyName("photo")]
-        public string? Photo { get; set; }
-
-        [JsonPropertyName("mobile")]
-        public string? Mobile { get; set; }
-
-        [JsonPropertyName("email")]
-        public string? Email { get; set; }
-
-        [JsonPropertyName("ABHANumber")]
-        public string? AbhaNumber { get; set; }
-
-        [JsonPropertyName("phrAddress")]
-        public List<string>? PhrAddress { get; set; }
-
-        [JsonPropertyName("address")]
-        public string? Address { get; set; }
-
-        [JsonPropertyName("districtCode")]
-        public string? DistrictCode { get; set; }
-
-        [JsonPropertyName("stateCode")]
-        public string? StateCode { get; set; }
-
-        [JsonPropertyName("pinCode")]
-        public string? PinCode { get; set; }
+        public string ABHANumber { get; set; }
+        public string preferredAbhaAddress { get; set; }
+        public string mobile { get; set; }
+        public string firstName { get; set; }
+        public string middleName { get; set; }
+        public string lastName { get; set; }
+        public string name { get; set; }
+        public string yearOfBirth { get; set; }
+        public string dayOfBirth { get; set; }
+        public string monthOfBirth { get; set; }
+        public string gender { get; set; }
+        public string profilePhoto { get; set; }
+        public string status { get; set; }
+        public string stateCode { get; set; }
+        public string districtCode { get; set; }
+        public string pincode { get; set; }
+        public string address { get; set; }
+        public string kycPhoto { get; set; }
+        public string stateName { get; set; }
+        public string districtName { get; set; }
+        public string subdistrictName { get; set; }
+        public List<string> authMethods { get; set; }
+        //public Tags tags { get; set; }
+        public bool kycVerified { get; set; }
+        public string verificationStatus { get; set; }
+        public string verificationType { get; set; }
+        public LocalizedDetails localizedDetails { get; set; }
+        public string createdDate { get; set; }
     }
+
+    //public class AbhaProfile
+    //{
+    //    [JsonPropertyName("firstName")]
+    //    public string? FirstName { get; set; }
+
+    //    [JsonPropertyName("middleName")]
+    //    public string? MiddleName { get; set; }
+
+    //    [JsonPropertyName("lastName")]
+    //    public string? LastName { get; set; }
+
+    //    [JsonPropertyName("dob")]
+    //    public string? Dob { get; set; }
+
+    //    [JsonPropertyName("gender")]
+    //    public string? Gender { get; set; }
+
+    //    [JsonPropertyName("photo")]
+    //    public string? Photo { get; set; }
+
+    //    [JsonPropertyName("mobile")]
+    //    public string? Mobile { get; set; }
+
+    //    [JsonPropertyName("email")]
+    //    public string? Email { get; set; }
+
+    //    [JsonPropertyName("ABHANumber")]
+    //    public string? AbhaNumber { get; set; }
+
+    //    [JsonPropertyName("phrAddress")]
+    //    public List<string>? PhrAddress { get; set; }
+
+    //    [JsonPropertyName("address")]
+    //    public string? Address { get; set; }
+
+    //    [JsonPropertyName("districtCode")]
+    //    public string? DistrictCode { get; set; }
+
+    //    [JsonPropertyName("stateCode")]
+    //    public string? StateCode { get; set; }
+
+    //    [JsonPropertyName("pinCode")]
+    //    public string? PinCode { get; set; }
+    //}
 
     // ===== ABHA Address =====
     public class AbhaAddressSuggestionResponse
@@ -275,5 +327,9 @@ namespace HIMS.API.ABHA.Models
     {
         public string TxnId { get; set; } = string.Empty;
         public string AbhaAddress { get; set; } = string.Empty;
+    }
+    public class ProfileRequestDto
+    {
+        public string Token { get; set; } = string.Empty;
     }
 }
