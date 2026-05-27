@@ -88,10 +88,10 @@ namespace HIMS.API.Controllers.ABHA
         }
 
         // ===== Profile / Card / QR =====
-        [HttpGet("profile")]
-        public async Task<ApiResponse> GetProfile([FromHeader(Name = "X-Token")] string xToken)
+        [HttpPost("aadhaar/profile")]
+        public async Task<ApiResponse> GetProfile([FromBody] ProfileRequestDto dto)
         {
-            var result = await _abhaService.GetAbhaProfileAsync(xToken);
+            var result = await _abhaService.GetAbhaProfileAsync(dto.Token);
             if (result.Success)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Profile retrieved successfully.", result.Data);
             else
