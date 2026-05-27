@@ -23,7 +23,7 @@
         public decimal? LandedRate { get; set; }
         public decimal? NetAmount { get; set; }
         public decimal? GrossAmount { get; set; }
-        public double? BalanceQty { get; set; }
+        public double BalanceQty { get; set; }
         public float? TotalQty { get; set; }
         public bool? IsBatchRequired { get; set; }
         public long? StoreId { get; set; }
