@@ -5,8 +5,10 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using System.Transactions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HIMS.Services.Administration
 {
@@ -171,24 +173,42 @@ namespace HIMS.Services.Administration
 
         }
 
-        public virtual void InsertSp(List<TSalesHeader> ObjTSalesHeader, int UserId, string UserName)
+        public virtual async Task GlobalDiscountUpdate(List<TSalesHeader> ObjTSalesHeader, int CurrentUserId, string CurrentUserName)
         {
+            // Begin Transaction
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             foreach (var item in ObjTSalesHeader)
             {
-                string[] AEntity = { "SalesNo", "CashCounterId", "ExtRegNo", "RefundAmt", "IsRefundFlag", "RegId", "PatientName", "RegNo", "UpdatedBy", "IsCancelled", "TSalesDetails",
-               "AddedBy","BedId","ConcessionAuthorizationId","CreditReason","CreditReasonId","Date","DiscperH","DoctorName","ExtAddress","ExternalPatientName","ExtMobileNo","IsBillCheck",
-                "IsFree","IsPrescription","IsPrint","IsPurBill","NetPayableAmt","IsSellted","OpIpId","OpIpType","PaidAmount","RoundOff","SalesHeadName","SalesTypeId","StoreId","Time","TotalAmount",
-                "UnitId","VatAmount","WardId","Cgstsgatper","Cgstsgatamt","Isgtper","Igstamt","IsDue","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate"};
+                string[] AEntity = { "SalesId", "NetAmount", "DiscAmount", "BalanceAmount", "ConcessionReasonId", "CreatedBy" };
                 var entity = item.ToDictionary();
 
-                foreach (var rProperty in AEntity)
+                foreach (var rProperty in entity.Keys.ToList())
                 {
-                    entity.Remove(rProperty);
+                    if (!AEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
                 }
-
                 odal.ExecuteNonQuery("m_Update_PhBillDiscountAfter", CommandType.StoredProcedure, entity);
+                await _context.LogProcedureExecution(entity, nameof(TSalesHeader), item.SalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+            }
+            // Save Log
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            // Commit Transaction
+            await transaction.CommitAsync();
+
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
             }
         }
 
