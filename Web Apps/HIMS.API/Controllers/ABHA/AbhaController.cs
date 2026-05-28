@@ -5,6 +5,7 @@ using HIMS.API.ABHA.Helper;
 using HIMS.API.ABHA.Interface;
 using HIMS.API.ABHA.Models;
 using Microsoft.AspNetCore.Mvc;
+using SixLabors.ImageSharp.PixelFormats;
 using System.Text.Json;
 
 namespace HIMS.API.Controllers.ABHA
@@ -98,22 +99,22 @@ namespace HIMS.API.Controllers.ABHA
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
-        [HttpGet("card")]
-        public async Task<ApiResponse> GetCard([FromHeader(Name = "X-Token")] string xToken)
+        [HttpPost("aadhaar/card")]
+        public async Task<ApiResponse> GetCard([FromBody] ProfileRequestDto dto)
         {
-            var result = await _abhaService.GetAbhaCardAsync(xToken);
+            var result = await _abhaService.GetAbhaCardAsync(dto.Token);
             if (result.Success)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Card retrieved successfully.", result.Data);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Card retrieved successfully.", Convert.ToBase64String(result.Data));
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
-        [HttpGet("qr")]
-        public async Task<ApiResponse> GetQr([FromHeader(Name = "X-Token")] string xToken)
+        [HttpPost("aadhaar/qr")]
+        public async Task<ApiResponse> GetQr([FromBody] ProfileRequestDto dto)
         {
-            var result = await _abhaService.GetAbhaQrCodeAsync(xToken);
+            var result = await _abhaService.GetAbhaQrCodeAsync(dto.Token);
             if (result.Success)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "QR code retrieved successfully.", result.Data);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "QR code retrieved successfully.", Convert.ToBase64String(result.Data));
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
