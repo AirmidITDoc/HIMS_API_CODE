@@ -137,7 +137,7 @@
         public string? PatientType { get; set; }
         public string? DepartmentName { get; set; }
         public string? RefDoctorName { get; set; }
-        public string FormattedText { get { return this.FirstName + " " + this.MiddleName + " " + this.LastName + " | " + this.RegNo + " | " + this.MobileNo; } }
+        public string FormattedText { get { return this.FirstName + " " + this.MiddleName + " " + this.LastName + " | " + this.RegNo + " | " + this.IPDNo + " | " + this.MobileNo; } }
     }
     public class AdmissionCancelListDto
     {
