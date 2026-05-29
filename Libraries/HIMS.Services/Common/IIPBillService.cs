@@ -25,13 +25,13 @@ namespace HIMS.Services.Common
 
         Task InsertAsync(AddCharge objAddCharge, List<AddCharge> objAddCharges, int CurrentUserId, string CurrentUserName);
         Task IPAddchargesdelete(AddCharge ObjaddCharge, int CurrentUserId, string CurrentUserName);
-        void IPbillSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission, Payment Objpayment, Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, List<TPayment> ObjTPayment, int UserId, string Username);
+        Task IPbillSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission, Payment Objpayment, Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, List<TPayment> ObjTPayment, int UserId, string Username);
         Task IPbillCreditSp(Bill ObjBill, List<BillDetail> ObjBillDetailsModel, AddCharge ObjAddCharge, Admission ObjAddmission, Bill ObjBills, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int CurrentUserId, string CurrentUserName);
         Task paymentAsyncSP(Payment objPayment, Bill ObjBill, List<AdvanceDetail> objadvanceDetailList, AdvanceHeader objAdvanceHeader, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName);
         Task paymentMultipleAsyncSP(List<Payment> objPayment, List<Bill> ObjBill,  List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName);
 
         Task IPInterimBillCashCounterSp(AddCharge ObjAddCharge, Bill ObjBill, List<BillDetail> ObjBillDetails, Payment Objpayment, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName);
-        void IPDraftBill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int UserId, string Username);
+        Task IPDraftBill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int UserId, string Username);
 
         Task IPAddcharges(AddCharge ObjaddCharge, List<AddCharge> objAddCharges, int UserId, string Username);
         Task Update(AddCharge objAddCharge, int CurrentUserId, string CurrentUserName);
