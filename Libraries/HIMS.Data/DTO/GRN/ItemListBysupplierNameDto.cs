@@ -30,8 +30,7 @@
         public long? StkId { get; set; }
         public long ReturnQty { get; set; }
         public float? ReceiveQty { get; set; }
-
-
+        public float? FreeQty { get; set; }
 
     }
 }
