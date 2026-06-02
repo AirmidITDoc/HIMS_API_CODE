@@ -30,6 +30,7 @@ namespace HIMS.Data.Models
         public float? Igstper { get; set; }
         public string? Remarks { get; set; }
         public long? StkId { get; set; }
+        public decimal? ReturnFreeQty { get; set; }
 
         public virtual TGrnreturnHeader? Grnreturn { get; set; }
     }

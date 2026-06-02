@@ -26,5 +26,7 @@
         public float? Igstper { get; set; }
         public float? DiscPercentage { get; set; }
         public decimal? DiscAmount { get; set; }
+        public decimal? ReturnFreeQty { get; set; }
+
     }
 }

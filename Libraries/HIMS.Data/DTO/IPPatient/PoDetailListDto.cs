@@ -43,6 +43,8 @@
         public string? SupplierName { get; set; }
         public float? FreeQty { get; set; }
         public float? TotalQty { get; set; }
+        public decimal? DefRate { get; set; }
+
 
     }
 }

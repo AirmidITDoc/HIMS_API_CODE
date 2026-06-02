@@ -140,7 +140,7 @@ namespace HIMS.API.ABHA.Models
         [JsonPropertyName("tokens")]
         public TokenInfo? Tokens { get; set; }
 
-        [JsonPropertyName("ABHAProfile")]
+        [JsonPropertyName("abhaProfile")]
         public AbhaProfile? AbhaProfile { get; set; }
 
         [JsonPropertyName("isNew")]
@@ -215,6 +215,7 @@ namespace HIMS.API.ABHA.Models
         public string verificationType { get; set; }
         public LocalizedDetails localizedDetails { get; set; }
         public string createdDate { get; set; }
+        public string[] phrAddress { get; set; }
     }
 
     //public class AbhaProfile

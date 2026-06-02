@@ -159,14 +159,14 @@ namespace HIMS.API.Controllers.Administration
 
         [HttpPost("PhBillGlobalDiscount")]
         [Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Add)]
-        public ApiResponse InsertSP1(GlobalDiscountModels obj)
+        public async Task <ApiResponse> GlobalDiscountUpdate(GlobalDiscountModels obj)
         {
 
             List<TSalesHeader> model = obj.Sales.MapTo<List<TSalesHeader>>();
             if (model.Count > 0)
             {
 
-                _paymentpharmacyService.InsertSp(model, CurrentUserId, CurrentUserName);
+                await _paymentpharmacyService.GlobalDiscountUpdate(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

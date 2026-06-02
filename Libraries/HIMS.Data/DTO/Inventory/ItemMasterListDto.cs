@@ -218,6 +218,46 @@ namespace HIMS.Data.DTO.Inventory
         public string? ExpDays { get; set; }
         public string? DaysFlag { get; set; }
     }
+    public class GETProcItemListForBatchDTO
+    {
+        public long StockId { get; set; }
+        public long? StoreId { get; set; }
+        public long? ItemId { get; set; }
+        public string? ItemName { get; set; }
+        public float? BalanceQty { get; set; }
+        public decimal? LandedRate { get; set; }
+        public decimal? UnitMRP { get; set; }
+        public decimal? PurchaseRate { get; set; }
+        public decimal? VatPercentage { get; set; }
+        public bool? IsBatchRequired { get; set; }
+        public string? BatchNo { get; set; }
+        public float? CGSTPer { get; set; }
+        public float? SGSTPer { get; set; }
+        public float? IGSTPer { get; set; }
+        public DateTime? BatchExpDate { get; set; }
+        public float? GrnRetQty { get; set; }
+        public string? ManufactureName { get; set; }
+        public string FormattedText { get { return this.ItemName + " | " + this.BalanceQty + " | " + this.UnitMRP + " | " + this.PurchaseRate; } }
+        public string? ConversionFactor { get; set; }
+        public string? ProdLocation { get; set; }
+        public long? ItemGenericNameId { get; set; }
+        public string? ItemGenericName { get; set; }
+        public string? ExpDays { get; set; }
+        public string? DaysFlag { get; set; }
+        public string? DrugTypeName { get; set; }
+
+        public bool? IsHighRisk { get; set; }
+        public bool? IsEmgerency { get; set; }
+        public bool? IsLasa { get; set; }
+        public bool? IsH1drug { get; set; }
+        public decimal HMrpUnitPrice { get; set; }
+        public decimal HMrp_Strip { get; set; }
+
+
+
+
+    }
+
 
 
     public class ItemListForSalesPageDTO

@@ -359,6 +359,16 @@ namespace HIMS.Services.Inventory
             List<ItemListForBatchDTO> lstServiceList = sql.FetchListBySP<ItemListForBatchDTO>("ps_Rtrv_ItemName_BatchPOP_BalanceQty", para);
             return lstServiceList;
         }
+        public List<GETProcItemListForBatchDTO> GetItemListForBatch(int StoreId, int ItemId)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[2];
+            para[0] = new SqlParameter("@StoreId", StoreId);
+            para[1] = new SqlParameter("@ItemId", ItemId);
+
+            List<GETProcItemListForBatchDTO> lstServiceList = sql.FetchListBySP<GETProcItemListForBatchDTO>("ps_Rtrv_ItemName_BatchPOP_BalanceQty_forNormal_Sales", para);
+            return lstServiceList;
+        }
 
         //public virtual async Task<List<ItemListForBatchPopDTO>> GetItemListForSalesBatchPop(int StoreId, int ItemId)
         //{

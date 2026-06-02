@@ -304,9 +304,13 @@ namespace HIMS.Services.Utilities
                 {
                     html = html.Replace(item.Key, item.Value);
                 }
+                foreach (var item in replacements)
+                {
+                    html = html.Replace(item.Key, item.Value);
+                }
 
-                // Final visibility flags
-                html = html
+            // Final visibility flags
+            html = html
                     .Replace("{{TextHeaderDisplay}}", hospital.IsHeaderOption == 1 ? "table-row" : "none")
                     .Replace("{{ImageHeaderDisplay}}", hospital.IsHeaderOption == 2 ? "table-row" : "none")
                     .Replace("{{TemplateHeaderDisplay}}", hospital.IsHeaderOption == 3 ? "table-row" : "none");

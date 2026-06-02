@@ -15,10 +15,12 @@ namespace HIMS.API.Models.OutPatient
     public class GlobalDiscountModel
     {
         public long? SalesId { get; set; }
-        public double? NetAmount { get; set; }
-        public double? DiscAmount { get; set; }
-        public double? BalanceAmount { get; set; }
+        public decimal? NetAmount { get; set; }
+        public decimal? DiscAmount { get; set; }
+        public decimal? BalanceAmount { get; set; }
         public long? ConcessionReasonId { get; set; }
+        public long? CreatedBy { get; set; }
+
 
     }
     public class GlobalDiscountModels

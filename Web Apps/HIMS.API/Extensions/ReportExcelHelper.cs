@@ -473,12 +473,19 @@ namespace HIMS.API.Extensions
                 case "MarketingDoctorTestWiseSale.html":
                     {
                         var headers = model.headerList.ToList();
-                        headers.Remove("ExecutiveName"); 
-
+                        headers.Remove("ExecutiveName");
+              
                         AddHeader(workSheet, headers); 
                         StyleHeaderRow(workSheet);
+                        int totalCols = headers.Count; // excluding ExecutiveName
+                        for (int i = totalCols; i >= 1; i--)
+                        {
+                            workSheet.Cell(1, i + 1).Value = workSheet.Cell(1, i).Value;
+                        }
+                        workSheet.Cell(1, 1).Value = "Sr.No";
 
                         int rowNo = 2;
+                        int srNo = 1;
 
                         string prevExec = "";
                         string prevDoctor = "";
@@ -503,26 +510,26 @@ namespace HIMS.API.Extensions
                                     if (prevDoctor != "")
                                     {
                                         workSheet.Cell(rowNo, 1).Value = "Doctor Total";
-                                        workSheet.Range(rowNo, 1, rowNo, 7).Merge();
+                                        workSheet.Range(rowNo, 1, rowNo, 8).Merge();
 
-                                        workSheet.Cell(rowNo, 8).Value = docGross;
-                                        workSheet.Cell(rowNo, 9).Value = docDisc;
-                                        workSheet.Cell(rowNo, 10).Value = docNet;
+                                        workSheet.Cell(rowNo, 9).Value = docGross;
+                                        workSheet.Cell(rowNo, 10).Value = docDisc;
+                                        workSheet.Cell(rowNo, 11).Value = docNet;
 
-                                        workSheet.Range(rowNo, 1, rowNo, 10).Style
+                                        workSheet.Range(rowNo, 1, rowNo, 11).Style
                                             .Font.SetBold()
                                             .Fill.SetBackgroundColor(XLColor.LightGray);
 
                                         rowNo++;
                                     }
                                     workSheet.Cell(rowNo, 1).Value = "Subtotal for " + prevExec;
-                                    workSheet.Range(rowNo, 1, rowNo, 7).Merge();
+                                    workSheet.Range(rowNo, 1, rowNo, 8 ).Merge();
 
-                                    workSheet.Cell(rowNo, 8).Value = execGross;
-                                    workSheet.Cell(rowNo, 9).Value = execDisc;
-                                    workSheet.Cell(rowNo, 10).Value = execNet;
+                                    workSheet.Cell(rowNo, 9).Value = execGross;
+                                    workSheet.Cell(rowNo, 10).Value = execDisc;
+                                    workSheet.Cell(rowNo, 11).Value = execNet;
 
-                                    var execRange = workSheet.Range(rowNo, 1, rowNo, 10);
+                                    var execRange = workSheet.Range(rowNo, 1, rowNo, 11);
                                     execRange.Style.Font.SetBold();
                                     execRange.Style.Border.TopBorder = XLBorderStyleValues.Thick;
                                     execRange.Style.Border.BottomBorder = XLBorderStyleValues.Thick;
@@ -548,13 +555,13 @@ namespace HIMS.API.Extensions
                                 {
                                     // Doctor Total
                                     workSheet.Cell(rowNo, 1).Value = "Doctor Total";
-                                    workSheet.Range(rowNo, 1, rowNo, 7).Merge();
+                                    workSheet.Range(rowNo, 1, rowNo, 8).Merge();
 
-                                    workSheet.Cell(rowNo, 8).Value = docGross;
-                                    workSheet.Cell(rowNo, 9).Value = docDisc;
-                                    workSheet.Cell(rowNo, 10).Value = docNet;
+                                    workSheet.Cell(rowNo, 9).Value = docGross;
+                                    workSheet.Cell(rowNo, 10).Value = docDisc;
+                                    workSheet.Cell(rowNo, 11).Value = docNet;
 
-                                    workSheet.Range(rowNo, 1, rowNo, 10).Style
+                                    workSheet.Range(rowNo, 1, rowNo, 11).Style
                                         .Font.SetBold()
                                         .Fill.SetBackgroundColor(XLColor.FromHtml("#f9f9f9"));
 
@@ -567,6 +574,7 @@ namespace HIMS.API.Extensions
                                 isFirstRowOfDoctor = true;
                             }
                             int col = 1;
+                            workSheet.Cell(rowNo, col++).Value = srNo++;
                             workSheet.Cell(rowNo, col++).Value = isFirstRowOfDoctor ? doctor : "";
                             isFirstRowOfDoctor = false;
 
@@ -592,13 +600,13 @@ namespace HIMS.API.Extensions
                         if (prevDoctor != "")
                         {
                             workSheet.Cell(rowNo, 1).Value = "Doctor Total";
-                            workSheet.Range(rowNo, 1, rowNo, 7).Merge();
+                            workSheet.Range(rowNo, 1, rowNo, 8).Merge();
 
-                            workSheet.Cell(rowNo, 8).Value = docGross;
-                            workSheet.Cell(rowNo, 9).Value = docDisc;
-                            workSheet.Cell(rowNo, 10).Value = docNet;
+                            workSheet.Cell(rowNo, 9).Value = docGross;
+                            workSheet.Cell(rowNo, 10).Value = docDisc;
+                            workSheet.Cell(rowNo, 11).Value = docNet;
 
-                            workSheet.Range(rowNo, 1, rowNo, 10).Style
+                            workSheet.Range(rowNo, 1, rowNo, 11).Style
                                 .Font.SetBold()
                                 .Fill.SetBackgroundColor(XLColor.FromHtml("#f9f9f9"));
 
@@ -608,13 +616,13 @@ namespace HIMS.API.Extensions
                         if (prevExec != "")
                         {
                             workSheet.Cell(rowNo, 1).Value = "Subtotal for " + prevExec;
-                            workSheet.Range(rowNo, 1, rowNo, 7).Merge();
+                            workSheet.Range(rowNo, 1, rowNo, 8).Merge();
 
-                            workSheet.Cell(rowNo, 8).Value = execGross;
-                            workSheet.Cell(rowNo, 9).Value = execDisc;
-                            workSheet.Cell(rowNo, 10).Value = execNet;
+                            workSheet.Cell(rowNo, 9).Value = execGross;
+                            workSheet.Cell(rowNo, 10).Value = execDisc;
+                            workSheet.Cell(rowNo, 11).Value = execNet;
 
-                            var execRange = workSheet.Range(rowNo, 1, rowNo, 10);
+                            var execRange = workSheet.Range(rowNo, 1, rowNo, 11);
                             execRange.Style.Font.SetBold();
                             execRange.Style.Border.TopBorder = XLBorderStyleValues.Thick;
                             execRange.Style.Border.BottomBorder = XLBorderStyleValues.Thick;
@@ -636,6 +644,146 @@ namespace HIMS.API.Extensions
                         workSheet.SheetView.FreezeRows(1);
                     }
                     break;
+                //case "MultiResultSetReportCustomSummary.html":
+                //    {
+                //        AddHeader(workSheet, model.headerList.ToList());
+                //        StyleHeaderRow(workSheet);
+
+                //        int rowNo = 2;
+                //        string[] cols = model.colList.Select(x => x.Trim()).ToArray();
+
+                //        string[] groupCols = model.groupByLabel?.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray() ?? Array.Empty<string>();
+
+                //        DataTable dtMain = dt;
+                //        void WriteRows(IEnumerable<DataRow> rows, int indentLevel)
+                //        {
+                //            foreach (var r in rows)
+                //            {
+                //                int colNo = 1;
+
+                //                foreach (var col in cols)
+                //                {
+                //                    object val = r.Table.Columns.Contains(col) ? r[col] : null;
+
+                //                    var cell = workSheet.Cell(rowNo, colNo);
+
+                //                    if (val == null || val == DBNull.Value)
+                //                        cell.Value = "";
+                //                    else if (val is DateTime d)
+                //                        cell.Value = d;
+                //                    else if (val is int || val is long)
+                //                        cell.Value = Convert.ToInt64(val);
+                //                    else if (val is decimal || val is double || val is float)
+                //                        cell.Value = Convert.ToDouble(val);
+                //                    else
+                //                        cell.Value = val.ToString();
+
+                //                    colNo++;
+                //                }
+
+                //                rowNo++;
+                //            }
+                //        }
+
+                //        void RenderGroup(int level, IEnumerable<DataRow> data)
+                //        {
+                //            if (level >= groupCols.Length)
+                //            {
+                //                WriteRows(data, level);
+                //                return;
+                //            }
+
+                //            var groups = data.Select(x => x[groupCols[level]]?.ToString()).Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList();
+
+                //            foreach (var g in groups)
+                //            {
+                //                workSheet.Cell(rowNo, 1).Value = g;
+                //                workSheet.Range(rowNo, 1, rowNo, cols.Length).Merge();
+                //                workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                //                workSheet.Cell(rowNo, 1).Style.Fill.BackgroundColor = XLColor.LightGray;
+
+                //                rowNo++;
+
+                //                var child = data.Where(x => (x[groupCols[level]]?.ToString() ?? "") == g);
+
+                //                RenderGroup(level + 1, child);
+                //            }
+                //        }
+
+                //        RenderGroup(0, dtMain.AsEnumerable());
+                //        rowNo += 2;
+
+                //        workSheet.Cell(rowNo, 1).Value = "SUMMARY REPORT";
+                //        workSheet.Range(rowNo, 1, rowNo, cols.Length).Merge();
+                //        workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+
+                //        rowNo++;
+
+                //        var dcFields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+
+                //        Microsoft.Data.SqlClient.SqlParameter[] dcPara = dcFields.Select(kv =>
+                //        {
+                //            bool isDate = kv.Key.Equals("FromDate", StringComparison.OrdinalIgnoreCase)
+                //                       || kv.Key.Equals("ToDate", StringComparison.OrdinalIgnoreCase);
+
+                //            return new Microsoft.Data.SqlClient.SqlParameter("@" + kv.Key,
+                //                isDate
+                //                    ? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                //                    : (object)kv.Value);
+                //        }).ToArray();
+                //        DatabaseHelper db = new DatabaseHelper();
+                //        List<DataTable> summarySets = db.FetchAllResultSets(model.SPName, dcPara);
+                //        for (int t = 1; t < summarySets.Count; t++)
+                //        {
+                //            DataTable table = summarySets[t];
+
+                //            if (table == null || table.Rows.Count == 0)
+                //                continue;
+
+                //            workSheet.Cell(rowNo, 1).Value = $"SUMMARY SET {t}";
+                //            workSheet.Range(rowNo, 1, rowNo, table.Columns.Count).Merge();
+                //            workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                //            rowNo++;
+                //            int colNo = 1;
+                //            foreach (DataColumn col in table.Columns)
+                //            {
+                //                workSheet.Cell(rowNo, colNo).Value = col.ColumnName;
+                //                workSheet.Cell(rowNo, colNo).Style.Font.Bold = true;
+                //                colNo++;
+                //            }
+
+                //            rowNo++;
+
+                //            foreach (DataRow dr in table.Rows)
+                //            {
+                //                colNo = 1;
+
+                //                foreach (DataColumn col in table.Columns)
+                //                {
+                //                    var val = dr[col];
+                //                    var cell = workSheet.Cell(rowNo, colNo);
+
+                //                    if (val == null || val == DBNull.Value)
+                //                        cell.Value = "";
+                //                    else if (val is DateTime d)
+                //                        cell.Value = d;
+                //                    else if (val is int || val is long)
+                //                        cell.Value = Convert.ToInt64(val);
+                //                    else if (val is decimal || val is double || val is float)
+                //                        cell.Value = Convert.ToDouble(val);
+                //                    else
+                //                        cell.Value = val.ToString();
+
+                //                    colNo++;
+                //                }
+
+                //                rowNo++;
+                //            }
+
+                //            rowNo++; 
+                //        }
+                //    }
+                //        break;
                 case "MultiResultSetReportCustomSummary.html":
                     {
                         AddHeader(workSheet, model.headerList.ToList());
@@ -644,35 +792,36 @@ namespace HIMS.API.Extensions
                         int rowNo = 2;
                         string[] cols = model.colList.Select(x => x.Trim()).ToArray();
 
-                        string[] groupCols = model.groupByLabel?.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray() ?? Array.Empty<string>();
+                        string[] groupCols = model.groupByLabel?.Split(',')
+                            .Where(x => !string.IsNullOrWhiteSpace(x))
+                            .Select(x => x.Trim())
+                            .ToArray() ?? Array.Empty<string>();
+
+                        // ADDED
+                        string[] totalCols = (model.totalFieldList ?? Array.Empty<string>())
+                            .Where(x => !string.IsNullOrWhiteSpace(x))
+                            .ToArray();
 
                         DataTable dtMain = dt;
+
                         void WriteRows(IEnumerable<DataRow> rows, int indentLevel)
                         {
                             foreach (var r in rows)
                             {
                                 int colNo = 1;
-
                                 foreach (var col in cols)
                                 {
                                     object val = r.Table.Columns.Contains(col) ? r[col] : null;
-
                                     var cell = workSheet.Cell(rowNo, colNo);
 
-                                    if (val == null || val == DBNull.Value)
-                                        cell.Value = "";
-                                    else if (val is DateTime d)
-                                        cell.Value = d;
-                                    else if (val is int || val is long)
-                                        cell.Value = Convert.ToInt64(val);
-                                    else if (val is decimal || val is double || val is float)
-                                        cell.Value = Convert.ToDouble(val);
-                                    else
-                                        cell.Value = val.ToString();
+                                    if (val == null || val == DBNull.Value) cell.Value = "";
+                                    else if (val is DateTime d) cell.Value = d;
+                                    else if (val is int || val is long) cell.Value = Convert.ToInt64(val);
+                                    else if (val is decimal || val is double || val is float) cell.Value = Convert.ToDouble(val);
+                                    else cell.Value = val.ToString();
 
                                     colNo++;
                                 }
-
                                 rowNo++;
                             }
                         }
@@ -685,7 +834,11 @@ namespace HIMS.API.Extensions
                                 return;
                             }
 
-                            var groups = data.Select(x => x[groupCols[level]]?.ToString()).Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList();
+                            var groups = data
+                                .Select(x => x[groupCols[level]]?.ToString())
+                                .Where(x => !string.IsNullOrEmpty(x))
+                                .Distinct()
+                                .ToList();
 
                             foreach (var g in groups)
                             {
@@ -693,49 +846,93 @@ namespace HIMS.API.Extensions
                                 workSheet.Range(rowNo, 1, rowNo, cols.Length).Merge();
                                 workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
                                 workSheet.Cell(rowNo, 1).Style.Fill.BackgroundColor = XLColor.LightGray;
-
                                 rowNo++;
 
-                                var child = data.Where(x => (x[groupCols[level]]?.ToString() ?? "") == g);
+                                // CHANGED: added .ToList()
+                                var child = data.Where(x => (x[groupCols[level]]?.ToString() ?? "") == g).ToList();
 
                                 RenderGroup(level + 1, child);
+
+                                // ADDED: subtotal block
+                                if (totalCols.Length > 0)
+                                {
+                                    workSheet.Cell(rowNo, 1).Value = $"Total - {g}";
+                                    workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                                    workSheet.Cell(rowNo, 1).Style.Fill.BackgroundColor = XLColor.LightYellow;
+
+                                    for (int i = 0; i < cols.Length; i++)
+                                    {
+                                        if (totalCols.Contains(cols[i], StringComparer.OrdinalIgnoreCase))
+                                        {
+                                            double subTotal = child
+                                                .Where(r => r.Table.Columns.Contains(cols[i]) && r[cols[i]] != DBNull.Value)
+                                                .Sum(r => Convert.ToDouble(r[cols[i]]));
+                                            workSheet.Cell(rowNo, i + 1).Value = subTotal;
+                                            workSheet.Cell(rowNo, i + 1).Style.Font.Bold = true;
+                                            workSheet.Cell(rowNo, i + 1).Style.Fill.BackgroundColor = XLColor.LightYellow;
+                                        }
+                                    }
+                                    rowNo++;
+                                }
                             }
                         }
 
                         RenderGroup(0, dtMain.AsEnumerable());
+
+                        // ADDED: grand total block
+                        if (totalCols.Length > 0)
+                        {
+                            rowNo++;
+                            workSheet.Cell(rowNo, 1).Value = "Grand Total";
+                            workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+
+                            for (int i = 0; i < cols.Length; i++)
+                            {
+                                if (totalCols.Contains(cols[i], StringComparer.OrdinalIgnoreCase))
+                                {
+                                    double total = dtMain.AsEnumerable()
+                                        .Where(r => r.Table.Columns.Contains(cols[i]) && r[cols[i]] != DBNull.Value)
+                                        .Sum(r => Convert.ToDouble(r[cols[i]]));
+                                    workSheet.Cell(rowNo, i + 1).Value = total;
+                                    workSheet.Cell(rowNo, i + 1).Style.Font.Bold = true;
+                                }
+                            }
+                            rowNo++;
+                        }
+
                         rowNo += 2;
 
                         workSheet.Cell(rowNo, 1).Value = "SUMMARY REPORT";
                         workSheet.Range(rowNo, 1, rowNo, cols.Length).Merge();
                         workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
-
                         rowNo++;
 
-                        var dcFields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+                        var dcFields = HIMS.Data.Extensions.SearchFieldExtension
+                            .GetSearchFields(model.SearchFields)
+                            .ToDictionary(e => e.FieldName, e => e.FieldValueString);
 
                         Microsoft.Data.SqlClient.SqlParameter[] dcPara = dcFields.Select(kv =>
                         {
                             bool isDate = kv.Key.Equals("FromDate", StringComparison.OrdinalIgnoreCase)
                                        || kv.Key.Equals("ToDate", StringComparison.OrdinalIgnoreCase);
-
                             return new Microsoft.Data.SqlClient.SqlParameter("@" + kv.Key,
-                                isDate
-                                    ? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture)
-                                    : (object)kv.Value);
+                                isDate ? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                                       : (object)kv.Value);
                         }).ToArray();
+
                         DatabaseHelper db = new DatabaseHelper();
                         List<DataTable> summarySets = db.FetchAllResultSets(model.SPName, dcPara);
+
                         for (int t = 1; t < summarySets.Count; t++)
                         {
                             DataTable table = summarySets[t];
-
-                            if (table == null || table.Rows.Count == 0)
-                                continue;
+                            if (table == null || table.Rows.Count == 0) continue;
 
                             workSheet.Cell(rowNo, 1).Value = $"SUMMARY SET {t}";
                             workSheet.Range(rowNo, 1, rowNo, table.Columns.Count).Merge();
                             workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
                             rowNo++;
+
                             int colNo = 1;
                             foreach (DataColumn col in table.Columns)
                             {
@@ -743,39 +940,30 @@ namespace HIMS.API.Extensions
                                 workSheet.Cell(rowNo, colNo).Style.Font.Bold = true;
                                 colNo++;
                             }
-
                             rowNo++;
 
                             foreach (DataRow dr in table.Rows)
                             {
                                 colNo = 1;
-
                                 foreach (DataColumn col in table.Columns)
                                 {
                                     var val = dr[col];
                                     var cell = workSheet.Cell(rowNo, colNo);
 
-                                    if (val == null || val == DBNull.Value)
-                                        cell.Value = "";
-                                    else if (val is DateTime d)
-                                        cell.Value = d;
-                                    else if (val is int || val is long)
-                                        cell.Value = Convert.ToInt64(val);
-                                    else if (val is decimal || val is double || val is float)
-                                        cell.Value = Convert.ToDouble(val);
-                                    else
-                                        cell.Value = val.ToString();
+                                    if (val == null || val == DBNull.Value) cell.Value = "";
+                                    else if (val is DateTime d) cell.Value = d;
+                                    else if (val is int || val is long) cell.Value = Convert.ToInt64(val);
+                                    else if (val is decimal || val is double || val is float) cell.Value = Convert.ToDouble(val);
+                                    else cell.Value = val.ToString();
 
                                     colNo++;
                                 }
-
                                 rowNo++;
                             }
-
-                            rowNo++; 
+                            rowNo++;
                         }
                     }
-                        break;
+                    break;
                 case "SimpleMultiResultSetReportCustomSummary.html":
                     {
                         var dcFields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields)
@@ -797,8 +985,13 @@ namespace HIMS.API.Extensions
 
                         DataTable firstDt = allSets[0];
 
+                        //string[] trimmedColList = model.colList.Select(x => x.Trim()).ToArray();
+                        //string[] trimmedHeaders = model.headerList.Select(x => x.Trim()).ToArray();
                         string[] trimmedColList = model.colList.Select(x => x.Trim()).ToArray();
-                        string[] trimmedHeaders = model.headerList.Select(x => x.Trim()).ToArray();
+                        string[] trimmedHeaders = model.headerList
+                            .Select(x => x.Trim())
+                            .Where(x => !x.Equals("Sr.No", StringComparison.OrdinalIgnoreCase)) 
+                            .ToArray();
                         string[] dcTotalCols = (model.totalFieldList ?? Array.Empty<string>()).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
                         string[] dcGroupCols = model.groupByLabel?.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray()?? Array.Empty<string>();
 

@@ -13555,6 +13555,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Remarks).HasMaxLength(50);
 
+                entity.Property(e => e.ReturnFreeQty).HasColumnType("decimal(18, 0)");
+
                 entity.Property(e => e.Sgstper).HasColumnName("SGSTPer");
 
                 entity.Property(e => e.UnitPurchaseRate).HasColumnType("decimal(18, 4)");

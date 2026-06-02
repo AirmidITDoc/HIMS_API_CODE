@@ -297,14 +297,15 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Delete)]
-        public ApiResponse Cancel(DRBillCancel obj)
+        [Permission(PageCode = "Bill", Permission = PagePermission.Delete)]
+        public async Task<ApiResponse> Cancel(DRBillCancel obj)
+
         {
             TDrbill model = obj.MapTo<TDrbill>();
             if (obj.Drbno != 0)
             {
                 model.Drbno = obj.Drbno;
-                _oPBillingService.Cancel(model, CurrentUserId, CurrentUserName);
+                await _oPBillingService.Cancel(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

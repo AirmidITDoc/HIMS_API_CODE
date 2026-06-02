@@ -177,7 +177,7 @@ namespace HIMS.Services.Pharmacy
             {
                 item.GrnreturnId = Convert.ToInt32(VGrnreturnId);
 
-                string[] Entity = { "GrnreturnId", "ItemId", "BatchNo", "BatchExpiryDate", "ReturnQty", "LandedRate", "Mrp", "UnitPurchaseRate", "Gstpercentage", "Gstamount", "LandedTotalAmount", "MrptotalAmount", "PurchaseTotalAmount", "Conversion", "Remarks", "StkId", "Cf", "TotalQty", "Grnid", "Cgstper", "Sgstper", "Igstper", "DiscPercentage", "DiscAmount" };
+                string[] Entity = { "GrnreturnId", "ItemId", "BatchNo", "BatchExpiryDate", "ReturnQty", "LandedRate", "Mrp", "UnitPurchaseRate", "Gstpercentage", "Gstamount", "LandedTotalAmount", "MrptotalAmount", "PurchaseTotalAmount", "Conversion", "Remarks", "StkId", "Cf", "TotalQty", "Grnid", "Cgstper", "Sgstper", "Igstper", "DiscPercentage", "DiscAmount", "ReturnFreeQty" };
                 var rentity = item.ToDictionary();
                 foreach (var rProperty in rentity.Keys.ToList())
                 {
@@ -261,7 +261,7 @@ namespace HIMS.Services.Pharmacy
             foreach (var item in objTGrnreturnDetail)
             {
 
-                string[] Entity = { "GrnreturnId", "ItemId", "BatchNo", "BatchExpiryDate", "ReturnQty", "LandedRate", "Mrp", "UnitPurchaseRate", "Gstpercentage", "Gstamount", "LandedTotalAmount", "MrptotalAmount", "PurchaseTotalAmount", "Conversion", "Remarks", "StkId", "Cf", "TotalQty", "Grnid", "Cgstper", "Sgstper", "Igstper", "DiscPercentage", "DiscAmount" };
+                string[] Entity = { "GrnreturnId", "ItemId", "BatchNo", "BatchExpiryDate", "ReturnQty", "LandedRate", "Mrp", "UnitPurchaseRate", "Gstpercentage", "Gstamount", "LandedTotalAmount", "MrptotalAmount", "PurchaseTotalAmount", "Conversion", "Remarks", "StkId", "Cf", "TotalQty", "Grnid", "Cgstper", "Sgstper", "Igstper", "DiscPercentage", "DiscAmount", "ReturnFreeQty" };
                 var rentity = item.ToDictionary();
                 foreach (var rProperty in rentity.Keys.ToList())
                 {

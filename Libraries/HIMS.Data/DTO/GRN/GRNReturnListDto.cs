@@ -33,6 +33,8 @@
         public float? BalanceQty { get; set; }
         public float? GrnRetQty { get; set; }
         public float ReceiveQty { get; set; }
+        public decimal? ReturnFreeQty { get; set; }
+
 
 
     }

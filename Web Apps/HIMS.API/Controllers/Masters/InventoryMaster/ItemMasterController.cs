@@ -190,6 +190,13 @@ namespace HIMS.API.Controllers.Inventory
             var data = _ItemMasterServices.ItemListForBatch(StoreId, ItemId, PatientTypeId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pharmacy Item Wise Batch List.", data);
         }
+        [HttpGet("GetProsearch-GetItemListForSalesBatchPop")]
+        public ApiResponse GetItemListForBatch(int StoreId, int ItemId)
+        {
+            var data = _ItemMasterServices.GetItemListForBatch(StoreId, ItemId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetProsearch Get ItemList ForSalesBatchPop.", data);
+        }
+
 
 
         [HttpGet("GetItemListforSalesPage")]
