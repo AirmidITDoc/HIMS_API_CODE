@@ -324,8 +324,10 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                model.ConEndTime = AppTime.Now;
-                model.CheckOutTime = AppTime.Now;
+                //model.ConEndTime = AppTime.Now;
+                //model.CheckOutTime = AppTime.Now;
+                model.ConEndTime = DateTime.Now;
+                model.CheckOutTime = DateTime.Now;
                 await _visitDetailsService.UpdateAsyncv(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
