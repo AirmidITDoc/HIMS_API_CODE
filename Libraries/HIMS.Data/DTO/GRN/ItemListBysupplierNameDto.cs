@@ -31,6 +31,9 @@
         public long ReturnQty { get; set; }
         public float? ReceiveQty { get; set; }
         public float? FreeQty { get; set; }
+        public double totalreturnqty { get; set; }
+        public decimal totalreturnfreeqty { get; set; }
+
 
     }
 }
