@@ -7453,6 +7453,8 @@ namespace HIMS.Services.Report
 
 
                         html = html.Replace("{{UpdatedBy}}", dt.GetColValue("UpdatedBy"));
+                        html = html.Replace("{{ModifiedDate}}", dt.GetColValue("ModifiedDate")).ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
                         html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
                         html = html.Replace("{{CountryName}}", dt.GetColValue("CountryName"));
 
@@ -7483,6 +7485,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkMedTourismOfficeWorkAddressflag}}", dt.GetColValue("MedTourismOfficeWorkAddress").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkMedTourismCitizenshipflag}}", dt.GetColValue("MedTourismCitizenship").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkCountryNameflag}}", dt.GetColValue("CountryName").ConvertToString() != "" ? "table-row" : "none");
+
+
+                        html = html.Replace("{{chkUpdatedByflag}}", dt.GetColValue("UpdatedBy").ConvertToString() != "" ? "visible" : "none");
 
                         return html;
 
