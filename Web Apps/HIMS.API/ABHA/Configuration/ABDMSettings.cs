@@ -34,8 +34,8 @@
         public string PublicCertificate { get; set; } = string.Empty;
         public string AadhaarOtpRequest { get; set; } = string.Empty;
         public string AadhaarOtpVerify { get; set; } = string.Empty;
-        public string MobileOtpRequest { get; set; } = string.Empty;
-        public string MobileOtpVerify { get; set; } = string.Empty;
+        public string OtpRequest { get; set; } = string.Empty;
+        public string OtpVerify { get; set; } = string.Empty;
         public string AbhaAddressSuggestion { get; set; } = string.Empty;
         public string CreateAbhaAddress { get; set; } = string.Empty;
         public string AbhaProfile { get; set; } = string.Empty;
@@ -46,5 +46,6 @@
         public string LinkingTokenRequest { get; set; } = string.Empty;
         public string LinkingTokenConfirm { get; set; } = string.Empty;
         public string CareContextNotify { get; set; } = string.Empty;
+        public string VerifyUser { get; set; } = string.Empty;
     }
 }

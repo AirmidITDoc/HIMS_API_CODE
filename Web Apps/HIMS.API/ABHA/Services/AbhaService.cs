@@ -3,10 +3,8 @@
 using HIMS.API.ABHA.Helper;
 using HIMS.API.ABHA.Interface;
 using HIMS.API.ABHA.Models;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
@@ -93,33 +91,33 @@ namespace HIMS.API.ABHA.Services
         }
 
         // ===== MOBILE FLOW =====
-        public async Task<ApiResult<OtpResponse>> RequestMobileOtpAsync(string txnId, string mobile)
+        public async Task<ApiResult<OtpResponse>> RequestOtpAsync(string aadharno, List<string> scope, string LoginHint, string OtpSystem)
         {
             try
             {
+                //List<string> scope = isMobile ? new List<string> { "abha-login", "mobile-verify" } : new List<string> { "abha-login", "aadhaar-verify" };
                 var publicKey = await _tokenService.GetPublicCertificateAsync();
-                var encryptedMobile = RsaEncryptionHelper.Encrypt(mobile, publicKey);
+                var encryptedAadhaar = RsaEncryptionHelper.Encrypt(aadharno, publicKey);
 
-                var payload = new MobileOtpRequest
+                var payload = new OtpRequest
                 {
-                    TxnId = txnId,
-                    LoginId = encryptedMobile,
-                    LoginHint = "mobile",
-                    OtpSystem = "abdm",
-                    Scope = new List<string> { "abha-enrol", "mobile-verify" }
+                    LoginId = encryptedAadhaar,
+                    LoginHint = LoginHint,
+                    OtpSystem = OtpSystem,
+                    Scope = scope
                 };
 
-                var url = $"{_settings.BaseUrls.AbhaBaseUrl}{_settings.Endpoints.MobileOtpRequest}";
+                var url = $"{_settings.BaseUrls.AbhaBaseUrl}{_settings.Endpoints.OtpRequest}";
                 return await PostAsync<OtpResponse>(url, payload);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "RequestMobileOtpAsync failed");
+                _logger.LogError(ex, "RequestOtpAsync failed");
                 return new ApiResult<OtpResponse> { Success = false, Error = ex.Message };
             }
         }
 
-        public async Task<ApiResult<AbhaEnrolmentResponse>> VerifyMobileOtpAsync(string txnId, string otp)
+        public async Task<ApiResult<VerifyOtpResponse>> VerifyOtpAsync(string txnId, string otp, List<string> scope)
         {
             try
             {
@@ -128,26 +126,25 @@ namespace HIMS.API.ABHA.Services
 
                 var payload = new
                 {
-                    scope = new[] { "abha-enrol", "mobile-verify" },
+                    scope,
                     authData = new
                     {
                         authMethods = new[] { "otp" },
                         otp = new
                         {
-                            timeStamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"),
                             txnId,
                             otpValue = encryptedOtp
                         }
                     }
                 };
 
-                var url = $"{_settings.BaseUrls.AbhaBaseUrl}{_settings.Endpoints.MobileOtpVerify}";
-                return await PostAsync<AbhaEnrolmentResponse>(url, payload);
+                var url = $"{_settings.BaseUrls.AbhaBaseUrl}{_settings.Endpoints.OtpVerify}";
+                return await PostAsync<VerifyOtpResponse>(url, payload);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "VerifyMobileOtpAsync failed");
-                return new ApiResult<AbhaEnrolmentResponse> { Success = false, Error = ex.Message };
+                return new ApiResult<VerifyOtpResponse> { Success = false, Error = ex.Message };
             }
         }
 
@@ -282,6 +279,16 @@ namespace HIMS.API.ABHA.Services
 
             var bytes = await response.Content.ReadAsByteArrayAsync();
             return new ApiResult<byte[]> { Success = true, Data = bytes, StatusCode = (int)response.StatusCode };
+        }
+
+        public async Task<ApiResult<VerifyUserResponse>> VerifyUser(VerifyUserRequest obj)
+        {
+            var publicKey = await _tokenService.GetPublicCertificateAsync();
+            obj.ABHANumber = RsaEncryptionHelper.Encrypt(obj.ABHANumber, publicKey);
+            var url = $"{_settings.BaseUrls.AbhaBaseUrl}{_settings.Endpoints.OtpVerify}";
+            return await PostAsync<VerifyUserResponse>(url, obj);
+            //var url = $"{_settings.BaseUrls.AbhaBaseUrl}{_settings.Endpoints.VerifyUser}";
+            //return PostAsync<VerifyUserResponse>(url, obj);
         }
     }
 }

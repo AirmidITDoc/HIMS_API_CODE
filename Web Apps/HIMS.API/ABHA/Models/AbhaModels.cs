@@ -70,6 +70,23 @@ namespace HIMS.API.ABHA.Models
         public string Message { get; set; } = string.Empty;
     }
 
+    public class VerifyUserRequest
+    {
+        public string ABHANumber { get; set; } = string.Empty;
+        public string txnId { get; set; } = string.Empty;
+    }
+    public class VerifyUserResponse
+    {
+        [JsonPropertyName("token")]
+        public string Token { get; set; } = string.Empty;
+        [JsonPropertyName("expiresIn")]
+        public int ExpiresIn { get; set; } = 0;
+        [JsonPropertyName("refreshToken")]
+        public string RefreshToken { get; set; } = string.Empty;
+        [JsonPropertyName("refreshExpiresIn")]
+        public int RefreshExpiresIn { get; set; } = 0;
+    }
+
     public class AadhaarOtpVerifyRequest
     {
         [JsonPropertyName("authData")]
@@ -112,23 +129,39 @@ namespace HIMS.API.ABHA.Models
         public string Version { get; set; } = "1.4";
     }
 
-    // ===== Mobile OTP =====
-    public class MobileOtpRequest
+    // ===== OTP =====
+    public class OtpRequest
     {
-        [JsonPropertyName("txnId")]
-        public string TxnId { get; set; } = string.Empty;
-
         [JsonPropertyName("scope")]
-        public List<string> Scope { get; set; } = new() { "abha-enrol", "mobile-verify" };
+        public List<string> Scope { get; set; } = new() { "abha-login", "aadhaar-verify" };
 
         [JsonPropertyName("loginHint")]
-        public string LoginHint { get; set; } = "mobile";
+        public string LoginHint { get; set; } = "aadhaar";
 
         [JsonPropertyName("loginId")]
         public string LoginId { get; set; } = string.Empty; // Encrypted mobile
 
         [JsonPropertyName("otpSystem")]
-        public string OtpSystem { get; set; } = "abdm";
+        public string OtpSystem { get; set; } = "aadhaar";
+    }
+    public class Account
+    {
+        public string ABHANumber { get; set; }
+        public string preferredAbhaAddress { get; set; }
+        public string name { get; set; }
+        public string status { get; set; }
+    }
+
+    public class VerifyOtpResponse
+    {
+        public string txnId { get; set; }
+        public string authResult { get; set; }
+        public string message { get; set; }
+        public string token { get; set; }
+        public int expiresIn { get; set; }
+        public string refreshToken { get; set; }
+        public int refreshExpiresIn { get; set; }
+        public List<Account> accounts { get; set; }
     }
 
     // ===== ABHA Profile / Enrolment response =====
@@ -317,12 +350,6 @@ namespace HIMS.API.ABHA.Models
     {
         public string TxnId { get; set; } = string.Empty;
         public string Otp { get; set; } = string.Empty;
-        public string? Mobile { get; set; }
-    }
-    public class MobileOtpDto
-    {
-        public string TxnId { get; set; } = string.Empty;
-        public string Mobile { get; set; } = string.Empty;
     }
     public class CreateAddressDto
     {

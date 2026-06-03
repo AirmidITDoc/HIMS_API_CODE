@@ -9,8 +9,8 @@ namespace HIMS.API.ABHA.Interface
         Task<ApiResult<AbhaEnrolmentResponse>> VerifyAadhaarOtpAsync(string txnId, string otp, string? mobile = null);
 
         // Mobile linking flow
-        Task<ApiResult<OtpResponse>> RequestMobileOtpAsync(string txnId, string mobile);
-        Task<ApiResult<AbhaEnrolmentResponse>> VerifyMobileOtpAsync(string txnId, string otp);
+        Task<ApiResult<OtpResponse>> RequestOtpAsync(string aadhaarNumber, List<string> scope, string LoginHint, string OtpSystem);
+        Task<ApiResult<VerifyOtpResponse>> VerifyOtpAsync(string txnId, string otp, List<string> scope);
 
         // ABHA address
         Task<ApiResult<AbhaAddressSuggestionResponse>> GetAbhaAddressSuggestionsAsync(string txnId);
@@ -20,5 +20,6 @@ namespace HIMS.API.ABHA.Interface
         Task<ApiResult<AbhaProfile>> GetAbhaProfileAsync(string xToken);
         Task<ApiResult<byte[]>> GetAbhaCardAsync(string xToken);
         Task<ApiResult<byte[]>> GetAbhaQrCodeAsync(string xToken);
+        Task<ApiResult<VerifyUserResponse>> VerifyUser(VerifyUserRequest obj);
     }
 }
