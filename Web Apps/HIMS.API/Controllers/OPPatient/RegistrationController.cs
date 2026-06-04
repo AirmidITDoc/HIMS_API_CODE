@@ -79,8 +79,10 @@ namespace HIMS.API.Controllers.OPPatient
             Registration model = obj.MapTo<Registration>();
             if (obj.RegId == 0)
             {
-                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
+                model.CreatedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
                 model.AddedBy = CurrentUserId;
                 await _IRegistrationService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
@@ -102,7 +104,8 @@ namespace HIMS.API.Controllers.OPPatient
                 model.RegDate = Convert.ToDateTime(obj.RegDate);
                 model.RegTime = Convert.ToDateTime(obj.RegTime);
                 model.UpdatedBy = CurrentUserId;
-                model.ModifiedDate = AppTime.Now;
+                //model.ModifiedDate = AppTime.Now;
+                model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _IRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
             }
