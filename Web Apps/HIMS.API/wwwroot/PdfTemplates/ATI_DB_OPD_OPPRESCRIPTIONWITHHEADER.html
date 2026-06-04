@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    {{LoadFont}}
+    </style>
+</head>
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="font-size: 22px;line-height: 24px; color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+                <tr class="top-header-row">
+                    {{NewHeader}}
+                </tr>
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 18px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;font-size:18px;">
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">OPD | Time : </span>
+                                    <span>{{PTime|dd/MM/yyyy | hh:mm tt}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Patient Name : </span>
+                                    <span>{{PatientName}}(<span>{{AgeYear}} Y |{{AgeMonth}} M|{{AgeDay}} D / {{GenderName}}</span>)</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <hr />
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <div>
+                            <table style="width: 100%; border-collapse: collapse;font-size:18px;">
+                                <thead style="font-size: 14px;">
+                                    <tr style="border-bottom:1px solid #d4c3c3;">
+                                        <td colspan="6" style="padding:10px 2px; font-size:20px;" id="vitals-row"></td>
+                                    </tr>
+                                    <tr style="display:{{chkChiefComplaintflag}}">
+                                        <td style="border-bottom: 1px solid #eee; padding: 6px;  font-size: 20px;">
+                                            <span style="font-weight:bold;">Complaints : </span>
+                                            <span>{{ChiefComplaint}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr style="display:{{chkDiagnosisflag}}">
+                                        <td style="border-bottom: 1px solid #eee; padding: 6px;  font-size: 20px;">
+                                            <span style="font-weight:bold;">Dignosis : </span>
+                                            <span>{{Diagnosis}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr style="display:{{chkExaminationflag}}">
+                                        <td style="border-bottom: 1px solid #eee; padding: 6px;  font-size: 20px;">
+                                            <span style="font-weight:bold;">Examination : </span>
+                                            <span>{{Examination}}</span>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <td style="padding: 6px; font-size: 18px;">
+                                    <span style="font-size: 42px; font-style: italic; vertical-align: middle; padding-right: 10px;">
+                                        ℞
+                                    </span>
+                                </td>
+                                <tr>
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tr style="font-weight:bold;border-top: 1px solid #000;">
+                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">
+                                            </td>
+                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">
+                                                Medicine
+                                            </td>
+                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">
+                                                Dosage
+                                            </td>
+                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">Instruction</td>
+                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">Qty</td>
+                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">Duration</td>
+
+                                        </tr>
+                                        <tbody>
+
+                                            <!--ITEMS_SP1-->
+
+                                            <tr style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:14px;height:5px;margin:0;">
+                                                <td style="vertical-align:top;padding:0;margin:0;text-align:center;font-size:14px;font-weight:bold;height:5px;">
+                                                    {{#}})
+                                                </td>
+
+                                                <td style="vertical-align:top;padding:0;margin:0;text-align:left;font-weight:bold;font-size:14px;padding-left:5px;height:5px;">
+                                                    {{DrugName}}
+                                                </td>
+
+                                                <td style="padding:0;margin:0;vertical-align:middle;text-align:left;font-size:14px;padding-left:5px;height:5px;">
+                                                    {{DoseName}}
+                                                </td>
+
+                                                <td style="padding:0;margin:0;vertical-align:middle;text-align:left;font-size:14px;padding-left:5px;height:5px;">
+                                                    {{Instruction}}
+                                                </td>
+
+                                                <td style="padding:0;margin:0;vertical-align:middle;text-align:left;font-size:14px;padding-left:5px;height:5px;">
+                                                    {{TotalQty}}
+                                                </td>
+
+                                                <td style="vertical-align:middle;padding:0;margin:0;text-align:left;font-size:14px;padding-left:5px;height:5px;">
+                                                    {{Days}} Days
+                                                </td>
+                                            </tr>
+
+                                            <tr class="generic-row" data-generic="{{ItemGenericName}}">
+                                                <td colspan="6"
+                                                    style="padding:0;margin:0;text-align:left;vertical-align:middle;padding-left:20px;height:5px;font-size:14px;font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;">
+                                                    Composition : {{ItemGenericName}}
+                                                </td>
+                                            </tr>
+
+                                            <tr style="font-size:14px;font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;height:5px;margin:0;">
+                                                <td colspan="6"
+                                                    style="padding:0;margin:0;text-align:left;vertical-align:middle;padding-left:20px;line-height:1;">
+                                                    Timing : {{DoseNameInEnglish}} {{DoseNameInMarathi}}
+                                                </td>
+                                            </tr>
+
+                                            <!--/ITEMS_SP1-->
+
+                                        </tbody>
+
+
+                                    </table>
+                                </tr>
+                                <br />
+                                <tr>
+                                    <td style="padding: 6px; font-size: 18px;">
+                                        <div style="display:{{chkRequestListflag}};">
+                                            <span style="font-weight: bold;">Advice Test List: </span>
+                                            <span>{{RequestList}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <br />
+                                <tr>
+                                    <td style="padding: 6px; font-size: 18px;">
+                                        <div style="display:{{chkSecondRefDoctorNameflag}};">
+                                            <span style="font-weight: bold;">Refer To: </span>
+                                            <span>{{SecondRefDoctorName}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <br />
+                                <tr>
+                                    <td style="padding: 6px; font-size: 18px;">
+                                        <div style="display:{{chkAdviceflag}};">
+                                            <span style="font-weight: bold;">Advice:</span>
+                                            <span>{{Advice}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <br />
+                                <tr style="margin-bottom: 20px;">
+                                    <td style="padding: 6px; font-size: 18px; margin-bottom: 40px;">
+                                        <span style="font-weight: bold;">Follow-up Date:</span>
+                                        <span>{{FollowupDate|dd/MM/yyyy}}</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <table style="width: 100%;text-align: left;">
+                                        <td>
+                                            <footer style="margin-left: 65%; font-size: 19px;">
+                                                <span style="margin-left:65%">
+                                                    <img src="{{Signature}}" width="200" height="100" style="display:{{chkSignatureflag}}">
+                                                </span>
+                                                <div style="font-weight:bold;">{{PathResultDr1}}</div>
+                                                <div style="font-weight:bold;display:{{chkEducationflag}}">{{Education}}</div>
+                                                <div style="font-weight:bold;display:{{chkMahRegNoflag}}">{{MahRegNo}}</div>
+                                            </footer>
+                                        </td>
+                                    </table>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+(function () {
+  var vitals = [
+    { flag: '{{chkHeightflag}}',     label: 'Height',       value: '{{Height}}'      },
+    { flag: '{{chkWeightflag}}',     label: 'Weight',       value: '{{Weight}}'      },
+    { flag: '{{chkBMIflag}}',        label: 'BMI',          value: '{{BMI}}'         },
+    { flag: '{{chkBPflag}}',         label: 'BP',           value: '{{BP}}'          },
+    { flag: '{{chkBSLflag}}',        label: 'BSL',          value: '{{BSL}}'         },
+    { flag: '{{chkSpO2flag}}',       label: 'SPO2',         value: '{{SpO2}}'        },
+    { flag: '{{chkPulseflag}}',      label: 'Pulse',        value: '{{Pulse}}'       },
+    { flag: '{{chkTempflag}}',       label: 'Temp',         value: '{{Temp}}'        },
+    { flag: '{{chkAllergyflag}}',    label: 'Allergy',      value: '{{Allergy}}'     },
+    { flag: '{{chkBloodGroupflag}}', label: 'Blood Group',  value: '{{BloodGroup}}'  },
+  ];
+
+  var parts = vitals
+    .filter(function (v) {
+      return v.flag !== 'none' && v.value && v.value.trim() !== '';
+    })
+    .map(function (v) {
+      return '<b>' + v.label + ' :</b> ' + v.value;
+    });
+
+  document.getElementById('vitals-row').innerHTML = parts.join(' &nbsp;|&nbsp; ');
+})();
+    </script>
+</body>
+</html>
+
