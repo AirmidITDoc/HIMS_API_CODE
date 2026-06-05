@@ -105,32 +105,71 @@ namespace HIMS.Services.OPPatient
             }
         }
 
-        public virtual async Task UpdateAsync(Registration objRegistration, int UserId, string Username)
+        //public virtual async Task UpdateAsync(Registration objRegistration, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+        //    {
+        //        // Update header & detail table records
+        //        Registration objReg = _context.Registrations.Where(x => x.RegId == objRegistration.RegId).FirstOrDefault();
+        //        if (objReg != null)
+        //            _context.Entry(objReg).State = EntityState.Detached;
+
+        //        objRegistration.RegNo = objReg.RegNo;
+        //        objRegistration.RegPrefix = objReg.RegPrefix;
+        //        objRegistration.AddedBy = objReg.AddedBy;
+        //        objRegistration.UpdatedBy = objReg.UpdatedBy;
+        //        objRegistration.AnnualIncome = objReg.AnnualIncome;
+        //        objRegistration.IsIndientOrWeaker = objReg.IsIndientOrWeaker;
+        //        objRegistration.RationCardNo = objReg.RationCardNo;
+        //        objRegistration.IsMember = objReg.IsMember;
+        //        objRegistration.RegDate = objReg.RegDate;
+        //        objRegistration.RegTime = objReg.RegTime;
+
+        //        _context.Registrations.Update(objRegistration);
+        //        // Don't update created fields
+        //        _context.Entry(objRegistration).Property(x => x.CreatedBy).IsModified = false;
+        //        _context.Entry(objRegistration).Property(x => x.CreatedDate).IsModified = false;
+
+        //        _context.Entry(objRegistration).State = EntityState.Modified;
+
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
+        public virtual async Task UpdateAsync(Registration objRegistration, int userId, string username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                // Update header & detail table records
-                Registration objReg = _context.Registrations.Where(x => x.RegId == objRegistration.RegId).FirstOrDefault();
-                if (objReg != null)
-                    _context.Entry(objReg).State = EntityState.Detached;
+            using var scope = new TransactionScope(TransactionScopeOption.Required,new TransactionOptions{IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted},TransactionScopeAsyncFlowOption.Enabled);
 
-                objRegistration.RegNo = objReg.RegNo;
-                objRegistration.RegPrefix = objReg.RegPrefix;
-                objRegistration.AddedBy = objReg.AddedBy;
-                objRegistration.UpdatedBy = objReg.UpdatedBy;
-                objRegistration.AnnualIncome = objReg.AnnualIncome;
-                objRegistration.IsIndientOrWeaker = objReg.IsIndientOrWeaker;
-                objRegistration.RationCardNo = objReg.RationCardNo;
-                objRegistration.IsMember = objReg.IsMember;
-                objRegistration.RegDate = objReg.RegDate;
-                objRegistration.RegTime = objReg.RegTime;
-                _context.Registrations.Update(objRegistration);
-                _context.Entry(objRegistration).State = EntityState.Modified;
+            var objReg = await _context.Registrations.FirstOrDefaultAsync(x => x.RegId == objRegistration.RegId);
 
-                await _context.SaveChangesAsync();
+            if (objReg == null)
+                throw new Exception("Registration not found.");
 
-                scope.Complete();
-            }
+            _context.Entry(objReg).State = EntityState.Detached;
+
+            // Preserve old values
+            objRegistration.RegNo = objReg.RegNo;
+            objRegistration.RegPrefix = objReg.RegPrefix;
+            objRegistration.AddedBy = objReg.AddedBy;
+            objRegistration.CreatedBy = objReg.CreatedBy;
+            objRegistration.CreatedDate = objReg.CreatedDate;
+            objRegistration.RegDate = objReg.RegDate;
+            objRegistration.RegTime = objReg.RegTime;
+
+            // Update audit fields
+            objRegistration.UpdatedBy = userId;
+            //objRegistration.UpdatedDate = DateTime.Now;
+
+            _context.Registrations.Update(objRegistration);
+
+            // Don't update created fields
+            _context.Entry(objRegistration).Property(x => x.CreatedBy).IsModified = false;
+            _context.Entry(objRegistration).Property(x => x.CreatedDate).IsModified = false;
+
+            await _context.SaveChangesAsync();
+
+            scope.Complete();
         }
         public virtual async Task RegUpdateAsync(Registration ObjRegistration, int CurrentUserId, string CurrentUserName)
         {
