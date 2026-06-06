@@ -13,22 +13,20 @@ namespace HIMS.Services.Inventory
         Task CancelAsync(MItemMaster objItemMaster, int UserId, string Username);
         Task<IPagedList<ItemMasterListDto>> GetItemMasterListAsync(GridRequestModel objGrid);
 
-       // Task<IPagedList<ItemListForGRNOrPO>> GetItemMasterBySpListAsync(GridRequestModel objGrid);
         Task<MItemMaster> GetById(int Id);
-       Task<List<ItemListForSearchDTO>> GetItemListForPrescription(int StoreId, string ItemName);
-       List<ItemListForSearch> GetItemListForPrescriptionSearch( string ItemName, int StoreId);
+        Task<List<ItemListForSearchDTO>> GetItemListForPrescription(int StoreId, string ItemName);
+        List<ItemListForSearch> GetItemListForPrescriptionSearch( string ItemName, int StoreId);
 
         Task<List<ItemListForSearchDTO>> GetItemListForGRNOrPO(int StoreId, string ItemName);
         Task<List<ItemListForBatchPopDTO>> GetItemListForSalesBatchPop(int StoreId, int ItemId);
         Task<List<ItemListForSalesPageDTO>> GetItemListForSalesPage(int StoreId, string ItemName);
         List<ItemListForSearchDTO> GetItemListForPrescriptionretrun(int StoreId,  int IPAdmID, string ItemName);
-        //List<ItemListForBatchPopDTO> SearchGetItemListForSalesBatchPop(int StoreId, int ItemId, int PatientTypeId);
         List<ItemListForBatchDTO> ItemListForBatch(int StoreId, int ItemId, int PatientTypeId);
 
         List<ItemListForGRNOrPO> ItemListForIndent(int StoreId, string ItemName);
         Task<List<ItemListDTO>> GetItemListGRN(int StoreId, string ItemName);
         Task<List<NewItemListForBatchPopDTO>> NewGetItemListForSalesBatchPop(int StoreId, int ItemId);
-        Task<List<NewItemListForSalesPageDTO>> NewGetItemListForSalesPage(int StoreId, string ItemName);
+        Task<List<ItemListForSalesPageDTO>> NewGetItemListForSalesPage(int StoreId, string ItemName);
         List<GETProcItemListForBatchDTO> GetItemListForBatch(int StoreId, int ItemId);
 
 
