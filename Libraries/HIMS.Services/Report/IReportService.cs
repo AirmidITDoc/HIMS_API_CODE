@@ -27,6 +27,7 @@ namespace HIMS.Services.Report
         Task<List<MItemDrugTypeMaster>> SearchMItemDrugTypeMaster(string str);
         Task<List<MCreditReasonMaster>> SearchMCreditReasonMaster(string str);
         Task<List<MItemMaster>> SearchMItemMaster(string str);
+        Task<List<MItemMaster>> SearchMItemMasterByContent(string str);
         Task<List<MModeOfPayment>> SearchMModeOfPayment(string str);
         Task<List<MExpensesHeadMaster>> SearchMExpensesHeadMaster(string str);
         Task<List<HospitalMaster>> SearchHospitalMaster(string str);

@@ -117,7 +117,10 @@ namespace HIMS.Services.Report
         {
             return await this._context.MItemMasters.Where(x => (x.ItemName).ToLower().Contains(str)).Take(25).ToListAsync();
         }
-
+        public virtual async Task<List<MItemMaster>> SearchMItemMasterByContent(string str)
+        {
+            return await this._context.MItemMasters .Where(x => x.Content.ToLower().Contains(str)) .Take(25) .ToListAsync();
+        }
         public virtual async Task<List<MModeOfPayment>> SearchMModeOfPayment(string str)
         {
             return await this._context.MModeOfPayments.Where(x => (x.ModeOfPayment).ToLower().Contains(str)).Take(25).ToListAsync();
