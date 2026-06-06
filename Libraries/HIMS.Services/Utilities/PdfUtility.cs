@@ -236,13 +236,17 @@ namespace HIMS.Services.Utilities
         //}
         public string GetHeader(string filePath, long hospitalId = 1)
         {
-           
+            try
+            {
+
                 hospitalId = hospitalId <= 0 ? 1 : hospitalId;
 
                 var hospital = _context.HospitalMasters.Find(hospitalId);
                 if (hospital == null) return string.Empty;
 
                 string html = File.ReadAllText(filePath);
+                if (string.IsNullOrWhiteSpace(html))
+                    throw new Exception($"GetHeader: Template file is empty. Path: {filePath}");
 
                 // Fetch all required files in ONE DB call
                 var files = _context.FileMasters.Where(x => x.RefId == hospital.HospitalId && x.IsDelete == false && (x.RefType == 7 || x.RefType == 10 || x.RefType == 11)).ToList();
@@ -281,6 +285,13 @@ namespace HIMS.Services.Utilities
 
                             //string hospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
                             //string hospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
+
+                            if (logo != null && !File.Exists(Path.Combine(AppSettings.Settings.StorageBaseUrl, "Hospital", "Logo", logo.DocSavedName)))
+                                throw new Exception($"Hospital logo file not found: {logo.DocSavedName}");
+
+                            if (logo2 != null && !File.Exists(Path.Combine(AppSettings.Settings.StorageBaseUrl, "NABHLogo", "NABH", logo2.DocSavedName)))
+                                throw new Exception($"NABH logo file not found: {logo2.DocSavedName}");
+
                             string hospitalLogo = logo != null ? $"{DestinationPath}Hospital/Logo/{logo.DocSavedName}" : "";
                             string hospitalLogo2 = logo2 != null ? $"{DestinationPath}NABHLogo/NABH/{logo2.DocSavedName}" : "";
                             replacements["{{logo}}"] = hospitalLogo;
@@ -292,6 +303,8 @@ namespace HIMS.Services.Utilities
 
                     case 2: // Image header
                         {
+                            if (infoImg != null && !File.Exists(Path.Combine(AppSettings.Settings.StorageBaseUrl, "Upload", "Img_Upload", infoImg.DocSavedName))) 
+                                throw new Exception($"Header image file not found: {infoImg.DocSavedName}");
                             string hospitalInfo = infoImg != null ? $"{DestinationPath}Upload/Img_Upload/{infoImg.DocSavedName}" : "";
 
                             replacements["{{hospitalinfo}}"] = hospitalInfo;
@@ -309,14 +322,19 @@ namespace HIMS.Services.Utilities
                     html = html.Replace(item.Key, item.Value);
                 }
 
-            // Final visibility flags
-            html = html
-                    .Replace("{{TextHeaderDisplay}}", hospital.IsHeaderOption == 1 ? "table-row" : "none")
-                    .Replace("{{ImageHeaderDisplay}}", hospital.IsHeaderOption == 2 ? "table-row" : "none")
-                    .Replace("{{TemplateHeaderDisplay}}", hospital.IsHeaderOption == 3 ? "table-row" : "none");
+                // Final visibility flags
+                html = html
+                        .Replace("{{TextHeaderDisplay}}", hospital.IsHeaderOption == 1 ? "table-row" : "none")
+                        .Replace("{{ImageHeaderDisplay}}", hospital.IsHeaderOption == 2 ? "table-row" : "none")
+                        .Replace("{{TemplateHeaderDisplay}}", hospital.IsHeaderOption == 3 ? "table-row" : "none");
 
                 return html;
-      
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
         }
 
         public string GetPatientHeader(ReportRequestModel model, string filePath)
@@ -562,7 +580,12 @@ namespace HIMS.Services.Utilities
                 };
 
                 byte[] bytes = converter.Convert(doc);
+                if (bytes == null || bytes.Length == 0)
+                    throw new Exception("PDF generation failed. Converter returned empty output.");
                 System.IO.File.WriteAllBytes(NewFileName, bytes);
+
+                if (!File.Exists(NewFileName) || new FileInfo(NewFileName).Length == 0)
+                    throw new Exception($"PDF generation failed. Generated PDF is empty. Path: {NewFileName}");
                 return new Tuple<byte[], string>(bytes, NewFileName);
             }
             finally

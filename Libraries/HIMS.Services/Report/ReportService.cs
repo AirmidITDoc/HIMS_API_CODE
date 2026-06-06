@@ -200,63 +200,70 @@ namespace HIMS.Services.Report
 
         public async Task<Tuple<byte[], string>> GetReportSetByProcDB(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1,long StoreId = 2)
         {
-            
-            var tuple = new Tuple<byte[], string>(null, string.Empty);
-            string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
-            var mrMode = model.Mode;
-            var mType = await _context.MReportSetupOperationals.Where(r => r.ReportMode == mrMode).Select(r => new { mReportHtmlName = r.ReportHtmlName, mReportHeaderHtmlName = r.ReportHeaderHtmlName, mProcedureName = r.ProcedureName, mFolderName = r.FolderName, mReportFileName = r.ReportFileName , mIsDBFunction =r.IsDbfunction, mIsA5orA4Page =r.IsA5orA4page , mHeaderSpace = r.HeaderSpace }).FirstOrDefaultAsync();
-
-            string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHtmlName);
-            string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHeaderHtmlName);
-
-            var header = mType.mReportHeaderHtmlName;
-
-            if (header == "PharmacyHeader.html")
+            try
             {
-                htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath, StoreId);
-            }
-            else
-            {
-                htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, UnitId);
 
-            }
+                var tuple = new Tuple<byte[], string>(null, string.Empty);
+                string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
+                var mrMode = model.Mode;
+                var mType = await _context.MReportSetupOperationals.Where(r => r.ReportMode == mrMode).Select(r => new { mReportHtmlName = r.ReportHtmlName, mReportHeaderHtmlName = r.ReportHeaderHtmlName, mProcedureName = r.ProcedureName, mFolderName = r.FolderName, mReportFileName = r.ReportFileName, mIsDBFunction = r.IsDbfunction, mIsA5orA4Page = r.IsA5orA4page, mHeaderSpace = r.HeaderSpace }).FirstOrDefaultAsync();
 
-            string html;
+                string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHtmlName);
+                string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHeaderHtmlName);
 
-            if(mType.mIsDBFunction ==false)
-            {
-                 html = GetHTMLView(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
-            }
-            else
-            {
-                 html = GetHTMLViewWithRender(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath);
-            }
+                var header = mType.mReportHeaderHtmlName;
 
-            html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-            html = html.Replace("{{PharmacyHeader}}", htmlHeaderFilePath);
-
-            html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
-
-            if(mType.mIsA5orA4Page==1)
-            {
-                tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
-            }
-             else
-             {
-                if (mType.mHeaderSpace == 0)
+                if (header == "PharmacyHeader.html")
                 {
-                    tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+                    htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath, StoreId);
                 }
                 else
                 {
-                    tuple = _pdfUtility.GeneratePdfFromHtmlNew(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait, PaperKind.A4, (long)mType.mHeaderSpace);
-                }
-            }
-                return tuple;
-           
+                    htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, UnitId);
 
-            //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
-        
+                }
+
+                string html;
+
+                if (mType.mIsDBFunction == false)
+                {
+                    html = GetHTMLView(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                }
+                else
+                {
+                    html = GetHTMLViewWithRender(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath);
+                }
+
+                html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                html = html.Replace("{{PharmacyHeader}}", htmlHeaderFilePath);
+
+                html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
+
+                if (mType.mIsA5orA4Page == 1)
+                {
+                    tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+                }
+                else
+                {
+                    if (mType.mHeaderSpace == 0)
+                    {
+                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+                    }
+                    else
+                    {
+                        tuple = _pdfUtility.GeneratePdfFromHtmlNew(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait, PaperKind.A4, (long)mType.mHeaderSpace);
+                    }
+                }
+                return tuple;
+
+
+                //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+
         }
 
         public async Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1)
