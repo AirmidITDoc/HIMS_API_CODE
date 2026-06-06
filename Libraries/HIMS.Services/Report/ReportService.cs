@@ -7593,7 +7593,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{UpdatedBy}}", dt.GetColValue("UpdatedBy"));
                         html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
                         html = html.Replace("{{CountryName}}", dt.GetColValue("CountryName"));
-
+                        html = html.Replace("{{ModifiedDate}}", dt.GetColValue("ModifiedDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
 
                         // New
                         html = html.Replace("{{EmgContactPersonName}}", dt.GetColValue("EmgContactPersonName"));
