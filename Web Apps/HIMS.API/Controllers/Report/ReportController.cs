@@ -599,19 +599,27 @@ namespace HIMS.API.Controllers.Report
         [HttpPost("ViewReportFromDB")]
         public async Task<IActionResult> ViewReportFromDB(ReportRequestModel model)
         {
-            
+            try
+            {
+
                 // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
                // long UnitId = 1;
-               //long StoreId = 2;
-                long UnitId = Context.UnitId;
+               // long StoreId = 2;
+               long UnitId = Context.UnitId;
                 long StoreId = Context.StoreId;
 
                 model.BaseUrl = AppSettings.Settings.BaseUrl;
                 model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
                 var byteFile = await _reportService.GetReportSetByProcDB(model, AppSettings.Settings.PdfFontPath, UnitId, StoreId);
+                if (byteFile?.Item1 == null || byteFile.Item1.Length < 100)
+                    throw new Exception($"Invalid PDF generated. Size: {byteFile?.Item1?.Length ?? 0} bytes.");
                 return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = Convert.ToBase64String(byteFile.Item1) }));
                 // return File(byteFile.Item1, "application/pdf", "report.pdf");
-          
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         [HttpPost("get-report-html")]
@@ -634,8 +642,8 @@ namespace HIMS.API.Controllers.Report
             objGrid.First = 0;
             objGrid.Rows = 0;
 
-            //   long StoreId = 2;
-            long StoreId = Context.StoreId;
+             //  long StoreId = 2;
+           long StoreId = Context.StoreId;
             IPagedList<MReportListDto> MReportConfigList = await _reportService.MReportListDto(objGrid);
             if (MReportConfigList.Count > 0)
             {
