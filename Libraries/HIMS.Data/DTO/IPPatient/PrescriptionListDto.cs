@@ -39,7 +39,6 @@
         public string? BedName { get; set; }
         public bool? IsCancelled { get; set; }
         public string? PresNo { get; set; }
-        public long? WardID { get; set; }
 
 
 
