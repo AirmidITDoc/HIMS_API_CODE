@@ -204,7 +204,14 @@ namespace HIMS.API.Controllers.Report
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchMItemMaster Data.", data.Select(x => new { Text = x.ItemName, Value = x.ItemId }));
         }
 
-
+        [HttpGet("MItemMasterList/auto-complete-by-content")]
+        public async Task<ApiResponse> GetMItemMasterListAutoCompleteByContent(string Keyword)
+        {
+            var data = await _reportService.SearchMItemMasterByContent(Keyword);
+            return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status200OK, "SearchMItemMasterByContent Data.",
+                data.Select(x => new { Text = x.Content, Value = x.ItemId })
+            );
+        }
         [HttpGet("Expensesheadmaster/auto-complete")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetExpensesheadmasterAutoComplete(string Keyword)
