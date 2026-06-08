@@ -610,7 +610,7 @@ namespace HIMS.API.Controllers.Report
             {
 
                 // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
-               // long UnitId = 1;
+              // long UnitId = 1;
                // long StoreId = 2;
                long UnitId = Context.UnitId;
                 long StoreId = Context.StoreId;

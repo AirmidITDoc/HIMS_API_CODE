@@ -247,7 +247,7 @@ namespace HIMS.Services.Report
                 {
                     if (mType.mHeaderSpace == 0)
                     {
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
                     }
                     else
                     {
@@ -291,7 +291,7 @@ namespace HIMS.Services.Report
                     html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                     html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
-                    tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+                    tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
                     return tuple;
                 }
             }
@@ -314,7 +314,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("rptListofRegistration", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RegistrationReport", "RegistrationReport" + vDate, Orientation.Portrait, PaperKind.A4);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "RegistrationReport", "RegistrationReport" + vDate, Orientation.Portrait, PaperKind.A4);
 
 
                         break;
@@ -332,7 +332,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("ps_LabPatientRegistrationList", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabRegistrationListReport", "LabRegistrationListReport", Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "LabRegistrationListReport", "LabRegistrationListReport", Orientation.Landscape);
                         break;
 
 
@@ -347,7 +347,7 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptOPRefundofBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPRefundReceipt", "OPRefundReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OPRefundReceipt", "OPRefundReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -359,7 +359,7 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptLabRefundofBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabRefundReceipt", "LabRefundReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "LabRefundReceipt", "LabRefundReceipt" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -376,7 +376,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPaymentReceipt", "OPPaymentReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OPPaymentReceipt", "OPPaymentReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -395,7 +395,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPLabPaymentReceipt", "OPLabPaymentReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OPLabPaymentReceipt", "OPLabPaymentReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -411,7 +411,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptLabPaymentReceiptPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabPaymentReceipt", "LabPaymentReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "LabPaymentReceipt", "LabPaymentReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -424,7 +424,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "AppointmentReceipt.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentReceipt", "AppointmentReceiptWithoutHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "AppointmentReceipt", "AppointmentReceiptWithoutHeader" + vDate, Orientation.Portrait);
                         break;
 
 
@@ -449,7 +449,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "AppointmentReceipt", "AppointmentReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "AppointmentReceipt", "AppointmentReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -476,7 +476,7 @@ namespace HIMS.Services.Report
                         //html = html.Replace("{{NewHeader}}", htmlHeaderFilePath1);
 
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html,   model.StorageBaseUrl, "AppointmentReceipt",  "AppointmentReceipt" + vDate,  Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html,   model.StorageBaseUrl, "AppointmentReceipt",  "AppointmentReceipt" + vDate,  Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -490,7 +490,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpBillReceipt", "OpBillReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OpBillReceipt", "OpBillReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -505,7 +505,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpBillReceiptTestingOnly", "OpBillReceiptTestingOnly" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OpBillReceiptTestingOnly", "OpBillReceiptTestingOnly" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -520,7 +520,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabBillReceipt", "LabBillReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "LabBillReceipt", "LabBillReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -534,7 +534,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabMoneyReceipt", "LabMoneyReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "LabMoneyReceipt", "LabMoneyReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -592,7 +592,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabMoneyReceiptWithoutHeader", "LabMoneyReceiptWithoutHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "LabMoneyReceiptWithoutHeader", "LabMoneyReceiptWithoutHeader" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -607,7 +607,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptLabBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{ExternalLabHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabMoneyReceiptWithImage", "LabMoneyReceiptWithImage" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "LabMoneyReceiptWithImage", "LabMoneyReceiptWithImage" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -651,7 +651,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "EstimatePrint", "EstimatePrint" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "EstimatePrint", "EstimatePrint" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -667,7 +667,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpDraftBillReceipt", "OpDraftBillReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OpDraftBillReceipt", "OpDraftBillReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -682,7 +682,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rpt_DraftBillSummary", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpDraftPatientStatement", "OpDraftPatientStatement" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OpDraftPatientStatement", "OpDraftPatientStatement" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -696,7 +696,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptAppointmentPrint1", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPCasePaper", "OPCasePaper" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OPCasePaper", "OPCasePaper" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -881,7 +881,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptLabRegisterBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabBillReceipt", "LabBillReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "LabBillReceipt", "LabBillReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -894,7 +894,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptLabRegisterBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "CommonTemplate", "CommonTemplate", Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "CommonTemplate", "CommonTemplate", Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -913,7 +913,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Signature}}", "");
                         html = SetFonts(html, PdfFontPath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPGastrologyPrescription", "OPGastrologyPrescription" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OPGastrologyPrescription", "OPGastrologyPrescription" + vDate, Orientation.Portrait);
 
 
                         break;
@@ -933,7 +933,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Signature}}", "");
                         html = SetFonts(html, PdfFontPath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPGastrologyPrescriptionWithoutHeader", "OPGastrologyPrescriptionWithoutHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OPGastrologyPrescriptionWithoutHeader", "OPGastrologyPrescriptionWithoutHeader" + vDate, Orientation.Portrait);
 
 
                         break;
@@ -953,7 +953,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Signature}}", "");
                         html = SetFonts(html, PdfFontPath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPrescription", "OPPrescription" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OPPrescription", "OPPrescription" + vDate, Orientation.Portrait);
 
 
                         break;
@@ -991,7 +991,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{Signature}}", "");
                         html = SetFonts(html, PdfFontPath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPPrescriptionwithoutHeader", "OPPrescriptionwithoutHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OPPrescriptionwithoutHeader", "OPPrescriptionwithoutHeader" + vDate, Orientation.Portrait);
 
                         break;
                     }
@@ -1026,7 +1026,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rpt_CertificateInformationPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "Certificate", "CertificateInformation" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "Certificate", "CertificateInformation" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -1042,7 +1042,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptEmergencyAdmPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "EmergencyPrint", "EmergencyPrint" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "EmergencyPrint", "EmergencyPrint" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -1062,7 +1062,7 @@ namespace HIMS.Services.Report
                         //html = html.Replace("{{Signature}}", "");
                         //html = SetFonts(html, PdfFontPath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "EmergencyPrescription", "EmergencyPrescription" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "EmergencyPrescription", "EmergencyPrescription" + vDate, Orientation.Portrait);
 
 
 
@@ -1087,7 +1087,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rpt_TConsentInformation", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "ConsentInformation", "ConsentInformation" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "ConsentInformation", "ConsentInformation" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -1102,7 +1102,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rpt_TConsentInformation", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         //  html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "ConsentInformationWithoutHeader", "ConsentInformationWithoutHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "ConsentInformationWithoutHeader", "ConsentInformationWithoutHeader" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -1117,7 +1117,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptOP_BillWithPackage_Print", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OPBillWithPackagePrint", "OPBillWithPackagePrint" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OPBillWithPackagePrint", "OPBillWithPackagePrint" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1130,7 +1130,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptPrintGRN", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "GRNReport", "GRNReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "GRNReport", "GRNReport" + vDate, Orientation.Portrait);
                         break;
 
 
@@ -1146,7 +1146,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptGRNReturnPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "GRNReturnReport", "GRNReturnReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "GRNReturnReport", "GRNReturnReport" + vDate, Orientation.Portrait);
                         break;
 
 
@@ -1164,7 +1164,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptPrintGRN", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "KenyaGRNReport", "KenyaGRNReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "KenyaGRNReport", "KenyaGRNReport" + vDate, Orientation.Portrait);
                         break;
 
 
@@ -1180,7 +1180,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptPrintIndent", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IndentwiseReport", "IndentwiseReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IndentwiseReport", "IndentwiseReport" + vDate, Orientation.Portrait);
                         break;
 
 
@@ -1206,7 +1206,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rpt_T_Doctors_Notes", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DoctorNotesReceipt", "DoctorNotesReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "DoctorNotesReceipt", "DoctorNotesReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1220,7 +1220,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rpt_T_NursingNotesPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NursingNotesReceipt", "NursingNotesReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "NursingNotesReceipt", "NursingNotesReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1235,7 +1235,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rpt_T_NursingNotesAndT_Doctors_NotesPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NursingNotesReceipt", "NursingNotesReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "NursingNotesReceipt", "NursingNotesReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1250,7 +1250,7 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rpt_T_Doctor_PatientHandover", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DoctorPatientHandoverReceipt", "DoctorPatientHandoverReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "DoctorPatientHandoverReceipt", "DoctorPatientHandoverReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1264,7 +1264,7 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rpt_T_Nursing_PatientHandover", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NursingPatientHandoverReceipt", "NursingPatientHandoverReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "NursingPatientHandoverReceipt", "NursingPatientHandoverReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1287,7 +1287,7 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("rptCurrentAdmittedListReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDCurrentAdmittedDoctorWiseCharges", "IPDCurrentAdmittedDoctorWiseCharges", Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPDCurrentAdmittedDoctorWiseCharges", "IPDCurrentAdmittedDoctorWiseCharges", Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -1303,7 +1303,7 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("rptCurrentAdmittedListReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDCurrentAdmittedWardWise", "IPDCurrentAdmittedWardWise", Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPDCurrentAdmittedWardWise", "IPDCurrentAdmittedWardWise", Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -1318,7 +1318,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptAdmissionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPCasepaper", "IPCasepaper" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPCasepaper", "IPCasepaper" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1331,7 +1331,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPCasepaper.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("m_rptAdmissionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPCasepaper", "IPCasepaper" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPCasepaper", "IPCasepaper" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1344,7 +1344,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_MLCCasePaperPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPMLCDetail", "IPMLCDetail" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPMLCDetail", "IPMLCDetail" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1355,7 +1355,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPReport_IPCompanyBillWithSR.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("rptIPComBlPrtSummary_WithAdd_SR", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPCompanyFinalBillWithSR", "IPCompanyFinalBillWithSR" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPCompanyFinalBillWithSR", "IPCompanyFinalBillWithSR" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1367,7 +1367,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "IPInterimBill.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("m_rptIPDInterimBill", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpCreditBill", "IpCreditBill" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpCreditBill", "IpCreditBill" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1379,7 +1379,7 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rptIPDInterimBill", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDInterimBill", "IPDInterimBill" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPDInterimBill", "IPDInterimBill" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -1411,7 +1411,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLViewGenericToMapping("ps_rptRegistrationPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RegistrationForm", "RegistrationForm" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "RegistrationForm", "RegistrationForm" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -1426,7 +1426,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptAdmissionPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPStickerPrint", "Sticker" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPStickerPrint", "Sticker" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -1439,7 +1439,7 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptIPD_DraftBillClassWise_Print", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillGroupWise" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillGroupWise" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -1466,7 +1466,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptIPD_DraftBillSummary_Print", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillClassWise" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillClassWise" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -1495,7 +1495,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptIPD_FINAL_BILL_CLASSWISE", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBill", "IPDFinalBillClassWise" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPFinalBill", "IPDFinalBillClassWise" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -1510,7 +1510,7 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("ps_rpt_IPDDraftBillChargesWithpharmacyPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillDateWise" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpDraftBill", "IpDraftBillDateWise" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -1525,7 +1525,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptIPD_FINAL_BILL_CLASSWISE", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBill", "IPFinalBillClassServiceWise" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPFinalBill", "IPFinalBillClassServiceWise" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -1543,7 +1543,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLViewWithTwoSPs("m_rptIPD_FINAL_BILL_GROUPWISE", "ps_Rpt_T_PatientWiseAdvancepayment",model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBill", "IPFinalBillGroupwise" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPFinalBill", "IPFinalBillGroupwise" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1560,7 +1560,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rpt_IPDFinalBillpharmacyWithDateWise", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBillChargesDatewise", "IPFinalBillChargesDatewise" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPFinalBillChargesDatewise", "IPFinalBillChargesDatewise" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1578,7 +1578,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rpt_IPDFinalBillpharmacyWithDateWise", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBillChargesDateWisegroupwise", "IPFinalBillChargesDateWisegroupwise" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPFinalBillChargesDateWisegroupwise", "IPFinalBillChargesDateWisegroupwise" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1595,7 +1595,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rpt_IPDFinalBillpharmacyWithDateWise", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPFinalBillChargesDateWisegroupwisewithoutadvance", "IPFinalBillChargesDateWisegroupwisewithoutadvance" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPFinalBillChargesDateWisegroupwisewithoutadvance", "IPFinalBillChargesDateWisegroupwisewithoutadvance" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1612,7 +1612,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptIPDPaymentReceiptPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPPaymentReceipt", "IPPaymentReceipt", Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPPaymentReceipt", "IPPaymentReceipt", Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1628,7 +1628,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptIPDAdvancePrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpAdvanceReceipt", "IpAdvanceReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpAdvanceReceipt", "IpAdvanceReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1644,7 +1644,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptIPAdvanceSummary", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpAdvanceStatement", "IpAdvanceStatement" + vDate, Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpAdvanceStatement", "IpAdvanceStatement" + vDate, Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -1661,7 +1661,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptIPRefundofAdvancePrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpAdvanceRefundReceipt", "IpAdvanceRefundReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpAdvanceRefundReceipt", "IpAdvanceRefundReceipt" + vDate, Orientation.Portrait);
                         break;
 
 
@@ -1679,7 +1679,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptIPRefundofBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpAdvanceRefundReceipt", "IpAdvanceRefundReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpAdvanceRefundReceipt", "IpAdvanceRefundReceipt" + vDate, Orientation.Portrait);
                         break;
 
 
@@ -1696,7 +1696,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryReport", "IpDischargeSummaryReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpDischargeSummaryReport", "IpDischargeSummaryReport" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -1710,7 +1710,7 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         //GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryReport", "IpDischargeSummarywithoutHeaderReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpDischargeSummaryReport", "IpDischargeSummarywithoutHeaderReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1723,7 +1723,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplate" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplate" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1736,7 +1736,7 @@ namespace HIMS.Services.Report
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         //GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         var html = GetHTMLViewWithTwoSPs("m_rptDischargeSummaryPrint_New", "m_Rtrv_IP_Prescription_Discharge", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplateWithoutHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplateWithoutHeader" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1767,7 +1767,7 @@ namespace HIMS.Services.Report
                         //html = html.Replace("{{NewHeader}}", htmlHeaderFilePath1);
 
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplate" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpDischargeSummaryTemplate", "IpDischargeSummaryTemplate" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1790,7 +1790,7 @@ namespace HIMS.Services.Report
 
                         //html = html.Replace("{{NewHeader}}", htmlHeaderFilePath1);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDisSummTemppatientWithoutHeader", "IpDisSummTemppatientWithoutHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpDisSummTemppatientWithoutHeader", "IpDisSummTemppatientWithoutHeader" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1808,7 +1808,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptDischargeCheckOutSlip", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpDischargeCheckOut", "IpDischargeReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpDischargeCheckOut", "IpDischargeReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1824,7 +1824,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptBedTransferDetails", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "BedTransferReceipt", "BedTransferReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "BedTransferReceipt", "BedTransferReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1860,7 +1860,7 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("Rtrv_AdmissionCancle_Report", model, htmlFilePath, htmlHeaderFilePath, colList, headerList );
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(  html,  model.StorageBaseUrl,  "AdmissionCancelReport",  "AdmissionCancelReport",   Orientation.Landscape );
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(  html,  model.StorageBaseUrl,  "AdmissionCancelReport",  "AdmissionCancelReport",   Orientation.Landscape );
 
                         break;
                     }
@@ -1880,7 +1880,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("rptCurrentAdmittedListReportwithCharges", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "wardWisechargesReport", "wardWisechargesReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "wardWisechargesReport", "wardWisechargesReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1893,7 +1893,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("RptRefDoctorWiseAdmission", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDrefDoctorwiseReport", "IPDrefDoctorwiseReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPDrefDoctorwiseReport", "IPDrefDoctorwiseReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1906,7 +1906,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("RptCurrentRefAdmittedReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDRefDoctorWiseReport", "IPDRefDoctorWiseReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPDRefDoctorWiseReport", "IPDRefDoctorWiseReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1920,7 +1920,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("Rtrv_IPDocWsSumry", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDoctorWiseVisitCountSummary", "IPDoctorWiseVisitCountSummary" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPDoctorWiseVisitCountSummary", "IPDoctorWiseVisitCountSummary" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1933,7 +1933,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("rptDischargeTypeReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDDischargeTypeReport", "IPDDischargeTypeReport" + vDate, Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPDDischargeTypeReport", "IPDDischargeTypeReport" + vDate, Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -1946,7 +1946,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("rptDischargeTypeReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDDischargeTypeCompanywiseReport", "IPDDischargeTypeCompanywiseReport" + vDate, Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPDDischargeTypeCompanywiseReport", "IPDDischargeTypeCompanywiseReport" + vDate, Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -1960,7 +1960,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("Rtrv_IPDepartWsSumry", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDDepartmentwisecountsummary", "IPDDepartmentwisecountsummary" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPDDepartmentwisecountsummary", "IPDDepartmentwisecountsummary" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -1974,7 +1974,7 @@ namespace HIMS.Services.Report
                         string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "SimpleReportFormat.html");
                         string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
                         var html = GetHTMLView("rptIPDischargeMarkStatusReport", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPDDischargewithmarkstatus", "IPDDischargewithmarkstatus" + vDate, Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPDDischargewithmarkstatus", "IPDDischargewithmarkstatus" + vDate, Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -1997,7 +1997,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptDischargeSummaryPrint_New", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "DischargeSummaryReport", "DischargeSummaryReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "DischargeSummaryReport", "DischargeSummaryReport" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -2022,7 +2022,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportWithHeader", "PathologyReportWithHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PathologyReportWithHeader", "PathologyReportWithHeader" + vDate, Orientation.Portrait);
 
 
                         break;
@@ -2041,7 +2041,7 @@ namespace HIMS.Services.Report
                         htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         //html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportWithOutHeader", "PathologyReportWithOutHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PathologyReportWithOutHeader", "PathologyReportWithOutHeader" + vDate, Orientation.Portrait);
 
                         break;
                     }
@@ -2064,7 +2064,7 @@ namespace HIMS.Services.Report
                         //html = html.Replace("{{Signature}}", signature);
 
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportWithImgHeader", "PathologyReportWithImgHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PathologyReportWithImgHeader", "PathologyReportWithImgHeader" + vDate, Orientation.Portrait);
 
 
                         break;
@@ -2085,7 +2085,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptPrintPathologyReportTemplate", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportTemplateWithOutHeader", "PathologyReportTemplateWithOutHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PathologyReportTemplateWithOutHeader", "PathologyReportTemplateWithOutHeader" + vDate, Orientation.Portrait);
 
                         break;
 
@@ -2107,7 +2107,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{ImgHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportTemplateWithImgHeader", "PathologyReportTemplateWithImgHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PathologyReportTemplateWithImgHeader", "PathologyReportTemplateWithImgHeader" + vDate, Orientation.Portrait);
 
                         break;
 
@@ -2123,7 +2123,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptPrintPathologyReportTemplate", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReportTemplateWithHeader", "PathologyReportTemplateWithHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PathologyReportTemplateWithHeader", "PathologyReportTemplateWithHeader" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -2143,7 +2143,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rptPathologyReportPrintMultiple", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PathologyReporKenyatWithHeader", "PathologyReporKenyatWithHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PathologyReporKenyatWithHeader", "PathologyReporKenyatWithHeader" + vDate, Orientation.Portrait);
 
 
                         break;
@@ -2169,7 +2169,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptRadiologyReportPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RadiologyTemplateReportWithHeader", "RadiologyTeRadiologyTemplateReportWithHeadermplateReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "RadiologyTemplateReportWithHeader", "RadiologyTeRadiologyTemplateReportWithHeadermplateReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2188,7 +2188,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptRadiologyReportPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RadiologyTemplateReportWithoutHeader", "RadiologyTemplateReportWithoutHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "RadiologyTemplateReportWithoutHeader", "RadiologyTemplateReportWithoutHeader" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2208,7 +2208,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptRadiologyReportPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{ImgHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "RadiologyTemplateReportWithImgHeader", "RadiologyTemplateReportWithImgHeader" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "RadiologyTemplateReportWithImgHeader", "RadiologyTemplateReportWithImgHeader" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2229,7 +2229,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptPrintPathologyRadiologyReport", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "LabSlipReport", "LabSlipReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "LabSlipReport", "LabSlipReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2247,7 +2247,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptPrintMaterialConsumption", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NurMaterialConsumption", "NurMaterialConsumption" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "NurMaterialConsumption", "NurMaterialConsumption" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2267,7 +2267,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptLabRequestList", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NurLabRequest", "NurLabRequest" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "NurLabRequest", "NurLabRequest" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2285,7 +2285,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptCanteenRequestPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "CanteenRequestprint", "CanteenRequestprint" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "CanteenRequestprint", "CanteenRequestprint" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2313,7 +2313,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptIPDPrecriptionPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IpPrescription", "IpPrescription" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IpPrescription", "IpPrescription" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2329,7 +2329,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptIPPrescriptionReturnListPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IPPrescriptionReturn", "IPPrescriptionReturn" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPPrescriptionReturn", "IPPrescriptionReturn" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2344,7 +2344,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptPrintPurchaseOrder", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PurchaseOrder", "PurchaseOrder" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PurchaseOrder", "PurchaseOrder" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2360,7 +2360,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptPrintIndent", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IndentWise", "IndentWise" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IndentWise", "IndentWise" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2374,7 +2374,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptPrintIndent", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "IndentWise", "IndentWise" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IndentWise", "IndentWise" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2388,7 +2388,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptPrintIssueToDepartment", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "Issuetodept", "Issuetodept" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "Issuetodept", "Issuetodept" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2401,7 +2401,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptIssueToDepartmentSummary", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "Issuetodept", "Issuetodept" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "Issuetodept", "Issuetodept" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2415,7 +2415,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rpt_OpeningBalance", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpeningBalance", "OpeningBalance" + vDate, Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OpeningBalance", "OpeningBalance" + vDate, Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -2428,7 +2428,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptWorkOrderPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "WorkOrder", "WorkOrder" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "WorkOrder", "WorkOrder" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2442,7 +2442,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptPrintIssueToDepartment", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "ReceivedBydept", "ReceivedBydept" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "ReceivedBydept", "ReceivedBydept" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2457,7 +2457,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rpt_BillCompanySummary", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PatientBillStatement", "PatientBillStatement" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PatientBillStatement", "PatientBillStatement" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2478,7 +2478,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptIPPatientSalesSummary", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{PharmacyHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharmacyPatientStatement", "pharmacyPatientStatementReport" + vDate, Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PharmacyPatientStatement", "pharmacyPatientStatementReport" + vDate, Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -2496,7 +2496,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptIPSalesBill", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{PharmacyHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "pharmacySalesDetails", "pharmacySalesDetailsReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "pharmacySalesDetails", "pharmacySalesDetailsReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2510,7 +2510,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptSalesPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharamcySalesBill", "PharamcySalesBill" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PharamcySalesBill", "PharamcySalesBill" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2523,7 +2523,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptSalesPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "SalesPrintKenya", "SalesPrintKenya" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "SalesPrintKenya", "SalesPrintKenya" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2537,7 +2537,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptSalesReturnPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "SalesReturnPrint", "SalesReturnPrint" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "SalesReturnPrint", "SalesReturnPrint" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2550,7 +2550,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptSalesReturnPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "SalesReturnPrintKenya", "SalesReturnPrintKenya" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "SalesReturnPrintKenya", "SalesReturnPrintKenya" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2564,7 +2564,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptInPatientSalesPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "InPatientSalesPrintKenya", "InPatientSalesPrintKenya" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "InPatientSalesPrintKenya", "InPatientSalesPrintKenya" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2577,7 +2577,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptInPatientSalesReturnPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharamcyInPatientSalesReturnKenya", "PharamcyInPatientSalesReturnKenya" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PharamcyInPatientSalesReturnKenya", "PharamcyInPatientSalesReturnKenya" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2594,7 +2594,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptSalesOpDarftBillPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OpDraftPharmacyReceipt", "OpDraftPharmacyReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OpDraftPharmacyReceipt", "OpDraftPharmacyReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2609,7 +2609,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptInPatientIPSalesBill", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharmacyInPatientSalesDetails", "PharmacyInPatientSalesDetails" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PharmacyInPatientSalesDetails", "PharmacyInPatientSalesDetails" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2623,7 +2623,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rptInPatientIPPatientSalesSummary", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharmacyInPatientStatement", "PharmacyInPatientStatement" + vDate, Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PharmacyInPatientStatement", "PharmacyInPatientStatement" + vDate, Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -2636,7 +2636,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptIPDPharAdvancePrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharamcyAdvanceReceipt", "PharamcyAdvanceReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PharamcyAdvanceReceipt", "PharamcyAdvanceReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2650,7 +2650,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptIPRefundofPharAdvancePrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "PharamcyAdvanceReturnReceipt", "PharamcyAdvanceReturnReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PharamcyAdvanceReturnReceipt", "PharamcyAdvanceReturnReceipt" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2664,7 +2664,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("Rtrv_GrnSupPayList", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "SupplierPaymentReciept", "SupplierPaymentReciept" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "SupplierPaymentReciept", "SupplierPaymentReciept" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2678,7 +2678,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rpt_SupplierPaymentReceipt", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "SupplierPaymentRecieptByPayment", "SupplierPaymentRecieptByPayment" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "SupplierPaymentRecieptByPayment", "SupplierPaymentRecieptByPayment" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2692,7 +2692,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("rptExpVoucharPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "ExpenseVoucharPrint", "ExpenseVoucharPrint" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "ExpenseVoucharPrint", "ExpenseVoucharPrint" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2708,7 +2708,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rpt_OTReservation", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTReservation", "OTReservation" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OTReservation", "OTReservation" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2725,7 +2725,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rpt_ClinicalData_All", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "NursingVitalsReport", "NursingVitalsReport" + vDate, Orientation.Landscape);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "NursingVitalsReport", "NursingVitalsReport" + vDate, Orientation.Landscape);
 
 
                         break;
@@ -2747,7 +2747,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_Rtrv_OTAnesthesiaRecord", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTAnaesthesiaRecord", "OTAnaesthesiaRecord" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OTAnaesthesiaRecord", "OTAnaesthesiaRecord" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2762,7 +2762,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("Rtrv_OT_ReservationCheckInOutReport_PatientWiseTest", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTCheckInOutPatientWise", "OTCheckInOutPatientWise" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OTCheckInOutPatientWise", "OTCheckInOutPatientWise" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2777,7 +2777,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rpt_OTInoperation", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTInOperationReport", "OTInOperationReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OTInOperationReport", "OTInOperationReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2791,7 +2791,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rpt_OTPreOperation", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTPreOperationReport", "OTPreOperationReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OTPreOperationReport", "OTPreOperationReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2806,7 +2806,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_Rtrv_OTRequest", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTRequestReport", "OTRequestReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OTRequestReport", "OTRequestReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2820,7 +2820,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("ps_rpt_OT_OperativeNotes", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTOperativeNotesReport", "OTOperativeNotesReport" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OTOperativeNotesReport", "OTOperativeNotesReport" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -2837,7 +2837,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                         html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "MRDFileView", "MRDFileView" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "MRDFileView", "MRDFileView" + vDate, Orientation.Portrait);
                         break;
 
                     }
@@ -2911,7 +2911,7 @@ namespace HIMS.Services.Report
 
             html = html.Replace("{{HospitalHeader}}", htmlHeaderFilePath);
 
-            return _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, model.FolderName, model.FileName + vDate, vPageOrg, PaperKind.A4);
+            return _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, model.FolderName, model.FileName + vDate, vPageOrg, PaperKind.A4);
         }
 
         private static string GetHTMLViewer(string sp_Name, ReportConfigDto model, string htmlFilePath, string htmlHeaderFilePath, string[] colList, string[] headerList = null, string[] totalColList = null, string groupByCol = "", string[] columnWidths = null, string[] columnAlignments = null)
@@ -7516,6 +7516,58 @@ namespace HIMS.Services.Report
         {
             var dt = GetDataBySp(model, sp_Name);
 
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                var log = new StringBuilder();
+
+                log.AppendLine();
+                log.AppendLine(new string('#', 100));
+                log.AppendLine($"Timestamp : {DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}");
+                log.AppendLine($"Procedure : {sp_Name}");
+                log.AppendLine(new string('#', 100));
+                log.AppendLine();
+
+                var nonNullColumns = new List<string>();
+                var nullColumns = new List<string>();
+
+                foreach (DataColumn col in dt.Columns)
+                {
+                    var value = dt.Rows[0][col.ColumnName];
+
+                    if (value == DBNull.Value || value == null)
+                        nullColumns.Add($"{col.ColumnName} = [NULL]");
+                    else
+                        nonNullColumns.Add($"{col.ColumnName} = {value}");
+                }
+
+                log.AppendLine($"NON-NULL COLUMNS ({nonNullColumns.Count})");
+                log.AppendLine(new string('=', 80));
+                foreach (var item in nonNullColumns)
+                    log.AppendLine(item);
+
+                log.AppendLine();
+                log.AppendLine($"NULL COLUMNS ({nullColumns.Count})");
+                log.AppendLine(new string('=', 80));
+                foreach (var item in nullColumns)
+                    log.AppendLine(item);
+
+                log.AppendLine();
+                log.AppendLine($"TOTAL COLUMNS : {dt.Columns.Count}");
+                log.AppendLine($"NON-NULL COUNT: {nonNullColumns.Count}");
+                log.AppendLine($"NULL COUNT    : {nullColumns.Count}");
+                log.AppendLine(new string('-', 100));
+
+                string storageBasePath = @"D:\Storage\";
+                string logFolder = Path.Combine(storageBasePath, "ReceiptDebugLogs");
+
+                Directory.CreateDirectory(logFolder);
+
+                string filePath = Path.Combine(
+                    logFolder,
+                    $"ReceiptDebug_{DateTime.Now:yyyyMMdd}.txt");
+
+                File.AppendAllText(filePath, log.ToString());
+            }
 
             //string htmlHeader = _pdfUtility.GetHeader(htmlHeaderFilePath, model.BaseUrl);
 
@@ -15510,8 +15562,21 @@ namespace HIMS.Services.Report
 
                 case "IpPaymentReceipt":
                     {
+                       
                         var dynamicVariable = new Dictionary<string, double>();
+                        // _logger.LogInformation("IpPaymentReceipt Started");
 
+                        //if (dt != null && dt.Rows.Count > 0)
+                        //{
+                        //    foreach (DataColumn col in dt.Columns)
+                        //    {
+                        //        File.AppendAllText(
+                        //            @"D:\Temp\ReceiptDebug.txt",
+                        //            $"{col.ColumnName} = {dt.Rows[0][col.ColumnName]}{Environment.NewLine}");
+                        //        throw new Exception($"{col.ColumnName} = {dt.Rows[0][col.ColumnName]}{Environment.NewLine}");
+                        //    }
+                        //}
+                       
                         html = html.Replace("{{PBillNo}}", dt.GetColValue("PBillNo"));
                         html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                         html = html.Replace("{{PaidAmount}}", dt.GetColValue("PaidAmount").ConvertToDouble().To2DecimalPlace());
@@ -23165,7 +23230,7 @@ namespace HIMS.Services.Report
             }
 
 
-            var tuple = _pdfUtility.GeneratePdfFromHtml(html.ToString(), StorageBaseUrl, "NewReport");
+            var tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html.ToString(), StorageBaseUrl, "NewReport");
             string byteFile = Convert.ToBase64String(tuple.Item1);
             return byteFile;
 
@@ -23453,7 +23518,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{AllTables}}", allTablesHtml.ToString());
 
-                        var tuple = _pdfUtility.GeneratePdfFromHtml(
+                        var tuple = _pdfUtility.GeneratePdfFromHtmlAsync(
                             html,
                             model.StorageBaseUrl,
                             "OTMultiTabReport"
@@ -23759,7 +23824,7 @@ namespace HIMS.Services.Report
                         }
                         html = System.Text.RegularExpressions.Regex.Replace(html, @"\{\{[^}]+\}\}", "");
 
-                        var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "OTMultiTabReport");
+                        var tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OTMultiTabReport");
                         pdfBytes = tuple.Item1;
                         break;
                     }
@@ -24012,7 +24077,7 @@ namespace HIMS.Services.Report
 
                         // Generate PDF
                         string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
-                        var tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, "BranchWiseStatement", "BranchWiseStatement" + vDate, Orientation.Portrait);
+                        var tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "BranchWiseStatement", "BranchWiseStatement" + vDate, Orientation.Portrait);
                
                         pdfBytes = tuple.Item1;
                         break;
