@@ -323,7 +323,8 @@ namespace HIMS.API.Controllers.Report
         public async Task<ApiResponse> GetDropdown()
         {
             var MItemMasterList = await _reportlistRepository1.GetAll(x => x.IsActive.Value);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemMaster dropdown", MItemMasterList.Select(x => new { x.Content, x.ItemId }));
+            //return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemMaster dropdown", MItemMasterList.Select(x => new { x.Content, x.ItemId }).Distinct());
+            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK,"ItemMaster dropdown",MItemMasterList.DistinctBy(x => x.Content).Select(x => new{ x.Content,x.ItemId}));
         }
 
         [HttpGet("PatientTypeMaster/auto-complete")]
