@@ -7557,8 +7557,7 @@ namespace HIMS.Services.Report
                 log.AppendLine($"NULL COUNT    : {nullColumns.Count}");
                 log.AppendLine(new string('-', 100));
 
-                string storageBasePath = @"D:\Storage\";
-                string logFolder = Path.Combine(storageBasePath, "ReceiptDebugLogs");
+                string logFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"ReceiptDebugLogs");
 
                 Directory.CreateDirectory(logFolder);
 
