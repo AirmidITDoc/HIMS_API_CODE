@@ -1,102 +1,70 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-    <table style="width:100%; border-collapse:collapse;">
-        <tr class="top-header-row">
-            <td style="padding:6px; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;">
-                <table style="width:100%; border-collapse:collapse;">
-                    <tr style="font-size:16px; display: {{TextHeaderDisplay}};">
-                        <td style="width:20%; padding:6px; text-align:center; vertical-align:top;">
-                            <img src="{{logo}}" alt="logo" width="120" style="display:block; margin:0 auto;">
-                        </td>
-                        <td style="width:60%; padding:0; text-align:center; vertical-align:top;">
-                            <table style="width:100%; border-collapse:collapse;">
-                                <tbody>
-                                    <tr>
-                                        <td style="font-size:15px;">
-                                            {{HospitalHeaderLine}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-size:20px; font-weight:600;">
-                                            {{HospitalName}}
-                                        </td>
-                                    </tr>
-                                    <tr style="display: {{chkHospitalShortNameFlag}};">
-                                        <td style="font-size: 13px;text-align:center">
-                                            {{HospitalShortName}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-size:13px;">
-                                            {{Address}} {{City}} - {{Pin}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-size:13px; white-space:nowrap;">
-                                            {{Phone}} | {{EmailID}} | {{WebSiteInfo}}
-                                        </td>
-                                    </tr>
+﻿
+        <table style="width:100% !important; border-collapse:collapse !important; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif !important; font-size:14px !important; line-height:normal !important; color:#101828 !important;">
 
-                                </tbody>
-                            </table>
-                        </td>
-                        <td style="width:20%; padding:6px; text-align:center; vertical-align:top;">
-                            <div style="display:{{chklogo2flag}};">
-                                <img src="{{logo2}}" alt="logo2" width="120" style="display:block; margin:0 auto;">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" style="height:0.5px; line-height:0.5px; font-size:0;">&nbsp;</td>
-                    </tr>
+            <!-- TEXT HEADER -->
+            <tr style="display:{{TextHeaderDisplay}};">
 
+                <!-- LEFT LOGO -->
+                <td style="width:20% !important; text-align:center !important; vertical-align:top !important; padding:6px !important;">
+                    <img src="{{logo}}" alt="logo" width="120" style="display:block !important; margin:auto !important;">
+                </td>
 
-                </table>
+                <!-- CENTER CONTENT -->
+                <td style="width:60% !important; text-align:center !important; vertical-align:top !important; padding:4px !important;">
+                    <div style="font-size:13px !important; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif !important; color:#101828 !important; line-height:1.4 !important; font-weight:normal !important;">
+                        {{HospitalHeaderLine}}
+                    </div>
+                    <div style="font-size:20px !important; font-weight:700 !important; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif !important; color:#101828 !important; line-height:1.4 !important;">
+                        {{HospitalName}}
+                    </div>
+                    <div style="font-size:12px !important; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif !important; color:#101828 !important; line-height:1.4 !important; font-weight:normal !important; width:100% !important;">
+                            {{HospitalShortName}}
+                    </div>
+                    <div style="font-size:12px !important; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif !important; color:#101828 !important; line-height:1.4 !important; font-weight:normal !important;">
+                        {{Address}} {{City}} - {{Pin}}
+                    </div>
+                    <div style="font-size:12px !important; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif !important; color:#101828 !important; line-height:1.4 !important; font-weight:normal !important; white-space:normal !important;">
+                        {{Phone}} | {{EmailID}} | {{WebSiteInfo}}
+                    </div>
+                </td>
 
-            </td>
-        </tr>
-        <tr style=" display:{{ImageHeaderDisplay}};">
-            <td>
-                <table style="width:100%; border-collapse:collapse; margin:0; padding:0; ">
-                    <tr>
-                        <td style="margin:0; padding:5px;">
-                            <img src="{{hospitalinfo}}" alt="hospitalinfo" style="display:block; width:100%; height:auto; margin:0; padding:0; border:0;" />
-                        </td>
-                    </tr>
-                </table>
-                <table style="width:100%; border-collapse:collapse; margin:5px 0; ">
-                    <tr>
-                        <td style="border-top:1px solid #000; height:1px; padding:0;"></td>
-                    </tr>
-                </table>
-            </td>
+                <!-- RIGHT LOGO -->
+                <td style="width:20% !important; text-align:right !important; vertical-align:top !important; padding:6px !important;">
+                    <div style="display:{{chklogo2flag}};">
+                        <img src="{{logo2}}" alt="logo2" width="120" style="display:block !important; margin-left:auto !important; margin-right:0 !important;">
+                    </div>
+                </td>
 
-        </tr>
+            </tr>
 
-        <tr style=" display:{{TemplateHeaderDisplay}};">
-            <td>
-                <table style="width:100%; border-collapse:collapse; margin:0; padding:0; ">
-                    <tr>
-                        <td style="margin:0; padding:5px;">
-                            {{hospitalTemplate}}
-                        </td>
-                    </tr>
-                </table>
-                <table style="width:100%; border-collapse:collapse; margin:5px 0; ">
-                    <tr>
-                        <td style="border-top:1px solid #000; height:1px; padding:0;"></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-     
-    </table>
+            <!-- DIVIDER -->
+            <tr>
+                <td colspan="3" style="border-top:1px solid #d4c3c3 !important; height:1px !important; padding:0 !important; font-size:0 !important;"></td>
+            </tr>
 
-</body>
-</html>
+        </table>
+
+        <!-- IMAGE HEADER -->
+        <table style="width:100% !important; border-collapse:collapse !important; display:{{ImageHeaderDisplay}};">
+            <tr>
+                <td style="padding:5px !important;">
+                    <img src="{{hospitalinfo}}" alt="hospitalinfo" style="display:block !important; width:100% !important; height:auto !important; border:0 !important;">
+                </td>
+            </tr>
+            <tr>
+                <td style="border-top:1px solid #000 !important; height:1px !important; padding:0 !important;"></td>
+            </tr>
+        </table>
+
+        <!-- TEMPLATE HEADER -->
+        <table style="width:100% !important; border-collapse:collapse !important; display:{{TemplateHeaderDisplay}};">
+            <tr>
+                <td style="padding:5px !important;">
+                    {{hospitalTemplate}}
+                </td>
+            </tr>
+            <tr>
+                <td style="border-top:1px solid #000 !important; height:1px !important; padding:0 !important;"></td>
+            </tr>
+        </table>
 
