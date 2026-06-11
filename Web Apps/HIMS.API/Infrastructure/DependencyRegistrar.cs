@@ -1,5 +1,8 @@
 ﻿using DinkToPdf;
 using DinkToPdf.Contracts;
+using HIMS.API.ABHA.Helper;
+using HIMS.API.ABHA.Interface;
+using HIMS.API.ABHA.Services;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Pathology;
 using HIMS.API.PaymentGateway;
@@ -205,8 +208,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<ILabPatientAddresService, LabPatientAddresService>();
 
 
-
-
+            services.AddScoped<IAbdmAuthService, AbdmAuthService>();
+            services.AddScoped<IHipLinkingService, HipLinkingService>();
 
 
 

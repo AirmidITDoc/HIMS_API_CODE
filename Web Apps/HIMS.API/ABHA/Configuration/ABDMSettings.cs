@@ -47,5 +47,8 @@
         public string RegisterBridge { get; set; } = string.Empty;
         public string BridgeServiceFindById {  get; set; } = string.Empty;
         public string Bridges {  get; set; } = string.Empty;
+        public string LinkTokenGenerate { get; set; } = string.Empty;
+        public string InitLinkSingle {  get; set; } = string.Empty;
+        public string LinkNotify { get; set; } = string.Empty;
     }
 }

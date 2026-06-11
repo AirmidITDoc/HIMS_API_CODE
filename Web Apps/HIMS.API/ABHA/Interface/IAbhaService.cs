@@ -23,11 +23,5 @@ namespace HIMS.API.ABHA.Interface
         Task<ApiResult<byte[]>> GetAbhaQrCodeAsync(string xToken);
         Task<ApiResult<VerifyUserResponse>> VerifyUser(VerifyUserRequest obj);
 
-        #region M2
-        Task<ApiResult<string>> UpdateBridgeUrlAsync(UpdateBridgeUrlRequest request);
-        Task<ApiResult<string>> RegisterBridgeServicesAsync(RegisterBridgeRequest request);
-        Task<ApiResult<BridgeServiceDto>> FindServiceByServiceIdAsync(string serviceId);
-        Task<ApiResult<BridgeResponseDto>> FindServicesByBridgeIdAsync();
-        #endregion
     }
 }
