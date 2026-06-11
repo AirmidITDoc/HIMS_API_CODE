@@ -18,6 +18,7 @@
         public string AbhaBaseUrl { get; set; } = string.Empty;
         public string AbhaProfileBaseUrl { get; set; } = string.Empty;
         public string PhrBaseUrl { get; set; } = string.Empty;
+        public string BridgeBaseUrl { get; set; } = string.Empty;
     }
 
     public class Credentials
@@ -41,11 +42,10 @@
         public string AbhaProfile { get; set; } = string.Empty;
         public string AbhaCard { get; set; } = string.Empty;
         public string AbhaQrCode { get; set; } = string.Empty;
-        public string SearchByMobile { get; set; } = string.Empty;
-        public string SearchByAbhaNumber { get; set; } = string.Empty;
-        public string LinkingTokenRequest { get; set; } = string.Empty;
-        public string LinkingTokenConfirm { get; set; } = string.Empty;
-        public string CareContextNotify { get; set; } = string.Empty;
         public string VerifyUser { get; set; } = string.Empty;
+        public string BridgeUrl { get; set; } = string.Empty;
+        public string RegisterBridge { get; set; } = string.Empty;
+        public string BridgeServiceFindById {  get; set; } = string.Empty;
+        public string Bridges {  get; set; } = string.Empty;
     }
 }

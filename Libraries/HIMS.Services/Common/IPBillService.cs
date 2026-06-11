@@ -967,9 +967,15 @@ namespace HIMS.Services.Common
         }
 
         public virtual async Task  IPAddcharges(AddCharge ObjaddCharge, List<AddCharge> objAddCharges, int CurrentUserId, string CurrentUserName)
-        {
-
+        { 
+            // Begin Transaction
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] AEntity = {  "ChargesId", "ChargesDate",  "OpdIpdType", "OpdIpdId", "ServiceId", "Price",
                 "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount","NetAmount","DoctorId","DocPercentage","DocAmt","HospitalAmt","IsGenerated","AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","IsSelfOrCompanyService",
                 "PackageId","WardId","BedId","ChargesTime","PackageMainChargeId","ClassId"};
@@ -983,8 +989,10 @@ namespace HIMS.Services.Common
 
             string AChargesId = odal.ExecuteNonQuery("ps_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
             ObjaddCharge.ChargesId = Convert.ToInt32(AChargesId);
+            await _context.LogProcedureExecution(entity, nameof(AddCharge), ObjaddCharge.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-            foreach (var item in objAddCharges)
+
+                foreach (var item in objAddCharges)
             {
                 item.ChargesId = Convert.ToInt32(AChargesId);
                 string[] Entity = { "ChargesDate", "OpdIpdType",  "OpdIpdId", "ServiceId", "Price", "Qty",
@@ -1000,12 +1008,30 @@ namespace HIMS.Services.Common
                 await _context.LogProcedureExecution(Aentity, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             }
+                // Save Log
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit Transaction
+                await transaction.CommitAsync();
+
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
        
         public virtual async Task  Update(AddCharge ObjaddCharge, int CurrentUserId, string CurrentUserName)
         {
-
+            // Begin Transaction
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] AEntity = {  "ChargesId", "Price", "Qty","TotalAmt", "ConcessionPercentage","ConcessionAmount",
                 "NetAmount", "DoctorId", "IsInclusionExclusion", "ModifiedBy"};
             var entity = ObjaddCharge.ToDictionary();
@@ -1018,7 +1044,18 @@ namespace HIMS.Services.Common
 
             odal.ExecuteNonQuery("ps_update_IPAddCharges", CommandType.StoredProcedure, entity);
             await _context.LogProcedureExecution(entity, nameof(AddCharge), ObjaddCharge.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            // Save Log
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            // Commit Transaction
+            await transaction.CommitAsync();
 
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
 
         }
 
@@ -1049,9 +1086,15 @@ namespace HIMS.Services.Common
 
         //}
 
-        public virtual void InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName, long traiffId, long ReqDetId)
+        public virtual async Task InsertLabRequest(AddCharge ObjaddCharge, int UserId, string UserName, long traiffId, long ReqDetId)
         {
+            // Begin Transaction
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
             string[] AEntity = { "OpdIpdId", "ClassId", "ServiceId", "TraiffId", "ReqDetId", "UserId", "ChargesDate", "DoctorId" };
 
@@ -1070,13 +1113,32 @@ namespace HIMS.Services.Common
             entity["UserId"] = UserId;
 
             odal.ExecuteNonQuery("ps_Insert_LabRequest_Charges_1", CommandType.StoredProcedure, entity);
+            await _context.LogProcedureExecution(entity, nameof(AddCharge), ObjaddCharge.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
+            // Save Log
+            await _context.SaveChangesAsync(UserId, UserName);
+            // Commit Transaction
+            await transaction.CommitAsync();
+
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
 
         }
 
         public virtual async Task InsertIPDPackage(AddCharge ObjaddCharge, int CurrentUserId, string CurrentUserName)
         {
-
+            // Begin Transaction
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] AEntity = {  "ChargesId", "ChargesDate",  "OpdIpdType", "OpdIpdId", "ServiceId", "Price",
                                   "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount","NetAmount","DoctorId","DocPercentage","DocAmt",
                                   "HospitalAmt","IsGenerated","AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","IsSelfOrCompanyService","PackageId","WardId","BedId","ChargesTime","PackageMainChargeId","ClassId"};
@@ -1090,13 +1152,30 @@ namespace HIMS.Services.Common
 
             string ChargesId = odal.ExecuteNonQuery("ps_insert_IPAddCharges_1", CommandType.StoredProcedure, "ChargesId", entity);
             await _context.LogProcedureExecution(entity, nameof(AddCharge), ObjaddCharge.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                // Save Log
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit Transaction
+            await transaction.CommitAsync();
 
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
 
         }
         public virtual async Task UpdateBill(List<AddCharge> ObjaddCharge, Bill ObjBill, int CurrentUserId, string CurrentUserName)
         {
-
+            // Begin Transaction
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] AEntity = { "BillNo", "ChargesDate","Price", "Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "AddedBy", "ChargesTime", "IsInclusionExclusion","ChargesId", "IsApprovedByCamp", "DoctorId", "DoctorName", "OpdIpdId", "OpdIpdType", "ServiceId", "ServiceName", "UnitId" };
             foreach (var item in ObjaddCharge)
             {
@@ -1110,6 +1189,8 @@ namespace HIMS.Services.Common
                 }
 
                 odal.ExecuteNonQuery("ps_UpdateIPAddCharges_1", CommandType.StoredProcedure, entity);
+                await _context.LogProcedureExecution(entity, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
             }
 
             string[] BEntity = { "BillNo", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "CompanyAmt", "PatientAmt", "SpeTaxPer", "SpeTaxAmt", "ConcessionReasonId", "DiscComments", "ModifiedBy" };
@@ -1122,15 +1203,31 @@ namespace HIMS.Services.Common
             }
 
             odal.ExecuteNonQuery("ps_BillAmountDetails", CommandType.StoredProcedure, bentity);
-            await _context.LogProcedureExecution(bentity, nameof(Bill), ObjBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            await _context.LogProcedureExecution(bentity, nameof(Bill), ObjBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            // Commit Transaction
+            await transaction.CommitAsync();
 
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
 
         }
 
         public virtual async Task BillGovtUpdate(Bill ObjBill, int CurrentUserId, string CurrentUserName)
         {
-            // -------------------- BILL Govert UPDATE ------------------------
+            // Begin Transaction
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+            // -------------------- BILL Govert UPDATE ------------------------
             string[] BEntity = { "BillNo", "GovtApprovedAmt", "GovtCompanyId", "CompanyApprovedAmt", "CompanyApprovedId", "GovtRefNo", "CompRefNo" };
             var bentity = ObjBill.ToDictionary();
 
@@ -1142,11 +1239,30 @@ namespace HIMS.Services.Common
 
             odal.ExecuteNonQuery("ps_update_BillGovtAmt", CommandType.StoredProcedure, bentity);
             await _context.LogProcedureExecution(bentity, nameof(Bill), ObjBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            // Save Log
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            // Commit Transaction
+            await transaction.CommitAsync();
+
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         public virtual async Task UpdateRefund(Refund OBJRefund, int CurrentUserId, string CurrentUserName)
         {
+
+            // Begin Transaction
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
             string[] AEntity = { "RefundDate", "RefundTime", "RefundId" };
             var Rentity = OBJRefund.ToDictionary();
 
@@ -1158,14 +1274,31 @@ namespace HIMS.Services.Common
 
             odal.ExecuteNonQuery("PS_RefundBillDateUpdate", CommandType.StoredProcedure, Rentity);
             await _context.LogProcedureExecution(Rentity, nameof(Refund), OBJRefund.RefundId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+            // Save Log
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit Transaction
+            await transaction.CommitAsync();
 
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
 
         public virtual async Task  InsertSP(AddCharge ObjaddCharge, int CurrentUserId, string CurrentUserName)
-        {
-
+        {  
+            // Begin Transaction
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] AEntity = { "OpdIpdId", };
             var entity = ObjaddCharge.ToDictionary();
 
@@ -1177,13 +1310,24 @@ namespace HIMS.Services.Common
 
             odal.ExecuteNonQuery("ps_m_AddBedService_Charges", CommandType.StoredProcedure, entity);
             await _context.LogProcedureExecution(entity, nameof(AddCharge), ObjaddCharge.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
+            // Save Log
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            // Commit Transaction
+            await transaction.CommitAsync();
+            
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
 
         }
 
 
 
-        public virtual void InsertSPC(AddCharge ObjaddCharge, int UserId, string UserName, long? NewClassId)
+        public virtual async Task InsertSPC(AddCharge ObjaddCharge, int UserId, string UserName, long? NewClassId)
         {
 
             DatabaseHelper odal = new();
@@ -1204,8 +1348,46 @@ namespace HIMS.Services.Common
 
 
         }
+        //public virtual async Task InsertSPC(AddCharge ObjaddCharge, int UserId, string UserName, long? NewClassId)
+        //{
+        //    // Begin Transaction
+        //    await using var transaction = await _context.Database.BeginTransactionAsync();
+        //    try
+        //    {
+        //    DatabaseHelper odal = new();
+        //    odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+        //    odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
-        public virtual void InsertSPT(AddCharge ObjaddCharge, int UserId, string UserName, long? NewClassId, long? NewTariffId)
+        //    string[] AEntity = { "ClassId", "TariffId", "OpdIpdId", "NewClassId"};
+        //    var entity = ObjaddCharge.ToDictionary();
+
+        //    foreach (var rProperty in entity.Keys.ToList())
+        //    {
+        //        if (!AEntity.Contains(rProperty))
+        //            entity.Remove(rProperty);
+        //    }
+
+        //    entity["NewClassId"] = NewClassId;
+
+        //    odal.ExecuteNonQuery("ps_m_ClasswiseRate_change", CommandType.StoredProcedure, entity);
+        //    await _context.LogProcedureExecution(entity, nameof(AddCharge), ObjaddCharge.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
+        //    // Save Log
+        //    await _context.SaveChangesAsync(UserId, UserName);
+        //    // Commit Transaction
+        //    await transaction.CommitAsync();
+
+        //    }
+        //    catch (Exception)
+        //    {
+        //        // Rollback Transaction
+        //        await transaction.RollbackAsync();
+        //        throw;
+        //    }
+
+        //}
+
+
+        public virtual async Task InsertSPT(AddCharge ObjaddCharge, int UserId, string UserName, long? NewClassId, long? NewTariffId)
         {
 
             DatabaseHelper odal = new();
@@ -1227,10 +1409,54 @@ namespace HIMS.Services.Common
             odal.ExecuteNonQuery("ps_m_Tariffwise_ClassRate_change", CommandType.StoredProcedure, entity);
 
         }
+        //public virtual async Task InsertSPT(AddCharge ObjaddCharge, int UserId, string UserName, long? NewClassId, long? NewTariffId)
+        //{
+        //    // Begin Transaction
+        //    await using var transaction = await _context.Database.BeginTransactionAsync();
+        //    try
+        //    {
+        //    DatabaseHelper odal = new();
+        //    odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+        //    odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
+        //    string[] AEntity = { "ClassId", "TariffId", "OpdIpdId", "NewClassId", "NewTariffId"};
+        //    var entity = ObjaddCharge.ToDictionary();
+
+        //        foreach (var rProperty in entity.Keys.ToList())
+        //        {
+        //            if (!AEntity.Contains(rProperty))
+        //                entity.Remove(rProperty);
+        //        }
+        //        entity["NewClassId"] = NewClassId;
+        //        entity["NewTariffId"] = NewTariffId;
+
+
+        //    odal.ExecuteNonQuery("ps_m_Tariffwise_ClassRate_change", CommandType.StoredProcedure, entity);
+        //    await _context.LogProcedureExecution(entity, nameof(AddCharge), ObjaddCharge.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, UserName);
+        //    // Save Log
+        //    await _context.SaveChangesAsync(UserId, UserName);
+        //    // Commit Transaction
+        //    await transaction.CommitAsync();
+
+        //    }
+        //    catch (Exception)
+        //    {
+        //        // Rollback Transaction
+        //        await transaction.RollbackAsync();
+        //        throw;
+        //    }
+        //}
+
 
         public virtual async Task  IPbillSp(Bill ObjBill, int CurrentUserId, string CurrentUserName)
-        {
+        { 
+            // Begin Transaction
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
             string[] AEntity = { "BillNo", "ConcessionReasonId", "BalanceAmt", "NetPayableAmt", "CompDiscAmt", "ConcessionAmt", "CreatedBy" };
             var Rentity = ObjBill.ToDictionary();
 
@@ -1242,7 +1468,18 @@ namespace HIMS.Services.Common
 
             odal.ExecuteNonQuery("ps_Update_BillDiscountAfter_1", CommandType.StoredProcedure, Rentity);
             await _context.LogProcedureExecution(Rentity, nameof(Bill), ObjBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                // Save Log
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit Transaction
+            await transaction.CommitAsync();
 
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
     }
 }
