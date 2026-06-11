@@ -324,7 +324,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPost("IPAddcharges")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
-        public ApiResponse IPAddcharges(AddChargModel obj)
+        public async Task <ApiResponse> IPAddcharges(AddChargModel obj)
         {
             AddCharge Model = obj.AdddCharges.MapTo<AddCharge>();
             List<AddCharge> Models = obj.AddCharge.MapTo<List<AddCharge>>();
@@ -333,7 +333,7 @@ namespace HIMS.API.Controllers.IPPatient
             {
 
                 Model.AddedBy = CurrentUserId;
-                _IPBillService.IPAddcharges(Model, Models, CurrentUserId, CurrentUserName);
+                await _IPBillService.IPAddcharges(Model, Models, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -342,7 +342,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPut("UpdateAddcharges/{id:int}")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Edit)]
-        public ApiResponse Update(UpdateAddchargesModel obj)
+        public async Task<ApiResponse> Update(UpdateAddchargesModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
             if (obj.ChargesId == 0)
@@ -353,14 +353,14 @@ namespace HIMS.API.Controllers.IPPatient
                 model.AddedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                _IPBillService.Update(model, CurrentUserId, CurrentUserName);
+                await _IPBillService.Update(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
         [HttpPost("InsertLabRequest")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
-        public ApiResponse InsertLabRequest(LabRequestsModel obj)
+        public async Task <ApiResponse> InsertLabRequest(LabRequestsModel obj)
         {
             if (obj.ClassId == 0)
             {
@@ -376,20 +376,20 @@ namespace HIMS.API.Controllers.IPPatient
                 DoctorId = obj.DoctorId,
                 AddedBy = CurrentUserId
             };
-            _IPBillService.InsertLabRequest(model, CurrentUserId, CurrentUserName, obj.TraiffId, obj.ReqDetId);
+            await _IPBillService.InsertLabRequest(model, CurrentUserId, CurrentUserName, obj.TraiffId, obj.ReqDetId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
 
         [HttpPost("InsertIPDPackageBill")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
-        public ApiResponse InsertIPDPackage(IPAddChargesModel obj)
+        public async Task <ApiResponse> InsertIPDPackage(IPAddChargesModel obj)
         {
             AddCharge Model = obj.MapTo<AddCharge>();
             if (obj.ChargesId == 0)
             {
 
                 Model.AddedBy = CurrentUserId;
-                _IPBillService.InsertIPDPackage(Model, CurrentUserId, CurrentUserName);
+                await _IPBillService.InsertIPDPackage(Model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -398,8 +398,8 @@ namespace HIMS.API.Controllers.IPPatient
 
        
         [HttpPost("BillUpdate")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
-        public ApiResponse BillUpdate(BillUpdate obj)
+        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task <ApiResponse> BillUpdate(BillUpdate obj)
         {
             List<AddCharge> model = obj.IPAddChargesBill.MapTo<List<AddCharge>>();
 
@@ -411,10 +411,8 @@ namespace HIMS.API.Controllers.IPPatient
                     item.AddedBy = CurrentUserId;
                 }
 
-                _IPBillService.UpdateBill(model, objBill, CurrentUserId, CurrentUserName);
-
+                await _IPBillService.UpdateBill(model, objBill, CurrentUserId, CurrentUserName);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.");
-
             }
             else
             {
@@ -425,13 +423,13 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPost("BillGovtUpdate")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
-        public ApiResponse BillGovtUpdate(BillGovtUpdate obj)
+        public async Task  <ApiResponse> BillGovtUpdate(BillGovtUpdate obj)
         {
             Bill objBill = obj.BillGovtUpdates.MapTo<Bill>();
             if (objBill.BillNo != 0)
             {
                 objBill.AddedBy = CurrentUserId;
-                _IPBillService.BillGovtUpdate(objBill, CurrentUserId, CurrentUserName);
+                await _IPBillService.BillGovtUpdate(objBill, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -440,16 +438,14 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPost("AddBedServiceCharges")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
-        public ApiResponse Insert(classWiseRateModel obj)
+        public async Task <ApiResponse> Insert(classWiseRateModel obj)
         {
             AddCharge Model = obj.MapTo<AddCharge>();
-
-
             if (obj.OpdIpdId != 0)
             {
 
                 Model.AddedBy = CurrentUserId;
-                _IPBillService.InsertSP(Model, CurrentUserId, CurrentUserName);
+                await _IPBillService.InsertSP(Model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -459,7 +455,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPost("ClasswiseRatechange")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
-        public ApiResponse InsertC(ClassRateModel obj)
+        public async Task <ApiResponse>  InsertC(ClassRateModel obj)
         {
             if (obj.ClassId == 0)
             {
@@ -472,14 +468,14 @@ namespace HIMS.API.Controllers.IPPatient
                 OpdIpdId = obj.OpdIpdId,
                 TariffId = obj.TariffId
             };
-            _IPBillService.InsertSPC(model, CurrentUserId, CurrentUserName, obj.NewClassId);
+            await _IPBillService.InsertSPC(model, CurrentUserId, CurrentUserName, obj.NewClassId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
 
 
         [HttpPost("TariffwiseClassRatechange")]
         [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
-        public ApiResponse InsertT(TariffwiseClassRatechangeModel obj)
+        public async Task <ApiResponse> InsertT(TariffwiseClassRatechangeModel obj)
         {
             if (obj.ClassId == 0)
             {
@@ -491,20 +487,20 @@ namespace HIMS.API.Controllers.IPPatient
                 OpdIpdId = obj.OpdIpdId,
                 TariffId = obj.TariffId
             };
-            _IPBillService.InsertSPT(model, CurrentUserId, CurrentUserName, obj.NewClassId, obj.NewTariffId);
+            await _IPBillService.InsertSPT(model, CurrentUserId, CurrentUserName, obj.NewClassId, obj.NewTariffId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Added successfully.");
         }
 
         [HttpPost("BillDiscountAfter")]
         [Permission]
         //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
-        public ApiResponse InsertCreditsSP(BillDiscountAfterModel obj)
+        public async Task<ApiResponse> InsertCreditsSP(BillDiscountAfterModel obj)
         {
 
             Bill Model = obj.MapTo<Bill>();
             if (obj.BillNo != 0)
             {
-                _IPBillService.IPbillSp(Model, CurrentUserId, CurrentUserName);
+                await _IPBillService.IPbillSp(Model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

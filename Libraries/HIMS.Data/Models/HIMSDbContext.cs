@@ -409,6 +409,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TAdvDetail> TAdvDetails { get; set; } = null!;
         public virtual DbSet<TAdvHeader> TAdvHeaders { get; set; } = null!;
         public virtual DbSet<TApayment> TApayments { get; set; } = null!;
+        public virtual DbSet<TApprovalHeader> TApprovalHeaders { get; set; } = null!;
         public virtual DbSet<TBatchAdjustment> TBatchAdjustments { get; set; } = null!;
         public virtual DbSet<TBedOccupancy> TBedOccupancies { get; set; } = null!;
         public virtual DbSet<TBedTransferDetail> TBedTransferDetails { get; set; } = null!;
@@ -11636,6 +11637,29 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReceiptNo).HasMaxLength(50);
 
                 entity.Property(e => e.Remark).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<TApprovalHeader>(entity =>
+            {
+                entity.HasKey(e => e.ApprovalId);
+
+                entity.ToTable("T_ApprovalHeader");
+
+                entity.Property(e => e.ApprovalNo).HasMaxLength(20);
+
+                entity.Property(e => e.ApprovedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Comment).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Time).HasColumnType("datetime");
+
+                entity.Property(e => e.TransactionType).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TBatchAdjustment>(entity =>
