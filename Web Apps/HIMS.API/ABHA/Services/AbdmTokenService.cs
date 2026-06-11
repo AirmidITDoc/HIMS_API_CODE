@@ -33,7 +33,7 @@ namespace HIMS.API.ABHA.Services
                 return cachedToken;
             }
 
-            var url = $"{_settings.Endpoints.SessionToken}";
+            var url = $"{_settings.BaseUrls.GatewayBaseUrl}{_settings.Endpoints.SessionToken}";
             var payload = new SessionTokenRequest
             {
                 ClientId = _settings.Credentials.ClientId,

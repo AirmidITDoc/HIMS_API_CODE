@@ -6,12 +6,14 @@ using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
+using HIMS.Services.Common;
 using HIMS.Services.Report;
 using HIMS.Services.Utilities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging.Abstractions;
 using PdfSharpCore.Pdf;
 using PdfSharpCore.Pdf.IO;
 using QRCoder;
@@ -245,8 +247,8 @@ namespace HIMS.Services.Utilities
                 if (hospital == null) return string.Empty;
 
                 string html = File.ReadAllText(filePath);
-                if (string.IsNullOrWhiteSpace(html))
-                    throw new Exception($"GetHeader: Template file is empty. Path: {filePath}");
+                //if (string.IsNullOrWhiteSpace(html))
+                //    throw new Exception($"GetHeader: Template file is empty. Path: {filePath}");
 
                 // Fetch all required files in ONE DB call
                 var files = _context.FileMasters.Where(x => x.RefId == hospital.HospitalId && x.IsDelete == false && (x.RefType == 7 || x.RefType == 10 || x.RefType == 11)).ToList();
@@ -286,11 +288,11 @@ namespace HIMS.Services.Utilities
                             //string hospitalLogo = logo != null ? GetBase64FromFolder("Hospital\\Logo", logo.DocSavedName) : "";
                             //string hospitalLogo2 = logo2 != null ? GetBase64FromFolder("NABHLogo\\NABH", logo2.DocSavedName) : "";
 
-                            if (logo != null && !File.Exists(Path.Combine(AppSettings.Settings.StorageBaseUrl, "Hospital", "Logo", logo.DocSavedName)))
-                                throw new Exception($"Hospital logo file not found: {logo.DocSavedName}");
+                            //if (logo != null && !File.Exists(Path.Combine(AppSettings.Settings.StorageBaseUrl, "Hospital", "Logo", logo.DocSavedName)))
+                            //    throw new Exception($"Hospital logo file not found: {logo.DocSavedName}");
 
-                            if (logo2 != null && !File.Exists(Path.Combine(AppSettings.Settings.StorageBaseUrl, "NABHLogo", "NABH", logo2.DocSavedName)))
-                                throw new Exception($"NABH logo file not found: {logo2.DocSavedName}");
+                            //if (logo2 != null && !File.Exists(Path.Combine(AppSettings.Settings.StorageBaseUrl, "NABHLogo", "NABH", logo2.DocSavedName)))
+                            //    throw new Exception($"NABH logo file not found: {logo2.DocSavedName}");
 
                             string hospitalLogo = logo != null ? $"{DestinationPath}Hospital/Logo/{logo.DocSavedName}" : "";
                             string hospitalLogo2 = logo2 != null ? $"{DestinationPath}NABHLogo/NABH/{logo2.DocSavedName}" : "";
@@ -303,8 +305,8 @@ namespace HIMS.Services.Utilities
 
                     case 2: // Image header
                         {
-                            if (infoImg != null && !File.Exists(Path.Combine(AppSettings.Settings.StorageBaseUrl, "Upload", "Img_Upload", infoImg.DocSavedName))) 
-                                throw new Exception($"Header image file not found: {infoImg.DocSavedName}");
+                            //if (infoImg != null && !File.Exists(Path.Combine(AppSettings.Settings.StorageBaseUrl, "Upload", "Img_Upload", infoImg.DocSavedName)))
+                            //    throw new Exception($"Header image file not found: {infoImg.DocSavedName}");
                             string hospitalInfo = infoImg != null ? $"{DestinationPath}Upload/Img_Upload/{infoImg.DocSavedName}" : "";
 
                             replacements["{{hospitalinfo}}"] = hospitalInfo;
@@ -537,8 +539,22 @@ namespace HIMS.Services.Utilities
             return htmlHeader.Replace("{{Display}}", (objStoreHospital?.StoreId ?? 0) > 0 ? "visible" : "hidden");
 
         }
-        public Tuple<byte[], string> GeneratePdfFromHtml(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
+        public Tuple<byte[], string> GeneratePdfFromHtmlAsync(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
         {
+            string fileName = $"htmlLogs_{DateTime.UtcNow:yyyy-MM-dd}.txt";
+            string filePath = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs"), fileName);
+            try
+            {
+                using FileStream fs = new(filePath, FileMode.Append, FileAccess.Write, FileShare.Read, bufferSize: 4096, useAsync: true);
+                using StreamWriter writer = new(fs, Encoding.UTF8);
+                writer.Write("\nHtml for generate pdf =>" + html);
+                writer.Flush();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
             html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
             string DestinationPath = string.Empty; //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
@@ -564,17 +580,17 @@ namespace HIMS.Services.Utilities
                 Margins = new MarginSettings() { Top = 10, Bottom = 10, Left = 10, Right = 10 },
             },
                     Objects = {
-                new ObjectSettings() {
+                     new ObjectSettings() {
                     PagesCount = true,
                     Page = tempFile,              // ✅ Use Page, not HtmlContent
                     WebSettings = { DefaultEncoding = "utf-8",LoadImages=true },
                     UseLocalLinks = true,         // ✅ Allow local file links
                      LoadSettings = new LoadSettings
-    {
-                         BlockLocalFileAccess = false,
-        JSDelay = 1500,
-        StopSlowScript = false
-    }
+                    {
+                        BlockLocalFileAccess = false,
+                        JSDelay = 5000,
+                        StopSlowScript = false
+                    }
                 }
             }
                 };
@@ -586,7 +602,33 @@ namespace HIMS.Services.Utilities
 
                 if (!File.Exists(NewFileName) || new FileInfo(NewFileName).Length == 0)
                     throw new Exception($"PDF generation failed. Generated PDF is empty. Path: {NewFileName}");
+                try
+                {
+                    using FileStream fs = new(filePath, FileMode.Append, FileAccess.Write, FileShare.Read, bufferSize: 4096, useAsync: true);
+                    using StreamWriter writer = new(fs, Encoding.UTF8);
+                    writer.Write("\nGenerated Successfully =>" + NewFileName);
+                    writer.Flush();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
                 return new Tuple<byte[], string>(bytes, NewFileName);
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    using FileStream fs = new(filePath, FileMode.Append, FileAccess.Write, FileShare.Read, bufferSize: 4096, useAsync: true);
+                    using StreamWriter writer = new(fs, Encoding.UTF8);
+                    writer.Write("\nError =>" + ex.Message);
+                    writer.Flush();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                throw new Exception("Error during PDF generation: " + ex.Message, ex);
             }
             finally
             {
@@ -1071,7 +1113,7 @@ namespace HIMS.Services.Utilities
             html = ReplaceDateFormats(html, firstRow);
             html = ReplaceFlags(html, firstRow);
             html = ReplaceImageSource(html, firstRow);
-        
+
             return html;
         }
 
@@ -1208,7 +1250,7 @@ namespace HIMS.Services.Utilities
             }
             catch
             {
-                return html; 
+                return html;
             }
         }
         public static string conversion(string amount)
@@ -1308,7 +1350,7 @@ namespace HIMS.Services.Utilities
 
                 html = html.Replace("{{Image}}", image);
 
-                html = html.Replace("{{chkImgFlag}}",string.IsNullOrWhiteSpace(imageFileName) ? "none" : "inline-block"
+                html = html.Replace("{{chkImgFlag}}", string.IsNullOrWhiteSpace(imageFileName) ? "none" : "inline-block"
                 );
                 return html;
             }

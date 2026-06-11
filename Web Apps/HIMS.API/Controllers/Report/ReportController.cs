@@ -27,16 +27,20 @@ namespace HIMS.API.Controllers.Report
         private readonly IRegistrationService _IRegistrationService;
         private readonly IDoctorMasterService _IDoctorMasterService;
         private readonly IGenericService<MReportConfig> _reportlistRepository;
+        private readonly IGenericService<MItemMaster> _reportlistRepository1;
+
         private readonly IReportService _reportService;
         public readonly IPdfUtility _pdfUtility;
         public readonly IFileUtility _FileUtility;
         public ReportController(IRegistrationService repository, IDoctorMasterService doctorRepository,
-            IGenericService<MReportConfig> reportlistRepository, IFileUtility fileUtility,
+            IGenericService<MReportConfig> reportlistRepository, IGenericService<MItemMaster> reportlistRepository1, IFileUtility fileUtility,
             IReportService reportService, IPdfUtility pdfUtility)
         {
             _IRegistrationService = repository;
             _IDoctorMasterService = doctorRepository;
             _reportlistRepository = reportlistRepository;
+            _reportlistRepository1 = reportlistRepository1;
+
             _reportService = reportService;
             _pdfUtility = pdfUtility;
             _FileUtility = fileUtility;
@@ -312,6 +316,15 @@ namespace HIMS.API.Controllers.Report
             }
             var data = await _reportService.SearchRegNo(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Search RegNo", data.Select(x => new { Text = x.LabRequestNo, Value = x.LabPatientId }));
+        }
+
+        [HttpGet]
+        [Route("get-ItemMaster")]
+        public async Task<ApiResponse> GetDropdown()
+        {
+            var MItemMasterList = await _reportlistRepository1.GetAll(x => x.IsActive.Value);
+            //return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemMaster dropdown", MItemMasterList.Select(x => new { x.Content, x.ItemId }).Distinct());
+            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK,"ItemMaster dropdown",MItemMasterList.DistinctBy(x => x.Content).Select(x => new{ x.Content,x.ItemId}));
         }
 
         [HttpGet("PatientTypeMaster/auto-complete")]
@@ -610,7 +623,7 @@ namespace HIMS.API.Controllers.Report
             {
 
                 // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
-               // long UnitId = 1;
+              // long UnitId = 1;
                // long StoreId = 2;
                long UnitId = Context.UnitId;
                 long StoreId = Context.StoreId;

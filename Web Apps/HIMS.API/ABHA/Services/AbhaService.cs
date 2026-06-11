@@ -3,6 +3,7 @@
 using HIMS.API.ABHA.Helper;
 using HIMS.API.ABHA.Interface;
 using HIMS.API.ABHA.Models;
+using HIMS.API.ABHA.Models.M2;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
 using System.Text;
@@ -30,6 +31,7 @@ namespace HIMS.API.ABHA.Services
             _logger = logger;
         }
 
+        #region M1 APIS
         // ===== AADHAAR FLOW =====
         public async Task<ApiResult<OtpResponse>> RequestAadhaarOtpAsync(string aadhaarNumber)
         {
@@ -211,6 +213,72 @@ namespace HIMS.API.ABHA.Services
             var url = $"{_settings.BaseUrls.AbhaBaseUrl}{_settings.Endpoints.AbhaQrCode}";
             return await GetBinaryAsync(url, xToken);
         }
+        #endregion
+        #region M2 APIS
+        public async Task<ApiResult<string>> UpdateBridgeUrlAsync(UpdateBridgeUrlRequest request)
+        {
+            try
+            {
+                var publicKey = await _tokenService.GetPublicCertificateAsync();
+                var encryptedAadhaar = RsaEncryptionHelper.Encrypt(request.Url, publicKey);
+                request.Url = encryptedAadhaar;
+                var url = $"{_settings.BaseUrls.GatewayBaseUrl}{_settings.Endpoints.BridgeUrl}";
+                return await PatchAsync<string>(url, request);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "RequestOtpAsync failed");
+                return new ApiResult<string> { Success = false, Error = ex.Message };
+            }
+        }
+
+        public async Task<ApiResult<string>> RegisterBridgeServicesAsync(RegisterBridgeRequest request)
+        {
+            try
+            {
+                var publicKey = await _tokenService.GetPublicCertificateAsync();
+                var encryptedAadhaar = RsaEncryptionHelper.Encrypt(request.HRP[0].BridgeId, publicKey);
+                request.HRP[0].BridgeId = encryptedAadhaar;
+                var url = $"{_settings.BaseUrls.BridgeBaseUrl}{_settings.Endpoints.RegisterBridge}";
+                return await PostAsync<string>(url, request);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "RequestOtpAsync failed");
+                return new ApiResult<string> { Success = false, Error = ex.Message };
+            }
+        }
+        public async Task<ApiResult<BridgeServiceDto>> FindServiceByServiceIdAsync(string serviceId)
+        {
+            try
+            {
+                var publicKey = await _tokenService.GetPublicCertificateAsync();
+                var encryptedAadhaar = RsaEncryptionHelper.Encrypt(serviceId, publicKey);
+                var url = $"{_settings.BaseUrls.GatewayBaseUrl}{_settings.Endpoints.BridgeServiceFindById}/{encryptedAadhaar}";
+                return await GetAsync<BridgeServiceDto>(url);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "RequestOtpAsync failed");
+                return new ApiResult<BridgeServiceDto> { Success = false, Error = ex.Message };
+            }
+        }
+        public async Task<ApiResult<BridgeResponseDto>> FindServicesByBridgeIdAsync()
+        {
+            try
+            {
+                var url = $"{_settings.BaseUrls.GatewayBaseUrl}{_settings.Endpoints.Bridges}";
+                return await GetAsync<BridgeResponseDto>(url);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "RequestOtpAsync failed");
+                return new ApiResult<BridgeResponseDto> { Success = false, Error = ex.Message };
+            }
+        }
+
+
+        #endregion
 
         // ===== Internal helpers =====
         private async Task<ApiResult<T>> PostAsync<T>(string url, object payload)
@@ -255,6 +323,34 @@ namespace HIMS.API.ABHA.Services
 
             if (!response.IsSuccessStatusCode)
                 return new ApiResult<T> { Success = false, Error = body, StatusCode = (int)response.StatusCode };
+
+            var data = JsonSerializer.Deserialize<T>(body, JsonOpts);
+            return new ApiResult<T> { Success = true, Data = data, StatusCode = (int)response.StatusCode };
+        }
+
+
+        private async Task<ApiResult<T>> PatchAsync<T>(string url, object payload)
+        {
+            var token = await _tokenService.GetAccessTokenAsync();
+            var json = JsonSerializer.Serialize(payload, JsonOpts);
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            using var request = new HttpRequestMessage(HttpMethod.Patch, url) { Content = content };
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            request.Headers.Add("REQUEST-ID", Guid.NewGuid().ToString());
+            request.Headers.Add("TIMESTAMP", DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
+
+            if (_settings.EnableRequestLogging)
+                _logger.LogInformation("ABDM POST {Url}", url);
+
+            var response = await _httpClient.SendAsync(request);
+            var body = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogWarning("ABDM POST failed {Status} {Body}", response.StatusCode, body);
+                return new ApiResult<T> { Success = false, Error = body, StatusCode = (int)response.StatusCode };
+            }
 
             var data = JsonSerializer.Deserialize<T>(body, JsonOpts);
             return new ApiResult<T> { Success = true, Data = data, StatusCode = (int)response.StatusCode };
