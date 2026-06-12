@@ -27,13 +27,13 @@ namespace HIMS.API.Controllers.Report
         private readonly IRegistrationService _IRegistrationService;
         private readonly IDoctorMasterService _IDoctorMasterService;
         private readonly IGenericService<MReportConfig> _reportlistRepository;
-        private readonly IGenericService<MItemMaster> _reportlistRepository1;
+        private readonly IGenericService<MItemGenericNameMaster> _reportlistRepository1;
 
         private readonly IReportService _reportService;
         public readonly IPdfUtility _pdfUtility;
         public readonly IFileUtility _FileUtility;
         public ReportController(IRegistrationService repository, IDoctorMasterService doctorRepository,
-            IGenericService<MReportConfig> reportlistRepository, IGenericService<MItemMaster> reportlistRepository1, IFileUtility fileUtility,
+            IGenericService<MReportConfig> reportlistRepository, IGenericService<MItemGenericNameMaster> reportlistRepository1, IFileUtility fileUtility,
             IReportService reportService, IPdfUtility pdfUtility)
         {
             _IRegistrationService = repository;
@@ -212,8 +212,7 @@ namespace HIMS.API.Controllers.Report
         public async Task<ApiResponse> GetMItemMasterListAutoCompleteByContent(string Keyword)
         {
             var data = await _reportService.SearchMItemMasterByContent(Keyword);
-            return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status200OK, "SearchMItemMasterByContent Data.",
-                data.Select(x => new { Text = x.Content, Value = x.ItemId })
+            return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status200OK, "SearchMItemMasterByContent Data.",data.Select(x => new { Text = x.Content, Value = x.ItemId })
             );
         }
         [HttpGet("Expensesheadmaster/auto-complete")]
@@ -319,12 +318,13 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet]
-        [Route("get-ItemMaster")]
+        [Route("get-MItemGenericNameMaster")]
         public async Task<ApiResponse> GetDropdown()
         {
-            var MItemMasterList = await _reportlistRepository1.GetAll(x => x.IsActive.Value);
+            var MItemGenericNameMasterList = await _reportlistRepository1.GetAll(x => x.IsActive.Value);
             //return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ItemMaster dropdown", MItemMasterList.Select(x => new { x.Content, x.ItemId }).Distinct());
-            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK,"ItemMaster dropdown",MItemMasterList.DistinctBy(x => x.Content).Select(x => new{ x.Content,x.ItemId}));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "MItemGenericNameMaster dropdown", MItemGenericNameMasterList.Select(x => new { x.ItemGenericName, x.ItemGenericNameId }));
+         ///   return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK,"ItemMaster dropdown", MItemGenericNameMasterList.DistinctBy(x => x.ItemGenericName).Select(x => new{ x.ItemGenericName, x.ItemGenericNameId }));
         }
 
         [HttpGet("PatientTypeMaster/auto-complete")]
