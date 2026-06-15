@@ -18,18 +18,20 @@ namespace HIMS.Services.Users
         public virtual async Task<LoginManager> CheckLogin(string UserName, string Password)
         {
             var objUser = await _context.LoginManagers.FirstOrDefaultAsync(x => x.UserName.ToLower() == UserName.ToLower() && x.Password == Password && x.IsActive == true);
-            var qry = from d in _context.TLoginStoreDetails
-                      join s in _context.MStoreMasters on d.StoreId equals s.StoreId
-                      where d.LoginId == objUser.UserId
-                      select new TLoginStoreDetail() { LoginId = d.LoginId, StoreId = d.StoreId, StoreName = s.StoreName, LoginStoreDetId = d.LoginStoreDetId };
-            objUser.TLoginStoreDetails = await qry.ToListAsync();
+            if ((objUser?.UserId ?? 0) > 0)
+            {
+                var qry = from d in _context.TLoginStoreDetails
+                          join s in _context.MStoreMasters on d.StoreId equals s.StoreId
+                          where d.LoginId == objUser.UserId
+                          select new TLoginStoreDetail() { LoginId = d.LoginId, StoreId = d.StoreId, StoreName = s.StoreName, LoginStoreDetId = d.LoginStoreDetId };
+                objUser.TLoginStoreDetails = await qry.ToListAsync();
 
-            var qry1 = from d in _context.TLoginUnitDetails
-                       join s in _context.HospitalMasters on d.UnitId equals s.HospitalId
-                       where d.LoginId == objUser.UserId
-                       select new TLoginUnitDetail() { LoginId = d.LoginId, UnitId = d.UnitId, UnitName = s.HospitalName, LoginUnitDetId = d.LoginUnitDetId };
-            objUser.TLoginUnitDetails = await qry1.ToListAsync();
-
+                var qry1 = from d in _context.TLoginUnitDetails
+                           join s in _context.HospitalMasters on d.UnitId equals s.HospitalId
+                           where d.LoginId == objUser.UserId
+                           select new TLoginUnitDetail() { LoginId = d.LoginId, UnitId = d.UnitId, UnitName = s.HospitalName, LoginUnitDetId = d.LoginUnitDetId };
+                objUser.TLoginUnitDetails = await qry1.ToListAsync();
+            }
             //var qry2 = from d in _context.TLoginAccessDetails
             //           where d.LoginId == objUser.UserId
             //           select new TLoginAccessDetail() { LoginId = d.LoginId, AccessValueId = d.AccessValueId, AccessInputValue = d.AccessInputValue, AccessValue = d.AccessValue };
