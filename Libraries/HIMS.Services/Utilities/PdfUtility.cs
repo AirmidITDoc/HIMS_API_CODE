@@ -19,6 +19,7 @@ using PdfSharpCore.Pdf.IO;
 using QRCoder;
 using System;
 using System.Data;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection.PortableExecutable;
 using System.Text;
@@ -556,8 +557,7 @@ namespace HIMS.Services.Utilities
                 catch { }
             }
 
-            string tempFile = string.Empty;
-            DateTime stepStart = DateTime.UtcNow;
+            var stopwatch = Stopwatch.StartNew();
 
             try
             {
@@ -573,84 +573,70 @@ namespace HIMS.Services.Utilities
                 string folderPath = Path.Combine(storageBasePath, folderName, dateFolder);
                 Directory.CreateDirectory(folderPath);
 
-                string newFileName = Path.Combine(
-                    folderPath,
-                    string.IsNullOrWhiteSpace(fileName) ? Guid.NewGuid().ToString() : fileName
-                ) + ".pdf";
+                string newFileName = Path.Combine(folderPath, string.IsNullOrWhiteSpace(fileName) ? Guid.NewGuid().ToString() : fileName) + ".pdf";
 
-                tempFile = Path.Combine(folderPath, $"{Guid.NewGuid():N}_temp.html");
-                File.WriteAllText(tempFile, html, Encoding.UTF8);
-
-                Log($"Step 2: Temp HTML file written at {tempFile} (elapsed: {(DateTime.UtcNow - stepStart).TotalMilliseconds} ms)");
-                stepStart = DateTime.UtcNow;
-
-                FileInfo fi = new FileInfo(tempFile);
-                fi.Refresh();
-                if (!fi.Exists || fi.Length == 0)
-                {
-                    Log("Temp HTML file not written correctly.");
-                    throw new Exception("Temp HTML file is empty.");
-                }
-
-                var doc = new HtmlToPdfDocument()
-                {
-                    GlobalSettings = {
-                ColorMode = ColorMode.Color,
-                Orientation = pageOrientation,
-                PaperSize = paperSize,
-                Margins = new MarginSettings { Top = 10, Bottom = 10, Left = 10, Right = 10 }
-            },
-                    Objects = {
-                new ObjectSettings {
-                    PagesCount = true,
-                    Page = tempFile,
-                    WebSettings = { DefaultEncoding = "utf-8", LoadImages = true },
-                    UseLocalLinks = true,
-                    LoadSettings = new LoadSettings {
-                        BlockLocalFileAccess = false,
-                        JSDelay = 8000,
-                        StopSlowScript = false
-                    }
-                }
-            }
-                };
-
+                int[] delays = { 2000, 5000, 8000, 12000, 15000 };
                 byte[] bytes = null;
-                int attempts = 0;
-                const int maxAttempts = 2;
 
-                while (attempts < maxAttempts)
+                foreach (var delay in delays)
                 {
-                    attempts++;
-                    Log($"Step 3: Attempt {attempts} - Starting conversion (elapsed: {(DateTime.UtcNow - stepStart).TotalMilliseconds} ms)");
-                    stepStart = DateTime.UtcNow;
+                    Log($"Attempt with JSDelay={delay} ms (elapsed={stopwatch.ElapsedMilliseconds} ms)");
+
+                    var doc = new HtmlToPdfDocument()
+                    {
+                        GlobalSettings = {
+                    ColorMode = ColorMode.Color,
+                    Orientation = pageOrientation,
+                    PaperSize = paperSize,
+                    Margins = new MarginSettings { Top = 10, Bottom = 10, Left = 10, Right = 10 }
+                        },
+                        Objects = {
+                    new ObjectSettings {
+                        PagesCount = true,
+                        HtmlContent = html,
+                        WebSettings = { DefaultEncoding = "utf-8", LoadImages = true },
+                        UseLocalLinks = true,
+                        LoadSettings = new LoadSettings {
+                            BlockLocalFileAccess = false,
+                            JSDelay = delay,
+                            StopSlowScript = false
+                                }
+                         }
+                        }
+                    };
 
                     try
                     {
                         bytes = converter.Convert(doc);
 
-                        Log($"Attempt {attempts} finished (duration: {(DateTime.UtcNow - stepStart).TotalMilliseconds} ms)");
+                        Log($"Conversion finished with JSDelay={delay} (duration={stopwatch.ElapsedMilliseconds} ms)");
 
                         if (bytes != null && bytes.Length > 0)
                         {
                             File.WriteAllBytes(newFileName, bytes);
-                            Log($"Step 4: PDF generated successfully at {newFileName}, size={bytes.Length} bytes (elapsed: {(DateTime.UtcNow - stepStart).TotalMilliseconds} ms)");
+                            Log($"PDF generated at {newFileName}, size={bytes.Length} bytes");
+
+                            if (bytes.Length < 5000)
+                            {
+                                string snapshotFile = Path.Combine(folderPath, $"{Guid.NewGuid():N}_FailedSnapshot.html");
+                                File.WriteAllText(snapshotFile, html);
+                                Log($"* Blank PDF detected (size={bytes.Length}). HTML snapshot saved at {snapshotFile}");
+                            }
+
                             return new Tuple<byte[], string>(bytes, newFileName);
                         }
                         else
                         {
-                            Log($"Attempt {attempts} failed: Converter returned empty output.");
+                            Log($"Empty output with JSDelay={delay} ms");
                         }
                     }
                     catch (Exception ex)
                     {
-                        Log($"Attempt {attempts} exception: {ex.Message}");
-                        if (attempts >= maxAttempts)
-                            throw;
+                        Log($"Exception with JSDelay={delay} ms: {ex.Message}");
                     }
                 }
 
-                throw new Exception("PDF generation failed after retries.");
+                throw new Exception("PDF generation failed after adaptive retries.");
             }
             catch (Exception ex)
             {
@@ -659,23 +645,10 @@ namespace HIMS.Services.Utilities
             }
             finally
             {
-                try
-                {
-                    if (!string.IsNullOrEmpty(tempFile) && File.Exists(tempFile))
-                    {
-                        File.Delete(tempFile);
-                        Log("Step 5: Temp file cleaned up.");
-                    }
-                }
-                catch (Exception cleanupEx)
-                {
-                    Log("Failed to delete temp file: " + cleanupEx.Message);
-                }
-                Log("=== PDF Generation Ended ===");
+                stopwatch.Stop();
+                Log($"=== PDF Generation Ended (total time={stopwatch.ElapsedMilliseconds} ms) ===");
             }
         }
-
-
 
         //public Tuple<byte[], string> GeneratePdfFromHtmlAsync(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
         //{
