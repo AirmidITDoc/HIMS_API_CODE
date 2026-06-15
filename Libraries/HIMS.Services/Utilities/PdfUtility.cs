@@ -539,103 +539,241 @@ namespace HIMS.Services.Utilities
             return htmlHeader.Replace("{{Display}}", (objStoreHospital?.StoreId ?? 0) > 0 ? "visible" : "hidden");
 
         }
-        public Tuple<byte[], string> GeneratePdfFromHtmlAsync(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
+
+        public Tuple<byte[], string> GeneratePdfFromHtmlAsync(string html, string storageBasePath, string folderName, string fileName = "", Orientation pageOrientation = Orientation.Portrait, PaperKind paperSize = PaperKind.A4)
         {
-            string fileName = $"htmlLogs_{DateTime.UtcNow:yyyy-MM-dd}.txt";
-            string filePath = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs"), fileName);
-            try
+            string logFileName = $"htmlLogs_{DateTime.UtcNow:yyyy-MM-dd}.txt";
+            string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs", logFileName);
+
+            void Log(string message)
             {
-                using FileStream fs = new(filePath, FileMode.Append, FileAccess.Write, FileShare.Read, bufferSize: 4096, useAsync: true);
-                using StreamWriter writer = new(fs, Encoding.UTF8);
-                writer.Write("\nHtml for generate pdf =>" + html);
-                writer.Flush();
-            }
-            catch (Exception)
-            {
-                throw;
+                try
+                {
+                    using FileStream fs = new(logFilePath, FileMode.Append, FileAccess.Write, FileShare.Read, 4096, useAsync: true);
+                    using StreamWriter writer = new(fs, Encoding.UTF8);
+                    writer.WriteLine($"{DateTime.UtcNow:O} :: {message}");
+                }
+                catch { }
             }
 
-            html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
-            string DestinationPath = string.Empty; //_Sales.GetFilePath();
-            if (string.IsNullOrWhiteSpace(DestinationPath))
-                DestinationPath = storageBasePath;// _configuration.GetValue<string>("StorageBasePath");
-            if (!Directory.Exists(DestinationPath))
-                Directory.CreateDirectory(DestinationPath);
-            if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy")))
-                Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy"));
-            string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
-            // ✅ Write html to a temp file
-            string tempFile = NewFileName.Replace(".pdf", $"{Guid.NewGuid():N}_temp.html");
-
-            File.WriteAllText(tempFile, html, Encoding.UTF8);
+            string tempFile = string.Empty;
+            DateTime stepStart = DateTime.UtcNow;
 
             try
             {
+                Log("=== PDF Generation Started ===");
+                Log($"Step 1: Received HTML (length={html?.Length ?? 0})");
+
+                if (string.IsNullOrWhiteSpace(html))
+                    throw new ArgumentException("HTML content is empty.");
+
+                html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
+
+                string dateFolder = AppTime.Now.ToString("ddMMyyyy");
+                string folderPath = Path.Combine(storageBasePath, folderName, dateFolder);
+                Directory.CreateDirectory(folderPath);
+
+                string newFileName = Path.Combine(
+                    folderPath,
+                    string.IsNullOrWhiteSpace(fileName) ? Guid.NewGuid().ToString() : fileName
+                ) + ".pdf";
+
+                tempFile = Path.Combine(folderPath, $"{Guid.NewGuid():N}_temp.html");
+                File.WriteAllText(tempFile, html, Encoding.UTF8);
+
+                Log($"Step 2: Temp HTML file written at {tempFile} (elapsed: {(DateTime.UtcNow - stepStart).TotalMilliseconds} ms)");
+                stepStart = DateTime.UtcNow;
+
+                FileInfo fi = new FileInfo(tempFile);
+                fi.Refresh();
+                if (!fi.Exists || fi.Length == 0)
+                {
+                    Log("Temp HTML file not written correctly.");
+                    throw new Exception("Temp HTML file is empty.");
+                }
+
                 var doc = new HtmlToPdfDocument()
                 {
                     GlobalSettings = {
                 ColorMode = ColorMode.Color,
-                Orientation = PageOrientation,
-                PaperSize = PaperSize,
-                Margins = new MarginSettings() { Top = 10, Bottom = 10, Left = 10, Right = 10 },
+                Orientation = pageOrientation,
+                PaperSize = paperSize,
+                Margins = new MarginSettings { Top = 10, Bottom = 10, Left = 10, Right = 10 }
             },
                     Objects = {
-                     new ObjectSettings() {
+                new ObjectSettings {
                     PagesCount = true,
-                    Page = tempFile,              // ✅ Use Page, not HtmlContent
-                    WebSettings = { DefaultEncoding = "utf-8",LoadImages=true },
-                    UseLocalLinks = true,         // ✅ Allow local file links
-                     LoadSettings = new LoadSettings
-                    {
+                    Page = tempFile,
+                    WebSettings = { DefaultEncoding = "utf-8", LoadImages = true },
+                    UseLocalLinks = true,
+                    LoadSettings = new LoadSettings {
                         BlockLocalFileAccess = false,
-                        JSDelay = 5000,
+                        JSDelay = 8000,
                         StopSlowScript = false
                     }
                 }
             }
                 };
 
-                byte[] bytes = converter.Convert(doc);
-                if (bytes == null || bytes.Length == 0)
-                    throw new Exception("PDF generation failed. Converter returned empty output.");
-                System.IO.File.WriteAllBytes(NewFileName, bytes);
+                byte[] bytes = null;
+                int attempts = 0;
+                const int maxAttempts = 2;
 
-                if (!File.Exists(NewFileName) || new FileInfo(NewFileName).Length == 0)
-                    throw new Exception($"PDF generation failed. Generated PDF is empty. Path: {NewFileName}");
-                try
+                while (attempts < maxAttempts)
                 {
-                    using FileStream fs = new(filePath, FileMode.Append, FileAccess.Write, FileShare.Read, bufferSize: 4096, useAsync: true);
-                    using StreamWriter writer = new(fs, Encoding.UTF8);
-                    writer.Write("\nGenerated Successfully =>" + NewFileName);
-                    writer.Flush();
+                    attempts++;
+                    Log($"Step 3: Attempt {attempts} - Starting conversion (elapsed: {(DateTime.UtcNow - stepStart).TotalMilliseconds} ms)");
+                    stepStart = DateTime.UtcNow;
+
+                    try
+                    {
+                        bytes = converter.Convert(doc);
+
+                        Log($"Attempt {attempts} finished (duration: {(DateTime.UtcNow - stepStart).TotalMilliseconds} ms)");
+
+                        if (bytes != null && bytes.Length > 0)
+                        {
+                            File.WriteAllBytes(newFileName, bytes);
+                            Log($"Step 4: PDF generated successfully at {newFileName}, size={bytes.Length} bytes (elapsed: {(DateTime.UtcNow - stepStart).TotalMilliseconds} ms)");
+                            return new Tuple<byte[], string>(bytes, newFileName);
+                        }
+                        else
+                        {
+                            Log($"Attempt {attempts} failed: Converter returned empty output.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log($"Attempt {attempts} exception: {ex.Message}");
+                        if (attempts >= maxAttempts)
+                            throw;
+                    }
                 }
-                catch (Exception)
-                {
-                    throw;
-                }
-                return new Tuple<byte[], string>(bytes, NewFileName);
+
+                throw new Exception("PDF generation failed after retries.");
             }
             catch (Exception ex)
             {
-                try
-                {
-                    using FileStream fs = new(filePath, FileMode.Append, FileAccess.Write, FileShare.Read, bufferSize: 4096, useAsync: true);
-                    using StreamWriter writer = new(fs, Encoding.UTF8);
-                    writer.Write("\nError =>" + ex.Message);
-                    writer.Flush();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                Log("Fatal error during PDF generation: " + ex);
                 throw new Exception("Error during PDF generation: " + ex.Message, ex);
             }
             finally
             {
-                if (File.Exists(tempFile))
-                    File.Delete(tempFile);  // ✅ Always cleanup
+                try
+                {
+                    if (!string.IsNullOrEmpty(tempFile) && File.Exists(tempFile))
+                    {
+                        File.Delete(tempFile);
+                        Log("Step 5: Temp file cleaned up.");
+                    }
+                }
+                catch (Exception cleanupEx)
+                {
+                    Log("Failed to delete temp file: " + cleanupEx.Message);
+                }
+                Log("=== PDF Generation Ended ===");
             }
         }
+
+
+
+        //public Tuple<byte[], string> GeneratePdfFromHtmlAsync(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
+        //{
+        //    string fileName = $"htmlLogs_{DateTime.UtcNow:yyyy-MM-dd}.txt";
+        //    string filePath = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs"), fileName);
+        //    try
+        //    {
+        //        using FileStream fs = new(filePath, FileMode.Append, FileAccess.Write, FileShare.Read, bufferSize: 4096, useAsync: true);
+        //        using StreamWriter writer = new(fs, Encoding.UTF8);
+        //        writer.Write("\nHtml for generate pdf =>" + html);
+        //        writer.Flush();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+
+        //    html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
+        //    string DestinationPath = string.Empty; //_Sales.GetFilePath();
+        //    if (string.IsNullOrWhiteSpace(DestinationPath))
+        //        DestinationPath = storageBasePath;// _configuration.GetValue<string>("StorageBasePath");
+        //    if (!Directory.Exists(DestinationPath))
+        //        Directory.CreateDirectory(DestinationPath);
+        //    if (!Directory.Exists(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy")))
+        //        Directory.CreateDirectory(DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy"));
+        //    string NewFileName = DestinationPath.Trim('\\') + "\\" + FolderName + "\\" + AppTime.Now.ToString("ddMMyyyy") + "\\" + (string.IsNullOrWhiteSpace(FileName) ? Guid.NewGuid().ToString() : FileName) + ".pdf";
+        //    // ✅ Write html to a temp file
+        //    string tempFile = NewFileName.Replace(".pdf", $"{Guid.NewGuid():N}_temp.html");
+
+        //    File.WriteAllText(tempFile, html, Encoding.UTF8);
+
+        //    try
+        //    {
+        //        var doc = new HtmlToPdfDocument()
+        //        {
+        //            GlobalSettings = {
+        //        ColorMode = ColorMode.Color,
+        //        Orientation = PageOrientation,
+        //        PaperSize = PaperSize,
+        //        Margins = new MarginSettings() { Top = 10, Bottom = 10, Left = 10, Right = 10 },
+        //    },
+        //            Objects = {
+        //             new ObjectSettings() {
+        //            PagesCount = true,
+        //            Page = tempFile,              // ✅ Use Page, not HtmlContent
+        //            WebSettings = { DefaultEncoding = "utf-8",LoadImages=true },
+        //            UseLocalLinks = true,         // ✅ Allow local file links
+        //             LoadSettings = new LoadSettings
+        //            {
+        //                BlockLocalFileAccess = false,
+        //                JSDelay = 5000,
+        //                StopSlowScript = false
+        //            }
+        //        }
+        //    }
+        //        };
+
+        //        byte[] bytes = converter.Convert(doc);
+        //        if (bytes == null || bytes.Length == 0)
+        //            throw new Exception("PDF generation failed. Converter returned empty output.");
+        //        System.IO.File.WriteAllBytes(NewFileName, bytes);
+
+        //        if (!File.Exists(NewFileName) || new FileInfo(NewFileName).Length == 0)
+        //            throw new Exception($"PDF generation failed. Generated PDF is empty. Path: {NewFileName}");
+        //        try
+        //        {
+        //            using FileStream fs = new(filePath, FileMode.Append, FileAccess.Write, FileShare.Read, bufferSize: 4096, useAsync: true);
+        //            using StreamWriter writer = new(fs, Encoding.UTF8);
+        //            writer.Write("\nGenerated Successfully =>" + NewFileName);
+        //            writer.Flush();
+        //        }
+        //        catch (Exception)
+        //        {
+        //            throw;
+        //        }
+        //        return new Tuple<byte[], string>(bytes, NewFileName);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        try
+        //        {
+        //            using FileStream fs = new(filePath, FileMode.Append, FileAccess.Write, FileShare.Read, bufferSize: 4096, useAsync: true);
+        //            using StreamWriter writer = new(fs, Encoding.UTF8);
+        //            writer.Write("\nError =>" + ex.Message);
+        //            writer.Flush();
+        //        }
+        //        catch (Exception)
+        //        {
+        //            throw;
+        //        }
+        //        throw new Exception("Error during PDF generation: " + ex.Message, ex);
+        //    }
+        //    finally
+        //    {
+        //        if (File.Exists(tempFile))
+        //            File.Delete(tempFile);  // ✅ Always cleanup
+        //    }
+        //}
 
         public Tuple<byte[], string> GeneratePdfFromHtmlNew(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4, long HeaderSpace = 10)
         {
