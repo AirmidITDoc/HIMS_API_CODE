@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.ABHA
         [HttpPost("aadhaar/verify-otp")]
         public async Task<ApiResponse> VerifyAadhaarOtp([FromBody] VerifyOtpDto dto)
         {
-            var result = await _abhaService.VerifyAadhaarOtpAsync(dto.TxnId, dto.Otp);
+            var result = await _abhaService.VerifyAadhaarOtpAsync(dto.TxnId, dto.Otp, dto.Mobile);
             if (result.Success)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Otp Sent successfully.", result.Data);
             else

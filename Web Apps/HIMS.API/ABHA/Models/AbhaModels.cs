@@ -350,6 +350,7 @@ namespace HIMS.API.ABHA.Models
     {
         public string TxnId { get; set; } = string.Empty;
         public string Otp { get; set; } = string.Empty;
+        public string Mobile { get; set; } = string.Empty;
     }
     public class CreateAddressDto
     {
