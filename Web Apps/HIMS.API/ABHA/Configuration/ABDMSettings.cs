@@ -7,6 +7,7 @@
         public Credentials Credentials { get; set; } = new();
         public Endpoints Endpoints { get; set; } = new();
         public int TokenCacheMinutes { get; set; } = 18;
+        public int CertificateCacheMinutes { get; set; } = 30;
         public int RequestTimeoutSeconds { get; set; } = 60;
         public int RetryCount { get; set; } = 3;
         public bool EnableRequestLogging { get; set; } = true;

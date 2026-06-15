@@ -109,7 +109,7 @@ namespace HIMS.API.ABHA.Services
             //_cache.Set(CertCacheKey, cert, TimeSpan.FromHours(1));
             _cache.Set(CertCacheKey, certificate.PublicKey, new MemoryCacheEntryOptions
             {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(_settings.CertificateCacheMinutes),
                 Size = 1
             });
             return certificate.PublicKey;
