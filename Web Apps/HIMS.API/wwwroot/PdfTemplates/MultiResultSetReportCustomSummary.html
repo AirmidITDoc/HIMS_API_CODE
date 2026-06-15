@@ -5,22 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Report</title>
     <style>
+
         body {
-            font-family: Calibri, Arial;
+            font-family: Calibri,Arial,sans-serif;
             font-size: 13px;
             color: #000;
             margin: 0;
-            padding: 0;
         }
 
         .report-wrapper {
             padding: 4px;
-        }
-
-        .report-title-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 4px;
         }
 
         .report-title {
@@ -30,55 +24,75 @@
             padding-bottom: 6px;
         }
 
-        .report-print-date {
+        .report-print-date,
+        .report-date-range {
             font-size: 14px;
             font-weight: bold;
+        }
+
+        .report-print-date {
             text-align: right;
             border-bottom: 1px solid #aaa;
         }
 
-        .report-date-range {
-            font-size: 14px;
-            font-weight: bold;
-            padding: 4px 0 6px 0;
-        }
-
-        .data-table {
+        .data-table,
+        #dataTable {
             width: 100%;
             border-collapse: collapse;
-            table-layout: fixed;
         }
 
-            .data-table thead th {
-                background: #e6e6e6;
+            .data-table th,
+            #dataTable th {
                 border: 1px solid #666;
-                padding: 5px;
+                background: #e6e6e6;
+                padding: 6px;
                 text-align: center;
                 font-weight: bold;
-                white-space: nowrap;
             }
 
-            .data-table tbody td {
+            .data-table td,
+            #dataTable td {
                 border: 1px solid #bfbfbf;
                 padding: 4px;
-                word-break: break-word;
             }
 
-            .data-table th, .data-table td {
-                min-width: 60px;
-            }
-
-        .row-total td {
+        .row-total td,
+        .groupHeader,
+        .billTotal,
+        .subTotal,
+        .grandTotal {
             font-weight: bold;
-            background: #efefef;
-            border-top: 2px solid #444 !important;
         }
 
-        .align-right {
+        .row-total td {
+            background: #efefef;
+            border-top: 2px solid #444;
+        }
+
+        .groupHeader {
+            background: #f2f2f2;
+        }
+
+        .subTotal {
+            background: #e6e6e6;
+        }
+
+        .billTotal {
+            border-top: 1px solid #666;
+        }
+
+        .grandTotal {
+            background: #d9d9d9;
+            border-top: 2px solid #000;
+        }
+
+        .align-right,
+        .right {
             text-align: right;
         }
 
-        .align-center {
+        .align-center,
+        .center {
             text-align: center;
         }
 
@@ -86,72 +100,12 @@
             text-align: left;
         }
 
-        .data-table thead {
-            display: table-header-group;
-        }
-
-        .data-table tr {
-            page-break-inside: avoid;
-        }
-
-        /* Template 1 styles */
-        #dataTable {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-            #dataTable th {
-                border: 1px solid #666;
-                background: #e6e6e6;
-                padding: 8px;
-                text-align: center;
-                font-size: 15px;
-                font-weight: bold;
-            }
-
-            #dataTable td {
-                border: 1px solid #bfbfbf;
-                padding: 6px;
-            }
-
-        .groupHeader {
-            background: #f2f2f2;
-            font-weight: bold;
-        }
-
-        .billTotal {
-            font-weight: bold;
-            border-top: 1px solid #666;
-        }
-
-        .subTotal {
-            background: #e6e6e6;
-            font-weight: bold;
-        }
-
-        .grandTotal {
-            background: #d9d9d9;
-            font-weight: bold;
-            border-top: 2px solid #000;
-        }
-
-        .center {
-            text-align: center;
-        }
-
-        .right {
-            text-align: right;
-        }
-
+        .data-table thead,
         #dataTable thead {
             display: table-header-group;
         }
 
-        #dataTable tfoot {
-            display: table-footer-group;
-        }
-
+        .data-table tr,
         #dataTable tr {
             page-break-inside: avoid;
         }
@@ -159,9 +113,9 @@
 </head>
 <body>
     <div class="report-wrapper">
-        <table style="width:100%;">{{HospitalHeader}}</table>
+        <table width="100%">{{HospitalHeader}}</table>
 
-        <table class="report-title-table">
+        <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="report-title">{{RepoertName}}</td>
                 <td class="report-print-date">Print Date : {{CurrentDate}}</td>
@@ -170,15 +124,12 @@
 
         <div class="report-date-range">From Date : {{FromDate}} — To Date : {{ToDate}}</div>
 
-        <!-- TEMPLATE 1 SECTION (DailyCollectionSummaryMulti only) -->
         <table id="dataTable">
             <thead>{{HeaderItems}}</thead>
             <tbody>{{Items}}{{ItemsTotal}}</tbody>
         </table>
         {{SummaryBlock}}
 
-
-        <!-- TEMPLATE 2 SECTION -->
         {{ResultSetTables}}
     </div>
 </body>
