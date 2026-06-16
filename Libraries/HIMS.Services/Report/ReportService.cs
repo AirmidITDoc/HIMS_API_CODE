@@ -14038,7 +14038,7 @@ namespace HIMS.Services.Report
                                     items.Append("<tr style='font-size:14px;border:1px solid #000;font-weight:bold;'>")
                                          .Append("<td colspan='5' style='text-align:right;padding:3px;'>Total</td>")
                                          .Append("<td style='text-align:right;padding:3px;'>")
-                                        .Append(Math.Round(T_TotalAmount, 0, MidpointRounding.AwayFromZero))
+                                         .Append(T_TotalAmount.ToString("0.00"))
                                          .Append("</td></tr>");
 
                                     T_TotalAmount = 0;
@@ -14071,7 +14071,7 @@ namespace HIMS.Services.Report
                                  .Append("<td style='border:1px solid #eee;text-align:left;padding:2px;'>").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>")
                                    .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(Convert.ToDouble(dr["Price"]).ToString("0.00")).Append("</td>")
                                  .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(dr["Qty"].ConvertToString()).Append("</td>")
-                                 .Append("<td style='border:1px solid #eee;text-align:right;padding:2px;'>").Append(dr["ChargesTotalAmt"].ConvertToDouble().To2DecimalPlace()).Append("</td></tr>");
+                                 .Append("<td style='border:1px solid #eee;text-align:right;padding:2px;'>").Append(Convert.ToDouble(dr["ChargesTotalAmt"]).ToString("0.00")).Append("</td></tr>");
 
                             // ================= ACCUMULATE TOTALS =================
 
@@ -14095,28 +14095,30 @@ namespace HIMS.Services.Report
                                 items.Append("<tr style='font-size:16px;font-weight:bold;border:1px solid #000;'>")
                                      .Append("<td colspan='5' style='text-align:right;padding:3px;'>Total</td>")
                                      .Append("<td style='text-align:right;padding:3px;'>")
-                                     .Append(Math.Round(T_TotalAmount, 0, MidpointRounding.AwayFromZero))
+                                    .Append(T_TotalAmount.ToString("0.00"))
                                      .Append("</td></tr>");
                             }
 
 
 
                         }
+                        F_TotalAmount = F_TotalAmount;
 
+                        //F_TotalAmount = Math.Round(F_TotalAmount, 0, MidpointRounding.AwayFromZero);
+                        MedicineReturnamt = MedicineReturnamt;
+                        //MedicineReturnamt = Math.Round(MedicineReturnamt, 0, MidpointRounding.AwayFromZero);
 
-                        F_TotalAmount = Math.Round(F_TotalAmount, 0, MidpointRounding.AwayFromZero);
+                        //TotalBillAmount = Math.Round(TotalBillAmount, 0, MidpointRounding.AwayFromZero);
 
-                        MedicineReturnamt = Math.Round(MedicineReturnamt, 0, MidpointRounding.AwayFromZero);
-
-                        TotalBillAmount = Math.Round(TotalBillAmount, 0, MidpointRounding.AwayFromZero);
-
-
+                        TotalBillAmount = TotalBillAmount;
 
                         TotalBillAmount = F_TotalAmount - MedicineReturnamt;
 
                         TotalBillAmount -= MedicineReturnamt;
 
                         FinalNetAmt = TotalBillAmount - TotalConcessionAmt;
+
+                        FinalNetAmt = Math.Round(FinalNetAmt, 0, MidpointRounding.AwayFromZero);
 
                         if (FinalNetAmt == TotalPaidAmount)
                         {
@@ -14577,9 +14579,9 @@ namespace HIMS.Services.Report
                                 items.Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(i).Append("</td>")
                                      .Append("<td style='border:1px solid #eee;padding:2px;'>").Append(dr["ServiceName"].ConvertToString()).Append("</td>")
                                      .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>")
-                                     .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(dr["Price"].ConvertToString()).Append("</td>")
+                                   .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(Convert.ToDouble(dr["Price"]).ToString("0.00")).Append("</td>")
                                      .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(dr["Qty"].ConvertToString()).Append("</td>")
-                                     .Append("<td style='border:1px solid #eee;text-align:right;padding:2px;'>").Append(dr["ChargesTotalAmt"].ConvertToDouble().To2DecimalPlace())
+                                     .Append("<td style='border:1px solid #eee;text-align:right;padding:2px;'>").Append(Convert.ToDouble(dr["ChargesTotalAmt"]).ToString("0.00"))
                                      .Append("</td></tr>");
 
                                 // ===== TOTALS =====
@@ -14597,12 +14599,15 @@ namespace HIMS.Services.Report
                                 items.Append("<tr style='font-size:14px;font-weight:bold;'>")
                                      .Append("<td colspan='6' style='text-align:right;padding:3px;'>Total</td>")
                                      .Append("<td style='text-align:right;padding:3px;'>")
-                                     .Append(T_TotalAmount.To2DecimalPlace())
+                                     .Append(T_TotalAmount.ToString("0.00"))
                                      .Append("</td></tr>");
                             }
                         }
 
-                        F_TotalAmount = Math.Ceiling(F_TotalAmount);
+                     //   F_TotalAmount = Math.Ceiling(F_TotalAmount);
+                        F_TotalAmount = F_TotalAmount 
+                        ;
+
 
 
                         TotalBillAmount = F_TotalAmount - MedicineReturnamt;
@@ -14611,6 +14616,7 @@ namespace HIMS.Services.Report
 
                         FinalNetAmt = TotalBillAmount - TotalConcessionAmt;
 
+                        FinalNetAmt = Math.Round(FinalNetAmt, 0, MidpointRounding.AwayFromZero);
                         if (FinalNetAmt == TotalPaidAmount)
                         {
                             aftergovbal = FinalNetAmt - TotalPaidAmount - AdvBalAmount;
@@ -14620,6 +14626,8 @@ namespace HIMS.Services.Report
                         {
                             aftergovbal = FinalNetAmt - TotalGovAmount - TotalCompApprovedAmount - TotalPaidAmount - AdvBalAmount;
                         }
+
+                     
 
 
                         string htmlHeader = "";
@@ -14803,9 +14811,9 @@ namespace HIMS.Services.Report
                                 items.Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(i).Append("</td>")
                                      .Append("<td style='border:1px solid #eee;padding:2px;'>").Append(dr["ServiceName"].ConvertToString()).Append("</td>")
                                      .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(dr["ChargesDoctorName"].ConvertToString()).Append("</td>")
-                                     .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(dr["Price"].ConvertToString()).Append("</td>")
+                                   .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(Convert.ToDouble(dr["Price"]).ToString("0.00")).Append("</td>")
                                      .Append("<td style='border:1px solid #eee;text-align:center;padding:2px;'>").Append(dr["Qty"].ConvertToString()).Append("</td>")
-                                     .Append("<td style='border:1px solid #eee;text-align:right;padding:2px;'>").Append(dr["ChargesTotalAmt"].ConvertToDouble().To2DecimalPlace())
+                                     .Append("<td style='border:1px solid #eee;text-align:right;padding:2px;'>").Append(Convert.ToDouble(dr["ChargesTotalAmt"]).ToString("0.00"))
                                      .Append("</td></tr>");
 
                                 // ===== TOTALS =====
@@ -14823,18 +14831,22 @@ namespace HIMS.Services.Report
                                 items.Append("<tr style='font-size:14px;font-weight:bold;'>")
                                      .Append("<td colspan='6' style='text-align:right;padding:3px;'>Total</td>")
                                      .Append("<td style='text-align:right;padding:3px;'>")
-                                     .Append(T_TotalAmount.To2DecimalPlace())
+                                     .Append(T_TotalAmount.ToString("0.00"))
                                      .Append("</td></tr>");
                             }
                         }
 
-                        F_TotalAmount = Math.Ceiling(F_TotalAmount);
+                        //   F_TotalAmount = Math.Ceiling(F_TotalAmount);
+
+                        F_TotalAmount = F_TotalAmount;
 
                         TotalBillAmount = F_TotalAmount - MedicineReturnamt;
 
                         TotalBillAmount -= MedicineReturnamt;
 
                         FinalNetAmt = TotalBillAmount - TotalConcessionAmt;
+
+                        FinalNetAmt = Math.Round(FinalNetAmt, 0, MidpointRounding.AwayFromZero);
 
                         if (FinalNetAmt == TotalPaidAmount)
                         {
@@ -20340,6 +20352,8 @@ namespace HIMS.Services.Report
 
                         double BillTotal = 0;
                         double BillDiscount = 0;
+                        double roundOff = 0;
+
                         double BillNet = 0;
                         double BillPaid = 0;
                         double OverallPaid = 0;
@@ -20348,6 +20362,8 @@ namespace HIMS.Services.Report
 
                         double OverallTotal = 0;
                         double OverallDiscount = 0;
+                        double OverallRound = 0;
+
                         double OverallNet = 0;
 
                         double GovtApprovedAmt = 0;
@@ -20391,12 +20407,15 @@ namespace HIMS.Services.Report
                             if (previousSalesNo != currentSalesNo)
                             {
                                 // CLOSE PREVIOUS BILL
+                                roundOff = Math.Round(BillTotal, 0, MidpointRounding.AwayFromZero) - BillTotal;
+
                                 if (!string.IsNullOrEmpty(previousSalesNo))
                                 {
                                     AppendBillFooter(
                                         items,
                                         BillTotal,
                                         BillDiscount,
+                                        roundOff,
                                         BillNet,
                                         BillPaid,
                                         previousPayMode,
@@ -20405,10 +20424,12 @@ namespace HIMS.Services.Report
 
                                     OverallTotal += BillTotal;
                                     OverallDiscount += BillDiscount;
+                                    OverallRound += roundOff;
                                     OverallNet += BillNet;
                                     OverallPaid += BillPaid;
                                     BillTotal = 0;
                                     BillDiscount = 0;
+                                    roundOff = 0;
                                     BillNet = 0;
                                     BillPaid = 0;
                                 }
@@ -20478,10 +20499,13 @@ namespace HIMS.Services.Report
 
                         if (!string.IsNullOrEmpty(previousSalesNo))
                         {
+                            roundOff = Math.Round(BillTotal, 0, MidpointRounding.AwayFromZero) - BillTotal;
+
                             AppendBillFooter(
                                 items,
                                 BillTotal,
                                 BillDiscount,
+                                roundOff,
                                 BillNet,
                                 BillPaid,
                                 previousPayMode,
@@ -20490,14 +20514,17 @@ namespace HIMS.Services.Report
 
                             OverallTotal += BillTotal;
                             OverallDiscount += BillDiscount;
+                            OverallRound += roundOff;
+
                             OverallNet += BillNet;
                             OverallPaid += BillPaid;
                         }
 
+
                         // ================= FINAL TOTAL =================
 
                         OverallNet = Math.Round(
-                            OverallTotal - OverallDiscount,
+                            OverallTotal - OverallDiscount + OverallRound,
                             0,
                             MidpointRounding.AwayFromZero
                         );
@@ -20535,8 +20562,14 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{GovtRefNo}}", dt.GetColValue("GovtRefNo").ToString());
                         html = html.Replace("{{CompanyApprovedName}}", dt.GetColValue("CompanyApprovedName").ToString());
                         html = html.Replace("{{CompRefNo}}", dt.GetColValue("CompRefNo").ToString());
-                        html = html.Replace("{{TotalAmount}}", Math.Round(OverallTotal, 0).ToString("F2"));
+                        //html = html.Replace("{{TotalAmount}}", Math.Round(OverallTotal, 0).ToString("F2"));
+                        html = html.Replace("{{TotalAmount}}", OverallTotal.ToString("F2"));
+
                         html = html.Replace("{{DiscAmount}}", OverallDiscount.ToString("F2"));
+                
+
+                        html = html.Replace("{{roundOff}}", OverallRound.ToString("F2"));
+
                         html = html.Replace("{{NetTotalAmount}}", OverallNet.ToString("F2"));
                         html = html.Replace("{{BalanceAmount}}", BalanceAmount.ToString("F2"));
                         html = html.Replace("{{chkGovtApprovedAmtflag}}", dt.GetColValue("GovtApprovedAmt").ConvertToDouble() > 0 ? "table-row" : "none");
@@ -20553,11 +20586,13 @@ namespace HIMS.Services.Report
 
 
                     // ================= FOOTER METHOD =================
+               
 
                     void AppendBillFooter(
                         StringBuilder items,
                         double total,
                         double discount,
+                        double roundOff,
                         double net,
                         double paidAmt,
                         string payMode,
@@ -20566,6 +20601,8 @@ namespace HIMS.Services.Report
                     )
                     {
                         net = total - discount;
+                        double roundedAmount = Math.Round(total, 0, MidpointRounding.AwayFromZero);
+                        roundOff = roundedAmount - total;
 
                         items.Append($@"
 
@@ -20605,7 +20642,31 @@ namespace HIMS.Services.Report
                border:px solid #000;
                padding:4px;'>
 
-        {discount:0.00}
+      {Math.Round(discount, 0, MidpointRounding.AwayFromZero):0.00}
+
+
+
+    </td>
+
+</tr>
+
+<tr style='font-weight:bold;font-size:15px;'>
+
+    <td colspan='4'
+        style='text-align:right;
+               border:px solid #000;
+               padding:4px;'>
+
+        RoundUp Amt :
+
+    </td>
+
+    <td style='text-align:right;
+               border:px solid #000;
+               padding:4px;'>
+
+        {roundOff:0.00}
+
 
     </td>
 
@@ -20626,7 +20687,7 @@ namespace HIMS.Services.Report
                border:px solid #000;
                padding:4px;'>
 
-        {net:0.00}
+      {Math.Round(net, 0, MidpointRounding.AwayFromZero):0.00}
 
     </td>
 
