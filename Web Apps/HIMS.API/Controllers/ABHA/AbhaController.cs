@@ -1,12 +1,10 @@
 ﻿using Asp.Versioning;
+using HIMS.ABHA.Helper;
+using HIMS.ABHA.Interface;
+using HIMS.ABHA.Models;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
-using HIMS.API.ABHA.Helper;
-using HIMS.API.ABHA.Interface;
-using HIMS.API.ABHA.Models;
 using Microsoft.AspNetCore.Mvc;
-using SixLabors.ImageSharp.PixelFormats;
-using System.Text.Json;
 
 namespace HIMS.API.Controllers.ABHA
 {
