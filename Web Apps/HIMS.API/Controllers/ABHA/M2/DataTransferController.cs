@@ -6,45 +6,43 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.ABHA
+namespace HIMS.API.Controllers.ABHA.M2
 {
-    [Route("api/v{version:apiVersion}/m2/user-linking")]
+    [Route("api/v{version:apiVersion}/m2/data-transfer")]
     [ApiController]
     [ApiVersion("1")]
-    public class UserLinkingController : BaseController
+    public class DataTransferController : BaseController
     {
-        private readonly IUserLinkingService _abhaService;
+        private readonly IDataTransferService _abhaService;
 
-        public UserLinkingController(IUserLinkingService abhaService)
+        public DataTransferController(IDataTransferService abhaService)
         {
             _abhaService = abhaService;
         }
-        [HttpPost("on-discover")]
-        public async Task<ApiResponse> OnDiscover([FromBody] OnDiscoverRequest req)
+        [HttpPost("consent/hip/on-notify")]
+        public async Task<ApiResponse> ConsentHipOnNotify([FromBody] ConsentHipOnNotifyRequest req)
         {
-            var result = await _abhaService.OnDiscoverAsync(req);
+            var result = await _abhaService.ConsentHipOnNotifyAsync(req);
+            if (result.Success)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service found.", result.Data);
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
+
+        }
+
+        [HttpPost("hip/hi/on-request")]
+        public async Task<ApiResponse> HipHiOnRequest([FromBody] HipHiOnRequestRequest req)
+        {
+            var result = await _abhaService.HipHiOnRequestAsync(req);
             if (result.Success)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service found.", result.Data);
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
-
-        [HttpPost("link/on-init")]
-        public async Task<ApiResponse> OnLinkInit([FromBody] LinkOnInitRequest req,
-            [FromHeader(Name = "X-CM-ID")] string xCmId)
+        [HttpPost("hi/notify")]
+        public async Task<ApiResponse> HiFlowNotify([FromBody] HiFlowNotifyRequest req)
         {
-            var result = await _abhaService.OnLinkInitAsync(req);
-            if (result.Success)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service found.", result.Data);
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
-        }
-
-        [HttpPost("link/on-confirm")]
-        public async Task<ApiResponse> OnLinkConfirm([FromBody] LinkOnConfirmRequest req,
-            [FromHeader(Name = "X-CM-ID")] string xCmId)
-        {
-            var result = await _abhaService.OnLinkConfirmAsync(req);
+            var result = await _abhaService.HiFlowNotifyAsync(req);
             if (result.Success)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service found.", result.Data);
             else

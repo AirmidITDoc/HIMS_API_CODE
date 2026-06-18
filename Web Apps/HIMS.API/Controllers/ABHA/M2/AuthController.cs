@@ -6,7 +6,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.ABHA
+namespace HIMS.API.Controllers.ABHA.M2
 {
     [Route("api/v{version:apiVersion}/m2/auth")]
     [ApiController]
