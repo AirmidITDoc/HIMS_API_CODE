@@ -164,6 +164,16 @@ namespace HIMS.ABHA.Models
         public List<Account> accounts { get; set; }
     }
 
+    public class VerifyAddressOtpResponse
+    {
+        public string AuthResult { get; set; }
+        public string Message { get; set; }
+
+        public List<Account> Users { get; set; }
+
+        public TokenInfo Tokens { get; set; }
+    }
+
     // ===== ABHA Profile / Enrolment response =====
     public class AbhaEnrolmentResponse
     {

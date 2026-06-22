@@ -103,7 +103,7 @@ namespace HIMS.ABHA.Services
                     Scope = scope
                 };
 
-                var url = $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{AppSettings.Current.Endpoints.OtpRequest}";
+                var url = $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{(LoginHint == "abha-address" ? AppSettings.Current.Endpoints.AbhaAddressOtpRequest : AppSettings.Current.Endpoints.OtpRequest)}";
                 return await _httpClient.PostAsync<OtpResponse>(url, payload);
             }
             catch (Exception ex)
@@ -113,7 +113,7 @@ namespace HIMS.ABHA.Services
             }
         }
 
-        public async Task<ApiResult<VerifyOtpResponse>> VerifyOtpAsync(string txnId, string otp, List<string> scope)
+        public async Task<ApiResult<VerifyOtpResponse>> VerifyOtpAsync(string txnId, string otp, List<string> scope, bool isAbhaAddress = false)
         {
             try
             {
@@ -134,8 +134,31 @@ namespace HIMS.ABHA.Services
                     }
                 };
 
-                var url = $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{AppSettings.Current.Endpoints.OtpVerify}";
-                return await _httpClient.PostAsync<VerifyOtpResponse>(url, payload);
+                var url = $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{(isAbhaAddress ? AppSettings.Current.Endpoints.AbhaAddressOtpVerify : AppSettings.Current.Endpoints.OtpVerify)}";
+                ApiResult<VerifyOtpResponse> resData = new();
+                if (isAbhaAddress)
+                {
+                   var data= await _httpClient.PostAsync<VerifyAddressOtpResponse>(url, payload);
+                    resData.Success = true;
+                    resData.Data = new VerifyOtpResponse
+                    {
+                        authResult = data.Data?.AuthResult??"",
+                        message = data.Data?.Message??"",
+                        token = data.Data?.Tokens?.Token??"",
+                        expiresIn = data.Data?.Tokens?.ExpiresIn ?? 0,
+                        refreshToken = data.Data?.Tokens?.RefreshToken??"",
+                        refreshExpiresIn = data.Data?.Tokens?.RefreshExpiresIn ?? 0,
+                        accounts = data.Data?.Users.Select(a => new Account
+                        {
+                            preferredAbhaAddress = a.preferredAbhaAddress,
+                            status = a.status,
+                        }).ToList() ?? new List<Account>()
+                    };
+                }
+                else
+                    resData = await _httpClient.PostAsync<VerifyOtpResponse>(url, payload);
+
+                return resData;
             }
             catch (Exception ex)
             {

@@ -50,19 +50,37 @@ namespace HIMS.API.Controllers.ABHA.M1
         {
             List<string> scope = new();
             string otpsystem;
+            string loginhint;
             if (dto.OtpType == 1)
             {
                 scope.Add("abha-login");
                 scope.Add("aadhaar-verify");
+                loginhint = "abha-number";
                 otpsystem = "aadhaar";
             }
-            else {
+            else if (dto.OtpType == 2)
+            {
                 scope.Add("abha-login");
                 scope.Add("mobile-verify");
+                loginhint = "abha-number";
+                otpsystem = "abdm";
+            }
+            else if (dto.OtpType == 3)
+            {
+                scope.Add("abha-address-login");
+                scope.Add("aadhaar-verify");
+                loginhint = "abha-address";
+                otpsystem = "aadhaar";
+            }
+            else
+            {
+                scope.Add("abha-address-login");
+                scope.Add("mobile-verify");
+                loginhint = "abha-address";
                 otpsystem = "abdm";
             }
 
-            var result = await _abhaService.RequestOtpAsync(dto.AadhaarNumber, scope, "abha-number", otpsystem);
+            var result = await _abhaService.RequestOtpAsync(dto.AadhaarNumber, scope, loginhint, otpsystem);
             if (result.Success)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Otp Sent successfully.", result.Data);
             else
@@ -92,17 +110,30 @@ namespace HIMS.API.Controllers.ABHA.M1
         public async Task<ApiResponse> VerifyAbhaOtpOtp([FromBody] VerifyOtpDto dto)
         {
             List<string> scope = new();
+            bool isAbhaAddress = false;
             if (dto.OtpType == 1)
             {
                 scope.Add("abha-login");
                 scope.Add("aadhaar-verify");
             }
-            else
+            else if (dto.OtpType == 2)
             {
                 scope.Add("abha-login");
                 scope.Add("mobile-verify");
             }
-            var result = await _abhaService.VerifyOtpAsync(dto.TxnId, dto.Otp, scope);
+            else if (dto.OtpType == 3)
+            {
+                scope.Add("abha-address-login");
+                scope.Add("aadhaar-verify");
+                isAbhaAddress = true;
+            }
+            else
+            {
+                scope.Add("abha-address-login");
+                scope.Add("mobile-verify");
+                isAbhaAddress = true;
+            }
+            var result = await _abhaService.VerifyOtpAsync(dto.TxnId, dto.Otp, scope, isAbhaAddress);
             if (result.Success)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Otp Sent successfully.", result.Data);
             else
