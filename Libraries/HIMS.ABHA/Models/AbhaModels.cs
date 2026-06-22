@@ -345,12 +345,17 @@ namespace HIMS.ABHA.Models
 
 
     // DTOs for controller
-    public class AadhaarOtpDto { public string AadhaarNumber { get; set; } = string.Empty; }
+    public class AadhaarOtpDto
+    {
+        public string AadhaarNumber { get; set; } = string.Empty;
+        public int OtpType { get; set; } = 1;
+    }
     public class VerifyOtpDto
     {
         public string TxnId { get; set; } = string.Empty;
         public string Otp { get; set; } = string.Empty;
         public string Mobile { get; set; } = string.Empty;
+        public int OtpType { get; set; } = 1;
     }
     public class CreateAddressDto
     {
