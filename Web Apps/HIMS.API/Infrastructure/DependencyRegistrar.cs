@@ -145,8 +145,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IPharmacyReorderService, PharmacyReorderService>();
             services.AddScoped<IPharmacyItemSummaryService, PharmacyItemSummaryService>();
             //services.AddScoped<IApprovalService, ApprovalService>();
-
-
+            services.AddScoped<IPcpndprocesService, PcpndprocessService>();
 
             services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IItemMasterService, ItemMasterServices>();
