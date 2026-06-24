@@ -69,5 +69,13 @@ namespace HIMS.ABHA.Configuration
         public string ConsentHIPNotifyUrl { get; set; } = string.Empty;
         public string HiFlowNotifyUrl { get; set; } = string.Empty;
         public string HipHiOnRequestUrl { get; set; } = string.Empty;
+        public string M3Certificate {  get; set; } = string.Empty;
+        public string M3OpenIdConfig {  get; set; } = string.Empty;
+        public string M3ConsentInit {  get; set; } = string.Empty;
+        public string M3ConsentStatus {  get; set; } = string.Empty;
+        public string M3ConsentNotify {  get; set; } = string.Empty;
+        public string M3ConsentFetch {  get; set; } = string.Empty;
+        public string M3HealthRequest {  get; set; } = string.Empty;
+        public string M3HealthNotify {  get; set; } = string.Empty;
     }
 }
