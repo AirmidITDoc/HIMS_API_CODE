@@ -52,6 +52,7 @@ namespace HIMS.Data.Models
         public string? ExtMobileNo { get; set; }
         public string? ExternalPatientName { get; set; }
         public string? DoctorName { get; set; }
+        public long? DoctorId { get; set; }
         public string? ExtAddress { get; set; }
         public bool? IsPurBill { get; set; }
         public bool? IsBillCheck { get; set; }
