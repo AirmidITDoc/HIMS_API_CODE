@@ -45,19 +45,42 @@ namespace HIMS.API.Controllers.ABHA.M1
         }
 
         // ===== Existing ABHA =====
-        [HttpPost("existing/request-abha-aadhar-otp")]
-        public async Task<ApiResponse> RequestAbhaAadhaarOtp([FromBody] AadhaarOtpDto dto)
-        {
-            var result = await _abhaService.RequestOtpAsync(dto.AadhaarNumber, new List<string> { "abha-login", "aadhaar-verify" }, "abha-number", "aadhaar");
-            if (result.Success)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Otp Sent successfully.", result.Data);
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
-        }
         [HttpPost("existing/request-abha-otp")]
         public async Task<ApiResponse> RequestAbhaOtp([FromBody] AadhaarOtpDto dto)
         {
-            var result = await _abhaService.RequestOtpAsync(dto.AadhaarNumber, new List<string> { "abha-login", "mobile-verify" }, "abha-number", "abdm");
+            List<string> scope = new();
+            string otpsystem;
+            string loginhint;
+            if (dto.OtpType == 1)
+            {
+                scope.Add("abha-login");
+                scope.Add("aadhaar-verify");
+                loginhint = "abha-number";
+                otpsystem = "aadhaar";
+            }
+            else if (dto.OtpType == 2)
+            {
+                scope.Add("abha-login");
+                scope.Add("mobile-verify");
+                loginhint = "abha-number";
+                otpsystem = "abdm";
+            }
+            else if (dto.OtpType == 3)
+            {
+                scope.Add("abha-address-login");
+                scope.Add("aadhaar-verify");
+                loginhint = "abha-address";
+                otpsystem = "aadhaar";
+            }
+            else
+            {
+                scope.Add("abha-address-login");
+                scope.Add("mobile-verify");
+                loginhint = "abha-address";
+                otpsystem = "abdm";
+            }
+
+            var result = await _abhaService.RequestOtpAsync(dto.AadhaarNumber, scope, loginhint, otpsystem);
             if (result.Success)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Otp Sent successfully.", result.Data);
             else
@@ -82,19 +105,35 @@ namespace HIMS.API.Controllers.ABHA.M1
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
-        [HttpPost("existing/verify-abha-aadhar-otp")]
-        public async Task<ApiResponse> VerifyAbhaAadharOtpOtp([FromBody] VerifyOtpDto dto)
-        {
-            var result = await _abhaService.VerifyOtpAsync(dto.TxnId, dto.Otp, new List<string> { "abha-login", "aadhaar-verify" });
-            if (result.Success)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Otp Sent successfully.", result.Data);
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
-        }
+
         [HttpPost("existing/verify-abha-otp")]
         public async Task<ApiResponse> VerifyAbhaOtpOtp([FromBody] VerifyOtpDto dto)
         {
-            var result = await _abhaService.VerifyOtpAsync(dto.TxnId, dto.Otp, new List<string> { "abha-login", "mobile-verify" });
+            List<string> scope = new();
+            bool isAbhaAddress = false;
+            if (dto.OtpType == 1)
+            {
+                scope.Add("abha-login");
+                scope.Add("aadhaar-verify");
+            }
+            else if (dto.OtpType == 2)
+            {
+                scope.Add("abha-login");
+                scope.Add("mobile-verify");
+            }
+            else if (dto.OtpType == 3)
+            {
+                scope.Add("abha-address-login");
+                scope.Add("aadhaar-verify");
+                isAbhaAddress = true;
+            }
+            else
+            {
+                scope.Add("abha-address-login");
+                scope.Add("mobile-verify");
+                isAbhaAddress = true;
+            }
+            var result = await _abhaService.VerifyOtpAsync(dto.TxnId, dto.Otp, scope, isAbhaAddress);
             if (result.Success)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Otp Sent successfully.", result.Data);
             else
@@ -161,13 +200,18 @@ namespace HIMS.API.Controllers.ABHA.M1
         }
 
         [HttpPost("aadhaar/card")]
-        public async Task<ApiResponse> GetCard([FromBody] ProfileRequestDto dto)
+        public async Task<IActionResult> GetCard([FromBody] ProfileRequestDto dto)
         {
             var result = await _abhaService.GetAbhaCardAsync(dto.Token);
-            if (result.Success)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Card retrieved successfully.", Convert.ToBase64String(result.Data));
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
+            if (!result.Success)
+            {
+                return BadRequest(AbhaHelper.GetErrorMessage(result.Error));
+            }
+            return File(result.Data, "image/png", "abha-card.png");
+            //if (result.Success)
+            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Card retrieved successfully.", Convert.ToBase64String(result.Data));
+            //else
+            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
         [HttpPost("aadhaar/qr")]

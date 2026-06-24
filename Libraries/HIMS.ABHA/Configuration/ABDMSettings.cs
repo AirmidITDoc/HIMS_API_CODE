@@ -50,6 +50,8 @@ namespace HIMS.ABHA.Configuration
         public string OtpVerify { get; set; } = string.Empty;
         public string AbhaAddressSuggestion { get; set; } = string.Empty;
         public string CreateAbhaAddress { get; set; } = string.Empty;
+        public string AbhaAddressOtpRequest { get; set; } = string.Empty;
+        public string AbhaAddressOtpVerify { get; set; } = string.Empty;
         public string AbhaProfile { get; set; } = string.Empty;
         public string AbhaCard { get; set; } = string.Empty;
         public string AbhaQrCode { get; set; } = string.Empty;

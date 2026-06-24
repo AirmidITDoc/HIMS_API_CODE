@@ -164,6 +164,16 @@ namespace HIMS.ABHA.Models
         public List<Account> accounts { get; set; }
     }
 
+    public class VerifyAddressOtpResponse
+    {
+        public string AuthResult { get; set; }
+        public string Message { get; set; }
+
+        public List<Account> Users { get; set; }
+
+        public TokenInfo Tokens { get; set; }
+    }
+
     // ===== ABHA Profile / Enrolment response =====
     public class AbhaEnrolmentResponse
     {
@@ -345,12 +355,17 @@ namespace HIMS.ABHA.Models
 
 
     // DTOs for controller
-    public class AadhaarOtpDto { public string AadhaarNumber { get; set; } = string.Empty; }
+    public class AadhaarOtpDto
+    {
+        public string AadhaarNumber { get; set; } = string.Empty;
+        public int OtpType { get; set; } = 1;
+    }
     public class VerifyOtpDto
     {
         public string TxnId { get; set; } = string.Empty;
         public string Otp { get; set; } = string.Empty;
         public string Mobile { get; set; } = string.Empty;
+        public int OtpType { get; set; } = 1;
     }
     public class CreateAddressDto
     {

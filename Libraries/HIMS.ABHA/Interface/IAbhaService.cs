@@ -10,7 +10,7 @@ namespace HIMS.ABHA.Interface
 
         // Mobile linking flow
         Task<ApiResult<OtpResponse>> RequestOtpAsync(string aadhaarNumber, List<string> scope, string LoginHint, string OtpSystem);
-        Task<ApiResult<VerifyOtpResponse>> VerifyOtpAsync(string txnId, string otp, List<string> scope);
+        Task<ApiResult<VerifyOtpResponse>> VerifyOtpAsync(string txnId, string otp, List<string> scope,bool isAbhaAddress=false);
 
         // ABHA address
         Task<ApiResult<AbhaAddressSuggestionResponse>> GetAbhaAddressSuggestionsAsync(string txnId);

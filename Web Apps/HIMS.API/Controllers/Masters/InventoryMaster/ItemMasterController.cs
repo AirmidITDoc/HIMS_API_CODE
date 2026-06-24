@@ -214,6 +214,13 @@ namespace HIMS.API.Controllers.Inventory
             var resultList = await _ItemMasterServices.NewGetItemListForSalesPage(StoreId, ItemName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " NEW Get ItemList Sales Page", resultList);
         }
+
+        [HttpGet("GetItemListByGenericName")]
+        public async Task<ApiResponse> GetItemListByGenericName(int ItemGenericNameId, int StoreId)
+        {
+            var resultList = _ItemMasterServices.GetItemListByGenericName(ItemGenericNameId, StoreId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List By Generic Name.", resultList);
+        }
     }
 }
 

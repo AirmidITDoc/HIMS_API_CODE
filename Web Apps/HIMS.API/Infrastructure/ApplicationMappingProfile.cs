@@ -125,9 +125,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<TCanteenBillDetail, CanteenBillDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TLabAppServiceDetail, LabAppServiceDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             //CreateMap<TApprovalHeader, ApprovalHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
-
-
+            CreateMap<TPcpndprocess, PcpndprocessModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPcpndprocessDetail, PcpndprocessDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+           
 
 
 
