@@ -105,7 +105,7 @@ namespace HIMS.API.Controllers.ABHA.M1
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
-        
+
         [HttpPost("existing/verify-abha-otp")]
         public async Task<ApiResponse> VerifyAbhaOtpOtp([FromBody] VerifyOtpDto dto)
         {
@@ -200,13 +200,18 @@ namespace HIMS.API.Controllers.ABHA.M1
         }
 
         [HttpPost("aadhaar/card")]
-        public async Task<ApiResponse> GetCard([FromBody] ProfileRequestDto dto)
+        public async Task<IActionResult> GetCard([FromBody] ProfileRequestDto dto)
         {
             var result = await _abhaService.GetAbhaCardAsync(dto.Token);
-            if (result.Success)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Card retrieved successfully.", Convert.ToBase64String(result.Data));
-            else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
+            if (!result.Success)
+            {
+                return BadRequest(AbhaHelper.GetErrorMessage(result.Error));
+            }
+            return File(result.Data, "image/png", "abha-card.png");
+            //if (result.Success)
+            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Card retrieved successfully.", Convert.ToBase64String(result.Data));
+            //else
+            //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
         [HttpPost("aadhaar/qr")]

@@ -230,6 +230,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MExaminationMaster> MExaminationMasters { get; set; } = null!;
         public virtual DbSet<MExpensesCategoryMaster> MExpensesCategoryMasters { get; set; } = null!;
         public virtual DbSet<MExpensesHeadMaster> MExpensesHeadMasters { get; set; } = null!;
+        public virtual DbSet<MExternalDoctorMaster> MExternalDoctorMasters { get; set; } = null!;
         public virtual DbSet<MFeedbackQuestion> MFeedbackQuestions { get; set; } = null!;
         public virtual DbSet<MGenericMaster> MGenericMasters { get; set; } = null!;
         public virtual DbSet<MIcdcdeMainMaster> MIcdcdeMainMasters { get; set; } = null!;
@@ -570,6 +571,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPaymentDoctor> TPaymentDoctors { get; set; } = null!;
         public virtual DbSet<TPaymentPharmacy> TPaymentPharmacies { get; set; } = null!;
         public virtual DbSet<TPaymentSync> TPaymentSyncs { get; set; } = null!;
+        public virtual DbSet<TPcpndprocess> TPcpndprocesses { get; set; } = null!;
+        public virtual DbSet<TPcpndprocessDetail> TPcpndprocessDetails { get; set; } = null!;
         public virtual DbSet<TPhColHadOvToAcc> TPhColHadOvToAccs { get; set; } = null!;
         public virtual DbSet<TPhRefund> TPhRefunds { get; set; } = null!;
         public virtual DbSet<TPhSm> TPhSms { get; set; } = null!;
@@ -642,6 +645,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<ViewDoctorshare> ViewDoctorshares { get; set; } = null!;
         public virtual DbSet<ViewTallyPharSalesReceiptNewOld> ViewTallyPharSalesReceiptNewOlds { get; set; } = null!;
         public virtual DbSet<VisitDetail> VisitDetails { get; set; } = null!;
+        public virtual DbSet<VwDoctormaster> VwDoctormasters { get; set; } = null!;
+        public virtual DbSet<VwPatientRegistrationInfo> VwPatientRegistrationInfos { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -7289,6 +7294,23 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<MExternalDoctorMaster>(entity =>
+            {
+                entity.HasKey(e => e.ExtDoctorId);
+
+                entity.ToTable("M_ExternalDoctorMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DoctorName).HasMaxLength(200);
+
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+
+                entity.Property(e => e.LastName).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<MFeedbackQuestion>(entity =>
             {
                 entity.HasKey(e => e.FeedbackId);
@@ -9167,7 +9189,7 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_SystemConfig");
 
-                entity.Property(e => e.SystemInputValue).HasMaxLength(50);
+                entity.Property(e => e.SystemInputValue).HasMaxLength(500);
 
                 entity.Property(e => e.SystemName).HasMaxLength(50);
             });
@@ -16719,6 +16741,79 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ValidationDate).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<TPcpndprocess>(entity =>
+            {
+                entity.HasKey(e => e.PcpndtprocessId);
+
+                entity.ToTable("T_PCPNDProcess");
+
+                entity.Property(e => e.PcpndtprocessId).HasColumnName("PCPNDTProcessId");
+
+                entity.Property(e => e.ChildrenCount).HasMaxLength(50);
+
+                entity.Property(e => e.ConsentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DaughtersDetails).HasMaxLength(255);
+
+                entity.Property(e => e.Indication).HasMaxLength(50);
+
+                entity.Property(e => e.IndicationofMtp)
+                    .HasMaxLength(50)
+                    .HasColumnName("IndicationofMTP");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Mperiod)
+                    .HasMaxLength(50)
+                    .HasColumnName("MPeriod");
+
+                entity.Property(e => e.NonInvasive).HasMaxLength(50);
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.Prenatal).HasMaxLength(50);
+
+                entity.Property(e => e.ProcedureDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProcessDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RelativeName).HasMaxLength(255);
+
+                entity.Property(e => e.ResultConveyedto).HasMaxLength(50);
+
+                entity.Property(e => e.ResultDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SonsDetails).HasMaxLength(50);
+
+                entity.Property(e => e.TestResult).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TPcpndprocessDetail>(entity =>
+            {
+                entity.HasKey(e => e.PcpndprocessDetId);
+
+                entity.ToTable("T_PCPNDProcessDetails");
+
+                entity.Property(e => e.PcpndprocessDetId).HasColumnName("PCPNDProcessDetId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IndicationDesc).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PcpndtprocessId).HasColumnName("PCPNDTProcessId");
+
+                entity.HasOne(d => d.Pcpndtprocess)
+                    .WithMany(p => p.TPcpndprocessDetails)
+                    .HasForeignKey(d => d.PcpndtprocessId)
+                    .HasConstraintName("FK_T_PCPNDProcessDetails_T_PCPNDProcess");
+            });
+
             modelBuilder.Entity<TPhColHadOvToAcc>(entity =>
             {
                 entity.HasKey(e => e.TranId);
@@ -18932,6 +19027,64 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.VisitDate).HasColumnType("datetime");
 
                 entity.Property(e => e.VisitTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<VwDoctormaster>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_DOCTORMASTER");
+
+                entity.Property(e => e.DoctorName).HasMaxLength(253);
+
+                entity.Property(e => e.GenderName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<VwPatientRegistrationInfo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_PATIENT_REGISTRATION_INFO");
+
+                entity.Property(e => e.AadharCardNo).HasMaxLength(25);
+
+                entity.Property(e => e.Address).HasMaxLength(200);
+
+                entity.Property(e => e.Age).HasMaxLength(10);
+
+                entity.Property(e => e.AgeGender).HasMaxLength(138);
+
+                entity.Property(e => e.City).HasMaxLength(100);
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(100);
+
+                entity.Property(e => e.CreatedDate).HasMaxLength(10);
+
+                entity.Property(e => e.DateofBirth).HasMaxLength(10);
+
+                entity.Property(e => e.EmailId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GenderName).HasMaxLength(100);
+
+                entity.Property(e => e.MobileNo).HasMaxLength(20);
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedDate).HasMaxLength(10);
+
+                entity.Property(e => e.PatientName).HasMaxLength(403);
+
+                entity.Property(e => e.PinNo).HasMaxLength(10);
+
+                entity.Property(e => e.RegDate).HasMaxLength(10);
+
+                entity.Property(e => e.RegNo).HasMaxLength(20);
+
+                entity.Property(e => e.RegPrefix).HasMaxLength(10);
+
+                entity.Property(e => e.RegTime).HasMaxLength(7);
             });
 
             OnModelCreatingPartial(modelBuilder);
