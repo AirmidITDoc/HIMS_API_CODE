@@ -569,5 +569,16 @@ namespace HIMS.Services.Inventory
         {
             throw new NotImplementedException();
         }
+        public virtual List<ItemListByGenericName> GetItemListByGenericName(int ItemGenericNameId, int StoreId)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[2];
+
+            para[0] = new SqlParameter("@ItemGenericNameId", ItemGenericNameId);
+            para[1] = new SqlParameter("@StoreId", StoreId);
+
+            List<ItemListByGenericName> ItemList =sql.FetchListBySP<ItemListByGenericName>("ps_Rtrv_ItemName_ByGenericName", para);
+            return ItemList;
+        }
     }
 }

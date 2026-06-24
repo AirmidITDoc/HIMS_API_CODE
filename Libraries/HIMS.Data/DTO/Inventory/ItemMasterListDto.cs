@@ -306,4 +306,20 @@ namespace HIMS.Data.DTO.Inventory
 
         public double? TaxPer { get; set; }
     }
+
+    public class ItemListByGenericName
+    {
+        public long ItemID { get; set; }
+        public string ItemShortName { get; set; }
+        public string ItemName { get; set; }
+        public long ItemGenericNameId { get; set; }
+        public string ItemGenericName { get; set; }
+        public double BalanceQty { get; set; }
+        public string DoseName { get; set; }
+        public string DoseDay { get; set; }
+        public string Instruction { get; set; }
+
+    }
+
+
 }
