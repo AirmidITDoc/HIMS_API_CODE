@@ -20,30 +20,24 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
     [ApiVersion("1")]
     public class ExternalDoctorController : BaseController
     {
-        private readonly IDoctorMasterService _IDoctorMasterService;
         private readonly IGenericService<MExternalDoctorMaster> _repository;
-        private readonly IFileUtility _FileUtility;
-
-
-        public ExternalDoctorController(IDoctorMasterService repository, IGenericService<MExternalDoctorMaster> repository1, IFileUtility fileUtility,
-            IGenericService<FileMaster> repository7)
+        public ExternalDoctorController(IGenericService<MExternalDoctorMaster> repository)
         {
-            _IDoctorMasterService = repository;
-            _repository = repository1;
+            _repository = repository;
 
         }
 
         //List API
         [HttpPost]
         [Route("[action]")]
-      //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+         //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MExternalDoctorMaster> ExternalDoctorList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(ExternalDoctorList.ToGridResponse(objGrid, "ExternalDoctor List"));
         }
         [HttpGet("{id?}")]
-    //    [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+         //    [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -103,7 +97,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
 
     }
