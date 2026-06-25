@@ -1148,6 +1148,349 @@ namespace HIMS.API.Extensions
                         }
                     }
                     break;
+                case "SalesWiseCollectionSummary.html":
+                    {
+                        int rowNo = 2;
+                        int srNo = 1;
+                        string[] headers =
+                            {
+                                "Sr.No","PaymentDate","SalesDate","SalesNo","PatientName",
+                                "GST","TotalAmt","DiscAmt","NetAmt","PaidAmt",
+                                "BalAmt","CashPay","ChequePay","NeftPay","PayTMPay","CardPay"
+                            };
+
+                        for (int i = 0; i < headers.Length; i++)
+                        {
+                            workSheet.Cell(rowNo, i + 1).Value = headers[i];
+                            workSheet.Cell(rowNo, i + 1).Style.Font.Bold = true;
+                        }
+
+                        rowNo++;
+
+                        decimal Dec(DataRow r, string c) =>
+                            r.Table.Columns.Contains(c) && r[c] != DBNull.Value
+                            ? Convert.ToDecimal(r[c]) : 0;
+                        decimal s_Pending = 0;
+                        decimal s_Net = 0;
+                        decimal s_Paid = 0;
+                        decimal s_Ret = 0;
+                        decimal s_Bal = 0;
+
+                        decimal s_Cash = 0;
+                        decimal s_Cheq = 0;
+                        decimal s_Neft = 0;
+                        decimal s_PayTM = 0;
+                        decimal s_Card = 0;
+
+                        var groups = dt.AsEnumerable()
+                                       .GroupBy(x => x["Lbl"]?.ToString());
+
+                        decimal gtGST = 0, gtTot = 0, gtDisc = 0, gtNet = 0, gtPaid = 0, gtBal = 0;
+                        decimal gtCash = 0, gtCheque = 0, gtNeft = 0, gtPaytm = 0, gtCard = 0;
+
+                        foreach (var grp in groups)
+                        {
+                            workSheet.Cell(rowNo, 1).Value = grp.Key;
+                            workSheet.Range(rowNo, 1, rowNo, 16).Merge();
+                            workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                            rowNo++;
+
+                            decimal stGST = 0, stTot = 0, stDisc = 0, stNet = 0, stPaid = 0, stBal = 0;
+                            decimal stCash = 0, stCheque = 0, stNeft = 0, stPaytm = 0, stCard = 0;
+
+                            foreach (var dr in grp)
+                            {
+                                workSheet.Cell(rowNo, 1).Value = srNo++;
+                                workSheet.Cell(rowNo, 2).Value =
+                               dr["PaymentDate"] == DBNull.Value
+                               ? ""
+                               : Convert.ToDateTime(dr["PaymentDate"]).ToString("dd/MM/yyyy");
+
+                                workSheet.Cell(rowNo, 3).Value =
+                                    dr["Date"] == DBNull.Value
+                                    ? ""
+                                    : Convert.ToDateTime(dr["Date"]).ToString("dd/MM/yyyy");
+                                workSheet.Cell(rowNo, 4).Value = dr["SalesNo"]?.ToString();
+                                workSheet.Cell(rowNo, 5).Value = dr["PatientName"]?.ToString();
+
+                                workSheet.Cell(rowNo, 6).Value = Dec(dr, "GST");
+                                workSheet.Cell(rowNo, 7).Value = Dec(dr, "TotalAmount");
+                                workSheet.Cell(rowNo, 8).Value = Dec(dr, "DiscAmount");
+                                workSheet.Cell(rowNo, 9).Value = Dec(dr, "NetAmount");
+                                workSheet.Cell(rowNo, 10).Value = Dec(dr, "PaidAmount");
+                                workSheet.Cell(rowNo, 11).Value = Dec(dr, "BalanceAmount");
+                                workSheet.Cell(rowNo, 12).Value = Dec(dr, "CashPay");
+                                workSheet.Cell(rowNo, 13).Value = Dec(dr, "ChequePay");
+                                workSheet.Cell(rowNo, 14).Value = Dec(dr, "NeftPay");
+                                workSheet.Cell(rowNo, 15).Value = Dec(dr, "PayTMPay");
+                                workSheet.Cell(rowNo, 16).Value = Dec(dr, "CardPay");
+
+                                stGST += Dec(dr, "GST");
+                                stTot += Dec(dr, "TotalAmount");
+                                stDisc += Dec(dr, "DiscAmount");
+                                stNet += Dec(dr, "NetAmount");
+                                stPaid += Dec(dr, "PaidAmount");
+                                stBal += Dec(dr, "BalanceAmount");
+                                stCash += Dec(dr, "CashPay");
+                                stCheque += Dec(dr, "ChequePay");
+                                stNeft += Dec(dr, "NeftPay");
+                                stPaytm += Dec(dr, "PayTMPay");
+                                stCard += Dec(dr, "CardPay");
+                                bool isReturn = dr["ExpenseType"]?.ToString() == "Expense";
+
+                                decimal net = Dec(dr, "NetAmount");
+                                decimal paid = Dec(dr, "PaidAmount");
+                                decimal bal = Dec(dr, "BalanceAmount");
+
+                                decimal cash = Dec(dr, "CashPay");
+                                decimal cheq = Dec(dr, "ChequePay");
+                                decimal neft = Dec(dr, "NeftPay");
+                                decimal paytm = Dec(dr, "PayTMPay");
+                                decimal card = Dec(dr, "CardPay");
+
+                                if (!isReturn)
+                                {
+                                    s_Net += net;
+                                    s_Paid += paid;
+                                    s_Bal += bal;
+
+                                    s_Cash += cash;
+                                    s_Cheq += cheq;
+                                    s_Neft += neft;
+                                    s_PayTM += paytm;
+                                    s_Card += card;
+
+                                    if (grp.Key == "Sales - Pending Amount Received")
+                                        s_Pending += cash + cheq + neft + paytm + card;
+                                }
+                                else
+                                {
+                                    s_Ret += paid;
+
+                                    s_Cash -= cash;
+                                    s_Cheq -= cheq;
+                                    s_Neft -= neft;
+                                    s_PayTM -= paytm;
+                                    s_Card -= card;
+                                }
+
+                                rowNo++;
+                            }
+
+                            workSheet.Cell(rowNo, 1).Value = $"Total : {grp.Key}";
+                            workSheet.Cell(rowNo, 6).Value = stGST;
+                            workSheet.Cell(rowNo, 7).Value = stTot;
+                            workSheet.Cell(rowNo, 8).Value = stDisc;
+                            workSheet.Cell(rowNo, 9).Value = stNet;
+                            workSheet.Cell(rowNo, 10).Value = stPaid;
+                            workSheet.Cell(rowNo, 11).Value = stBal;
+                            workSheet.Cell(rowNo, 12).Value = stCash;
+                            workSheet.Cell(rowNo, 13).Value = stCheque;
+                            workSheet.Cell(rowNo, 14).Value = stNeft;
+                            workSheet.Cell(rowNo, 15).Value = stPaytm;
+                            workSheet.Cell(rowNo, 16).Value = stCard;
+
+                            workSheet.Row(rowNo).Style.Font.Bold = true;
+                            rowNo++;
+                            gtGST += stGST;
+                            gtTot += stTot;
+                            gtDisc += stDisc;
+                            gtNet += stNet;
+                            gtPaid += stPaid;
+                            gtBal += stBal;
+                            gtCash += stCash;
+                            gtCheque += stCheque;
+                            gtNeft += stNeft;
+                            gtPaytm += stPaytm;
+                            gtCard += stCard;
+                        }
+
+                        workSheet.Cell(rowNo, 1).Value = "Grand Total";
+                        workSheet.Cell(rowNo, 6).Value = gtGST;
+                        workSheet.Cell(rowNo, 7).Value = gtTot;
+                        workSheet.Cell(rowNo, 8).Value = gtDisc;
+                        workSheet.Cell(rowNo, 9).Value = gtNet;
+                        workSheet.Cell(rowNo, 10).Value = gtPaid;
+                        workSheet.Cell(rowNo, 11).Value = gtBal;
+                        workSheet.Cell(rowNo, 12).Value = gtCash;
+                        workSheet.Cell(rowNo, 13).Value = gtCheque;
+                        workSheet.Cell(rowNo, 14).Value = gtNeft;
+                        workSheet.Cell(rowNo, 15).Value = gtPaytm;
+                        workSheet.Cell(rowNo, 16).Value = gtCard;
+
+                        workSheet.Row(rowNo).Style.Font.Bold = true;
+                        rowNo += 3;
+
+                        workSheet.Cell(rowNo, 1).Value = "Summary Report";
+                        workSheet.Cell(rowNo, 1).Style.Font.Bold = true;
+                        rowNo++;
+
+                        string[] sumHeaders =
+                        {
+                            "Header","Total Sale","Discount","Net Sale",
+                            "PaidAmount","BalanceAmount",
+                            "Cash","Cheque","NEFT","UPI","Card"
+                        };
+
+                        for (int i = 0; i < sumHeaders.Length; i++)
+                        {
+                            workSheet.Cell(rowNo, i + 1).Value = sumHeaders[i];
+                            workSheet.Cell(rowNo, i + 1).Style.Font.Bold = true;
+                        }
+
+                        rowNo++;
+
+
+                        var summaryGroups = dt.AsEnumerable()
+                      .GroupBy(x => x["Lbl"]?.ToString());
+
+                        decimal gTot = 0, gDisc = 0, gNet = 0, gPaid = 0, gBal = 0;
+                        decimal gCash = 0, gCheq = 0, gNeft = 0, gPaytm = 0, gCard = 0;
+
+                        foreach (var grp in summaryGroups)
+                        {
+                            decimal tot = grp.Sum(x => Dec(x, "TotalAmount"));
+                            decimal disc = grp.Sum(x => Dec(x, "DiscAmount"));
+                            decimal net = grp.Sum(x => Dec(x, "NetAmount"));
+                            decimal paid = grp.Sum(x => Dec(x, "PaidAmount"));
+                            decimal bal = grp.Sum(x => Dec(x, "BalanceAmount"));
+
+                            decimal cash = grp.Sum(x => Dec(x, "CashPay"));
+                            decimal cheq = grp.Sum(x => Dec(x, "ChequePay"));
+                            decimal neft = grp.Sum(x => Dec(x, "NeftPay"));
+                            decimal paytm = grp.Sum(x => Dec(x, "PayTMPay"));
+                            decimal card = grp.Sum(x => Dec(x, "CardPay"));
+
+                            bool isReturn = grp.Any(x => x["ExpenseType"]?.ToString() == "Expense");
+
+                            if (isReturn)
+                            {
+                                tot = -tot;
+                                disc = -disc;
+                                net = -net;
+                                paid = -paid;
+                                bal = -bal;
+
+                                cash = -cash;
+                                cheq = -cheq;
+                                neft = -neft;
+                                paytm = -paytm;
+                                card = -card;
+                            }
+
+                            workSheet.Cell(rowNo, 1).Value = grp.Key;
+                            workSheet.Cell(rowNo, 2).Value = tot;
+                            workSheet.Cell(rowNo, 3).Value = disc;
+                            workSheet.Cell(rowNo, 4).Value = net;
+                            workSheet.Cell(rowNo, 5).Value = paid;
+                            workSheet.Cell(rowNo, 6).Value = bal;
+                            workSheet.Cell(rowNo, 7).Value = cash;
+                            workSheet.Cell(rowNo, 8).Value = cheq;
+                            workSheet.Cell(rowNo, 9).Value = neft;
+                            workSheet.Cell(rowNo, 10).Value = paytm;
+                            workSheet.Cell(rowNo, 11).Value = card;
+
+                            gTot += tot;
+                            gDisc += disc;
+                            gNet += net;
+                            gPaid += paid;
+                            gBal += bal;
+                            gCash += cash;
+                            gCheq += cheq;
+                            gNeft += neft;
+                            gPaytm += paytm;
+                            gCard += card;
+
+                            rowNo++;
+                        }
+                        workSheet.Cell(rowNo, 1).Value = "Grand Total";
+                        workSheet.Cell(rowNo, 2).Value = gTot;
+                        workSheet.Cell(rowNo, 3).Value = gDisc;
+                        workSheet.Cell(rowNo, 4).Value = gNet;
+                        workSheet.Cell(rowNo, 5).Value = gPaid;
+                        workSheet.Cell(rowNo, 6).Value = gBal;
+                        workSheet.Cell(rowNo, 7).Value = gCash;
+                        workSheet.Cell(rowNo, 8).Value = gCheq;
+                        workSheet.Cell(rowNo, 9).Value = gNeft;
+                        workSheet.Cell(rowNo, 10).Value = gPaytm;
+                        workSheet.Cell(rowNo, 11).Value = gCard;
+
+                        workSheet.Row(rowNo).Style.Font.Bold = true;
+
+                        rowNo += 3;
+                        decimal totalPayment = s_Cash + s_Cheq + s_Neft + s_PayTM + s_Card;
+                        decimal netAfterReturn = s_Net - s_Ret;
+
+                        workSheet.Cell(rowNo, 1).Value = "Description";
+                        workSheet.Cell(rowNo, 2).Value = "Amount";
+
+                        workSheet.Cell(rowNo, 5).Value = "Sales Summary";
+                        workSheet.Cell(rowNo, 6).Value = "Amount";
+
+                        workSheet.Cell(rowNo, 9).Value = "Payment Type";
+                        workSheet.Cell(rowNo, 10).Value = "Amount";
+
+                        rowNo++;
+
+                        workSheet.Cell(rowNo, 1).Value = "Amount Received";
+                        workSheet.Cell(rowNo, 2).Value = s_Paid;
+
+                        workSheet.Cell(rowNo, 5).Value = "Net Sale";
+                        workSheet.Cell(rowNo, 6).Value = s_Net;
+
+                        workSheet.Cell(rowNo, 9).Value = "Cash";
+                        workSheet.Cell(rowNo, 10).Value = s_Cash;
+
+                        rowNo++;
+
+                        workSheet.Cell(rowNo, 1).Value = "Amount Returned";
+                        workSheet.Cell(rowNo, 2).Value = s_Ret;
+
+                        workSheet.Cell(rowNo, 5).Value = "Net Return";
+                        workSheet.Cell(rowNo, 6).Value = s_Ret;
+
+                        workSheet.Cell(rowNo, 9).Value = "Cheque";
+                        workSheet.Cell(rowNo, 10).Value = s_Cheq;
+
+                        rowNo++;
+
+                        workSheet.Cell(rowNo, 1).Value = "Net Received";
+                        workSheet.Cell(rowNo, 2).Value = netAfterReturn;
+
+                        workSheet.Cell(rowNo, 5).Value = "Net After Return";
+                        workSheet.Cell(rowNo, 6).Value = netAfterReturn;
+
+                        workSheet.Cell(rowNo, 9).Value = "NEFT";
+                        workSheet.Cell(rowNo, 10).Value = s_Neft;
+
+                        rowNo++;
+
+                        workSheet.Cell(rowNo, 1).Value = "Pending Amount Received";
+                        workSheet.Cell(rowNo, 2).Value = s_Pending;
+
+                        workSheet.Cell(rowNo, 9).Value = "PayTM";
+                        workSheet.Cell(rowNo, 10).Value = s_PayTM;
+
+                        rowNo++;
+
+                        workSheet.Cell(rowNo, 1).Value = "Cash On Hand";
+                        workSheet.Cell(rowNo, 2).Value = s_Cash;
+
+                        workSheet.Cell(rowNo, 9).Value = "Card";
+                        workSheet.Cell(rowNo, 10).Value = s_Card;
+
+                        rowNo++;
+
+                        workSheet.Cell(rowNo, 1).Value = "Outstanding Amount";
+                        workSheet.Cell(rowNo, 2).Value = s_Bal;
+
+                        workSheet.Cell(rowNo, 9).Value = "Total";
+                        workSheet.Cell(rowNo, 10).Value = totalPayment;
+                        workSheet.Columns().AdjustToContents();
+
+                    }
+                    break;
+
             }
             return SaveToStream(excel);
         }
