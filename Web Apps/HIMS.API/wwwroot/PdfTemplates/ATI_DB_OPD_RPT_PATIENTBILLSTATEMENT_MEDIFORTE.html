@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Statement</title>
+</head>
+<body>
+    <div class="bill-template-wrapper" style="font-size:14px;font-family:Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;">
+        <table style="width:100%;line-height:inherit;text-align:left;">
+
+            <!-- HEADER -->
+            <tr class="top-header-row">
+                {{NewHeader}}
+            </tr>
+
+            <!-- TITLE -->
+            <tr class="title-date-row">
+                <td style="padding:5px;">
+                    <table style="width:100%;border-collapse:collapse;">
+                        <tr style="font-size:18px;">
+                            <td style="border-bottom:1px solid #d4c3c3;padding:2px;padding-bottom:5px;text-align:center;">
+                                <b>INVOICE STATEMENT</b>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- PATIENT INFO -->
+            <tr class="bill-info-row">
+                <td>
+                    <table style="width:100%;border-collapse:collapse;font-size:20px;">
+                        <tr>
+                            <td style="width:50%;padding:2px;"><span style="font-weight:bold;">UHID :</span> <span>{{RegNo}}</span></td>
+                            <td style="width:50%;padding:2px;"><span style="font-weight:bold;">Doctor Name :</span> <span>{{DoctorName}}</span></td>
+                        </tr>
+                        <tr>
+                            <td style="width:50%;padding:2px;"><span style="font-weight:bold;">Patient Name :</span> <span>{{PatientName}}</span></td>
+                            <td style="width:50%;padding:2px;"><span style="font-weight:bold;">Department Name :</span> <span>{{DepartmentName}}</span></td>
+                        </tr>
+                        <tr>
+                            <td style="width:50%;padding:2px;"><span style="font-weight:bold;">National Id :</span> <span>{{AadharCardNo}}</span></td>
+                            <td style="width:50%;padding:2px;"><span style="font-weight:bold;">POL/MEB :</span> <span>{{PolicyNo}}</span></td>
+                        </tr>
+                        <tr>
+                            <td style="width:50%;padding:2px;"><span style="font-weight:bold;">Invoice No :</span> <span>{{PBillNo}}</span></td>
+                            <td style="width:50%;padding:2px;"><span style="font-weight:bold;">Company Name :</span> <span>{{CompanyName}}</span></td>
+                        </tr>
+                    </table>
+
+                    <!-- ITEMS TABLE -->
+                    <table style="width:100%;border-collapse:collapse;">
+                        <thead>
+                            <tr style="font-size:18px;background-color:white;">
+                                <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px;">Sr.No</td>
+                                <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px;">Service Name</td>
+                                <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px;">Price</td>
+                                <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px;">Qty</td>
+                                <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px;">Net Amt</td>
+                            </tr>
+                        </thead>
+                        <tbody id="itemRows">
+                            <!--ITEMS_SP1-->
+                            <tr class="item-data-row"
+                                data-billno="{{PBillNo}}"
+                                data-billdate="{{BillDate}}"
+                                data-billtime="{{BillTime}}"
+                                data-referenceno="{{ReferenceNo}}"
+                                data-username="{{UserName}}"
+                                data-paymode="{{PayMode}}"
+                                data-billdiscamt="{{BillDiscAmt}}"
+                                data-netpayableamt="{{NetPayableAmt}}"
+                                data-paidamt="{{PaidAmt}}"
+                                data-price="{{Price}}"
+                                data-totalamt="{{TotalAmt}}"
+                                data-govtamt="{{GovtApprovedAmt}}"
+                                data-compamt="{{CompanyApprovedAmt}}"
+                                data-govtname="{{GovtApprovedName}}"
+                                data-compname="{{CompanyApprovedName}}"
+                                data-govtrefno="{{GovtRefNo}}"
+                                data-comprefno="{{CompRefNo}}"
+                                style="font-size:15px;font-weight:bold;text-align:center;vertical-align:middle;">
+                                <td style="border:1px solid #000;text-align:center;vertical-align:middle;padding:4px;" class="sr-no"></td>
+                                <td style="border:1px solid #000;text-align:left;vertical-align:middle;padding:4px;">{{ServiceName}}</td>
+                                <td style="border:1px solid #000;text-align:right;vertical-align:middle;padding:4px;" class="td-price"></td>
+                                <td style="border:1px solid #000;text-align:center;vertical-align:middle;padding:4px;">{{Qty}}</td>
+                                <td style="border:1px solid #000;text-align:right;vertical-align:middle;padding:4px;" class="td-lineamt"></td>
+                            </tr>
+                            <!--/ITEMS_SP1-->
+                        </tbody>
+
+                        <!-- GRAND TOTAL SUMMARY — borders kept here -->
+                        <tbody>
+                            <tr>
+                                <td colspan="5">
+                                    <table style="width:100%;border-collapse:collapse;font-size:17px;font-weight:bold;">
+                                        <tr>
+                                            <td style="width:45%;border-bottom:1px solid #eee;padding:6px;text-align:left;">Total Amount</td>
+                                            <td style="width:20%;border-bottom:1px solid #eee;padding:6px;"></td>
+                                            <td style="width:35%;border-bottom:1px solid #eee;padding:6px;text-align:right;" id="spanOverallTotal">0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:45%;border-bottom:1px solid #eee;padding:6px;text-align:left;">Discount Amount</td>
+                                            <td style="width:20%;border-bottom:1px solid #eee;padding:6px;"></td>
+                                            <td style="width:35%;border-bottom:1px solid #eee;padding:6px;text-align:right;" id="spanOverallDiscount">0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:45%;border-bottom:1px solid #eee;padding:6px;text-align:left;">RoundUp Amount</td>
+                                            <td style="width:20%;border-bottom:1px solid #eee;padding:6px;"></td>
+                                            <td style="width:35%;border-bottom:1px solid #eee;padding:6px;text-align:right;" id="spanOverallRound">0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:45%;border-bottom:1px solid #eee;padding:6px;text-align:left;">Net Amount</td>
+                                            <td style="width:20%;border-bottom:1px solid #eee;padding:6px;"></td>
+                                            <td style="width:35%;border-bottom:1px solid #eee;padding:6px;text-align:right;" id="spanOverallNet">0.00</td>
+                                        </tr>
+                                        <tr id="rowGovt" style="display:none;">
+                                            <td style="width:45%;border-bottom:1px solid #eee;padding:6px;text-align:left;">Name : <span id="spanGovtName"></span></td>
+                                            <td style="width:20%;border-bottom:1px solid #eee;padding:6px 6px 6px 30px;text-align:center;" id="spanGovtRefNo"></td>
+                                            <td style="width:35%;border-bottom:1px solid #eee;padding:6px;text-align:right;" id="spanGovtAmt">0.00</td>
+                                        </tr>
+                                        <tr id="rowComp" style="display:none;">
+                                            <td style="width:45%;border-bottom:1px solid #eee;padding:6px;text-align:left;">Name : <span id="spanCompName"></span></td>
+                                            <td style="width:20%;border-bottom:1px solid #eee;padding:6px 6px 6px 30px;text-align:center;" id="spanCompRefNo"></td>
+                                            <td style="width:35%;border-bottom:1px solid #eee;padding:6px;text-align:right;" id="spanCompAmt">0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:45%;border-bottom:1px solid #eee;padding:6px;text-align:left;">Paid Amount</td>
+                                            <td style="width:20%;border-bottom:1px solid #eee;padding:6px;"></td>
+                                            <td style="width:35%;border-bottom:1px solid #eee;padding:6px;text-align:right;" id="spanOverallPaid">0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:45%;border-bottom:1px solid #eee;padding:6px;text-align:left;">Balance Amount</td>
+                                            <td style="width:20%;border-bottom:1px solid #eee;padding:6px;"></td>
+                                            <td style="width:35%;border-bottom:1px solid #eee;padding:6px;text-align:right;" id="spanBalanceAmt">0.00</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <script>
+        window.onload = function () {
+            var rows = document.querySelectorAll('#itemRows tr.item-data-row');
+            if (rows.length === 0) return;
+
+            var tbody = document.getElementById('itemRows');
+            var prevBillNo = '', serial = 1;
+            var billTotal = 0, overallTotal = 0, overallDiscount = 0, overallRound = 0, overallPaid = 0;
+            var billDisc = 0, billNet = 0, billPaid = 0, payMode = '', refNo = '';
+            var govtAmt = 0, compAmt = 0, govtName = '', compName = '', govtRef = '', compRef = '';
+
+            // Read patient-level data from first row (same across all rows)
+            govtAmt = parseFloat(rows[0].getAttribute('data-govtamt')) || 0;
+            compAmt = parseFloat(rows[0].getAttribute('data-compamt')) || 0;
+            govtName = rows[0].getAttribute('data-govtname') || '';
+            compName = rows[0].getAttribute('data-compname') || '';
+            govtRef = rows[0].getAttribute('data-govtrefno') || '';
+            compRef = rows[0].getAttribute('data-comprefno') || '';
+
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                var billNo = row.getAttribute('data-billno') || '';
+
+                // Read line amount from data attribute — reliable, no innerText parse risk
+                var lineAmt = parseFloat(row.getAttribute('data-totalamt')) || 0;
+
+                // ---- New bill group ----
+                if (billNo !== prevBillNo) {
+                    if (prevBillNo !== '') {
+                        // Close previous bill
+                        var ro = Math.round(billTotal) - billTotal;
+                        insertBillFooter(row, billTotal, billDisc, ro, billNet, billPaid, payMode, refNo);
+                        overallTotal += billTotal;
+                        overallDiscount += billDisc;
+                        overallRound += ro;
+                        overallPaid += billPaid;
+                    }
+
+                    // Bill header — format date & time
+                    var rawDate = row.getAttribute('data-billdate') || '';
+                    var rawTime = row.getAttribute('data-billtime') || '';
+                    var userName = row.getAttribute('data-username') || '';
+
+                    // Date: strip time part, reformat yyyy-MM-dd → dd-MM-yyyy
+                    var dateOnly = rawDate.replace(/\s.*$/, '').replace(/T.*$/, '');
+                    var dm = dateOnly.match(/(\d{4})-(\d{2})-(\d{2})/);
+                    var fmtDate = dm ? dm[3] + '-' + dm[2] + '-' + dm[1] : dateOnly;
+
+                    // Time: HH:MM(:SS) → hh:MM AM/PM
+                    var fmtTime = '';
+                    var tm = rawTime.match(/(\d{1,2}):(\d{2})/);
+                    if (tm) {
+                        var h = parseInt(tm[1]), mn = tm[2], ap = h >= 12 ? 'PM' : 'AM';
+                        h = h % 12 || 12;
+                        fmtTime = (h < 10 ? '0' + h : h) + ':' + mn + ' ' + ap;
+                    }
+
+                    var timePart = fmtTime ? ' &nbsp;|&nbsp; ' + fmtTime : '';
+                    var userPart = userName ? ' &nbsp;&nbsp;|&nbsp;&nbsp; UserName : ' + userName : '';
+                    var hdr = document.createElement('tr');
+                    hdr.style.cssText = 'font-size:18px;font-weight:bold;background:#f2f2f2;';
+                    hdr.innerHTML = '<td colspan="5" style="border:1px solid #000;padding:6px;">'
+                        + 'Bill Date : ' + fmtDate + timePart
+                        + ' &nbsp;&nbsp;|&nbsp;&nbsp; Bill No : ' + billNo
+                        + userPart + '</td>';
+                    tbody.insertBefore(hdr, row);
+
+                    // Read bill-level totals from FIRST row of this group only
+                    billDisc = parseFloat(row.getAttribute('data-billdiscamt')) || 0;
+                    billNet = parseFloat(row.getAttribute('data-netpayableamt')) || 0;
+                    billPaid = parseFloat(row.getAttribute('data-paidamt')) || 0;
+                    payMode = row.getAttribute('data-paymode') || '';
+                    refNo = row.getAttribute('data-referenceno') || '';
+                    billTotal = 0;
+                    serial = 1;
+                }
+
+                row.querySelector('.sr-no').innerText = serial++;
+                row.querySelector('.td-price').innerText = parseFloat(row.getAttribute('data-price') || 0).toFixed(2);
+                row.querySelector('.td-lineamt').innerText = lineAmt.toFixed(2);
+                billTotal += lineAmt;
+                prevBillNo = billNo;
+            }
+
+            // Close last bill
+            if (prevBillNo !== '') {
+                var ro = Math.round(billTotal) - billTotal;
+                insertBillFooter(null, billTotal, billDisc, ro, billNet, billPaid, payMode, refNo);
+                overallTotal += billTotal;
+                overallDiscount += billDisc;
+                overallRound += ro;
+                overallPaid += billPaid;
+            }
+
+            // Grand totals
+            var overallNet = Math.round(overallTotal - overallDiscount + overallRound);
+            var balanceAmt = overallNet - govtAmt - compAmt - overallPaid;
+
+            document.getElementById('spanOverallTotal').innerText = overallTotal.toFixed(2);
+            document.getElementById('spanOverallDiscount').innerText = overallDiscount.toFixed(2);
+            document.getElementById('spanOverallRound').innerText = overallRound.toFixed(2);
+            document.getElementById('spanOverallNet').innerText = overallNet.toFixed(2);
+            document.getElementById('spanOverallPaid').innerText = overallPaid.toFixed(2);
+            document.getElementById('spanBalanceAmt').innerText = balanceAmt.toFixed(2);
+
+            if (govtAmt > 0) {
+                document.getElementById('rowGovt').style.display = 'table-row';
+                document.getElementById('spanGovtName').innerText = govtName;
+                document.getElementById('spanGovtRefNo').innerText = govtRef;
+                document.getElementById('spanGovtAmt').innerText = govtAmt.toFixed(2);
+            }
+            if (compAmt > 0) {
+                document.getElementById('rowComp').style.display = 'table-row';
+                document.getElementById('spanCompName').innerText = compName;
+                document.getElementById('spanCompRefNo').innerText = compRef;
+                document.getElementById('spanCompAmt').innerText = compAmt.toFixed(2);
+            }
+        };
+
+        // Per-bill summary rows — NO grid/box borders, only a thin bottom separator
+        function insertBillFooter(refNode, total, disc, ro, net, paid, payMode, refNo) {
+            var tbody = document.getElementById('itemRows');
+            var items = [
+                ['Bill Total', total.toFixed(2)],
+                ['Discount Amount', disc.toFixed(2)],
+                ['RoundUp Amount', ro.toFixed(2)],
+                ['Net Amount', net.toFixed(2)],
+                ['Paid Amount', paid.toFixed(2)]
+            ];
+            if (refNo && refNo.trim() !== '') items.push(['Reference No', refNo]);
+            items.push(['Pay Mode', payMode]);
+
+            for (var j = 0; j < items.length; j++) {
+                var tr = document.createElement('tr');
+                tr.style.cssText = 'font-size:15px;font-weight:bold;background:#fafafa;';
+                tr.innerHTML =
+                    '<td colspan="4" style="padding:5px 6px;text-align:right;border-bottom:1px solid #eee;">' + items[j][0] + '</td>'
+                    + '<td style="padding:5px 6px;text-align:right;border-bottom:1px solid #eee;">' + items[j][1] + '</td>';
+                refNode ? tbody.insertBefore(tr, refNode) : tbody.appendChild(tr);
+            }
+        }
+    </script>
+</body>
+</html>

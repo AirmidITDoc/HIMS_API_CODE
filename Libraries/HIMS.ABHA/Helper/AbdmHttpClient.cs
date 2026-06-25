@@ -60,7 +60,7 @@ namespace HIMS.ABHA.Helper
             return new ApiResult<T> { Success = true, Data = data, StatusCode = (int)response.StatusCode };
         }
 
-        public async Task<ApiResult<T>> GetAsync<T>(string url, string? xToken = null, string? txnId = null)
+        public async Task<ApiResult<T>> GetAsync<T>(string url, string? xToken = null, string? txnId = null,string? CmId=null)
         {
             var token = await _tokenService.GetAccessTokenAsync();
             using var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -71,6 +71,8 @@ namespace HIMS.ABHA.Helper
                 request.Headers.Add("X-Token", $"Bearer {xToken}");
             if (!string.IsNullOrEmpty(txnId))
                 request.Headers.Add("Transaction_Id", txnId);
+            if (!string.IsNullOrEmpty(CmId))
+                request.Headers.Add("X-CM-ID", CmId);
 
             var response = await _httpClient.SendAsync(request);
             var body = await response.Content.ReadAsStringAsync();
