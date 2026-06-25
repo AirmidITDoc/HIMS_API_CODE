@@ -9,7 +9,9 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
+using HIMS.Services.Inventory;
 using HIMS.Services.Masters;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,20 +23,21 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
     public class ExternalDoctorController : BaseController
     {
         private readonly IGenericService<MExternalDoctorMaster> _repository;
-        public ExternalDoctorController(IGenericService<MExternalDoctorMaster> repository)
+        private readonly IExternalDoctorService _IExternalDoctorService;
+
+        public ExternalDoctorController(IGenericService<MExternalDoctorMaster> repository, IExternalDoctorService repository1)
         {
             _repository = repository;
+            _IExternalDoctorService = repository1;
+
 
         }
-
-        //List API
-        [HttpPost]
-        [Route("[action]")]
-         //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        [HttpPost("List")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MExternalDoctorMaster> ExternalDoctorList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(ExternalDoctorList.ToGridResponse(objGrid, "ExternalDoctor List"));
+            IPagedList<ExternalDoctorMasterDto> ExternalDoctorMasterList = await _IExternalDoctorService.GetListAsync(objGrid);
+            return Ok(ExternalDoctorMasterList.ToGridResponse(objGrid, "External DoctorMaster List"));
         }
         [HttpGet("{id?}")]
          //    [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
