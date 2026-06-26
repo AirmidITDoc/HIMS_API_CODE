@@ -216,9 +216,9 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpGet("GetItemListByGenericName")]
-        public async Task<ApiResponse> GetItemListByGenericName(int ItemGenericNameId, int StoreId)
+        public async Task<ApiResponse> GetItemListByGenericName(string ItemGenericNameId,string ItemName, int StoreId)
         {
-            var resultList = _ItemMasterServices.GetItemListByGenericName(ItemGenericNameId, StoreId);
+            var resultList = _ItemMasterServices.GetItemListByGenericName(ItemGenericNameId, ItemName, StoreId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List By Generic Name.", resultList);
         }
     }

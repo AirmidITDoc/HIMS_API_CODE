@@ -28,7 +28,7 @@ namespace HIMS.Services.Inventory
         Task<List<NewItemListForBatchPopDTO>> NewGetItemListForSalesBatchPop(int StoreId, int ItemId);
         Task<List<ItemListForSalesPageDTO>> NewGetItemListForSalesPage(int StoreId, string ItemName);
         List<GETProcItemListForBatchDTO> GetItemListForBatch(int StoreId, int ItemId);
-        List<ItemListByGenericName> GetItemListByGenericName(int ItemGenericNameId, int StoreId);
+        List<ItemListByGenericName> GetItemListByGenericName(string ItemGenericNameId, string ItemName, int StoreId);
 
 
 
