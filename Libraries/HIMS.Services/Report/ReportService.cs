@@ -11254,21 +11254,37 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
                         html = html.Replace("{{PONo}}", dt.GetColValue("PONo"));
 
-                        html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
+                        //html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
 
-                        string finalamt = conversion(dt.GetColValue("NetAmount").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
-                        //string finalamt = ConvertNumbertoWords(dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace().Count());
+                        //string finalamt = conversion(dt.GetColValue("NetAmount").ConvertToDouble().To2DecimalPlace());
                         //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
-                        string NetAmount = ConvertNumbertoWords(dt.GetColValue("NetAmount").ConvertToDouble().To2DecimalPlace().Count());
-                        html = html.Replace("{{NetAmount}}", finalamt.ToString().ToUpper());
+                        ////string finalamt = ConvertNumbertoWords(dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace().Count());
+                        ////html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                        //string NetAmount = ConvertNumbertoWords(dt.GetColValue("NetAmount").ConvertToDouble().To2DecimalPlace().Count());
+                        //html = html.Replace("{{NetAmount}}", finalamt.ToString().ToUpper());
 
-                        html = html.Replace("{{chkdiscflag}}", dt.GetColValue("T_TotalDiscAmount").ConvertToDouble() > 0 ? "block" : "none");
+                        //html = html.Replace("{{chkdiscflag}}", dt.GetColValue("T_TotalDiscAmount").ConvertToDouble() > 0 ? "block" : "none");
 
 
-                        html = html.Replace("{{chkponoflag}}", dt.GetColValue("PONo").ConvertToDouble() != 0 ? "table-row " : "none");
+                        //html = html.Replace("{{chkponoflag}}", dt.GetColValue("PONo").ConvertToDouble() != 0 ? "table-row " : "none");
 
 
+
+                        //return html;
+                        html = html.Replace("{{PrintStoreName}}",  dt.GetColValue("PrintStoreName"));
+                        // Total Net Amount
+                        html = html.Replace("{{NetAmount}}", T_TotalNETAmount.ToString("F2"));
+
+                        // Total Amount In Words
+                        string finalamtWords =   conversion(T_TotalNETAmount.ToString("F2"));
+
+                        html = html.Replace("{{finalamt}}", finalamtWords.ToUpper());
+
+
+
+                        html = html.Replace("{{chkdiscflag}}", dt.GetColValue("T_TotalDiscAmount") .ConvertToDouble() > 0  ? "block" : "none");
+
+                        html = html.Replace("{{chkponoflag}}",   dt.GetColValue("PONo").ConvertToDouble() != 0? "table-row": "none");
 
                         return html;
 

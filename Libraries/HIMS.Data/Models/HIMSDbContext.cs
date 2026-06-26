@@ -16747,33 +16747,23 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PcpndtprocessId).HasColumnName("PCPNDTProcessId");
 
-                entity.Property(e => e.ChildrenCount).HasMaxLength(50);
+                entity.Property(e => e.Abhanumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("ABHANumber");
 
                 entity.Property(e => e.ConsentDate).HasColumnType("datetime");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.DaughtersDetails).HasMaxLength(255);
-
-                entity.Property(e => e.Indication).HasMaxLength(50);
-
-                entity.Property(e => e.IndicationofMtp)
-                    .HasMaxLength(50)
-                    .HasColumnName("IndicationofMTP");
+                entity.Property(e => e.IndicationofMtp).HasColumnName("IndicationofMTP");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Mperiod)
-                    .HasMaxLength(50)
-                    .HasColumnName("MPeriod");
-
-                entity.Property(e => e.NonInvasive).HasMaxLength(50);
+                entity.Property(e => e.Mperiod).HasColumnName("MPeriod");
 
                 entity.Property(e => e.Opipid).HasColumnName("OPIPID");
 
                 entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
-
-                entity.Property(e => e.Prenatal).HasMaxLength(50);
 
                 entity.Property(e => e.ProcedureDate).HasColumnType("datetime");
 
@@ -16781,13 +16771,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.RelativeName).HasMaxLength(255);
 
-                entity.Property(e => e.ResultConveyedto).HasMaxLength(50);
-
                 entity.Property(e => e.ResultDate).HasColumnType("datetime");
-
-                entity.Property(e => e.SonsDetails).HasMaxLength(50);
-
-                entity.Property(e => e.TestResult).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TPcpndprocessDetail>(entity =>

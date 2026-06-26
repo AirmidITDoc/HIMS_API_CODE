@@ -64,6 +64,8 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public long? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public string? Address { get; set; }
+        public string? Abhanumber { get; set; }
 
         public virtual ICollection<TPcpndprocessDetail> TPcpndprocessDetails { get; set; }
     }
