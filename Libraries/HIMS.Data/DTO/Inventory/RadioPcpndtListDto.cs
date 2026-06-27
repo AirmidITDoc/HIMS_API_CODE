@@ -63,12 +63,16 @@ namespace HIMS.Data.DTO.Inventory
         public string? ConsentDate { get; set; }
         public long? DeclarationDoctorid { get; set; }
         public long? CreatedBy { get; set; }
-        public string AbhaAddress { get; set; }
-        public string ABHANumber { get; set; }
+        public string? AbhaAddress { get; set; }
+        public string? ABHANumber { get; set; }
         public string Refrancedoctor { get; set; }
         public string CondDoctor { get; set; }
         public string? ProcedureDate { get; set; }
         public string? DeclarationDoctor { get; set; }
+        public long? ConsultantDocId { get; set; }
+        public string? IndicationDesc { get; set; }
+        public bool? IndicationValues { get; set; }
+
 
     }
 }
