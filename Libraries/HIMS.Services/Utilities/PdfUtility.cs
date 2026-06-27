@@ -1494,7 +1494,7 @@ namespace HIMS.Services.Utilities
                     }
                 }
 
-                html = html.Replace("{{Image}}", image);
+                html = html.Replace("{{ImageSource}}", image);
 
                 html = html.Replace("{{chkImgFlag}}", string.IsNullOrWhiteSpace(imageFileName) ? "none" : "inline-block"
                 );
