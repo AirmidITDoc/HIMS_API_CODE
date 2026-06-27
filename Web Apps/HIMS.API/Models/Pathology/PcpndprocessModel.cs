@@ -55,6 +55,8 @@ namespace HIMS.API.Models.Pathology
         public long? AnyOther2 { get; set; }
         public DateTime? ConsentDate { get; set; }
         public long? DeclarationDoctorid { get; set; }
+        public string? Address { get; set; }
+        public string? Abhanumber { get; set; }
         public List<PcpndprocessDetailModel> TPcpndprocessDetails { get; set; }
 
     }
