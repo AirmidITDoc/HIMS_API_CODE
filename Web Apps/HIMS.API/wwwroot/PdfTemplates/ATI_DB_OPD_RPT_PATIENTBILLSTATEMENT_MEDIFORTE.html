@@ -207,7 +207,7 @@
                     var userPart = userName ? ' &nbsp;&nbsp;|&nbsp;&nbsp; UserName : ' + userName : '';
                     var hdr = document.createElement('tr');
                     hdr.style.cssText = 'font-size:18px;font-weight:bold;background:#f2f2f2;';
-                    hdr.innerHTML = '<td colspan="5" style="border:1px solid #000;padding:6px;">'
+                    hdr.innerHTML = '<td colspan="5" style="border:1px solid #000;border-top:2px solid #000;padding:6px;">'
                         + 'Bill Date : ' + fmtDate + timePart
                         + ' &nbsp;&nbsp;|&nbsp;&nbsp; Bill No : ' + billNo
                         + userPart + '</td>';
@@ -275,15 +275,15 @@
                 ['Net Amount', net.toFixed(2)],
                 ['Paid Amount', paid.toFixed(2)]
             ];
-            if (refNo && refNo.trim() !== '') items.push(['Reference No', refNo]);
-            items.push(['Pay Mode', payMode]);
+            var payModeDisplay = payMode + (refNo && refNo.trim() !== '' ? ' | ' + refNo : '');
+            items.push(['Pay Mode', payModeDisplay]);
 
             for (var j = 0; j < items.length; j++) {
                 var tr = document.createElement('tr');
-                tr.style.cssText = 'font-size:15px;font-weight:bold;background:#fafafa;';
+                tr.style.cssText = 'font-size:15px;font-weight:bold;';
                 tr.innerHTML =
-                    '<td colspan="4" style="padding:5px 6px;text-align:right;border-bottom:1px solid #eee;">' + items[j][0] + '</td>'
-                    + '<td style="padding:5px 6px;text-align:right;border-bottom:1px solid #eee;">' + items[j][1] + '</td>';
+                    '<td colspan="4" style="padding:5px 6px;text-align:right;">' + items[j][0] + '</td>'
+                    + '<td style="padding:5px 6px;text-align:right;">' + items[j][1] + '</td>';
                 refNode ? tbody.insertBefore(tr, refNode) : tbody.appendChild(tr);
             }
         }
