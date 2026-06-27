@@ -75,4 +75,10 @@ namespace HIMS.Data.DTO.Inventory
 
 
     }
+    public class IndicationListDto
+    {
+        public string? IndicationDesc { get; set; }
+        public bool? IndicationValues { get; set; }
+    }
+
 }

@@ -14,6 +14,8 @@ namespace HIMS.Services.Pathlogy
         Task InsertAsync(TPcpndprocess ObjTPcpndprocess, int UserId, string Username);
         Task UpdateAsync(TPcpndprocess ObjTPcpndprocess, int UserId, string Username, string[]? ignoreColumns = null);
         Task<IPagedList<RadioPcpndtListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<IndicationListDto>> GetList(GridRequestModel objGrid);
+
 
 
 

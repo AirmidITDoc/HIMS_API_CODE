@@ -24,7 +24,10 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<RadioPcpndtListDto>(model, "ps_Rtrv_RadioPcpndtList");
         }
-
+        public virtual async Task<IPagedList<IndicationListDto>> GetList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IndicationListDto>(model, "ps_RtrvIndicationbyProcessId");
+        }
 
 
         public virtual async Task InsertAsync( TPcpndprocess ObjTPcpndprocess, int UserId,string Username)

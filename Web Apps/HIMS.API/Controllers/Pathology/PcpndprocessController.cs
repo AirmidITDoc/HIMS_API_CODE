@@ -39,6 +39,15 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(RadioPcpndtList.ToGridResponse(objGrid, "RadioPcpndt List"));
         }
 
+       
+
+        [HttpPost("IndicationtList")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> IndicationList(GridRequestModel objGrid)
+        {
+            IPagedList<IndicationListDto> IndicationtList = await _IPcpndprocesService.GetList(objGrid);
+            return Ok(IndicationtList.ToGridResponse(objGrid, "Indicationt  List"));
+        }
 
         [HttpPost("Insert")]
         //[Permission]
