@@ -192,7 +192,7 @@ namespace HIMS.API.Controllers.ABHA.M1
         [HttpPost("aadhaar/profile")]
         public async Task<ApiResponse> GetProfile([FromBody] ProfileRequestDto dto)
         {
-            var result = await _abhaService.GetAbhaProfileAsync(dto.Token);
+            var result = await _abhaService.GetAbhaProfileAsync(dto.Token, dto.IsAddress);
             if (result.Success)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Profile retrieved successfully.", result.Data);
             else
@@ -217,7 +217,7 @@ namespace HIMS.API.Controllers.ABHA.M1
         [HttpPost("aadhaar/qr")]
         public async Task<ApiResponse> GetQr([FromBody] ProfileRequestDto dto)
         {
-            var result = await _abhaService.GetAbhaQrCodeAsync(dto.Token);
+            var result = await _abhaService.GetAbhaQrCodeAsync(dto.Token, dto.IsAddress);
             if (result.Success)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "QR code retrieved successfully.", Convert.ToBase64String(result.Data));
             else
