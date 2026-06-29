@@ -1,0 +1,499 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>FORM PCPNDT</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        .page {
+            width: 900px;
+            margin: auto;
+            line-height: 1.5;
+        }
+
+        .page-break {
+            page-break-after: always;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .sub {
+            font-size: 15px;
+        }
+
+        .line {
+            border-bottom: 2px solid black;
+            margin-top: 10px;
+        }
+
+        .section {
+            margin-top: 15px;
+        }
+
+        .row {
+            margin-bottom: 10px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .box {
+            border: 1px solid black;
+            padding: 5px;
+            display: inline-block;
+            min-width: 350px;
+        }
+
+        .inline {
+            display: inline-block;
+        }
+
+        .space {
+            margin-left: 30px;
+        }
+
+        .address {
+            padding-left: 15px;
+        }
+
+        .chk {
+            margin-bottom: 8px;
+        }
+
+        .result-box {
+            border: 1px solid black;
+            padding: 10px;
+            min-height: 80px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== PAGE 1 ==================== -->
+    <div class="page">
+
+        <div class="center">
+            <div class="title">PRE CONCEPTION AND PRE - NATAL DIAGNOSTIC TECHNIQUES</div>
+            <div class="title">(PROHIBITION OF SEX SELECTION) ACT 1994 (AMENDMENT RULES 2014)</div>
+            <br>
+            <div style="font-size:26px;font-weight:bold">Form F</div>
+            <div class="sub">See Proviso to Section 4[3] rule 9(4) and rule 10(1A)</div>
+            <br>
+            <div class="bold">
+                FORM FOR MAINTENANCE OF RECORD IN CASE OF PRENATAL DIAGNOSTIC TEST /
+                PROCEDURE BY GENETIC CLINIC / ULTRASOUND CLINIC / IMAGING CENTRE
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="section"><i>Section A : To be filled in for all Diagnostic Procedures / Tests</i></div>
+
+        <div class="row">
+            <b>1. Name and complete address of Genetic Clinic / Ultrasound Clinic / Imaging Centre :</b>
+            <br><br>
+                <span style="font-size: 18px;font-weight: bold;text-align: center;color: rgb(1, 58, 72); ">
+                    SANE GURUJI AROGYA KENDRA
+                </span>   
+        </div>
+
+        <div class="row">
+        <b>2. Registration No. (Under PC &amp; PNDT ) :</b>
+        <span class="space">{{RegNo}}</span>
+    </div>
+        <!--<div class="row">
+            <b>2. Registration No. </b>
+            <span class="space">{{RegNo}}</span>
+        </div>-->
+
+        <div class="row">
+            <b>3. Patient's Name :</b>
+            <span class="box">{{PatientName}}</span>
+            <span class="space">
+                <b>Age :</b> {{Age}} Years &nbsp;&nbsp; {{AgeMonth}} Months
+            </span>
+        </div>
+
+        <div class="row"><b>4. Total Number of living children :</b> {{ChildrenCount}}</div>
+        <div class="row">(a). Number of living sons : {{SonsDetails}}</div>
+        <div class="row">(b). Number of living daughters : {{DaughtersDetails}}</div>
+
+        <div class="row">
+            <b>5. Husband's / Wife's / Father's / Mother's Name :</b>
+            <span class="space">{{RelativeName}}</span>
+        </div>
+
+        <div class="row">
+            <b>6. Full postal address of patient with Contact Number</b>
+            <div class="address">
+                <!--{{Occ. No.2 B& C Wing. Sr. No. 165A,Pt.No. 195-208 Malwadi, Hadapsar, Pune.}}<br>-->
+                <span style="font-size: 16px ;font-weight: bold;text-align: center;color: rgb(1, 58, 72);  ">
+                    Occ. No.2 B& C Wing. Sr. No. 165A,Pt.No. 195-208 Malwadi, Hadapsar, Pune.
+                </span>
+                {{MobileNo}}
+            </div>
+        </div>
+
+        <div class="row">
+            <b>7. (a) Referred by</b><br><br>
+            {{CondDoctor}}<br>
+            {{ConDoctorAdress}}
+        </div>
+
+        <div class="row">(Referral slips to be preserved carefully with Form F)</div>
+
+        <div class="row">
+            Self - Referral by Gynecologist / Radiologist /
+            Registered Medical Practitioner conducting diagnostic procedures
+        </div>
+
+        <div class="row">(Referral note with indications and case papers to be preserved)</div>
+
+        <div class="row">
+            <b>8. Last Menstrual period / weeks of pregnancy :</b>
+            <span class="space">{{MPeriod}}</span>
+        </div>
+
+        <div class="section">
+            <b>Section B : To be filled in for performing non-invasive diagnostic procedures / Tests only</b>
+        </div>
+
+        <div class="row">
+            <b>9. Name of doctor performing procedure/s :</b><br>
+            {{DoctorPerform}}<br>
+            {{DoctorRegNo}}
+        </div>
+
+        <div class="row">
+            <b>10. Indication/s for diagnosis procedure :</b><br>
+            {{Diagnosis}}
+        </div>
+
+    </div>
+    <!-- ==================== END PAGE 1 ==================== -->
+
+    <div class="page-break"></div>
+
+    <!-- ==================== PAGE 2 (Indications Checklist) ==================== -->
+    <div class="page">
+
+        <p>(Specify with Reference to the request made in referral slip or self-referral note)</p>
+        <p>(Ultrasonography prenatal diagnosis during pregnancy should only be performed when indicated. Put a Tick mark against applicable indication.)</p>
+
+        <div class="chk">{{Checked1}} &nbsp; i. To diagnose intra-uterine and/or ectopic pregnancy and confirm viability.</div>
+        <div class="chk">{{Checked2}} &nbsp; ii. Estimation of gestational age (dating).</div>
+        <div class="chk">{{Checked3}} &nbsp; iii. Detection of number of fetuses and their chorionicity.</div>
+        <div class="chk">{{Checked4}} &nbsp; iv. Suspected pregnancy with IUCD in-situ / contraceptive failure.</div>
+        <div class="chk">{{Checked5}} &nbsp; v. Vaginal bleeding / leaking.</div>
+        <div class="chk">{{Checked6}} &nbsp; vi. Follow-up of cases of abortion.</div>
+        <div class="chk">{{Checked7}} &nbsp; vii. Assessment of cervical canal and diameter of internal os.</div>
+        <div class="chk">{{Checked8}} &nbsp; viii. Discrepancy between uterine size and period of amenorrhea.</div>
+        <div class="chk">{{Checked9}} &nbsp; ix. Suspected adnexal / uterine pathology.</div>
+        <div class="chk">{{Checked10}} &nbsp; x. Detection of chromosomal abnormalities, fetal structural defects and follow-up.</div>
+        <div class="chk">{{Checked11}} &nbsp; xi. Evaluate fetal presentation and position.</div>
+        <div class="chk">{{Checked12}} &nbsp; xii. Assessment of liquor amnii.</div>
+        <div class="chk">{{Checked13}} &nbsp; xiii. Preterm labour / membrane rupture.</div>
+        <div class="chk">{{Checked14}} &nbsp; xiv. Evaluation of placental position and abnormalities.</div>
+        <div class="chk">{{Checked15}} &nbsp; xv. Evaluation of umbilical cord.</div>
+        <div class="chk">{{Checked16}} &nbsp; xvi. Evaluation of previous Caesarean Section scars.</div>
+        <div class="chk">{{Checked17}} &nbsp; xvii. Evaluation of fetal growth and wellbeing.</div>
+        <div class="chk">{{Checked18}} &nbsp; xviii. Color flow mapping and Doppler studies.</div>
+        <div class="chk">{{Checked19}} &nbsp; xix. Ultrasound guided procedures and follow-up.</div>
+        <div class="chk">{{Checked20}} &nbsp; xx. Adjunct diagnostic / therapeutic invasive interventions.</div>
+        <div class="chk">{{Checked21}} &nbsp; xxi. Observation of intra-partum events.</div>
+        <div class="chk">{{Checked22}} &nbsp; xxii. Medical / Surgical conditions complicating pregnancy.</div>
+        <div class="chk">{{Checked23}} &nbsp; xxiii. Research / Scientific studies.</div>
+
+    </div>
+    <!-- ==================== END PAGE 2 ==================== -->
+
+    <div class="page-break"></div>
+
+    <!-- ==================== PAGE 3 ==================== -->
+    <div class="page">
+
+        <div class="row">
+            <b>11. Procedure carried out (non-invasive) (Put a "Tick" on the appropriate procedure)</b>
+            <br><br>
+            {{UltrasoundChecked}} &nbsp; i. Ultrasound
+            <br><br>
+            <div style="padding-left:25px">
+                ( Important Note : Ultrasound is not indicated / advised / performed
+                to determine sex of fetus except for diagnosis of sex-linked disease
+                such as Duchene Muscular Dystrophy, Hemophilia A &amp; B etc.)
+            </div>
+            <br>
+            ii. Any other (specify) _____________________ {{AnyOther1}}
+        </div>
+
+        <div class="row">
+            <b>12. Date on which declaration of pregnant woman/person was obtained :</b>
+            <span class="space">{{ConsentDate}}</span>
+        </div>
+
+        <div class="row">
+            <b>13. Date on which procedure carried out :</b>
+            <span class="space">{{ProcessDate}}</span>
+        </div>
+
+        <div class="row">
+            <b>14. Result of the non-invasive procedure carried out (report in brief of the test including ultrasound carried out)</b>
+            <br><br>
+                <div style="border:1px solid black;padding:10px;min-height:120px;">
+                    {{ResultDate}}
+                </div>
+        </div>
+
+        <div class="row">
+            <b>15. Result of pre-natal diagnostic procedures was conveyed to :</b>
+            <br><br>
+            {{PatientName}}
+            <br><br>
+            <b>On :</b> {{ProcessDate}}
+        </div>
+
+        <div class="row">
+            <b>16. Any indication for MTP as per abnormality detected in diagnostic procedures / tests :</b>
+            <br><br>
+                <div style="border:1px solid black;padding:10px;min-height:80px;">
+                    {{indicationofMtp}}
+                </div>
+        </div>
+
+        <br><br><br>
+
+        <table width="100%">
+            <tr>
+                <td><b>Date :</b> {{DoctorDate}}</td>
+                <td align="right"><b>Place :</b> {{Place}}</td>
+            </tr>
+        </table>
+
+        <br><br><br><br>
+
+        <div style="text-align:right">
+            <b>Dr. {{CondDoctor}}</b><br>
+            {{DoctorRegNo}}<br><br>
+            {{DoctorSeal}}<br>
+            Name, Signature and Registration Number with Seal of the Gynecologist /<br>
+            Radiologist / Registered Medical Practitioner performing Diagnostic Procedures
+        </div>
+
+    </div>
+    <!-- ==================== END PAGE 3 ==================== -->
+
+    <div class="page-break"></div>
+
+    <!-- ==================== PAGE 4 (Section C) ==================== -->
+    <div class="page">
+
+        <div class="section"><b>Section C : To be filled for performing invasive Procedures / Tests only</b></div>
+        <br>
+
+        <div class="row">
+            <b>17. Name of doctor/s performing procedure/s :</b><br><br>
+            {{ProcedureDoctor}}
+        </div>
+
+        <div class="row">
+            <b>18. History of genetic / medical disease in family (specify)</b><br><br>
+            {{FamilyHistory}}<br><br>
+            Clinical {{Clinical}} &nbsp;&nbsp;
+            Bio-Chemical {{BioChemical}} &nbsp;&nbsp;
+            Cytogenetic {{Cytogenetic}} &nbsp;&nbsp;
+            Other {{HistoryOther}}
+        </div>
+
+        <div class="row">
+            <b>19. Indication/s for diagnosis procedure</b><br><br>
+            <b>A. Previous child/children with :</b><br><br>
+            {{Chromosomal}} Chromosomal disorders<br>
+            {{Metabolic}} Metabolic disorders<br>
+            {{Congenitalanomaly}} Congenital anomaly<br>
+            {{MentalDisability}} Mental Disability<br>
+            {{Haemoglobinopathy}} Haemoglobinopathy<br>
+            {{SexLinkeddisorder}} Sex Linked disorder<br>
+            {{Singlegenedisorder}} Single gene disorder<br>
+            {{AnyOther1}} Any Other : {{AnyOther1}}
+            <br><br>
+            <b>B. Advanced maternal age (35 years)</b> {{Mage}}
+            <br><br>
+            <b>C. Mother/Father/Sibling has genetic disease</b> {{GeneticDisease}}
+            <br><br>
+            <b>D. Any Other specify :</b> {{AnyOtherIndication}}
+        </div>
+
+        <div class="row">
+            <b>20. Date on which consent of pregnant woman/person was obtained in Form G</b><br><br>
+            {{ConsentDate}}
+        </div>
+
+        <div class="row">
+            <b>21. Invasive procedures carried out (Tick appropriate indication)</b><br><br>
+            {{Amniocentesis}} &nbsp; i. Aminiocentesis<br>
+            {{ChorionicVilliaspiration}} &nbsp; ii. Chorionic Villi aspiration<br>
+            {{FetalBiopsy}} &nbsp; iii. Fetal Biopsy<br>
+            {{Cordocentesis}} &nbsp; iv. Cordocentesis<br>
+            {{AnyOther2}} Any Other : {{AnyOther2}}
+        </div>
+
+        <div class="row">
+            <b>22. Any complication/s of invasive procedure :</b><br><br>
+            <div class="result-box">{{Complication}}</div>
+        </div>
+
+        <div class="row">
+            <b>23. Additional tests recommended</b><br><br>
+            {{Chromosomal}} &nbsp; i. Chromosomal Studies<br>
+            {{BiochemicalStudies}} &nbsp; ii. Biochemical Studies<br>
+            {{Molecular}} &nbsp; iii. Molecular Studies<br>
+            {{PreImplantation}} &nbsp; iv. Preimplantation gender diagnosis<br>
+            {{AnyOtherTest}} Any Other : {{AnyOtherTest}}
+        </div>
+
+        <div class="row">
+            <b>24. Result of procedures / Tests carried out :</b>
+            <div class="result-box">{{TestResult}}</div>
+        </div>
+
+        <div class="row">
+            <b>25. Date on which procedures carried out :</b> {{ProcedureDate}}
+        </div>
+
+        <div class="row">
+            <b>26. Result conveyed to :</b><br><br>
+            {{ResultConveyed}}
+        </div>
+
+        <div class="row">
+            <b>27. Any indication for MTP :</b><br><br>
+            {{MTPResult}}
+        </div>
+
+        <div class="row">
+            <b>Basis of diagnosis :</b> {{DiagnosisBasis}}
+        </div>
+
+        <br><br>
+
+        <table width="100%">
+            <tr>
+                <td>Date : {{SignDate}}</td>
+                <td align="right">Place : {{Place}}</td>
+            </tr>
+        </table>
+
+        <br><br><br>
+
+        <div style="text-align:right">
+            <b>{{CondDoctor}}</b><br>
+            {{DoctorRegNo}}<br><br>
+            Name, Signature and Registration Number with Seal of the<br>
+            Gynecologist / Radiologist / Registered Medical Practitioner
+        </div>
+
+    </div>
+    <!-- ==================== END PAGE 4 ==================== -->
+
+    <div class="page-break"></div>
+
+    <!-- ==================== PAGE 5 (Section D - Declaration) ==================== -->
+    <div class="page">
+
+        <div class="section"><b>SECTION D : Declaration</b></div>
+        <br>
+
+        <div class="row"><b>DECLARATION OF THE PERSON UNDERGOING PRENATAL DIAGNOSTIC TEST / PROCEDURE</b></div>
+
+        <div class="row">
+            I , Mr./Mrs./Ms.
+            <span class="box">{{PatientName}}</span>
+            declare that by undergoing Prenatal Diagnostic Test / Procedure,
+            I do not want to know the sex of my foetus.
+        </div>
+
+        <div class="row">
+            असे घोषित करते की, अल्ट्रा-सोनोग्राफी / चाचणी करून मी माझ्या गर्भाचे लिंग जाणून घेऊ इच्छित नाही.
+        </div>
+
+        <div class="row"><b>Date :</b> {{DeclarationDate}}</div>
+
+        <br><br>
+
+        <div class="row">
+            <b>Signature / Thumb impression of the person undergoing prenatal diagnostic test / procedure</b>
+        </div>
+
+        <div class="row">In Case of thumb impression :</div>
+
+        <table width="100%">
+            <tr>
+                <td>Identified by (Name)<br><br>________________</td>
+                <td>Age<br><br>_____</td>
+                <td>Sex<br><br>_____</td>
+            </tr>
+        </table>
+
+        <div class="row">Relation (if any) : ______________________________________</div>
+        <div class="row">Address &amp; Contact No : ______________________________________</div>
+        <div class="row">
+            Signature of person attesting thumb impression : _____________________
+            <span style="float:right">Date : __________</span>
+        </div>
+
+        <br><br><br>
+
+        <div class="row"><b>DECLARATION OF DOCTOR / PERSON CONDUCTING PRENATAL DIAGNOSTIC PROCEDURE / TEST</b></div>
+
+        <div class="row">
+            I , <b>Dr. {{CondDoctor}}</b>
+            (name of person conducting ultrasonography / image scanning)
+            declare that while conducting ultrasonography / image scanning on Ms.
+            <span class="box">{{PatientName}}</span>
+            I have neither detected nor disclosed the sex of her foetus to anybody in any manner.
+        </div>
+
+        <br><br>
+
+        <table width="100%">
+            <tr>
+                <td>Date : {{DoctorDate}}</td>
+                <td>Signature : __________________</td>
+            </tr>
+        </table>
+
+        <br><br><br><br><br>
+
+        <div style="text-align:right">
+            <b>Dr. {{DoctorName}}</b><br><br>
+            {{DoctorRegNo}}<br><br>
+            __________________________________<br>
+            Name in Capitals, Registration Number with Seal<br>
+            of Gynecologist / Radiologist / Registered Medical Practitioner<br>
+            Conducting Diagnostic Procedure
+        </div>
+
+    </div>
+    <!-- ==================== END PAGE 5 ==================== -->
+
+</body>
+</html>
