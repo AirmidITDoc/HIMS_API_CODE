@@ -23,7 +23,7 @@ namespace HIMS.ABHA.Models.M3
         public ConsentHip Hip { get; set; } = new ConsentHip();
 
         [JsonPropertyName("careContexts")]
-        public List<CareContext> CareContexts { get; set; } = new List<CareContext>();
+        public List<M3CareContext> CareContexts { get; set; } = new List<M3CareContext>();
 
         [JsonPropertyName("requester")]
         public ConsentRequester Requester { get; set; } = new ConsentRequester();
@@ -65,7 +65,7 @@ namespace HIMS.ABHA.Models.M3
         public string Id { get; set; } = string.Empty;
     }
 
-    public class CareContext
+    public class M3CareContext
     {
         [JsonPropertyName("patientReference")]
         public string PatientReference { get; set; } = string.Empty;
@@ -140,13 +140,13 @@ namespace HIMS.ABHA.Models.M3
     public class ConsentHiuOnNotifyRequest
     {
         [JsonPropertyName("acknowledgement")]
-        public List<ConsentAcknowledgement> Acknowledgement { get; set; } = new List<ConsentAcknowledgement>();
+        public List<M3ConsentAcknowledgement> Acknowledgement { get; set; } = new List<M3ConsentAcknowledgement>();
 
         [JsonPropertyName("response")]
         public ConsentOnNotifyResponse Response { get; set; } = new ConsentOnNotifyResponse();
     }
 
-    public class ConsentAcknowledgement
+    public class M3ConsentAcknowledgement
     {
         [JsonPropertyName("status")]
         public string Status { get; set; } = string.Empty;
@@ -170,10 +170,10 @@ namespace HIMS.ABHA.Models.M3
     public class HiuHealthInformationRequest
     {
         [JsonPropertyName("hiRequest")]
-        public HiRequestDetail HiRequest { get; set; } = new HiRequestDetail();
+        public M3HiRequestDetail HiRequest { get; set; } = new M3HiRequestDetail();
     }
 
-    public class HiRequestDetail
+    public class M3HiRequestDetail
     {
         [JsonPropertyName("consent")]
         public ConsentPatient Consent { get; set; } = new ConsentPatient(); // { "id": "..." } - reuse same shape
@@ -185,10 +185,10 @@ namespace HIMS.ABHA.Models.M3
         public string DataPushUrl { get; set; } = string.Empty;
 
         [JsonPropertyName("keyMaterial")]
-        public KeyMaterial KeyMaterial { get; set; } = new KeyMaterial();
+        public M3KeyMaterial KeyMaterial { get; set; } = new M3KeyMaterial();
     }
 
-    public class KeyMaterial
+    public class M3KeyMaterial
     {
         [JsonPropertyName("cryptoAlg")]
         public string CryptoAlg { get; set; } = string.Empty;
@@ -197,13 +197,13 @@ namespace HIMS.ABHA.Models.M3
         public string Curve { get; set; } = string.Empty;
 
         [JsonPropertyName("dhPublicKey")]
-        public DhPublicKey DhPublicKey { get; set; } = new DhPublicKey();
+        public M3DhPublicKey DhPublicKey { get; set; } = new M3DhPublicKey();
 
         [JsonPropertyName("nonce")]
         public string Nonce { get; set; } = string.Empty;
     }
 
-    public class DhPublicKey
+    public class M3DhPublicKey
     {
         [JsonPropertyName("expiry")]
         public string Expiry { get; set; } = string.Empty;
@@ -236,7 +236,7 @@ namespace HIMS.ABHA.Models.M3
         public Notifier Notifier { get; set; } = new Notifier();
 
         [JsonPropertyName("statusNotification")]
-        public StatusNotification StatusNotification { get; set; } = new StatusNotification();
+        public M3StatusNotification StatusNotification { get; set; } = new M3StatusNotification();
     }
 
     public class Notifier
@@ -248,7 +248,7 @@ namespace HIMS.ABHA.Models.M3
         public string Id { get; set; } = string.Empty;
     }
 
-    public class StatusNotification
+    public class M3StatusNotification
     {
         [JsonPropertyName("sessionStatus")]
         public string SessionStatus { get; set; } = string.Empty;
@@ -257,10 +257,10 @@ namespace HIMS.ABHA.Models.M3
         public string HipId { get; set; } = string.Empty;
 
         [JsonPropertyName("statusResponses")]
-        public List<StatusResponse> StatusResponses { get; set; } = new List<StatusResponse>();
+        public List<M3StatusResponse> StatusResponses { get; set; } = new List<M3StatusResponse>();
     }
 
-    public class StatusResponse
+    public class M3StatusResponse
     {
         [JsonPropertyName("careContextReference")]
         public string CareContextReference { get; set; } = string.Empty;
