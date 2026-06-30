@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>OPD Card</title>
+    <style>
+        html {
+            height: auto;
+        }
+    </style>
+</head>
+
+<body style="margin:0;padding:5px;font-family:Tahoma,Arial,sans-serif;font-size:13px;height:auto;">
+
+    <div style="width:800px;height:auto;margin:auto;background:#fff;border:1x solid #000;padding:5px;box-sizing:border-box;">
+
+        <!-- Header -->
+        <table style="width:100%;border-collapse:collapse;border:1px solid #000;">
+
+            <tr>
+
+                <td colspan="2" style="padding:6px;line-height:20px;">
+
+                    <div style="font-weight:bold;font-size:14px;">
+                        महाराष्ट्र आरोग्य मंडळ, सुमतीबाई शाह आयुर्वेद महाविद्यालय संचलित
+                    </div>
+
+                    <div style="font-size:22px;font-weight:bold;">
+                        आयुर्वेद रुग्णालय - साने गुरुजी आरोग्य केंद्र
+                    </div>
+
+                    <div style="font-size:14px;">
+                        (धर्मवीर), हडपसर, पुणे - ४११०२८.
+                    </div>
+
+                </td>
+
+                <td style="width:140px;border-left:1px solid #000;text-align:center;font-weight:bold;font-size:18px;">
+                    SGAK/F/01
+                </td>
+
+            </tr>
+
+            <tr>
+                <td colspan="3" style="border-top:1px solid #000;"></td>
+            </tr>
+
+            <tr>
+
+                <td style="padding:6px;width:45%;">
+                    <b>नाव :</b>
+                    <span style="font-size:18px;font-weight:bold;">
+                        {{PatientName}}
+                    </span>
+                </td>
+
+                <td style="padding:6px;width:25%;">
+                    एम.आर.क्र. :
+                    <b>{{RegNo}}</b>
+                </td>
+
+                <td style="padding:6px;">
+                    ओपीडी नं. :
+                    <b>{{OPDNo}}</b>
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td style="padding:6px;">
+                    <b>पत्ता :</b>
+                    {{Address}}
+                </td>
+
+                <td style="padding:6px;text-align:center;font-weight:bold;font-size:16px;">
+                    {{GenderName}}
+                </td>
+
+                <td></td>
+
+            </tr>
+
+            <tr>
+
+                <td></td>
+
+                <td colspan="2" style="padding:6px;">
+                    वय :
+                    {{AgeYear}}
+                </td>
+
+            </tr>
+
+        </table>
+
+        <!-- Current Complaint -->
+
+        <div style="height:210px;border-left:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;padding:8px;">
+
+            <div style="font-weight:bold;">
+                वर्तमान वेदना आणि वेदनावृत्त :
+            </div>
+
+        </div>
+
+        <!-- Diagnosis -->
+
+        <div style="border-left:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;padding:8px;">
+
+            <div style="font-weight:bold;margin-bottom:8px;">
+                रोगनिदान :
+            </div>
+
+            <table style="width:100%;border-collapse:collapse;">
+
+                <tr>
+
+                    <td style="width:45%;padding:4px;">
+                        अंतिम रजो दिनांक :
+                    </td>
+
+                    <td style="padding:4px;">
+                        अपेक्षित प्रसव दिनांक :
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td colspan="2" style="padding:4px;">
+                        प्रसव इतिहास (बालंतपण / गर्भपात / जिवंत अथवा मृत गर्भ शिशु इतिहास) :
+                        <span style="font-size:22px;font-weight:bold;letter-spacing:8px;">
+                            G P A L D
+                        </span>
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td colspan="2" style="padding:4px;">
+                        कुटुंब नियोजन : साधने / शस्त्रक्रिया
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td colspan="2" style="padding:4px;">
+                        रजोनिवृत्ती :
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+        <!-- Previous History -->
+
+        <div style="height:140px;border-left:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;padding:8px;">
+
+            <div style="font-weight:bold;">
+                पूर्वव्याधीवृत्त : (औषधी / शस्त्रक्रियांचा इतिहास)
+            </div>
+
+            <br><br><br>
+
+            <div style="font-weight:bold;">
+                औषधे / आहार असह्यता :
+            </div>
+
+        </div>
+
+        <!-- Treatment Table -->
+
+        <table style="width:100%;border-collapse:collapse;border:1px solid #000;">
+            <tr>
+                <td style="border:1px solid #000;width:12%;text-align:center;padding:5px;font-weight:bold;">
+                    तारीख
+                </td>
+                <td style="border:1px solid #000;width:22%;text-align:center;padding:5px;font-weight:bold;">
+                    लक्षणे
+                </td>
+                <td style="border:1px solid #000;width:30%;text-align:center;padding:5px;font-weight:bold;">
+                    चिकित्सा
+                </td>
+                <td style="border:1px solid #000;width:10%;text-align:center;padding:5px;font-weight:bold;">
+                    रोख
+                </td>
+                <td style="border:1px solid #000;width:10%;text-align:center;padding:5px;font-weight:bold;">
+                    मोफत
+                </td>
+                <td style="border:1px solid #000;width:10%;text-align:center;padding:5px;font-weight:bold;">
+                    सूट
+                </td>
+            </tr>
+            <!--ITEMS_SP1-->
+            <tr>
+                <td style="border:1px solid #000;padding:5px;vertical-align:top;text-align:center;">
+                    {{VisitDate|dd/MM/yyyy}}
+                </td>
+                <td style="border:1px solid #000;vertical-align:top;"></td>
+                <td style="border:1px solid #000;vertical-align:top;text-align:center;font-weight:bold;">
+                    {{ServiceName}}
+                </td>
+                <td style="border:1px solid #000;vertical-align:top;text-align:center;">
+                    {{NetAmount}}
+                </td>
+                <td style="border:1px solid #000;vertical-align:top;text-align:center;"></td>
+                <td style="border:1px solid #000;vertical-align:top;text-align:center;">
+                    {{ConcessionAmount}}
+                </td>
+            </tr>
+            <!--/ITEMS_SP1-->
+        </table>
+        <!-- Footer -->
+
+        <div style="margin-top:10px;font-size:11px;text-align:right;">
+
+            Login By : {{AddedByName}}
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+        </div>
+
+    </div>
+
+</body>
+</html>
