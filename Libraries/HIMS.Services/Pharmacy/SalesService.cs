@@ -283,14 +283,34 @@ namespace HIMS.Services.Users
                 odal.ExecuteNonQueryNew("ps_Update_T_SalDraHeader_IsClosed_1", CommandType.StoredProcedure, "", Hentity);
                 await _context.LogProcedureExecution(Hentity, nameof(TSalesDraftHeader), ObjDraftHeader.DsalesId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
                 // 4️⃣ Insert Payment
+                //foreach (var item in ObjTPaymentPharmacy)
+                //{
+                //    string[] Entity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
+                //                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+
+
+                //    TPaymentPharmacy objTPay = new();
+                //    objTPay = item;
+                //    objTPay.BillNo = ObjPayment.BillNo;
+
+                //    var pentity = item.ToDictionary();
+                //    foreach (var rProperty in pentity.Keys.ToList())
+                //    {
+                //        if (!Entity.Contains(rProperty))
+                //            pentity.Remove(rProperty);
+                //    }
+                //    string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_PaymentPharmacy", CommandType.StoredProcedure, "PaymentId", pentity);
+                //    item.PaymentId = Convert.ToInt32(VPaymentId);
+                //    await _context.LogProcedureExecution( pentity, nameof(TPaymentPharmacy), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId,  CurrentUserName);
+
+                //}
+
                 foreach (var item in ObjTPaymentPharmacy)
                 {
                     string[] Entity = { "PaymentId", "UnitId",  "BillNo", "Opdipdtype", "PaymentDate", "PaymentTime", "PayAmount", "TranNo", "BankName", "ValidationDate", "AdvanceUsedAmount","Comments", "PayMode", "OnlineTranNo",
-                                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
+                           "OnlineTranResponse","CompanyId","AdvanceId","RefundId","CashCounterId","TransactionType","IsSelfOrcompany","TranMode","CreatedBy","TransactionLabel"};
 
-
-                    TPaymentPharmacy objTPay = new();
-                    objTPay = item;
+                    TPaymentPharmacy objTPay = item;
                     objTPay.BillNo = ObjPayment.BillNo;
 
                     var pentity = item.ToDictionary();
@@ -299,10 +319,11 @@ namespace HIMS.Services.Users
                         if (!Entity.Contains(rProperty))
                             pentity.Remove(rProperty);
                     }
-                    string VPaymentId = odal.ExecuteNonQuery("ps_insert_T_PaymentPharmacy", CommandType.StoredProcedure, "PaymentId", pentity);
-                    item.PaymentId = Convert.ToInt32(VPaymentId);
-                    await _context.LogProcedureExecution( pentity, nameof(TPaymentPharmacy), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId,  CurrentUserName);
 
+                    string VPaymentId = odal.ExecuteNonQueryNew("ps_insert_T_PaymentPharmacy", CommandType.StoredProcedure, "PaymentId", pentity);
+                    item.PaymentId = Convert.ToInt32(VPaymentId);
+
+                    await _context.LogProcedureExecution(pentity, nameof(TPaymentPharmacy), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                 }
 
 
