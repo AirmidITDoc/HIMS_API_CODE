@@ -653,7 +653,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -6853,8 +6853,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UpdatedOn)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.Value).HasMaxLength(250);
             });
 
             modelBuilder.Entity<MCountryMaster>(entity =>
@@ -16749,33 +16747,23 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PcpndtprocessId).HasColumnName("PCPNDTProcessId");
 
-                entity.Property(e => e.ChildrenCount).HasMaxLength(50);
+                entity.Property(e => e.Abhanumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("ABHANumber");
 
                 entity.Property(e => e.ConsentDate).HasColumnType("datetime");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.DaughtersDetails).HasMaxLength(255);
-
-                entity.Property(e => e.Indication).HasMaxLength(50);
-
-                entity.Property(e => e.IndicationofMtp)
-                    .HasMaxLength(50)
-                    .HasColumnName("IndicationofMTP");
+                entity.Property(e => e.IndicationofMtp).HasColumnName("IndicationofMTP");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Mperiod)
-                    .HasMaxLength(50)
-                    .HasColumnName("MPeriod");
-
-                entity.Property(e => e.NonInvasive).HasMaxLength(50);
+                entity.Property(e => e.Mperiod).HasColumnName("MPeriod");
 
                 entity.Property(e => e.Opipid).HasColumnName("OPIPID");
 
                 entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
-
-                entity.Property(e => e.Prenatal).HasMaxLength(50);
 
                 entity.Property(e => e.ProcedureDate).HasColumnType("datetime");
 
@@ -16783,13 +16771,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.RelativeName).HasMaxLength(255);
 
-                entity.Property(e => e.ResultConveyedto).HasMaxLength(50);
-
                 entity.Property(e => e.ResultDate).HasColumnType("datetime");
-
-                entity.Property(e => e.SonsDetails).HasMaxLength(50);
-
-                entity.Property(e => e.TestResult).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TPcpndprocessDetail>(entity =>
@@ -16801,8 +16783,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PcpndprocessDetId).HasColumnName("PCPNDProcessDetId");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.IndicationDesc).HasMaxLength(50);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 

@@ -596,9 +596,6 @@ namespace HIMS.Services.Utilities
 
             try
             {
-                Log("=== PDF Generation Started ===");
-                Log($"Step 1: Received HTML (length={html?.Length ?? 0})");
-
                 if (string.IsNullOrWhiteSpace(html))
                     throw new ArgumentException("HTML content is empty.");
 
@@ -608,15 +605,16 @@ namespace HIMS.Services.Utilities
                 string folderPath = Path.Combine(storageBasePath, folderName, dateFolder);
                 Directory.CreateDirectory(folderPath);
 
-                string newFileName = Path.Combine(folderPath, string.IsNullOrWhiteSpace(fileName) ? Guid.NewGuid().ToString() : fileName) + ".pdf";
+                string newFileName = Path.Combine(
+                    folderPath,
+                    string.IsNullOrWhiteSpace(fileName) ? Guid.NewGuid().ToString() : fileName
+                ) + ".pdf";
 
-                int[] delays = { 2000, 5000, 8000, 12000, 15000 };
+                int[] delays = { 2000, 5000, 8000, 12000 };
                 byte[] bytes = null;
 
                 foreach (var delay in delays)
                 {
-                    Log($"Attempt with JSDelay={delay} ms (elapsed={stopwatch.ElapsedMilliseconds} ms)");
-
                     var doc = new HtmlToPdfDocument()
                     {
                         GlobalSettings = {
@@ -624,50 +622,46 @@ namespace HIMS.Services.Utilities
                     Orientation = pageOrientation,
                     PaperSize = paperSize,
                     Margins = new MarginSettings { Top = 10, Bottom = 10, Left = 10, Right = 10 }
-                        },
+                },
                         Objects = {
                     new ObjectSettings {
                         PagesCount = true,
                         HtmlContent = html,
                         WebSettings = { DefaultEncoding = "utf-8", LoadImages = true },
                         UseLocalLinks = true,
-                        LoadSettings = new LoadSettings {
-                            BlockLocalFileAccess = false,
-                            JSDelay = delay,
-                            StopSlowScript = false
-                                }
-                         }
-                        }
+                        LoadSettings = new LoadSettings {BlockLocalFileAccess = false, JSDelay = delay, StopSlowScript = false}
+                    }
+                }
                     };
 
                     try
                     {
-                        bytes = converter.Convert(doc);
+                        converter.Error += (sender, e) => Log("wkhtmltopdf error: " + e.Message);
+                        converter.Warning += (sender, e) => Log("wkhtmltopdf warning: " + e.Message);
 
-                        Log($"Conversion finished with JSDelay={delay} (duration={stopwatch.ElapsedMilliseconds} ms)");
+                        bytes = converter.Convert(doc);
 
                         if (bytes != null && bytes.Length > 0)
                         {
                             File.WriteAllBytes(newFileName, bytes);
-                            Log($"PDF generated at {newFileName}, size={bytes.Length} bytes");
 
                             if (bytes.Length < 5000)
                             {
                                 string snapshotFile = Path.Combine(folderPath, $"{Guid.NewGuid():N}_FailedSnapshot.html");
                                 File.WriteAllText(snapshotFile, html);
-                                Log($"* Blank PDF detected (size={bytes.Length}). HTML snapshot saved at {snapshotFile}");
+                                Log($"* Blank/small PDF detected (size={bytes.Length}). HTML snapshot saved at {snapshotFile}");
                             }
 
                             return new Tuple<byte[], string>(bytes, newFileName);
                         }
                         else
                         {
-                            Log($"Empty output with JSDelay={delay} ms");
+                            Log($"* Empty output with JSDelay={delay} ms");
                         }
                     }
                     catch (Exception ex)
                     {
-                        Log($"Exception with JSDelay={delay} ms: {ex.Message}");
+                        Log($"* Exception with JSDelay={delay} ms: {ex.Message}");
                     }
                 }
 
@@ -681,9 +675,14 @@ namespace HIMS.Services.Utilities
             finally
             {
                 stopwatch.Stop();
-                Log($"=== PDF Generation Ended (total time={stopwatch.ElapsedMilliseconds} ms) ===");
+                if (stopwatch.ElapsedMilliseconds > 10000)
+                {
+                    Log($"* Long execution time: {stopwatch.ElapsedMilliseconds} ms");
+                }
             }
         }
+        
+
 
         //public Tuple<byte[], string> GeneratePdfFromHtmlAsync(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
         //{
@@ -1494,7 +1493,7 @@ namespace HIMS.Services.Utilities
                     }
                 }
 
-                html = html.Replace("{{Image}}", image);
+                html = html.Replace("{{ImageSource}}", image);
 
                 html = html.Replace("{{chkImgFlag}}", string.IsNullOrWhiteSpace(imageFileName) ? "none" : "inline-block"
                 );

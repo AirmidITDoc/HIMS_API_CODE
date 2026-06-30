@@ -1,12 +1,15 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Microsoft.EntityFrameworkCore;
 
 namespace HIMS.Services.Pathlogy
 {
@@ -17,7 +20,16 @@ namespace HIMS.Services.Pathlogy
         {
             _context = HIMSDbContext;
         }
-      
+        public virtual async Task<IPagedList<RadioPcpndtListDto>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<RadioPcpndtListDto>(model, "ps_Rtrv_RadioPcpndtList");
+        }
+        public virtual async Task<IPagedList<IndicationListDto>> GetList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IndicationListDto>(model, "ps_RtrvIndicationbyProcessId");
+        }
+
+
         public virtual async Task InsertAsync( TPcpndprocess ObjTPcpndprocess, int UserId,string Username)
         {
             using var scope = new TransactionScope( TransactionScopeOption.Required,new TransactionOptions {IsolationLevel =   System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

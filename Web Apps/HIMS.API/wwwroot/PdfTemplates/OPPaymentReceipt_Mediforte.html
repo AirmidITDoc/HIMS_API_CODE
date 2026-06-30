@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPD Payment Receipt</title>
+</head>
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="font-size:14px;line-height:24px;font-family:Calibri,'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;color:#101828;">
+            <table style="width:100%;line-height:inherit;text-align:left;">
+
+                <tr class="top-header-row">
+                    {{NewHeader}}
+                </tr>
+
+                <tr class="title-date-row">
+                    <td style="padding:6px;">
+                        <table style="width:100%;border-collapse:collapse;">
+                            <tr style="font-size:18px;">
+                                <td style="border-bottom:1px solid #d4c3c3;padding:2px;padding-bottom:16px;"><b>OPD Payment Receipt</b></td>
+                                <td style="border-bottom:1px solid #d4c3c3;padding:2px;padding-bottom:16px;text-align:right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="bill-info-row">
+                    <td style="padding:6px;">
+                        <table style="width:100%;border-collapse:collapse;font-size:18px;">
+                            <tr>
+                                <td style="padding:2px;"><span><b>Receipt No :</b></span> <span>{{ReceiptNo}}</span></td>
+                                <td style="padding:2px;"><span><b>OPD No :</b></span> <span>{{OPDNo}}</span></td>
+                                <td style="padding:2px;"><span><b>Date | Time :</b></span> <span>{{BillDate}}</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:2px;"><span><b>UHID :</b></span> <span>{{RegNo}}</span></td>
+                                <td style="padding:2px;"><span><b>Age | Gender :</b></span> <span>{{AgeYear}} | {{GenderName}}</span></td>
+                                <td style="padding:2px;"><span><b>OPD | Time :</b></span> <span>{{VisitDate}}</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:2px;"><span><b>Patient Name :</b></span> <span>{{PatientName}}</span></td>
+                                <td style="padding:2px;"><span><b>Patient Type :</b></span> <span>{{PatientType}}</span></td>
+                                <td style="padding:2px;"><span><b>Payment Date :</b></span> <span>{{PaymentTime}}</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:2px;"><span><b>Doctor Name :</b></span> <span>{{ConsultantDocName}}</span></td>
+                                <td style="padding:2px;"><span><b>Department :</b></span> <span>{{DepartmentName}}</span></td>
+                                <td style="padding:2px;"><span><b>Ref Dr Name :</b></span> <span>{{RefDocName}}</span></td>
+                            </tr>
+                            <tr style="display:{{chkCompanyflag}};">
+                                <td style="padding:2px;" colspan="3"><span><b>Company Name :</b></span> <span>{{CompanyName}}</span></td>
+                            </tr>
+                        </table>
+                        <div style="border-top:1px solid #d4c3c3;margin-top:6px;"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:6px 6px 2px 6px;">
+                        <h4 style="margin:4px 0;font-size:22px;">Bill Information</h4>
+                        <table style="width:100%;border-collapse:collapse;font-size:20px;margin-top:4px;">
+                            <tr>
+                                <td style="padding:2px;"><span>Total Amount :</span><br><span>{{CurrSymbol}} {{TotalAmt}}</span></td>
+                                <td style="padding:2px;"><span>Disc Amount :</span><br><span>{{CurrSymbol}} {{ConcessionAmt}}</span></td>
+                                <td style="padding:2px;"><span>Net Amount :</span><br><span>{{CurrSymbol}} {{NetPayableAmt}}</span></td>
+                                <td style="padding:2px;"><span>Paid Amount :</span><br><span>{{CurrSymbol}} {{PaidAmount}}</span></td>
+                            </tr>
+                        </table>
+                        <div style="border-top:1px solid #d4c3c3;margin-top:6px;"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:6px 6px 2px 6px;">
+                        <h4 style="margin:4px 0;font-size:20px;">Payment Information</h4>
+                        <table style="width:100%;border-collapse:collapse;font-size:20px;margin-top:4px;">
+
+                            <tr style="display:{{chkcashflag}};">
+                                <td style="padding:3px;"><b>Cash Pay :</b> {{CurrSymbol}} {{CashPayAmount}}</td>
+                                <td style="padding:3px;"></td>
+                                <td style="padding:3px;"></td>
+                            </tr>
+
+                            <tr style="display:{{chkcardflag}};">
+                                <td style="padding:3px;"><b>Card Pay :</b> {{CurrSymbol}} {{CardPayAmount}}</td>
+                                <td style="padding:3px;"><b>Card No :</b> {{CardNo}}</td>
+                                <td style="padding:3px;"><b>Bank Name :</b> {{CardBankName}}</td>
+                            </tr>
+
+                            <tr style="display:{{chkchequeflag}};">
+                                <td style="padding:3px;"><b>Cheque Pay :</b> {{CurrSymbol}} {{ChequePayAmount}}</td>
+                                <td style="padding:3px;"><b>Cheque No :</b> {{ChequeNo}}</td>
+                                <td style="padding:3px;"><b>Bank Name :</b> {{BankName}}</td>
+                            </tr>
+
+                            <tr style="display:{{chkneftflag}};">
+                                <td style="padding:3px;"><b>NEFT Pay :</b> {{CurrSymbol}} {{NEFTPayAmount}}</td>
+                                <td style="padding:3px;"><b>NEFT No :</b> {{NEFTNo}}</td>
+                                <td style="padding:3px;display:{{chkNEFTBankFlag}};"><b>Bank Name :</b> {{NEFTBankMaster}}</td>
+                            </tr>
+                            <tr style="display:{{chkOnlineAmountflag}};">
+                                <td style="padding:3px;"><b>MPesa :</b> {{CurrSymbol}} {{OnlineAmount}}</td>
+                                <td style="padding:3px;"><b>Tran No :</b> {{PayTMTranNo}}</td>
+                                <td style="padding:3px;"></td>
+                            </tr>
+
+                        </table>
+
+                        <table style="width:100%;border-collapse:collapse;margin-top:20px;font-size:20px;">
+                            <tr>
+                                <td style="padding:6px;font-weight:bold;">Amount in words :- {{finalamt}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:6px;text-align:center;font-size:12px;padding:15px 100px;">
+                        This is Computer generated invoice hence doesn't require signature
+                    </td>
+                </tr>
+                <tr class="footer-row">
+                    <td style="padding:6px;margin-top:10px;">
+                        <table style="width:100%;border-collapse:collapse;">
+                            <tbody style="font-size:14px;">
+                                <tr>
+                                    <td style="padding:6px;text-align:left;"></td>
+                                    <td style="padding:6px;text-align:center;"></td>
+                                    <td style="padding:6px;text-align:right;">{{UserName}}<br>Authorized Signature</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</body>
+</html>

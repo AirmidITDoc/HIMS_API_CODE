@@ -9,7 +9,9 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
+using HIMS.Services.Inventory;
 using HIMS.Services.Masters;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,30 +22,25 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
     [ApiVersion("1")]
     public class ExternalDoctorController : BaseController
     {
-        private readonly IDoctorMasterService _IDoctorMasterService;
         private readonly IGenericService<MExternalDoctorMaster> _repository;
-        private readonly IFileUtility _FileUtility;
+        private readonly IExternalDoctorService _IExternalDoctorService;
 
-
-        public ExternalDoctorController(IDoctorMasterService repository, IGenericService<MExternalDoctorMaster> repository1, IFileUtility fileUtility,
-            IGenericService<FileMaster> repository7)
+        public ExternalDoctorController(IGenericService<MExternalDoctorMaster> repository, IExternalDoctorService repository1)
         {
-            _IDoctorMasterService = repository;
-            _repository = repository1;
+            _repository = repository;
+            _IExternalDoctorService = repository1;
+
 
         }
-
-        //List API
-        [HttpPost]
-        [Route("[action]")]
-      //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+        [HttpPost("List")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MExternalDoctorMaster> ExternalDoctorList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(ExternalDoctorList.ToGridResponse(objGrid, "ExternalDoctor List"));
+            IPagedList<ExternalDoctorMasterDto> ExternalDoctorMasterList = await _IExternalDoctorService.GetListAsync(objGrid);
+            return Ok(ExternalDoctorMasterList.ToGridResponse(objGrid, "External DoctorMaster List"));
         }
         [HttpGet("{id?}")]
-    //    [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
+         //    [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -103,7 +100,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
 
     }

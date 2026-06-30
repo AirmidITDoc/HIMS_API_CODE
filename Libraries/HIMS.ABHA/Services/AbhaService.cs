@@ -138,15 +138,15 @@ namespace HIMS.ABHA.Services
                 ApiResult<VerifyOtpResponse> resData = new();
                 if (isAbhaAddress)
                 {
-                   var data= await _httpClient.PostAsync<VerifyAddressOtpResponse>(url, payload);
+                    var data = await _httpClient.PostAsync<VerifyAddressOtpResponse>(url, payload);
                     resData.Success = true;
                     resData.Data = new VerifyOtpResponse
                     {
-                        authResult = data.Data?.AuthResult??"",
-                        message = data.Data?.Message??"",
-                        token = data.Data?.Tokens?.Token??"",
+                        authResult = data.Data?.AuthResult ?? "",
+                        message = data.Data?.Message ?? "",
+                        token = data.Data?.Tokens?.Token ?? "",
                         expiresIn = data.Data?.Tokens?.ExpiresIn ?? 0,
-                        refreshToken = data.Data?.Tokens?.RefreshToken??"",
+                        refreshToken = data.Data?.Tokens?.RefreshToken ?? "",
                         refreshExpiresIn = data.Data?.Tokens?.RefreshExpiresIn ?? 0,
                         accounts = data.Data?.Users.Select(a => new Account
                         {
@@ -196,9 +196,9 @@ namespace HIMS.ABHA.Services
         }
 
         // ===== PROFILE / CARD / QR =====
-        public async Task<ApiResult<AbhaProfile>> GetAbhaProfileAsync(string xToken)
+        public async Task<ApiResult<AbhaProfile>> GetAbhaProfileAsync(string xToken, bool isAddress)
         {
-            var url = $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{AppSettings.Current.Endpoints.AbhaProfile}";
+            var url = isAddress ? $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{AppSettings.Current.Endpoints.AbhaAddressProfile}" : $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{AppSettings.Current.Endpoints.AbhaProfile}";
             return await _httpClient.GetAsync<AbhaProfile>(url, xToken);
         }
 
@@ -208,9 +208,9 @@ namespace HIMS.ABHA.Services
             return await _httpClient.GetBinaryAsync(url, xToken);
         }
 
-        public async Task<ApiResult<byte[]>> GetAbhaQrCodeAsync(string xToken)
+        public async Task<ApiResult<byte[]>> GetAbhaQrCodeAsync(string xToken, bool isAddress)
         {
-            var url = $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{AppSettings.Current.Endpoints.AbhaQrCode}";
+            var url = isAddress ? $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{AppSettings.Current.Endpoints.AbhaAddressQrCode}" : $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{AppSettings.Current.Endpoints.AbhaQrCode}";
             return await _httpClient.GetBinaryAsync(url, xToken);
         }
         #endregion

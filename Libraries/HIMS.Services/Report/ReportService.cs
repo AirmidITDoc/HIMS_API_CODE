@@ -7976,6 +7976,7 @@ namespace HIMS.Services.Report
                     }
                     break;
 
+
                 case "LabPaymentReceipt":
                     {
 
@@ -11254,21 +11255,37 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
                         html = html.Replace("{{PONo}}", dt.GetColValue("PONo"));
 
-                        html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
+                        //html = html.Replace("{{PrintStoreName}}", dt.GetColValue("PrintStoreName"));
 
-                        string finalamt = conversion(dt.GetColValue("NetAmount").ConvertToDouble().To2DecimalPlace());
-                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
-                        //string finalamt = ConvertNumbertoWords(dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace().Count());
+                        //string finalamt = conversion(dt.GetColValue("NetAmount").ConvertToDouble().To2DecimalPlace());
                         //html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
-                        string NetAmount = ConvertNumbertoWords(dt.GetColValue("NetAmount").ConvertToDouble().To2DecimalPlace().Count());
-                        html = html.Replace("{{NetAmount}}", finalamt.ToString().ToUpper());
+                        ////string finalamt = ConvertNumbertoWords(dt.GetColValue("GrnReturnAmount").ConvertToDouble().To2DecimalPlace().Count());
+                        ////html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+                        //string NetAmount = ConvertNumbertoWords(dt.GetColValue("NetAmount").ConvertToDouble().To2DecimalPlace().Count());
+                        //html = html.Replace("{{NetAmount}}", finalamt.ToString().ToUpper());
 
-                        html = html.Replace("{{chkdiscflag}}", dt.GetColValue("T_TotalDiscAmount").ConvertToDouble() > 0 ? "block" : "none");
+                        //html = html.Replace("{{chkdiscflag}}", dt.GetColValue("T_TotalDiscAmount").ConvertToDouble() > 0 ? "block" : "none");
 
 
-                        html = html.Replace("{{chkponoflag}}", dt.GetColValue("PONo").ConvertToDouble() != 0 ? "table-row " : "none");
+                        //html = html.Replace("{{chkponoflag}}", dt.GetColValue("PONo").ConvertToDouble() != 0 ? "table-row " : "none");
 
 
+
+                        //return html;
+                        html = html.Replace("{{PrintStoreName}}",  dt.GetColValue("PrintStoreName"));
+                        // Total Net Amount
+                        html = html.Replace("{{NetAmount}}", T_TotalNETAmount.ToString("F2"));
+
+                        // Total Amount In Words
+                        string finalamtWords =   conversion(T_TotalNETAmount.ToString("F2"));
+
+                        html = html.Replace("{{finalamt}}", finalamtWords.ToUpper());
+
+
+
+                        html = html.Replace("{{chkdiscflag}}", dt.GetColValue("T_TotalDiscAmount") .ConvertToDouble() > 0  ? "block" : "none");
+
+                        html = html.Replace("{{chkponoflag}}",   dt.GetColValue("PONo").ConvertToDouble() != 0? "table-row": "none");
 
                         return html;
 
@@ -23008,7 +23025,127 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkNEFTBankFlag}}", dt.GetColValue("ChequeBankName").ConvertToString() != "" ? "block" : "none");
                         return html;
                     }
+                case "PcndtProcessForm":
+                    {
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            html = html.Replace("{{AdmissionDate}}", dt.GetColValue("AdmissionDate").ConvertToDateString("dd/MM/yyyy"));
+                            html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                            html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                            html = html.Replace("{{City}}", dt.GetColValue("City"));
+                            html = html.Replace("{{Age}}", dt.GetColValue("Age"));
+                            html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+                            html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                            html = html.Replace("{{ConDoctorAdress}}", dt.GetColValue("ConDoctorAdress"));
 
+                            html = html.Replace("{{ProcessDate}}", dt.GetColValue("ProcessDate").ConvertToDateString("dd/MM/yyyy"));
+                            html = html.Replace("{{ConsentDate}}", dt.GetColValue("ConsentDate").ConvertToDateString("dd/MM/yyyy"));
+                            html = html.Replace("{{ResultDate}}", dt.GetColValue("ResultDate").ConvertToDateString("dd/MM/yyyy"));
+
+
+
+
+                            html = html.Replace("{{PCPNDTProcessId}}", dt.GetColValue("PCPNDTProcessId"));
+                            html = html.Replace("{{ProcessDate}}", dt.GetColValue("ProcessDate").ConvertToDateString("dd/MM/yyyy"));
+                            html = html.Replace("{{OPIPID}}", dt.GetColValue("OPIPID"));
+                            html = html.Replace("{{OPIPType}}", dt.GetColValue("OPIPType"));
+
+                            html = html.Replace("{{RelativeName}}", dt.GetColValue("RelativeName"));
+                            html = html.Replace("{{ChildrenCount}}", dt.GetColValue("ChildrenCount"));
+                            html = html.Replace("{{DaughtersDetails}}", dt.GetColValue("DaughtersDetails"));
+                            html = html.Replace("{{SonsDetails}}", dt.GetColValue("SonsDetails"));
+                            html = html.Replace("{{MPeriod}}", dt.GetColValue("MPeriod"));
+
+                            html = html.Replace("{{RefDocId}}", dt.GetColValue("RefDocId"));
+                            html = html.Replace("{{Refrancedoctor}}", dt.GetColValue("Refrancedoctor"));
+
+                            html = html.Replace("{{NonInvasive}}", dt.GetColValue("NonInvasive"));
+                            html = html.Replace("{{Indication}}", dt.GetColValue("Indication"));
+                            html = html.Replace("{{Prenatal}}", dt.GetColValue("Prenatal"));
+
+                            html = html.Replace("{{ResultDate}}", dt.GetColValue("ResultDate").ConvertToDateString("dd/MM/yyyy"));
+
+                            html = html.Replace("{{Ultrasound}}", dt.GetColValue("Ultrasound"));
+                            html = html.Replace("{{Obs}}", dt.GetColValue("Obs"));
+                            html = html.Replace("{{Pelvic}}", dt.GetColValue("Pelvic"));
+
+                            html = html.Replace("{{InvasiveDoctorId}}", dt.GetColValue("InvasiveDoctorId"));
+                            html = html.Replace("{{ComplicationsId}}", dt.GetColValue("ComplicationsId"));
+
+                            html = html.Replace("{{Clinical}}", dt.GetColValue("Clinical"));
+                            html = html.Replace("{{BioChemical}}", dt.GetColValue("BioChemical"));
+                            html = html.Replace("{{Cytogenetic}}", dt.GetColValue("Cytogenetic"));
+                            html = html.Replace("{{OtherRadiological}}", dt.GetColValue("OtherRadiological"));
+
+                            html = html.Replace("{{Chromosomaldisorder}}", dt.GetColValue("Chromosomaldisorder"));
+                            html = html.Replace("{{Metabolicdisorder}}", dt.GetColValue("Metabolicdisorder"));
+                            html = html.Replace("{{Congenitalanomaly}}", dt.GetColValue("Congenitalanomaly"));
+                            html = html.Replace("{{MentalDisability}}", dt.GetColValue("MentalDisability"));
+                            html = html.Replace("{{Haemoglobinopathy}}", dt.GetColValue("Haemoglobinopathy"));
+                            html = html.Replace("{{SexLinkeddisorder}}", dt.GetColValue("SexLinkeddisorder"));
+                            html = html.Replace("{{Singlegenedisorder}}", dt.GetColValue("Singlegenedisorder"));
+
+                            html = html.Replace("{{AnyOther1}}", dt.GetColValue("AnyOther1"));
+                            html = html.Replace("{{Mage}}", dt.GetColValue("Mage"));
+                            html = html.Replace("{{GeneticDisease}}", dt.GetColValue("GeneticDisease"));
+                            html = html.Replace("{{AnyOtherIndication}}", dt.GetColValue("AnyOtherIndication"));
+
+                            html = html.Replace("{{Chromosomal}}", dt.GetColValue("Chromosomal"));
+                            html = html.Replace("{{Molecular}}", dt.GetColValue("Molecular"));
+                            html = html.Replace("{{PreImplantation}}", dt.GetColValue("PreImplantation"));
+                            html = html.Replace("{{AnyOtherTest}}", dt.GetColValue("AnyOtherTest"));
+
+                            html = html.Replace("{{TestResult}}", dt.GetColValue("TestResult"));
+                            html = html.Replace("{{ResultConveyedto}}", dt.GetColValue("ResultConveyedto"));
+                            html = html.Replace("{{indicationofMtp}}", dt.GetColValue("IndicationofMTP"));
+
+                            html = html.Replace("{{Amniocentesis}}", dt.GetColValue("Amniocentesis"));
+                            html = html.Replace("{{ChorionicVilliaspiration}}", dt.GetColValue("ChorionicVilliaspiration"));
+                            html = html.Replace("{{FetalBiopsy}}", dt.GetColValue("FetalBiopsy"));
+                            html = html.Replace("{{Cordocentesis}}", dt.GetColValue("Cordocentesis"));
+                            html = html.Replace("{{AnyOther2}}", dt.GetColValue("AnyOther2"));
+
+                            html = html.Replace("{{ConsentDate}}",
+                                dt.GetColValue("ConsentDate").ConvertToDateString("dd/MM/yyyy"));
+
+                            html = html.Replace("{{DeclarationDoctorid}}",
+                                dt.GetColValue("DeclarationDoctorid"));
+
+                            html = html.Replace("{{DeclarationDoctor}}",
+                                dt.GetColValue("DeclarationDoctor"));
+
+                            html = html.Replace("{{CreatedBy}}",
+                                dt.GetColValue("CreatedBy"));
+
+                            html = html.Replace("{{AbhaAddress}}",
+                                dt.GetColValue("AbhaAddress"));
+
+                            html = html.Replace("{{ABHANumber}}",
+                                dt.GetColValue("ABHANumber"));
+
+                            html = html.Replace("{{CondDoctor}}",
+                                dt.GetColValue("CondDoctor"));
+
+                            html = html.Replace("{{ProcedureDate}}",
+                                dt.GetColValue("ProcedureDate")
+                                .ConvertToDateString("dd/MM/yyyy"));
+
+                            // Visibility Flags
+
+                            html = html.Replace("{{chkAnyOther1}}",
+                                dt.GetColValue("AnyOther1").ConvertToString() != ""
+                                ? "table-row" : "none");
+
+                            html = html.Replace("{{chkAnyOtherTest}}",
+                                dt.GetColValue("AnyOtherTest").ConvertToString() != ""
+                                ? "table-row" : "none");
+
+                            html = html.Replace("{{chkABHAFlag}}",
+                                dt.GetColValue("ABHANumber").ConvertToString() != ""
+                                ? "table-row" : "none");
+                        }
+                    }
+                    break;
 
 
 

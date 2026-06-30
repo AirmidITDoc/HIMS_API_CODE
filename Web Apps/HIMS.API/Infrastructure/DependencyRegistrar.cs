@@ -159,6 +159,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IEstimasteService, EstimateSerive>();
             services.AddScoped<IBillingService, BillingService>();
             services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IExternalDoctorService, ExternalDoctorService>();
+
 
             services.AddScoped<IOPRefundOfBillService, OPRefundOfBillService>();
 

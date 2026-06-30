@@ -5,8 +5,10 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Pathology;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
 using HIMS.Services.OTManagment;
@@ -28,8 +30,25 @@ namespace HIMS.API.Controllers.Pathology
             _IPcpndprocesService = repository;
           
         }
+       
+        [HttpPost("RadioPcpndtList")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<RadioPcpndtListDto> RadioPcpndtList = await _IPcpndprocesService.GetListAsync(objGrid);
+            return Ok(RadioPcpndtList.ToGridResponse(objGrid, "RadioPcpndt List"));
+        }
 
        
+
+        [HttpPost("IndicationtList")]
+        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        public async Task<IActionResult> IndicationList(GridRequestModel objGrid)
+        {
+            IPagedList<IndicationListDto> IndicationtList = await _IPcpndprocesService.GetList(objGrid);
+            return Ok(IndicationtList.ToGridResponse(objGrid, "Indicationt  List"));
+        }
+
         [HttpPost("Insert")]
         //[Permission]
         public async Task<ApiResponse> Insert(PcpndprocessModel obj)
