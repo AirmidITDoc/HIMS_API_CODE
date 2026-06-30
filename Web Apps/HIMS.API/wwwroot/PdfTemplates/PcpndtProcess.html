@@ -111,27 +111,37 @@
         <div class="row">
             <b>1. Name and complete address of Genetic Clinic / Ultrasound Clinic / Imaging Centre :</b>
             <br><br>
-                <span style="font-size: 18px;font-weight: bold;text-align: center;color: rgb(1, 58, 72); ">
-                    SANE GURUJI AROGYA KENDRA
-                </span>   
+            <!--<span style="font-size: 16px;font-weight: bold;text-align: center;color: rgb(1, 58, 72); ">
+            SANE GURUJI AROGYA KENDRA
+        </span>-->
+            <span style="font-size: 16px; font-weight: bold; text-align: center; color: black;">
+                SANE GURUJI AROGYA KENDRA
+            </span>
         </div>
 
         <div class="row">
-        <b>2. Registration No. (Under PC &amp; PNDT ) :</b>
-        <span class="space">{{RegNo}}</span>
+            <b>2. Registration No. (Under PC & PNDT Act, 1994) :</b>
+            <span class="space">{{RegNo}}</span>
+        </div>
+       
+        <div class="row">
+        <b>3. Patient's Name :</b>
+        <span class="box">{{PatientName}}</span>
+        <span class="space">
+            <b>Age :</b> {{Age}} Years &nbsp;&nbsp; {{AgeMonth}} Months
+        </span>
     </div>
         <!--<div class="row">
-            <b>2. Registration No. </b>
-            <span class="space">{{RegNo}}</span>
-        </div>-->
-
-        <div class="row">
             <b>3. Patient's Name :</b>
-            <span class="box">{{PatientName}}</span>
+
+            <span class="box patient-name">
+                {{PatientName}}
+            </span>
+
             <span class="space">
                 <b>Age :</b> {{Age}} Years &nbsp;&nbsp; {{AgeMonth}} Months
             </span>
-        </div>
+        </div>-->
 
         <div class="row"><b>4. Total Number of living children :</b> {{ChildrenCount}}</div>
         <div class="row">(a). Number of living sons : {{SonsDetails}}</div>
@@ -146,17 +156,20 @@
             <b>6. Full postal address of patient with Contact Number</b>
             <div class="address">
                 <!--{{Occ. No.2 B& C Wing. Sr. No. 165A,Pt.No. 195-208 Malwadi, Hadapsar, Pune.}}<br>-->
-                <span style="font-size: 16px ;font-weight: bold;text-align: center;color: rgb(1, 58, 72);  ">
-                    Occ. No.2 B& C Wing. Sr. No. 165A,Pt.No. 195-208 Malwadi, Hadapsar, Pune.
+                <span style="font-size: 15px; font-weight: bold; text-align: center; color: black;">
+                    Occ. No.2 B & C Wing, Sr. No. 165A, Pt. No. 195-208, Malwadi, Hadapsar, Pune.
                 </span>
                 {{MobileNo}}
             </div>
         </div>
 
         <div class="row">
-            <b>7. (a) Referred by</b><br><br>
+            <b>7. (a) Referred by  (Full name & address of Doctor(s)/Genetic Counselling Centre)</b><br><br>
+
             {{CondDoctor}}<br>
-            {{ConDoctorAdress}}
+            <span style="font-size: 16px ;font-weight: bold;text-align: center;color: rgb(1, 58, 72);  ">
+                Occ. No.2 B& C Wing. Sr. No. 165A,Pt.No. 195-208 Malwadi, Hadapsar, Pune.
+            </span>
         </div>
 
         <div class="row">(Referral slips to be preserved carefully with Form F)</div>
@@ -197,31 +210,58 @@
     <div class="page">
 
         <p>(Specify with Reference to the request made in referral slip or self-referral note)</p>
-        <p>(Ultrasonography prenatal diagnosis during pregnancy should only be performed when indicated. Put a Tick mark against applicable indication.)</p>
+        <p>
+            (Ultrasonography prenatal diagnosis during pregnancy should only be performed when indicated. Put a Tick mark against applicable indication.for
+            ultrasound)
+        </p>
 
-        <div class="chk">{{Checked1}} &nbsp; i. To diagnose intra-uterine and/or ectopic pregnancy and confirm viability.</div>
-        <div class="chk">{{Checked2}} &nbsp; ii. Estimation of gestational age (dating).</div>
-        <div class="chk">{{Checked3}} &nbsp; iii. Detection of number of fetuses and their chorionicity.</div>
-        <div class="chk">{{Checked4}} &nbsp; iv. Suspected pregnancy with IUCD in-situ / contraceptive failure.</div>
-        <div class="chk">{{Checked5}} &nbsp; v. Vaginal bleeding / leaking.</div>
-        <div class="chk">{{Checked6}} &nbsp; vi. Follow-up of cases of abortion.</div>
-        <div class="chk">{{Checked7}} &nbsp; vii. Assessment of cervical canal and diameter of internal os.</div>
-        <div class="chk">{{Checked8}} &nbsp; viii. Discrepancy between uterine size and period of amenorrhea.</div>
-        <div class="chk">{{Checked9}} &nbsp; ix. Suspected adnexal / uterine pathology.</div>
-        <div class="chk">{{Checked10}} &nbsp; x. Detection of chromosomal abnormalities, fetal structural defects and follow-up.</div>
-        <div class="chk">{{Checked11}} &nbsp; xi. Evaluate fetal presentation and position.</div>
-        <div class="chk">{{Checked12}} &nbsp; xii. Assessment of liquor amnii.</div>
-        <div class="chk">{{Checked13}} &nbsp; xiii. Preterm labour / membrane rupture.</div>
-        <div class="chk">{{Checked14}} &nbsp; xiv. Evaluation of placental position and abnormalities.</div>
-        <div class="chk">{{Checked15}} &nbsp; xv. Evaluation of umbilical cord.</div>
-        <div class="chk">{{Checked16}} &nbsp; xvi. Evaluation of previous Caesarean Section scars.</div>
-        <div class="chk">{{Checked17}} &nbsp; xvii. Evaluation of fetal growth and wellbeing.</div>
-        <div class="chk">{{Checked18}} &nbsp; xviii. Color flow mapping and Doppler studies.</div>
-        <div class="chk">{{Checked19}} &nbsp; xix. Ultrasound guided procedures and follow-up.</div>
-        <div class="chk">{{Checked20}} &nbsp; xx. Adjunct diagnostic / therapeutic invasive interventions.</div>
-        <div class="chk">{{Checked21}} &nbsp; xxi. Observation of intra-partum events.</div>
-        <div class="chk">{{Checked22}} &nbsp; xxii. Medical / Surgical conditions complicating pregnancy.</div>
-        <div class="chk">{{Checked23}} &nbsp; xxiii. Research / Scientific studies.</div>
+        <!--<div class="chk">{{Checked1}} &nbsp; i. To diagnose intra-uterine and/or ectopic pregnancy and confirm viability.</div>
+    <div class="chk">{{Checked2}} &nbsp; ii. Estimation of gestational age (dating).</div>
+    <div class="chk">{{Checked3}} &nbsp; iii. Detection of number of fetuses and their chorionicity.</div>
+    <div class="chk">{{Checked4}} &nbsp; iv. Suspected pregnancy with IUCD in-situ / contraceptive failure.</div>
+    <div class="chk">{{Checked5}} &nbsp; v. Vaginal bleeding / leaking.</div>
+    <div class="chk">{{Checked6}} &nbsp; vi. Follow-up of cases of abortion.</div>
+    <div class="chk">{{Checked7}} &nbsp; vii. Assessment of cervical canal and diameter of internal os.</div>
+    <div class="chk">{{Checked8}} &nbsp; viii. Discrepancy between uterine size and period of amenorrhea.</div>
+    <div class="chk">{{Checked9}} &nbsp; ix. Suspected adnexal / uterine pathology.</div>
+    <div class="chk">{{Checked10}} &nbsp; x. Detection of chromosomal abnormalities, fetal structural defects and follow-up.</div>
+    <div class="chk">{{Checked11}} &nbsp; xi. Evaluate fetal presentation and position.</div>
+    <div class="chk">{{Checked12}} &nbsp; xii. Assessment of liquor amnii.</div>
+    <div class="chk">{{Checked13}} &nbsp; xiii. Preterm labour / membrane rupture.</div>
+    <div class="chk">{{Checked14}} &nbsp; xiv. Evaluation of placental position and abnormalities.</div>
+    <div class="chk">{{Checked15}} &nbsp; xv. Evaluation of umbilical cord.</div>
+    <div class="chk">{{Checked16}} &nbsp; xvi. Evaluation of previous Caesarean Section scars.</div>
+    <div class="chk">{{Checked17}} &nbsp; xvii. Evaluation of fetal growth and wellbeing.</div>
+    <div class="chk">{{Checked18}} &nbsp; xviii. Color flow mapping and Doppler studies.</div>
+    <div class="chk">{{Checked19}} &nbsp; xix. Ultrasound guided procedures and follow-up.</div>
+    <div class="chk">{{Checked20}} &nbsp; xx. Adjunct diagnostic / therapeutic invasive interventions.</div>
+    <div class="chk">{{Checked21}} &nbsp; xxi. Observation of intra-partum events.</div>
+    <div class="chk">{{Checked22}} &nbsp; xxii. Medical / Surgical conditions complicating pregnancy.</div>
+    <div class="chk">{{Checked23}} &nbsp; xxiii. Research / Scientific studies.</div>-->
+        <div class="chk">&#9744; &nbsp; i. To diagnose intra-uterine and/or ectopic pregnancy and confirm viability.</div>
+        <div class="chk">&#9744; &nbsp; ii. Estimation of gestational age (dating).</div>
+        <div class="chk">&#9744; &nbsp; iii. Detection of number of fetuses and their chorionicity.</div>
+        <div class="chk">&#9744; &nbsp; iv. Suspected pregnancy with IUCD in-situ / contraceptive failure.</div>
+        <div class="chk">&#9744; &nbsp; v. Vaginal bleeding / leaking.</div>
+        <div class="chk">&#9744; &nbsp; vi. Follow-up of cases of abortion.</div>
+        <div class="chk">&#9744; &nbsp; vii. Assessment of cervical canal and diameter of internal os.</div>
+        <div class="chk">&#9744; &nbsp; viii. Discrepancy between uterine size and period of amenorrhea.</div>
+        <div class="chk">&#9744; &nbsp; ix. Suspected adnexal / uterine pathology.</div>
+        <div class="chk">&#9744; &nbsp; x. Detection of chromosomal abnormalities, fetal structural defects and follow-up.</div>
+        <div class="chk">&#9744; &nbsp; xi. Evaluate fetal presentation and position.</div>
+        <div class="chk">&#9744; &nbsp; xii. Assessment of liquor amnii.</div>
+        <div class="chk">&#9744; &nbsp; xiii. Preterm labour / membrane rupture.</div>
+        <div class="chk">&#9744; &nbsp; xiv. Evaluation of placental position and abnormalities.</div>
+        <div class="chk">&#9744; &nbsp; xv. Evaluation of umbilical cord.</div>
+        <div class="chk">&#9744; &nbsp; xvi. Evaluation of previous Caesarean Section scars.</div>
+        <div class="chk">&#9744; &nbsp; xvii. Evaluation of fetal growth and wellbeing.</div>
+        <div class="chk">&#9744; &nbsp; xviii. Color flow mapping and Doppler studies.</div>
+        <div class="chk">&#9744; &nbsp; xix. Ultrasound guided procedures and follow-up.</div>
+        <div class="chk">&#9744; &nbsp; xx. Adjunct diagnostic / therapeutic invasive interventions.</div>
+        <div class="chk">&#9744; &nbsp; xxi. Observation of intra-partum events.</div>
+        <div class="chk">&#9744; &nbsp; xxii. Medical / Surgical conditions complicating pregnancy.</div>
+        <div class="chk">&#9744; &nbsp; xxiii. Research / Scientific studies.</div>
+
 
     </div>
     <!-- ==================== END PAGE 2 ==================== -->
@@ -256,28 +296,43 @@
         </div>
 
         <div class="row">
-            <b>14. Result of the non-invasive procedure carried out (report in brief of the test including ultrasound carried out)</b>
-            <br><br>
-                <div style="border:1px solid black;padding:10px;min-height:120px;">
-                    {{ResultDate}}
-                </div>
+            <b>
+                14. Result of the non-invasive procedure carried out
+                (report in brief of the test including ultrasound carried out) :
+            </b>
+            <br><br><br><br><br>
         </div>
 
         <div class="row">
-            <b>15. Result of pre-natal diagnostic procedures was conveyed to :</b>
+            <b>15. The result of pre-natal diagnostic procedures was conveyed to :</b>
             <br><br>
-            {{PatientName}}
-            <br><br>
-            <b>On :</b> {{ProcessDate}}
+
+        
+            <div style="border:1px solid black;width:380px;padding:5px;display:inline-block;">
+                <b>{{PatientName}}</b>
+            </div>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <b>On :</b> {{ResultDate}}
+        
+
         </div>
 
+        <br><br>
+
         <div class="row">
-            <b>16. Any indication for MTP as per abnormality detected in diagnostic procedures / tests :</b>
-            <br><br>
-                <div style="border:1px solid black;padding:10px;min-height:80px;">
-                    {{indicationofMtp}}
-                </div>
+            <b>
+                16. Any indication for MTP as per abnormality detected in diagnostic procedures / tests :
+            </b>
+
+            &nbsp;&nbsp;
+            {{indicationofMtp}}
+         
+
         </div>
+
+    </div>
 
         <br><br><br>
 
@@ -293,7 +348,6 @@
         <div style="text-align:right">
             <b>Dr. {{CondDoctor}}</b><br>
             {{DoctorRegNo}}<br><br>
-            {{DoctorSeal}}<br>
             Name, Signature and Registration Number with Seal of the Gynecologist /<br>
             Radiologist / Registered Medical Practitioner performing Diagnostic Procedures
         </div>
@@ -317,63 +371,170 @@
         <div class="row">
             <b>18. History of genetic / medical disease in family (specify)</b><br><br>
             {{FamilyHistory}}<br><br>
-            Clinical {{Clinical}} &nbsp;&nbsp;
-            Bio-Chemical {{BioChemical}} &nbsp;&nbsp;
-            Cytogenetic {{Cytogenetic}} &nbsp;&nbsp;
-            Other {{HistoryOther}}
+            <label>
+                <input type="checkbox"> Clinical
+            </label>
+
+            &nbsp;&nbsp;
+
+            <label>
+                <input type="checkbox"> Bio-Chemical
+            </label>
+
+            &nbsp;&nbsp;
+
+            <label>
+                <input type="checkbox"> Cytogenetic
+            </label>
+
+            &nbsp;&nbsp;
+
+            <label>
+                <input type="checkbox"> Other
+                (e.g radiological / ultrasonography. etc-specify)
+            </label>
         </div>
 
+
+
+
         <div class="row">
-            <b>19. Indication/s for diagnosis procedure</b><br><br>
-            <b>A. Previous child/children with :</b><br><br>
-            {{Chromosomal}} Chromosomal disorders<br>
-            {{Metabolic}} Metabolic disorders<br>
-            {{Congenitalanomaly}} Congenital anomaly<br>
-            {{MentalDisability}} Mental Disability<br>
-            {{Haemoglobinopathy}} Haemoglobinopathy<br>
-            {{SexLinkeddisorder}} Sex Linked disorder<br>
-            {{Singlegenedisorder}} Single gene disorder<br>
-            {{AnyOther1}} Any Other : {{AnyOther1}}
+            <b>19. Indication/s for the diagnosis procedure</b>
             <br><br>
-            <b>B. Advanced maternal age (35 years)</b> {{Mage}}
+
+            <b>A. Previous child or children with :</b>
             <br><br>
-            <b>C. Mother/Father/Sibling has genetic disease</b> {{GeneticDisease}}
+
+            <label><input type="checkbox" {{Chromosomal disorders}}> Chromosomal disorders</label>
+            &nbsp;&nbsp;
+
+            <label><input type="checkbox" {{Metabolic disorders}}> Metabolic disorders</label>
+            &nbsp;&nbsp;
+
+            <label><input type="checkbox" {{Congenital anomaly}}> Congenital anomaly</label>
+            <br>
+
+            <label><input type="checkbox" {{Mental Disability}}> Mental Disability</label>
+            &nbsp;&nbsp;
+
+            <label><input type="checkbox" {{Haemoglobinopathy}}> Haemoglobinopathy</label>
+            &nbsp;&nbsp;
+
+            <label><input type="checkbox" {{SexLinkeddisorder}}> Sex Linked disorder</label>
+            <br>
+
+            <label><input type="checkbox" {{Single gene disorder}}> Single gene disorder</label>
+            &nbsp;&nbsp;
+
+            <label>
+                <input type="checkbox" {{AnyOther1}}>
+                Any Other : (Specify)
+            </label>
+            <br><br>
+            <!--<b>B. Advanced maternal age (35 years)</b> {{Mage}}-->
+            <b>B. Advanced maternal age (35 years)</b> : ☐ {{Mage}}
+            <br><br>
+            <b>C. Mother/Father/Sibling has genetic disease</b> : ☐
             <br><br>
             <b>D. Any Other specify :</b> {{AnyOtherIndication}}
         </div>
 
         <div class="row">
-            <b>20. Date on which consent of pregnant woman/person was obtained in Form G</b><br><br>
-            {{ConsentDate}}
+            <b>20. Date on which consent of pregnant woman/person was obtained in Form  G prescribed in PC&PNDT Act.1994 </b><br><br>
+            {{AnyOther1}}
         </div>
 
+        <!--<div class="row">
+        <b>21. Invasive procedures carried out (Tick appropriate indication)</b><br><br>
+        {{Amniocentesis}} &nbsp; i. Aminiocentesis<br>
+        {{ChorionicVilliaspiration}} &nbsp; ii. Chorionic Villi aspiration<br>
+        {{FetalBiopsy}} &nbsp; iii. Fetal Biopsy<br>
+        {{Cordocentesis}} &nbsp; iv. Cordocentesis<br>
+        {{AnyOther2}} Any Other : {{AnyOther2}}
+    </div>-->
         <div class="row">
-            <b>21. Invasive procedures carried out (Tick appropriate indication)</b><br><br>
-            {{Amniocentesis}} &nbsp; i. Aminiocentesis<br>
-            {{ChorionicVilliaspiration}} &nbsp; ii. Chorionic Villi aspiration<br>
-            {{FetalBiopsy}} &nbsp; iii. Fetal Biopsy<br>
-            {{Cordocentesis}} &nbsp; iv. Cordocentesis<br>
-            {{AnyOther2}} Any Other : {{AnyOther2}}
+            <b>21. Invasive procedures carried out ("Tick" on appropriate indications)</b>
+            <br><br>
+
+            ☐ i. Amniocentesis
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            ☐ ii. Chorionic Villi aspiration
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            ☐ iii. Fetal Biopsy
+            <br><br>
+
+            ☐ iv. Cordocentesis
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            ☐ iv. Any Other (specify)
+            &nbsp;&nbsp; {{AnyOther2}}
+        </div>
+        <div class="row">
+            <b>22. Any complication/s of invasive procedure :</b>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <span style="font-weight:bold;">
+                {{AnyOther2}}
+            </span>
+
         </div>
 
-        <div class="row">
-            <b>22. Any complication/s of invasive procedure :</b><br><br>
-            <div class="result-box">{{Complication}}</div>
-        </div>
+        <br>
 
         <div class="row">
-            <b>23. Additional tests recommended</b><br><br>
-            {{Chromosomal}} &nbsp; i. Chromosomal Studies<br>
-            {{BiochemicalStudies}} &nbsp; ii. Biochemical Studies<br>
-            {{Molecular}} &nbsp; iii. Molecular Studies<br>
-            {{PreImplantation}} &nbsp; iv. Preimplantation gender diagnosis<br>
-            {{AnyOtherTest}} Any Other : {{AnyOtherTest}}
+            <b>23. Additional tests recommended (Please mention if applicable) :</b>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <span style="font-weight:bold;">
+                {{AnyOther2}}
+            </span>
+
+            <br><br>
+
+            ☐ i. Chromosomal Studies
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            ☐ ii. Biochemical Studies
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            ☐ iii. Molecular Studies
+
+            <br><br>
+
+            ☐ iv. Preimplantation gender diagnosis
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            Any Other (specify)
+
+            &nbsp;&nbsp;
+
+            {{AnyOther2}}
+
         </div>
 
+        <br>
+
         <div class="row">
-            <b>24. Result of procedures / Tests carried out :</b>
-            <div class="result-box">{{TestResult}}</div>
+            <b>
+                24. Result of procedures / Tests carried out
+                (report in brief of the invasive tests/procedures carried out) :
+            </b>
+
+            &nbsp;&nbsp;&nbsp;
+
+            <span style="font-weight:bold;">
+                {{TestResult}}
+            </span>
+
+            <br><br><br><br><br>
+
         </div>
+
 
         <div class="row">
             <b>25. Date on which procedures carried out :</b> {{ProcedureDate}}
@@ -484,7 +645,7 @@
         <br><br><br><br><br>
 
         <div style="text-align:right">
-            <b>Dr. {{DoctorName}}</b><br><br>
+            <b>Dr. {{DeclarationDoctor}}</b><br><br>
             {{DoctorRegNo}}<br><br>
             __________________________________<br>
             Name in Capitals, Registration Number with Seal<br>
