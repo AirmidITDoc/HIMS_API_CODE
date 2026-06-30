@@ -3,23 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>IPD Admission Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        @media print {
-            body {
-                background: #fff;
-                padding: 0
-            }
 
-            .page {
-                border: none;
-                margin: 0
-            }
+        @font-face {
+            font-family: 'MarathiFont';
+            src: url('NotoSansDevanagari-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
         }
-                
-    {{LoadFont}}
+
+        html,
+        body,
+        table,
+        tr,
+        td,
+        th,
+        div,
+        span,
+        p,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'MarathiFont', sans-serif !important;
+        }
     </style>
 </head>
-<body style="font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#111; margin:0; padding:20px">
+<body style="font-size:13px; color:#111; margin:0; padding:20px">
 
     <!-- PAGE 1 -->
     <div style="max-width:850px; margin:0 auto 20px; background:#fff; padding:18px 22px">
@@ -108,10 +122,10 @@
             </tr>
         </table>
 
-        <div style="font-weight:bold; margin:14px 0 6px; font-size:13.5px">२) वेदना विशेष व कालावधी :</div>
+        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:13.5px">२) वेदना विशेष व कालावधी :</div>
         <div style="min-height:110px; margin:6px 0 14px"><span style="color:#999; font-style:italic; font-weight:normal; padding:6px; display:inline-block"></span></div>
 
-        <div style="font-weight:bold; margin:14px 0 6px; font-size:13.5px">३) परीक्षण (Physical Examination) :</div>
+        <div style="font-weight:bold; margin:14px 0 6px; font-size:13.5px">३) परीक्षण <span class="mr"></span>(Physical Examination) :</div>
         <div style="min-height:150px; padding:6px; position:relative; margin-bottom:10px">
             <table style="width:140px; border-collapse:collapse; float:right" width="140">
                 <tr><td style="padding: 4px 6px; font-size: 12px; border: 1px solid #000;">Prakruti : <span style="color:#999; font-style:italic; font-weight:normal"></span></td></tr>
@@ -130,16 +144,16 @@
 
         <table style="width:100%; border-collapse:collapse; margin-bottom:10px" width="100%">
             <tr>
-                <td style="padding:5px 7px; width:50%" width="50%">४) L.M.P. ( पूर्व रजः प्रवृत्ती) <span style="color:#999; font-style:italic; font-weight:normal"></span></td>
-                <td style="padding:5px 7px; width:50%" width="50%">EDD (अपेक्षित प्रसव दिनांक) : <span style="color:#999; font-style:italic; font-weight:normal"></span></td>
+                <td class="mr" style="padding:5px 7px; width:50%" width="50%">४) L.M.P. ( पूर्व रजः प्रवृत्ती) <span style="color:#999; font-style:italic; font-weight:normal"></span></td>
+                <td class="mr" style="padding:5px 7px; width:50%" width="50%">EDD (अपेक्षित प्रसव दिनांक) : <span style="color:#999; font-style:italic; font-weight:normal"></span></td>
             </tr>
         </table>
 
         <table style="width:100%; border-collapse:collapse; margin-bottom:10px" width="100%">
             <tr>
-                <td style="padding:5px 7px">५) नुख्य चिकित्सक</td>
-                <td style="padding:5px 7px">सहाय्यक</td>
-                <td style="padding:5px 7px">हाऊसनन</td>
+                <td class="mr" style="padding:5px 7px">५) मुख्य चिकित्सक</td>
+                <td class="mr" style="padding:5px 7px">सहाय्यक</td>
+                <td class="mr" style="padding:5px 7px">हाऊसमन</td>
             </tr>
             <tr>
                 <td style="padding:5px 7px"><span style="color:#999; font-style:italic; font-weight:normal"></span></td>
@@ -151,65 +165,136 @@
 
     <!-- PAGE 2 -->
     <div style="max-width:850px; margin:0 auto 20px; background:#fff; padding:18px 22px">
-        <div style="font-weight:bold; margin:14px 0 6px; font-size:13.5px">६) बाळंतपणाचा इतिहास : गर्भस्त्राव –</div>
+        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:13.5px">६) बाळंतपणाचा इतिहास : गर्भस्त्राव –</div>
         <div style="min-height:40px; margin:6px 0 14px"><span style="color:#999; font-style:italic; font-weight:normal; padding:6px; display:inline-block"></span></div>
 
         <table style="width:100%; border-collapse:collapse; margin-bottom:10px" width="100%">
             <tr>
-                <td style="padding:5px 7px; width:50%" width="50%">कुटुंब नियोजन शस्त्रक्रिया होय / नाही</td>
-                <td style="padding:5px 7px; width:50%" width="50%">गर्भनिरोध साधनांचा वापर</td>
+                <td class="mr" style="padding:5px 7px; width:50%" width="50%">कुटुंब नियोजन शस्त्रक्रिया होय / नाही</td>
+                <td class="mr" style="padding:5px 7px; width:50%" width="50%">गर्भनिरोध साधनांचा वापर</td>
             </tr>
             <tr>
-                <td style="padding:5px 7px; width:50%" width="50%">जिवात अपत्य : नुल्ग</td>
-                <td style="padding:5px 7px; width:50%" width="50%">नुल्ग</td>
+                <td class="mr" style="padding:5px 7px; width:50%" width="50%">जिवीत अपत्ये : मुलगा</td>
+                <td class="mr" style="padding:5px 7px; width:50%" width="50%">मुलगी</td>
+            </tr>
+            <tr>
+                <td class="mr" style="padding:5px 7px; width:50%" width="50%">मृत अपत्ये : मुलगा</td>
+                <td class="mr" style="padding:5px 7px; width:50%" width="50%">मुलगी</td>
             </tr>
         </table>
 
-        <div style="font-weight:bold; margin:14px 0 6px; font-size:13.5px">७)</div>
-        <table style="width:100%; border-collapse:collapse; margin-bottom:14px" width="100%">
+        <!-- 7 -->
+        <div class="mr" style="font-weight:bold;margin:14px 0 6px;font-size:13.5px;">
+            ७)
+        </div>
+
+        <table style="width:100%;border-collapse:collapse;border:1px solid #000;font-size:13px;margin-bottom:14px;">
+
             <tr>
-                <td style="padding:5px 7px"></td>
-                <td colspan="1" style="padding:5px 7px; text-align:center" align="center">जात्न</td>
+
+                <td style="width:18%;border:1px solid #000;text-align:center;vertical-align:middle;font-weight:bold;padding:6px;">
+                    निदान
+                </td>
+
+                <td style="width:41%;border:1px solid #000;text-align:center;font-weight:bold;padding:6px;">
+                    सुरुवातीचे
+                </td>
+
+                <td style="width:41%;border:1px solid #000;text-align:center;font-weight:bold;padding:6px;">
+                    अंतिम
+                </td>
+
             </tr>
+
             <tr>
-                <td style="padding: 5px 7px; border: 1px solid #000">आयुर्वेदिक</td>
-                <td style="padding: 5px 7px; border: 1px solid #000">आयुर्वेदिक</td>
+
+                <td class="mr" style="border:1px solid #000;padding:8px;">
+                    आयुर्वेदिक
+                </td>
+
+                <td style="border:1px solid #000;padding:8px;height:35px;">
+                </td>
+
+                <td style="border:1px solid #000;padding:8px;height:35px;">
+                    आयुर्वेदिक
+                </td>
+
             </tr>
+
             <tr>
-                <td style="padding: 5px 7px; border: 1px solid #000">अॅलोपॅथी</td>
-                <td style="padding: 5px 7px; border: 1px solid #000">अॅलोपॅथी</td>
+
+                <td class="mr" style="border:1px solid #000;padding:8px;">
+                    अॅलोपॅथी
+                </td>
+
+                <td style="border:1px solid #000;padding:8px;height:35px;">
+                </td>
+
+                <td style="border:1px solid #000;padding:8px;height:35px;">
+                    अॅलोपॅथी
+                </td>
+
             </tr>
+
         </table>
 
-        <div style="font-weight:bold; margin:14px 0 6px; font-size:13.5px">८) यापुर्वीच्या आजारासंबंधी माहिती :</div>
+        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:13.5px">८) यापुर्वीच्या आजारासंबंधी माहिती :</div>
         <div style="min-height:40px; margin:6px 0 14px"><span style="color:#999; font-style:italic; font-weight:normal; padding:6px; display:inline-block"></span></div>
 
-        <div style="font-weight:bold; margin:14px 0 6px; font-size:13.5px">९) असात्म्य : (Known Allergy) :</div>
+        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:13.5px">९) असात्म्य : (Known Allergy) :</div>
         <div style="min-height:40px; margin:6px 0 14px"><span style="color:#999; font-style:italic; font-weight:normal; padding:6px; display:inline-block"></span></div>
 
-        <div style="font-weight:bold; margin:14px 0 6px; font-size:13.5px">१०) कुटुंबातील कोणाला ब्लडप्रेशर, मधुमेह, दना वगैरे आजारपण आहे काय? तपशिल देणे :</div>
+        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:13.5px">१०) कुटुंबातील कोणाला ब्लडप्रेशर, मधुमेह, दना वगैरे आजारपण आहे काय? तपशिल देणे :</div>
         <div style="border-bottom:1px solid #000; height:20px; margin-bottom:14px;"><span style="color:#999; font-style:italic; font-weight:normal"></span></div>
 
-        <div style="text-align:center; font-weight:bold; font-size:15px; margin-bottom:8px;">
+    
+        <div class="mr" style="text-align:center;font-weight:bold;font-size:15px;margin-bottom:8px;">
             रुग्णाने आणलेली औषधे : (Drugs Brought) :
         </div>
 
-        <table style="width:100%; border-collapse:collapse; margin-top:8px" width="100%">
+        <table style="width:100%;border-collapse:collapse;border-top:1px solid #000;margin-top:8px;">
+
             <tr>
-                <th style="padding:6px; font-size:12px; text-align:left; background:#f2f2f2; width:25%" align="left" width="25%">तारीख</th>
-                <th style="padding:6px; font-size:12px; text-align:left; background:#f2f2f2" align="left">औषधाचा तपशिल</th>
+
+                <th style="width:22%;
+                   border-right:1px solid #000;
+                   border-bottom:1px solid #000;
+                   text-align:center;
+                   padding:6px;
+                   font-size:13px;
+                   font-weight:bold;">
+                    तारीख
+                </th>
+
+                <th style="border-bottom:1px solid #000;
+                   text-align:center;
+                   padding:6px;
+                   font-size:13px;
+                   font-weight:bold;">
+                    औषधाचा तपशिल
+                </th>
+
             </tr>
-            <tr><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td></tr>
-            <tr><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td></tr>
-            <tr><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td></tr>
-            <tr><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td></tr>
-            <tr><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td></tr>
-            <tr><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td></tr>
-            <tr><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td></tr>
-            <tr><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td></tr>
-            <tr><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td></tr>
-            <tr><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td><td style="padding:6px; font-size:12px; text-align:left; height:28px" align="left" height="28"> </td></tr>
+
+            <!-- Blank Writing Area -->
+            <tr>
+
+                <td style="border-right:1px solid #000;
+                   height:420px;
+                   vertical-align:top;
+                   padding:5px;">
+                </td>
+
+                <td style="height:420px;
+                   vertical-align:top;
+                   padding:5px;">
+                </td>
+
+            </tr>
+
         </table>
+
+
     </div>
 
 </body>
