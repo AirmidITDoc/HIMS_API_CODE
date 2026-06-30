@@ -209,56 +209,56 @@ namespace HIMS.ABHA.Models
     }
     public class LocalizedDetails
     {
-        public string name { get; set; }
-        public string stateName { get; set; }
-        public string districtName { get; set; }
-        public string villageName { get; set; }
-        public string townName { get; set; }
-        public string gender { get; set; }
-        public LocalizedLabels localizedLabels { get; set; }
+        public string name { get; set; } = string.Empty;
+        public string stateName { get; set; } = string.Empty;
+        public string districtName { get; set; } = string.Empty;
+        public string villageName { get; set; } = string.Empty;
+        public string townName { get; set; } = string.Empty;
+        public string gender { get; set; } = string.Empty;
+        public LocalizedLabels localizedLabels { get; set; } = new LocalizedLabels();
     }
 
     public class LocalizedLabels
     {
-        public string name { get; set; }
-        public string abhaNumber { get; set; }
-        public string abhaAddress { get; set; }
-        public string gender { get; set; }
-        public string dob { get; set; }
-        public string mobile { get; set; }
+        public string name { get; set; } = string.Empty;
+        public string abhaNumber { get; set; } = string.Empty;
+        public string abhaAddress { get; set; } = string.Empty;
+        public string gender { get; set; } = string.Empty;
+        public string dob { get; set; } = string.Empty;
+        public string mobile { get; set; } = string.Empty;
     }
 
     public class AbhaProfile
     {
-        public string ABHANumber { get; set; }
-        public string preferredAbhaAddress { get; set; }
-        public string mobile { get; set; }
-        public string firstName { get; set; }
-        public string middleName { get; set; }
-        public string lastName { get; set; }
-        public string name { get; set; }
-        public string yearOfBirth { get; set; }
-        public string dayOfBirth { get; set; }
-        public string monthOfBirth { get; set; }
-        public string gender { get; set; }
-        public string profilePhoto { get; set; }
-        public string status { get; set; }
-        public string stateCode { get; set; }
-        public string districtCode { get; set; }
-        public string pincode { get; set; }
-        public string address { get; set; }
-        public string kycPhoto { get; set; }
-        public string stateName { get; set; }
-        public string districtName { get; set; }
-        public string subdistrictName { get; set; }
-        public List<string> authMethods { get; set; }
+        public string ABHANumber { get; set; } = string.Empty;
+        public string preferredAbhaAddress { get; set; } = string.Empty;
+        public string mobile { get; set; } = string.Empty;
+        public string firstName { get; set; } = string.Empty;
+        public string middleName { get; set; } = string.Empty;
+        public string lastName { get; set; } = string.Empty;
+        public string name { get; set; } = string.Empty;
+        public string yearOfBirth { get; set; } = string.Empty;
+        public string dayOfBirth { get; set; } = string.Empty;
+        public string monthOfBirth { get; set; } = string.Empty;
+        public string gender { get; set; } = string.Empty;
+        public string profilePhoto { get; set; } = string.Empty;
+        public string status { get; set; } = string.Empty;
+        public string stateCode { get; set; } = string.Empty;
+        public string districtCode { get; set; } = string.Empty;
+        public string pincode { get; set; } = string.Empty;
+        public string address { get; set; } = string.Empty;
+        public string kycPhoto { get; set; } = string.Empty;
+        public string stateName { get; set; } = string.Empty;
+        public string districtName { get; set; } = string.Empty;
+        public string subdistrictName { get; set; } = string.Empty;
+        public List<string> authMethods { get; set; } = new List<string>();
         //public Tags tags { get; set; }
         public bool kycVerified { get; set; }
-        public string verificationStatus { get; set; }
-        public string verificationType { get; set; }
-        public LocalizedDetails localizedDetails { get; set; }
-        public string createdDate { get; set; }
-        public string[] phrAddress { get; set; }
+        public string verificationStatus { get; set; } = string.Empty;
+        public string verificationType { get; set; } = string.Empty;
+        public LocalizedDetails localizedDetails { get; set; } = new LocalizedDetails();
+        public string createdDate { get; set; } = string.Empty;
+        public string[] phrAddress { get; set; } = Array.Empty<string>();
     }
 
     //public class AbhaProfile
@@ -375,5 +375,6 @@ namespace HIMS.ABHA.Models
     public class ProfileRequestDto
     {
         public string Token { get; set; } = string.Empty;
+        public bool IsAddress { get; set; } = false;
     }
 }

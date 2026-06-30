@@ -53,8 +53,10 @@ namespace HIMS.ABHA.Configuration
         public string AbhaAddressOtpRequest { get; set; } = string.Empty;
         public string AbhaAddressOtpVerify { get; set; } = string.Empty;
         public string AbhaProfile { get; set; } = string.Empty;
+        public string AbhaAddressProfile {  get; set; }  = string.Empty;
         public string AbhaCard { get; set; } = string.Empty;
         public string AbhaQrCode { get; set; } = string.Empty;
+        public string AbhaAddressQrCode {  set; get; } = string.Empty;
         public string VerifyUser { get; set; } = string.Empty;
         public string BridgeUrl { get; set; } = string.Empty;
         public string RegisterBridge { get; set; } = string.Empty;

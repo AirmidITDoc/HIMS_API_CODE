@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.ABHA.M3
             return Ok(result);
         }
         [HttpPost("consent/request/init")]
-        public async Task<IActionResult> ConsentInitRequest([FromBody] ConsentInitRequest request, [FromHeader(Name = "X-CM-ID")] string cmId = "sbx")
+        public async Task<IActionResult> ConsentInitRequestAsync([FromBody] ConsentInitRequest request, [FromHeader(Name = "X-CM-ID")] string cmId = "sbx")
         {
             if (request?.Consent == null)
                 return BadRequest("consent payload is required.");
