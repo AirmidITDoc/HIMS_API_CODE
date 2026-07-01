@@ -85,6 +85,18 @@
             min-height: 80px;
             margin-top: 5px;
         }
+        .chk-box {
+            display: inline-block;
+            font-size: 14px;
+        }
+
+            .chk-box:before {
+                content: "☐";
+            }
+
+            .chk-box.chk-1:before {
+                content: "☑";
+            }
 
   {{LoadFont}}
     </style>
@@ -218,31 +230,14 @@
             ultrasound)
         </p>
 
-      
-        <div class="chk">&#9744; &nbsp; i. To diagnose intra-uterine and/or ectopic pregnancy and confirm viability.</div>
-        <div class="chk">&#9744; &nbsp; ii. Estimation of gestational age (dating).</div>
-        <div class="chk">&#9744; &nbsp; iii. Detection of number of fetuses and their chorionicity.</div>
-        <div class="chk">&#9744; &nbsp; iv. Suspected pregnancy with IUCD in-situ / contraceptive failure.</div>
-        <div class="chk">&#9744; &nbsp; v. Vaginal bleeding / leaking.</div>
-        <div class="chk">&#9744; &nbsp; vi. Follow-up of cases of abortion.</div>
-        <div class="chk">&#9744; &nbsp; vii. Assessment of cervical canal and diameter of internal os.</div>
-        <div class="chk">&#9744; &nbsp; viii. Discrepancy between uterine size and period of amenorrhea.</div>
-        <div class="chk">&#9744; &nbsp; ix. Suspected adnexal / uterine pathology.</div>
-        <div class="chk">&#9744; &nbsp; x. Detection of chromosomal abnormalities, fetal structural defects and follow-up.</div>
-        <div class="chk">&#9744; &nbsp; xi. Evaluate fetal presentation and position.</div>
-        <div class="chk">&#9744; &nbsp; xii. Assessment of liquor amnii.</div>
-        <div class="chk">&#9744; &nbsp; xiii. Preterm labour / membrane rupture.</div>
-        <div class="chk">&#9744; &nbsp; xiv. Evaluation of placental position and abnormalities.</div>
-        <div class="chk">&#9744; &nbsp; xv. Evaluation of umbilical cord.</div>
-        <div class="chk">&#9744; &nbsp; xvi. Evaluation of previous Caesarean Section scars.</div>
-        <div class="chk">&#9744; &nbsp; xvii. Evaluation of fetal growth and wellbeing.</div>
-        <div class="chk">&#9744; &nbsp; xviii. Color flow mapping and Doppler studies.</div>
-        <div class="chk">&#9744; &nbsp; xix. Ultrasound guided procedures and follow-up.</div>
-        <div class="chk">&#9744; &nbsp; xx. Adjunct diagnostic / therapeutic invasive interventions.</div>
-        <div class="chk">&#9744; &nbsp; xxi. Observation of intra-partum events.</div>
-        <div class="chk">&#9744; &nbsp; xxii. Medical / Surgical conditions complicating pregnancy.</div>
-        <div class="chk">&#9744; &nbsp; xxiii. Research / Scientific studies.</div>
 
+
+        <!--ITEMS_SP2-->
+        <div class="chk">
+            <span class="chk-box chk-{{IndicationValues}}"></span>
+            &nbsp; {{IndicationDesc}}
+        </div>
+        <!--/ITEMS_SP2-->
 
     </div>
     <!-- ==================== END PAGE 2 ==================== -->
