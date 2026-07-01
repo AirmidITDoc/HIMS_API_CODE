@@ -582,7 +582,7 @@ namespace HIMS.Services.Common
                     if (!rEntity.Contains(rProperty))
                         entity.Remove(rProperty);
                 }
-                string RegId = odal1.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+                string RegId = odal1.ExecuteNonQueryNew("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
                 objRegistration.RegId = Convert.ToInt32(RegId);
                 objVisitDetail.RegId = Convert.ToInt32(RegId);
                  //  ( For RegNo fetch )
@@ -602,7 +602,7 @@ namespace HIMS.Services.Common
                     if (!rVisitEntity.Contains(rProperty))
                         visitentity.Remove(rProperty);
                 }
-                string VisitId = odal1.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+                string VisitId = odal1.ExecuteNonQueryNew("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
                 objVisitDetail.VisitId = Convert.ToInt32(VisitId);
                 objBill.OpdIpdId = objVisitDetail.VisitId;
                 objBill.RegNo = Convert.ToInt64(objRegistration.RegNo);
@@ -612,7 +612,7 @@ namespace HIMS.Services.Common
                 {
                     VisitId = Convert.ToInt32(VisitId)
                 };
-                odal1.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+                odal1.ExecuteNonQueryNew("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure,"", tokenObj.ToDictionary());
                 await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                 //objVisitDetail.RegId = objRegistration.RegId;
@@ -640,7 +640,7 @@ namespace HIMS.Services.Common
                     if (!BEntity.Contains(rProperty))
                         bentity.Remove(rProperty);
                 }
-                string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
+                string vBillNo = odal.ExecuteNonQueryNew("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
                 objBill.BillNo = Convert.ToInt32(vBillNo);
                 await _context.LogProcedureExecution(bentity, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
@@ -733,7 +733,7 @@ namespace HIMS.Services.Common
                                 }
                                 Packagescharge["PackageMainChargeId"] = objItem1.ChargesId;
                                 Packagescharge["BillNo"] = objBill.BillNo;
-                                var VChargesId = odal.ExecuteNonQuery("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
+                                var VChargesId = odal.ExecuteNonQueryNew("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
                                 item.ChargesId = Convert.ToInt32(VChargesId);
                                 await _context.LogProcedureExecution(Packagescharge, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
@@ -744,7 +744,7 @@ namespace HIMS.Services.Common
                                     ["ChargesId"] = VChargesId
                                 };
 
-                                odal.ExecuteNonQuery("ps_insert_BillDetails_1", CommandType.StoredProcedure, OPBillDet2);
+                                odal.ExecuteNonQueryNew("ps_insert_BillDetails_1", CommandType.StoredProcedure, "", OPBillDet2);
                                 await _context.LogProcedureExecution(bentity, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                             }
@@ -765,7 +765,7 @@ namespace HIMS.Services.Common
                             entity2.Remove(rProperty);
                     }
                     entity2["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
-                    string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
+                    string PaymentId = odal.ExecuteNonQueryNew("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
                     objPayment.PaymentId = Convert.ToInt32(PaymentId);
                     await _context.LogProcedureExecution(entity2, nameof(Payment), objPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                     // Save Log
@@ -800,7 +800,7 @@ namespace HIMS.Services.Common
                     if (!rEntity.Contains(rProperty))
                         entity.Remove(rProperty);
                 }
-                string RegId = odal1.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+                string RegId = odal1.ExecuteNonQueryNew("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
                 objRegistration.RegId = Convert.ToInt32(RegId);
                 objVisitDetail.RegId = objRegistration.RegId;
                 await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, currentUserName);
@@ -819,7 +819,7 @@ namespace HIMS.Services.Common
                     if (!rVisitEntity.Contains(rProperty))
                         visitentity.Remove(rProperty);
                 }
-                string VisitId = odal1.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+                string VisitId = odal1.ExecuteNonQueryNew("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
                 objVisitDetail.VisitId = Convert.ToInt32(VisitId);
                 objBill.OpdIpdId = objVisitDetail.VisitId;
                 objBill.RegNo = Convert.ToInt64(objRegistration.RegNo);
@@ -855,7 +855,7 @@ namespace HIMS.Services.Common
                     if (!BEntity.Contains(rProperty))
                         bentity.Remove(rProperty);
                 }
-                string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
+                string vBillNo = odal.ExecuteNonQueryNew("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
                 objBill.BillNo = Convert.ToInt32(vBillNo);
                 await _context.LogProcedureExecution(bentity, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, currentUserName);
 
@@ -946,7 +946,7 @@ namespace HIMS.Services.Common
                             }
                             Packagescharge["PackageMainChargeId"] = objItem1.ChargesId;
                             Packagescharge["BillNo"] = objBill.BillNo;
-                            var VChargesId = odal.ExecuteNonQuery("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
+                            var VChargesId = odal.ExecuteNonQueryNew("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
                             item.ChargesId = Convert.ToInt32(VChargesId);
                             await _context.LogProcedureExecution(Packagescharge, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, currentUserName);
 
@@ -957,7 +957,7 @@ namespace HIMS.Services.Common
                                 ["ChargesId"] = VChargesId
                             };
 
-                            odal.ExecuteNonQuery("ps_insert_BillDetails_1", CommandType.StoredProcedure, OPBillDet2);
+                            odal.ExecuteNonQueryNew("ps_insert_BillDetails_1", CommandType.StoredProcedure,"", OPBillDet2);
                             await _context.LogProcedureExecution(bentity, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, currentUserName);
 
 
@@ -999,7 +999,7 @@ namespace HIMS.Services.Common
                     if (!rVisitEntity.Contains(rProperty))
                         visitentity.Remove(rProperty);
                 }
-                string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+                string VisitId = odal.ExecuteNonQueryNew("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
                 objVisitDetail.VisitId = Convert.ToInt32(VisitId);
                 objBill.OpdIpdId = objVisitDetail.VisitId;
                 //objBill.RegNo = Convert.ToInt64(objRegistration.RegNo);
@@ -1008,7 +1008,7 @@ namespace HIMS.Services.Common
                 {
                     VisitId = Convert.ToInt32(VisitId)
                 };
-                odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+                odal.ExecuteNonQueryNew("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure,"", tokenObj.ToDictionary());
                 await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                 //_context.VisitDetails.Add(objVisitDetail);
@@ -1030,7 +1030,7 @@ namespace HIMS.Services.Common
                     if (!BEntity.Contains(rProperty))
                         bentity.Remove(rProperty);
                 }
-                string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
+                string vBillNo = odal.ExecuteNonQueryNew("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
                 objBill.BillNo = Convert.ToInt32(vBillNo);
                 await _context.LogProcedureExecution(bentity, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
@@ -1124,7 +1124,7 @@ namespace HIMS.Services.Common
                                 }
                                 Packagescharge["PackageMainChargeId"] = objItem1.ChargesId;
                                 Packagescharge["BillNo"] = objBill.BillNo;
-                                var VChargesId = odal.ExecuteNonQuery("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
+                                var VChargesId = odal.ExecuteNonQueryNew("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
                                 item.ChargesId = Convert.ToInt32(VChargesId);
                                 await _context.LogProcedureExecution(Packagescharge, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
@@ -1135,7 +1135,7 @@ namespace HIMS.Services.Common
                                     ["ChargesId"] = VChargesId
                                 };
 
-                                odal.ExecuteNonQuery("ps_insert_BillDetails_1", CommandType.StoredProcedure, OPBillDet2);
+                                odal.ExecuteNonQueryNew("ps_insert_BillDetails_1", CommandType.StoredProcedure,"", OPBillDet2);
                                 await _context.LogProcedureExecution(bentity, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                             }
@@ -1156,7 +1156,7 @@ namespace HIMS.Services.Common
                             entity2.Remove(rProperty);
                     }
                     entity2["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
-                    string PaymentId = odal.ExecuteNonQuery("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
+                    string PaymentId = odal.ExecuteNonQueryNew("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
                     objPayment.PaymentId = Convert.ToInt32(PaymentId);
                     await _context.LogProcedureExecution(entity2, nameof(Payment), objPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                     // Save Log
@@ -1192,7 +1192,7 @@ namespace HIMS.Services.Common
                     if (!DEntity.Contains(rProperty))
                         bentity.Remove(rProperty);
                 }
-                string VDrbno = odal.ExecuteNonQuery("PS_Insert_T_DRBill", CommandType.StoredProcedure, "Drbno", bentity);
+                string VDrbno = odal.ExecuteNonQueryNew("PS_Insert_T_DRBill", CommandType.StoredProcedure, "Drbno", bentity);
                 ObjTDrbill.Drbno = Convert.ToInt32(VDrbno);
                 await _context.LogProcedureExecution(bentity, nameof(TDrbill), ObjTDrbill.Drbno.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
@@ -1208,7 +1208,7 @@ namespace HIMS.Services.Common
                         if (!CREntity.Contains(rProperty))
                             centity.Remove(rProperty);
                     }
-                    string VChargId = odal.ExecuteNonQuery("PS_Insert_T_DRAddCharges", CommandType.StoredProcedure, "ChargesId", centity);
+                    string VChargId = odal.ExecuteNonQueryNew("PS_Insert_T_DRAddCharges", CommandType.StoredProcedure, "ChargesId", centity);
                     item.ChargesId = Convert.ToInt32(VChargId);
                     await _context.LogProcedureExecution( centity, nameof(TDraddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId,  CurrentUserName);
                     Dictionary<string, object> tokenObj = new()
@@ -1217,7 +1217,7 @@ namespace HIMS.Services.Common
                         ["ChargesID"] = VChargId
                     };
                    
-                    odal.ExecuteNonQuery("PS_Insert_T_DRBillDet", CommandType.StoredProcedure, tokenObj);
+                    odal.ExecuteNonQueryNew("PS_Insert_T_DRBillDet", CommandType.StoredProcedure, "",tokenObj);
                     await _context.LogProcedureExecution( tokenObj, nameof(TDrbillDet), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                 }
