@@ -215,29 +215,7 @@
             ultrasound)
         </p>
 
-        <!--<div class="chk">{{Checked1}} &nbsp; i. To diagnose intra-uterine and/or ectopic pregnancy and confirm viability.</div>
-    <div class="chk">{{Checked2}} &nbsp; ii. Estimation of gestational age (dating).</div>
-    <div class="chk">{{Checked3}} &nbsp; iii. Detection of number of fetuses and their chorionicity.</div>
-    <div class="chk">{{Checked4}} &nbsp; iv. Suspected pregnancy with IUCD in-situ / contraceptive failure.</div>
-    <div class="chk">{{Checked5}} &nbsp; v. Vaginal bleeding / leaking.</div>
-    <div class="chk">{{Checked6}} &nbsp; vi. Follow-up of cases of abortion.</div>
-    <div class="chk">{{Checked7}} &nbsp; vii. Assessment of cervical canal and diameter of internal os.</div>
-    <div class="chk">{{Checked8}} &nbsp; viii. Discrepancy between uterine size and period of amenorrhea.</div>
-    <div class="chk">{{Checked9}} &nbsp; ix. Suspected adnexal / uterine pathology.</div>
-    <div class="chk">{{Checked10}} &nbsp; x. Detection of chromosomal abnormalities, fetal structural defects and follow-up.</div>
-    <div class="chk">{{Checked11}} &nbsp; xi. Evaluate fetal presentation and position.</div>
-    <div class="chk">{{Checked12}} &nbsp; xii. Assessment of liquor amnii.</div>
-    <div class="chk">{{Checked13}} &nbsp; xiii. Preterm labour / membrane rupture.</div>
-    <div class="chk">{{Checked14}} &nbsp; xiv. Evaluation of placental position and abnormalities.</div>
-    <div class="chk">{{Checked15}} &nbsp; xv. Evaluation of umbilical cord.</div>
-    <div class="chk">{{Checked16}} &nbsp; xvi. Evaluation of previous Caesarean Section scars.</div>
-    <div class="chk">{{Checked17}} &nbsp; xvii. Evaluation of fetal growth and wellbeing.</div>
-    <div class="chk">{{Checked18}} &nbsp; xviii. Color flow mapping and Doppler studies.</div>
-    <div class="chk">{{Checked19}} &nbsp; xix. Ultrasound guided procedures and follow-up.</div>
-    <div class="chk">{{Checked20}} &nbsp; xx. Adjunct diagnostic / therapeutic invasive interventions.</div>
-    <div class="chk">{{Checked21}} &nbsp; xxi. Observation of intra-partum events.</div>
-    <div class="chk">{{Checked22}} &nbsp; xxii. Medical / Surgical conditions complicating pregnancy.</div>
-    <div class="chk">{{Checked23}} &nbsp; xxiii. Research / Scientific studies.</div>-->
+      
         <div class="chk">&#9744; &nbsp; i. To diagnose intra-uterine and/or ectopic pregnancy and confirm viability.</div>
         <div class="chk">&#9744; &nbsp; ii. Estimation of gestational age (dating).</div>
         <div class="chk">&#9744; &nbsp; iii. Detection of number of fetuses and their chorionicity.</div>
@@ -365,79 +343,128 @@
 
         <div class="row">
             <b>17. Name of doctor/s performing procedure/s :</b><br><br>
-            {{ProcedureDoctor}}
+            {{AnyOtherTest}}
         </div>
 
+        <!--<div class="row">
+        <b>18. History of genetic / medical disease in family (specify)</b><br><br>
+        {{FamilyHistory}}<br><br>
+        <label>
+            <input type="checkbox"> Clinical
+        </label>
+
+        &nbsp;&nbsp;
+
+        <label>
+            <input type="checkbox"> Bio-Chemical
+        </label>
+
+        &nbsp;&nbsp;
+
+        <label>
+            <input type="checkbox"> Cytogenetic
+        </label>
+
+        &nbsp;&nbsp;
+
+        <label>
+            <input type="checkbox"> Other
+            (e.g radiological / ultrasonography. etc-specify)
+        </label>
+    </div>-->
         <div class="row">
-            <b>18. History of genetic / medical disease in family (specify)</b><br><br>
-            {{FamilyHistory}}<br><br>
-            <label>
-                <input type="checkbox"> Clinical
-            </label>
+            <b>18. History of genetic / medical disease in family (specify)</b>
+            <br><br>
 
-            &nbsp;&nbsp;
+            {{AnyOtherTest}}
+            <br><br>
 
-            <label>
-                <input type="checkbox"> Bio-Chemical
-            </label>
+            ☐ Clinical
+            &nbsp;&nbsp;&nbsp;&nbsp;
 
-            &nbsp;&nbsp;
+            ☐ Bio-Chemical
+            &nbsp;&nbsp;&nbsp;&nbsp;
 
-            <label>
-                <input type="checkbox"> Cytogenetic
-            </label>
+            ☐ Cytogenetic
+            &nbsp;&nbsp;&nbsp;&nbsp;
 
-            &nbsp;&nbsp;
-
-            <label>
-                <input type="checkbox"> Other
-                (e.g radiological / ultrasonography. etc-specify)
-            </label>
+            ☐ Other (e.g radiological / ultrasonography. etc-specify)
         </div>
 
 
 
 
-        <div class="row">
-            <b>19. Indication/s for the diagnosis procedure</b>
-            <br><br>
+        <!--<div class="row">
+        <b>19. Indication/s for the diagnosis procedure</b>
+        <br><br>
 
-            <b>A. Previous child or children with :</b>
-            <br><br>
+        <b>A. Previous child or children with :</b>
+        <br><br>
 
-            <label><input type="checkbox" {{Chromosomal disorders}}> Chromosomal disorders</label>
-            &nbsp;&nbsp;
+        {{ChromosomalDisorders}} Chromosomal disorders
+        &nbsp;&nbsp;&nbsp;&nbsp;
 
-            <label><input type="checkbox" {{Metabolic disorders}}> Metabolic disorders</label>
-            &nbsp;&nbsp;
+        {{MetabolicDisorders}} Metabolic disorders
+        &nbsp;&nbsp;&nbsp;&nbsp;
 
-            <label><input type="checkbox" {{Congenital anomaly}}> Congenital anomaly</label>
-            <br>
+        {{CongenitalAnomaly}} Congenital anomaly
+        <br><br>
 
-            <label><input type="checkbox" {{Mental Disability}}> Mental Disability</label>
-            &nbsp;&nbsp;
+        {{MentalDisability}} Mental Disability
+        &nbsp;&nbsp;&nbsp;&nbsp;
 
-            <label><input type="checkbox" {{Haemoglobinopathy}}> Haemoglobinopathy</label>
-            &nbsp;&nbsp;
+        {{Haemoglobinopathy}} Haemoglobinopathy
+        &nbsp;&nbsp;&nbsp;&nbsp;
 
-            <label><input type="checkbox" {{SexLinkeddisorder}}> Sex Linked disorder</label>
-            <br>
+        {{SexLinkedDisorder}} Sex Linked disorder
+        <br><br>
 
-            <label><input type="checkbox" {{Single gene disorder}}> Single gene disorder</label>
-            &nbsp;&nbsp;
+        {{SingleGeneDisorder}} Single gene disorder
+    </div>-->
+    <div class="row">
+        <b>19. Indication/s for the diagnosis procedure</b>
+        <br><br>
 
-            <label>
-                <input type="checkbox" {{AnyOther1}}>
-                Any Other : (Specify)
-            </label>
-            <br><br>
-            <!--<b>B. Advanced maternal age (35 years)</b> {{Mage}}-->
-            <b>B. Advanced maternal age (35 years)</b> : ☐ {{Mage}}
-            <br><br>
-            <b>C. Mother/Father/Sibling has genetic disease</b> : ☐
-            <br><br>
-            <b>D. Any Other specify :</b> {{AnyOtherIndication}}
-        </div>
+        <b>A. Previous child or children with :</b>
+        <br><br>
+
+        ☐ Chromosomal disorders
+        &nbsp;&nbsp;&nbsp;&nbsp;
+
+        ☐ Metabolic disorders
+        &nbsp;&nbsp;&nbsp;&nbsp;
+
+        ☐ Congenital anomaly
+
+        <br><br>
+
+        ☐ Mental Disability
+        &nbsp;&nbsp;&nbsp;&nbsp;
+
+        ☐ Haemoglobinopathy
+        &nbsp;&nbsp;&nbsp;&nbsp;
+
+        ☐ Sex Linked disorder
+
+        <br><br>
+
+        ☐ Single gene disorder
+        &nbsp;&nbsp;&nbsp;&nbsp;
+
+        ☐ Any Other : (Specify)
+    </div>
+        <!--<label>
+            <input type="checkbox" {{AnyOther1}}>
+            Any Other : (Specify)
+        </label>-->
+        <br><br>
+        <!--<b>B. Advanced maternal age (35 years)</b> {{Mage}}-->
+        <b>B. Advanced maternal age (35 years)</b> : ☐ {{Mage}}
+        <br><br>
+        <b>C. Mother/Father/Sibling has genetic disease</b> : ☐
+        <br><br>
+        <b>D. Any Other specify :</b> {{AnyOtherIndication}}
+    </div>
 
         <div class="row">
             <b>20. Date on which consent of pregnant woman/person was obtained in Form  G prescribed in PC&PNDT Act.1994 </b><br><br>
@@ -592,7 +619,10 @@
             I do not want to know the sex of my foetus.
         </div>
 
-        <div class="row">
+        <!--<div class="row">
+        असे घोषित करते की, अल्ट्रा-सोनोग्राफी / चाचणी करून मी माझ्या गर्भाचे लिंग जाणून घेऊ इच्छित नाही.
+    </div>-->
+        <div class="row" style="font-family: 'MarathiFont','Nirmala UI','Mangal','Arial Unicode MS'">
             असे घोषित करते की, अल्ट्रा-सोनोग्राफी / चाचणी करून मी माझ्या गर्भाचे लिंग जाणून घेऊ इच्छित नाही.
         </div>
 
@@ -626,7 +656,7 @@
         <div class="row"><b>DECLARATION OF DOCTOR / PERSON CONDUCTING PRENATAL DIAGNOSTIC PROCEDURE / TEST</b></div>
 
         <div class="row">
-            I , <b>Dr. {{CondDoctor}}</b>
+            I , <b>Dr. {{DeclarationDoctor}}</b>
             (name of person conducting ultrasonography / image scanning)
             declare that while conducting ultrasonography / image scanning on Ms.
             <span class="box">{{PatientName}}</span>
@@ -635,12 +665,21 @@
 
         <br><br>
 
-        <table width="100%">
-            <tr>
-                <td>Date : {{DoctorDate}}</td>
-                <td>Signature : __________________</td>
-            </tr>
-        </table>
+            <table width="100%" style="margin-top:20px;">
+                <tr>
+                    <td style="width:50%; text-align:left;">
+                        <b>Date :</b>
+                        <span style="border-bottom:1px solid #000; padding:0 40px;">
+                            {{DoctorDate}}
+                        </span>
+                    </td>
+
+                    <td style="width:50%; text-align:right;">
+                        <b>Signature :</b>
+                        <span style="display:inline-block; border-bottom:1px solid #000; width:220px;"></span>
+                    </td>
+                </tr>
+            </table>
 
         <br><br><br><br><br>
 
