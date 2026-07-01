@@ -172,6 +172,7 @@ namespace HIMS.Services.OPPatient
                 DatabaseHelper odal = new();
                 odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
                 odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
                 string[] BEntity = { "OpdIpdId", "RegNo",  "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId","PatientType", "CompanyName", "CompanyAmt",
                         "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId",
                         "IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments","CashCounterId","CreatedBy","BillNo","GovtApprovedAmt"};
@@ -181,7 +182,7 @@ namespace HIMS.Services.OPPatient
                     if (!BEntity.Contains(rProperty))
                         bentity.Remove(rProperty);
                 }
-                string vBillNo = odal.ExecuteNonQuery("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
+                string vBillNo = odal.ExecuteNonQueryNew("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
                 objBill.BillNo = Convert.ToInt32(vBillNo);
                 await _context.LogProcedureExecution(bentity, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
@@ -267,11 +268,9 @@ namespace HIMS.Services.OPPatient
                                 }
                                 Packagescharge["PackageMainChargeId"] = objItem1.ChargesId;
                                 Packagescharge["BillNo"] = objBill.BillNo;
-                                var VChargesId = odal.ExecuteNonQuery("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
+                                var VChargesId = odal.ExecuteNonQueryNew("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
                                 item.ChargesId = Convert.ToInt32(VChargesId);
                                 await _context.LogProcedureExecution(Packagescharge, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
-
 
                                 //   Package Service add in Bill Details
                                 Dictionary<string, object> OPBillDet2 = new()
