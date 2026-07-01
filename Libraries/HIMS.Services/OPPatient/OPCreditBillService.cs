@@ -280,7 +280,7 @@ namespace HIMS.Services.OPPatient
                                     ["ChargesId"] = VChargesId
                                 };
 
-                                odal.ExecuteNonQuery("m_insert_BillDetails_1", CommandType.StoredProcedure, OPBillDet2);
+                                odal.ExecuteNonQueryNew("m_insert_BillDetails_1", CommandType.StoredProcedure,"", OPBillDet2);
                                 await _context.LogProcedureExecution(OPBillDet2,nameof(BillDetail),Convert.ToInt32(VChargesId),Core.Domain.Logging.LogAction.Add,CurrentUserId,CurrentUserName);
                             }
 
