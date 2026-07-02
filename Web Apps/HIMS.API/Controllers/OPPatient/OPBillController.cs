@@ -166,7 +166,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("AppointmentBillingInsert")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AppBillInsert(AppBillingMainModels obj)
         {
             Registration Regmodel = obj.AppRegistrationBills.MapTo<Registration>();
@@ -189,7 +189,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("AppointmentBillingRegisteredInsert")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AppBillRegisteredInsert(RegistredAppBillingMainModels obj)
         {
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
