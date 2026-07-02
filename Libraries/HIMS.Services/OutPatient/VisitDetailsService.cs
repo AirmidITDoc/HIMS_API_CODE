@@ -112,7 +112,7 @@ namespace HIMS.Services.OutPatient
                     if (!rEntity.Contains(rProperty))
                         entity.Remove(rProperty);
                 }
-                string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+                string RegId = odal.ExecuteNonQueryNew("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
                 objRegistration.RegId = Convert.ToInt32(RegId);
                 objVisitDetail.RegId = Convert.ToInt32(RegId);
                 await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
@@ -124,7 +124,7 @@ namespace HIMS.Services.OutPatient
                     if (!rVisitEntity.Contains(rProperty))
                         visitentity.Remove(rProperty);
                 }
-                string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+                string VisitId = odal.ExecuteNonQueryNew("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
                 objVisitDetail.VisitId = Convert.ToInt32(VisitId);
                 await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
@@ -137,7 +137,7 @@ namespace HIMS.Services.OutPatient
                     if (!PatientPolicyEntity.Contains(rProperty))
                         Patiententity.Remove(rProperty);
                 }
-                string PatientPolicyId = odal.ExecuteNonQuery("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
+                string PatientPolicyId = odal.ExecuteNonQueryNew("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
                 ObjTPatientPolicyInformation.PatientPolicyId = Convert.ToInt32(PatientPolicyId);
 
                 await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
@@ -147,7 +147,7 @@ namespace HIMS.Services.OutPatient
                 {
                     VisitId = Convert.ToInt32(VisitId)
                 };
-                odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+                odal.ExecuteNonQueryNew("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure,"", tokenObj.ToDictionary());
                 await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                 //  Save & Commit 
                 await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
@@ -176,7 +176,7 @@ namespace HIMS.Services.OutPatient
                     if (!rVisitEntity.Contains(rProperty))
                         visitentity.Remove(rProperty);
                 }
-                string VisitId = odal.ExecuteNonQuery("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
+                string VisitId = odal.ExecuteNonQueryNew("ps_insert_VisitDetails_1", CommandType.StoredProcedure, "VisitId", visitentity);
                 objVisitDetail.VisitId = Convert.ToInt32(VisitId);
                 await _context.LogProcedureExecution(visitentity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
@@ -189,7 +189,7 @@ namespace HIMS.Services.OutPatient
                     if (!PatientPolicyEntity.Contains(rProperty))
                         Patiententity.Remove(rProperty);
                 }
-                string PatientPolicyId = odal.ExecuteNonQuery("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
+                string PatientPolicyId = odal.ExecuteNonQueryNew("ps_insert_T_PatientPolicyInformation", CommandType.StoredProcedure, "PatientPolicyId", Patiententity);
                 ObjTPatientPolicyInformation.PatientPolicyId = Convert.ToInt32(PatientPolicyId);
                 //objVisitDetail.VisitId = Convert.ToInt32(VisitId);
                 await _context.LogProcedureExecution(Patiententity, nameof(TPatientPolicyInformation), ObjTPatientPolicyInformation.PatientPolicyId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
@@ -198,7 +198,7 @@ namespace HIMS.Services.OutPatient
                 {
                     VisitId = Convert.ToInt32(VisitId)
                 };
-                odal.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+                odal.ExecuteNonQueryNew("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, "", tokenObj.ToDictionary());
                 await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
                 //  Save & Commit 
                 await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);

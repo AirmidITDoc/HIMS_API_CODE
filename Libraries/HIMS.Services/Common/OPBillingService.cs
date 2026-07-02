@@ -1217,7 +1217,7 @@ namespace HIMS.Services.Common
                         ["ChargesID"] = VChargId
                     };
                    
-                    odal.ExecuteNonQueryNew("PS_Insert_T_DRBillDet", CommandType.StoredProcedure, "",tokenObj);
+                    odal.ExecuteNonQueryNew("PS_Insert_T_DRBillDet", CommandType.StoredProcedure,"",tokenObj);
                     await _context.LogProcedureExecution( tokenObj, nameof(TDrbillDet), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                 }
@@ -1247,7 +1247,7 @@ namespace HIMS.Services.Common
             {
                 Drbno = Convert.ToInt32(ObjTDrbill.Drbno)
             };
-            odal.ExecuteNonQuery("Delete_OPDraftBill", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            odal.ExecuteNonQueryNew("Delete_OPDraftBill", CommandType.StoredProcedure,"", tokensObj.ToDictionary());
             await _context.LogProcedureExecution(tokensObj.ToDictionary(),nameof(TDrbill),ObjTDrbill.Drbno.ToInt(),Core.Domain.Logging.LogAction.Delete,CurrentUserId,CurrentUserName);
 
             string[] DEntity = { "Drbno", "OpdIpdId",  "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "IsCancelled", "PbillNo","TotalAdvanceAmount", "AdvanceUsedAmount", "AddedBy",
@@ -1258,7 +1258,7 @@ namespace HIMS.Services.Common
                 if (!DEntity.Contains(rProperty))
                     bentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("PS_Update_T_DRBill", CommandType.StoredProcedure, bentity);
+            odal.ExecuteNonQueryNew("PS_Update_T_DRBill", CommandType.StoredProcedure,"", bentity);
             await _context.LogProcedureExecution(bentity, nameof(TDrbill), ObjTDrbill.Drbno.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
 
@@ -1274,7 +1274,7 @@ namespace HIMS.Services.Common
                         if (!CREntity.Contains(rProperty))
                             centity.Remove(rProperty);
                     }
-                    string VChargId = odal.ExecuteNonQuery("PS_Insert_T_DRAddCharges", CommandType.StoredProcedure, "ChargesId", centity);
+                    string VChargId = odal.ExecuteNonQueryNew("PS_Insert_T_DRAddCharges", CommandType.StoredProcedure, "ChargesId", centity);
                     item.ChargesId = Convert.ToInt32(VChargId);
                     await _context.LogProcedureExecution(centity, nameof(TDraddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
@@ -1284,7 +1284,7 @@ namespace HIMS.Services.Common
                         ["ChargesID"] = VChargId
                     };
 
-                    odal.ExecuteNonQuery("PS_Insert_T_DRBillDet", CommandType.StoredProcedure, tokenObj);
+                    odal.ExecuteNonQueryNew("PS_Insert_T_DRBillDet", CommandType.StoredProcedure,"", tokenObj);
                     await _context.LogProcedureExecution(tokenObj, nameof(TDrbillDet), Convert.ToInt32(VChargId), Core.Domain.Logging.LogAction.Add,  CurrentUserId,  CurrentUserName);
 
                 }
@@ -1322,7 +1322,7 @@ namespace HIMS.Services.Common
             }
             dentity["IsCancelledBy"] = CurrentUserId;
             dentity["IsCancelledDate"] = DateTime.Now;
-            odal.ExecuteNonQuery("ps_opDraftBillCancel", CommandType.StoredProcedure, dentity);
+            odal.ExecuteNonQueryNew("ps_opDraftBillCancel", CommandType.StoredProcedure,"", dentity);
             await _context.LogProcedureExecution(dentity, nameof(TDrbill), ObjTDrbill.Drbno.ToInt(), Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
             // Save Log
             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);

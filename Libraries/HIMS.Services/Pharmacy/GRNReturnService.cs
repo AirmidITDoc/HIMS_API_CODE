@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using System.Transactions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HIMS.Services.Pharmacy
 {
@@ -137,17 +138,35 @@ namespace HIMS.Services.Pharmacy
 
         public virtual async Task Verify(TGrnreturnHeader objGRN, int CurrentUserId, string CurrentUserName)
         {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            DatabaseHelper odal = new();
-            string[] rEntity = { "GrnreturnId", "IsVerified" };
-            var entity = objGRN.ToDictionary();
-            foreach (var rProperty in entity.Keys.ToList())
+            try
             {
-                if (!rEntity.Contains(rProperty))
-                    entity.Remove(rProperty);
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // Share same DbTransaction
+
+                string[] rEntity = { "GrnreturnId", "IsVerified" };
+                var entity = objGRN.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+                odal.ExecuteNonQueryNew("m_Update_GRNReturn_Verify_Status_1", CommandType.StoredProcedure, "", entity);
+                await _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), objGRN.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+                // Save Logs
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit Transaction
+                await transaction.CommitAsync();
             }
-            odal.ExecuteNonQuery("m_Update_GRNReturn_Verify_Status_1", CommandType.StoredProcedure, entity);
-            _ = Task.Run(() => _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), objGRN.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName));
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
        
@@ -168,7 +187,7 @@ namespace HIMS.Services.Pharmacy
                 if (!rEntity.Contains(rProperty))
                     entity.Remove(rProperty);
             }
-            var VGrnreturnId = odal.ExecuteNonQuery("ps_insert_GRNReturnH_GrnReturnNo_1", CommandType.StoredProcedure, "GrnreturnId", entity);
+            var VGrnreturnId = odal.ExecuteNonQueryNew("ps_insert_GRNReturnH_GrnReturnNo_1", CommandType.StoredProcedure, "GrnreturnId", entity);
             objGRNReturn.GrnreturnId = Convert.ToInt32(VGrnreturnId);
             await _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), objGRNReturn.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
@@ -184,7 +203,7 @@ namespace HIMS.Services.Pharmacy
                     if (!Entity.Contains(rProperty))
                         rentity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("ps_insert_GRNReturnDetails_1", CommandType.StoredProcedure, rentity);
+                odal.ExecuteNonQueryNew("ps_insert_GRNReturnDetails_1", CommandType.StoredProcedure,"", rentity);
                 await _context.LogProcedureExecution(rentity, nameof(TGrnreturnDetail), item.GrnreturnDetailId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             }
@@ -198,7 +217,7 @@ namespace HIMS.Services.Pharmacy
                     if (!GGEntity.Contains(rProperty))
                         gentity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("ps_Update_T_CurrentStock_GRNReturn_1", CommandType.StoredProcedure, gentity);
+                odal.ExecuteNonQueryNew("ps_Update_T_CurrentStock_GRNReturn_1", CommandType.StoredProcedure, "", gentity);
                 await _context.LogProcedureExecution(gentity, nameof(TCurrentStock), item.StockId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
             }
             foreach (var item in ObjTGrndetails)
@@ -210,7 +229,7 @@ namespace HIMS.Services.Pharmacy
                     if (!GGEntity.Contains(rProperty))
                         gentity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("ps_Update_GrnReturnQty_GrnTbl_1", CommandType.StoredProcedure, gentity);
+                odal.ExecuteNonQueryNew("ps_Update_GrnReturnQty_GrnTbl_1", CommandType.StoredProcedure,"", gentity);
                 await _context.LogProcedureExecution(gentity, nameof(TGrndetail), item.GrndetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             }
@@ -247,7 +266,7 @@ namespace HIMS.Services.Pharmacy
                 if (!rEntity.Contains(rProperty))
                     entity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_update_GRNReturnHeader_1", CommandType.StoredProcedure, entity);
+            odal.ExecuteNonQueryNew("ps_update_GRNReturnHeader_1", CommandType.StoredProcedure, "", entity);
             await _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), objGRNReturn.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
 
@@ -255,7 +274,7 @@ namespace HIMS.Services.Pharmacy
             {
                 GrnreturnId = Convert.ToInt32(objGRNReturn.GrnreturnId)
             };
-            odal.ExecuteNonQuery("ps_Delete_T_GrnreturnDetail", CommandType.StoredProcedure, DeleteGrnReturnDetObj.ToDictionary());
+            odal.ExecuteNonQueryNew("ps_Delete_T_GrnreturnDetail", CommandType.StoredProcedure,"", DeleteGrnReturnDetObj.ToDictionary());
             await _context.LogProcedureExecution( DeleteGrnReturnDetObj.ToDictionary(),"ps_Delete_T_GrnreturnDetail", objGRNReturn.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Delete, CurrentUserId,CurrentUserName);
 
             foreach (var item in objTGrnreturnDetail)
@@ -268,7 +287,7 @@ namespace HIMS.Services.Pharmacy
                     if (!Entity.Contains(rProperty))
                         rentity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("ps_insert_GRNReturnDetails_1", CommandType.StoredProcedure, rentity);
+                odal.ExecuteNonQueryNew("ps_insert_GRNReturnDetails_1", CommandType.StoredProcedure,"", rentity);
                 await _context.LogProcedureExecution(rentity, nameof(TGrnreturnDetail), item.GrnreturnDetailId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
 
@@ -277,7 +296,7 @@ namespace HIMS.Services.Pharmacy
             {
                 GrnreturnId = Convert.ToInt32(objGRNReturn.GrnreturnId)
             };
-            odal.ExecuteNonQuery("ps_Upt_GrnStk_Reset", CommandType.StoredProcedure, tokenObj.ToDictionary());
+            odal.ExecuteNonQueryNew("ps_Upt_GrnStk_Reset", CommandType.StoredProcedure, "", tokenObj.ToDictionary());
             await _context.LogProcedureExecution(tokenObj.ToDictionary(), "ps_Upt_GrnStk_Reset", objGRNReturn.GrnreturnId.ToInt(),Core.Domain.Logging.LogAction.Edit, CurrentUserId , CurrentUserName);
 
             foreach (var item in ObjTCurrentStock)
@@ -289,7 +308,7 @@ namespace HIMS.Services.Pharmacy
                     if (!GGEntity.Contains(rProperty))
                         gentity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("Update_T_CurrentStock_GRNReturn_1", CommandType.StoredProcedure, gentity);
+                odal.ExecuteNonQueryNew("Update_T_CurrentStock_GRNReturn_1", CommandType.StoredProcedure, "", gentity);
                 await _context.LogProcedureExecution(gentity, nameof(TCurrentStock), item.StockId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
             }
@@ -303,7 +322,7 @@ namespace HIMS.Services.Pharmacy
                     if (!GGEntity.Contains(rProperty))
                         gentity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("Update_GrnReturnQty_GrnTbl_1", CommandType.StoredProcedure, gentity);
+                odal.ExecuteNonQueryNew("Update_GrnReturnQty_GrnTbl_1", CommandType.StoredProcedure, "", gentity);
                 await _context.LogProcedureExecution(gentity, nameof(TGrndetail), item.GrndetId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
             }

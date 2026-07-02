@@ -81,7 +81,7 @@ namespace HIMS.Services.OPPatient
                     if (!rEntity.Contains(rProperty))
                         entity.Remove(rProperty);
                 }
-                string RegId = odal.ExecuteNonQuery("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
+                string RegId = odal.ExecuteNonQueryNew("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
                 objRegistration.RegId = Convert.ToInt32(RegId);
                 await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                 await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
@@ -190,7 +190,7 @@ namespace HIMS.Services.OPPatient
                         Rentity.Remove(rProperty);
                 }
 
-                odal.ExecuteNonQuery("ps_RegistrationUpdate", CommandType.StoredProcedure, Rentity);
+                odal.ExecuteNonQueryNew("ps_RegistrationUpdate", CommandType.StoredProcedure, "", Rentity);
                 await _context.LogProcedureExecution(Rentity, nameof(Registration), ObjRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
                 // SaveChanges (important)
                 await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);

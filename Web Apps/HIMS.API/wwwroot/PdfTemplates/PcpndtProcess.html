@@ -138,25 +138,25 @@
             <b>2. Registration No. (Under PC & PNDT Act, 1994) :</b>
             <span class="space">{{RegNo}}</span>
         </div>
-       
+
         <div class="row">
-        <b>3. Patient's Name :</b>
-        <span class="box">{{PatientName}}</span>
-        <span class="space">
-            <b>Age :</b> {{Age}} Years &nbsp;&nbsp; {{AgeMonth}} Months
-        </span>
-    </div>
-        <!--<div class="row">
             <b>3. Patient's Name :</b>
-
-            <span class="box patient-name">
-                {{PatientName}}
-            </span>
-
+            <span class="box">{{PatientName}}</span>
             <span class="space">
                 <b>Age :</b> {{Age}} Years &nbsp;&nbsp; {{AgeMonth}} Months
             </span>
-        </div>-->
+        </div>
+        <!--<div class="row">
+        <b>3. Patient's Name :</b>
+
+        <span class="box patient-name">
+            {{PatientName}}
+        </span>
+
+        <span class="space">
+            <b>Age :</b> {{Age}} Years &nbsp;&nbsp; {{AgeMonth}} Months
+        </span>
+    </div>-->
 
         <div class="row"><b>4. Total Number of living children :</b> {{ChildrenCount}}</div>
         <div class="row">(a). Number of living sons : {{SonsDetails}}</div>
@@ -170,19 +170,16 @@
         <div class="row">
             <b>6. Full postal address of patient with Contact Number</b>
             <div class="address">
-                <!--{{Occ. No.2 B& C Wing. Sr. No. 165A,Pt.No. 195-208 Malwadi, Hadapsar, Pune.}}<br>-->
-                <span style="font-size: 15px; font-weight: bold; text-align: center; color: black;">
-                    Occ. No.2 B & C Wing, Sr. No. 165A, Pt. No. 195-208, Malwadi, Hadapsar, Pune.
+                <span style="font-size: 15px; font-weight: bold; text-align: center; color: black; display: block;">
+                    {{PatientAddress}}
                 </span>
                 {{MobileNo}}
             </div>
         </div>
-
         <div class="row">
             <b>7. (a) Referred by  (Full name & address of Doctor(s)/Genetic Counselling Centre)</b><br><br>
-
             {{CondDoctor}}<br>
-            <span style="font-size: 16px ;font-weight: bold;text-align: center;color: rgb(1, 58, 72);  ">
+            <span style="font-size: 16px; font-weight: bold; text-align: center; color: black;">
                 Occ. No.2 B& C Wing. Sr. No. 165A,Pt.No. 195-208 Malwadi, Hadapsar, Pune.
             </span>
         </div>
