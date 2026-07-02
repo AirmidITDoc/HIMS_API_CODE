@@ -629,9 +629,10 @@ namespace HIMS.Services.Common
                 await _context.SaveChangesAsync();
 
 
-                DatabaseHelper odal = new();
+               // DatabaseHelper odal = new();
                 string[] BEntity = { "OpdIpdId", "RegNo",  "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId","PatientType", "CompanyName", "CompanyAmt",
-                    "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments","CashCounterId","CreatedBy","GovtApprovedAmt","BillNo"};
+                    "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree",
+                    "CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments","CashCounterId","CreatedBy","GovtApprovedAmt","BillNo"};
                 var bentity = objBill.ToDictionary();
 
 
@@ -640,7 +641,7 @@ namespace HIMS.Services.Common
                     if (!BEntity.Contains(rProperty))
                         bentity.Remove(rProperty);
                 }
-                string vBillNo = odal.ExecuteNonQueryNew("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
+                string vBillNo = odal1.ExecuteNonQueryNew("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
                 objBill.BillNo = Convert.ToInt32(vBillNo);
                 await _context.LogProcedureExecution(bentity, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
@@ -733,7 +734,7 @@ namespace HIMS.Services.Common
                                 }
                                 Packagescharge["PackageMainChargeId"] = objItem1.ChargesId;
                                 Packagescharge["BillNo"] = objBill.BillNo;
-                                var VChargesId = odal.ExecuteNonQueryNew("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
+                                var VChargesId = odal1.ExecuteNonQueryNew("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
                                 item.ChargesId = Convert.ToInt32(VChargesId);
                                 await _context.LogProcedureExecution(Packagescharge, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
@@ -744,7 +745,7 @@ namespace HIMS.Services.Common
                                     ["ChargesId"] = VChargesId
                                 };
 
-                                odal.ExecuteNonQueryNew("ps_insert_BillDetails_1", CommandType.StoredProcedure, "", OPBillDet2);
+                                odal1.ExecuteNonQueryNew("ps_insert_BillDetails_1", CommandType.StoredProcedure, "", OPBillDet2);
                                 await _context.LogProcedureExecution(bentity, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                             }
@@ -765,7 +766,7 @@ namespace HIMS.Services.Common
                             entity2.Remove(rProperty);
                     }
                     entity2["OPDIPDType"] = 0; // Ensure objpayment has OPDIPDType
-                    string PaymentId = odal.ExecuteNonQueryNew("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
+                    string PaymentId = odal1.ExecuteNonQueryNew("ps_Commoninsert_Payment_1", CommandType.StoredProcedure, "PaymentId", entity2);
                     objPayment.PaymentId = Convert.ToInt32(PaymentId);
                     await _context.LogProcedureExecution(entity2, nameof(Payment), objPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                     // Save Log
