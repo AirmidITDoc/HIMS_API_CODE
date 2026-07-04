@@ -16,6 +16,15 @@
             font-size: 13px;
         }
 
+        @font-face {
+            font-family: 'NotoDevanagari';
+            src: url('{{FontBasePath}}/NotoSansDevanagari-Regular.ttf') format('truetype');
+        }
+
+        .marathi-text {
+            font-family: 'NotoDevanagari', Arial, sans-serif;
+        }
+
         .page {
             width: 900px;
             margin: auto;
@@ -85,6 +94,7 @@
             min-height: 80px;
             margin-top: 5px;
         }
+
         .chk-box {
             display: inline-block;
             font-size: 14px;
@@ -97,8 +107,25 @@
             .chk-box.chk-1:before {
                 content: "☑";
             }
+            .chk-box.chk-True:before {
+                content: "☑";
+            }
 
-  {{LoadFont}}
+
+            .chk-box.chk-False:before {
+                content: "☐";
+            }
+            .chk-box:before {
+                content: "☐";
+            }
+
+            .chk-box.chk-1:before,
+            .chk-box.chk-true:before,
+            .chk-box.chk-True:before {
+                content: "☑";
+            }
+
+        {{LoadFont}}
     </style>
 </head>
 <body>
@@ -106,11 +133,24 @@
     <!-- ==================== PAGE 1 ==================== -->
     <div class="page">
 
+        <!--<div class="center">
+        <div class="title">PRE CONCEPTION AND PRE - NATAL DIAGNOSTIC TECHNIQUES</div>
+        <div class="title">(PROHIBITION OF SEX SELECTION) ACT 1994 (AMENDMENT RULES 2014)</div>
+        <br>
+        <div style="font-size:26px;font-weight:bold">Form F</div>
+        <div class="sub">See Proviso to Section 4[3] rule 9(4) and rule 10(1A)</div>
+        <br>
+        <div class="bold">
+            FORM FOR MAINTENANCE OF RECORD IN CASE OF PRENATAL DIAGNOSTIC TEST /
+            PROCEDURE BY GENETIC CLINIC / ULTRASOUND CLINIC / IMAGING CENTRE
+        </div>
+    </div>-->
         <div class="center">
-            <div class="title">PRE CONCEPTION AND PRE - NATAL DIAGNOSTIC TECHNIQUES</div>
-            <div class="title">(PROHIBITION OF SEX SELECTION) ACT 1994 (AMENDMENT RULES 2014)</div>
+            <div class="title" style="font-size:18px;">
+                PRE CONCEPTION AND PRE - NATAL DIAGNOSTIC TECHNIQUES (PROHIBITION OF SEX SELECTION) ACT 1994 (AMENDMENT RULES 2014)
+            </div>
             <br>
-            <div style="font-size:26px;font-weight:bold">Form F</div>
+            <div style="font-size:15px;font-weight:bold">Form F</div>
             <div class="sub">See Proviso to Section 4[3] rule 9(4) and rule 10(1A)</div>
             <br>
             <div class="bold">
@@ -126,11 +166,8 @@
         <div class="row">
             <b>1. Name and complete address of Genetic Clinic / Ultrasound Clinic / Imaging Centre :</b>
             <br><br>
-            <!--<span style="font-size: 16px;font-weight: bold;text-align: center;color: rgb(1, 58, 72); ">
-            SANE GURUJI AROGYA KENDRA
-        </span>-->
-            <span style="font-size: 16px; font-weight: bold; text-align: center; color: black;">
-                SANE GURUJI AROGYA KENDRA
+            <span style="font-weight: bold; text-align: left; color: black;">
+                SANE GURUJI AROGYA KENDRA Occ. No.2 B& C Wing, Sr. No. 165A,Pt.No. 195-208 Malwadi, Hadapsar, Pune.
             </span>
         </div>
 
@@ -146,21 +183,10 @@
                 <b>Age :</b> {{Age}} Years &nbsp;&nbsp; {{AgeMonth}} Months
             </span>
         </div>
-        <!--<div class="row">
-        <b>3. Patient's Name :</b>
-
-        <span class="box patient-name">
-            {{PatientName}}
-        </span>
-
-        <span class="space">
-            <b>Age :</b> {{Age}} Years &nbsp;&nbsp; {{AgeMonth}} Months
-        </span>
-    </div>-->
 
         <div class="row"><b>4. Total Number of living children :</b> {{ChildrenCount}}</div>
-        <div class="row">(a). Number of living sons : {{SonsDetails}}</div>
-        <div class="row">(b). Number of living daughters : {{DaughtersDetails}}</div>
+        <div class="row">(a). Number of living sons with age of each living son (in years or months):  {{SonsDetails}}</div>
+        <div class="row">(b). Number of living Daughters with age of each living daughter (in years or months):</div>
 
         <div class="row">
             <b>5. Husband's / Wife's / Father's / Mother's Name :</b>
@@ -168,18 +194,19 @@
         </div>
 
         <div class="row">
-            <b>6. Full postal address of patient with Contact Number</b>
+            <b>6. Full postal address of the patient with Contact. Number (if any) :</b>
             <div class="address">
-                <span style="font-size: 15px; font-weight: bold; text-align: center; color: black; display: block;">
-                    {{PatientAddress}}
+                <span style="font-size: 15px; font-weight: bold; text-align: left; color: black; display: block;">
+                    {{PatientAddress}} <span style="font-size: 12px;">CONTACT NO. - {{MobileNo}}</span>
                 </span>
-                {{MobileNo}}
             </div>
         </div>
+
         <div class="row">
             <b>7. (a) Referred by  (Full name & address of Doctor(s)/Genetic Counselling Centre)</b><br><br>
-            {{CondDoctor}}<br>
-            <span style="font-size: 16px; font-weight: bold; text-align: center; color: black;">
+            <b>{{CondDoctor}}</b><br>
+            <b>{{ConEducation}}</b>
+            <span style="font-weight: bold; text-align: left; color: black;">
                 Occ. No.2 B& C Wing. Sr. No. 165A,Pt.No. 195-208 Malwadi, Hadapsar, Pune.
             </span>
         </div>
@@ -188,7 +215,23 @@
 
         <div class="row">
             Self - Referral by Gynecologist / Radiologist /
-            Registered Medical Practitioner conducting diagnostic procedures
+            Registered Medical Practitioner conducting the diagnostic procedures
+        </div>
+
+        <table width="100%">
+            <tr>
+                <td style="vertical-align:top; width:75%;">
+                    (Referral note with indications and case papers of the patient to be preserved with Form F)
+                </td>
+                <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                    NOT APPLICABLE
+                </td>
+            </tr>
+        </table>
+
+        <div class="row">
+            (Self-referral does not mean a client coming to a clinic and requesting for the test
+            or the relative/s requesting for the test of a pregnant woman)
         </div>
 
         <div class="row">(Referral note with indications and case papers to be preserved)</div>
@@ -201,16 +244,37 @@
         <div class="section">
             <b>Section B : To be filled in for performing non-invasive diagnostic procedures / Tests only</b>
         </div>
+        <br>
 
-        <div class="row">
-            <b>9. Name of doctor performing procedure/s :</b><br>
-            {{DoctorPerform}}<br>
-            {{DoctorRegNo}}
+
+
+        <div class="row" style="display:table; width:100%; border-collapse:collapse;">
+            <div style="display:table-row;">
+                <div style="display:table-cell; white-space:nowrap; padding:0; line-height:1.2;">
+                    <b>9. Name of the doctor performing the procedure/s :</b>&nbsp;&nbsp;&nbsp;
+                </div>
+                <div style="display:table-cell; padding:0; line-height:1.2;">
+                    <b style="font-size:14px;">{{invasiveDoctorName}}</b>
+                </div>
+            </div>
+            <div style="display:table-row;">
+                <div style="display:table-cell; padding:0; line-height:1.2;"></div>
+                <div style="display:table-cell; padding:0; line-height:1.2;">
+                    <b style="font-size:11px;">{{InvEducation}} REGNO {{RegNo}}</b>
+                </div>
+            </div>
         </div>
 
         <div class="row">
             <b>10. Indication/s for diagnosis procedure :</b><br>
             {{Diagnosis}}
+        </div>
+
+        <div class="row">
+            <b>
+                X. Detection of chromosomal abnormalities, fetal structural defects and other abnormalities and their
+                follow - up. :
+            </b><br>
         </div>
 
     </div>
@@ -221,20 +285,14 @@
     <!-- ==================== PAGE 2 (Indications Checklist) ==================== -->
     <div class="page">
 
-        <p>(Specify with Reference to the request made in referral slip or self-referral note)</p>
+        <p>( Specify with Referance to the request made in the referral slip or in a self - referral note)</p>
         <p>
-            (Ultrasonography prenatal diagnosis during pregnancy should only be performed when indicated. Put a Tick mark against applicable indication.for
-            ultrasound)
+            ( Ultrasonography prenatal diagnosis during pregnancy should only be performed when indicated. The Following is the representative list of indication/s for ultrasound during pregnancy). ( Put a '' Tick'' against the appropriate indications for ultrasound)
         </p>
 
 
+        <!--ITEMS_SP2--><div class="chk"><span class="chk-box chk-{{IndicationValues}}"></span>&nbsp; {{RomanNo}}.{{IndicationDesc}}</div><!--/ITEMS_SP2-->
 
-        <!--ITEMS_SP2-->
-        <div class="chk">
-            <span class="chk-box chk-{{IndicationValues}}"></span>
-            &nbsp; {{IndicationDesc}}
-        </div>
-        <!--/ITEMS_SP2-->
 
     </div>
     <!-- ==================== END PAGE 2 ==================== -->
@@ -255,17 +313,17 @@
                 such as Duchene Muscular Dystrophy, Hemophilia A &amp; B etc.)
             </div>
             <br>
-            ii. Any other (specify) _____________________ {{AnyOther1}}
+            ii. Any other (specify) -<b>{{AnyOther1}} </b>
         </div>
 
         <div class="row">
             <b>12. Date on which declaration of pregnant woman/person was obtained :</b>
-            <span class="space">{{ConsentDate}}</span>
+            <span class="space"><b>{{ConsentDate}}</b></span>
         </div>
 
         <div class="row">
             <b>13. Date on which procedure carried out :</b>
-            <span class="space">{{ProcessDate}}</span>
+            <span class="space"><b>{{ProcessDate}}</b></span>
         </div>
 
         <div class="row">
@@ -280,50 +338,54 @@
             <b>15. The result of pre-natal diagnostic procedures was conveyed to :</b>
             <br><br>
 
-        
             <div style="border:1px solid black;width:380px;padding:5px;display:inline-block;">
                 <b>{{PatientName}}</b>
             </div>
 
             &nbsp;&nbsp;&nbsp;&nbsp;
 
-            <b>On :</b> {{ResultDate}}
-        
-
+            <b>On :</b> <b>{{ResultDate}}</b><br><br>
         </div>
 
         <br><br>
 
-        <div class="row">
-            <b>
-                16. Any indication for MTP as per abnormality detected in diagnostic procedures / tests :
-            </b>
-
-            &nbsp;&nbsp;
-            {{indicationofMtp}}
-         
-
-        </div>
-
-    </div>
+       
+    <table width="100%">
+        <tr>
+            <td style="vertical-align:top; width:75%;">
+                <b>16. Any indication for MTP as per abnormality detected in diagnostic procedures / tests :</b>
+            </td>
+            <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                {{AnyOther2}}
+            </td>
+        </tr>
+    </table>
 
         <br><br><br>
 
-        <table width="100%">
+        <table width="100%" style="border-collapse:collapse;">
             <tr>
-                <td><b>Date :</b> {{DoctorDate}}</td>
-                <td align="right"><b>Place :</b> {{Place}}</td>
+                <td width="55%" valign="top">
+                    <b>Date :</b> {{ResultDate}}<br><br>
+
+                    <b>Place :</b><br>
+                    <span style="font-weight:bold;">
+                        Malwadi,Hadapsar, Pune.
+                    </span>
+                </td>
+
+                <td width="45%" valign="top" align="center">
+                    <b>{{invasiveDoctorName}}</b><br>
+                    <b>{{InvEducation}}</b><br>
+                    <b>REGNO. {{RegNo}}</b><br><br>
+                    Name, Signature and Registration Number with Seal of the
+                    Gynecologist / Radiologist / Registered Medical Practitioner
+                    performing Diagnostic Procedures
+                </td>
             </tr>
         </table>
 
         <br><br><br><br>
-
-        <div style="text-align:right">
-            <b>Dr. {{CondDoctor}}</b><br>
-            {{DoctorRegNo}}<br><br>
-            Name, Signature and Registration Number with Seal of the Gynecologist /<br>
-            Radiologist / Registered Medical Practitioner performing Diagnostic Procedures
-        </div>
 
     </div>
     <!-- ==================== END PAGE 3 ==================== -->
@@ -332,267 +394,280 @@
 
     <!-- ==================== PAGE 4 (Section C) ==================== -->
     <div class="page">
-
-        <div class="section"><b>Section C : To be filled for performing invasive Procedures / Tests only</b></div>
+        <table width="100%">
+            <tr>
+                <td style="vertical-align:top; width:75%;">
+                    <div class="section"><b>Section C : To be filled for performing invasive Procedures / Tests only</b></div>
+                </td>
+                <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                    {{AnyOtherTest}}
+                </td>
+            </tr>
+        </table>
         <br>
 
+        <table width="100%">
+            <tr>
+                <td style="vertical-align:top; width:75%;">
+                    <b>17. Name of doctor/s performing procedure/s :</b>
+                </td>
+                <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                    {{AnyOtherTest}}
+                </td>
+            </tr>
+        </table>
+
+        <table width="100%">
+            <tr>
+                <td style="vertical-align:top; width:75%;">
+                    <b>18. History of genetic / medical disease in family (specify)</b>
+                </td>
+                <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                    {{AnyOtherTest}}
+                </td>
+            </tr>
+        </table>
+
         <div class="row">
-            <b>17. Name of doctor/s performing procedure/s :</b><br><br>
-            {{AnyOtherTest}}
+            Basis of diagnosis (" Tick" on appropriate basis of diagnosis) :
         </div>
 
-        <!--<div class="row">
-        <b>18. History of genetic / medical disease in family (specify)</b><br><br>
-        {{FamilyHistory}}<br><br>
-        <label>
-            <input type="checkbox"> Clinical
-        </label>
 
-        &nbsp;&nbsp;
+        <div class="chk">
+            <span class="chk-box chk-{{Clinical}}"></span>        Clinical
 
-        <label>
-            <input type="checkbox"> Bio-Chemical
-        </label>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="chk-box chk-{{BioChemical}}"></span>        Bio-Chemical
 
-        &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="chk-box chk-{{Cytogenetic}}"></span>        Cytogenetic
 
-        <label>
-            <input type="checkbox"> Cytogenetic
-        </label>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="chk-box chk-{{Other}}"></span>        Other (e.g. radiological / ultrasonography etc.)
 
-        &nbsp;&nbsp;
-
-        <label>
-            <input type="checkbox"> Other
-            (e.g radiological / ultrasonography. etc-specify)
-        </label>
-    </div>-->
-        <div class="row">
-            <b>18. History of genetic / medical disease in family (specify)</b>
-            <br><br>
-
-            {{AnyOtherTest}}
-            <br><br>
-
-            ☐ Clinical
-            &nbsp;&nbsp;&nbsp;&nbsp;
-
-            ☐ Bio-Chemical
-            &nbsp;&nbsp;&nbsp;&nbsp;
-
-            ☐ Cytogenetic
-            &nbsp;&nbsp;&nbsp;&nbsp;
-
-            ☐ Other (e.g radiological / ultrasonography. etc-specify)
         </div>
 
 
 
 
-        <!--<div class="row">
-        <b>19. Indication/s for the diagnosis procedure</b>
-        <br><br>
+       
+        <table width="100%">
+            <tr>
+                <td style="vertical-align:top; width:75%;">
+                    <b>19. Indication/s for the diagnosis procedure</b>
+                    &nbsp;&nbsp;
+                    ("Tick" on appropriate Indications)
+                </td>
+                <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                    {{AnyOther1}}
+                </td>
+            </tr>
+        </table>
 
-        <b>A. Previous child or children with :</b>
-        <br><br>
 
-        {{ChromosomalDisorders}} Chromosomal disorders
-        &nbsp;&nbsp;&nbsp;&nbsp;
 
-        {{MetabolicDisorders}} Metabolic disorders
-        &nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="row">
+            <b>A. Previous child or children with :</b>
+            <br><br>
 
-        {{CongenitalAnomaly}} Congenital anomaly
-        <br><br>
+            <span class="chk-box chk-{{Chromosomaldisorder}}"></span> Chromosomal disorders
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="chk-box chk-{{MetabolicDisorder}}"></span> Metabolic disorder
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="chk-box chk-{{Congenitalanomaly}}"></span> Congenital anomaly
 
-        {{MentalDisability}} Mental Disability
-        &nbsp;&nbsp;&nbsp;&nbsp;
+            <br><br>
 
-        {{Haemoglobinopathy}} Haemoglobinopathy
-        &nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="chk-box chk-{{MentalDisability}}"></span> Mental Disability
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="chk-box chk-{{Haemoglobinopathy}}"></span> Haemoglobinopathy
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="chk-box chk-{{SexLinkeddisorder}}"></span> Sex Linked disorder
 
-        {{SexLinkedDisorder}} Sex Linked disorder
-        <br><br>
+            <br><br>
 
-        {{SingleGeneDisorder}} Single gene disorder
-    </div>-->
-    <div class="row">
-        <b>19. Indication/s for the diagnosis procedure</b>
-        <br><br>
-
-        <b>A. Previous child or children with :</b>
-        <br><br>
-
-        ☐ Chromosomal disorders
-        &nbsp;&nbsp;&nbsp;&nbsp;
-
-        ☐ Metabolic disorders
-        &nbsp;&nbsp;&nbsp;&nbsp;
-
-        ☐ Congenital anomaly
-
-        <br><br>
-
-        ☐ Mental Disability
-        &nbsp;&nbsp;&nbsp;&nbsp;
-
-        ☐ Haemoglobinopathy
-        &nbsp;&nbsp;&nbsp;&nbsp;
-
-        ☐ Sex Linked disorder
+            <span class="chk-box chk-{{Singlegenedisorder}}"></span> Single gene disorder
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="chk-box chk-{{AnyOtherSpecify}}"></span> Any Other (Specify)
+        </div>
 
         <br><br>
+        <b>B. Advanced maternal age (35 years)</b> : ☐
+        <!--<b>B. Advanced maternal age (35 years)</b>: {{Mage}}-->
 
-        ☐ Single gene disorder
-        &nbsp;&nbsp;&nbsp;&nbsp;
-
-        ☐ Any Other : (Specify)
-    </div>
-        <!--<label>
-            <input type="checkbox" {{AnyOther1}}>
-            Any Other : (Specify)
-        </label>-->
-        <br><br>
-        <!--<b>B. Advanced maternal age (35 years)</b> {{Mage}}-->
-        <b>B. Advanced maternal age (35 years)</b> : ☐ {{Mage}}
         <br><br>
         <b>C. Mother/Father/Sibling has genetic disease</b> : ☐
         <br><br>
         <b>D. Any Other specify :</b> {{AnyOtherIndication}}
-    </div>
 
-        <div class="row">
-            <b>20. Date on which consent of pregnant woman/person was obtained in Form  G prescribed in PC&PNDT Act.1994 </b><br><br>
-            {{AnyOther1}}
-        </div>
-
-        <!--<div class="row">
-        <b>21. Invasive procedures carried out (Tick appropriate indication)</b><br><br>
-        {{Amniocentesis}} &nbsp; i. Aminiocentesis<br>
-        {{ChorionicVilliaspiration}} &nbsp; ii. Chorionic Villi aspiration<br>
-        {{FetalBiopsy}} &nbsp; iii. Fetal Biopsy<br>
-        {{Cordocentesis}} &nbsp; iv. Cordocentesis<br>
-        {{AnyOther2}} Any Other : {{AnyOther2}}
-    </div>-->
-        <div class="row">
-            <b>21. Invasive procedures carried out ("Tick" on appropriate indications)</b>
-            <br><br>
-
-            ☐ i. Amniocentesis
-            &nbsp;&nbsp;&nbsp;&nbsp;
-
-            ☐ ii. Chorionic Villi aspiration
-            &nbsp;&nbsp;&nbsp;&nbsp;
-
-            ☐ iii. Fetal Biopsy
-            <br><br>
-
-            ☐ iv. Cordocentesis
-            &nbsp;&nbsp;&nbsp;&nbsp;
-
-            ☐ iv. Any Other (specify)
-            &nbsp;&nbsp; {{AnyOther2}}
-        </div>
-        <div class="row">
-            <b>22. Any complication/s of invasive procedure :</b>
-
-            &nbsp;&nbsp;&nbsp;&nbsp;
-
-            <span style="font-weight:bold;">
-                {{AnyOther2}}
-            </span>
-
-        </div>
-
-        <br>
-
-        <div class="row">
-            <b>23. Additional tests recommended (Please mention if applicable) :</b>
-
-            &nbsp;&nbsp;&nbsp;&nbsp;
-
-            <span style="font-weight:bold;">
-                {{AnyOther2}}
-            </span>
-
-            <br><br>
-
-            ☐ i. Chromosomal Studies
-            &nbsp;&nbsp;&nbsp;&nbsp;
-
-            ☐ ii. Biochemical Studies
-            &nbsp;&nbsp;&nbsp;&nbsp;
-
-            ☐ iii. Molecular Studies
-
-            <br><br>
-
-            ☐ iv. Preimplantation gender diagnosis
-
-            &nbsp;&nbsp;&nbsp;&nbsp;
-
-            Any Other (specify)
-
-            &nbsp;&nbsp;
-
-            {{AnyOther2}}
-
-        </div>
-
-        <br>
-
-        <div class="row">
-            <b>
-                24. Result of procedures / Tests carried out
-                (report in brief of the invasive tests/procedures carried out) :
-            </b>
-
-            &nbsp;&nbsp;&nbsp;
-
-            <span style="font-weight:bold;">
-                {{TestResult}}
-            </span>
-
-            <br><br><br><br><br>
-
-        </div>
-
-
-        <div class="row">
-            <b>25. Date on which procedures carried out :</b> {{ProcedureDate}}
-        </div>
-
-        <div class="row">
-            <b>26. Result conveyed to :</b><br><br>
-            {{ResultConveyed}}
-        </div>
-
-        <div class="row">
-            <b>27. Any indication for MTP :</b><br><br>
-            {{MTPResult}}
-        </div>
-
-        <div class="row">
-            <b>Basis of diagnosis :</b> {{DiagnosisBasis}}
-        </div>
-
-        <br><br>
 
         <table width="100%">
             <tr>
-                <td>Date : {{SignDate}}</td>
-                <td align="right">Place : {{Place}}</td>
+                <td style="vertical-align:top; width:75%;">
+                    <b>20. Date on which consent of pregnant woman/person was obtained in Form  G prescribed in PC&amp;PNDT Act.1994 :</b>
+                </td>
+                <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                    {{AnyOther1}}
+                </td>
             </tr>
         </table>
 
-        <br><br><br>
 
-        <div style="text-align:right">
-            <b>{{CondDoctor}}</b><br>
-            {{DoctorRegNo}}<br><br>
-            Name, Signature and Registration Number with Seal of the<br>
-            Gynecologist / Radiologist / Registered Medical Practitioner
+        <table width="100%">
+            <tr>
+                <td style="vertical-align:top; width:75%;">
+                    <b>21. Invasive procedures carried out ("Tick" on appropriate indications)</b>
+                </td>
+                <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                    {{AnyOther2}}
+                </td>
+            </tr>
+        </table>
+
+
+
+        <div class="chk">
+            <span class="chk-box chk-{{Amniocentesis}}"></span> i. Amniocentesis
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <span class="chk-box chk-{{ChorionicVilliaspiration}}"></span> ii. Chorionic Villi aspiration
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <span class="chk-box chk-{{FetalBiopsy}}"></span> iii. Fetal Biopsy
+
+            <br><br>
+
+            <span class="chk-box chk-{{Cordocentesis}}"></span> iv. Cordocentesis
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <span class="chk-box chk-{{AnyOther2}}"></span> iv. Any Other (specify)
+            &nbsp;&nbsp; {{AnyOther2}}
         </div>
+    </div>
+
+    
+    <table width="100%">
+        <tr>
+            <td style="vertical-align:top; width:75%;">
+                <b>22. Any complication/s of invasive procedure :</b>
+            </td>
+            <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                {{AnyOther2}}
+            </td>
+        </tr>
+    </table>
+
+    <br>
+
+
+   
+    <table width="100%">
+        <tr>
+            <td style="vertical-align:top; width:75%;">
+                <b>23. Additional tests recommended (Please mention if applicable) :</b>
+            </td>
+            <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                {{AnyOther2}}
+            </td>
+        </tr>
+    </table>
+    <br><br>
+    <div class="chk">
+        <span class="chk-box chk-{{ChromosomalStudies}}"></span> i. Chromosomal Studies
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="chk-box chk-{{BiochemicalStudies}}"></span> ii. Biochemical Studies
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="chk-box chk-{{MolecularStudies}}"></span> iii. Molecular Studies
+        <br><br>
+        <span class="chk-box chk-{{PreimplantationGenderDiagnosis}}"></span> iv. Preimplantation gender diagnosis
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Any Other (specify)
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <b style="font-style:italic;">{{AnyOtherSpecify}}</b>
+    </div>
+    </div>
+    <br>
+    <div class="row">
+
+
+
+
+
+        <table width="100%">
+            <tr>
+                <td style="vertical-align:top; width:75%;">
+                    <b>24. Result of procedures / Tests carried out (report in brief of the invasive tests/procedures carried out):</b>
+                </td>
+                <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                    {{AnyOther2}}
+                </td>
+            </tr>
+        </table>
+
+        &nbsp;&nbsp;&nbsp;
+
+        <span style="font-weight:bold;">
+            {{TestResult}}
+        </span>
+
+        <br><br><br><br><br>
+    </div>
+
+    
+<table width="100%">
+    <tr>
+        <td style="vertical-align:top; width:75%;">
+            <b>25. Date on which procedures carried out :</b>
+        </td>
+        <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+            {{AnyOther2}}
+        </td>
+    </tr>
+</table>
+
+   
+<table width="100%">
+    <tr>
+        <td style="vertical-align:top; width:75%;">
+            <b>26. The result of pre-natal diagnostic procedures was conveyed to :</b>
+        </td>
+        <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+            {{AnyOther2}}
+        </td>
+    </tr>
+</table>
+
+    <table width="100%">
+        <tr>
+            <td style="vertical-align:top; width:75%;">
+                <b>
+                    27.  Any indication for MTP as per the abnormality detected in the diagnostic
+                    procedures/test :
+                </b>
+            </td>
+            <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                {{anyOtherIndication}}
+            </td>
+        </tr>
+    </table>
+
+    <div class="row">
+        <b>Basis of diagnosis :</b> {{DiagnosisBasis}}
+    </div>
+
+    <br><br>
+
+    <div class="row">
+        <b>Date :</b> <b>{{SignDate}}</b>
+        <br><br>
+        <b>Place :</b> {{Place}}
+    </div>
+
+    <br><br><br>
+
+    <div style="text-align:right">
+        <b>{{CondDoctor}}</b><br>
+        <b>RegNo.{{DoctorRegNo}}</b><br><br>
+        Name, Signature and Registration Number with Seal of the<br>
+        Gynecologist / Radiologist / Registered Medical Practitioner
+    </div>
 
     </div>
     <!-- ==================== END PAGE 4 ==================== -->
@@ -608,51 +683,58 @@
         <div class="row"><b>DECLARATION OF THE PERSON UNDERGOING PRENATAL DIAGNOSTIC TEST / PROCEDURE</b></div>
 
         <div class="row">
-            I , Mr./Mrs./Ms.
+            I , Mrs./Mr.
             <span class="box">{{PatientName}}</span>
             declare that by undergoing Prenatal Diagnostic Test / Procedure,
             I do not want to know the sex of my foetus.
         </div>
 
-        <!--<div class="row">
-        असे घोषित करते की, अल्ट्रा-सोनोग्राफी / चाचणी करून मी माझ्या गर्भाचे लिंग जाणून घेऊ इच्छित नाही.
-    </div>-->
-        <div class="row">
-
+        <div class="row marathi-text">
             असे घोषित करते की, अल्ट्रा-सोनोग्राफी / चाचणी करून मी माझ्या गर्भाचे लिंग जाणून घेऊ इच्छित नाही.
         </div>
 
-        <div class="row"><b>Date :</b> {{DeclarationDate}}</div>
+        <div class="row"><b>Date :</b> {{ResultDate}}</div>
 
         <br><br>
 
         <div class="row">
-            <b>Signature / Thumb impression of the person undergoing prenatal diagnostic test / procedure</b>
+            <b>signature / Thumb impression of the person undergoing the prenatal diagnostic Test / Procedure</b>
         </div>
+        <div class="row"><b>In Case of thumb impression :</b></div>
 
-        <div class="row">In Case of thumb impression :</div>
 
-        <table width="100%">
-            <tr>
-                <td>Identified by (Name)<br><br>________________</td>
-                <td>Age<br><br>_____</td>
-                <td>Sex<br><br>_____</td>
-            </tr>
-        </table>
-
-        <div class="row">Relation (if any) : ______________________________________</div>
-        <div class="row">Address &amp; Contact No : ______________________________________</div>
+        <div class="row" style="margin-bottom:15px;">
+            <b>Identified by (Name)</b>
+            <span style="display:inline-block; border-bottom:1px solid #000; width:380px; margin-left:10px; margin-right:30px;">&nbsp;</span>
+            <b>Age</b>
+            <span style="display:inline-block; border-bottom:1px solid #000; width:90px; margin-left:10px; margin-right:30px;">&nbsp;</span>
+            <b>Sex</b>
+            <span style="display:inline-block; border-bottom:1px solid #000; width:90px; margin-left:10px;">&nbsp;</span>
+        </div>
         <div class="row">
-            Signature of person attesting thumb impression : _____________________
-            <span style="float:right">Date : __________</span>
+            <b>Relation (if any) :</b>
+            <span style="display:inline-block; border-bottom:1px solid #000; width:660px; margin-left:10px;">&nbsp;</span>
         </div>
+        <div class="row">
+            <b>Address &amp; Contact No. :</b>
+            <span style="display:inline-block; border-bottom:1px solid #000; width:610px; margin-left:10px;">&nbsp;</span>
+        </div>
+        <div class="row">
+            <b>signature of a person attesting thumb impression :</b>
+            <span style="display:inline-block; border-bottom:1px solid #000; width:250px; margin-left:10px; margin-right:30px;">&nbsp;</span>
+            <span style="float:right;">
+                <b>Date :</b>
+                <span style="display:inline-block; border-bottom:1px solid #000; width:90px; margin-left:10px;">&nbsp;</span>
+            </span>
+        </div>
+
 
         <br><br><br>
 
         <div class="row"><b>DECLARATION OF DOCTOR / PERSON CONDUCTING PRENATAL DIAGNOSTIC PROCEDURE / TEST</b></div>
 
         <div class="row">
-            I , <b>Dr. {{DeclarationDoctor}}</b>
+            I , <b>{{DeclarationDoctor}}</b>
             (name of person conducting ultrasonography / image scanning)
             declare that while conducting ultrasonography / image scanning on Ms.
             <span class="box">{{PatientName}}</span>
@@ -661,27 +743,27 @@
 
         <br><br>
 
-            <table width="100%" style="margin-top:20px;">
-                <tr>
-                    <td style="width:50%; text-align:left;">
-                        <b>Date :</b>
-                        <span style="border-bottom:1px solid #000; padding:0 40px;">
-                            {{DoctorDate}}
-                        </span>
-                    </td>
-
-                    <td style="width:50%; text-align:right;">
-                        <b>Signature :</b>
-                        <span style="display:inline-block; border-bottom:1px solid #000; width:220px;"></span>
-                    </td>
-                </tr>
-            </table>
+        <table width="100%" style="margin-top:20px;">
+            <tr>
+                <td style="width:50%; text-align:left;">
+                    <b>Date :</b>
+                    <span style="border-bottom:1px solid #000; padding:0 40px;">
+                        <b>{{ResultDate}}</b>
+                    </span>
+                </td>
+                <td style="width:50%; text-align:left;">
+                    <b>Signature :</b>
+                    <span style="display:inline-block; border-bottom:1px solid #000; width:220px;"></span>
+                </td>
+            </tr>
+        </table>
 
         <br><br><br><br><br>
 
-        <div style="text-align:right">
-            <b>Dr. {{DeclarationDoctor}}</b><br><br>
-            {{DoctorRegNo}}<br><br>
+        <div style="text-align:center; width:50%; margin-left:auto;">
+            <b>{{DeclarationDoctor}}</b><br><br>
+            <b>{{DeclEducation}}</b><br>
+            <b>RegNo.</b> <b>{{DoctorRegNo}}</b><br><br>
             __________________________________<br>
             Name in Capitals, Registration Number with Seal<br>
             of Gynecologist / Radiologist / Registered Medical Practitioner<br>
