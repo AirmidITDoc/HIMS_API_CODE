@@ -193,6 +193,7 @@ namespace HIMS.API.Models.OutPatient
     }
     public class AppointmentUpdate
     {
+        public AppReistrationModel Registration { get; set; }
         public AppVisitDetailModel Visit { get; set; }
         public PatientPolicyModels PatientPolicy { get; set; }
 

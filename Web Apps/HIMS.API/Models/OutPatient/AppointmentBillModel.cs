@@ -70,7 +70,7 @@ namespace HIMS.API.Models.OutPatient
 
         public class RegistredAppBillingMainModels
         {
-            //public AppRegistrationBill1 AppRegistrationBills { get; set; }
+            public AppRegistrationBill1 AppRegistrationBills { get; set; }
             public AppVisitDetailModel1 Visit { get; set; }
             public AppOPBillIngModels AppOPBillIngModels { get; set; }
 
