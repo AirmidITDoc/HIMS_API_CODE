@@ -118,7 +118,8 @@ namespace HIMS.API.Controllers.OPPatient
             var data = await _IRegistrationService.SearchRegistration(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration Data.", data.Select(x => new
             {
-                Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile,
+                //Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile,
+                Text = x.FirstName + " " + x.MiddleName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile,
                 Value = x.Id,
                 RegNo = x.RegNo,
                 MobileNo = x.MobileNo,

@@ -30,7 +30,8 @@ namespace HIMS.Services.OPPatient
 
             return await this._context.Registrations
                 .Where(x =>
-                    (x.FirstName + " " + x.LastName).ToLower().StartsWith(str) || // Optional: if you want full name search
+                    //(x.FirstName + " " + x.LastName).ToLower().StartsWith(str) || // Optional: if you want full name search
+                    (x.FirstName + " " + (x.MiddleName ?? "") + " " + x.LastName) .ToLower() .StartsWith(str) ||
                     x.FirstName.ToLower().StartsWith(str) ||                     // Match first name starting with str
                     x.RegNo.ToLower().StartsWith(str) ||                         // Match RegNo starting with str
                     x.MobileNo.ToLower().Contains(str) 
