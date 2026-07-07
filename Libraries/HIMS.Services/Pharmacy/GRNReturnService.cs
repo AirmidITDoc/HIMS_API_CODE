@@ -142,7 +142,7 @@ namespace HIMS.Services.Pharmacy
 
             try
             {
-                DatabaseHelper odal = new();
+                using DatabaseHelper odal = new();
                 odal.SetConnection(_context.Database.GetDbConnection()); // Share same DbConnection
                 odal.SetTransaction(transaction.GetDbTransaction());     // Share same DbTransaction
 
@@ -155,9 +155,8 @@ namespace HIMS.Services.Pharmacy
                 }
                 odal.ExecuteNonQueryNew("m_Update_GRNReturn_Verify_Status_1", CommandType.StoredProcedure, "", entity);
                 await _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), objGRN.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
-                // Save Logs
-                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // save in one shot
+                //await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
                 // Commit Transaction
                 await transaction.CommitAsync();
             }
@@ -169,166 +168,73 @@ namespace HIMS.Services.Pharmacy
             }
         }
 
-       
+
         public virtual async Task Insertsp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int CurrentUserId, string CurrentUserName)
         {
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
             {
-             DatabaseHelper odal = new();
-             odal.SetConnection(_context.Database.GetDbConnection()); // Share same DbConnection
-             odal.SetTransaction(transaction.GetDbTransaction());     // Share same DbTransaction
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // Share same DbTransaction
 
-            string[] rEntity = { "Grnid", "GrnreturnDate", "GrnreturnTime", "StoreId", "SupplierId", "TotalAmount", "GrnReturnAmount", "TotalDiscAmount", "TotalVatAmount", "TotalOtherTaxAmount", "TotalOctroiAmount", "NetAmount", "CashCredit", "Remark", "IsVerified", "AddedBy", "IsCancelled", "IsClosed", "GrnType", "IsGrnTypeFlag", "GrnreturnId", "UnitId", "ReturnTypeId" };
-            var entity = objGRNReturn.ToDictionary();
-            foreach (var rProperty in entity.Keys.ToList())
-            {
-                if (!rEntity.Contains(rProperty))
-                    entity.Remove(rProperty);
-            }
-            var VGrnreturnId = odal.ExecuteNonQueryNew("ps_insert_GRNReturnH_GrnReturnNo_1", CommandType.StoredProcedure, "GrnreturnId", entity);
-            objGRNReturn.GrnreturnId = Convert.ToInt32(VGrnreturnId);
-            await _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), objGRNReturn.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
-
-            foreach (var item in objTGrnreturnDetail)
-            {
-                item.GrnreturnId = Convert.ToInt32(VGrnreturnId);
-
-                string[] Entity = { "GrnreturnId", "ItemId", "BatchNo", "BatchExpiryDate", "ReturnQty", "LandedRate", "Mrp", "UnitPurchaseRate", "Gstpercentage", "Gstamount", "LandedTotalAmount", "MrptotalAmount", "PurchaseTotalAmount", "Conversion", "Remarks", "StkId", "Cf", "TotalQty", "Grnid", "Cgstper", "Sgstper", "Igstper", "DiscPercentage", "DiscAmount", "ReturnFreeQty" };
-                var rentity = item.ToDictionary();
-                foreach (var rProperty in rentity.Keys.ToList())
+                string[] rEntity = { "Grnid", "GrnreturnDate", "GrnreturnTime", "StoreId", "SupplierId", "TotalAmount", "GrnReturnAmount", "TotalDiscAmount", "TotalVatAmount", "TotalOtherTaxAmount", "TotalOctroiAmount", "NetAmount", "CashCredit", "Remark", "IsVerified", "AddedBy", "IsCancelled", "IsClosed", "GrnType", "IsGrnTypeFlag", "GrnreturnId", "UnitId", "ReturnTypeId" };
+                var entity = objGRNReturn.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
                 {
-                    if (!Entity.Contains(rProperty))
-                        rentity.Remove(rProperty);
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
                 }
-                odal.ExecuteNonQueryNew("ps_insert_GRNReturnDetails_1", CommandType.StoredProcedure,"", rentity);
-                await _context.LogProcedureExecution(rentity, nameof(TGrnreturnDetail), item.GrnreturnDetailId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                var VGrnreturnId = odal.ExecuteNonQueryNew("ps_insert_GRNReturnH_GrnReturnNo_1", CommandType.StoredProcedure, "GrnreturnId", entity);
+                objGRNReturn.GrnreturnId = Convert.ToInt32(VGrnreturnId);
+                await _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), objGRNReturn.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-            }
 
-            foreach (var item in ObjTCurrentStock)
-            {
-                string[] GGEntity = { "ItemId", "IssueQty", "IstkId", "StoreId" };
-                var gentity = item.ToDictionary();
-                foreach (var rProperty in gentity.Keys.ToList())
+                foreach (var item in objTGrnreturnDetail)
                 {
-                    if (!GGEntity.Contains(rProperty))
-                        gentity.Remove(rProperty);
+                    item.GrnreturnId = Convert.ToInt32(VGrnreturnId);
+
+                    string[] Entity = { "GrnreturnId", "ItemId", "BatchNo", "BatchExpiryDate", "ReturnQty", "LandedRate", "Mrp", "UnitPurchaseRate", "Gstpercentage", "Gstamount", "LandedTotalAmount", "MrptotalAmount", "PurchaseTotalAmount", "Conversion", "Remarks", "StkId", "Cf", "TotalQty", "Grnid", "Cgstper", "Sgstper", "Igstper", "DiscPercentage", "DiscAmount", "ReturnFreeQty" };
+                    var rentity = item.ToDictionary();
+                    foreach (var rProperty in rentity.Keys.ToList())
+                    {
+                        if (!Entity.Contains(rProperty))
+                            rentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQueryNew("ps_insert_GRNReturnDetails_1", CommandType.StoredProcedure, "", rentity);
+                    await _context.LogProcedureExecution(rentity, nameof(TGrnreturnDetail), item.GrnreturnDetailId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
                 }
-                odal.ExecuteNonQueryNew("ps_Update_T_CurrentStock_GRNReturn_1", CommandType.StoredProcedure, "", gentity);
-                await _context.LogProcedureExecution(gentity, nameof(TCurrentStock), item.StockId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-            }
-            foreach (var item in ObjTGrndetails)
-            {
-                string[] GGEntity = { "GrndetId", "ReturnQty" };
-                var gentity = item.ToDictionary();
-                foreach (var rProperty in gentity.Keys.ToList())
+
+                foreach (var item in ObjTCurrentStock)
                 {
-                    if (!GGEntity.Contains(rProperty))
-                        gentity.Remove(rProperty);
+                    string[] GGEntity = { "ItemId", "IssueQty", "IstkId", "StoreId" };
+                    var gentity = item.ToDictionary();
+                    foreach (var rProperty in gentity.Keys.ToList())
+                    {
+                        if (!GGEntity.Contains(rProperty))
+                            gentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQueryNew("ps_Update_T_CurrentStock_GRNReturn_1", CommandType.StoredProcedure, "", gentity);
+                    await _context.LogProcedureExecution(gentity, nameof(TCurrentStock), item.StockId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
                 }
-                odal.ExecuteNonQueryNew("ps_Update_GrnReturnQty_GrnTbl_1", CommandType.StoredProcedure,"", gentity);
-                await _context.LogProcedureExecution(gentity, nameof(TGrndetail), item.GrndetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
-            }
-            // Save Logs
-            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
-            // Commit Transaction
-            await transaction.CommitAsync();
-            }
-            catch (Exception)
-            {
-                // Rollback Transaction
-                await transaction.RollbackAsync();
-                throw;
-            }
-
-
-        }
-
-
-        public virtual async Task  Updatesp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int CurrentUserId, string CurrentUserName)
-        {
-            await using var transaction = await _context.Database.BeginTransactionAsync();
-
-            try
-            {
-            DatabaseHelper odal = new();
-            odal.SetConnection(_context.Database.GetDbConnection()); // Share same DbConnection
-            odal.SetTransaction(transaction.GetDbTransaction());     // Share same DbTransaction
-
-            string[] rEntity = { "Grnid", "GrnreturnDate", "GrnreturnTime", "StoreId", "SupplierId", "TotalAmount", "GrnReturnAmount", "TotalDiscAmount", "TotalVatAmount", "TotalOtherTaxAmount", "TotalOctroiAmount", "NetAmount", "CashCredit", "Remark", "IsVerified", "AddedBy", "IsCancelled", "IsClosed", "GrnType", "IsGrnTypeFlag", "GrnreturnId", "UnitId", "ReturnTypeId" };
-            var entity = objGRNReturn.ToDictionary();
-            foreach (var rProperty in entity.Keys.ToList())
-            {
-                if (!rEntity.Contains(rProperty))
-                    entity.Remove(rProperty);
-            }
-            odal.ExecuteNonQueryNew("ps_update_GRNReturnHeader_1", CommandType.StoredProcedure, "", entity);
-            await _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), objGRNReturn.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
-
-            var DeleteGrnReturnDetObj = new
-            {
-                GrnreturnId = Convert.ToInt32(objGRNReturn.GrnreturnId)
-            };
-            odal.ExecuteNonQueryNew("ps_Delete_T_GrnreturnDetail", CommandType.StoredProcedure,"", DeleteGrnReturnDetObj.ToDictionary());
-            await _context.LogProcedureExecution( DeleteGrnReturnDetObj.ToDictionary(),"ps_Delete_T_GrnreturnDetail", objGRNReturn.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Delete, CurrentUserId,CurrentUserName);
-
-            foreach (var item in objTGrnreturnDetail)
-            {
-
-                string[] Entity = { "GrnreturnId", "ItemId", "BatchNo", "BatchExpiryDate", "ReturnQty", "LandedRate", "Mrp", "UnitPurchaseRate", "Gstpercentage", "Gstamount", "LandedTotalAmount", "MrptotalAmount", "PurchaseTotalAmount", "Conversion", "Remarks", "StkId", "Cf", "TotalQty", "Grnid", "Cgstper", "Sgstper", "Igstper", "DiscPercentage", "DiscAmount", "ReturnFreeQty" };
-                var rentity = item.ToDictionary();
-                foreach (var rProperty in rentity.Keys.ToList())
+                foreach (var item in ObjTGrndetails)
                 {
-                    if (!Entity.Contains(rProperty))
-                        rentity.Remove(rProperty);
+                    string[] GGEntity = { "GrndetId", "ReturnQty" };
+                    var gentity = item.ToDictionary();
+                    foreach (var rProperty in gentity.Keys.ToList())
+                    {
+                        if (!GGEntity.Contains(rProperty))
+                            gentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQueryNew("ps_Update_GrnReturnQty_GrnTbl_1", CommandType.StoredProcedure, "", gentity);
+                    await _context.LogProcedureExecution(gentity, nameof(TGrndetail), item.GrndetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
                 }
-                odal.ExecuteNonQueryNew("ps_insert_GRNReturnDetails_1", CommandType.StoredProcedure,"", rentity);
-                await _context.LogProcedureExecution(rentity, nameof(TGrnreturnDetail), item.GrnreturnDetailId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
-
-            }
-            var tokenObj = new
-            {
-                GrnreturnId = Convert.ToInt32(objGRNReturn.GrnreturnId)
-            };
-            odal.ExecuteNonQueryNew("ps_Upt_GrnStk_Reset", CommandType.StoredProcedure, "", tokenObj.ToDictionary());
-            await _context.LogProcedureExecution(tokenObj.ToDictionary(), "ps_Upt_GrnStk_Reset", objGRNReturn.GrnreturnId.ToInt(),Core.Domain.Logging.LogAction.Edit, CurrentUserId , CurrentUserName);
-
-            foreach (var item in ObjTCurrentStock)
-            {
-                string[] GGEntity = { "ItemId", "IssueQty", "StoreId", "IstkId" };
-                var gentity = item.ToDictionary();
-                foreach (var rProperty in gentity.Keys.ToList())
-                {
-                    if (!GGEntity.Contains(rProperty))
-                        gentity.Remove(rProperty);
-                }
-                odal.ExecuteNonQueryNew("Update_T_CurrentStock_GRNReturn_1", CommandType.StoredProcedure, "", gentity);
-                await _context.LogProcedureExecution(gentity, nameof(TCurrentStock), item.StockId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
-            }
-
-            foreach (var item in ObjTGrndetails)
-            {
-                string[] GGEntity = { "GrndetId", "ReturnQty" };
-                var gentity = item.ToDictionary();
-                foreach (var rProperty in gentity.Keys.ToList())
-                {
-                    if (!GGEntity.Contains(rProperty))
-                        gentity.Remove(rProperty);
-                }
-                odal.ExecuteNonQueryNew("Update_GrnReturnQty_GrnTbl_1", CommandType.StoredProcedure, "", gentity);
-                await _context.LogProcedureExecution(gentity, nameof(TGrndetail), item.GrndetId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
-            }
-            // Save Logs
-             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
-             // Commit Transaction
+                // Save Logs
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit Transaction
                 await transaction.CommitAsync();
             }
             catch (Exception)
@@ -342,6 +248,99 @@ namespace HIMS.Services.Pharmacy
         }
 
 
-      
+        public virtual async Task Updatesp(TGrnreturnHeader objGRNReturn, List<TGrnreturnDetail> objTGrnreturnDetail, List<TCurrentStock> ObjTCurrentStock, List<TGrndetail> ObjTGrndetails, int CurrentUserId, string CurrentUserName)
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // Share same DbTransaction
+
+                string[] rEntity = { "Grnid", "GrnreturnDate", "GrnreturnTime", "StoreId", "SupplierId", "TotalAmount", "GrnReturnAmount", "TotalDiscAmount", "TotalVatAmount", "TotalOtherTaxAmount", "TotalOctroiAmount", "NetAmount", "CashCredit", "Remark", "IsVerified", "AddedBy", "IsCancelled", "IsClosed", "GrnType", "IsGrnTypeFlag", "GrnreturnId", "UnitId", "ReturnTypeId" };
+                var entity = objGRNReturn.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+                odal.ExecuteNonQueryNew("ps_update_GRNReturnHeader_1", CommandType.StoredProcedure, "", entity);
+                await _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), objGRNReturn.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+                var DeleteGrnReturnDetObj = new
+                {
+                    GrnreturnId = Convert.ToInt32(objGRNReturn.GrnreturnId)
+                };
+                odal.ExecuteNonQueryNew("ps_Delete_T_GrnreturnDetail", CommandType.StoredProcedure, "", DeleteGrnReturnDetObj.ToDictionary());
+                await _context.LogProcedureExecution(DeleteGrnReturnDetObj.ToDictionary(), "ps_Delete_T_GrnreturnDetail", objGRNReturn.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
+
+                foreach (var item in objTGrnreturnDetail)
+                {
+
+                    string[] Entity = { "GrnreturnId", "ItemId", "BatchNo", "BatchExpiryDate", "ReturnQty", "LandedRate", "Mrp", "UnitPurchaseRate", "Gstpercentage", "Gstamount", "LandedTotalAmount", "MrptotalAmount", "PurchaseTotalAmount", "Conversion", "Remarks", "StkId", "Cf", "TotalQty", "Grnid", "Cgstper", "Sgstper", "Igstper", "DiscPercentage", "DiscAmount", "ReturnFreeQty" };
+                    var rentity = item.ToDictionary();
+                    foreach (var rProperty in rentity.Keys.ToList())
+                    {
+                        if (!Entity.Contains(rProperty))
+                            rentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQueryNew("ps_insert_GRNReturnDetails_1", CommandType.StoredProcedure, "", rentity);
+                    await _context.LogProcedureExecution(rentity, nameof(TGrnreturnDetail), item.GrnreturnDetailId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+
+                }
+                var tokenObj = new
+                {
+                    GrnreturnId = Convert.ToInt32(objGRNReturn.GrnreturnId)
+                };
+                odal.ExecuteNonQueryNew("ps_Upt_GrnStk_Reset", CommandType.StoredProcedure, "", tokenObj.ToDictionary());
+                await _context.LogProcedureExecution(tokenObj.ToDictionary(), "ps_Upt_GrnStk_Reset", objGRNReturn.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+                foreach (var item in ObjTCurrentStock)
+                {
+                    string[] GGEntity = { "ItemId", "IssueQty", "StoreId", "IstkId" };
+                    var gentity = item.ToDictionary();
+                    foreach (var rProperty in gentity.Keys.ToList())
+                    {
+                        if (!GGEntity.Contains(rProperty))
+                            gentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQueryNew("Update_T_CurrentStock_GRNReturn_1", CommandType.StoredProcedure, "", gentity);
+                    await _context.LogProcedureExecution(gentity, nameof(TCurrentStock), item.StockId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+                }
+
+                foreach (var item in ObjTGrndetails)
+                {
+                    string[] GGEntity = { "GrndetId", "ReturnQty" };
+                    var gentity = item.ToDictionary();
+                    foreach (var rProperty in gentity.Keys.ToList())
+                    {
+                        if (!GGEntity.Contains(rProperty))
+                            gentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQueryNew("Update_GrnReturnQty_GrnTbl_1", CommandType.StoredProcedure, "", gentity);
+                    await _context.LogProcedureExecution(gentity, nameof(TGrndetail), item.GrndetId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+                }
+                // Save Logs
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit Transaction
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
+
+
+        }
+
+
+
     }
 }
