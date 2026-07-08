@@ -69,21 +69,21 @@ namespace HIMS.Data.DTO.OPPatient
         public string? FamilyDoctorName { get; set; }
         public string? FamilyDoctorContact { get; set; }
         public string? MonthlyIncomeRange { get; set; }
-        public long? HusbandPreviousMemberId { get; set; }
-        public long? WifePreviousMemberId { get; set; }
+        public string? HusbandPreviousMemberId { get; set; }
+        public string? WifePreviousMemberId { get; set; }
         public DateTime? DeclarationDate { get; set; }
         public bool? FeeReceived { get; set; }
         public decimal? FeeAmount { get; set; }
         public DateTime? ReceiptDate { get; set; }
         public string? HOcccupation { get; set; }
         public string? Value { get; set; }
-        public decimal? HIncome { get; set; }
+        public string? HIncome { get; set; }
         public string? WifeOccupation { get; set; }
         public string? CompanyName { get; set; }
         public string? HusbandFirstName { get; set; }
         public string? HusbandMiddleName { get; set; }
         public string? HusbandLastName { get; set; }
-        public long CityId { get; set; }
+        public long? CityId { get; set; }
 
 
 
