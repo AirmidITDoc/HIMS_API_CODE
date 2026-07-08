@@ -83,7 +83,7 @@ namespace HIMS.API.Models.TrustMembershipRegistration
     {
         public TrustMembershipRegModelValidator()
         {
-            RuleFor(x => x.MembershipNo).NotNull().NotEmpty().WithMessage("MembershipNo is required");
+            //RuleFor(x => x.MembershipNo).NotNull().NotEmpty().WithMessage("MembershipNo is required");
             RuleFor(x => x.MembershipDate).NotNull().NotEmpty().WithMessage("MembershipDate is required");
             RuleFor(x => x.MembershipTime).NotNull().NotEmpty().WithMessage("MembershipTime  is required");
             //RuleFor(x => x.HusbandDob).NotNull().NotEmpty().WithMessage(" HusbandDob required");

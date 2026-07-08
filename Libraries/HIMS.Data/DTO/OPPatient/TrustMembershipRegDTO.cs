@@ -80,6 +80,13 @@ namespace HIMS.Data.DTO.OPPatient
         public decimal? HIncome { get; set; }
         public string? WifeOccupation { get; set; }
         public string? CompanyName { get; set; }
+        public string? HusbandFirstName { get; set; }
+        public string? HusbandMiddleName { get; set; }
+        public string? HusbandLastName { get; set; }
+        public long CityId { get; set; }
+
+
+
     }
 }
 
