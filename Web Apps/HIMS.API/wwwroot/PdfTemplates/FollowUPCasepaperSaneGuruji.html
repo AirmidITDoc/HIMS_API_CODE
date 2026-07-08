@@ -2,297 +2,174 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>OPD Prescription</title>
-
+    <title>OPD Card</title>
     <style>
 
   {{LoadFont}}
     </style>
 </head>
-<body style="margin:0;padding:3px;font-size:13px;color:#000;">
 
-    <table style="width:800px;border-collapse:collapse;border:1px solid #000;margin:auto;">
-
+<body style="margin:0; padding:0; font-size:25px;">
+    <div style="width:100%;margin:0;background:#fff;box-sizing:border-box;">
         <!-- Header -->
-        <tr>
-            <td style="width:60%;border-right:1px solid #000;padding:8px;vertical-align:top;">
+        <table style="width:100%;border-collapse:collapse;border:1px solid #000;">
 
-                <div style="font-size:18px;font-weight:bold;">
-                    महाराष्ट्र आरोग्य मंडळाचे,
-                </div>
+            <tr>
 
-                <div style="font-size:17px;">
-                    सुमतीभाई शाह आयुर्वेद महाविद्यालय संचालित
-                </div>
+                <td colspan="2" style="padding:6px;width:50%;">
+                    <table style="border-collapse:collapse;">
+                        <tr><td style="font-size:22px;font-weight:bold;padding:0;">महाराष्ट्र आरोग्य मंडळाचे,</td></tr>
+                        <tr><td style="font-size:22px;padding:0;">सुमतिभाई शाह आयुर्वेद महाविद्यालय संचालित</td></tr>
+                        <tr><td style="font-size:24px;font-weight:bold;padding:2px 0 0 0;">आयुर्वेद रुग्णालय – साने गुरूजी आरोग्य केंद्र</td></tr>
+                        <tr><td style="font-size:22px;padding:0;">(धर्मादाय), हडपसर, पुणे – २८</td></tr>
+                    </table>
+                </td>
 
-                <div style="font-size:22px;font-weight:bold;margin-top:5px;">
-                    आयुर्वेद रुग्णालय – साने गुरूजी आरोग्य केंद्र
-                </div>
+                <td style="width:50%;padding:8px;vertical-align:top;">
 
-                <div style="font-size:14px;">
-                    (घोरपडी), हडपसर, पुणे – २८
-                </div>
+                    <table style="width:100%;border-collapse:collapse;">
 
-            </td>
+                        <tr>
+                            <td style="font-weight:bold;text-align:left;">
+                                पुरवणी केस पेपर
+                            </td>
+                    
+                            <td>
+                                <B>  SGAK/F/02</B>
+                            </td>
+                        </tr>
 
-            <td style="width:40%;padding:8px;vertical-align:top;">
+                        <tr>
+                            <td>वार्षिक एम.आर. क्रमांक :</td>
+                            <td> <b>{{RegNo}}</b></td>
+                        </tr>
 
-                <table style="width:100%;border-collapse:collapse;">
+                        <tr>
+                            <td>ओपीडी नं :  <b>{{OPDNo}}</b></td>
+                            <td> <b>{{GenderName}}</b></td>
+                        </tr>
 
-                    <tr>
-                        <td style="font-weight:bold;font-size:18px;text-align:center;" colspan="2">
-                            पुरवणी के से पेपर
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>पुरवणी क.</td>
+                            <td> </td>
+                        </tr>
+                    </table>
+                </td>
 
-                    <tr>
-                        <td>वार्षिक एम.आर. क्रमांक</td>
-                        <td>: <b>{{RegNo}}</b></td>
-                    </tr>
+            </tr>
 
-                    <tr>
-                        <td>ओपीडी नं.</td>
-                        <td>: <b>{{OPDNo}}</b></td>
-                    </tr>
 
-                    <tr>
-                        <td>पुरवणी क्र.</td>
-                        <td>: </td>
-                    </tr>
+            <tr style="vertical-align:top;">
 
-                </table>
+                <td colspan="3" style="padding:4px 6px; width:45%; border-top:1px solid #000;  vertical-align:top;colspan="3" ">
+                    <b>नाव :</b>
+                    <span style="font-size:20px;font-weight:bold;">
+                        {{PatientName}}
+                    </span>
+                </td>
 
-            </td>
-        </tr>
+            </tr>
 
-        <!-- Patient -->
-        <tr>
-            <td colspan="2" style="border-top:1px solid #000;padding:8px;">
+            <tr>
+                <td colspan="3" style="padding:2px 6px;font-size:20px;">
+                    <b>पत्ता :</b>
+                    {{Address}}
+                </td>
 
-                <table style="width:100%;">
+            </tr>
 
-                    <tr>
-                        <td style="width:60%;">
-                            <b>नाव :</b>
-                            <span style="font-size:22px;font-weight:bold;">
-                                {{PatientName}}
-                            </span>
-                        </td>
+            <tr>
 
-                        <td>
-                            <b>लिंग :</b> {{GenderName}}
-                        </td>
-                    </tr>
+                <td></td>
+                <td colspan="2" style="padding: 6px; ">
+                    वय :
+                    <span style="font-size:22px;">
+                        वर्ष <b>{{AgeYear}}  </b>  महिना <b> {{AgeMonth}}</b>  दिवस <b>{{AgeDay}} </b>
+                    </span>
+                </td>
 
-                    <tr>
-                        <td colspan="2" style="padding-top:5px;">
-                            <b>पत्ता :</b>
-                            {{Address}}
-                        </td>
-                    </tr>
+            </tr>
 
-                    <tr>
 
-                        <td>
-                            <b>वय :</b> {{AgeYear}}
-                        </td>
+        </table>
 
-                        <td>
-                            <b>महिना :</b> {{AgeMonth}}
-                        </td>
+     
+        <!-- Treatment Table -->
 
-                    </tr>
+        <table style="width:100%; border-collapse:collapse; border:1px solid #000; font-family:Mangal,Arial,sans-serif; font-size:15px;">
+            <thead>
+                <tr style="height:30px;">
+                    <th style="border:1px solid #000; width:10%; text-align:center; font-weight:normal;">
+                        तारीख
+                    </th>
+                    <th style="border:1px solid #000; width:33%; text-align:center; font-weight:normal;">
+                        लक्षणे
+                    </th>
+                    <th style="border:1px solid #000; width:33%; text-align:center; font-weight:normal;">
+                        चिकित्सा
+                    </th>
+                    <th style="border:1px solid #000; width:8%; text-align:center; font-weight:normal;">
+                        रोख
+                    </th>
+                    <th style="border:1px solid #000; width:8%; text-align:center; font-weight:normal;">
+                        मोफत
+                    </th>
+                    <th style="border:1px solid #000; width:8%; text-align:center; font-weight:normal;">
+                        सूट
+                    </th>
+                </tr>
+            </thead>
 
-                </table>
+            <tbody>
 
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding:0;">
+                <!--ITEMS_SP1-->
 
-                <table style="width:100%;border-collapse:collapse;font-family:Tahoma;font-size:13px;">
+                <tr style="height:980px;">
 
-                    <tr style="background:#f5f5f5;font-weight:bold;text-align:center;height:30px;">
+                    <td style="border:1px solid #000; vertical-align:top; padding:5px; font-weight:bold;">
+                        {{VisitDate|dd/MM/yyyy}} {{VisitDate|h:mm tt}}
+                    </td>
 
-                        <td style="width:12%;border:1px solid #000;">तारीख<br /></td>
+                    <td style="border:1px solid #000; vertical-align:top; padding:5px;">
+                        {{Symptoms}}
+                    </td>
 
-                        <td style="width:28%;border:1px solid #000;">लक्षणे<br /></td>
+                    <td style="border:1px solid #000; vertical-align:top; padding:5px; text-align:center; font-weight:bold;">
+                        {{ServiceName_1}}
+                    </td>
 
-                        <td style="width:30%;border:1px solid #000;">चिकित्सा <br /> </td>
+                    <td style="border:1px solid #000; vertical-align:top; padding:5px; text-align:center; font-weight:bold;">
+                        {{NetAmount|N2}}
+                    </td>
 
-                        <td style="width:10%;border:1px solid #000;">रक्कम<br /></td>
+                    <td style="border:1px solid #000; vertical-align:top; padding:5px; text-align:center; font-weight:bold;">
+                        {{FreeAmount|N2}}
+                    </td>
 
-                        <td style="width:10%;border:1px solid #000;">शेष<br /></td>
+                    <td style="border:1px solid #000; vertical-align:top; padding:5px; text-align:center; font-weight:bold;">
+                        {{ConcessionAmount|N2}}
+                    </td>
 
-                        <td style="width:10%;border:1px solid #000;">सूट<br /></td>
+                </tr>
 
-                    </tr>
+                <!--/ITEMS_SP1-->
 
-                    <!--ITEMS_SP1-->
-
-                    <tr style="height:55px;vertical-align:top;">
-
-                        <td style="border:px solid #000;padding:5px;">
-                            {{VisitDate|dd/MM/yyyy}}
-                        </td>
-
-                        <td style="border:px solid #000;padding:5px;">
-                            {{Symptoms}}
-                        </td>
-
-                        <td style="border:px solid #000;padding:5px;">
-                            {{ServiceName}}
-                        </td>
-
-                        <td style="border:px solid #000;padding:5px;text-align:right;">
-                            {{NetAmount}}
-                        </td>
-
-                        <td style="border:px solid #000;padding:5px;text-align:right;">
-                            {{Balance}}
-                        </td>
-
-                        <td style="border:px solid #000;padding:5px;text-align:right;">
-                            {{ConcessionAmount}}
-                        </td>
-
-                    </tr>
-
-                    <!--/ITEMS_SP1-->
-                    <!-- Blank Rows -->
-
-                    <tr style="height:55px;">
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                    </tr>
-
-                    <tr style="height:55px;">
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                    </tr>
-
-                    <tr style="height:55px;">
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                    </tr>
-
-                    <tr style="height:55px;">
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                    </tr>
-
-                    <tr style="height:55px;">
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                    </tr>
-
-                    <tr style="height:55px;">
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                    </tr>
-
-                    <tr style="height:55px;">
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                    </tr>
-
-                    <tr style="height:55px;">
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                    </tr>
-
-                    <tr style="height:55px;">
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                    </tr>
-                    <tr style="height:55px;">
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                    </tr>
-                    <tr style="height:55px;">
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                    </tr>
-                    <tr style="height:55px;">
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                        <td style="border:px solid #000;"></td>
-                    </tr>
-
-                </table>
-
-            </td>
-        </tr>
+            </tbody>
+        </table>
         <!-- Footer -->
-        <tr>
 
-            <td colspan="2" style="padding:6px;font-size:11px;">
+        <div style="margin-top: 10px; font-size: 20px; text-align: right; font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif; ">
 
-                <table style="width:100%;">
+            Login By : {{AddedByName}}
 
-                    <tr>
-
-                        <td>
-                            Login By : {{AddedByName}}
-                        </td>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
-                    </tr>
 
-                </table>
+        </div>
 
-            </td>
-
-        </tr>
-
-    </table>
+    </div>
 
 </body>
+
 </html>
