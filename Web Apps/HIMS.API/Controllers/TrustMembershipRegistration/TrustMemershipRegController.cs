@@ -6,8 +6,11 @@ using HIMS.API.Models.Masters;
 using HIMS.API.Models.TrustMembershipRegistration;
 using HIMS.API.Utility;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.OPPatient;
 using HIMS.Services.TrustMembershipRegistration;
@@ -30,8 +33,17 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
             _repository = repository1;
         }
 
+        [HttpPost("TrustMembershipRegList")]
+        //[Permission]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<TrustMembershipRegDTO> SupplierList = await _ITrustMembershipRegService.GetListAsync(objGrid);
+            return Ok(SupplierList.ToGridResponse(objGrid, "TrustMembershipReg List"));
+        }
+
+
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
+        //[Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -44,7 +56,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
 
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        //[Permission]
         public async Task<ApiResponse> Insert(TrustMembershipRegModel obj)
         {
             TMembershipRegistration model = obj.MapTo<TMembershipRegistration>();
@@ -86,7 +98,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.MembershipId);
         }
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
+        //[Permission]
         public async Task<ApiResponse> Edit(TrustMembershipRegModel obj)
         {
             TMembershipRegistration model = obj.MapTo<TMembershipRegistration>();
@@ -137,13 +149,13 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        //[Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             TMembershipRegistration model = await _repository.GetById(x => x.MembershipId == Id);
             if ((model?.MembershipId ?? 0) > 0)
             {
-                //model.IsActive = model.IsActive == true ? false : true;
+                model.IsActive = model.IsActive == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
                 await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);

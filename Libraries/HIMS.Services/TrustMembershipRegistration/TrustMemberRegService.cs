@@ -1,12 +1,16 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace HIMS.Services.TrustMembershipRegistration
@@ -18,7 +22,12 @@ namespace HIMS.Services.TrustMembershipRegistration
         {
             _context = HIMSDbContext;
         }
-       
+        public virtual async Task<IPagedList<TrustMembershipRegDTO>> GetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TrustMembershipRegDTO>(model, "ps_Rtrv_TrustMembershipList");
+        }
+
+
         public virtual async Task<TMembershipRegistration> GetById(int Id)
         {
             return await this._context.TMembershipRegistrations .Include(x => x.TMembershipChildren).Include(x => x.TMembershipEmrgencies).Include(x => x.TMembershipRelatives).FirstOrDefaultAsync(x => x.MembershipId == Id);

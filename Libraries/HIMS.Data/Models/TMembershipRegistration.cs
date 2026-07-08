@@ -29,7 +29,7 @@ namespace HIMS.Data.Models
         public string? HusbandEmail { get; set; }
         public string? HusbandAadhaar { get; set; }
         public string? HusbandPan { get; set; }
-        public long? HusbandBloodGroupId { get; set; }
+        public string? HusbandBloodGroupId { get; set; }
         public string? HusbandEducation { get; set; }
         public long? HusbandOccupationId { get; set; }
         public string? HusbandHobbies { get; set; }
@@ -48,7 +48,7 @@ namespace HIMS.Data.Models
         public long? WifeAgeD { get; set; }
         public string? WifeMobile { get; set; }
         public string? WifeEmail { get; set; }
-        public long? WifeBloodGroupId { get; set; }
+        public string? WifeBloodGroupId { get; set; }
         public string? WifeAadhaar { get; set; }
         public string? WifePan { get; set; }
         public long? WifeOccupationId { get; set; }
@@ -85,6 +85,7 @@ namespace HIMS.Data.Models
         public DateTime CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public bool? IsActive { get; set; }
 
         public virtual ICollection<TMembershipChild> TMembershipChildren { get; set; }
         public virtual ICollection<TMembershipEmrgency> TMembershipEmrgencies { get; set; }

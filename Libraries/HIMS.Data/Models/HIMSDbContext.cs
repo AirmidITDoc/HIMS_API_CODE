@@ -14699,6 +14699,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.HusbandAadhaar).HasMaxLength(12);
 
+                entity.Property(e => e.HusbandBloodGroupId).HasMaxLength(50);
+
                 entity.Property(e => e.HusbandDob)
                     .HasColumnType("datetime")
                     .HasColumnName("HusbandDOB");
@@ -14729,6 +14731,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.HusbandPreviousMemberId).HasMaxLength(50);
 
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.MediclaimCompany).HasMaxLength(150);
 
                 entity.Property(e => e.MediclaimEndDate).HasColumnType("datetime");
@@ -14758,6 +14764,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.WgenderId).HasColumnName("WGenderId");
 
                 entity.Property(e => e.WifeAadhaar).HasMaxLength(12);
+
+                entity.Property(e => e.WifeBloodGroupId).HasMaxLength(50);
 
                 entity.Property(e => e.WifeDob)
                     .HasColumnType("datetime")
