@@ -11,6 +11,12 @@ namespace HIMS.Data.Models
         public string? RegDate { get; set; }
         public string? RegTime { get; set; }
         public string? PatientName { get; set; }
+        public string? FirstName { get; set; }
+        public string? MiddleName { get; set; }
+        public string? LastName { get; set; }
+        public string? AgeYear { get; set; }
+        public string? AgeMonth { get; set; }
+        public string? AgeDay { get; set; }
         public string? AgeGender { get; set; }
         public string? MobileNo { get; set; }
         public string? Address { get; set; }

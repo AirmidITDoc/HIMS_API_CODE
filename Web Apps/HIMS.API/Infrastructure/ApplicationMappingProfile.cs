@@ -23,6 +23,7 @@ using HIMS.API.Models.Pathology;
 using HIMS.API.Models.Pharmacy;
 using HIMS.API.Models.Radiology;
 using HIMS.API.Models.Transaction;
+using HIMS.API.Models.TrustMembershipRegistration;
 using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using static HIMS.API.Models.Administration.NewTPaymentModel;
@@ -127,8 +128,13 @@ namespace HIMS.API.Infrastructure
             //CreateMap<TApprovalHeader, ApprovalHeaderModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPcpndprocess, PcpndprocessModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPcpndprocessDetail, PcpndprocessDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-           
 
+            CreateMap<TMembershipRegistration, TrustMembershipRegModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TMembershipChild, MembershipChildModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TMembershipEmrgency, MembershipEmrgencyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TMembershipRelative, MembershipRelativeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            
 
 
 

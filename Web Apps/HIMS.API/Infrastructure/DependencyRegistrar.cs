@@ -31,6 +31,7 @@ using HIMS.Services.Radiology;
 using HIMS.Services.Report;
 using HIMS.Services.Report.OPReports;
 using HIMS.Services.Transaction;
+using HIMS.Services.TrustMembershipRegistration;
 using HIMS.Services.Users;
 using HIMS.Services.Utilities;
 
@@ -182,6 +183,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IIPDraftBillSerive, IPDraftBillSerive>();
             services.AddScoped<IIPDraftBillSerive, IPDraftBillSerive>();
             services.AddScoped<IIPInterimBillSerive, IPInterimBillSerive>();
+            services.AddScoped<ITrustMembershipRegService, TrustMemberRegService>();
+
 
 
             services.AddScoped<IVisitDetailsService, VisitDetailsService>();

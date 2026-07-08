@@ -111,12 +111,12 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("Verify")]
         [Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
-        public ApiResponse Verify(GRNReturnVerifyModel obj)
+        public async Task<ApiResponse> VerifyAsync(GRNReturnVerifyModel obj)
         {
             TGrnreturnHeader model = obj.MapTo<TGrnreturnHeader>();
             if (obj.GrnreturnId != 0)
             {
-                _gRNReturnService.Verify(model, CurrentUserId, CurrentUserName);
+                await _gRNReturnService.Verify(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

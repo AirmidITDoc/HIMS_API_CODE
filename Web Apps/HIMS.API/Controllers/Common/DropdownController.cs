@@ -502,6 +502,7 @@ namespace HIMS.API.Controllers.Common
                 "ExternalDoctorMaster" => (await _MExternalDoctorMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MExternalDoctorMaster.ExtDoctorId), nameof(MExternalDoctorMaster.DoctorName)),
                 "PCPNDTAnyother" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "PCPNDTAnyother")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "TrustIncomerange" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TrustIncomerange")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "TrustOccupation" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TrustOccupation")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
 
 

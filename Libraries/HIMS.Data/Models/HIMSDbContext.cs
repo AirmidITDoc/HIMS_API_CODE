@@ -506,6 +506,10 @@ namespace HIMS.Data.Models
         public virtual DbSet<TMaterialConsumptionDetail> TMaterialConsumptionDetails { get; set; } = null!;
         public virtual DbSet<TMaterialConsumptionHeader> TMaterialConsumptionHeaders { get; set; } = null!;
         public virtual DbSet<TMedicolegalCertificate> TMedicolegalCertificates { get; set; } = null!;
+        public virtual DbSet<TMembershipChild> TMembershipChildren { get; set; } = null!;
+        public virtual DbSet<TMembershipEmrgency> TMembershipEmrgencies { get; set; } = null!;
+        public virtual DbSet<TMembershipRegistration> TMembershipRegistrations { get; set; } = null!;
+        public virtual DbSet<TMembershipRelative> TMembershipRelatives { get; set; } = null!;
         public virtual DbSet<TMlcinformation> TMlcinformations { get; set; } = null!;
         public virtual DbSet<TMpesaResponse> TMpesaResponses { get; set; } = null!;
         public virtual DbSet<TMrdfileReceived> TMrdfileReceiveds { get; set; } = null!;
@@ -10484,7 +10488,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.RegNo).HasMaxLength(20);
 
-                entity.Property(e => e.RegPrefix).HasMaxLength(10);
+                entity.Property(e => e.RegPrefix).HasMaxLength(20);
 
                 entity.Property(e => e.RegTime).HasColumnType("datetime");
             });
@@ -14618,6 +14622,202 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpIpId).HasColumnName("OP_IP_Id");
 
                 entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
+            });
+
+            modelBuilder.Entity<TMembershipChild>(entity =>
+            {
+                entity.HasKey(e => e.ChildId)
+                    .HasName("PK__T_Member__BEFA07167347EA53");
+
+                entity.ToTable("T_MembershipChildren");
+
+                entity.Property(e => e.ChildMobile).HasMaxLength(15);
+
+                entity.Property(e => e.ChildName).HasMaxLength(150);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Membership)
+                    .WithMany(p => p.TMembershipChildren)
+                    .HasForeignKey(d => d.MembershipId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_MembershipChildren_T_MembershipRegistration");
+            });
+
+            modelBuilder.Entity<TMembershipEmrgency>(entity =>
+            {
+                entity.HasKey(e => e.EmrgencyId)
+                    .HasName("PK__T_Member__C33ABAFB01A0FDDE");
+
+                entity.ToTable("T_MembershipEmrgency");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EmrgencyAddress).HasMaxLength(255);
+
+                entity.Property(e => e.EmrgencyMobile).HasMaxLength(15);
+
+                entity.Property(e => e.EmrgencyName).HasMaxLength(150);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Membership)
+                    .WithMany(p => p.TMembershipEmrgencies)
+                    .HasForeignKey(d => d.MembershipId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_T_MembershipEmrgency_T_MembershipRegistration");
+            });
+
+            modelBuilder.Entity<TMembershipRegistration>(entity =>
+            {
+                entity.HasKey(e => e.MembershipId)
+                    .HasName("PK__Membersh__92A78679C15A8C2D");
+
+                entity.ToTable("T_MembershipRegistration");
+
+                entity.Property(e => e.AyushmanSpouseDetails).HasMaxLength(200);
+
+                entity.Property(e => e.CityName).HasMaxLength(150);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DeclarationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.FamilyDoctorContact).HasMaxLength(15);
+
+                entity.Property(e => e.FamilyDoctorName).HasMaxLength(150);
+
+                entity.Property(e => e.FeeAmount).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.HgenderId).HasColumnName("HGenderId");
+
+                entity.Property(e => e.HprefixId).HasColumnName("HPrefixId");
+
+                entity.Property(e => e.HusbandAadhaar).HasMaxLength(12);
+
+                entity.Property(e => e.HusbandDob)
+                    .HasColumnType("datetime")
+                    .HasColumnName("HusbandDOB");
+
+                entity.Property(e => e.HusbandEducation).HasMaxLength(150);
+
+                entity.Property(e => e.HusbandEmail).HasMaxLength(255);
+
+                entity.Property(e => e.HusbandFirstName).HasMaxLength(50);
+
+                entity.Property(e => e.HusbandFullBodyCheckupDate).HasColumnType("date");
+
+                entity.Property(e => e.HusbandHobbies).HasMaxLength(500);
+
+                entity.Property(e => e.HusbandLastName).HasMaxLength(50);
+
+                entity.Property(e => e.HusbandMedications).HasMaxLength(500);
+
+                entity.Property(e => e.HusbandMiddleName).HasMaxLength(50);
+
+                entity.Property(e => e.HusbandMobile).HasMaxLength(15);
+
+                entity.Property(e => e.HusbandPan)
+                    .HasMaxLength(20)
+                    .HasColumnName("HusbandPAN");
+
+                entity.Property(e => e.HusbandPhoto).HasMaxLength(500);
+
+                entity.Property(e => e.HusbandPreviousMemberId).HasMaxLength(50);
+
+                entity.Property(e => e.MediclaimCompany).HasMaxLength(150);
+
+                entity.Property(e => e.MediclaimEndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.MediclaimIssuanceAmt).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.MediclaimPolicyNumber).HasMaxLength(50);
+
+                entity.Property(e => e.MediclaimStartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.MembershipDate).HasColumnType("datetime");
+
+                entity.Property(e => e.MembershipNo).HasMaxLength(50);
+
+                entity.Property(e => e.MembershipTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.MonthlyIncomeRange).HasMaxLength(50);
+
+                entity.Property(e => e.NativePlace).HasMaxLength(100);
+
+                entity.Property(e => e.ReceiptDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ResidenceAddress).HasMaxLength(255);
+
+                entity.Property(e => e.WgenderId).HasColumnName("WGenderId");
+
+                entity.Property(e => e.WifeAadhaar).HasMaxLength(12);
+
+                entity.Property(e => e.WifeDob)
+                    .HasColumnType("datetime")
+                    .HasColumnName("WifeDOB");
+
+                entity.Property(e => e.WifeEducation).HasMaxLength(150);
+
+                entity.Property(e => e.WifeEmail).HasMaxLength(255);
+
+                entity.Property(e => e.WifeFirstName).HasMaxLength(50);
+
+                entity.Property(e => e.WifeFullBodyCheckupDate).HasColumnType("date");
+
+                entity.Property(e => e.WifeHobbies).HasMaxLength(500);
+
+                entity.Property(e => e.WifeLastName).HasMaxLength(50);
+
+                entity.Property(e => e.WifeMedications).HasMaxLength(500);
+
+                entity.Property(e => e.WifeMiddleName).HasMaxLength(50);
+
+                entity.Property(e => e.WifeMobile).HasMaxLength(15);
+
+                entity.Property(e => e.WifePan)
+                    .HasMaxLength(20)
+                    .HasColumnName("WifePAN");
+
+                entity.Property(e => e.WifeParentalDetails).HasMaxLength(255);
+
+                entity.Property(e => e.WifeParentsNativePlace).HasMaxLength(100);
+
+                entity.Property(e => e.WifePhoto).HasMaxLength(500);
+
+                entity.Property(e => e.WifePreviousMemberId).HasMaxLength(50);
+
+                entity.Property(e => e.WprefixId).HasColumnName("WPrefixId");
+            });
+
+            modelBuilder.Entity<TMembershipRelative>(entity =>
+            {
+                entity.HasKey(e => e.RelativeId)
+                    .HasName("PK__T_Member__951FE7613E30FC79");
+
+                entity.ToTable("T_MembershipRelative");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RelativeAddress).HasMaxLength(255);
+
+                entity.Property(e => e.RelativeMobile).HasMaxLength(15);
+
+                entity.Property(e => e.RelativeName).HasMaxLength(255);
+
+                entity.HasOne(d => d.Membership)
+                    .WithMany(p => p.TMembershipRelatives)
+                    .HasForeignKey(d => d.MembershipId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_MembershipRelative_T_MembershipRegistration");
             });
 
             modelBuilder.Entity<TMlcinformation>(entity =>
@@ -19032,7 +19232,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Age).HasMaxLength(10);
 
+                entity.Property(e => e.AgeDay).HasMaxLength(10);
+
                 entity.Property(e => e.AgeGender).HasMaxLength(138);
+
+                entity.Property(e => e.AgeMonth).HasMaxLength(10);
+
+                entity.Property(e => e.AgeYear).HasMaxLength(10);
 
                 entity.Property(e => e.City).HasMaxLength(100);
 
@@ -19046,7 +19252,13 @@ namespace HIMS.Data.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
+                entity.Property(e => e.FirstName).HasMaxLength(100);
+
                 entity.Property(e => e.GenderName).HasMaxLength(100);
+
+                entity.Property(e => e.LastName).HasMaxLength(100);
+
+                entity.Property(e => e.MiddleName).HasMaxLength(100);
 
                 entity.Property(e => e.MobileNo).HasMaxLength(20);
 
@@ -19062,7 +19274,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.RegNo).HasMaxLength(20);
 
-                entity.Property(e => e.RegPrefix).HasMaxLength(10);
+                entity.Property(e => e.RegPrefix).HasMaxLength(20);
 
                 entity.Property(e => e.RegTime).HasMaxLength(7);
             });
