@@ -16,47 +16,40 @@
 
             <tr>
 
-                <td colspan="2" style="padding:6px;line-height:20px;">
+                <td colspan="2" style="padding: 6px; width: 85%; line-height: 20px;">
 
-                    <div style="font-weight:bold;font-size:20px;">
+                    <div style="font-weight:bold;font-size:22px;">
                         महाराष्ट्र आरोग्य मंडळ, सुमतिभाई शाह आयुर्वेद महाविद्यालय संचलित
                     </div>
 
                     <div style="font-size:22px;font-weight:bold;">
-                        आयुर्वेद रुग्णालय - साने गुरुजी आरोग्य केंद्र
-                    </div>
-
-                    <div style="font-size:18px;">
-                        (धर्मादाय), हडपसर, पुणे - ४११०२८.
+                        आयुर्वेद रुग्णालय - साने गुरुजी आरोग्य केंद्र  (धर्मादाय), हडपसर, पुणे - ४११०२८.
                     </div>
 
                 </td>
 
-                <td style="width:140px;border-left:1px solid #000;text-align:center;font-weight:bold;font-size:18px;">
+                <td style="width:15%;border-left:1px solid #000;text-align:center;font-weight:bold;font-size:18px;">
                     SGAK/F/01
                 </td>
 
             </tr>
 
-            <tr>
-                <td colspan="3" style="border-top:1px solid #000;"></td>
-            </tr>
 
-            <tr>
+            <tr style="vertical-align:top;">
 
-                <td style="padding:6px;width:45%;">
+                <td style="padding:4px 6px; width:45%; border-top:1px solid #000; vertical-align:top;">
                     <b>नाव :</b>
                     <span style="font-size:20px;font-weight:bold;">
                         {{PatientName}}
                     </span>
                 </td>
 
-                <td style="padding:6px;width:25%;">
+                <td style="padding:4px 6px; width:25%; border-top:1px solid #000; vertical-align:top;">
                     एम.आर.क्र. :
                     <b>{{RegNo}}</b>
                 </td>
 
-                <td style="padding:6px;">
+                <td style="padding:4px 6px; border-top:1px solid #000; vertical-align:top;">
                     ओपीडी नं. :
                     <b>{{OPDNo}}</b>
                 </td>
@@ -64,31 +57,32 @@
             </tr>
 
             <tr>
-
-                <td style="padding:6px;">
+                <td colspan="3" style="padding:2px 6px;font-size:20px;">
                     <b>पत्ता :</b>
                     {{Address}}
-                </td>
-
-                <td style="padding:6px;text-align:center;font-weight:bold;font-size:20px;">
-                    {{GenderName}}
-                </td>
-
-                <td></td>
+                </td>   
 
             </tr>
 
             <tr>
 
                 <td></td>
-
-                <td colspan="1" style="padding:6px;">
+                <td colspan="1" style="padding: 6px; ">
                     वय :
-                    {{AgeYear}}
+                    <span style="font-size: 22px;">{{AgeYear}}Y {{AgeMonth}}M {{AgeDay}}D </span>
                 </td>
                 <td style="padding: 6px; font-weight: bold; font-size: 18px;">
-                    PrintDate : {{CurrentDate}}
+                    PrintDate : <span id="printDate">{{CurrentDate}}</span>
                 </td>
+            </tr>
+            <tr>
+
+                <td></td>
+                <td colspan="1" style="padding:6px;">
+                    लिंग :
+                    {{GenderName}}
+                </td>
+                <td></td>
             </tr>
 
         </table>
@@ -108,7 +102,7 @@
         <div style="border-left:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;padding:8px;">
 
             <div style="font-weight:bold;margin-bottom:8px;">
-                रोगनिदान :
+                रजोइतिहास :
             </div>
 
             <table style="width:100%;border-collapse:collapse;">
@@ -128,7 +122,7 @@
                 <tr>
 
                     <td colspan="2" style="padding:4px;">
-                        प्रसव इतिहास (बालंतपण / गर्भपात / जिवंत अथवा मृत गर्भ शिशु इतिहास) :
+                        प्रसव इतिहास (बाळंतपण / गर्भपात / जिवंत अथवा मृत गर्भ शिशू इतिहास) :
                         <span style="font-size:22px;font-weight:bold;letter-spacing:8px;">
                             G P A L D
                         </span>
@@ -166,9 +160,9 @@
 
             <br><br><br>
 
-            <div style="font-weight:bold;">
-                औषधे / आहार असह्यता :
-            </div>
+                    <div style="font-weight:bold;">
+                        औषधे / आहार असात्म्यता :
+                    </div>
 
         </div>
 
@@ -177,22 +171,22 @@
         <table style="width:100%; border-collapse:collapse; border:1px solid #000; font-family:Mangal,Arial,sans-serif; font-size:15px;">
             <thead>
                 <tr style="height:30px;">
-                    <th style="border:1px solid #000; width:14%; text-align:center; font-weight:normal;">
+                    <th style="border:1px solid #000; width:20%; text-align:center; font-weight:normal;">
                         तारीख
                     </th>
-                    <th style="border:1px solid #000; width:22%; text-align:center; font-weight:normal;">
+                    <th style="border:1px solid #000; width:28%; text-align:center; font-weight:normal;">
                         लक्षणे
                     </th>
-                    <th style="border:1px solid #000; width:30%; text-align:center; font-weight:normal;">
+                    <th style="border:1px solid #000; width:28%; text-align:center; font-weight:normal;">
                         चिकित्सा
                     </th>
-                    <th style="border:1px solid #000; width:10%; text-align:center; font-weight:normal;">
+                    <th style="border:1px solid #000; width:8%; text-align:center; font-weight:normal;">
                         रोख
                     </th>
-                    <th style="border:1px solid #000; width:12%; text-align:center; font-weight:normal;">
+                    <th style="border:1px solid #000; width:8%; text-align:center; font-weight:normal;">
                         मोफत
                     </th>
-                    <th style="border:1px solid #000; width:12%; text-align:center; font-weight:normal;">
+                    <th style="border:1px solid #000; width:8%; text-align:center; font-weight:normal;">
                         सूट
                     </th>
                 </tr>
@@ -202,10 +196,10 @@
 
                 <!--ITEMS_SP1-->
 
-                <tr style="height:330px;">
+                <tr style="height:410px;">
 
                     <td style="border:1px solid #000; vertical-align:top; padding:5px; font-weight:bold;">
-                        {{VisitDate|dd/MM/yyyy}}
+                        {{VisitDate|dd/MM/yyyy}} {{VisitDate|h:mm tt}}
                     </td>
 
                     <td style="border:1px solid #000; vertical-align:top; padding:5px;">
@@ -213,19 +207,19 @@
                     </td>
 
                     <td style="border:1px solid #000; vertical-align:top; padding:5px; text-align:center; font-weight:bold;">
-                        {{ServiceName}}
+                        {{ServiceName_1}}
                     </td>
 
                     <td style="border:1px solid #000; vertical-align:top; padding:5px; text-align:center; font-weight:bold;">
-                        {{NetAmount}}
+                        {{NetAmount|N2}}
                     </td>
 
                     <td style="border:1px solid #000; vertical-align:top; padding:5px; text-align:center; font-weight:bold;">
-                        {{FreeAmount}}
+                        {{FreeAmount|N2}}
                     </td>
 
                     <td style="border:1px solid #000; vertical-align:top; padding:5px; text-align:center; font-weight:bold;">
-                        {{ConcessionAmount}}
+                        {{ConcessionAmount|N2}}
                     </td>
 
                 </tr>
@@ -249,4 +243,10 @@
     </div>
 
 </body>
+<script>window.onload = function () {
+    var el = document.getElementById("printDate");
+    if (el) {
+        el.innerText = el.innerText.split(' ')[0];
+    }
+};</script>
 </html>
