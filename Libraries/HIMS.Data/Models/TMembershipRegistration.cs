@@ -67,14 +67,14 @@ namespace HIMS.Data.Models
         public bool? MaleFemaleEnrolled { get; set; }
         public string? AyushmanSpouseDetails { get; set; }
         public bool? HasMediclaim { get; set; }
-        public string? MediclaimCompany { get; set; }
+        public long? MediclaimCompany { get; set; }
         public string? MediclaimPolicyNumber { get; set; }
         public decimal? MediclaimIssuanceAmt { get; set; }
         public DateTime? MediclaimStartDate { get; set; }
         public DateTime? MediclaimEndDate { get; set; }
         public string? FamilyDoctorName { get; set; }
         public string? FamilyDoctorContact { get; set; }
-        public string? MonthlyIncomeRange { get; set; }
+        public long? MonthlyIncomeRange { get; set; }
         public string? HusbandPreviousMemberId { get; set; }
         public string? WifePreviousMemberId { get; set; }
         public DateTime? DeclarationDate { get; set; }
