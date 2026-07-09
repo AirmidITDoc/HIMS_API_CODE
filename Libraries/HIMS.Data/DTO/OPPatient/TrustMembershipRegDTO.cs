@@ -47,6 +47,7 @@ namespace HIMS.Data.DTO.OPPatient
         public string? WifeAadhaar { get; set; }
         public string? WifePAN { get; set; }
         public long? WifeOccupationId { get; set; }
+        public long? HusbandOccupationId { get; set; }
         public string? WifeEducation { get; set; }
         public string? WifeHobbies { get; set; }
         public string? WifeParentsNativePlace { get; set; }
