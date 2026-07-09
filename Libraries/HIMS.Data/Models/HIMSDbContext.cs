@@ -14735,8 +14735,6 @@ namespace HIMS.Data.Models
                     .IsRequired()
                     .HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.MediclaimCompany).HasMaxLength(150);
-
                 entity.Property(e => e.MediclaimEndDate).HasColumnType("datetime");
 
                 entity.Property(e => e.MediclaimIssuanceAmt).HasColumnType("decimal(18, 0)");
@@ -14752,8 +14750,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.MembershipTime).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.MonthlyIncomeRange).HasMaxLength(50);
 
                 entity.Property(e => e.NativePlace).HasMaxLength(100);
 

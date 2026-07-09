@@ -47,6 +47,7 @@ namespace HIMS.Data.DTO.OPPatient
         public string? WifeAadhaar { get; set; }
         public string? WifePAN { get; set; }
         public long? WifeOccupationId { get; set; }
+        public long? HusbandOccupationId { get; set; }
         public string? WifeEducation { get; set; }
         public string? WifeHobbies { get; set; }
         public string? WifeParentsNativePlace { get; set; }
@@ -56,34 +57,33 @@ namespace HIMS.Data.DTO.OPPatient
         public string? ResidenceAddress { get; set; }
         public string? ResidenceType { get; set; }
         public string? NativePlace { get; set; }
-
         public bool? AyushmanEnrolled { get; set; }
         public bool? MaleFemaleEnrolled { get; set; }
         public string? AyushmanSpouseDetails { get; set; }
         public bool? HasMediclaim { get; set; }
-        public string? MediclaimCompany { get; set; }
+        public long? MediclaimCompany { get; set; }
         public string? MediclaimPolicyNumber { get; set; }
         public decimal? MediclaimIssuanceAmt { get; set; }
         public DateTime? MediclaimStartDate { get; set; }
         public DateTime? MediclaimEndDate { get; set; }
         public string? FamilyDoctorName { get; set; }
         public string? FamilyDoctorContact { get; set; }
-        public string? MonthlyIncomeRange { get; set; }
-        public long? HusbandPreviousMemberId { get; set; }
-        public long? WifePreviousMemberId { get; set; }
+        public long? MonthlyIncomeRange { get; set; }
+        public string? HusbandPreviousMemberId { get; set; }
+        public string? WifePreviousMemberId { get; set; }
         public DateTime? DeclarationDate { get; set; }
         public bool? FeeReceived { get; set; }
         public decimal? FeeAmount { get; set; }
         public DateTime? ReceiptDate { get; set; }
         public string? HOcccupation { get; set; }
         public string? Value { get; set; }
-        public decimal? HIncome { get; set; }
+        public string? HIncome { get; set; }
         public string? WifeOccupation { get; set; }
         public string? CompanyName { get; set; }
         public string? HusbandFirstName { get; set; }
         public string? HusbandMiddleName { get; set; }
         public string? HusbandLastName { get; set; }
-        public long CityId { get; set; }
+        public long? CityId { get; set; }
 
 
 

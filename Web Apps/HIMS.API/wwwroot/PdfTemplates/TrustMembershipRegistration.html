@@ -1,0 +1,810 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Membership Registration Form</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #000;
+            margin: 0;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        .page {
+            max-width: 850px;
+            width: 100%;
+            margin: 0 auto;
+            border: 2px solid #4a3f2a;
+            padding: 20px 30px;
+            page-break-after: always;
+            overflow: hidden;
+        }
+
+            .page:last-child {
+                page-break-after: auto;
+            }
+
+        .page-2, .page-3, .page-4 {
+            border-top: none;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            text-align: center;
+            border-bottom: 1px solid #000;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .logo-left, .logo-right {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            text-align: center;
+            border: 1px solid #999;
+            border-radius: 50%;
+            color: #b00;
+        }
+
+        .logo-left {
+            left: 0;
+        }
+
+        .logo-right {
+            right: 0;
+            border-radius: 6px;
+            border: 1px solid #333;
+            color: #000;
+        }
+
+        .title-block h1 {
+            font-size: 18px;
+            margin: 2px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .title-block h2 {
+            font-size: 16px;
+            margin: 2px 0;
+        }
+
+        .managed {
+            color: #c00;
+            font-weight: bold;
+            font-size: 12px;
+            margin: 2px 0;
+        }
+
+        .sub-managed {
+            font-size: 11px;
+            font-weight: bold;
+            margin: 2px 0;
+        }
+
+        .form-title {
+            display: inline-block;
+            margin: 10px auto;
+            padding: 4px 14px;
+            border: 1px solid #c00;
+            color: #c00;
+            font-weight: bold;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .form-title-wrap {
+            text-align: center;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin: 16px 0 8px 0;
+            font-size: 13px;
+        }
+
+        .field-row {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .field-label {
+            white-space: nowrap;
+            margin-right: 6px;
+        }
+
+        .field-line {
+            flex: 1;
+            border-bottom: 1px solid #000;
+            min-height: 14px;
+            min-width: 60px;
+        }
+
+        .dob-row {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .dob-seg {
+            border-bottom: 1px solid #000;
+            display: inline-block;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .age-line {
+            border-bottom: 1px solid #000;
+            display: inline-block;
+            min-width: 70px;
+            margin: 0 4px;
+        }
+
+        .content-wrap {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .left-col {
+            flex: 1 1 300px;
+            min-width: 0;
+        }
+
+        .right-col {
+            width: 100px;
+            flex: 0 0 100px;
+        }
+
+        .photo-box {
+            width: 100px;
+            height: 110px;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-size: 12px;
+            margin-bottom: 46px;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+            .checkbox-row label {
+                margin-right: 4px;
+            }
+
+        .checkbox-box {
+            min-width: 14px;
+            min-height: 14px;
+            width: auto;
+            height: auto;
+            border: 1px solid #000;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1px 2px;
+            font-size: 6px;
+            line-height: 1;
+            white-space: nowrap;
+            margin-right: 18px;
+            vertical-align: middle;
+        }
+
+        .two-field-row {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+            .two-field-row .field-row {
+                flex: 1;
+                margin-bottom: 0;
+                min-width: 260px;
+            }
+
+        .multiline .field-line {
+            margin-bottom: 6px;
+        }
+
+        .position-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px 4px;
+            margin-bottom: 12px;
+        }
+
+            .position-row .field-label {
+                margin-right: 10px;
+                min-width: 155px;
+            }
+
+            .position-row label {
+                margin-right: 2px;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #4a3f2a;
+            padding: 6px 8px;
+            font-size: 12px;
+            text-align: left;
+            height: 22px;
+        }
+
+        th {
+            background-color: #cbbfa8;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        td {
+            height: 24px;
+        }
+
+        .sub-heading {
+            font-weight: bold;
+            margin: 10px 0 6px 0;
+            font-size: 12.5px;
+        }
+
+        .note-line {
+            margin-bottom: 10px;
+        }
+
+        .blank-line {
+            border-bottom: 1px solid #000;
+            height: 14px;
+            margin-bottom: 6px;
+        }
+
+        .gender-header {
+            display: flex;
+            justify-content: space-between;
+            max-width: 520px;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        .yn-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .income-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px 4px;
+            margin-bottom: 14px;
+        }
+
+            .income-row label {
+                margin-right: 14px;
+            }
+
+        .spacer {
+            height: 40px;
+        }
+
+        .note-block {
+            margin-top: 30px;
+        }
+
+        .note-heading {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .note-list {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+            .note-list li {
+                margin-bottom: 6px;
+            }
+
+        .footer-page {
+            text-align: right;
+            font-size: 11px;
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== PAGE 1 ==================== -->
+    <div class="page">
+
+        <div class="header">
+            <div class="logo-left">JAIN<br>SANGH<br>LOGO</div>
+            <div class="title-block">
+                <h1>SHREE THANA VARDHAMAN STHANAKVASI</h1>
+                <h2>JAIN SHRAVAK SANGH</h2>
+                <div class="managed">MANAGED</div>
+                <div class="sub-managed">MATUSHRI DHANUBEN VELJI KARMAN SHAH (NU.TRAMBO) FUSED BLUB (SENIOR CITIZEN CLUB)</div>
+            </div>
+            <div class="logo-right">FUSED<br>BULB</div>
+        </div>
+
+        <div class="form-title-wrap">
+            <div class="form-title">MEMBERSHIP REGISTRATION FORM</div>
+        </div>
+
+        <div class="content-wrap">
+            <div class="left-col">
+
+                <div class="section-title">1. Member Details</div>
+
+                <div class="field-row">
+                    <span class="field-label">Husband Name :</span>
+                    <span class="field-line">{{HusbandName}}</span>
+                </div>
+
+                <div class="field-row">
+                    <span class="field-label">Wife Name :</span>
+                    <span class="field-line">{{WifeName}}</span>
+                </div>
+
+                <div class="field-row">
+                    <span class="field-label">Wife Parental Details:</span>
+                    <span class="field-line">{{WifeParentalDetails}}</span>
+                </div>
+
+                <div class="dob-row">
+                    <span class="field-label">Man/Husband's Date of Birth:</span>
+                    <span class="dob-seg">{{HusbandDOB_DD}}</span> / <span class="dob-seg">{{HusbandDOB_MM}}</span> / <span class="dob-seg" style="min-width:50px;">{{HusbandDOB_YYYY}}</span>
+                    <span class="field-label">Age:</span>
+                    <span class="age-line">{{HusbandAge}}</span> Years
+                </div>
+
+                <div class="dob-row">
+                    <span class="field-label">Woman/Wife's Date of Birth:</span>
+                    <span class="dob-seg">{{WifeDOB_DD}}</span> / <span class="dob-seg">{{WifeDOB_MM}}</span> / <span class="dob-seg" style="min-width:50px;">{{WifeDOB_YYYY}}</span>
+                    <span class="field-label">Age:</span>
+                    <span class="age-line">{{WifeAge}}</span> Years
+                </div>
+
+            </div>
+
+            <div class="right-col">
+                <div class="photo-box">PHOTO</div>
+                <div class="photo-box">PHOTO</div>
+            </div>
+        </div>
+
+        <div class="section-title">2. Marriage Details</div>
+
+        <div class="field-row">
+            <span class="field-label">Man/Husband's Mobile Number:</span>
+            <span class="field-line">{{HusbandMobile}}</span>
+        </div>
+
+        <div class="field-row">
+            <span class="field-label">Man/Husband's Email:</span>
+            <span class="field-line">{{HusbandEmail}}</span>
+        </div>
+
+        <div class="field-row">
+            <span class="field-label">Woman/Wife's Mobile Number:</span>
+            <span class="field-line">{{WifeMobile}}</span>
+        </div>
+
+        <div class="field-row">
+            <span class="field-label">Woman/Wife's Email:</span>
+            <span class="field-line">{{WifeEmail}}</span>
+        </div>
+
+        <div class="section-title">3 Residence and Personal Information</div>
+
+        <div class="field-row multiline">
+            <span class="field-label">Residence Address:</span>
+            <span class="field-line">{{ResidenceAddressLine1}}</span>
+        </div>
+        <div class="field-row multiline">
+            <span class="field-label" style="visibility:hidden;">Residence Address:</span>
+            <span class="field-line">{{ResidenceAddressLine2}}</span>
+        </div>
+
+        <div class="checkbox-row">
+            <span class="field-label">Residence Type:</span>
+            <label>Own</label><span class="checkbox-box">{{chkResidenceOwn}}</span>
+            <label>Rented</label><span class="checkbox-box">{{chkResidenceRented}}</span>
+        </div>
+
+        <div class="two-field-row">
+            <div class="field-row">
+                <span class="field-label">Native Place:</span>
+                <span class="field-line">{{NativePlace}}</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Wife's Parents Native Place:</span>
+                <span class="field-line">{{WifeParentsNativePlace}}</span>
+            </div>
+        </div>
+
+        <div class="section-title">4. Blood Group</div>
+
+        <div class="two-field-row">
+            <div class="field-row">
+                <span class="field-label">Man/Husband's Blood Group:</span>
+                <span class="field-line">{{HusbandBloodGroup}}</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Woman/Wife's Blood Group:</span>
+                <span class="field-line">{{WifeBloodGroup}}</span>
+            </div>
+        </div>
+
+        <div class="section-title">5. Identity Details (Aadhaar &amp; PAN Details)</div>
+
+        <div class="two-field-row">
+            <div class="field-row">
+                <span class="field-label">Man/Husband's Aadhaar Number:</span>
+                <span class="field-line">{{HusbandAadhaar}}</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Man/Husband's PAN Number:</span>
+                <span class="field-line">{{HusbandPAN}}</span>
+            </div>
+        </div>
+
+        <div class="two-field-row">
+            <div class="field-row">
+                <span class="field-label">Woman/Wife's Aadhaar Number:</span>
+                <span class="field-line">{{WifeAadhaar}}</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Woman/Wife's PAN Number:</span>
+                <span class="field-line">{{WifePAN}}</span>
+            </div>
+        </div>
+
+        <div class="footer-page">Page 1 of 4</div>
+
+    </div>
+
+    <!-- ==================== PAGE 2 ==================== -->
+    <div class="page page-2">
+
+        <div class="section-title">6. OCCUPATION AND POSITION</div>
+
+        <div class="position-row">
+            <span class="field-label">Man/Husband's position:</span>
+            <span class="checkbox-box">{{chkHusbandRetired}}</span><label>Retired</label>
+            <span class="checkbox-box">{{chkHusbandBusiness}}</span><label>Business</label>
+            <span class="checkbox-box">{{chkHusbandUnemployed}}</span><label>Unemployed</label>
+            <span class="checkbox-box">{{chkHusbandWidow}}</span><label>Widow</label>
+            <span class="checkbox-box">{{chkHusbandCaretaker}}</span><label>Caretaker</label>
+            <span class="checkbox-box">{{chkHusbandOther}}</span>
+        </div>
+
+        <div class="position-row">
+            <span class="field-label">Woman/Wife's position:</span>
+            <span class="checkbox-box">{{chkWifeRetired}}</span><label>Retired</label>
+            <span class="checkbox-box">{{chkWifeBusiness}}</span><label>Business</label>
+            <span class="checkbox-box">{{chkWifeUnemployed}}</span><label>Unemployed</label>
+            <span class="checkbox-box">{{chkWifeWidow}}</span><label>Widow</label>
+            <span class="checkbox-box">{{chkWifeCaretaker}}</span><label>Caretaker</label>
+            <span class="checkbox-box">{{chkWifeOther}}</span>
+        </div>
+
+        <div class="section-title">7. EDUCATION</div>
+
+        <div class="two-field-row">
+            <div class="field-row">
+                <span class="field-label">Man/Husband's education:</span>
+                <span class="field-line">{{HusbandEducation}}</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Woman/Wife's education:</span>
+                <span class="field-line">{{WifeEducation}}</span>
+            </div>
+        </div>
+
+        <div class="section-title">8. HOBBIES</div>
+
+        <div class="field-row">
+            <span class="field-label">Man/Husband's hobbies:</span>
+            <span class="field-line">{{HusbandHobbies}}</span>
+        </div>
+
+        <div class="field-row">
+            <span class="field-label">Woman/Wife's hobbies:</span>
+            <span class="field-line">{{WifeHobbies}}</span>
+        </div>
+
+        <div class="section-title">9. FAMILY - RELATED INFORMATION</div>
+
+        <div class="sub-heading">- &nbsp;Information about children</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Mobile number</th>
+                    <th>Email address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>{{Child1Name}}</td><td>{{Child1Mobile}}</td><td>{{Child1Email}}</td></tr>
+                <tr><td>{{Child2Name}}</td><td>{{Child2Mobile}}</td><td>{{Child2Email}}</td></tr>
+                <tr><td>{{Child3Name}}</td><td>{{Child3Mobile}}</td><td>{{Child3Email}}</td></tr>
+                <tr><td>{{Child4Name}}</td><td>{{Child4Mobile}}</td><td>{{Child4Email}}</td></tr>
+                <tr><td>{{Child5Name}}</td><td>{{Child5Mobile}}</td><td>{{Child5Email}}</td></tr>
+            </tbody>
+        </table>
+
+        <div class="sub-heading">-&nbsp; Close Relative / Guardian</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Relation</th>
+                    <th>Mobile number</th>
+                    <th>mail address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>{{Relative1Name}}</td><td>{{Relative1Relation}}</td><td>{{Relative1Mobile}}</td><td>{{Relative1Email}}</td></tr>
+                <tr><td>{{Relative2Name}}</td><td>{{Relative2Relation}}</td><td>{{Relative2Mobile}}</td><td>{{Relative2Email}}</td></tr>
+                <tr><td>{{Relative3Name}}</td><td>{{Relative3Relation}}</td><td>{{Relative3Mobile}}</td><td>{{Relative3Email}}</td></tr>
+                <tr><td>{{Relative4Name}}</td><td>{{Relative4Relation}}</td><td>{{Relative4Mobile}}</td><td>{{Relative4Email}}</td></tr>
+            </tbody>
+        </table>
+
+        <div class="sub-heading">- &nbsp;Emergency Contact Of Neighbours</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Mobile number</th>
+                    <th>Email address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>{{Neighbour1Name}}</td><td>{{Neighbour1Mobile}}</td><td>{{Neighbour1Email}}</td></tr>
+                <tr><td>{{Neighbour2Name}}</td><td>{{Neighbour2Mobile}}</td><td>{{Neighbour2Email}}</td></tr>
+                <tr><td>{{Neighbour3Name}}</td><td>{{Neighbour3Mobile}}</td><td>{{Neighbour3Email}}</td></tr>
+                <tr><td>{{Neighbour4Name}}</td><td>{{Neighbour4Mobile}}</td><td>{{Neighbour4Email}}</td></tr>
+            </tbody>
+        </table>
+
+        <div class="footer-page">Page 2 of 4</div>
+
+    </div>
+
+    <!-- ==================== PAGE 3 ==================== -->
+    <div class="page page-3">
+
+        <div class="section-title">10. HEALTH INFORMATION</div>
+
+        <div class="note-line">If You Have Any Breathing Problems Or Allergies To Any Substances, Then The Details</div>
+
+        <div class="field-row">
+            <span class="field-label">Male / Husband Current Medications / Treatment :</span>
+            <span class="field-line">{{HusbandMedications}}</span>
+        </div>
+        <div class="blank-line"></div>
+        <div class="blank-line"></div>
+        <div class="blank-line"></div>
+
+        <div class="field-row">
+            <span class="field-label">Female / Wife Current Medications / Treatment :</span>
+            <span class="field-line">{{WifeMedications}}</span>
+        </div>
+        <div class="blank-line"></div>
+        <div class="blank-line"></div>
+        <div class="blank-line"></div>
+
+        <div class="two-field-row">
+            <div class="field-row" style="flex-direction: column; align-items: stretch;">
+                <span class="field-label">Husband Recent Full Body Check-up:</span>
+                <span style="display:flex; gap:4px; align-items:baseline;">
+                    <span class="dob-seg">{{HusbandCheckupDD}}</span> / <span class="dob-seg">{{HusbandCheckupMM}}</span> / <span class="dob-seg" style="min-width:46px;">{{HusbandCheckupYYYY}}</span>
+                </span>
+            </div>
+            <div class="field-row" style="flex-direction: column; align-items: stretch;">
+                <span class="field-label">Wife Recent Full Body Check-up:</span>
+                <span style="display:flex; gap:4px; align-items:baseline;">
+                    <span class="dob-seg">{{WifeCheckupDD}}</span> / <span class="dob-seg">{{WifeCheckupMM}}</span> / <span class="dob-seg" style="min-width:46px;">{{WifeCheckupYYYY}}</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="section-title">11. AYUSHMAN BHARAT SCHEME</div>
+
+        <div class="note-line">Are You Enrolled In The Ayushman Bharat Scheme?</div>
+
+        <div class="gender-header">
+            <span>&nbsp;</span>
+            <span>Male /</span>
+            <span>Female /</span>
+        </div>
+
+        <div class="yn-row">
+            <span class="field-label">No</span><span class="checkbox-box">{{chkAyushmanNo}}</span>
+            <span class="field-label">Yes</span><span class="checkbox-box">{{chkAyushmanYes}}</span>
+            <span class="field-label">Then Spouse Details:</span>
+            <span class="field-line" style="min-width:200px;">{{AyushmanCardNumber}}</span>
+            <span class="field-label">Spouse:</span>
+            <span class="field-line" style="min-width:150px;">{{AyushmanSpouseCardNumber}}</span>
+        </div>
+
+        <div class="section-title">12. MEDICAL INSURANCE / MEDICLAIM DETAILS</div>
+
+        <div class="note-line">Do you have a Mediclaim Policy?</div>
+
+        <div class="yn-row">
+            <span class="field-label">No</span><span class="checkbox-box">{{chkMediclaimNo}}</span>
+            <span class="field-label">Yes</span><span class="checkbox-box">{{chkMediclaimYes}}</span>
+        </div>
+
+        <div class="note-line">then details:</div>
+
+        <div class="two-field-row">
+            <div class="field-row">
+                <span class="field-label">Company Name:</span>
+                <span class="field-line">{{MediclaimCompanyName}}</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Policy Number:</span>
+                <span class="field-line">{{MediclaimPolicyNumber}}</span>
+            </div>
+        </div>
+
+        <div class="two-field-row">
+            <div class="field-row">
+                <span class="field-label">Issuance:</span>
+                <span class="field-line">{{MediclaimIssuance}}</span>
+            </div>
+            <div class="dob-row">
+                <span class="field-label">Start:</span>
+                <span class="dob-seg">{{MediclaimStartDD}}</span> / <span class="dob-seg">{{MediclaimStartMM}}</span> / <span class="dob-seg" style="min-width:46px;">{{MediclaimStartYYYY}}</span>
+                <span class="field-label" style="margin-left:14px;">End:</span>
+                <span class="dob-seg">{{MediclaimEndDD}}</span> / <span class="dob-seg">{{MediclaimEndMM}}</span> / <span class="dob-seg" style="min-width:46px;">{{MediclaimEndYYYY}}</span>
+            </div>
+        </div>
+
+        <div class="section-title">13. FAMILY DOCTOR DETAILS</div>
+
+        <div class="two-field-row">
+            <div class="field-row">
+                <span class="field-label">Doctor's Name:</span>
+                <span class="field-line">{{FamilyDoctorName}}</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Contact Number:</span>
+                <span class="field-line">{{FamilyDoctorContact}}</span>
+            </div>
+        </div>
+
+        <div class="section-title">14. Income Information</div>
+
+        <div class="note-line">Monthly Income (Approx.):</div>
+
+        <div class="income-row">
+            <span class="checkbox-box">{{chkIncome0to6L}}</span><label>₹0- ₹6,00,000</label>
+            <span class="checkbox-box">{{chkIncome6to12L}}</span><label>₹6,00,001 - ₹12,00,000</label>
+            <span class="checkbox-box">{{chkIncome12to18L}}</span><label>₹12,00,001 - ₹18,00,000</label>
+            <span class="checkbox-box">{{chkIncomeAbove18L}}</span><label>₹18,00,000 And Above</label>
+        </div>
+
+        <div class="section-title">15. Member Status Past</div>
+
+        <div class="note-line">Man / Husband Shree Thana Sangh Member Id Number: {{HusbandOldMemberID}}</div>
+        <div class="note-line">Female / Wife Shree Thana Sangh Member Id Number: {{WifeOldMemberID}}</div>
+        <div class="note-line">Member Fees ₹ 1000 Per Person (valid For 5 Years)</div>
+
+        <div class="footer-page">Page 3 of 4</div>
+
+    </div>
+
+    <!-- ==================== PAGE 4 ==================== -->
+    <div class="page page-4">
+
+        <div class="section-title">15. Declamation</div>
+
+        <div class="note-line">
+            Certify That The Information Given Above Is Correct To The Best Of My Knowledge And Will Abide
+            By The Rules Of The Club.
+        </div>
+
+        <div class="field-row">
+            <span class="field-label">Male/Husband Signature:</span>
+            <span class="field-line"></span>
+        </div>
+
+        <div class="field-row">
+            <span class="field-label">Female/Wife Signature:</span>
+            <span class="field-line"></span>
+        </div>
+
+        <div class="dob-row">
+            <span class="field-label">Date:</span>
+            <span class="dob-seg">{{DeclarationDateDD}}</span> / <span class="dob-seg">{{DeclarationDateMM}}</span> / <span class="dob-seg" style="min-width:60px;">{{DeclarationDateYYYY}}</span>
+        </div>
+
+        <div class="section-title">17. For Office Use</div>
+
+        <div class="field-row">
+            <span class="field-label">Membership No:.</span>
+            <span class="field-line">{{MembershipNo}}</span>
+        </div>
+
+        <div class="dob-row">
+            <span class="field-label">Date Of Receipt Of Form:.</span>
+            <span class="dob-seg">{{ReceiptDateDD}}</span> / <span class="dob-seg">{{ReceiptDateMM}}</span> / <span class="dob-seg" style="min-width:60px;">{{ReceiptDateYYYY}}</span>
+        </div>
+
+        <div class="yn-row">
+            <span class="field-label">Fee Received</span>
+            <span class="checkbox-box">{{chkFeeReceivedYes}}</span><label>Yes</label>
+            <span class="checkbox-box">{{chkFeeReceivedNo}}</span><label>No</label>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="field-row">
+            <span class="field-label">Sign. (Trustee/ Officer):</span>
+            <span class="field-line"></span>
+        </div>
+
+        <div class="note-block">
+            <div class="note-heading">Note</div>
+            <ol class="note-list">
+                <li>Either husband or wife must be 60 years of age or above</li>
+                <li>Membership fee is valid for 5 years</li>
+                <li>Fuzed Blub Club rules may change from time to time</li>
+                <li>Attach husband and wife photo</li>
+            </ol>
+        </div>
+
+        <div class="footer-page">Page 4 of 4</div>
+
+    </div>
+
+</body>
+</html>
