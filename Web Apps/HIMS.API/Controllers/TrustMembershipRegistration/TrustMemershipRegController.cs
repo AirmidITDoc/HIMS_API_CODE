@@ -60,6 +60,8 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
         public async Task<ApiResponse> Insert(TrustMembershipRegModel obj)
         {
             TMembershipRegistration model = obj.MapTo<TMembershipRegistration>();
+            model.IsActive = true;
+
             if (obj.MembershipId == 0)
             {
                 foreach (var q in model.TMembershipChildren)
@@ -97,15 +99,17 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.MembershipId);
         }
+       
         [HttpPut("Edit/{id:int}")]
-        //[Permission]
         public async Task<ApiResponse> Edit(TrustMembershipRegModel obj)
         {
-            TMembershipRegistration model = obj.MapTo<TMembershipRegistration>();
-            if (obj.MembershipId == 0)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            else
+            try
             {
+                TMembershipRegistration model = obj.MapTo<TMembershipRegistration>();
+                model.IsActive = true;
+
+                if (obj.MembershipId == 0) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError,  "Invalid params");
+
                 foreach (var q in model.TMembershipChildren)
                 {
                     if (q.ChildId == 0)
@@ -113,9 +117,12 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
                         q.CreatedBy = CurrentUserId;
                         q.CreatedDate = AppTime.Now;
                     }
+
                     q.ModifiedBy = CurrentUserId;
                     q.ModifiedDate = AppTime.Now;
-                    q.ChildId = 0;
+
+                    // Remove this line if you are updating an existing record.            
+                    // q.ChildId = 0;
                 }
 
                 foreach (var v in model.TMembershipEmrgencies)
@@ -125,10 +132,12 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
                         v.CreatedBy = CurrentUserId;
                         v.CreatedDate = AppTime.Now;
                     }
+
                     v.ModifiedBy = CurrentUserId;
                     v.ModifiedDate = AppTime.Now;
-                    v.EmrgencyId = 0;
+
                 }
+
                 foreach (var v in model.TMembershipRelatives)
                 {
                     if (v.RelativeId == 0)
@@ -136,16 +145,26 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
                         v.CreatedBy = CurrentUserId;
                         v.CreatedDate = AppTime.Now;
                     }
+
                     v.ModifiedBy = CurrentUserId;
                     v.ModifiedDate = AppTime.Now;
-                    v.RelativeId = 0;
-                }
-                model.ModifiedDate = AppTime.Now;
-                model.ModifiedBy = CurrentUserId;
-                await _ITrustMembershipRegService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
 
+                  
+                }
+
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+
+                await _ITrustMembershipRegService.UpdateAsync( model, CurrentUserId, CurrentUserName, new string[] { "CreatedBy", "CreatedDate" });
+
+                return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK,   "Record updated successfully.",   model.MembershipId);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.MembershipId);
+            catch (Exception ex)
+            {
+                var error = ex.InnerException != null  ? ex.InnerException.Message  : ex.Message;
+
+                return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status500InternalServerError, error);
+            }
         }
         //Delete API
         [HttpDelete]
