@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Laboratory Report</title>
+</head>
+
+<body style="margin: 0; height: 100%; font-family: Verdana, Arial, sans-serif; color: #000; display: flex; flex-direction: column; min-height: 100vh; margin-left: 12px;">
+    <div style="flex: 1; padding: 10px; box-sizing: border-box; margin-left: 12px;">
+        <table style="width:100%; border-collapse:collapse; font-size:12px;">
+            <tr>
+                <td style="padding-top:80px;"></td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="width:100%; border-collapse:collapse;">
+                        <tr>
+                            <td style="font-weight:bold; font-size:12px; text-align:left;">
+                                Laboratory Report
+                            </td>
+                            <td style="font-weight:bold; font-size:12px; text-align:right;">
+                                Print Date : {{CurrentDate}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-top:5px;">
+                    <table style="width:100%; border-collapse:collapse; border-top:1px solid #000; border-bottom:1px solid #000;">
+                        <tr>
+                            <td style="width:78%; vertical-align:top;">
+                                <table style="width:100%; border-collapse:collapse;" cellpadding="4">
+                                    <tr>
+                                        <td style="font-size:12px; font-weight:normal;">UHID</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{RegNo}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal;">REGISTERED ON</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{PathTime}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:12px; font-weight:normal;">PATIENT NAME</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{PatientName}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal;">COLLECTED ON</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{SampleCollectionTime}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:12px; font-weight:normal;">AGE</td>
+                                        <td style="font-size:12px; font-weight:normal;">: {{AgeYear}} Years</td>
+                                        <td style="font-size:12px; font-weight:normal;">REPORTED ON</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{ReportTime}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:12px; font-weight:normal;">SEX</td>
+                                        <td style="font-size:12px; font-weight:normal;">: {{GenderName}}</td>
+                                        <td style="font-size:12px; font-weight:normal;">SAMPLE NO</td>
+                                        <td style="font-size:12px; font-weight:normal;">: {{SampleNo}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:12px; font-weight:normal;">NATIONAL ID</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{AdharCardNo}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal;">REFERRED BY</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{ConsultantDocName}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:12px; font-weight:normal;">OP/IP NO</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{OP_IP_Number}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal;">REPORT STATUS</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>Final</strong></td>
+                                    </tr>
+                                    <tr style="display:{{chkRoomNameflag}};">
+                                        <td style="font-size:12px; font-weight:normal;">ROOM/WARD </td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{RoomName}}</strong></td>
+                                        <td style="font-size:12px; font-weight:normal;">BED NAME</td>
+                                        <td style="font-size:12px; font-weight:normal;">: <strong>{{BedName}}</strong></td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td style="width:22%; text-align:center; vertical-align:top;">
+                                <!-- QR CODE -->
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{RegNo}}"
+                                     alt="QR Code"
+                                     style="width:80px; height:80px; margin:8px auto 4px; display:block; image-rendering:pixelated;" />
+
+                                <!-- BARCODE -->
+                                <img src="https://barcode.tec-it.com/barcode.ashx?data={{RegNo}}&code=Code128&dpi=300&modulewidth=0.4&imagetype=png&showtext=true"
+                                     alt="Barcode"
+                                     style="width:150px; height:30px; display:block; margin:6px auto 0; image-rendering:crisp-edges;" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <table style="width:100%; border-collapse:separate; border-spacing:0; margin-top:5px;">
+                        <tr>
+                            <td style="width: 25%; padding: 6px; font-size: 12px; font-weight: bold; border-top: 1px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-top-left-radius: 30px; border-bottom-left-radius: 30px; background: #f0f0f0;">
+                                Test
+                            </td>
+                            <td style="width: 25%; padding: 6px; font-size: 12px; font-weight: bold; text-align: center; border-top: 1px solid #000; border-bottom: 1px solid #000; background: #f0f0f0; ">
+                                Observed Value
+                            </td>
+                            <td style="width: 30%; padding: 6px; font-size: 12px; font-weight: bold; border-top: 1px solid #000; border-bottom: 1px solid #000; background: #f0f0f0;">
+                                Biological Reference Interval
+                            </td>
+                            <td style="width: 20%; padding: 6px; font-size: 12px; font-weight: bold; border-top: 1px solid #000; border-bottom: 1px solid #000; border-right: 1px solid #000; border-top-right-radius: 30px; border-bottom-right-radius: 30px; background: #f0f0f0;">
+                                Units
+                            </td>
+                        </tr>
+
+                        <!-- ── ITEMS_SP1 template row (one per result row from SP) ── -->
+                        <tbody id="labRows">
+                            <!--ITEMS_SP1-->
+                            <tr class="lab-data-row"
+                                data-testname="{{PrintTestName}}"
+                                data-subtest="{{SubTestName}}"
+                                data-result="{{ResultValue}}"
+                                data-range="{{NormalRange}}"
+                                data-unit="{{UnitNamePathTran}}"
+                                data-isbold="{{IsBoldFlag}}"
+                                data-parabold="{{ParaBoldFlag}}"
+                                data-method="{{MethodName}}"
+                                data-font="{{FontFlag}}"
+                                data-param="{{PrintParameterName}}"
+                                style="display:none;">
+                                <!-- cells built by JS -->
+                            </tr>
+                            <!--/ITEMS_SP1-->
+                        </tbody>
+
+                    </table>
+                </td>
+            </tr>
+
+            <tr style="display: {{chkSuggestionNote}};">
+                <td colspan="4" style="padding:3px;">
+                    <div style="font-size:12px; font-weight:bold; margin-bottom:2px;">
+                        Interpretation Remark :
+                    </div>
+                    <pre style="margin:0; font-family: Verdana, Arial, sans-serif; font-size:9px; font-weight:400; white-space:pre-wrap;">{{SuggestionNote}}</pre>
+                </td>
+            </tr>
+
+        </table>
+
+        <table style="width: 100%; margin-top: 20px; border-top: 1px solid #000;">
+            <tr>
+                <td style="text-align:center; font-size:12px;">
+                    **End Of Report**
+                </td>
+            </tr>
+        </table>
+
+        <table style="width:30%; margin-top:15px;">
+            <tr>
+                <td style="text-align: left; padding-left: 30px;">
+                    <img src="{{SignatureImg}}" width="150" height="70" style="display:{{chkSignatureImgFlag}};" />
+                    <div style="font-size:12px; font-weight:bold;">{{PathResultDr1}}</div>
+                    <div style="font-size:12px; font-weight:bold;">{{Education}}</div>
+                    <div style="font-size:12px; font-weight:bold;">{{MahRegNo}}</div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+
+    <script>
+        window.onload = function () {
+
+            var tbody = document.getElementById('labRows');
+            var rows = tbody.querySelectorAll('tr.lab-data-row');
+            if (rows.length === 0) return;
+
+            // FontFlag "1" = small (12px headers, 12px rows), else large (18px headers, 16px rows)
+            var isSmall = (rows[0].getAttribute('data-font') === '1');
+            var szHeader = isSmall ? '14px' : '18px';   // test name header
+            var szSubHeader = isSmall ? '12px' : '16px';   // sub-test header
+            var szCell = isSmall ? '12px' : '16px';   // data cells
+
+            var prevTest = '', prevSub = '';
+
+            for (var i = 0; i < rows.length; i++) {
+                var r = rows[i];
+                var testName = r.getAttribute('data-testname') || '';
+                var subTest = r.getAttribute('data-subtest') || '';
+                var result = r.getAttribute('data-result') || '';
+                var range = r.getAttribute('data-range') || '';
+                var unit = r.getAttribute('data-unit') || '';
+                var isBold = r.getAttribute('data-isbold') || '';
+                var paraBold = r.getAttribute('data-parabold') || '';
+                var method = r.getAttribute('data-method') || '';
+
+                // ── TEST NAME HEADER (when test changes) ──
+                if (testName !== prevTest) {
+                    var th = document.createElement('tr');
+                    th.style.cssText = 'font-size:' + szHeader + ';font-family:Verdana,Arial,sans-serif;color:#000;font-weight:bold;';
+                    th.innerHTML = '<td colspan="4" style="padding:6px;text-align:left;">'
+                        + '<span style="border-bottom:2px solid #000;">' + testName + '</span></td>';
+                    tbody.insertBefore(th, r);
+                    prevSub = '';   // reset sub-test on every new test
+                }
+
+                // ── SKIP rows with no result value ──
+                if (result.trim() === '') { prevTest = testName; continue; }
+
+                // ── SUB-TEST HEADER (when sub-test changes) ──
+                if (subTest !== '' && subTest !== prevSub) {
+                    var sh = document.createElement('tr');
+                    sh.style.cssText = 'font-size:' + szSubHeader + ';font-family:Verdana,Arial,sans-serif;font-weight:bold;';
+                    sh.innerHTML = '<td colspan="4" style="padding:5px;text-align:left;">' + subTest + '</td>';
+                    tbody.insertBefore(sh, r);
+                    prevSub = subTest;
+                }
+
+                // ── ARROW LOGIC (high / low) ──
+                var arrow = '';
+                var num = parseFloat(result);
+                if (!isNaN(num) && range !== '') {
+                    var nums = range.match(/\d+(\.\d+)?/g);
+                    if (nums && nums.length >= 2) {
+                        var lo = parseFloat(nums[0]), hi = parseFloat(nums[1]);
+                        if (num > hi) arrow = 'high';
+                        else if (num < lo) arrow = 'low';
+                    }
+                }
+
+                // ── BUILD DATA ROW ──
+                r.style.display = '';   // make visible
+
+                // Cell 1: Parameter name (+ optional method)
+                var paramStyle = 'font-size:' + szCell + ';padding:5px;text-align:left;' + (isBold === 'B' ? 'font-weight:bold;' : '');
+                var paramName = r.getAttribute('data-param') || '';
+                var cell1 = '<td style="' + paramStyle + '">' + paramName;
+                if (method !== '') cell1 += '<br/><span style="font-size:10px;font-style:italic;color:#555;">' + method + '</span>';
+                cell1 += '</td>';
+
+                // Cell 2: Observed value with arrow
+                var valStyle = 'font-size:' + szCell + ';padding:6px;text-align:center;' + (paraBold === 'B' ? 'font-weight:bold;' : '');
+                var valHtml;
+                if (arrow === 'low') {
+                    valHtml = '<span style="color:blue;font-weight:bold;font-size:' + szCell + ';">&#8595;</span> ' + result;
+                } else if (arrow === 'high') {
+                    valHtml = result + ' <span style="color:red;font-weight:bold;font-size:' + szCell + ';">&#8593;</span>';
+                } else {
+                    valHtml = result;
+                }
+                var cell2 = '<td style="' + valStyle + '">' + valHtml + '</td>';
+
+                // Cell 3: Reference range
+                var cell3 = '<td style="font-size:' + szCell + ';padding:6px;text-align:left;">' + range + '</td>';
+
+                // Cell 4: Units
+                var cell4 = '<td style="font-size:' + szCell + ';padding:6px;text-align:left;">' + unit + '</td>';
+
+                r.innerHTML = cell1 + cell2 + cell3 + cell4;
+
+                prevTest = testName;
+            }
+        };
+    </script>
+
+</body>
+</html>
