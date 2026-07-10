@@ -34,33 +34,34 @@ namespace HIMS.Services.TrustMembershipRegistration
         }
 
 
+      
         public virtual async Task InsertAsync(TMembershipRegistration ObjTMembershipRegistration, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope( TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted}, TransactionScopeAsyncFlowOption.Enabled);
 
-            {
-                var lastSeqNoStr = await _context.TMembershipRegistrations
-                    .OrderByDescending(x => x.MembershipNo)
-                    .Select(x => x.MembershipNo)
-                    .FirstOrDefaultAsync();
+            var membershipNos = await _context.TMembershipRegistrations
+                .Select(x => x.MembershipNo)
+                .ToListAsync();
 
-                int lastSeqNo = 0;
-                if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
-                    lastSeqNo = parsed;
+            int lastSeqNo = membershipNos
+                .Where(x => !string.IsNullOrWhiteSpace(x) && int.TryParse(x, out _))
+                .Select(x => int.Parse(x))
+                .DefaultIfEmpty(0)
+                .Max();
 
-                // Increment the sequence number
-                int newSeqNo = lastSeqNo + 1;
-                ObjTMembershipRegistration.MembershipNo = newSeqNo.ToString();
+            // Generate next Membership Number
+            ObjTMembershipRegistration.MembershipNo = (lastSeqNo + 1).ToString();
 
+            ObjTMembershipRegistration.CreatedBy = UserId;
+            ObjTMembershipRegistration.CreatedDate = AppTime.Now;
 
-                ObjTMembershipRegistration.CreatedBy = UserId;
-                ObjTMembershipRegistration.CreatedDate = AppTime.Now;
+            Console.WriteLine("Generated MembershipNo : " + ObjTMembershipRegistration.MembershipNo);
 
-                _context.TMembershipRegistrations.Add(ObjTMembershipRegistration);
-                await _context.SaveChangesAsync();
+            _context.TMembershipRegistrations.Add(ObjTMembershipRegistration);
 
-                scope.Complete();
-            }
+            await _context.SaveChangesAsync();
+
+            scope.Complete();
         }
         public virtual async Task UpdateAsync(TMembershipRegistration ObjTMembershipRegistration, int UserId, string Username, string[]? ignoreColumns = null)
         {

@@ -84,6 +84,8 @@ namespace HIMS.Data.DTO.OPPatient
         public string? HusbandMiddleName { get; set; }
         public string? HusbandLastName { get; set; }
         public long? CityId { get; set; }
+        public DateTime? MembershipvalidDate { get; set; }
+
 
 
 

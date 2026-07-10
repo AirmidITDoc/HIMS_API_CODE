@@ -75,6 +75,8 @@ namespace HIMS.API.Models.TrustMembershipRegistration
         public bool? FeeReceived { get; set; }
         public decimal? FeeAmount { get; set; }
         public DateTime? ReceiptDate { get; set; }
+        public DateTime? MembershipvalidDate { get; set; }
+
         public List<MembershipChildModel> TMembershipChildren { get; set; }
         public List<MembershipEmrgencyModel> TMembershipEmrgencies { get; set; }
         public List<MembershipRelativeModel> TMembershipRelatives { get; set; }
