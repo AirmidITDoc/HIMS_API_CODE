@@ -792,17 +792,16 @@
 
 
         <!--FIX: SP column HasMediclaim (bit), MediclaimCompany -> CompanyName (join se aata hai)-->
-        <div class="section-title">12. MEDICAL INSURANCE / MEDICLAIM DETAILS</div>
+        <!--<div class="section-title">12. MEDICAL INSURANCE / MEDICLAIM DETAILS</div>
 
-        <div class="note-line">Do you have a Mediclaim Policy?</div>
+    <div class="note-line">Do you have a Mediclaim Policy?</div>
 
-        <div class="yn-row">
-            <span class="field-label">No</span><span class="chk-box chk-{{HasMediclaimNo}}"></span>
-            <span class="field-label">Yes</span><span class="chk-box chk-{{HasMediclaimYes}}"></span>
-        </div>
+    <div class="yn-row">
+        <span class="field-label">No</span><span class="chk-box chk-{{HasMediclaimNo}}"></span>
+        <span class="field-label">Yes</span><span class="chk-box chk-{{HasMediclaimYes}}"></span>
+    </div>
 
-        <div class="note-line">then details:</div>
-
+    <div class="note-line">then details:</div>-->
         <!--<div class="two-field-row">
         <div class="field-row">
             <span class="field-label">Company Name:</span>
@@ -823,28 +822,65 @@
             <span class="dob-seg">{{MediclaimEndDate}}</span>
         </div>
     </div>-->
-        <div class="two-field-row">
-            <div class="field-row">
-                <span class="field-label">Company Name:</span>
-                <span class="field-line">{{MediclaimCompany}}</span>
+        <!--<div class="two-field-row">
+        <div class="field-row">
+            <span class="field-label">Company Name:</span>
+            <span class="field-line">{{MediclaimCompany}}</span>
 
-                <span class="field-label" style="margin-left:20px;">Policy Number:</span>
-                <span class="field-line">{{MediclaimPolicyNumber}}</span>
-            </div>
+            <span class="field-label" style="margin-left:20px;">Policy Number:</span>
+            <span class="field-line">{{MediclaimPolicyNumber}}</span>
         </div>
+    </div>
 
-        <div class="two-field-row">
-            <div class="field-row">
-                <span class="field-label">Issuance:</span>
-                <span class="field-line">{{MediclaimIssuanceAmt}}</span>
+    <div class="two-field-row">
+        <div class="field-row">
+            <span class="field-label">Issuance:</span>
+            <span class="field-line">{{MediclaimIssuanceAmt}}</span>
 
-                <span class="field-label" style="margin-left:20px;">Start:</span>
-                <span class="dob-seg">{{MediclaimStartDate}}</span>
+            <span class="field-label" style="margin-left:20px;">Start:</span>
+            <span class="dob-seg">{{MediclaimStartDate}}</span>
 
-                <span class="field-label" style="margin-left:20px;">End:</span>
-                <span class="dob-seg">{{MediclaimEndDate}}</span>
-            </div>
+            <span class="field-label" style="margin-left:20px;">End:</span>
+            <span class="dob-seg">{{MediclaimEndDate}}</span>
         </div>
+    </div>-->
+    <table style="page-break-inside:avoid; border:none; margin-bottom:22px;">
+        <tr>
+            <td style="border:none; padding:0;">
+
+                <div class="section-title">12. MEDICAL INSURANCE / MEDICLAIM DETAILS</div>
+
+                <div class="note-line">Do you have a Mediclaim Policy?</div>
+
+                <div class="yn-row">
+                    <span class="field-label">No</span><span class="chk-box chk-{{HasMediclaimNo}}"></span>
+                    <span class="field-label">Yes</span><span class="chk-box chk-{{HasMediclaimYes}}"></span>
+                </div>
+
+                <div class="note-line">then details:</div>
+
+                <div class="field-row">
+                    <span class="field-label">Company Name:</span>
+                    <span class="field-line">{{MediclaimCompany}}</span>
+                    <span class="field-label" style="margin-left:20px;">Policy Number:</span>
+                    <span class="field-line">{{MediclaimPolicyNumber}}</span>
+                </div>
+
+                <div class="field-row">
+                    <span class="field-label">Issuance:</span>
+                    <span class="field-line">{{MediclaimIssuanceAmt}}</span>
+
+                    <span class="field-label" style="margin-left:20px;">Start:</span>
+                    <span class="dob-seg" style="min-width:26px;">{{MediclaimStartDate}}</span>&nbsp;/&nbsp;
+
+                    <span class="field-label" style="margin-left:20px;">End:</span>
+                    <span class="dob-seg" style="min-width:26px;">{{MediclaimEndDate}}</span>&nbsp;/&nbsp;
+
+                </div>
+
+            </td>
+        </tr>
+    </table>
 
         <div class="section-title">13. FAMILY DOCTOR DETAILS</div>
 
