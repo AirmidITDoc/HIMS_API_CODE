@@ -14,9 +14,20 @@
     <!-- PAGE 1 -->
     <div style="max-width:850px; margin:0 auto 20px; background:#fff; padding:18px 22px">
         <div style="text-align:center; border-bottom:2px solid #000; padding-bottom:8px; margin-bottom:10px; position:relative" align="center">
-            <div style="position:absolute; left:0; top:0; padding:4px 10px; font-size:11px; font-weight:bold; text-align:center" align="center">
-                <div>Admission ID No.</div>
-                <div style="font-size:14px">{{AdmissionID}}</div>
+            <div style="position:absolute;
+            left:10px;
+            top:12px;
+            width:110px;
+            border:1px solid #000;
+            border-radius:5px;
+            text-align:center;
+            padding:4px;">
+
+                <div style="font-size:11px;font-weight:bold;">Admission No.</div>
+                <div style="font-size:15px;font-weight:bold;color:#1a3fa0;">
+                    {{AdmissionID}}
+                </div>
+
             </div>
             <h1 style="color:#1a3fa0; font-weight:bold; font-size:22px; margin:0">MAM's Sumatibhai Shah Ayurved Mahavidyalay's</h1>
             <div style="font-size:18px; margin:2px 0">Ayurved Hospital -</div>
@@ -36,72 +47,72 @@
 
         <table style="width:100%; border-collapse:collapse" width="100%">
             <tr>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top; width:18%" valign="top" width="18%">Name of Patient :</td>
-                <td colspan="2" style="color:#1a3fa0; font-weight:bold; padding:5px 7px; vertical-align:top" valign="top">{{PatientName}}</td>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top; width:10%" valign="top" width="10%">Age :</td>
-                <td style="min-width:120px; padding:5px 7px; vertical-align:top" valign="top">{{Age}} Yr {{AgeMonth}} M. {{AgeDay}} Days</td>
+                <td style="font-size: 18px;font-weight:bold; white-space: nowrap; padding: 5px 7px; vertical-align: top; width: 18%" valign="top" width="18%">Name of Patient :</td>
+                <td colspan="2" style="font-size: 18px; color: #1a3fa0; font-weight: bold; padding: 5px 7px; vertical-align: top" valign="top">{{PatientName}}</td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top; width: 10%" valign="top" width="10%">Age :</td>
+                <td style="font-size: 18px; min-width: 120px; padding: 5px 7px; vertical-align: top" valign="top">{{Age}} Yr {{AgeMonth}} M. {{AgeDay}} Days</td>
             </tr>
             <tr>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Sex :</td>
-                <td colspan="2" style="padding:5px 7px; vertical-align:top" valign="top">{{GenderName}}</td>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Occupation</td>
-                <td style="padding:5px 7px; vertical-align:top" valign="top">{{Occupation}}</td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Sex :</td>
+                <td colspan="2" style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top">{{GenderName}}</td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Occupation</td>
+                <td style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top">{{Occupation}}</td>
             </tr>
             <tr>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Education :</td>
-                <td colspan="4" style="padding:5px 7px; vertical-align:top" valign="top">{{Education}}</td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Education :</td>
+                <td colspan="4" style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top">{{Education}}</td>
             </tr>
             <tr>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Address :</td>
-                <td colspan="2" style="padding:5px 7px; vertical-align:top" valign="top">{{Address}}, {{City}}</td>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Patient Mob. No. :</td>
-                <td style="padding:5px 7px; vertical-align:top" valign="top">{{MobileNo}}</td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Address :</td>
+                <td colspan="2" style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top">{{Address}}, {{City}}</td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Patient Mob. No. :</td>
+                <td style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top">{{MobileNo}}</td>
             </tr>
             <tr>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Name Husband/<br>Wife/ Father :</td>
-                <td colspan="2" style="padding:5px 7px; vertical-align:top" valign="top">{{RelativeName}}</td>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Relative Mob No :</td>
-                <td style="padding:5px 7px; vertical-align:top" valign="top">{{RelativePhoneNo}}</td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Name Husband/<br>Wife/ Father :</td>
+                <td colspan="2" style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top">{{RelativeName}}</td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Relative Mob No :</td>
+                <td style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top">{{RelativePhoneNo}}</td>
             </tr>
             <tr>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Patient Admitted By :</td>
-                <td colspan="2" style="padding:5px 7px; vertical-align:top" valign="top">{{RelativeName}}</td>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Signature of<br>Admitting Person :</td>
-                <td style="padding:5px 7px; vertical-align:top" valign="top"><span style="color:#999; font-style:italic; font-weight:normal"></span></td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Patient Admitted By :</td>
+                <td colspan="2" style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top">{{RelativeName}}</td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Signature of<br>Admitting Person :</td>
+                <td style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top"><span style="color:#999; font-style:italic; font-weight:normal"></span></td>
             </tr>
             <tr>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Relation With Patient :</td>
-                <td colspan="2" style="padding:5px 7px; vertical-align:top" valign="top">{{RelationshipName}}</td>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Doctor's Name :</td>
-                <td style="padding:5px 7px; vertical-align:top" valign="top">{{AdmittedDoctorName}}</td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Relation With Patient :</td>
+                <td colspan="2" style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top">{{RelationshipName}}</td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Doctor's Name :</td>
+                <td style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top">{{AdmittedDoctorName}}</td>
             </tr>
             <tr>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Sister's/Clerk Name :</td>
-                <td colspan="2" style="padding:5px 7px; vertical-align:top" valign="top">{{LoginUserName}} {{LoginUserSurname}}</td>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Discharge Date :</td>
-                <td style="padding:5px 7px; vertical-align:top" valign="top"><span style="color:#999; font-style:italic; font-weight:normal">{{DischargeDate}}</span></td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Sister's/Clerk Name :</td>
+                <td colspan="2" style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top">{{LoginUserName}} {{LoginUserSurname}}</td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Discharge Date :</td>
+                <td style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top"><span style="color:#999; font-style:italic; font-weight:normal">{{DischargeDate}}</span></td>
             </tr>
             <tr>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Admission Date :</td>
-                <td style="padding:5px 7px; vertical-align:top" valign="top">{{DOA}}</td>
-                <td style="padding:5px 7px; vertical-align:top" valign="top"><b>Time :</b> {{DOT}}</td>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Advance Amount (Rs.) :</td>
-                <td style="padding:5px 7px; vertical-align:top" valign="top">{{AdvanceAmount}}</td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Admission Date :</td>
+                <td style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top">{{DOA}}</td>
+                <td style="font-size: 16px; padding: 5px 7px; vertical-align: top" valign="top"><b>Time:</b> {{DOT}}</td>
+                <td style="font-weight: bold; font-size: 18px; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Advance Amount (Rs.) :</td>
+                <td style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top">{{AdvanceAmount}}</td>
             </tr>
             <tr>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Condition on Discharge :</td>
-                <td colspan="4" style="padding:5px 7px; vertical-align:top" valign="top">Cured / Improved / On Request / DAMA / Expired / Name of Hospital Where Shifted.</td>
+                <td style="font-size: 18px; font-weight: bold; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Condition on Discharge :</td>
+                <td colspan="4" style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top">Cured / Improved / On Request / DAMA / Expired / Name of Hospital Where Shifted.</td>
             </tr>
             <tr>
-                <td style="font-weight:bold; white-space:nowrap; padding:5px 7px; vertical-align:top" valign="top">Remark, If Any, on Discharge :</td>
-                <td colspan="4" style="padding:5px 7px; vertical-align:top" valign="top"><span style="color:#999; font-style:italic; font-weight:normal">{{DischargeRemark}}</span></td>
+                <td style="font-weight: bold; font-size: 18px; white-space: nowrap; padding: 5px 7px; vertical-align: top" valign="top">Remark, If Any, on Discharge :</td>
+                <td colspan="4" style="font-size: 18px; padding: 5px 7px; vertical-align: top" valign="top"><span style="color:#999; font-style:italic; font-weight:normal">{{DischargeRemark}}</span></td>
             </tr>
         </table>
 
-        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:13.5px">२) वेदना विशेष व कालावधी :</div>
+        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:18px">२) वेदना विशेष व कालावधी :</div>
         <div style="min-height:110px; margin:6px 0 14px"><span style="color:#999; font-style:italic; font-weight:normal; padding:6px; display:inline-block"></span></div>
 
-        <div style="font-weight:bold; margin:14px 0 6px; font-size:15.5px">३) परीक्षण <span class="mr"></span>(Physical Examination) :</div>
+        <div style="font-weight:bold; margin:14px 0 6px; font-size:18px">३) परीक्षण <span class="mr"></span>(Physical Examination) :</div>
         <div style="min-height:150px; padding:6px; position:relative; margin-bottom:10px">
             <table style="width:140px; border-collapse:collapse; float:right" width="140">
                 <tr><td style="padding: 4px 6px; font-size: 18px; border: 1px solid #000;">Prakruti : <span style="color:#999; font-style:italic; font-weight:normal"></span></td></tr>
@@ -120,16 +131,16 @@
 
         <table style="width:100%; border-collapse:collapse; margin-bottom:10px" width="100%">
             <tr>
-                <td class="mr" style="padding:5px 7px; width:50%" width="50%">४) L.M.P. ( पूर्व रजः प्रवृत्ती) <span style="color:#999; font-style:italic; font-weight:normal"></span></td>
-                <td class="mr" style="padding:5px 7px; width:50%" width="50%">EDD (अपेक्षित प्रसव दिनांक) : <span style="color:#999; font-style:italic; font-weight:normal"></span></td>
+                <td class="mr" style="font-weight: bold; font-size: 18px; padding: 5px 7px; width: 50% " width="50%">४) L.M.P. ( पूर्व रजः प्रवृत्ती) <span style="color:#999; font-style:italic; font-weight:normal"></span></td>
+                <td class="mr" style="font-weight: bold; font-size: 18px; padding: 5px 7px; width: 50% " width="50%">EDD (अपेक्षित प्रसव दिनांक) : <span style="color:#999; font-style:italic; font-weight:normal"></span></td>
             </tr>
         </table>
 
         <table style="width:100%; border-collapse:collapse; margin-bottom:10px" width="100%">
             <tr>
-                <td class="mr" style="padding:5px 7px">५) मुख्य चिकित्सक</td>
-                <td class="mr" style="padding:5px 7px">सहाय्यक</td>
-                <td class="mr" style="padding:5px 7px">हाऊसमन</td>
+                <td class="mr" style="font-size: 18px; font-weight: bold; padding: 5px 7px">५) मुख्य चिकित्सक</td>
+                <td class="mr" style="font-size: 18px; padding: 5px 7px">सहाय्यक</td>
+                <td class="mr" style="font-size: 18px; padding: 5px 7px">हाऊसमन</td>
             </tr>
             <tr>
                 <td style="padding:5px 7px"><span style="color:#999; font-style:italic; font-weight:normal"></span></td>
@@ -141,26 +152,26 @@
 
     <!-- PAGE 2 -->
     <div style="max-width:850px; margin:0 auto 20px; background:#fff; padding:18px 22px">
-        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:14.5px">६) बाळंतपणाचा इतिहास : गर्भस्त्राव –</div>
+        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:18px">६) बाळंतपणाचा इतिहास : गर्भस्त्राव –</div>
         <div style="min-height:40px; margin:6px 0 14px"><span style="color:#999; font-style:italic; font-weight:normal; padding:6px; display:inline-block"></span></div>
 
         <table style="width:100%; border-collapse:collapse; margin-bottom:10px" width="100%">
             <tr>
-                <td class="mr" style="padding:5px 7px; width:50%" width="50%">कुटुंब नियोजन शस्त्रक्रिया होय / नाही</td>
-                <td class="mr" style="padding:5px 7px; width:50%" width="50%">गर्भनिरोध साधनांचा वापर</td>
+                <td class="mr" style="font-size: 18px; padding: 5px 7px; width: 50%" width="50%">कुटुंब नियोजन शस्त्रक्रिया होय / नाही</td>
+                <td class="mr" style="font-size: 18px; padding: 5px 7px; width: 50%" width="50%">गर्भनिरोध साधनांचा वापर</td>
             </tr>
             <tr>
-                <td class="mr" style="padding:5px 7px; width:50%" width="50%">जिवीत अपत्ये : मुलगा</td>
-                <td class="mr" style="padding:5px 7px; width:50%" width="50%">मुलगी</td>
+                <td class="mr" style="font-size: 18px; padding: 5px 7px; width: 50%" width="50%">जिवीत अपत्ये : मुलगा</td>
+                <td class="mr" style="font-size: 18px; padding: 5px 7px; width: 50%" width="50%">मुलगी</td>
             </tr>
             <tr>
-                <td class="mr" style="padding:5px 7px; width:50%" width="50%">मृत अपत्ये : मुलगा</td>
-                <td class="mr" style="padding:5px 7px; width:50%" width="50%">मुलगी</td>
+                <td class="mr" style="font-size: 18px; padding: 5px 7px; width: 50%" width="50%">मृत अपत्ये : मुलगा</td>
+                <td class="mr" style="font-size: 18px; padding: 5px 7px; width: 50%" width="50%">मुलगी</td>
             </tr>
         </table>
 
         <!-- 7 -->
-        <div class="mr" style="font-weight:bold;margin:14px 0 6px;font-size:15.5px;">
+        <div class="mr" style="font-weight:bold;margin:14px 0 6px;font-size:18px;">
             ७)
         </div>
 
@@ -168,15 +179,15 @@
 
             <tr>
 
-                <td style="width:18%;border:1px solid #000;text-align:center;vertical-align:middle;font-weight:bold;padding:6px;">
+                <td style="font-size: 18px; width: 18%; border: 1px solid #000; text-align: center; vertical-align: middle; font-weight: bold; padding: 6px;">
                     निदान
                 </td>
 
-                <td style="width:41%;border:1px solid #000;text-align:center;font-weight:bold;padding:6px;">
+                <td style="font-size: 18px; width: 41%; border: 1px solid #000; text-align: center; font-weight: bold; padding: 6px;">
                     सुरुवातीचे
                 </td>
 
-                <td style="width:41%;border:1px solid #000;text-align:center;font-weight:bold;padding:6px;">
+                <td style="font-size: 18px; width: 41%; border: 1px solid #000; text-align: center; font-weight: bold; padding: 6px;">
                     अंतिम
                 </td>
 
@@ -184,14 +195,14 @@
 
             <tr>
 
-                <td class="mr" style="border:1px solid #000;padding:8px;">
+                <td class="mr" style="font-size: 18px; border: 1px solid #000; padding: 8px;">
                     आयुर्वेदिक
                 </td>
 
-                <td style="border:1px solid #000;padding:8px;height:35px;">
+                <td style="font-size: 18px; border: 1px solid #000; padding: 8px; height: 35px;">
                 </td>
 
-                <td style="border:1px solid #000;padding:8px;height:35px;">
+                <td style="font-size: 18px; border: 1px solid #000; padding: 8px; height: 35px;">
                     आयुर्वेदिक
                 </td>
 
@@ -199,14 +210,14 @@
 
             <tr>
 
-                <td class="mr" style="border:1px solid #000;padding:8px;">
+                <td class="mr" style="font-size: 18px; border: 1px solid #000; padding: 8px;">
                     अॅलोपॅथी
                 </td>
 
-                <td style="border:1px solid #000;padding:8px;height:35px;">
+                <td style="font-size: 18px; border: 1px solid #000; padding: 8px; height: 35px;">
                 </td>
 
-                <td style="border:1px solid #000;padding:8px;height:35px;">
+                <td style="font-size: 18px; border: 1px solid #000; padding: 8px; height: 35px;">
                     अॅलोपॅथी
                 </td>
 
@@ -214,17 +225,17 @@
 
         </table>
 
-        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:17.5px">८) यापुर्वीच्या आजारासंबंधी माहिती :</div>
+        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:18px">८) यापुर्वीच्या आजारासंबंधी माहिती :</div>
         <div style="min-height:40px; margin:6px 0 14px"><span style="color:#999; font-style:italic; font-weight:normal; padding:6px; display:inline-block"></span></div>
 
-        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:16.5px">९) असात्म्य : (Known Allergy) :</div>
+        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:18px">९) असात्म्य : (Known Allergy) :</div>
         <div style="min-height:40px; margin:6px 0 14px"><span style="color:#999; font-style:italic; font-weight:normal; padding:6px; display:inline-block"></span></div>
 
-        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:17.5px">१०) कुटुंबातील कोणाला ब्लडप्रेशर, मधुमेह, दना वगैरे आजारपण आहे काय? तपशिल देणे :</div>
+        <div class="mr" style="font-weight:bold; margin:14px 0 6px; font-size:18px">१०) कुटुंबातील कोणाला ब्लडप्रेशर, मधुमेह, दना वगैरे आजारपण आहे काय? तपशिल देणे :</div>
         <div style="border-bottom:1px solid #000; height:20px; margin-bottom:14px;"><span style="color:#999; font-style:italic; font-weight:normal"></span></div>
 
     
-        <div class="mr" style="text-align:center;font-weight:bold;font-size:19px;margin-bottom:8px;">
+        <div class="mr" style="text-align:center;font-weight:bold;font-size:18px;margin-bottom:8px;">
             रुग्णाने आणलेली औषधे : (Drugs Brought) :
         </div>
 
@@ -256,7 +267,7 @@
             <tr>
 
                 <td style="border-right:1px solid #000;
-                   height:420px;
+                   height:560px;
                    vertical-align:top;
                    padding:5px;">
                 </td>
