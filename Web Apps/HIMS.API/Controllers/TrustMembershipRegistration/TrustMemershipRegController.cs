@@ -53,6 +53,32 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
             var data = await _ITrustMembershipRegService.GetById(id);
             return data.ToSingleResponse<TMembershipRegistration, TrustMembershipRegModel>("Doctor Master");
         }
+        //[HttpGet("auto-complete")]
+        ////[Permission]
+        //public async Task<ApiResponse> GetAutoComplete(string Keyword)
+        //{
+        //    var data = await _ITrustMembershipRegService.SearchTrust(Keyword);
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration Data.", data.Select(x => new
+        //    {
+        //        //Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile,
+        //        Text = x.FirstName + " " + x.MiddleName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile,
+        //        Value = x.Id,
+        //        RegNo = x.RegNo,
+        //        MobileNo = x.MobileNo,
+        //        AgeYear = x.AgeYear,
+        //        AgeMonth = x.AgeMonth,
+        //        AgeDay = x.AgeDay,
+        //        PatientName = x.FirstName + " " + x.MiddleName + " " + x.LastName,
+        //        EmailId = x.EmailId,
+        //        RegId = x.RegId,
+        //        AadharCardNo = x.AadharCardNo,
+        //        DateofBirth = x.DateofBirth,
+        //        Gender = x.Gender
+
+
+
+        //    }));
+        //}
 
 
         [HttpPost("Insert")]

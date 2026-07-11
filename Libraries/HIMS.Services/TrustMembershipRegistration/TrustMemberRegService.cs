@@ -32,9 +32,42 @@ namespace HIMS.Services.TrustMembershipRegistration
         {
             return await this._context.TMembershipRegistrations .Include(x => x.TMembershipChildren).Include(x => x.TMembershipEmrgencies).Include(x => x.TMembershipRelatives).FirstOrDefaultAsync(x => x.MembershipId == Id);
         }
+        //public virtual async Task<List<TrustMembershipRegistrationDTO>> SearchTrust(string str)
+        //{
+
+        //    return await this._context.TMembershipRegistrations
+        //        .Where(x =>
+        //            (x.HusbandFirstName + " " + (x.HusbandMiddleName ?? "") + " " + x.HusbandLastName).ToLower().StartsWith(str) ||
+        //            x.HusbandFirstName.ToLower().StartsWith(str) ||                     // Match first name starting with str
+        //            //x.RegNo.ToLower().StartsWith(str) ||                         // Match RegNo starting with str
+        //            x.HusbandMobile.ToLower().Contains(str)
+        //        // Keep full Contains() for MobileNo
+        //        )
+        //        .Take(25)
+        //        .Select(x => new TrustMembershipRegistrationDTO
+        //        {
+        //            HusbandFirstName = x.HusbandFirstName,
+        //            //Id = x.RegId,
+        //            HusbandLastName = x.HusbandLastName,
+        //            HusbandMiddleName = x.HusbandMiddleName,
+        //            HusbandMobile = x.HusbandMobile,
+        //            //RegNo = x.RegNo,
+        //            HusbandAgeY = x.HusbandAgeY,
+        //            HusbandAgeM = x.HusbandAgeM,
+        //            HusbandAgeD = x.HusbandAgeD,
+        //            HusbandDob = x.HusbandDob,
+        //            HusbandEmail = x.HusbandEmail,
+        //            HusbandAadhaar = x.HusbandAadhaar,
+        //            CityId = x.CityId,
+
+        //        })
+        //       .OrderByDescending(x => x.RegNo == str ? 3 : x.HusbandMobile == str ? 2 : (x.HusbandFirstName + " " + x.LastName) == str ? 1 : 0)
+        //       .ThenBy(x => x.FirstName).ToListAsync();
+
+        //}
 
 
-      
+
         public virtual async Task InsertAsync(TMembershipRegistration ObjTMembershipRegistration, int UserId, string Username)
         {
             using var scope = new TransactionScope( TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted}, TransactionScopeAsyncFlowOption.Enabled);

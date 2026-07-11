@@ -107,6 +107,8 @@ namespace HIMS.API.Models.TrustMembershipRegistration
         public string ChildName { get; set; } = null!;
         public string? ChildMobile { get; set; }
         public string? ChildAddress { get; set; }
+        public string? PrefixName { get; set; }
+
 
     }
     public class MembershipChildModelValidator : AbstractValidator<MembershipChildModel>
@@ -128,6 +130,8 @@ namespace HIMS.API.Models.TrustMembershipRegistration
         public string? EmrgencyName { get; set; }
         public string? EmrgencyMobile { get; set; }
         public string? EmrgencyAddress { get; set; }
+        public string? PrefixName { get; set; }
+
     }
     public class MembershipEmrgencyModelValidator : AbstractValidator<MembershipEmrgencyModel>
     {
@@ -152,6 +156,8 @@ namespace HIMS.API.Models.TrustMembershipRegistration
         //public long? RelationNameId { get; set; }
         public string? RelativeMobile { get; set; }
         public string? RelativeAddress { get; set; }
+        public string? PrefixName { get; set; }
+
     }
     public class MembershipRelativeModelValidator : AbstractValidator<MembershipRelativeModel>
     {
