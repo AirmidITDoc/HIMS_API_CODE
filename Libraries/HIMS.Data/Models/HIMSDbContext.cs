@@ -14749,6 +14749,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.MembershipTime).HasColumnType("datetime");
 
+                entity.Property(e => e.MembershipvalidDate).HasColumnType("datetime");
+
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.NativePlace).HasMaxLength(100);
