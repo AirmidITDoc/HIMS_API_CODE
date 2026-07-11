@@ -25,12 +25,26 @@
             padding: 20px;
             font-size: 15px;
         }
+        .field-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+        }
 
-        .page {
+       /* .page {
             max-width: 850px;
             width: 100%;
             margin: 0 auto;
             border: 2px solid #4a3f2a;
+            padding: 20px 30px;
+            page-break-after: always;
+            overflow: hidden;
+        }*/
+        .page {
+            max-width: 850px;
+            width: 100%;
+            margin: 0 auto;
             padding: 20px 30px;
             page-break-after: always;
             overflow: hidden;
@@ -405,6 +419,7 @@
                 height: 100%;
                 object-fit: cover;
             }
+
     </style>
 </head>
 <body>
@@ -451,22 +466,22 @@
 
                 <div class="dob-row">
                     <span class="field-label">Man/Husband's Date of Birth:</span>
-                    <span class="dob-seg">{{HusbandDOB}}</span> /
-                    <span class="dob-seg">{{HusbandAgeM}}</span> /
-                    <span class="dob-seg" style="min-width:52px;">{{HusbandAgeY}}</span>
+                    <span class="dob-seg">{{HusbandDOB}}</span> 
+                    <!--<span class="dob-seg">{{HusbandAgeM}}</span>--> 
+                    <!--<span class="dob-seg" style="min-width:52px;">{{HusbandAgeY}}</span>-->
 
-                    <span class="field-label">Age:</span>
-                    <span class="age-line">{{HusbandAgeY}}</span> Years
+                    <!--<span class="field-label">Age:</span>
+                    <span class="age-line">{{HusbandAgeY}}</span> Years-->
                 </div>
 
                 <div class="dob-row">
                     <span class="field-label">Woman/Wife's Date of Birth:</span>
-                    <span class="dob-seg">{{WifeDOB}}</span> /
-                    <span class="dob-seg">{{WifeAgeM}}</span> /
+                    <span class="dob-seg">{{WifeDOB}}</span> 
+                    <!--<span class="dob-seg">{{WifeAgeM}}</span> /
                     <span class="dob-seg" style="min-width:52px;">{{WifeAgeY}}</span>
 
                     <span class="field-label">Age:</span>
-                    <span class="age-line">{{WifeAgeY}}</span> Years
+                    <span class="age-line">{{WifeAgeY}}</span> Years-->
                 </div>
 
             </div>
@@ -585,7 +600,7 @@
 
             <span class="chk-box chk-{{HusbandOccupationId}}"></span><span>Widow</span>
 
-            <span class="chk-box chk-{{HusbandCaretaker}}"></span><span>Caretaker</span>
+            <span class="chk-box chk-{{HusbandOccupationId}}"></span><span>Caretaker</span>
         </div>
         <div class="position-row">
             <span class="field-label">Woman/Wife's position:</span>
@@ -735,18 +750,18 @@
         <div class="blank-line"></div>
         <div class="blank-line"></div>
 
-      
+
         <div class="two-field-row">
             <div class="field-row" style="flex-direction: column; align-items: stretch;">
                 <span class="field-label">Husband Recent Full Body Check-up:</span>
                 <span style="display:flex; align-items:baseline;">
-                    / <span class="dob-seg">{{HusbandFullBodyCheckupDate}}</span>
+                    <span class="dob-seg">{{HusbandFullBodyCheckupDate}}</span>
                 </span>
             </div>
             <div class="field-row" style="flex-direction: column; align-items: stretch;">
                 <span class="field-label">Wife Recent Full Body Check-up:</span>
                 <span style="display:flex; align-items:baseline;">
-                    / <span class="dob-seg">{{WifeFullBodyCheckupDate}}</span>
+                    <span class="dob-seg">{{WifeFullBodyCheckupDate}}</span>
                 </span>
             </div>
         </div>
@@ -765,16 +780,18 @@
         <div class="yn-row">
             <span class="field-label">No</span><span class="chk-box chk-{{AyushmanEnrolledNo}}"></span>
             <span class="field-label">Yes</span><span class="chk-box chk-{{AyushmanEnrolledYes}}"></span>
-            <span class="field-label">Male/Female Enrolled:</span>
-            <span class="field-line" style="min-width:150px;">{{MaleFemaleEnrolled}}</span>
+
         </div>
 
         <div class="field-row">
-            <span class="field-label">Spouse Details:</span>
+            <span class="field-label">Then Spouse Details:</span>
+            <span class="field-line">{{AyushmanSpouseDetails}}</span>
+            <span class="field-label">Spouse :</span>
             <span class="field-line">{{AyushmanSpouseDetails}}</span>
         </div>
 
-        <!-- FIX: SP column HasMediclaim (bit), MediclaimCompany -> CompanyName (join se aata hai) -->
+
+        <!--FIX: SP column HasMediclaim (bit), MediclaimCompany -> CompanyName (join se aata hai)-->
         <div class="section-title">12. MEDICAL INSURANCE / MEDICLAIM DETAILS</div>
 
         <div class="note-line">Do you have a Mediclaim Policy?</div>
@@ -786,13 +803,32 @@
 
         <div class="note-line">then details:</div>
 
+        <!--<div class="two-field-row">
+        <div class="field-row">
+            <span class="field-label">Company Name:</span>
+            <span class="field-line">{{MediclaimCompany}}</span>
+            <span class="field-label">Policy Number:</span>
+            <span class="field-line">{{MediclaimPolicyNumber}}</span>
+        </div>
+    </div>
+
+    <div class="two-field-row">
+        <div class="field-row">
+            <span class="field-label">Issuance:</span>
+            <span class="field-line">{{MediclaimIssuanceAmt}}</span>
+        </div>
+            <span class="field-label">Start:</span>
+            <span class="dob-seg">{{MediclaimStartDate}}</span>
+            <span class="field-label" style="margin-left:14px;">End:</span>
+            <span class="dob-seg">{{MediclaimEndDate}}</span>
+        </div>
+    </div>-->
         <div class="two-field-row">
             <div class="field-row">
                 <span class="field-label">Company Name:</span>
                 <span class="field-line">{{MediclaimCompany}}</span>
-            </div>
-            <div class="field-row">
-                <span class="field-label">Policy Number:</span>
+
+                <span class="field-label" style="margin-left:20px;">Policy Number:</span>
                 <span class="field-line">{{MediclaimPolicyNumber}}</span>
             </div>
         </div>
@@ -801,11 +837,11 @@
             <div class="field-row">
                 <span class="field-label">Issuance:</span>
                 <span class="field-line">{{MediclaimIssuanceAmt}}</span>
-            </div>
-            <div class="dob-row">
-                <span class="field-label">Start:</span>
+
+                <span class="field-label" style="margin-left:20px;">Start:</span>
                 <span class="dob-seg">{{MediclaimStartDate}}</span>
-                <span class="field-label" style="margin-left:14px;">End:</span>
+
+                <span class="field-label" style="margin-left:20px;">End:</span>
                 <span class="dob-seg">{{MediclaimEndDate}}</span>
             </div>
         </div>
