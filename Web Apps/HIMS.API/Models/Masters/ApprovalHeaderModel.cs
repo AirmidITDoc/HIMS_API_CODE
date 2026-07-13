@@ -20,6 +20,15 @@ namespace HIMS.API.Models.Masters
         public ApprovalHeaderModelValidator()
         {
             RuleFor(x => x.Date).NotNull().NotEmpty().WithMessage("Date is required");
+            RuleFor(x => x.ApprovalNo).NotNull().NotEmpty().WithMessage("ApprovalNo is required");
+            RuleFor(x => x.Time).NotNull().NotEmpty().WithMessage("Time is required");
+            RuleFor(x => x.TransactionType).NotNull().NotEmpty().WithMessage("TransactionType is required");
+            RuleFor(x => x.TranId).NotNull().NotEmpty().WithMessage("TranId is required");
+            RuleFor(x => x.AuthorizeBy).NotNull().NotEmpty().WithMessage("AuthorizeBy is required");
+            RuleFor(x => x.ApprovedDateTime).NotNull().NotEmpty().WithMessage("ApprovedDateTime is required");
+
+
+
         }
     }
 }

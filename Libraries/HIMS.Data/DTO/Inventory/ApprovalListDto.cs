@@ -23,4 +23,11 @@ namespace HIMS.Data.DTO.Inventory
         public long? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
     }
+    public class UserApprovalNamelistDto
+    {
+        public long UserId { get; set; }
+        public string? UserName { get; set; }
+        public string? AccessValueName { get; set; }
+        public bool? AccessValue { get; set; }
+    }
 }
