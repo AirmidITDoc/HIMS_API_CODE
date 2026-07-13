@@ -37,6 +37,13 @@ namespace HIMS.API.Controllers.Inventory
             IPagedList<ApprovalListDto> ApprovalList = await _IApprovalService.GetListAsync(objGrid);
             return Ok(ApprovalList.ToGridResponse(objGrid, "Approval List"));
         }
+        [HttpPost("UserApprovalNamelist")]
+        //[Permission]
+        public async Task<IActionResult> UserApprovalNamelist(GridRequestModel objGrid)
+        {
+            IPagedList<UserApprovalNamelistDto> ApprovalList = await _IApprovalService.NewGetListAsync(objGrid);
+            return Ok(ApprovalList.ToGridResponse(objGrid, "UserApprovalName List"));
+        }
 
         //Add API
         [HttpPost]

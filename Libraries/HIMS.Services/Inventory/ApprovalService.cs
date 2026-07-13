@@ -24,6 +24,10 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<ApprovalListDto>(model, "ps_ApprovalHeaderList");
         }
+        public virtual async Task<IPagedList<UserApprovalNamelistDto>> NewGetListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<UserApprovalNamelistDto>(model, "ps_Rtrv_UserApprovalNamelist");
+        }
         public virtual async Task InsertAsync(TApprovalHeader ObjTApprovalHeader, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

@@ -468,17 +468,17 @@
                     <!--<span class="dob-seg">{{HusbandAgeM}}</span>-->
                     <!--<span class="dob-seg" style="min-width:52px;">{{HusbandAgeY}}</span>-->
                     <!--<span class="field-label">Age:</span>
-                <span class="age-line">{{HusbandAgeY}}</span> Years-->
+                    <span class="age-line">{{HusbandAgeY}}</span> Years-->
                 </div>
 
                 <div class="dob-row">
                     <span class="field-label">Woman/Wife's Date of Birth:</span>
                     <span class="dob-seg">{{WifeDOB}}</span>
                     <!--<span class="dob-seg">{{WifeAgeM}}</span> /
-                <span class="dob-seg" style="min-width:52px;">{{WifeAgeY}}</span>
+                    <span class="dob-seg" style="min-width:52px;">{{WifeAgeY}}</span>
 
-                <span class="field-label">Age:</span>
-                <span class="age-line">{{WifeAgeY}}</span> Years-->
+                    <span class="field-label">Age:</span>
+                    <span class="age-line">{{WifeAgeY}}</span> Years-->
                 </div>
 
             </div>
@@ -537,7 +537,7 @@
         </div>
 
 
-       
+
         <table class="two-field-row" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="field-cell" style="width:40%;">
@@ -551,7 +551,7 @@
             </tr>
         </table>
 
-       
+
         <div class="section-title">4. Blood Group</div>
         <table class="two-field-row" cellpadding="0" cellspacing="0">
             <tr>
@@ -566,7 +566,7 @@
             </tr>
         </table>
 
-       
+
         <div class="section-title">5. Identity Details (Aadhaar &amp; PAN Details)</div>
         <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
             <tr>
@@ -642,7 +642,7 @@
             </tr>
         </table>
 
-     
+
         <div class="section-title">8. HOBBIES</div>
         <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
             <tr>
@@ -656,6 +656,15 @@
                 </td>
             </tr>
         </table>
+        <!--<div class="section-title">8. HOBBIES</div>
+        <div class="field-row">
+            <span class="field-label">Man/Husband's hobbies:</span>
+            <span class="field-line">{{HusbandHobbies}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">Woman/Wife's hobbies:</span>
+            <span class="field-line">{{WifeHobbies}}</span>
+        </div>-->
 
 
         <div class="section-title">9. FAMILY - RELATED INFORMATION</div>
@@ -737,8 +746,7 @@
 
     <!-- ==================== PAGE 3 ==================== -->
     <!--<div class="page page-3">-->
-
-    <div class="section-title">10. HEALTH INFORMATION</div>
+    <!--<div class="section-title">10. HEALTH INFORMATION</div>
 
     <div class="note-line">If You Have Any Breathing Problems Or Allergies To Any Substances, Then The Details</div>
 
@@ -772,10 +780,9 @@
                 <span class="dob-seg">{{WifeFullBodyCheckupDate}}</span>
             </span>
         </div>
-    </div>
-
+    </div>-->
     <!-- FIX: SP ke actual columns AyushmanEnrolled (bit), MaleFemaleEnrolled, AyushmanSpouseDetails hain -->
-    <div class="section-title">11. AYUSHMAN BHARAT SCHEME</div>
+    <!--<div class="section-title">11. AYUSHMAN BHARAT SCHEME</div>
 
     <div class="note-line">Are You Enrolled In The Ayushman Bharat Scheme?</div>
 
@@ -797,7 +804,82 @@
         <span class="field-label">Spouse :</span>
         <span class="field-line">{{AyushmanSpouseDetails}}</span>
     </div>
-    <div class="footer-page">Page 2 </div>
+    <div class="footer-page">Page 2 </div>-->
+    <!-- ==================== PAGE 3 ==================== -->
+    <div class="page page-3">
+
+        <table style="page-break-inside:avoid; border:none; margin-bottom:22px;">
+            <tr>
+                <td style="border:none; padding:0;">
+
+                    <div class="section-title">10. HEALTH INFORMATION</div>
+
+                    <div class="note-line">If You Have Any Breathing Problems Or Allergies To Any Substances, Then The Details</div>
+
+                    <div class="field-row">
+                        <span class="field-label">Male / Husband Current Medications / Treatment :</span>
+                        <span class="field-line">{{HusbandMedications}}</span>
+                    </div>
+                    <div class="blank-line"></div>
+                    <div class="blank-line"></div>
+                    <div class="blank-line"></div>
+
+                    <div class="field-row">
+                        <span class="field-label">Female / Wife Current Medications / Treatment :</span>
+                        <span class="field-line">{{WifeMedications}}</span>
+                    </div>
+                    <div class="blank-line"></div>
+                    <div class="blank-line"></div>
+                    <div class="blank-line"></div>
+
+                    <div class="two-field-row">
+                        <div class="field-row" style="flex-direction: column; align-items: stretch;">
+                            <span class="field-label">Husband Recent Full Body Check-up:</span>
+                            <span style="display:flex; align-items:baseline;">
+                                <span class="dob-seg">{{HusbandFullBodyCheckupDate}}</span>
+                            </span>
+                        </div>
+                        <div class="field-row" style="flex-direction: column; align-items: stretch;">
+                            <span class="field-label">Wife Recent Full Body Check-up:</span>
+                            <span style="display:flex; align-items:baseline;">
+                                <span class="dob-seg">{{WifeFullBodyCheckupDate}}</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- FIX: SP ke actual columns AyushmanEnrolled (bit), MaleFemaleEnrolled, AyushmanSpouseDetails hain -->
+                    <div class="section-title">11. AYUSHMAN BHARAT SCHEME</div>
+
+                    <div class="note-line">Are You Enrolled In The Ayushman Bharat Scheme?</div>
+
+                    <div class="gender-header">
+                        <span>&nbsp;</span>
+                        <span>Male /</span>
+                        <span>Female /</span>
+                    </div>
+
+                    <div class="yn-row">
+                        <span class="field-label">No</span><span class="chk-box chk-{{AyushmanEnrolledNo}}"></span>
+                        <span class="field-label">Yes</span><span class="chk-box chk-{{AyushmanEnrolledYes}}"></span>
+                    </div>
+
+                    <div class="field-row">
+                        <span class="field-label">Then Spouse Details:</span>
+                        <span class="field-line">{{AyushmanSpouseDetails}}</span>
+                        <span class="field-label">Spouse :</span>
+                        <span class="field-line">{{AyushmanSpouseDetails}}</span>
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+
+        <div class="footer-page">Page 2 </div>
+
+    </div>
+    <br>
+    <br>
+    <br>
     <!-- ==================== PAGE 2 ==================== -->
     <div class="page page-2">
 
