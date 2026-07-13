@@ -468,17 +468,17 @@
                     <!--<span class="dob-seg">{{HusbandAgeM}}</span>-->
                     <!--<span class="dob-seg" style="min-width:52px;">{{HusbandAgeY}}</span>-->
                     <!--<span class="field-label">Age:</span>
-                    <span class="age-line">{{HusbandAgeY}}</span> Years-->
+                <span class="age-line">{{HusbandAgeY}}</span> Years-->
                 </div>
 
                 <div class="dob-row">
                     <span class="field-label">Woman/Wife's Date of Birth:</span>
                     <span class="dob-seg">{{WifeDOB}}</span>
                     <!--<span class="dob-seg">{{WifeAgeM}}</span> /
-                    <span class="dob-seg" style="min-width:52px;">{{WifeAgeY}}</span>
+                <span class="dob-seg" style="min-width:52px;">{{WifeAgeY}}</span>
 
-                    <span class="field-label">Age:</span>
-                    <span class="age-line">{{WifeAgeY}}</span> Years-->
+                <span class="field-label">Age:</span>
+                <span class="age-line">{{WifeAgeY}}</span> Years-->
                 </div>
 
             </div>
@@ -537,16 +537,7 @@
         </div>
 
 
-        <!--<div class="two-field-row">
-            <div class="field-row">
-                <span class="field-label">Native Place:</span>
-                <span class="field-line">{{NativePlace}}</span>
-            </div>
-            <div class="field-row">
-                <span class="field-label">Wife's Parents Native Place:</span>
-                <span class="field-line">{{WifeParentsNativePlace}}</span>
-            </div>
-        </div>-->
+       
         <table class="two-field-row" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="field-cell" style="width:40%;">
@@ -560,42 +551,47 @@
             </tr>
         </table>
 
+       
         <div class="section-title">4. Blood Group</div>
+        <table class="two-field-row" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="field-cell" style="width:40%;">
+                    <span class="field-label">Man/Husband's Blood Group:</span>
+                    <span class="field-line">{{HusbandBloodGroupId}}</span>
+                </td>
+                <td class="field-cell" style="width:60%;">
+                    <span class="field-label">Woman/Wife's Blood Group:</span>
+                    <span class="field-line">{{WifeBloodGroupId}}</span>
+                </td>
+            </tr>
+        </table>
 
-        <div class="two-field-row">
-            <div class="field-row">
-                <span class="field-label">Man/Husband's Blood Group:</span>
-                <span class="field-line">{{HusbandBloodGroupId}}</span>
-            </div>
-            <div class="field-row">
-                <span class="field-label">Woman/Wife's Blood Group:</span>
-                <span class="field-line">{{WifeBloodGroupId}}</span>
-            </div>
-        </div>
-
+       
         <div class="section-title">5. Identity Details (Aadhaar &amp; PAN Details)</div>
-
-        <div class="two-field-row">
-            <div class="field-row">
-                <span class="field-label">Man/Husband's Aadhaar Number:</span>
-                <span class="field-line">{{HusbandAadhaar}}</span>
-            </div>
-            <div class="field-row">
-                <span class="field-label">Man/Husband's PAN Number:</span>
-                <span class="field-line">{{HusbandPAN}}</span>
-            </div>
-        </div>
-
-        <div class="two-field-row">
-            <div class="field-row">
-                <span class="field-label">Woman/Wife's Aadhaar Number:</span>
-                <span class="field-line">{{WifeAadhaar}}</span>
-            </div>
-            <div class="field-row">
-                <span class="field-label">Woman/Wife's PAN Number:</span>
-                <span class="field-line">{{WifePAN}}</span>
-            </div>
-        </div>
+        <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
+            <tr>
+                <td class="field-cell" style="width:50%;">
+                    <span class="field-label">Man/Husband's Aadhaar Number:</span>
+                    <span class="field-line">{{HusbandAadhaar}}</span>
+                </td>
+                <td class="field-cell" style="width:50%;">
+                    <span class="field-label">Man/Husband's PAN Number:</span>
+                    <span class="field-line">{{HusbandPAN}}</span>
+                </td>
+            </tr>
+        </table>
+        <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
+            <tr>
+                <td class="field-cell" style="width:50%;">
+                    <span class="field-label">Woman/Wife's Aadhaar Number:</span>
+                    <span class="field-line">{{WifeAadhaar}}</span>
+                </td>
+                <td class="field-cell" style="width:50%;">
+                    <span class="field-label">Woman/Wife's PAN Number:</span>
+                    <span class="field-line">{{WifePAN}}</span>
+                </td>
+            </tr>
+        </table>
         <div class="section-title">6. OCCUPATION AND POSITION</div>
 
         <div class="position-row">
@@ -632,31 +628,34 @@
     <!-- ==================== PAGE 2 ==================== -->
     <div class="page page-2" style="margin-top:20px">
 
-
         <div class="section-title">7. EDUCATION</div>
+        <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
+            <tr>
+                <td class="field-cell" style="width:50%;">
+                    <span class="field-label">Man/Husband's education:</span>
+                    <span class="field-line">{{HusbandEducation}}</span>
+                </td>
+                <td class="field-cell" style="width:50%;">
+                    <span class="field-label">Woman/Wife's education:</span>
+                    <span class="field-line">{{WifeEducation}}</span>
+                </td>
+            </tr>
+        </table>
 
-        <div class="two-field-row">
-            <div class="field-row">
-                <span class="field-label">Man/Husband's education:</span>
-                <span class="field-line">{{HusbandEducation}}</span>
-            </div>
-            <div class="field-row">
-                <span class="field-label">Woman/Wife's education:</span>
-                <span class="field-line">{{WifeEducation}}</span>
-            </div>
-        </div>
-
+     
         <div class="section-title">8. HOBBIES</div>
-
-        <div class="field-row">
-            <span class="field-label">Man/Husband's hobbies:</span>
-            <span class="field-line">{{HusbandHobbies}}</span>
-        </div>
-
-        <div class="field-row">
-            <span class="field-label">Woman/Wife's hobbies:</span>
-            <span class="field-line">{{WifeHobbies}}</span>
-        </div>
+        <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
+            <tr>
+                <td class="field-cell" style="width:50%;">
+                    <span class="field-label">Man/Husband's hobbies:</span>
+                    <span class="field-line">{{HusbandHobbies}}</span>
+                </td>
+                <td class="field-cell" style="width:50%;">
+                    <span class="field-label">Woman/Wife's hobbies:</span>
+                    <span class="field-line">{{WifeHobbies}}</span>
+                </td>
+            </tr>
+        </table>
 
 
         <div class="section-title">9. FAMILY - RELATED INFORMATION</div>

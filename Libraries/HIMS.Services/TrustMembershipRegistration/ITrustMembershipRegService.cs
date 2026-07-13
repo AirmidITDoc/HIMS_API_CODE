@@ -17,7 +17,7 @@ namespace HIMS.Services.TrustMembershipRegistration
         Task UpdateAsync(TMembershipRegistration ObjTMembershipRegistration, int UserId, string Username, string[]? references);
         Task<TMembershipRegistration> GetById(int Id);
         Task<IPagedList<TrustMembershipRegDTO>> GetListAsync(GridRequestModel objGrid);
-        //Task<List<TrustMembershipRegistrationDTO>> SearchTrust(string str);
+        Task<List<TrustMembershipRegistrationDTO>> SearchTrust(string str);
 
 
 
