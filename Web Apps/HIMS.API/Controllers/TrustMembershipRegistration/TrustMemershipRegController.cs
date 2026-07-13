@@ -60,16 +60,16 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
             var data = await _ITrustMembershipRegService.SearchTrust(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration Data.", data.Select(x => new
             {
-                Text = x.HusbandFirstName + " " + x.HusbandMiddleName + " " + x.HusbandLastName + " " + x.HusbandMobile,
+                Text = x.HusbandFirstName + " " + x.HusbandMiddleName + " " + x.HusbandLastName + " | " + x.MembershipNo + " | " + x.HusbandMobile,
                 //Value = x.Id,
-                //RegNo = x.RegNo,
+                MembershipId = x.MembershipId,
                 MobileNo = x.HusbandMobile,
                 AgeYear = x.HusbandAgeY,
                 AgeMonth = x.HusbandAgeM,
                 AgeDay = x.HusbandAgeD,
                 PatientName = x.HusbandFirstName + " " + x.HusbandMiddleName + " " + x.HusbandLastName,
                 HusbandEmail = x.HusbandEmail,
-                //RegId = x.RegId,
+                MembershipNo = x.MembershipNo,
                 HusbandAadhaar = x.HusbandAadhaar,
                 HusbandDob = x.HusbandDob,
                 //Gender = x.Gender

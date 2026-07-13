@@ -47,11 +47,11 @@ namespace HIMS.Services.TrustMembershipRegistration
                 .Select(x => new TrustMembershipRegistrationDTO
                 {
                     HusbandFirstName = x.HusbandFirstName,
-                    //Id = x.RegId,
+                    MembershipId = x.MembershipId,
                     HusbandLastName = x.HusbandLastName,
                     HusbandMiddleName = x.HusbandMiddleName,
                     HusbandMobile = x.HusbandMobile,
-                    //RegNo = x.RegNo,
+                    MembershipNo = x.MembershipNo,
                     HusbandAgeY = x.HusbandAgeY,
                     HusbandAgeM = x.HusbandAgeM,
                     HusbandAgeD = x.HusbandAgeD,
@@ -61,8 +61,7 @@ namespace HIMS.Services.TrustMembershipRegistration
                     CityId = x.CityId,
 
                 })
-               //.OrderByDescending(x => x.RegNo == str ? 3 : x.HusbandMobile == str ? 2 : (x.HusbandFirstName + " " + x.HusbandLastName) == str ? 1 : 0)
-               .OrderByDescending(x => x.HusbandMobile == str ? 2 : (x.HusbandFirstName + " " + x.HusbandLastName) == str ? 1 : 0)
+               .OrderByDescending(x => x.MembershipNo == str ? 3 : x.HusbandMobile == str ? 2 : (x.HusbandFirstName + " " + x.HusbandLastName) == str ? 1 : 0)
                .ThenBy(x => x.HusbandFirstName).ToListAsync();
 
         }
