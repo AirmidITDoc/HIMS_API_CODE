@@ -197,7 +197,7 @@ namespace HIMS.ABHA.Services
             return await _httpClient.PostAsync<AbhaEnrolmentResponse>(url, payload);
         }
 
-        public async Task<ApiResult<FindAbhaResponse>> FindAbhaMobileAsync(string scope,string mobile)
+        public async Task<ApiResult<List<FindAbhaResponse>>> FindAbhaMobileAsync(string mobile)
         {
             try
             {
@@ -211,13 +211,14 @@ namespace HIMS.ABHA.Services
                 };
 
                 var url = $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{AppSettings.Current.Endpoints.FindAbha}";
-                return await _httpClient.PostAsync<FindAbhaResponse>(url, payload);
+                return await _httpClient.PostAsync<List<FindAbhaResponse>>(url, payload);
+                //return await _httpClient.PostAsync<List<FindAbhaResponse>>(url, payload);
 
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "search-abha failed");
-                return new ApiResult<FindAbhaResponse> { Success = false, Error = ex.Message };
+                return new ApiResult<List<FindAbhaResponse>> { Success = false, Error = ex.Message };
             }
         }
 

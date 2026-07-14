@@ -15,7 +15,7 @@ namespace HIMS.ABHA.Interface
         // ABHA address
         Task<ApiResult<AbhaAddressSuggestionResponse>> GetAbhaAddressSuggestionsAsync(string txnId);
         Task<ApiResult<AbhaEnrolmentResponse>> CreateAbhaAddressAsync(string txnId, string abhaAddress);
-        Task<ApiResult<FindAbhaResponse>> FindAbhaMobileAsync(string scope, string mobile);
+        Task<ApiResult<List<FindAbhaResponse>>> FindAbhaMobileAsync(string mobile);
 
         // Profile / Card / QR
         Task<ApiResult<AbhaProfile>> GetAbhaProfileAsync(string xToken,bool IsAddress);

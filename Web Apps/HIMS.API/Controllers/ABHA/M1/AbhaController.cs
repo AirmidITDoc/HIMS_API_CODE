@@ -187,11 +187,14 @@ namespace HIMS.API.Controllers.ABHA.M1
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
-        
+
+
+        // ===== ABHA address with Mobile =====
+        // 1. Search Abha
         [HttpPost("address/findAbha")]
-        public async Task<ApiResponse> findAbha(FindAbhaMobileDto dto)
+        public async Task<ApiResponse> FindAbha(FindAbhaMobileDto dto)
         {
-            var result = await _abhaService.FindAbhaMobileAsync(dto.scope, dto.Mobile);
+            var result = await _abhaService.FindAbhaMobileAsync(dto.Mobile);
             if (result.Success)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Address created successfully.", result.Data);
             else
