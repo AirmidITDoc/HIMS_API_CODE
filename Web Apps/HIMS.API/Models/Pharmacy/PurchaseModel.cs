@@ -34,7 +34,9 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? FreightCharges { get; set; }
         public bool? IsCancelled { get; set; }
         public long? IsPurchaseRequisitionId { get; set; }
-        public bool? IsProceedToApproval { get; set; } 
+        public bool? IsProceedToApproval { get; set; }
+        public bool? IsApproved { get; set; }
+
 
         public List<PurchaseDetailModel> TPurchaseDetails { get; set; }
         public List<TprheaderModel>? Tpr { get; set; }

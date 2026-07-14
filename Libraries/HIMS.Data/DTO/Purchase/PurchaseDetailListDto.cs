@@ -28,6 +28,9 @@
         public string? Specification { get; set; }
         public float? FreeQty { get; set; }
         public float? TotalQty { get; set; }
+        public bool? IsApproved { get; set; }
+
+
 
 
 
