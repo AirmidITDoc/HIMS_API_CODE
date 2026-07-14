@@ -85,7 +85,7 @@ namespace HIMS.API.Models.TrustMembershipRegistration
     {
         public TrustMembershipRegModelValidator()
         {
-            //RuleFor(x => x.MembershipNo).NotNull().NotEmpty().WithMessage("MembershipNo is required");
+            RuleFor(x => x.MembershipNo).NotNull().NotEmpty().WithMessage("MembershipNo is required");
             RuleFor(x => x.MembershipDate).NotNull().NotEmpty().WithMessage("MembershipDate is required");
             RuleFor(x => x.MembershipTime).NotNull().NotEmpty().WithMessage("MembershipTime  is required");
             //RuleFor(x => x.HusbandDob).NotNull().NotEmpty().WithMessage(" HusbandDob required");
@@ -115,10 +115,9 @@ namespace HIMS.API.Models.TrustMembershipRegistration
     {
         public MembershipChildModelValidator()
         {
-            //RuleFor(x => x.ChildMobile).NotNull().NotEmpty().WithMessage("ChildMobile  is required");
-            //RuleFor(x => x.ChildAddress).NotNull().NotEmpty().WithMessage(" ChildAddress required");
-            //RuleFor(x => x.MembershipId).NotNull().NotEmpty().WithMessage(" MembershipId required");
-            //RuleFor(x => x.ChildAddress).NotNull().NotEmpty().WithMessage(" ChildAddress required");
+            RuleFor(x => x.ChildId).NotNull().NotEmpty().WithMessage("ChildId  is required");
+            RuleFor(x => x.MembershipId).NotNull().NotEmpty().WithMessage(" MembershipId required");
+            RuleFor(x => x.PrefixId).NotNull().NotEmpty().WithMessage(" PrefixId required");
 
         }
     }
@@ -137,11 +136,10 @@ namespace HIMS.API.Models.TrustMembershipRegistration
     {
         public MembershipEmrgencyModelValidator()
         {
-            //RuleFor(x => x.EmrgencyName).NotNull().NotEmpty().WithMessage("EmrgencyName is required");
-            //RuleFor(x => x.EmrgencyMobile).NotNull().NotEmpty().WithMessage("EmrgencyMobile  is required");
-            //RuleFor(x => x.EmrgencyAddress).NotNull().NotEmpty().WithMessage(" EmrgencyAddress required");
-            //RuleFor(x => x.PrefixId).NotNull().NotEmpty().WithMessage(" PrefixId required");
-            //RuleFor(x => x.MembershipId).NotNull().NotEmpty().WithMessage(" MembershipId required");
+            RuleFor(x => x.EmrgencyId).NotNull().NotEmpty().WithMessage("EmrgencyId is required");
+            RuleFor(x => x.MembershipId).NotNull().NotEmpty().WithMessage("MembershipId  is required");
+            RuleFor(x => x.PrefixId).NotNull().NotEmpty().WithMessage(" PrefixId required");
+            
 
         }
     }
@@ -153,7 +151,6 @@ namespace HIMS.API.Models.TrustMembershipRegistration
         public long PrefixId { get; set; }
         public long RelationId { get; set; }
         public string? RelativeName { get; set; }
-        //public long? RelationNameId { get; set; }
         public string? RelativeMobile { get; set; }
         public string? RelativeAddress { get; set; }
         public string? PrefixName { get; set; }
@@ -163,10 +160,10 @@ namespace HIMS.API.Models.TrustMembershipRegistration
     {
         public MembershipRelativeModelValidator()
         {
-            //RuleFor(x => x.RelativeName).NotNull().NotEmpty().WithMessage("RelativeName is required");
-            //RuleFor(x => x.RelativeMobile).NotNull().NotEmpty().WithMessage("RelativeMobile  is required");
-            //RuleFor(x => x.MembershipId).NotNull().NotEmpty().WithMessage(" MembershipId required");
-            //RuleFor(x => x.PrefixId).NotNull().NotEmpty().WithMessage(" PrefixId required");
+            RuleFor(x => x.RelativeId).NotNull().NotEmpty().WithMessage("RelativeId is required");
+            RuleFor(x => x.MembershipId).NotNull().NotEmpty().WithMessage("MembershipId  is required");
+            RuleFor(x => x.PrefixId).NotNull().NotEmpty().WithMessage(" PrefixId required");
+            RuleFor(x => x.RelationId).NotNull().NotEmpty().WithMessage(" RelationId required");
 
         }
     }
