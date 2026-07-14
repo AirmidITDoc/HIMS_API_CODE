@@ -77,9 +77,9 @@ namespace HIMS.API.Models.TrustMembershipRegistration
         public DateTime? ReceiptDate { get; set; }
         public DateTime? MembershipvalidDate { get; set; }
 
-        public List<MembershipChildModel> TMembershipChildren { get; set; }
-        public List<MembershipEmrgencyModel> TMembershipEmrgencies { get; set; }
-        public List<MembershipRelativeModel> TMembershipRelatives { get; set; }
+        public List<MembershipChildModel>? TMembershipChildren { get; set; }
+        public List<MembershipEmrgencyModel>? TMembershipEmrgencies { get; set; }
+        public List<MembershipRelativeModel>? TMembershipRelatives { get; set; }
     }
     public class TrustMembershipRegModelValidator : AbstractValidator<TrustMembershipRegModel>
     {
@@ -163,7 +163,7 @@ namespace HIMS.API.Models.TrustMembershipRegistration
             RuleFor(x => x.RelativeId).NotNull().NotEmpty().WithMessage("RelativeId is required");
             RuleFor(x => x.MembershipId).NotNull().NotEmpty().WithMessage("MembershipId  is required");
             RuleFor(x => x.PrefixId).NotNull().NotEmpty().WithMessage(" PrefixId required");
-            RuleFor(x => x.RelationId).NotNull().NotEmpty().WithMessage(" RelationId required");
+            //RuleFor(x => x.RelationId).NotNull().NotEmpty().WithMessage(" RelationId required");
 
         }
     }
