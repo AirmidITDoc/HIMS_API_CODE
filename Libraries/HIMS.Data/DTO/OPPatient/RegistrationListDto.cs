@@ -65,14 +65,7 @@
         public string CreatedBy { get; set; }
         public string? EmailId { get; set; }
 
-
-
-
-
-    }
-
-
-
+  }
 
     public class RegistrationAutoCompleteDto
     {
@@ -90,6 +83,8 @@
         public long RegId { get; set; }
         public DateTime? DateofBirth { get; set; }
         public string? AadharCardNo { get; set; }
+        public long? GenderId { get; set; }
+
 
     }
 }

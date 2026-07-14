@@ -129,7 +129,11 @@ namespace HIMS.API.Controllers.OPPatient
                 PatientName = x.FirstName + " " + x.MiddleName + " " + x.LastName,     
                 EmailId = x.EmailId,
                 RegId =x.RegId,
-                AadharCardNo = x.AadharCardNo
+                AadharCardNo = x.AadharCardNo,
+                DateofBirth = x.DateofBirth,
+                GenderId = x.GenderId
+
+
 
             }));
         }

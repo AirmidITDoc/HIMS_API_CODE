@@ -116,8 +116,9 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MEmployeeDepartmentMaster> _MEmployeeDepartmentMaster;
         private readonly IGenericService<MEmployeeDesignationMaster> _MEmployeeDesignationMaster;
         private readonly IGenericService<MExternalDoctorMaster> _MExternalDoctorMaster;
+        private readonly IGenericService<MLoginAccessConfig> _MLoginAccessConfig;
 
-
+        
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
                                   IGenericService<MMaritalStatusMaster> iMaritalStatusMaster, IGenericService<MReligionMaster> iMreligionMaster, IGenericService<PatientTypeMaster> iPatientTypeMaster, IGenericService<TariffMaster> tariffMaster,
                                   IGenericService<MDepartmentMaster> iMDepartmentMaster, IGenericService<DoctorMaster> iDoctorMaster, IGenericService<DbPurposeMaster> iMDoPurposeMaster, IGenericService<MCityMaster> iMDoCityMaster
@@ -175,7 +176,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MedicalRecordConfig> MedicalRecordConfig,
                               IGenericService<MEmployeeDepartmentMaster> MEmployeeDepartmentMaster,
                               IGenericService<MEmployeeDesignationMaster> MEmployeeDesignationMaster,
-                              IGenericService<MExternalDoctorMaster> MExternalDoctorMaster
+                              IGenericService<MExternalDoctorMaster> MExternalDoctorMaster,
+                              IGenericService<MLoginAccessConfig> MLoginAccessConfig
+
 
 
 
@@ -283,6 +286,8 @@ namespace HIMS.API.Controllers.Common
             _MEmployeeDepartmentMaster = MEmployeeDepartmentMaster;
             _MEmployeeDesignationMaster = MEmployeeDesignationMaster;
             _MExternalDoctorMaster = MExternalDoctorMaster;
+            _MLoginAccessConfig = MLoginAccessConfig;
+
 
 
             
@@ -503,7 +508,8 @@ namespace HIMS.API.Controllers.Common
                 "PCPNDTAnyother" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "PCPNDTAnyother")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "TrustIncomerange" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TrustIncomerange")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "TrustOccupation" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TrustOccupation")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
-
+                //"LoginAccessConfig" => (await _MLoginAccessConfig.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MLoginAccessConfig.LoginConfigId), nameof(MLoginAccessConfig.AccessValueId)),
+                "LoginAccessConfig" => (await _MLoginAccessConfig.GetAll()).ToList() .ToDropDown(nameof(MLoginAccessConfig.LoginConfigId), nameof(MLoginAccessConfig.AccessValueId)),
 
 
                 _ => new List<SelectListItem>()

@@ -89,6 +89,42 @@ namespace HIMS.Data.DTO.OPPatient
 
 
 
+
+    }
+    public class TrustMembershipRegistrationDTO
+    {
+
+        public long MembershipId { get; set; }
+        public string MembershipNo { get; set; } = null!;
+        //public DateTime MembershipDate { get; set; }
+        //public DateTime MembershipTime { get; set; }
+        public long HprefixId { get; set; }
+        public long HgenderId { get; set; }
+        public string HusbandFirstName { get; set; } = null!;
+        public string? HusbandMiddleName { get; set; }
+        public string? HusbandLastName { get; set; }
+        public DateTime HusbandDob { get; set; }
+        public long? HusbandAgeY { get; set; }
+        public long? HusbandAgeM { get; set; }
+        public long? HusbandAgeD { get; set; }
+        public string? HusbandMobile { get; set; }
+        public string? HusbandEmail { get; set; }
+        public string? HusbandAadhaar { get; set; }
+        public string? HusbandPan { get; set; }
+        public string? HusbandBloodGroupId { get; set; }
+        public string? HusbandEducation { get; set; }
+        public long? HusbandOccupationId { get; set; }
+        public string? HusbandHobbies { get; set; }
+        public string? HusbandMedications { get; set; }
+        public DateTime? HusbandFullBodyCheckupDate { get; set; }
+        public string? HusbandPhoto { get; set; }
+        public long? CityId { get; set; }
+        public string? CityName { get; set; }
+       
+
+
+
+
     }
 }
 

@@ -14641,6 +14641,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.PrefixName).HasMaxLength(50);
+
                 entity.HasOne(d => d.Membership)
                     .WithMany(p => p.TMembershipChildren)
                     .HasForeignKey(d => d.MembershipId)
@@ -14664,6 +14666,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.EmrgencyName).HasMaxLength(150);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PrefixName).HasMaxLength(50);
 
                 entity.HasOne(d => d.Membership)
                     .WithMany(p => p.TMembershipEmrgencies)
@@ -14812,6 +14816,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PrefixName).HasMaxLength(50);
 
                 entity.Property(e => e.RelativeAddress).HasMaxLength(255);
 
