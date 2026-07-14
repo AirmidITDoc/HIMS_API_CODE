@@ -79,5 +79,6 @@ namespace HIMS.ABHA.Configuration
         public string M3ConsentFetch {  get; set; } = string.Empty;
         public string M3HealthRequest {  get; set; } = string.Empty;
         public string M3HealthNotify {  get; set; } = string.Empty;
+        public string FindAbha { get; set; } = string.Empty;
     }
 }

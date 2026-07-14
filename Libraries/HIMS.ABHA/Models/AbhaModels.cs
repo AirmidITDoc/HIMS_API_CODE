@@ -306,6 +306,38 @@ namespace HIMS.ABHA.Models
     //    public string? PinCode { get; set; }
     //}
 
+    // ===== fins ABHA Address =====
+    public class FindAbhaResponse
+    {
+        [JsonPropertyName("txnId")]
+        public string TxnId { get; set; }
+
+        [JsonPropertyName("ABHA")]
+        public List<AbhaDetails> ABHA { get; set; }
+    }
+
+    public class AbhaDetails
+    {
+        [JsonPropertyName("index")]
+        public int Index { get; set; }
+
+        [JsonPropertyName("ABHANumber")]
+        public string ABHANumber { get; set; }
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("gender")]
+        public string Gender { get; set; }
+
+        // JSON returns "true"/"false" as a string, so keep it as string
+        [JsonPropertyName("kycVerified")]
+        public string KycVerified { get; set; }
+
+        [JsonPropertyName("authMethods")]
+        public List<string> AuthMethods { get; set; }
+    }
+
     // ===== ABHA Address =====
     public class AbhaAddressSuggestionResponse
     {
@@ -371,6 +403,11 @@ namespace HIMS.ABHA.Models
     {
         public string TxnId { get; set; } = string.Empty;
         public string AbhaAddress { get; set; } = string.Empty;
+    }
+    public class FindAbhaMobileDto
+    {
+        public string scope { get; set; } = string.Empty;
+        public string Mobile { get; set; } = string.Empty;
     }
     public class ProfileRequestDto
     {

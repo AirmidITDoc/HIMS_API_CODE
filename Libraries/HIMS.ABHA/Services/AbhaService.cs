@@ -4,6 +4,7 @@ using HIMS.ABHA.Interface;
 using HIMS.ABHA.Models;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
+using static System.Net.WebRequestMethods;
 
 namespace HIMS.ABHA.Services
 {
@@ -184,6 +185,7 @@ namespace HIMS.ABHA.Services
 
         public async Task<ApiResult<AbhaEnrolmentResponse>> CreateAbhaAddressAsync(string txnId, string abhaAddress)
         {
+
             var payload = new CreateAbhaAddressRequest
             {
                 TxnId = txnId,
@@ -193,6 +195,30 @@ namespace HIMS.ABHA.Services
 
             var url = $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{AppSettings.Current.Endpoints.CreateAbhaAddress}";
             return await _httpClient.PostAsync<AbhaEnrolmentResponse>(url, payload);
+        }
+
+        public async Task<ApiResult<FindAbhaResponse>> FindAbhaMobileAsync(string scope,string mobile)
+        {
+            try
+            {
+                var publicKey = await _tokenService.GetPublicCertificateAsync();
+                var encryptedOtp = RsaEncryptionHelper.Encrypt(mobile, publicKey);
+
+                var payload = new
+                {
+                    scope = new[] { "search-abha" },
+                    mobile = encryptedOtp
+                };
+
+                var url = $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{AppSettings.Current.Endpoints.FindAbha}";
+                return await _httpClient.PostAsync<FindAbhaResponse>(url, payload);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "search-abha failed");
+                return new ApiResult<FindAbhaResponse> { Success = false, Error = ex.Message };
+            }
         }
 
         // ===== PROFILE / CARD / QR =====
