@@ -53,6 +53,8 @@ namespace HIMS.API.Models.IPPatient
         public string? MedTourismOfficeWorkAddress { get; set; }
         public string? EmailId { get; set; }
         public long RegId { get; set; }
+        public long? MembershipId { get; set; }
+
 
     }
     public class AdmissionRegModelValidator : AbstractValidator<AdmissionRegModel>

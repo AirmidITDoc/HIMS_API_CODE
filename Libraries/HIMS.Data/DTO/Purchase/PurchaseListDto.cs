@@ -29,13 +29,12 @@
 
         public long? PaymentTermId { get; set; }
         public long? ModeOfPayment { get; set; }
-        public String? Worrenty { get; set; }
+        public string? Worrenty { get; set; }
 
-        public String? Email { get; set; }
-        public String? Mobile { get; set; }
+        public string? Email { get; set; }
+        public string? Mobile { get; set; }
         public long IsPurchaseRequisitionId { get; set; }
         public bool IsProceedToApproval { get; set; }
-        public bool? IsApproved { get; set; }
 
 
     }
