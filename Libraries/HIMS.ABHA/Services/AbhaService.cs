@@ -239,13 +239,31 @@ namespace HIMS.ABHA.Services
 
                 var url = $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{AppSettings.Current.Endpoints.FindAbha}";
                 return await _httpClient.PostAsync<List<FindAbhaResponse>>(url, payload);
-                //return await _httpClient.PostAsync<List<FindAbhaResponse>>(url, payload);
-
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "search-abha failed");
                 return new ApiResult<List<FindAbhaResponse>> { Success = false, Error = ex.Message };
+            }
+        }
+
+        public async Task<ApiResult<AbhaProfileResponse>> AbhaAddressSearchAsync(string mobile)
+        {
+            try
+            {
+                var payload = new
+                {
+                    abhaAddress = mobile
+                };
+
+                var url = $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{AppSettings.Current.Endpoints.AbhaAddressSearch}";
+                return await _httpClient.PostAsync<AbhaProfileResponse>(url, payload);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "search-abha failed");
+                return new ApiResult<AbhaProfileResponse> { Success = false, Error = ex.Message };
             }
         }
 
