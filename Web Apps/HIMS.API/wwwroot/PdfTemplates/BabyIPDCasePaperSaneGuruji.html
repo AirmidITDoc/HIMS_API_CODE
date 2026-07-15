@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neonatal Baby - IPD Case Paper</title>
+    <style>
+        /* A4 page setup — cannot be expressed via inline style="" attributes */
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .a4-sheet {
+                width: 190mm !important;
+                min-height: 0 !important;
+                margin: 0 !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body style="margin:0; padding:1px; font-family: Arial, Helvetica, sans-serif;">
+
+    <table class="a4-sheet" style="width:210mm; min-height:297mm; margin:0 auto; background-color:#ffffff; border:px solid #ccc; border-collapse:collapse; color:#222;  rgba(0,0,0,0.15);" cellpadding="0" cellspacing="0">
+        <tr>
+            <td style="padding:1mm; vertical-align:top;">
+
+                <!-- Header -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:20px; border-bottom:2px solid #000; padding-bottom:10px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:1%;">&nbsp;</td>
+                        <td style="text-align:center; font-size:13px; color:#333; padding-bottom:10px;">
+                            Maharashtra Arogya Mandal's Sumatibhai Shah Ayurved Mahavidyalaya's<br>
+                            <span style="font-size:15px; font-weight:bold;">Ayurved Rugnalaya-Sane Guruji Arogya Kendra, <span style="font-weight:normal; font-size:14px;">Hadapsar, Pune 28.</span></span><br>
+                            <span style="font-size:16px; font-weight:bold; letter-spacing:1px;">NEONATAL BABY - IPD CASE-PAPER</span>
+                        </td>
+                        <td style="width:70px; text-align:right; vertical-align:top; font-size:12px; color:#444; white-space:nowrap;">SGAK/F/50</td>
+                    </tr>
+                </table>
+
+                <!-- B/o, MR No -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:8px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:65%;">B/o {{MotherName}}</td>
+                        <td style="width:35%; text-align:right;">MR No. <span style="display:inline-block; width:100px; border-bottom:1px solid #000;">{{RegNo}}</span></td>
+                    </tr>
+                </table>
+
+                <!-- Address -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:15px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:12%; white-space:nowrap;">Address :</td>
+                        <td style="border-bottom:1px solid #000;">{{Address}}, {{City}}</td>
+                    </tr>
+                </table>
+
+                <!-- IPD/OPD/Sex -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:10px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:33%;">IPD No. <span style="display:inline-block; width:120px; border-bottom:1px solid #000;">{{IPDNo}}</span></td>
+                        <td style="width:33%;">OPD No. : <span style="display:inline-block; width:120px; border-bottom:1px solid #000;">{{OPDNo}}</span></td>
+                        <td style="width:34%;">Sex M/F: <span style="display:inline-block; width:100px; border-bottom:1px solid #000;">{{GenderName}}</span></td>
+                    </tr>
+                </table>
+
+                <!-- Age -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:6px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:33%; white-space:nowrap;">Age-{{AgeYear}}&nbsp;&nbsp;&nbsp;Month-{{AgeMonth}}</td>
+                        <td style="width:33%;">Day : <span style="display:inline-block; width:100px; border-bottom:1px solid #000;">{{AgeDay}}</span></td>
+                        <td style="width:34%;">Hours : <span style="display:inline-block; width:100px; border-bottom:1px solid #000;">{{AgeHour}}</span></td>
+                    </tr>
+                </table>
+
+                <!-- Dates -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:15px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:34%;">Date of Admission. <span style="display:inline-block; width:110px; border-bottom:1px solid #000;">{{DOA}} {{DOT}}</span></td>
+                        <td style="width:33%;">Date of Discharge : <span style="display:inline-block; width:110px; border-bottom:1px solid #000;">{{DischargeDate}}</span></td>
+                        <td style="width:33%;">Date of Birth : <span style="display:inline-block; width:110px; border-bottom:1px solid #000;">{{DateOfBirth}}</span></td>
+                    </tr>
+                </table>
+
+                <!-- Type of Delivery -->
+                <div style="font-size:14px; margin-bottom:12px;">
+                    Type of Delivery : Normal / LSCS / Forceps / Ventose/ Hospital Delivery / Outside Delivery
+                </div>
+
+                <!-- Time of Birth -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:12px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:50%;">Time of Birth <span style="display:inline-block; width:150px; border-bottom:1px solid #000;">{{TimeOfBirth}}</span></td>
+                        <td style="width:50%;">Baby Weight : <span style="display:inline-block; width:150px; border-bottom:1px solid #000;">{{BabyWeight}}</span></td>
+                    </tr>
+                </table>
+
+                <!-- Ward Admission -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:8px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="white-space:nowrap; width:1%;">Ward Admission : Ward_1/ Ward_3/ Special room / NICU/ HDU/ Labour Room :</td>
+                        <td style="border-bottom:1px solid #000;">{{RoomName}} - {{BedName}}</td>
+                    </tr>
+                </table>
+
+                <!-- Maternal History -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:12px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:35%;">Maternal History:G <span style="display:inline-block; width:80px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                        <td style="width:20%;">P <span style="display:inline-block; width:80px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                        <td style="width:20%;">A <span style="display:inline-block; width:80px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                        <td style="width:25%;">H/o PROM <span style="display:inline-block; width:80px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                    </tr>
+                </table>
+
+                <!-- Blood Group -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:12px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:30%;">Blood Group Mother's<span style="display:inline-block; width:100px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                        <td style="width:25%;">Baby's<span style="display:inline-block; width:100px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                        <td style="width:25%;">Blood Pressure<span style="display:inline-block; width:100px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                        <td style="width:20%;">Maternal HB%</td>
+                    </tr>
+                </table>
+
+                <!-- HIV -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:12px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:60%;">HIV/VDRL/TORCH/HBsAg : <span style="display:inline-block; width:200px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                        <td style="width:40%;">H/o.Consanginity- <span style="display:inline-block; width:120px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                    </tr>
+                </table>
+
+                <!-- Gestational age -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:6px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:60%;">Gestational age by: USG : <span style="display:inline-block; width:200px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                        <td style="width:40%;">Clinically : <span style="display:inline-block; width:150px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                    </tr>
+                </table>
+
+                <!-- Any Other -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:6px; font-size:14px; font-weight:bold;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:1%; white-space:nowrap;">Any Other :</td>
+                        <td style="border-bottom:1px solid #000;">&nbsp;</td>
+                    </tr>
+                </table>
+
+                <!-- Delivered by / Received by -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:18px; font-size:14px; margin-top:12px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:60%;">Delivered by Doctor : <span style="display:inline-block; width:250px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                        <td style="width:40%;">Received by Doctor : <span style="display:inline-block; width:180px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                    </tr>
+                </table>
+
+                <!-- Clinical Examination -->
+                <div style="font-size:14px; margin-bottom:10px;">
+                    Clinical Examination of Neonate:
+                </div>
+
+                <!-- APGAR -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:6px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:15%;">APGAR</td>
+                        <td style="width:28%;">0 Min. <span style="display:inline-block; width:80px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                        <td style="width:28%;">5 Min. <span style="display:inline-block; width:80px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                        <td style="width:29%;">10 Min <span style="display:inline-block; width:80px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                    </tr>
+                </table>
+
+                <!-- Weight/Height -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:12px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:15%;">Weight:</td>
+                        <td style="width:28%; border-bottom:1px solid #000;">&nbsp;</td>
+                        <td style="width:28%;">Height <span style="display:inline-block; width:80px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                        <td style="width:29%;">&nbsp;</td>
+                    </tr>
+                </table>
+
+                <!-- Head circumference -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:18px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:50%;">Head circumfernance : <span style="display:inline-block; width:150px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                        <td style="width:50%;">Ant.Fontanel <span style="display:inline-block; width:150px; border-bottom:1px solid #000;">&nbsp;</span></td>
+                    </tr>
+                </table>
+
+                <!-- Systemic Examination -->
+                <div style="font-weight:bold; font-size:14px; margin-bottom:8px;">Systemic Examination :</div>
+
+                <table style="width:100%; border-collapse:collapse; margin-bottom:20px; font-size:14px; table-layout:fixed;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="border:1px solid #000; width:25%; padding:8px; font-weight:bold; text-align:center;">CVS</td>
+                        <td style="border:1px solid #000; width:25%; padding:8px; font-weight:bold; text-align:center;">RS</td>
+                        <td style="border:1px solid #000; width:25%; padding:8px; font-weight:bold; text-align:center;">P/A</td>
+                        <td style="border:1px solid #000; width:25%; padding:8px; font-weight:bold; text-align:center;">CNS</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #000; height:60px;">&nbsp;</td>
+                        <td style="border:1px solid #000; height:60px;">&nbsp;</td>
+                        <td style="border:1px solid #000; height:60px;">&nbsp;</td>
+                        <td style="border:1px solid #000; height:60px;">&nbsp;</td>
+                    </tr>
+                </table>
+
+                <!-- Birth Defect -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:18px; font-size:14px;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:1%; white-space:nowrap;">Birth Defect: if any:</td>
+                        <td style="border-bottom:1px solid #000;">&nbsp;</td>
+                    </tr>
+                </table>
+
+                <!-- Daily Rounds -->
+                <div style="font-weight:bold; font-size:14px; margin-bottom:8px;">Daily Rounds:</div>
+
+                <table style="width:100%; border-collapse:collapse; font-size:14px; table-layout:fixed;" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="border:1px solid #000; width:15%; padding:8px; vertical-align:top;">Date</td>
+                        <td style="border:1px solid #000; width:55%; padding:8px; vertical-align:top; text-align:center;">Observation</td>
+                        <td style="border:1px solid #000; width:30%; padding:8px; vertical-align:top; text-align:center;">Treatment</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #000; height:220px;">&nbsp;</td>
+                        <td style="border:1px solid #000;">&nbsp;</td>
+                        <td style="border:1px solid #000;">&nbsp;</td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
