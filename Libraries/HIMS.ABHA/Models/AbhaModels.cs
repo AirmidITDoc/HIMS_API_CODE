@@ -143,6 +143,9 @@ namespace HIMS.ABHA.Models
 
         [JsonPropertyName("otpSystem")]
         public string OtpSystem { get; set; } = "aadhaar";
+
+        [JsonPropertyName("txnId")]
+        public string? TxnId { get; set; } = string.Empty;
     }
     public class Account
     {
@@ -412,5 +415,11 @@ namespace HIMS.ABHA.Models
     {
         public string Token { get; set; } = string.Empty;
         public bool IsAddress { get; set; } = false;
+    }
+    public class AbhaFindRequestOtpDto
+    {
+        public string TxnId { get; set; } = string.Empty;
+        public string AadhaarNumber { get; set; } = string.Empty;
+        public int OtpType { get; set; } = 1;
     }
 }
