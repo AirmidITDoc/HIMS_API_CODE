@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HIMS.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -82,5 +83,10 @@ namespace HIMS.Data.DTO.Inventory
         public string? IndicationDesc { get; set; }
         public bool? IndicationValues { get; set; }
     }
-
+    public class RadioLogistListDto
+    {
+        public string? DoctorName { get; set; }
+        public string? DepartmentName { get; set; }
+    }
+     
 }

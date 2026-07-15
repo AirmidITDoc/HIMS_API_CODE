@@ -10,6 +10,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.Data;
+using Microsoft.Data.SqlClient;
+
+
 
 namespace HIMS.Services.Pathlogy
 {
@@ -28,6 +32,14 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<IndicationListDto>(model, "ps_RtrvIndicationbyProcessId");
         }
+        public List<RadioLogistListDto> SearchPatient()
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = Array.Empty<SqlParameter>();
+            var data = sql.FetchListBySP<RadioLogistListDto>("Rtrv_RadiologistDoctorMasterForCombo", para);
+            return data;
+        }
+
 
 
         public virtual async Task InsertAsync( TPcpndprocess ObjTPcpndprocess, int UserId,string Username)
