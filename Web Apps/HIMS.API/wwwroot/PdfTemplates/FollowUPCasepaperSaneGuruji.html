@@ -11,6 +11,7 @@
 
 <body style="margin:0; padding:0; font-size:25px;">
     <div style="width:100%;margin:0;background:#fff;box-sizing:border-box;">
+
         <!-- Header -->
         <table style="width:100%;border-collapse:collapse;border:1px solid #000;">
 
@@ -21,7 +22,7 @@
                         <tr><td style="font-size:22px;font-weight:bold;padding:0;">महाराष्ट्र आरोग्य मंडळाचे,</td></tr>
                         <tr><td style="font-size:22px;padding:0;">सुमतिभाई शाह आयुर्वेद महाविद्यालय संचालित</td></tr>
                         <tr><td style="font-size:24px;font-weight:bold;padding:2px 0 0 0;">आयुर्वेद रुग्णालय – साने गुरूजी आरोग्य केंद्र</td></tr>
-                        <tr><td style="font-size:22px;padding:0;">(धर्मादाय), हडपसर, पुणे – २८</td></tr>
+                        <tr><td style="font-size:22px;padding:0;">(धर्मादाय), हडपसर, पुणे – ४११०२८</td></tr>
                     </table>
                 </td>
 
@@ -33,23 +34,23 @@
                             <td style="font-weight:bold;text-align:left;">
                                 पुरवणी केस पेपर
                             </td>
-                    
+
                             <td>
                                 <B>  SGAK/F/02</B>
                             </td>
                         </tr>
 
-                        <tr>
+                        <tr style="font-size:22px;">
                             <td>वार्षिक एम.आर. क्रमांक :</td>
                             <td> <b>{{RegNo}}</b></td>
                         </tr>
 
-                        <tr>
+                        <tr style="font-size:22px;">
                             <td>ओपीडी नं :  <b>{{OPDNo}}</b></td>
-                            <td> <b>{{GenderName}}</b></td>
+
                         </tr>
 
-                        <tr>
+                        <tr style="font-size:22px;">
                             <td>पुरवणी क.</td>
                             <td> </td>
                         </tr>
@@ -61,7 +62,7 @@
 
             <tr style="vertical-align:top;">
 
-                <td colspan="3" style="padding:4px 6px; width:45%; border-top:1px solid #000;  vertical-align:top;colspan="3" ">
+                <td colspan="3" style="padding:4px 6px; width:45%; border-top:1px solid #000;  vertical-align:top;colspan=" 3" ">
                     <b>नाव :</b>
                     <span style="font-size:20px;font-weight:bold;">
                         {{PatientName}}
@@ -71,29 +72,30 @@
             </tr>
 
             <tr>
-                <td colspan="3" style="padding:2px 6px;font-size:20px;">
+                <td style="padding:2px 6px;font-size:20px;">
                     <b>पत्ता :</b>
                     {{Address}}
                 </td>
-
-            </tr>
-
-            <tr>
-
-                <td></td>
-                <td colspan="2" style="padding: 6px; ">
+                <td style="padding: 6px; ">
+                </td>
+                <td style="padding: 6px; ">
                     वय :
                     <span style="font-size:22px;">
-                        वर्ष <b>{{AgeYear}}  </b>  महिना <b> {{AgeMonth}}</b>  दिवस <b>{{AgeDay}} </b>
+                        वर्ष <b>{{Age}}</b>
+                    </span>
+
+                    लिंग  :
+                    <span style="font-size:22px;">
+                        <b>{{GenderName}}</b>
                     </span>
                 </td>
-
             </tr>
+
 
 
         </table>
 
-     
+
         <!-- Treatment Table -->
 
         <table style="width:100%; border-collapse:collapse; border:1px solid #000; font-family:Mangal,Arial,sans-serif; font-size:15px;">
@@ -102,7 +104,7 @@
                     <th style="border:1px solid #000; width:10%; text-align:center; font-weight:normal;">
                         तारीख
                     </th>
-                    <th style="border:1px solid #000; width:33%; text-align:center; font-weight:normal;">
+                    <th style="border:1px solid #000; width:20%; text-align:center; font-weight:normal;">
                         लक्षणे
                     </th>
                     <th style="border:1px solid #000; width:33%; text-align:center; font-weight:normal;">
