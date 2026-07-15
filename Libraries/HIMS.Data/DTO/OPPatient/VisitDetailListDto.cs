@@ -101,6 +101,8 @@
         public string? AgeDay { get; set; }
         public long? UnitId { get; set; }
         public long? hospitalId { get; set; }
+        public string? Address { get; set; }
+
 
     }
 }
