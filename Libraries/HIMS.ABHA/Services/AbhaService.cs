@@ -114,6 +114,33 @@ namespace HIMS.ABHA.Services
             }
         }
 
+        public async Task<ApiResult<OtpResponse>> RequestOtpAbhaFindAsync(string aadharno, List<string> scope, string LoginHint, string OtpSystem, string txnId)
+        {
+            try
+            {
+                //List<string> scope = isMobile ? new List<string> { "abha-login", "mobile-verify" } : new List<string> { "abha-login", "aadhaar-verify" };
+                var publicKey = await _tokenService.GetPublicCertificateAsync();
+                var encryptedAadhaar = RsaEncryptionHelper.Encrypt(aadharno, publicKey);
+
+                var payload = new OtpRequest
+                {
+                    LoginId = encryptedAadhaar,
+                    LoginHint = LoginHint,
+                    OtpSystem = OtpSystem,
+                    Scope = scope,
+                    TxnId = txnId
+                };
+
+                var url = $"{AppSettings.Current.BaseUrls.AbhaBaseUrl}{(AppSettings.Current.Endpoints.AbhaFindSendOtpRequest)}";
+                return await _httpClient.PostAsync<OtpResponse>(url, payload);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "RequestOtpAsync failed");
+                return new ApiResult<OtpResponse> { Success = false, Error = ex.Message };
+            }
+        }
+
         public async Task<ApiResult<VerifyOtpResponse>> VerifyOtpAsync(string txnId, string otp, List<string> scope, bool isAbhaAddress = false)
         {
             try
