@@ -57,6 +57,9 @@ namespace HIMS.API.Models.Pathology
         public long? DeclarationDoctorid { get; set; }
         public string? Address { get; set; }
         public string? Abhanumber { get; set; }
+        public string? PatientAddress { get; set; }
+        public string? PatientMobileNo { get; set; }
+        public string? RadiologistDoctor { get; set; }
         public List<PcpndprocessDetailModel> TPcpndprocessDetails { get; set; }
 
     }

@@ -10402,10 +10402,6 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AadharCardNo).HasMaxLength(25);
 
-                entity.Property(e => e.AbhaAddress).HasMaxLength(255);
-
-                entity.Property(e => e.AbhaNumber).HasMaxLength(50);
-
                 entity.Property(e => e.Address).HasMaxLength(200);
 
                 entity.Property(e => e.Age).HasMaxLength(10);
@@ -17009,9 +17005,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
 
+                entity.Property(e => e.PatientAddress).HasMaxLength(500);
+
+                entity.Property(e => e.PatientMobileNo).HasMaxLength(20);
+
                 entity.Property(e => e.ProcedureDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ProcessDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RadiologistDoctor).HasMaxLength(500);
 
                 entity.Property(e => e.RelativeName).HasMaxLength(255);
 

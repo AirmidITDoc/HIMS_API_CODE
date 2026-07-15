@@ -66,6 +66,9 @@ namespace HIMS.Data.Models
         public DateTime? ModifiedDate { get; set; }
         public string? Address { get; set; }
         public string? Abhanumber { get; set; }
+        public string? PatientAddress { get; set; }
+        public string? PatientMobileNo { get; set; }
+        public string? RadiologistDoctor { get; set; }
 
         public virtual ICollection<TPcpndprocessDetail> TPcpndprocessDetails { get; set; }
     }
