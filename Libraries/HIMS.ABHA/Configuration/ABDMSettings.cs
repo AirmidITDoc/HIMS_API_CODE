@@ -81,5 +81,6 @@ namespace HIMS.ABHA.Configuration
         public string M3HealthNotify {  get; set; } = string.Empty;
         public string FindAbha { get; set; } = string.Empty;
         public string AbhaFindSendOtpRequest { get; set; } = string.Empty;
+        public string AbhaAddressSearch { get; set; } = string.Empty;
     }
 }

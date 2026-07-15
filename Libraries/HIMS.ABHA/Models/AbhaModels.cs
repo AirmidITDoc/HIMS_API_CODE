@@ -351,6 +351,33 @@ namespace HIMS.ABHA.Models
         public List<string> AbhaAddressList { get; set; } = new();
     }
 
+    public class AbhaProfileResponse
+    {
+        [JsonPropertyName("healthIdNumber")]
+        public string HealthIdNumber { get; set; } = string.Empty;
+
+        [JsonPropertyName("abhaAddress")]
+        public string AbhaAddress { get; set; } = string.Empty;
+
+        [JsonPropertyName("authMethods")]
+        public List<string> AuthMethods { get; set; } = new();
+
+        [JsonPropertyName("blockedAuthMethods")]
+        public List<string> BlockedAuthMethods { get; set; } = new();
+
+        [JsonPropertyName("status")]
+        public string Status { get; set; } = string.Empty;
+
+        [JsonPropertyName("message")]
+        public string? Message { get; set; }
+
+        [JsonPropertyName("fullName")]
+        public string FullName { get; set; } = string.Empty;
+
+        [JsonPropertyName("mobile")]
+        public string Mobile { get; set; } = string.Empty;
+    }
+
     public class CreateAbhaAddressRequest
     {
         [JsonPropertyName("txnId")]

@@ -191,7 +191,7 @@ namespace HIMS.API.Controllers.ABHA.M1
 
 
         // ===== ABHA address with Mobile =====
-        // 1. Search Abha
+        // 1. Search Abha with Mobile
         [HttpPost("address/findAbha")]
         public async Task<ApiResponse> FindAbha(FindAbhaMobileDto dto)
         {
@@ -219,6 +219,17 @@ namespace HIMS.API.Controllers.ABHA.M1
             var result = await _abhaService.RequestOtpAbhaFindAsync(dto.AadhaarNumber, scope, LoginHint, otpsystem, dto.TxnId);
             if (result.Success)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Otp Sent successfully.", result.Data);
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
+        }
+
+        //=========Abha Address Search Api
+        [HttpPost("address/AbhaAddressSearch")]
+        public async Task<ApiResponse> AbhaAddressSearch(FindAbhaMobileDto dto)
+        {
+            var result = await _abhaService.AbhaAddressSearchAsync(dto.Mobile);
+            if (result.Success)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Address retrieved successfully.", result.Data);
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
