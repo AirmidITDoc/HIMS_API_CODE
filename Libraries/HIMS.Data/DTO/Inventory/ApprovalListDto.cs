@@ -15,13 +15,15 @@ namespace HIMS.Data.DTO.Inventory
         public long? TranId { get; set; }
         public string? TransactionType { get; set; }
         public byte? ApprovalStatus { get; set; }
-        public long? AuthorizeBy { get; set; }
         public DateTime? ApprovedDateTime { get; set; }
         public string? Comment { get; set; }
-        public long? CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public long? ModifiedBy { get; set; }
+        public string? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public string? AuthorizedBy { get; set; }
+
+        
     }
     public class UserApprovalNamelistDto
     {

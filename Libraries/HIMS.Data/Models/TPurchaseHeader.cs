@@ -51,6 +51,7 @@ namespace HIMS.Data.Models
         public DateTime? ModifiedDate { get; set; }
         public long? IsPurchaseRequisitionId { get; set; }
         public bool? IsProceedToApproval { get; set; }
+        public bool? IsApproved { get; set; }
 
         public virtual ICollection<TPurchaseDetail> TPurchaseDetails { get; set; }
     }

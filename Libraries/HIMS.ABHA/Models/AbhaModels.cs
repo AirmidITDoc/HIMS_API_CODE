@@ -406,7 +406,6 @@ namespace HIMS.ABHA.Models
     }
     public class FindAbhaMobileDto
     {
-        public string scope { get; set; } = string.Empty;
         public string Mobile { get; set; } = string.Empty;
     }
     public class ProfileRequestDto

@@ -567,6 +567,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPathologyReportDetailsArch> TPathologyReportDetailsArches { get; set; } = null!;
         public virtual DbSet<TPathologyReportHeader> TPathologyReportHeaders { get; set; } = null!;
         public virtual DbSet<TPathologyReportTemplateDetail> TPathologyReportTemplateDetails { get; set; } = null!;
+        public virtual DbSet<TPatientAbhaInformation> TPatientAbhaInformations { get; set; } = null!;
         public virtual DbSet<TPatientDetail> TPatientDetails { get; set; } = null!;
         public virtual DbSet<TPatientFeedback> TPatientFeedbacks { get; set; } = null!;
         public virtual DbSet<TPatientPolicyInformation> TPatientPolicyInformations { get; set; } = null!;
@@ -10401,6 +10402,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AadharCardNo).HasMaxLength(25);
 
+                entity.Property(e => e.AbhaAddress).HasMaxLength(255);
+
+                entity.Property(e => e.AbhaNumber).HasMaxLength(50);
+
                 entity.Property(e => e.Address).HasMaxLength(200);
 
                 entity.Property(e => e.Age).HasMaxLength(10);
@@ -16634,6 +16639,33 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SuggestionNotes).HasMaxLength(500);
 
                 entity.Property(e => e.TemplateResultInHtml).HasColumnName("TemplateResultInHTML");
+            });
+
+            modelBuilder.Entity<TPatientAbhaInformation>(entity =>
+            {
+                entity.HasKey(e => e.AbhaTranId);
+
+                entity.ToTable("T_PatientAbhaInformation");
+
+                entity.Property(e => e.AbhaAddress).HasMaxLength(255);
+
+                entity.Property(e => e.AbhaFullName).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Gender)
+                    .HasMaxLength(2)
+                    .IsFixedLength();
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.VerifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.YearOfBirth).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TPatientDetail>(entity =>
