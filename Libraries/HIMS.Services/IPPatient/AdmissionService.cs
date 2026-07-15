@@ -275,6 +275,8 @@ namespace HIMS.Services.IPPatient
                           DepartmentName = de.DepartmentName,
                           PatientType = p.PatientType,
                           RefDoctorName = "Dr. " + doc.FirstName + " " + doc.LastName,
+                          Address = r.Address
+
 
                       };
             return await qry.Take(25).ToListAsync();

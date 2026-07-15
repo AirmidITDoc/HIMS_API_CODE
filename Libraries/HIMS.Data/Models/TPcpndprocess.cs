@@ -68,7 +68,6 @@ namespace HIMS.Data.Models
         public string? Abhanumber { get; set; }
         public string? PatientAddress { get; set; }
         public string? PatientMobileNo { get; set; }
-        public string? RadiologistDoctor { get; set; }
 
         public virtual ICollection<TPcpndprocessDetail> TPcpndprocessDetails { get; set; }
     }

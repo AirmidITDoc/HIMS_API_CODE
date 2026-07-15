@@ -17013,8 +17013,6 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ProcessDate).HasColumnType("datetime");
 
-                entity.Property(e => e.RadiologistDoctor).HasMaxLength(500);
-
                 entity.Property(e => e.RelativeName).HasMaxLength(255);
 
                 entity.Property(e => e.ResultDate).HasColumnType("datetime");
