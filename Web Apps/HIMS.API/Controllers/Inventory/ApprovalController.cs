@@ -31,14 +31,14 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("ApprovalList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ApprovalListDto> ApprovalList = await _IApprovalService.GetListAsync(objGrid);
             return Ok(ApprovalList.ToGridResponse(objGrid, "Approval List"));
         }
         [HttpPost("UserApprovalNamelist")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> UserApprovalNamelist(GridRequestModel objGrid)
         {
             IPagedList<UserApprovalNamelistDto> ApprovalList = await _IApprovalService.NewGetListAsync(objGrid);
@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Inventory
 
         //Add API
         [HttpPost]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Post(ApprovalHeaderModel obj)
         {
             TApprovalHeader model = obj.MapTo<TApprovalHeader>();

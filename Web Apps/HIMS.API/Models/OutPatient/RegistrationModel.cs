@@ -51,6 +51,8 @@ namespace HIMS.API.Models.OutPatient
         public string? MedTourismOfficeWorkAddress { get; set; }
         public string? EmailId { get; set; }
         public long RegId { get; set; }
+        public long? MembershipId { get; set; }
+
 
 
 

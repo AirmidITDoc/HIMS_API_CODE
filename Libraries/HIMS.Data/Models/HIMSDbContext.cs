@@ -567,6 +567,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TPathologyReportDetailsArch> TPathologyReportDetailsArches { get; set; } = null!;
         public virtual DbSet<TPathologyReportHeader> TPathologyReportHeaders { get; set; } = null!;
         public virtual DbSet<TPathologyReportTemplateDetail> TPathologyReportTemplateDetails { get; set; } = null!;
+        public virtual DbSet<TPatientAbhaInformation> TPatientAbhaInformations { get; set; } = null!;
         public virtual DbSet<TPatientDetail> TPatientDetails { get; set; } = null!;
         public virtual DbSet<TPatientFeedback> TPatientFeedbacks { get; set; } = null!;
         public virtual DbSet<TPatientPolicyInformation> TPatientPolicyInformations { get; set; } = null!;
@@ -16636,6 +16637,33 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TemplateResultInHtml).HasColumnName("TemplateResultInHTML");
             });
 
+            modelBuilder.Entity<TPatientAbhaInformation>(entity =>
+            {
+                entity.HasKey(e => e.AbhaTranId);
+
+                entity.ToTable("T_PatientAbhaInformation");
+
+                entity.Property(e => e.AbhaAddress).HasMaxLength(255);
+
+                entity.Property(e => e.AbhaFullName).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Gender)
+                    .HasMaxLength(2)
+                    .IsFixedLength();
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.VerifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.YearOfBirth).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<TPatientDetail>(entity =>
             {
                 entity.HasKey(e => e.PatientId);
@@ -16977,9 +17005,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
 
+                entity.Property(e => e.PatientAddress).HasMaxLength(500);
+
+                entity.Property(e => e.PatientMobileNo).HasMaxLength(20);
+
                 entity.Property(e => e.ProcedureDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ProcessDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RadiologistDoctor).HasMaxLength(500);
 
                 entity.Property(e => e.RelativeName).HasMaxLength(255);
 

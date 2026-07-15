@@ -63,5 +63,7 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string? EmailId { get; set; }
+        public long? MembershipId { get; set; }
+        public long? AbhaTranId { get; set; }
     }
 }

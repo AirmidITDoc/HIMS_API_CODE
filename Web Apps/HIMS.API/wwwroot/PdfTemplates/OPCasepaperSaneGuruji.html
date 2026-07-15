@@ -18,7 +18,7 @@
 
                 <td colspan="2" style="padding: 6px; width: 85%; line-height: 20px;">
 
-                    <div style="font-weight:bold;font-size:22px;">
+                    <div style="font-weight:bold;font-size:22px; padding:4px 4px 10px 4px; ">
                         महाराष्ट्र आरोग्य मंडळ, सुमतिभाई शाह आयुर्वेद महाविद्यालय संचलित
                     </div>
 
@@ -39,17 +39,17 @@
 
                 <td style="padding:4px 6px; width:45%; border-top:1px solid #000; vertical-align:top;">
                     <b>नाव :</b>
-                    <span style="font-size:20px;font-weight:bold;">
+                    <span style="font-size:22px;font-weight:bold;">
                         {{PatientName}}
                     </span>
                 </td>
 
-                <td style="padding:4px 6px; width:25%; border-top:1px solid #000; vertical-align:top;">
+                <td style="padding: 4px 6px; width: 25%; font-size: 20px; border-top: 1px solid #000; vertical-align: top;">
                     एम.आर.क्र. :
                     <b>{{RegNo}}</b>
                 </td>
 
-                <td style="padding:4px 6px; border-top:1px solid #000; vertical-align:top;">
+                <td style="padding:4px 6px; font-size:20px; border-top:1px solid #000; vertical-align:top;">
                     ओपीडी नं. :
                     <b>{{OPDNo}}</b>
                 </td>
@@ -60,7 +60,7 @@
                 <td colspan="3" style="padding:2px 6px;font-size:20px;">
                     <b>पत्ता :</b>
                     {{Address}}
-                </td>   
+                </td>
 
             </tr>
 
@@ -71,16 +71,14 @@
                     वय :
                     <span style="font-size: 22px;">{{AgeYear}}Y {{AgeMonth}}M {{AgeDay}}D </span>
                 </td>
-                <td style="padding: 6px; font-weight: bold; font-size: 18px;">
-                    PrintDate : <span id="printDate">{{CurrentDate}}</span>
-                </td>
-            </tr>
-            <tr>
-
-                <td></td>
                 <td colspan="1" style="padding:6px;">
                     लिंग :
                     {{GenderName}}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="1" style="padding:6px;">
                 </td>
                 <td></td>
             </tr>
@@ -89,9 +87,9 @@
 
         <!-- Current Complaint -->
 
-        <div style="height:210px;border-left:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;padding:8px;">
+        <div style="height:150px;border-left:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;padding:6px;">
 
-            <div style="font-weight:bold;">
+            <div style="font-weight:bold; font-size:18px">
                 वर्तमान वेदना आणि वेदनावृत्त :
             </div>
 
@@ -101,7 +99,7 @@
 
         <div style="border-left:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;padding:8px;">
 
-            <div style="font-weight:bold;margin-bottom:8px;">
+            <div style="font-weight:bold;margin-bottom:2px;font-size:18px">
                 रजोइतिहास :
             </div>
 
@@ -109,19 +107,19 @@
 
                 <tr>
 
-                    <td style="width:45%;padding:4px;">
+                    <td style="width: 45%; padding: 4px 4px 4px 4px; margin-top: 0; font-size:18px">
                         अंतिम रजो दिनांक :
                     </td>
 
-                    <td style="padding:4px;">
+                    <td style="padding:4px;font-size:18px">
                         अपेक्षित प्रसव दिनांक :
                     </td>
 
                 </tr>
 
-                <tr>
+                <tr style="height: 100px;">
 
-                    <td colspan="2" style="padding:4px;">
+                    <td colspan="2" style="padding: 4px; padding: 4px 4px 60px 4px;font-size:18px">
                         प्रसव इतिहास (बाळंतपण / गर्भपात / जिवंत अथवा मृत गर्भ शिशू इतिहास) :
                         <span style="font-size:22px;font-weight:bold;letter-spacing:8px;">
                             G P A L D
@@ -132,7 +130,7 @@
 
                 <tr>
 
-                    <td colspan="2" style="padding:4px;">
+                    <td colspan="2" style="padding:4px;font-size:18px">
                         कुटुंब नियोजन : साधने / शस्त्रक्रिया
                     </td>
 
@@ -140,8 +138,8 @@
 
                 <tr>
 
-                    <td colspan="2" style="padding:4px;">
-                        रजोनिवृत्ती :
+                    <td colspan="2" style="padding:4px; padding:4px 4px 60px 4px;font-size:18px">
+                        लसीकरण :
                     </td>
 
                 </tr>
@@ -154,15 +152,15 @@
 
         <div style="height:140px;border-left:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;padding:8px;">
 
-            <div style="font-weight:bold;">
-                पूर्वव्याधीवृत्त : (औषधी / शस्त्रक्रियांचा इतिहास)
+            <div style="font-weight:bold;font-size:18px">
+                पूर्वव्याधीवृत्त : (औषधी / शस्त्रकर्माचा इतिहास)
             </div>
 
             <br><br><br>
 
-                    <div style="font-weight:bold;">
-                        औषधे / आहार असात्म्यता :
-                    </div>
+            <div style="font-weight:bold;font-size:18px">
+                औषधे / आहार असात्म्यता :
+            </div>
 
         </div>
 
@@ -171,13 +169,13 @@
         <table style="width:100%; border-collapse:collapse; border:1px solid #000; font-family:Mangal,Arial,sans-serif; font-size:15px;">
             <thead>
                 <tr style="height:30px;">
-                    <th style="border:1px solid #000; width:20%; text-align:center; font-weight:normal;">
+                    <th style="border:1px solid #000; width:10%; text-align:center; font-weight:normal;">
                         तारीख
                     </th>
-                    <th style="border:1px solid #000; width:28%; text-align:center; font-weight:normal;">
+                    <th style="border:1px solid #000; width:30%; text-align:center; font-weight:normal;">
                         लक्षणे
                     </th>
-                    <th style="border:1px solid #000; width:28%; text-align:center; font-weight:normal;">
+                    <th style="border:1px solid #000; width:38%; text-align:center; font-weight:normal;">
                         चिकित्सा
                     </th>
                     <th style="border:1px solid #000; width:8%; text-align:center; font-weight:normal;">
@@ -241,10 +239,11 @@
     </div>
 
 </body>
-<script>window.onload = function () {
-    var el = document.getElementById("printDate");
-    if (el) {
-        el.innerText = el.innerText.split(' ')[0];
-    }
-};</script>
+<script>
+    window.onload = function () {
+        var el = document.getElementById("printDate");
+        if (el) {
+            el.innerText = el.innerText.split(' ')[0];
+        }
+    };</script>
 </html>

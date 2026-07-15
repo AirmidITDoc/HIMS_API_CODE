@@ -72,6 +72,9 @@ namespace HIMS.Data.DTO.Inventory
         public long? ConsultantDocId { get; set; }
         public string? IndicationDesc { get; set; }
         public bool? IndicationValues { get; set; }
+        public string? PatientAddress { get; set; }
+        public string? PatientMobileNo { get; set; }
+        public string? RadiologistDoctor { get; set; }
 
 
     }
