@@ -64,8 +64,11 @@
         public string UpdatedBy { get; set; }
         public string CreatedBy { get; set; }
         public string? EmailId { get; set; }
+        public long? AbhaTranId { get; set; }
+        public string? AbhaAddress { get; set; }
+        public string? AbhaNumber { get; set; }
 
-  }
+    }
 
     public class RegistrationAutoCompleteDto
     {

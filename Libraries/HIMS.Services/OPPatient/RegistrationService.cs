@@ -76,7 +76,7 @@ namespace HIMS.Services.OPPatient
                 string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", "AgeMonth", "AgeDay",
                 "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "ReligionId", "AreaId", "IsSeniorCitizen", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo",
                 "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry",
-                "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress","EmailId","MembershipId", "RegId" };
+                "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress","EmailId","MembershipId", "RegId","tPatientAbhaInformations" };
                 var entity = objRegistration.ToDictionary();
                 foreach (var rProperty in entity.Keys.ToList())
                 {
@@ -85,7 +85,24 @@ namespace HIMS.Services.OPPatient
                 }
                 string RegId = odal.ExecuteNonQueryNew("ps_insert_Registration_1", CommandType.StoredProcedure, "RegId", entity);
                 objRegistration.RegId = Convert.ToInt32(RegId);
+                objRegistration.TPatientAbhaInformations.First().RegId = Convert.ToInt32(RegId);
                 await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+                string[] PatientPolicyEntity = { "RegId", "AbhaNumber", "AbhaFullName", "AbhaAddress", "Gender", "YearOfBirth", "Verified", "VerifiedDateTime", "AbhaTranId", "CreatedBy" };
+
+                foreach (var abhaInfo in objRegistration.TPatientAbhaInformations)
+                {
+                    var Patiententity = abhaInfo.ToDictionary();
+
+                    foreach (var rProperty in Patiententity.Keys.ToList())
+                    {
+                        if (!PatientPolicyEntity.Contains(rProperty))
+                            Patiententity.Remove(rProperty);
+                    }
+                    string AbhaTranId = odal.ExecuteNonQueryNew("ps_Insert_PatientAbhaInformation", CommandType.StoredProcedure, "AbhaTranId", Patiententity);
+                    await _context.LogProcedureExecution(Patiententity, nameof(TPatientAbhaInformation), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                }
+
                 await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
                 await transaction.CommitAsync();
             }
@@ -106,44 +123,60 @@ namespace HIMS.Services.OPPatient
                 scope.Complete();
             }
         }
+        public virtual async Task UpdateAsyncSP(Registration objRegistration, int CurrentUserId, string CurrentUserName)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
-        //public virtual async Task UpdateAsync(Registration objRegistration, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        // Update header & detail table records
-        //        Registration objReg = _context.Registrations.Where(x => x.RegId == objRegistration.RegId).FirstOrDefault();
-        //        if (objReg != null)
-        //            _context.Entry(objReg).State = EntityState.Detached;
+            try
+            {
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
-        //        objRegistration.RegNo = objReg.RegNo;
-        //        objRegistration.RegPrefix = objReg.RegPrefix;
-        //        objRegistration.AddedBy = objReg.AddedBy;
-        //        objRegistration.UpdatedBy = objReg.UpdatedBy;
-        //        objRegistration.AnnualIncome = objReg.AnnualIncome;
-        //        objRegistration.IsIndientOrWeaker = objReg.IsIndientOrWeaker;
-        //        objRegistration.RationCardNo = objReg.RationCardNo;
-        //        objRegistration.IsMember = objReg.IsMember;
-        //        objRegistration.RegDate = objReg.RegDate;
-        //        objRegistration.RegTime = objReg.RegTime;
+                string[] rEntity = { "RegId", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "AadharCardNo", "GenderId", "DateofBirth", "Age", "AgeYear", "AgeMonth", "AgeDay", "PhoneNo", "MobileNo", "PanCardNo", "MaritalStatusId", "ReligionId", 
+                    "AreaId", "CityId", "City", "StateId", "CountryId", "IsCharity", "IsSeniorCitizen", "Photo", "PinNo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", 
+                    "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry", "MedTourismDateOfEntry", 
+                    "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress", "EmailId", "MembershipId" ,"tPatientAbhaInformations"};
+                var entity = objRegistration.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+                string RegId = odal.ExecuteNonQueryNew("ps_Update_Registration", CommandType.StoredProcedure, "", entity);
+                await _context.LogProcedureExecution(entity, nameof(Registration), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
-        //        _context.Registrations.Update(objRegistration);
-        //        // Don't update created fields
-        //        _context.Entry(objRegistration).Property(x => x.CreatedBy).IsModified = false;
-        //        _context.Entry(objRegistration).Property(x => x.CreatedDate).IsModified = false;
+                string[] PatientPolicyEntity = { "RegId", "AbhaNumber", "AbhaFullName", "AbhaAddress", "Gender", "YearOfBirth", "Verified", "VerifiedDateTime", "AbhaTranId", "CreatedBy" };
 
-        //        _context.Entry(objRegistration).State = EntityState.Modified;
+                foreach (var abhaInfo in objRegistration.TPatientAbhaInformations)
+                {
+                    var Patiententity = abhaInfo.ToDictionary();
 
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
+                    foreach (var rProperty in Patiententity.Keys.ToList())
+                    {
+                        if (!PatientPolicyEntity.Contains(rProperty))
+                            Patiententity.Remove(rProperty);
+                    }
+                    string AbhaTranId = odal.ExecuteNonQueryNew("ps_Insert_PatientAbhaInformation", CommandType.StoredProcedure, "AbhaTranId", Patiententity);
+                    await _context.LogProcedureExecution(Patiententity, nameof(TPatientAbhaInformation), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                }
+            
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                // ❌ Rollback on error
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
         public virtual async Task UpdateAsync(Registration objRegistration, int userId, string username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required,new TransactionOptions{IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted},TransactionScopeAsyncFlowOption.Enabled);
 
             var objReg = await _context.Registrations.FirstOrDefaultAsync(x => x.RegId == objRegistration.RegId);
+            //var objReg = await _context.Registrations.Include(x => x.TPatientAbhaInformations).FirstOrDefaultAsync(x => x.RegId == objRegistration.RegId);
 
             if (objReg == null)
                 throw new Exception("Registration not found.");
@@ -163,20 +196,23 @@ namespace HIMS.Services.OPPatient
             objRegistration.UpdatedBy = userId;
             //objRegistration.UpdatedDate = DateTime.Now;
 
-            _context.Registrations.Update(objRegistration);
+            //_context.Registrations.Update(objRegistration);
 
             // Don't update created fields
             _context.Entry(objRegistration).Property(x => x.CreatedBy).IsModified = false;
             _context.Entry(objRegistration).Property(x => x.CreatedDate).IsModified = false;
 
 
-            var deleted = objReg.TPatientAbhaInformations.Where(x => !objRegistration.TPatientAbhaInformations.Any(y => y.RegId == x.RegId)).ToList();
-            _context.TPatientAbhaInformations.RemoveRange(deleted);
+            //var deleted = objReg.TPatientAbhaInformations.Where(x => objRegistration.TPatientAbhaInformations.Any(y => y.RegId == x.RegId)).ToList();
+            //_context.TPatientAbhaInformations.RemoveRange(deleted);
 
             foreach (var item in objRegistration.TPatientAbhaInformations)
             {
-                var existing = objReg.TPatientAbhaInformations
-                    .FirstOrDefault(x => x.AbhaTranId == item.AbhaTranId);
+                Console.WriteLine(objReg.TPatientAbhaInformations?.Count);
+                var existing = objReg.TPatientAbhaInformations.FirstOrDefault(x => x.AbhaNumber == item.AbhaNumber);
+                
+                item.CreatedBy = 2; //userId;
+                item.CreatedDate = DateTime.Now; 
 
                 if (existing == null)
                 {
