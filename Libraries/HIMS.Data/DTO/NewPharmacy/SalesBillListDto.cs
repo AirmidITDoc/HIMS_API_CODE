@@ -46,4 +46,10 @@
         public string? ExtMobileNo { get; set; }
         public string? DoctorName { get; set; }
     }
+    public class MExternalDoctorMasterDto
+    {
+        public long ExtDoctorId { get; set; }
+        public string? DoctorName { get; set; }
+        public bool? IsActive { get; set; }
+    }
 }

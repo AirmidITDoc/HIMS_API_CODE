@@ -202,6 +202,10 @@ namespace HIMS.Services.Pharmacy
         {
             return await DatabaseHelper.GetGridDataBySp<PurchaseListDto>(model, "ps_Rtrv_PurchaseOrderList_by_Name_Pagn");
         }
+        public virtual async Task<IPagedList<PurchaseListDto>> GetPurchaseAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PurchaseListDto>(model, "ps_Rtrv_PurchaseOrderHeader_List");
+        }
 
         public virtual async Task<IPagedList<PurchaseDetailListDto>> GetPurchaseDetailListAsync(GridRequestModel model)
         {

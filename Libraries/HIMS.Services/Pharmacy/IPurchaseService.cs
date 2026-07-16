@@ -15,5 +15,6 @@ namespace HIMS.Services.Pharmacy
         Task<IPagedList<PurchaseDetailListDto>> GetPurchaseDetailListAsync(GridRequestModel objGrid);
         Task<IPagedList<LastthreeItemListDto>> GetLastthreeItemListAsync(GridRequestModel objGrid);
         Task<IPagedList<SupplierRatelistDto>> GetSupplierRatetAsync(GridRequestModel objGrid);
+        Task<IPagedList<PurchaseListDto>> GetPurchaseAsync(GridRequestModel objGrid);
     }
 }

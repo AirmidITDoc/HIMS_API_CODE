@@ -40,6 +40,8 @@ namespace HIMS.API.Models.Pharmacy
         public decimal? RoundOff { get; set; }
         public string? ExtAddress { get; set; }
         public long SalesId { get; set; }
+        public long? DoctorId { get; set; }
+
 
 
         public List<SalesDetailModel> TSalesDetails { get; set; }

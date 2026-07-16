@@ -2,10 +2,12 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Masters;
 using HIMS.API.Models.Pharmacy;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
+using HIMS.Data;
 using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
@@ -19,9 +21,13 @@ namespace HIMS.API.Controllers.Pharmacy
     public class PurchaseController : BaseController
     {
         private readonly IPurchaseService _IPurchaseService;
-        public PurchaseController(IPurchaseService repository)
+        private readonly IGenericService<TPurchaseHeader> _repository;
+
+        public PurchaseController(IPurchaseService repository, IGenericService<TPurchaseHeader> repository1)
         {
             _IPurchaseService = repository;
+            _repository = repository1;
+
         }
         [HttpPost("PurchaseOrderList")]
         [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
@@ -30,6 +36,14 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<PurchaseListDto> List = await _IPurchaseService.GetPurchaseListAsync(objGrid);
             return Ok(List.ToGridResponse(objGrid, "Purchase Order List"));
         }
+        [HttpPost("PurchaseOrderListGetBYId")]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        public async Task<IActionResult> GetPurchaseorderAsync(GridRequestModel objGrid)
+        {
+            IPagedList<PurchaseListDto> List = await _IPurchaseService.GetPurchaseAsync(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "Purchase Order Get List"));
+        }
+
 
         [HttpPost("PurchaseItemList")]
         [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
