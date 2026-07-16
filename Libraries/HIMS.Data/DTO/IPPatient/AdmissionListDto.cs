@@ -96,9 +96,8 @@
         public DateTime? IsCancelledDateTime { get; set; }
         public string? IsCancelComment { get; set; }
         public bool? IsMaterialReplacement { get; set; }
-
         public string? UserName { get; set; }
-
+        public long AbhaTranId { get; set; }
 
 
 
