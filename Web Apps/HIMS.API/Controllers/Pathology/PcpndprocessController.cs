@@ -32,17 +32,26 @@ namespace HIMS.API.Controllers.Pathology
         }
        
         [HttpPost("RadioPcpndtList")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<RadioPcpndtListDto> RadioPcpndtList = await _IPcpndprocesService.GetListAsync(objGrid);
             return Ok(RadioPcpndtList.ToGridResponse(objGrid, "RadioPcpndt List"));
         }
 
-       
+        [HttpGet("search-RadiologistDoctor")]
+        //[Permission]
+        public ApiResponse SearchPatientNew()
+        {
+            var data = _IPcpndprocesService.SearchPatient();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiologist Doctor List", data);
+        }
+
+
+
 
         [HttpPost("IndicationtList")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
+        //[Permission]
         public async Task<IActionResult> IndicationList(GridRequestModel objGrid)
         {
             IPagedList<IndicationListDto> IndicationtList = await _IPcpndprocesService.GetList(objGrid);

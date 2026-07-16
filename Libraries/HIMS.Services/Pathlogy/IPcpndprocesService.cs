@@ -1,4 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using System;
@@ -15,6 +16,8 @@ namespace HIMS.Services.Pathlogy
         Task UpdateAsync(TPcpndprocess ObjTPcpndprocess, int UserId, string Username, string[]? ignoreColumns = null);
         Task<IPagedList<RadioPcpndtListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<IndicationListDto>> GetList(GridRequestModel objGrid);
+        List<RadioLogistListDto> SearchPatient();
+
 
 
 
