@@ -87,6 +87,8 @@ namespace HIMS.Data.DTO.Inventory
     {
         public string? DoctorName { get; set; }
         public string? DepartmentName { get; set; }
+        public long? DoctorId { get; set; }
+
     }
-     
+
 }
