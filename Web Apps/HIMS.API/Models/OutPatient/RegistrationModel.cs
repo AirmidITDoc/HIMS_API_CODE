@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -52,10 +53,7 @@ namespace HIMS.API.Models.OutPatient
         public string? EmailId { get; set; }
         public long RegId { get; set; }
         public long? MembershipId { get; set; }
-
-
-
-
+        public List<TPatientAbhaInformationModel>? TPatientAbhaInformations { get; set; }
 
     }
 
@@ -71,6 +69,20 @@ namespace HIMS.API.Models.OutPatient
             RuleFor(x => x.StateId).NotNull().NotEmpty().WithMessage("State is required");
             RuleFor(x => x.CountryId).NotNull().NotEmpty().WithMessage("Country is required");
         }
+    }
+
+    public class TPatientAbhaInformationModel
+    {
+        public long AbhaTranId { get; set; }      // Required for Update, ignore for Insert
+        public long RegId { get; set; }
+        public long AbhaNumber { get; set; }
+        public string AbhaFullName { get; set; } = string.Empty;
+        public string AbhaAddress { get; set; } = string.Empty;
+        public string Gender { get; set; } = string.Empty;
+        public DateTime YearOfBirth { get; set; }
+        public bool Verified { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime? VerifiedDateTime { get; set; }
     }
     public class RegistrationModel1
     {

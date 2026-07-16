@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class Registration
     {
+        public Registration()
+        {
+            TPatientAbhaInformations = new HashSet<TPatientAbhaInformation>();
+        }
+
         public long RegId { get; set; }
         public DateTime? RegDate { get; set; }
         public DateTime? RegTime { get; set; }
@@ -65,5 +70,7 @@ namespace HIMS.Data.Models
         public string? EmailId { get; set; }
         public long? MembershipId { get; set; }
         public long? AbhaTranId { get; set; }
+
+        public virtual ICollection<TPatientAbhaInformation> TPatientAbhaInformations { get; set; }
     }
 }

@@ -169,6 +169,27 @@ namespace HIMS.Services.OPPatient
             _context.Entry(objRegistration).Property(x => x.CreatedBy).IsModified = false;
             _context.Entry(objRegistration).Property(x => x.CreatedDate).IsModified = false;
 
+
+            var deleted = objReg.TPatientAbhaInformations.Where(x => !objRegistration.TPatientAbhaInformations.Any(y => y.RegId == x.RegId)).ToList();
+            _context.TPatientAbhaInformations.RemoveRange(deleted);
+
+            foreach (var item in objRegistration.TPatientAbhaInformations)
+            {
+                var existing = objReg.TPatientAbhaInformations
+                    .FirstOrDefault(x => x.AbhaTranId == item.AbhaTranId);
+
+                if (existing == null)
+                {
+                    // Insert
+                    objReg.TPatientAbhaInformations.Add(item);
+                }
+                else
+                {
+                    // Update
+                    _context.Entry(existing).CurrentValues.SetValues(item);
+                }
+            }
+
             await _context.SaveChangesAsync();
 
             scope.Complete();
