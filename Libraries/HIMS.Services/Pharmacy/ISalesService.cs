@@ -39,6 +39,7 @@ namespace HIMS.Services.Users
         Task InsertSP(TSalesHeader ObjTSalesHeader, int UserId, string Username);
         Task<List<SalesPatientAutoCompleteDto>> SearchRegistration(string str);
         Task<List<SalesPatientAutoCompleteDto>> SearchExtDoctor(string str);
+        Task<List<MExternalDoctorMasterDto>> NewSearchExtDoctor(string str);
         Task<float> GetStock(long StockId);
         Task InsertSalesInPatientAsyncSPC(TSalesInpatientHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int CurrentUserId, string CurrentUserName);
         Task Update(TSalesHeader ObjTSalesHeader, List<TSalesDetail> ObjTSalesDetail, List<TCurrentStock> ObjTCurrentStock, int CurrentUserId, string CurrentUserName);

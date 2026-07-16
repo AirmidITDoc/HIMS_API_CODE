@@ -201,7 +201,7 @@ namespace HIMS.Services.Users
                 odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
                 // 1️⃣ Insert Sales Header
-                string[] AEntity = { "Date", "Time", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "ConcessionReasonId", "ConcessionAuthorizationId", "IsSellted", "IsPrint", "IsFree", "UnitId", "ExternalPatientName", "DoctorName", "StoreId", "IsPrescription", "AddedBy", "CreditReason", "CreditReasonId", "WardId", "BedId", "DiscperH", "IsPurBill", "IsBillCheck", "SalesHeadName", "SalesTypeId", "RegId", "ExtMobileNo", "RoundOff", "ExtAddress", "SalesId" /*TSalesDetails*/ };
+                string[] AEntity = { "Date", "Time", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount", "ConcessionReasonId", "ConcessionAuthorizationId", "IsSellted", "IsPrint", "IsFree", "UnitId", "ExternalPatientName", "DoctorName", "StoreId", "IsPrescription", "AddedBy", "CreditReason", "CreditReasonId", "WardId", "BedId", "DiscperH", "IsPurBill", "IsBillCheck", "SalesHeadName", "SalesTypeId", "RegId", "ExtMobileNo", "RoundOff", "ExtAddress", "SalesId", "DoctorId" };
                 var entity = ObjSalesHeader.ToDictionary();
 
                 foreach (var rProperty in entity.Keys.ToList())
@@ -347,8 +347,7 @@ namespace HIMS.Services.Users
             "PaidAmount","BalanceAmount","ConcessionReasonId","ConcessionAuthorizationId","IsSellted",
             "IsPrint","IsFree","UnitId","ExternalPatientName","DoctorName","StoreId","IsPrescription",
             "AddedBy","CreditReason","CreditReasonId","WardId","BedId","DiscperH","IsPurBill",
-            "IsBillCheck","SalesHeadName","SalesTypeId","RegId","ExtMobileNo","RoundOff","ExtAddress","SalesId"
-            };
+            "IsBillCheck","SalesHeadName","SalesTypeId","RegId","ExtMobileNo","RoundOff","ExtAddress","SalesId","doctorId" };
 
             var stockWhitelist = new HashSet<string>(StringComparer.Ordinal) { "ItemId", "IssueQty", "IstkId", "StoreId" };
             var prescriptionWhitelist = new HashSet<string>(StringComparer.Ordinal) { "OpIpId", "IsClosed" };
@@ -1244,6 +1243,27 @@ namespace HIMS.Services.Users
 
             return result;
 
+        }
+        public virtual async Task<List<MExternalDoctorMasterDto>> NewSearchExtDoctor(string str)
+        {
+            str = str?.Trim() ?? string.Empty;
+
+            var result = await _context.MExternalDoctorMasters
+                .Where(x => x.IsActive == true
+                         && !string.IsNullOrEmpty(x.DoctorName)
+                         && x.DoctorName.StartsWith(str))
+                .Select(x => new MExternalDoctorMasterDto
+                {
+                    ExtDoctorId = x.ExtDoctorId,
+                    DoctorName = x.DoctorName
+                })
+                .ToListAsync();
+
+            return result
+                .OrderByDescending(x => x.DoctorName.Equals(str, StringComparison.OrdinalIgnoreCase))
+                .ThenBy(x => x.DoctorName)
+                .Take(25)
+                .ToList();
         }
         public virtual async Task<float> GetStock(long StockId)
         {

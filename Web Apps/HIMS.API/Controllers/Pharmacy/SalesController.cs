@@ -486,7 +486,20 @@ namespace HIMS.API.Controllers.Pharmacy
                 x.DoctorName,
             }));
         }
-      
+        [HttpGet("NewMExternalDoctor-auto-complete")]
+        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<ApiResponse> NewSearchExtDoctor(string Keyword)
+        {
+            var data = await _ISalesService.NewSearchExtDoctor(Keyword);
+
+            return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status200OK,  "External Doctor Data.",  data.Select(x => new  {
+                    Text = x.DoctorName,
+                    Value = x.ExtDoctorId,
+                    x.ExtDoctorId,
+                    x.DoctorName
+                }));
+        }
+
         [HttpPut("SalesUpdate/{id:int}")]
         [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(SalesUpdate obj)
