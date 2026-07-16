@@ -8,6 +8,7 @@ namespace HIMS.Services.OPPatient
     {
         Task<IPagedList<RegistrationListDto>> GetListAsync(GridRequestModel objGrid);
         Task InsertAsyncSP(Registration objRegistration, int CurrentUserId, string CurrentUserName);
+        Task UpdateAsyncSP(Registration objRegistration, int CurrentUserId, string CurrentUserName);
         Task InsertAsync(Registration Registration, int UserId, string Username);
 
         Task UpdateAsync(Registration objRegistration, int UserId, string Username);

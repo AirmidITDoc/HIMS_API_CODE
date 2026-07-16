@@ -92,7 +92,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RegistrationUpdate")]
-        //[Permission]
+        [Permission]
         //[Permission(PageCode = "Registration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(RegistrationModel obj)
         {
@@ -107,7 +107,7 @@ namespace HIMS.API.Controllers.OPPatient
                 //model.ModifiedDate = AppTime.Now;
                 model.ModifiedDate = DateTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                await _IRegistrationService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _IRegistrationService.UpdateAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model);
         }

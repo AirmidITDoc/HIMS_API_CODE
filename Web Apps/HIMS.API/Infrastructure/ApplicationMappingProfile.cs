@@ -211,6 +211,7 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<Registration, RegistrationUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPatientAbhaInformation, TPatientAbhaInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<Registration, RegistrationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TOtOperativeNote, OTOperativeNotesModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 

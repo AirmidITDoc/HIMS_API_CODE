@@ -83,6 +83,7 @@ namespace HIMS.API.Models.OutPatient
         public bool Verified { get; set; }
         public bool IsActive { get; set; }
         public DateTime? VerifiedDateTime { get; set; }
+        public long CreatedBy { get; set; }
     }
     public class RegistrationModel1
     {
@@ -134,7 +135,7 @@ namespace HIMS.API.Models.OutPatient
         public long RegId { get; set; }
         public string? RegNo { get; set; }
         public string? EmailId { get; set; }
-
+        public List<TPatientAbhaInformationModel>? TPatientAbhaInformations { get; set; }
 
     }
     public class RegistrationUpdate
@@ -144,7 +145,7 @@ namespace HIMS.API.Models.OutPatient
         public string? MobileNo { get; set; }
         public string? EmailId { get; set; }
 
-
+        public List<TPatientAbhaInformationModel>? TPatientAbhaInformations { get; set; }
 
     }
 }

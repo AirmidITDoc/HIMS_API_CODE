@@ -67,11 +67,7 @@
         public long TokenNo { get; set; }
         public long? GenderId { get; set; }
         public string UserName { get; set; }
-
-
-
-
-
+        public long AbhaTranId { get; set; }
 
     }
     public class VisitDetailsListSearchDto
