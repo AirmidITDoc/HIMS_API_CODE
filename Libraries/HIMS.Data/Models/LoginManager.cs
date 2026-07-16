@@ -8,6 +8,7 @@ namespace HIMS.Data.Models
         public LoginManager()
         {
             TLoginAccessDetails = new HashSet<TLoginAccessDetail>();
+            TLoginCashCounterDetails = new HashSet<TLoginCashCounterDetail>();
             TLoginStoreDetails = new HashSet<TLoginStoreDetail>();
             TLoginUnitDetails = new HashSet<TLoginUnitDetail>();
         }
@@ -56,6 +57,7 @@ namespace HIMS.Data.Models
         public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<TLoginAccessDetail> TLoginAccessDetails { get; set; }
+        public virtual ICollection<TLoginCashCounterDetail> TLoginCashCounterDetails { get; set; }
         public virtual ICollection<TLoginStoreDetail> TLoginStoreDetails { get; set; }
         public virtual ICollection<TLoginUnitDetail> TLoginUnitDetails { get; set; }
     }
