@@ -3,9 +3,11 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Models.Masters;
 using HIMS.API.Models.OutPatient;
 using HIMS.Core;
 using HIMS.Core.Infrastructure;
+using HIMS.Data;
 using HIMS.Data.Models;
 using HIMS.Services.OutPatient;
 using HIMS.Services.Pathlogy;
@@ -19,11 +21,27 @@ namespace HIMS.API.Controllers.OPPatient
     public class PatientAbhaInformationController : BaseController
     {
         private readonly IPatientAbhaInformationService _IPatientAbhaInformationService;
+        private readonly IGenericService<TPatientAbhaInformation> _repository;
 
-        public PatientAbhaInformationController(IPatientAbhaInformationService repository)
+
+        public PatientAbhaInformationController(IPatientAbhaInformationService repository, IGenericService<TPatientAbhaInformation> repository1)
         {
             _IPatientAbhaInformationService = repository;
+            _repository = repository1;
 
+
+        }
+        //List API Get By Id
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _repository.GetById(x => x.AbhaTranId == id);
+            return data.ToSingleResponse<TPatientAbhaInformation, PatientAbhaInformationModel>("PatientType");
         }
         [HttpPost("Insert")]
         //[Permission]
