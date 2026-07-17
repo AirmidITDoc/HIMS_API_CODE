@@ -54,7 +54,8 @@ namespace HIMS.Services.OPPatient
                     EmailId =  x.EmailId,
                     RegId =x.RegId,
                     AadharCardNo= x.AadharCardNo,
-                    GenderId = x.GenderId
+                    GenderId = x.GenderId,
+                    AbhaTranId = x.AbhaTranId
 
                 })
                .OrderByDescending(x => x.RegNo == str ? 3 : x.MobileNo == str ? 2 : (x.FirstName + " " + x.LastName) == str ? 1 : 0)

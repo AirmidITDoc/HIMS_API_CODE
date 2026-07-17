@@ -1182,7 +1182,8 @@ namespace HIMS.Services.Users
               {
                   ExternalPatientName = x.ExternalPatientName,
                   ExtMobileNo = x.ExtMobileNo,
-                  DoctorName = x.DoctorName
+                  DoctorName = x.DoctorName,
+                  DoctorId = x.DoctorId
               })
                 .ToListAsync();
 
@@ -1192,7 +1193,8 @@ namespace HIMS.Services.Users
                 {
                     ExternalPatientName = x.ExternalPatientName,
                     ExtMobileNo = x.ExtMobileNo,
-                    DoctorName = x.DoctorName
+                    DoctorName = x.DoctorName,
+                    DoctorId= 0
                 })
                 .ToListAsync();
 
