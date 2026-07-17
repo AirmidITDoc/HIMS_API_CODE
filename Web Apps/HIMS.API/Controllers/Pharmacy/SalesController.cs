@@ -469,7 +469,8 @@ namespace HIMS.API.Controllers.Pharmacy
                 Value = x.ExtMobileNo,
                 x.ExtMobileNo,
                 x.DoctorName,
-                PatientName = x.ExternalPatientName
+                PatientName = x.ExternalPatientName,
+                x.DoctorId
             }));
         }
 

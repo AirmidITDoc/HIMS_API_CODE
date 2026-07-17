@@ -87,7 +87,7 @@
         public DateTime? DateofBirth { get; set; }
         public string? AadharCardNo { get; set; }
         public long? GenderId { get; set; }
-
+        public long? AbhaTranId { get; set; }
 
     }
 }
