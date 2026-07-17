@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        //[Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
