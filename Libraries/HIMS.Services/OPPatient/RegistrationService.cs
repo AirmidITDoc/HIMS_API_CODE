@@ -90,17 +90,26 @@ namespace HIMS.Services.OPPatient
 
                 string[] PatientPolicyEntity = { "RegId", "AbhaNumber", "AbhaFullName", "AbhaAddress", "Gender", "YearOfBirth", "Verified", "VerifiedDateTime", "AbhaTranId", "CreatedBy" };
 
-                foreach (var abhaInfo in objRegistration.TPatientAbhaInformations)
-                {
-                    var Patiententity = abhaInfo.ToDictionary();
+                var abhaList = objRegistration.TPatientAbhaInformations?.Where(x =>
+                        !string.IsNullOrWhiteSpace(x.AbhaNumber) ||
+                        !string.IsNullOrWhiteSpace(x.AbhaFullName) ||
+                        !string.IsNullOrWhiteSpace(x.AbhaAddress))
+                    .ToList();
 
-                    foreach (var rProperty in Patiententity.Keys.ToList())
+                if (abhaList?.Any() == true)
+                {
+                    foreach (var abhaInfo in objRegistration.TPatientAbhaInformations)
                     {
-                        if (!PatientPolicyEntity.Contains(rProperty))
-                            Patiententity.Remove(rProperty);
+                        var Patiententity = abhaInfo.ToDictionary();
+
+                        foreach (var rProperty in Patiententity.Keys.ToList())
+                        {
+                            if (!PatientPolicyEntity.Contains(rProperty))
+                                Patiententity.Remove(rProperty);
+                        }
+                        string AbhaTranId = odal.ExecuteNonQueryNew("ps_Insert_PatientAbhaInformation", CommandType.StoredProcedure, "AbhaTranId", Patiententity);
+                        await _context.LogProcedureExecution(Patiententity, nameof(TPatientAbhaInformation), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                     }
-                    string AbhaTranId = odal.ExecuteNonQueryNew("ps_Insert_PatientAbhaInformation", CommandType.StoredProcedure, "AbhaTranId", Patiententity);
-                    await _context.LogProcedureExecution(Patiententity, nameof(TPatientAbhaInformation), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                 }
 
                 await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
@@ -148,19 +157,27 @@ namespace HIMS.Services.OPPatient
 
                 string[] PatientPolicyEntity = { "RegId", "AbhaNumber", "AbhaFullName", "AbhaAddress", "Gender", "YearOfBirth", "Verified", "VerifiedDateTime", "AbhaTranId", "CreatedBy" };
 
-                foreach (var abhaInfo in objRegistration.TPatientAbhaInformations)
-                {
-                    var Patiententity = abhaInfo.ToDictionary();
+                var abhaList = objRegistration.TPatientAbhaInformations?.Where(x =>
+                       !string.IsNullOrWhiteSpace(x.AbhaNumber) ||
+                       !string.IsNullOrWhiteSpace(x.AbhaFullName) ||
+                       !string.IsNullOrWhiteSpace(x.AbhaAddress))
+                   .ToList();
 
-                    foreach (var rProperty in Patiententity.Keys.ToList())
+                if (abhaList?.Any() == true)
+                {
+                    foreach (var abhaInfo in objRegistration.TPatientAbhaInformations)
                     {
-                        if (!PatientPolicyEntity.Contains(rProperty))
-                            Patiententity.Remove(rProperty);
+                        var Patiententity = abhaInfo.ToDictionary();
+
+                        foreach (var rProperty in Patiententity.Keys.ToList())
+                        {
+                            if (!PatientPolicyEntity.Contains(rProperty))
+                                Patiententity.Remove(rProperty);
+                        }
+                        string AbhaTranId = odal.ExecuteNonQueryNew("ps_Insert_PatientAbhaInformation", CommandType.StoredProcedure, "AbhaTranId", Patiententity);
+                        await _context.LogProcedureExecution(Patiententity, nameof(TPatientAbhaInformation), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                     }
-                    string AbhaTranId = odal.ExecuteNonQueryNew("ps_Insert_PatientAbhaInformation", CommandType.StoredProcedure, "AbhaTranId", Patiententity);
-                    await _context.LogProcedureExecution(Patiententity, nameof(TPatientAbhaInformation), objRegistration.RegId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                 }
-            
                 await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
                 await transaction.CommitAsync();
             }
