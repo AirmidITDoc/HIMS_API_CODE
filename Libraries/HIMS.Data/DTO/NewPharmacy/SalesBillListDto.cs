@@ -45,6 +45,7 @@
         public string? ExternalPatientName { get; set; }
         public string? ExtMobileNo { get; set; }
         public string? DoctorName { get; set; }
+        public long? DoctorId { get; set; }
     }
     public class MExternalDoctorMasterDto
     {

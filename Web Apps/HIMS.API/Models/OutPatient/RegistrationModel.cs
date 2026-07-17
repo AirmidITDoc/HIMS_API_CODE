@@ -75,7 +75,7 @@ namespace HIMS.API.Models.OutPatient
     {
         public long AbhaTranId { get; set; }      // Required for Update, ignore for Insert
         public long RegId { get; set; }
-        public long AbhaNumber { get; set; }
+        public string AbhaNumber { get; set; }
         public string AbhaFullName { get; set; } = string.Empty;
         public string AbhaAddress { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;

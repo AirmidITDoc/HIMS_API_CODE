@@ -21,10 +21,10 @@
             src: url('{{FontBasePath}}/NotoSansDevanagari-Regular.ttf') format('truetype');
         }
 
-        .marathi-text {
+      /*  .marathi-text {
             font-family: 'NotoDevanagari', Arial, sans-serif;
         }
-
+*/
         .page {
             width: 900px;
             margin: auto;
@@ -133,25 +133,14 @@
     <!-- ==================== PAGE 1 ==================== -->
     <div class="page">
 
-        <!--<div class="center">
-        <div class="title">PRE CONCEPTION AND PRE - NATAL DIAGNOSTIC TECHNIQUES</div>
-        <div class="title">(PROHIBITION OF SEX SELECTION) ACT 1994 (AMENDMENT RULES 2014)</div>
-        <br>
-        <div style="font-size:26px;font-weight:bold">Form F</div>
-        <div class="sub">See Proviso to Section 4[3] rule 9(4) and rule 10(1A)</div>
-        <br>
-        <div class="bold">
-            FORM FOR MAINTENANCE OF RECORD IN CASE OF PRENATAL DIAGNOSTIC TEST /
-            PROCEDURE BY GENETIC CLINIC / ULTRASOUND CLINIC / IMAGING CENTRE
-        </div>
-    </div>-->
+
         <div class="center">
             <div class="title" style="font-size:18px;">
                 PRE CONCEPTION AND PRE - NATAL DIAGNOSTIC TECHNIQUES (PROHIBITION OF SEX SELECTION) ACT 1994 (AMENDMENT RULES 2014)
             </div>
             <br>
             <div style="font-size:15px;font-weight:bold">Form F</div>
-            <div class="sub">See Proviso to Section 4[3] rule 9(4) and rule 10(1A)</div>
+            <div class="sub">See Provision to Section 4[3] rule 9(4) and rule 10(1A)</div>
             <br>
             <div class="bold">
                 FORM FOR MAINTENANCE OF RECORD IN CASE OF PRENATAL DIAGNOSTIC TEST /
@@ -172,8 +161,8 @@
         </div>
 
         <div class="row">
-            <b>2. Registration No. (Under PC & PNDT Act, 1994) :</b>
-            <span class="space">{{RegNo}}</span>
+            <b>2. Registration No. (Under PC & PNDT Act, 1994) : 92/2012</b>
+            <!--<span class="space">{{RegNo}}</span>-->
         </div>
 
         <div class="row">
@@ -193,11 +182,15 @@
             <span class="space">{{RelativeName}}</span>
         </div>
 
+
         <div class="row">
-            <b>6. Full postal address of the patient with Contact. Number (if any) :</b>
+            <b>6. Full postal address of the patient with Contact Number (if any):</b>
             <div class="address">
-                <span style="font-size: 15px; font-weight: bold; text-align: left; color: black; display: block;">
-                    {{PatientAddress}} <span style="font-size: 12px;">CONTACT NO. - {{MobileNo}}</span>
+                <span style="font-size:15px;font-weight:bold;color:black;">
+                    {{PatientAddress}}
+                    <span style="font-size:12px;">
+                        CONTACT NO. - {{PatientMobileNo}}
+                    </span>
                 </span>
             </div>
         </div>
@@ -205,10 +198,10 @@
         <div class="row">
             <b>7. (a) Referred by  (Full name & address of Doctor(s)/Genetic Counselling Centre)</b><br><br>
             <b>{{CondDoctor}}</b><br>
-            <b>{{ConEducation}}</b>
-            <span style="font-weight: bold; text-align: left; color: black;">
-                Occ. No.2 B& C Wing. Sr. No. 165A,Pt.No. 195-208 Malwadi, Hadapsar, Pune.
-            </span>
+            <!--<b>{{ConEducation}}</b>-->
+        <span style="font-weight: bold; text-align: left; color: black;">
+            SANE GURUJI AROGYA KENDRA Occ. No.2 B& C Wing, Sr. No. 165A,Pt.No. 195-208 Malwadi, Hadapsar, Pune.
+        </span>
         </div>
 
         <div class="row">(Referral slips to be preserved carefully with Form F)</div>
@@ -338,8 +331,8 @@
             <b>15. The result of pre-natal diagnostic procedures was conveyed to :</b>
             <br><br>
 
-            <div style="border:1px solid black;width:380px;padding:5px;display:inline-block;">
-                <b>{{PatientName}}</b>
+            <div style="width:380px;padding:5px;display:inline-block;">
+                <span class="box">{{PatientName}}</span>
             </div>
 
             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -349,29 +342,26 @@
 
         <br><br>
 
-       
-    <table width="100%">
-        <tr>
-            <td style="vertical-align:top; width:75%;">
-                <b>16. Any indication for MTP as per abnormality detected in diagnostic procedures / tests :</b>
-            </td>
-            <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
-                {{AnyOther2}}
-            </td>
-        </tr>
-    </table>
+
+        <table width="100%">
+            <tr>
+                <td style="vertical-align:top; width:75%;">
+                    <b>16. Any indication for MTP as per abnormality detected in diagnostic procedures / tests :</b>
+                </td>
+                <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                    {{AnyOther2}}
+                </td>
+            </tr>
+        </table>
 
         <br><br><br>
+
 
         <table width="100%" style="border-collapse:collapse;">
             <tr>
                 <td width="55%" valign="top">
-                    <b>Date :</b> {{ResultDate}}<br><br>
-
-                    <b>Place :</b><br>
-                    <span style="font-weight:bold;">
-                        Malwadi,Hadapsar, Pune.
-                    </span>
+                    <b>Date :</b> <b>{{ResultDate}}</b><br><br>
+                    <b>Place :</b> <b>Malwadi Hadapsar, Pune</b>
                 </td>
 
                 <td width="45%" valign="top" align="center">
@@ -447,7 +437,7 @@
 
 
 
-       
+
         <table width="100%">
             <tr>
                 <td style="vertical-align:top; width:75%;">
@@ -542,7 +532,7 @@
         </div>
     </div>
 
-    
+
     <table width="100%">
         <tr>
             <td style="vertical-align:top; width:75%;">
@@ -557,7 +547,7 @@
     <br>
 
 
-   
+
     <table width="100%">
         <tr>
             <td style="vertical-align:top; width:75%;">
@@ -610,29 +600,29 @@
         <br><br><br><br><br>
     </div>
 
-    
-<table width="100%">
-    <tr>
-        <td style="vertical-align:top; width:75%;">
-            <b>25. Date on which procedures carried out :</b>
-        </td>
-        <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
-            {{AnyOther2}}
-        </td>
-    </tr>
-</table>
 
-   
-<table width="100%">
-    <tr>
-        <td style="vertical-align:top; width:75%;">
-            <b>26. The result of pre-natal diagnostic procedures was conveyed to :</b>
-        </td>
-        <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
-            {{AnyOther2}}
-        </td>
-    </tr>
-</table>
+    <table width="100%">
+        <tr>
+            <td style="vertical-align:top; width:75%;">
+                <b>25. Date on which procedures carried out :</b>
+            </td>
+            <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                {{AnyOther2}}
+            </td>
+        </tr>
+    </table>
+
+
+    <table width="100%">
+        <tr>
+            <td style="vertical-align:top; width:75%;">
+                <b>26. The result of pre-natal diagnostic procedures was conveyed to :</b>
+            </td>
+            <td style="vertical-align:top; text-align:right; font-style:italic; font-weight:bold; white-space:nowrap;">
+                {{AnyOther2}}
+            </td>
+        </tr>
+    </table>
 
     <table width="100%">
         <tr>
@@ -655,21 +645,22 @@
     <br><br>
 
     <div class="row">
-        <b>Date :</b> <b>{{SignDate}}</b>
+        <b>Date :</b> <b>{{AnyOther2}}</b>
         <br><br>
-        <b>Place :</b> {{Place}}
+        <b>Place :</b>  <b>{{AnyOther2}}</b>
     </div>
 
     <br><br><br>
 
     <div style="text-align:right">
-        <b>{{CondDoctor}}</b><br>
-        <b>RegNo.{{DoctorRegNo}}</b><br><br>
+        <b>{{AnyOther2}}</b><br>
+        <b>
+    </b><br><br>
         Name, Signature and Registration Number with Seal of the<br>
         Gynecologist / Radiologist / Registered Medical Practitioner
     </div>
 
-    </div>
+   
     <!-- ==================== END PAGE 4 ==================== -->
 
     <div class="page-break"></div>
@@ -684,18 +675,31 @@
 
         <div class="row">
             I , Mrs./Mr.
+            <!--<span class="box">{{PatientName}}</span>-->
             <span class="box">{{PatientName}}</span>
+
             declare that by undergoing Prenatal Diagnostic Test / Procedure,
             I do not want to know the sex of my foetus.
         </div>
 
-        <div class="row marathi-text">
+        <!--<div class="row marathi-text">
+            असे घोषित करते की, अल्ट्रा-सोनोग्राफी / चाचणी करून मी माझ्या गर्भाचे लिंग जाणून घेऊ इच्छित नाही.
+        </div>-->
+        <div class="row marathi-text" style="font-size:16px;">
             असे घोषित करते की, अल्ट्रा-सोनोग्राफी / चाचणी करून मी माझ्या गर्भाचे लिंग जाणून घेऊ इच्छित नाही.
         </div>
 
-        <div class="row"><b>Date :</b> {{ResultDate}}</div>
-
+      
+        <td style="width:50%; text-align:left;">
+            <b>Date :</b>
+            <span style="border-bottom:1px solid #000; padding:0 40px;">
+                <b>{{ResultDate}}</b>
+            </span>
+            <br><br>
+            <b>Place :</b> <b>Malwadi Hadapsar, Pune</b>
+        </td>
         <br><br>
+
 
         <div class="row">
             <b>signature / Thumb impression of the person undergoing the prenatal diagnostic Test / Procedure</b>
@@ -738,10 +742,13 @@
             (name of person conducting ultrasonography / image scanning)
             declare that while conducting ultrasonography / image scanning on Ms.
             <span class="box">{{PatientName}}</span>
-            I have neither detected nor disclosed the sex of her foetus to anybody in any manner.
+
+            (name of the pregnant woman or the person undergoing pre-natal diagnostic procedure/test) , I have neither detected
+            nor disclosed the sex of her fetus to anybody in any manner.
         </div>
 
         <br><br>
+
 
         <table width="100%" style="margin-top:20px;">
             <tr>
@@ -750,6 +757,8 @@
                     <span style="border-bottom:1px solid #000; padding:0 40px;">
                         <b>{{ResultDate}}</b>
                     </span>
+                    <br><br>
+                    <b>Place :</b> <b>Malwadi Hadapsar, Pune</b>
                 </td>
                 <td style="width:50%; text-align:left;">
                     <b>Signature :</b>

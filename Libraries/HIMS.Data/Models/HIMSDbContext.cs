@@ -233,6 +233,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MExternalDoctorMaster> MExternalDoctorMasters { get; set; } = null!;
         public virtual DbSet<MFeedbackQuestion> MFeedbackQuestions { get; set; } = null!;
         public virtual DbSet<MGenericMaster> MGenericMasters { get; set; } = null!;
+        public virtual DbSet<MHsncodeMaster> MHsncodeMasters { get; set; } = null!;
         public virtual DbSet<MIcdcdeMainMaster> MIcdcdeMainMasters { get; set; } = null!;
         public virtual DbSet<MIcdcodingMaster> MIcdcodingMasters { get; set; } = null!;
         public virtual DbSet<MInstructionMaster> MInstructionMasters { get; set; } = null!;
@@ -659,7 +660,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -7339,6 +7340,36 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.GenericName).HasMaxLength(500);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MHsncodeMaster>(entity =>
+            {
+                entity.HasKey(e => e.HsncodeId)
+                    .HasName("PK__M_HSNCod__10A18E4749EDF712");
+
+                entity.ToTable("M_HSNCode_Master");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.HsncodeName)
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ModifiedBy)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
@@ -16664,6 +16695,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.AbhaAddress).HasMaxLength(255);
 
                 entity.Property(e => e.AbhaFullName).HasMaxLength(255);
+
+                entity.Property(e => e.AbhaNumber).HasMaxLength(20);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 

@@ -7,7 +7,7 @@ namespace HIMS.Data.Models
     {
         public long AbhaTranId { get; set; }
         public long RegId { get; set; }
-        public long AbhaNumber { get; set; }
+        public string AbhaNumber { get; set; } = null!;
         public string AbhaFullName { get; set; } = null!;
         public string AbhaAddress { get; set; } = null!;
         public string Gender { get; set; } = null!;

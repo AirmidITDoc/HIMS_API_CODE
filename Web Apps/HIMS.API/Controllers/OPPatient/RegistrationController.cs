@@ -131,7 +131,9 @@ namespace HIMS.API.Controllers.OPPatient
                 RegId =x.RegId,
                 AadharCardNo = x.AadharCardNo,
                 DateofBirth = x.DateofBirth,
-                GenderId = x.GenderId
+                GenderId = x.GenderId,
+                AbhaTranId = x.AbhaTranId
+
             }));
         }
       
