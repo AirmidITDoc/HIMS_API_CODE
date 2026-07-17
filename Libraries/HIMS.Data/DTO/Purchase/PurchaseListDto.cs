@@ -35,7 +35,7 @@
         public string? Mobile { get; set; }
         public long IsPurchaseRequisitionId { get; set; }
         public bool IsProceedToApproval { get; set; }
-
+        public bool? IsApproved { get; set; }
 
     }
     public class PurchaseHeaderListModel

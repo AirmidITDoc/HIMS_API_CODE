@@ -197,8 +197,6 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "GetProsearch Get ItemList ForSalesBatchPop.", data);
         }
 
-
-
         [HttpGet("GetItemListforSalesPage")]
         [Permission]
         public async Task<ApiResponse> GetItemListforSalesPage(int StoreId, string ItemName)

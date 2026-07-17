@@ -46,12 +46,26 @@ namespace HIMS.Services.Inventory
                 int newSeqNo = lastSeqNo + 1;
                 ObjTApprovalHeader.ApprovalNo = newSeqNo.ToString();
 
-
                 ObjTApprovalHeader.CreatedBy = UserId;
                 ObjTApprovalHeader.CreatedDate = AppTime.Now;
 
                 _context.TApprovalHeaders.Add(ObjTApprovalHeader);
                 await _context.SaveChangesAsync();
+
+                // Update Purchase Header
+                var purchaseHeader = await _context.TPurchaseHeaders
+                    .FirstOrDefaultAsync(x => x.PurchaseId == ObjTApprovalHeader.TranId);
+
+                if (purchaseHeader != null)
+                {
+                    purchaseHeader.IsProceedToApproval = true;
+                    // Optional:
+                    // purchaseHeader.ModifiedBy = UserId;
+                    // purchaseHeader.ModifiedDate = AppTime.Now;
+
+                    await _context.SaveChangesAsync();
+                }
+
 
                 scope.Complete();
             }
