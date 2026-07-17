@@ -4,7 +4,11 @@ using HIMS.ABHA.Interface;
 using HIMS.ABHA.Models.M2;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
+using HIMS.API.Models.PaymentGateway;
+using HIMS.Core.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace HIMS.API.Controllers.ABHA.M2
 {
@@ -14,10 +18,11 @@ namespace HIMS.API.Controllers.ABHA.M2
     public class AuthController : BaseController
     {
         private readonly IAbdmAuthService _abhaService;
-
-        public AuthController(IAbdmAuthService abhaService)
+        private readonly IConfiguration _configuration;
+        public AuthController(IAbdmAuthService abhaService, IConfiguration configuration)
         {
             _abhaService = abhaService;
+            _configuration = configuration;
         }
         [HttpPatch("bridge/url")]
         public async Task<ApiResponse> UpdateBridgeUrl([FromBody] UpdateBridgeUrlRequest req)
@@ -27,6 +32,17 @@ namespace HIMS.API.Controllers.ABHA.M2
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Otp Sent successfully.", result.Data);
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
+        }
+
+        [HttpPatch("bridge/callback")]
+        public async Task<IActionResult> Callback([FromBody] JsonElement payload)
+        {
+            string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callbak\\";
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+            string filename = path + "\\" + AppTime.Now.ToString("dd_MM_yyyy") + ".txt";
+            System.IO.File.AppendAllText(filename, "\n New request come at" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " =>" + payload.ToString());
+            return Ok();
         }
 
         [HttpPost("bridge/register")]
