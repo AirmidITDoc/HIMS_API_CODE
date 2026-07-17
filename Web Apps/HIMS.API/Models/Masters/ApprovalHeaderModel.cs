@@ -26,9 +26,6 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.TranId).NotNull().NotEmpty().WithMessage("TranId is required");
             RuleFor(x => x.AuthorizeBy).NotNull().NotEmpty().WithMessage("AuthorizeBy is required");
             RuleFor(x => x.ApprovedDateTime).NotNull().NotEmpty().WithMessage("ApprovedDateTime is required");
-
-
-
         }
     }
 }
