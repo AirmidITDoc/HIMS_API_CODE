@@ -2,14 +2,18 @@
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Microsoft.EntityFrameworkCore;
 
 namespace HIMS.Services.Inventory
 {
@@ -68,6 +72,41 @@ namespace HIMS.Services.Inventory
 
 
                 scope.Complete();
+            }
+        }
+        public virtual async Task UpdateAsync(TApprovalHeader objApproval, int currentUserId, string currentUserName)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection());// <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());    // <-- Share same DbTransaction
+
+                string[] Entity ={ "ApprovalId", "ApprovalStatus", "ApprovedDateTime" };
+
+                var entity = objApproval.ToDictionary();
+
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!Entity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+
+                odal.ExecuteNonQueryNew( "ps_UpdateApprovalStatus", CommandType.StoredProcedure, "", entity);
+
+                await _context.LogProcedureExecution(entity, nameof(TApprovalHeader), objApproval.ApprovalId.ToInt(),  Core.Domain.Logging.LogAction.Edit, currentUserId, currentUserName);
+
+                await _context.SaveChangesAsync(currentUserId, currentUserName);
+
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                // ❌ Rollback
+                await transaction.RollbackAsync();
+                throw;
             }
         }
     }

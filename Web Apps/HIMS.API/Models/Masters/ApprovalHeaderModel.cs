@@ -28,4 +28,19 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.ApprovedDateTime).NotNull().NotEmpty().WithMessage("ApprovedDateTime is required");
         }
     }
+    public class ApprovalHeaderUpdateModel
+    {
+        public long ApprovalId { get; set; }
+        public byte ApprovalStatus { get; set; }
+        public DateTime? ApprovedDateTime { get; set; }
+    }
+    public class ApprovalHeaderUpdateModelValidator : AbstractValidator<ApprovalHeaderUpdateModel>
+    {
+        public ApprovalHeaderUpdateModelValidator()
+        {
+            RuleFor(x => x.ApprovalStatus).NotNull().NotEmpty().WithMessage("ApprovalStatus is required");
+            RuleFor(x => x.ApprovedDateTime).NotNull().NotEmpty().WithMessage("ApprovedDateTime is required");
+           
+        }
+    }
 }
