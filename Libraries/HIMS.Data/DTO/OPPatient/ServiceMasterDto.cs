@@ -24,4 +24,11 @@ namespace HIMS.Data.DTO.OPPatient
         public string FormattedText { get { return this.ServiceName + " | Price : " + this.Price.ToString("F2"); } }
 
     }
+    public class UserCashCounterMasterDTO
+    {
+        public long CashCounterId { get; set; }
+        public string? CashCounterName { get; set; }
+
+    }
+
 }

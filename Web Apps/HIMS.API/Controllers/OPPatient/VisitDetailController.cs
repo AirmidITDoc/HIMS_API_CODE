@@ -237,10 +237,19 @@ namespace HIMS.API.Controllers.OPPatient
         {
             var data = _visitDetailsService.SearchGetServiceListwithTraiff(TariffId, ClassId, GroupId, SubGroupId, SrvcName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service List.", data);
+
         }
 
-        //Edit EditVital
-        [HttpPut("EditVital/{id:int}")]
+        [HttpGet("SearchUserWiseCashCounterList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse SearchUserWiseCashCounterList(int LoginId, string CCType)
+        {
+                var data = _visitDetailsService.SearchUserWiseCashCounterList(LoginId, CCType);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service List.", data);
+        }
+
+            //Edit EditVital
+            [HttpPut("EditVital/{id:int}")]
         [Permission(PageCode = "Appointment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(UpdateVitalInfModel obj)
         {

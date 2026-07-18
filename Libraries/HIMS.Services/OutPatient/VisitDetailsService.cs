@@ -299,6 +299,17 @@ namespace HIMS.Services.OutPatient
             List<ServiceMasterDTO> lstServiceList = sql.FetchListBySP<ServiceMasterDTO>("ps_Rtrv_ServicesList", para);
             return lstServiceList;
         }
+        public List<UserCashCounterMasterDTO> SearchUserWiseCashCounterList(int LoginId, string CCType)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[2];
+
+            para[0] = new SqlParameter("@LoginId", LoginId);
+            para[1] = new SqlParameter("@CCType", CCType);
+
+            List<UserCashCounterMasterDTO> lstUserCashCounterList = sql.FetchListBySP<UserCashCounterMasterDTO>("ps_Rtrv_LoginWise_CashCounter", para);
+            return lstUserCashCounterList;
+        }
         public virtual async Task<IPagedList<DeptDoctorListDoT>> GetListAsyncDoc(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<DeptDoctorListDoT>(model, "ps_getDepartmentWiseDoctorList");

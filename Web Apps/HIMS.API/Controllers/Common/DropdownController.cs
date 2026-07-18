@@ -178,12 +178,6 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MEmployeeDesignationMaster> MEmployeeDesignationMaster,
                               IGenericService<MExternalDoctorMaster> MExternalDoctorMaster,
                               IGenericService<MLoginAccessConfig> MLoginAccessConfig
-
-
-
-
-
-
                              )
         {
 
