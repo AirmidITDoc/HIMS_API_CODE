@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Transactions;
@@ -30,6 +31,11 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<LoginStoreUserWiseListDto>(model, "ps_M_LoginStoreUserWise");
         }
+        public virtual async Task<IPagedList<UserCashCounterMasterDTO>> GetListAsyncLCashCounter(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<UserCashCounterMasterDTO>(model, "ps_M_LoginCashCounterUserWise");
+        }
+
         public virtual async Task<IPagedList<LoginAccessConfigListDto>> GetListAsyncLA(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<LoginAccessConfigListDto>(model, "ps_M_LoginAccessConfigList");
