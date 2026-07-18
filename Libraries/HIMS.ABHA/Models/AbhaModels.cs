@@ -417,6 +417,11 @@ namespace HIMS.ABHA.Models
 
 
     // DTOs for controller
+
+    public class AadhaarReqOtpDto
+    {
+        public string AadhaarNumber { get; set; } = string.Empty;
+    }
     public class AadhaarOtpDto
     {
         public string AadhaarNumber { get; set; } = string.Empty;
