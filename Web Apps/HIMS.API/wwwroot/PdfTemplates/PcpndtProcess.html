@@ -167,19 +167,20 @@
 
         <div class="row">
             <b>3. Patient's Name :</b>
-            <span class="box">{{PatientName}}</span>
+            <!--<span class="box">{{PatientName}}</span>-->
+            <span class="box"><b>{{PatientName}}</b></span>
             <span class="space">
                 <b>Age :</b> {{Age}} Years &nbsp;&nbsp; {{AgeMonth}} Months
             </span>
         </div>
 
-        <div class="row"><b>4. Total Number of living children :</b> {{ChildrenCount}}</div>
-        <div class="row">(a). Number of living sons with age of each living son (in years or months):  {{SonsDetails}}</div>
+        <div class="row"><b>4. Total Number of living children :</b> <b>{{ChildrenCount}}</b></div>
+        <div class="row">(a). Number of living sons with age of each living son (in years or months):<b>{{SonsDetails}}</b></div>
         <div class="row">(b). Number of living Daughters with age of each living daughter (in years or months):</div>
 
         <div class="row">
             <b>5. Husband's / Wife's / Father's / Mother's Name :</b>
-            <span class="space">{{RelativeName}}</span>
+            <span class="space"><b>{{RelativeName}}</b></span>
         </div>
 
 
@@ -197,7 +198,7 @@
 
         <div class="row">
             <b>7. (a) Referred by  (Full name & address of Doctor(s)/Genetic Counselling Centre)</b><br><br>
-            <b>{{CondDoctor}}</b><br>
+               <b>{{Refrancedoctor}}</b><br>
             <!--<b>{{ConEducation}}</b>-->
         <span style="font-weight: bold; text-align: left; color: black;">
             SANE GURUJI AROGYA KENDRA Occ. No.2 B& C Wing, Sr. No. 165A,Pt.No. 195-208 Malwadi, Hadapsar, Pune.
@@ -261,7 +262,9 @@
         <div class="row">
             <b>10. Indication/s for diagnosis procedure :</b><br>
             <!--{{Diagnosis}}-->
-            <!--ITEMS_SP3--><div> <span class="chk-box chk-{{SrNo}}"></span>&nbsp;{{RomanNo}}.{{selectedIndicationDesc}}</div><!--/ITEMS_SP3-->
+            <!--ITEMS_SP3--><div> <!--<span class="chk-box chk-{{SrNo}}"></span>-->&nbsp;<b>{{RomanNo}}.{{selectedIndicationDesc}}</b></div><!--/ITEMS_SP3-->
+
+           
 
         </div>
 
@@ -329,7 +332,7 @@
             <br><br>
 
             <div style="width:380px;padding:5px;display:inline-block;">
-                <span class="box">{{PatientName}}</span>
+                <span class="box"><b>{{PatientName}}</b></span>
             </div>
 
             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -673,8 +676,7 @@
         <div class="row">
             I , Mrs./Mr.
             <!--<span class="box">{{PatientName}}</span>-->
-            <span class="box">{{PatientName}}</span>
-
+            <span class="box"><b>{{PatientName}}</b></span>
             declare that by undergoing Prenatal Diagnostic Test / Procedure,
             I do not want to know the sex of my foetus.
         </div>
@@ -682,7 +684,7 @@
         <!--<div class="row marathi-text">
             असे घोषित करते की, अल्ट्रा-सोनोग्राफी / चाचणी करून मी माझ्या गर्भाचे लिंग जाणून घेऊ इच्छित नाही.
         </div>-->
-        <div class="row marathi-text" style="font-size:16px;">
+        <div class="row marathi-text" style="font-size:18px;">
             असे घोषित करते की, अल्ट्रा-सोनोग्राफी / चाचणी करून मी माझ्या गर्भाचे लिंग जाणून घेऊ इच्छित नाही.
         </div>
 
@@ -738,8 +740,7 @@
             I , <b>{{DeclarationDoctor}}</b>
             (name of person conducting ultrasonography / image scanning)
             declare that while conducting ultrasonography / image scanning on Ms.
-            <span class="box">{{PatientName}}</span>
-
+                <span class="box"><b>{{PatientName}}</b></span>
             (name of the pregnant woman or the person undergoing pre-natal diagnostic procedure/test) , I have neither detected
             nor disclosed the sex of her fetus to anybody in any manner.
         </div>
