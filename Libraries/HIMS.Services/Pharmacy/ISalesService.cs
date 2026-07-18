@@ -44,6 +44,8 @@ namespace HIMS.Services.Users
         Task InsertSalesInPatientAsyncSPC(TSalesInpatientHeader ObjSalesHeader, List<TCurrentStock> ObjTCurrentStock, TIpPrescription ObjPrescription, TSalesDraftHeader ObjDraftHeader, int CurrentUserId, string CurrentUserName);
         Task Update(TSalesHeader ObjTSalesHeader, List<TSalesDetail> ObjTSalesDetail, List<TCurrentStock> ObjTCurrentStock, int CurrentUserId, string CurrentUserName);
         Task SalesUpdate(TSalesInpatientHeader ObjTSalesHeader, List<TSalesInpatientDetail> ObjTSalesDetail, List<TCurrentStock> ObjTCurrentStock, int CurrentUserId, string CurrentUserName);
+        List<ExpiryItemScrollingDataDto> GetExpiryList(string Keyword);
+
 
 
     }

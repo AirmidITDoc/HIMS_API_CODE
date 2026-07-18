@@ -112,6 +112,14 @@ namespace HIMS.Services.Inventory
                 if (storeList.Any())
                     _context.TLoginStoreDetails.RemoveRange(storeList);
 
+                // Delete related Cash Counter records
+                var cashCounterList = await _context.TLoginCashCounterDetails
+                    .Where(x => x.LoginId == objLogin.UserId)
+                    .ToListAsync();
+
+                if (cashCounterList.Any())
+                    _context.TLoginCashCounterDetails.RemoveRange(cashCounterList);
+
                 //  Attach entity
                 _context.Attach(objLogin);
                 _context.Entry(objLogin).State = EntityState.Modified;

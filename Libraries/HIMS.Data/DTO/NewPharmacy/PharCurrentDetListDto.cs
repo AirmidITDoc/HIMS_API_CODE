@@ -12,4 +12,9 @@
         public decimal UnitMRP { get; set; }
         public long StoreId { get; set; }
     }
+    public class ExpiryItemScrollingDataDto
+    {
+        public string? ItemName { get; set; }
+
+    }
 }

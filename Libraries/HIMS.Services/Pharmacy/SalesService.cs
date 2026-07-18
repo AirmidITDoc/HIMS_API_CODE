@@ -12,6 +12,8 @@ using System.Data;
 using System.Security.Principal;
 using System.Transactions;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Microsoft.Data.SqlClient;
+
 
 namespace HIMS.Services.Users
 {
@@ -22,6 +24,14 @@ namespace HIMS.Services.Users
         {
             _context = HIMSDbContext;
         }
+        public List<ExpiryItemScrollingDataDto> GetExpiryList(string Keyword)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@Keyword", Keyword);
+            return sql.FetchListBySP<ExpiryItemScrollingDataDto>("ps_ExpiryItemScrollingData", para);
+        }
+
         public virtual async Task<IPagedList<PharSalesCurrentSumryListDto>> GetList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PharSalesCurrentSumryListDto>(model, "m_rtrv_Phar_SalesList_CurrentSumry");

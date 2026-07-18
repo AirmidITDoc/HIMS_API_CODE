@@ -45,6 +45,8 @@ namespace HIMS.API.Models.Inventory
         public List<LoginAccessDetailModel> TLoginAccessDetails { get; set; }
         public List<LoginUnitDetailModel> TLoginUnitDetails { get; set; }
         public List<LoginStoreDetailModel> TLoginStoreDetails { get; set; }
+        public List<LoginCashCounterDetailModel> TLoginCashCounterDetails { get; set; }
+
 
     }
     public class LoginManagerModelValidator : AbstractValidator<LoginManagerModel>
@@ -106,6 +108,13 @@ namespace HIMS.API.Models.Inventory
         public string Password { get; set; }
         public DateTime? LastPasswordChangedDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
+
+    }
+    public class LoginCashCounterDetailModel
+    {
+        public long LoginCashCounterDetId { get; set; }
+        public long LoginId { get; set; }
+        public long CashCounterId { get; set; }
 
     }
 }

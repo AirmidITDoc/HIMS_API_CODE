@@ -32,7 +32,7 @@ namespace HIMS.API.Models.Masters
     {
         public long ApprovalId { get; set; }
         public byte ApprovalStatus { get; set; }
-        public DateTime? ApprovedDateTime { get; set; }
+        public string? ApprovedDateTime { get; set; }
     }
     public class ApprovalHeaderUpdateModelValidator : AbstractValidator<ApprovalHeaderUpdateModel>
     {

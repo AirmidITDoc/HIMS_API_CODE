@@ -190,6 +190,14 @@ namespace HIMS.API.Controllers.Pharmacy
             IPagedList<ItemGenericByNameListDto> ItemGenericByNameList = await _ISalesService.ItemGenericByNameList(objGrid);
             return Ok(ItemGenericByNameList.ToGridResponse(objGrid, "ItemGenericByName List"));
         }
+        [HttpGet("ExpiryItemScrollingData")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse GetExpiry(string Keyword)
+        {
+            var data = _ISalesService.GetExpiryList(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "ExpiryItemScrollingData", data);
+        }
+
 
         // done by Ashu Date : 20-May-2025
         [HttpPost("SalesSaveWithPayment")]

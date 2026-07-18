@@ -95,6 +95,11 @@ namespace HIMS.API.Controllers.Login
                     p.CreatedBy = CurrentUserId;
                     p.CreatedDate = AppTime.Now;
                 }
+                foreach (var r in model.TLoginCashCounterDetails)
+                {
+                    r.CreatedBy = CurrentUserId;
+                    r.CreatedDate = AppTime.Now;
+                }
                 model.AddedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
@@ -155,6 +160,17 @@ namespace HIMS.API.Controllers.Login
                 p.ModifiedBy = CurrentUserId;
                 p.ModifiedDate = AppTime.Now;
                 p.LoginId = 0;
+            }
+            foreach (var r in model.TLoginCashCounterDetails)
+            {
+                if (r.LoginId == 0)
+                {
+                    r.CreatedBy = CurrentUserId;
+                    r.CreatedDate = AppTime.Now;
+                }
+                r.ModifiedBy = CurrentUserId;
+                r.ModifiedDate = AppTime.Now;
+                r.LoginId = 0;
             }
             model.ModifiedDate = AppTime.Now;
             model.ModifiedBy = CurrentUserId;
