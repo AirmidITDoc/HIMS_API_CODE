@@ -22,7 +22,7 @@ namespace HIMS.API.Controllers.ABHA.M1
 
         // ===== Aadhaar flow =====
         [HttpPost("aadhaar/request-otp")]
-        public async Task<ApiResponse> RequestAadhaarOtp([FromBody] AadhaarOtpDto dto)
+        public async Task<ApiResponse> RequestAadhaarOtp([FromBody] AadhaarReqOtpDto dto)
         {
             if (string.IsNullOrWhiteSpace(dto.AadhaarNumber) || dto.AadhaarNumber.Length != 12)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Valid 12-digit Aadhaar number required");
