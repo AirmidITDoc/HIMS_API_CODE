@@ -23,8 +23,8 @@ namespace HIMS.ABHA.Services
             try
             {
                 var publicKey = await _tokenService.GetPublicCertificateAsync();
-                var encryptedAadhaar = RsaEncryptionHelper.Encrypt(request.Url, publicKey);
-                request.Url = encryptedAadhaar;
+                //var encryptedAadhaar = RsaEncryptionHelper.Encrypt(request.Url, publicKey);
+                //request.Url = encryptedAadhaar;
                 var url = $"{AppSettings.Current.BaseUrls.GatewayBaseUrl}{AppSettings.Current.Endpoints.BridgeUrl}";
                 return await _client.PatchAsync<string>(url, request);
             }

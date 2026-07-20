@@ -34,10 +34,10 @@ namespace HIMS.API.Controllers.ABHA.M2
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
-        [HttpPatch("bridge/callback")]
+        [HttpPost("bridge/callback")]
         public async Task<IActionResult> Callback([FromBody] JsonElement payload)
         {
-            string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callbak\\";
+            string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
             string filename = path + "\\" + AppTime.Now.ToString("dd_MM_yyyy") + ".txt";
