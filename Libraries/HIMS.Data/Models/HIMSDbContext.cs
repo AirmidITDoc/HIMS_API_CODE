@@ -660,7 +660,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -1355,6 +1355,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.BillNo).HasMaxLength(100);
 
                 entity.Property(e => e.CashCounterName).HasMaxLength(100);
+
+                entity.Property(e => e.CashCounterType).HasMaxLength(20);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
@@ -7351,27 +7353,33 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("M_HSNCode_Master");
 
-                entity.Property(e => e.CreatedBy)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.EffectiveFrom)
+                    .HasColumnType("datetime")
+                    .HasColumnName("effective_from");
+
+                entity.Property(e => e.EffectiveTo)
+                    .HasColumnType("datetime")
+                    .HasColumnName("effective_to");
+
+                entity.Property(e => e.GstRate)
+                    .HasColumnName("gst_rate")
+                    .HasDefaultValueSql("((0.00))");
 
                 entity.Property(e => e.HsncodeName)
                     .HasMaxLength(150)
                     .IsUnicode(false);
 
-                entity.Property(e => e.IsActive)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.ModifiedBy)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.UnitOfMeasure)
+                    .HasMaxLength(50)
+                    .HasColumnName("unit_of_measure");
             });
 
             modelBuilder.Entity<MIcdcdeMainMaster>(entity =>

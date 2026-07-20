@@ -387,11 +387,6 @@ namespace HIMS.API.Infrastructure
 
 
             CreateMap<ConfigSetting, ConfigurationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
-
-
-
-
             CreateMap<LoginManager, LoginManagerModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TLoginAccessDetail, LoginAccessDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TLoginUnitDetail, LoginUnitDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -406,6 +401,7 @@ namespace HIMS.API.Infrastructure
             //Radiology//
             CreateMap<MRadiologyTemplateMaster, RadiologyTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<MHsncodeMaster, HSNCodeMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             CreateMap<TPrescription, IPPrescriptionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
