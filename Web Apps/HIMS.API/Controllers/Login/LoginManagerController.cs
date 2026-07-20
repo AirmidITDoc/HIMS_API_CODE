@@ -7,6 +7,7 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
@@ -55,6 +56,13 @@ namespace HIMS.API.Controllers.Login
             return Ok(LoginStoreUserWiseList.ToGridResponse(objGrid, "LoginConfigUserWiseList "));
         }
 
+        [HttpPost("LoginCashCounterUserWiseList")]
+        //[Permission(PageCode = "Login", Permission = PagePermission.View)]
+        public async Task<IActionResult> ListCashCounter(GridRequestModel objGrid)
+        {
+            IPagedList<UserCashCounterMasterDTO> LoginStoreUserWiseList = await _ILoginService.GetListAsyncLCashCounter(objGrid);
+            return Ok(LoginStoreUserWiseList.ToGridResponse(objGrid, "Login CashCounter UserWise List "));
+        }
         [HttpPost("LoginAccessConfigList")]
         //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> ListA(GridRequestModel objGrid)
