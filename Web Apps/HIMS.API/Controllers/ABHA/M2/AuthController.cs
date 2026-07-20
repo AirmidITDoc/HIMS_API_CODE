@@ -24,7 +24,7 @@ namespace HIMS.API.Controllers.ABHA.M2
             _abhaService = abhaService;
             _configuration = configuration;
         }
-        [HttpPatch("bridge/url")]
+        [HttpPost("bridge/url")]
         public async Task<ApiResponse> UpdateBridgeUrl([FromBody] UpdateBridgeUrlRequest req)
         {
             var result = await _abhaService.UpdateBridgeUrlAsync(req);
