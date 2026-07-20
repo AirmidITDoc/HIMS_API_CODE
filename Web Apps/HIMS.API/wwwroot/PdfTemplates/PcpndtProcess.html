@@ -13,7 +13,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            font-size: 13px;
+            font-size:17px;
         }
 
         @font-face {
@@ -26,9 +26,9 @@
         }
 */
         .page {
-            width: 900px;
+            width: 960px;
             margin: auto;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .page-break {
@@ -40,12 +40,12 @@
         }
 
         .title {
-            font-size: 28px;
+            font-size:34px;
             font-weight: bold;
         }
 
         .sub {
-            font-size: 15px;
+            font-size:19px;
         }
 
         .line {
@@ -69,7 +69,7 @@
             border: 1px solid black;
             padding: 5px;
             display: inline-block;
-            min-width: 350px;
+            min-width: 380px;
         }
 
         .inline {
@@ -97,7 +97,7 @@
 
         .chk-box {
             display: inline-block;
-            font-size: 14px;
+            font-size:18px;
         }
 
             .chk-box:before {
@@ -135,11 +135,11 @@
 
 
         <div class="center">
-            <div class="title" style="font-size:18px;">
+            <div class="title" style="font-size:22px;">
                 PRE CONCEPTION AND PRE - NATAL DIAGNOSTIC TECHNIQUES (PROHIBITION OF SEX SELECTION) ACT 1994 (AMENDMENT RULES 2014)
             </div>
             <br>
-            <div style="font-size:15px;font-weight:bold">Form F</div>
+            <div style="font-size:19px;font-weight:bold">Form F</div>
             <div class="sub">See Provision to Section 4[3] rule 9(4) and rule 10(1A)</div>
             <br>
             <div class="bold">
@@ -187,9 +187,9 @@
         <div class="row">
             <b>6. Full postal address of the patient with Contact Number (if any):</b>
             <div class="address">
-                <span style="font-size:15px;font-weight:bold;color:black;">
+                <span style="font-size:19px;font-weight:bold;color:black;">
                     {{PatientAddress}}
-                    <span style="font-size:12px;">
+                    <span style="font-size:16px;">
                         CONTACT NO. - {{PatientMobileNo}}
                     </span>
                 </span>
@@ -198,11 +198,11 @@
 
         <div class="row">
             <b>7. (a) Referred by  (Full name & address of Doctor(s)/Genetic Counselling Centre)</b><br><br>
-               <b>{{Refrancedoctor}}</b><br>
+            <b>{{Refrancedoctor}}</b><br>
             <!--<b>{{ConEducation}}</b>-->
-        <span style="font-weight: bold; text-align: left; color: black;">
-            SANE GURUJI AROGYA KENDRA Occ. No.2 B& C Wing, Sr. No. 165A,Pt.No. 195-208 Malwadi, Hadapsar, Pune.
-        </span>
+            <span style="font-weight: bold; text-align: left; color: black;">
+                SANE GURUJI AROGYA KENDRA Occ. No.2 B& C Wing, Sr. No. 165A,Pt.No. 195-208 Malwadi, Hadapsar, Pune.
+            </span>
         </div>
 
         <div class="row">(Referral slips to be preserved carefully with Form F)</div>
@@ -248,13 +248,13 @@
                     <b>9. Name of the doctor performing the procedure/s :</b>&nbsp;&nbsp;&nbsp;
                 </div>
                 <div style="display:table-cell; padding:0; line-height:1.2;">
-                    <b style="font-size:14px;">{{invasiveDoctorName}}</b>
+                    <b style="font-size:18px;">{{invasiveDoctorName}}</b>
                 </div>
             </div>
             <div style="display:table-row;">
                 <div style="display:table-cell; padding:0; line-height:1.2;"></div>
                 <div style="display:table-cell; padding:0; line-height:1.2;">
-                    <b style="font-size:11px;">{{InvEducation}} REGNO {{RegNo}}</b>
+                    <b style="font-size:15px;">{{InvEducation}} REGNO {{InvRegNo}}</b>
                 </div>
             </div>
         </div>
@@ -264,11 +264,11 @@
             <!--{{Diagnosis}}-->
             <!--ITEMS_SP3--><div> <!--<span class="chk-box chk-{{SrNo}}"></span>-->&nbsp;<b>{{RomanNo}}.{{selectedIndicationDesc}}</b></div><!--/ITEMS_SP3-->
 
-           
+
 
         </div>
 
-       
+
 
     </div>
     <!-- ==================== END PAGE 1 ==================== -->
@@ -324,14 +324,14 @@
                 14. Result of the non-invasive procedure carried out
                 (report in brief of the test including ultrasound carried out) :
             </b>
-            <br><br><br><br><br>
+            <br>
         </div>
 
         <div class="row">
             <b>15. The result of pre-natal diagnostic procedures was conveyed to :</b>
             <br><br>
 
-            <div style="width:380px;padding:5px;display:inline-block;">
+            <div style="width:400px;padding:5px;display:inline-block;">
                 <span class="box"><b>{{PatientName}}</b></span>
             </div>
 
@@ -340,7 +340,7 @@
             <b>On :</b> <b>{{ResultDate}}</b><br><br>
         </div>
 
-        <br><br>
+        <!--<br><br>-->
 
 
         <table width="100%">
@@ -354,7 +354,7 @@
             </tr>
         </table>
 
-        <br><br><br>
+        <br><br><br><br><br><br>
 
 
         <table width="100%" style="border-collapse:collapse;">
@@ -367,7 +367,7 @@
                 <td width="45%" valign="top" align="center">
                     <b>{{invasiveDoctorName}}</b><br>
                     <b>{{InvEducation}}</b><br>
-                    <b>REGNO. {{RegNo}}</b><br><br>
+                    <b>REGNO. {{InvRegNo}}</b><br><br>
                     Name, Signature and Registration Number with Seal of the
                     Gynecologist / Radiologist / Registered Medical Practitioner
                     performing Diagnostic Procedures
@@ -573,14 +573,9 @@
         <b style="font-style:italic;">{{AnyOtherSpecify}}</b>
     </div>
     </div>
-    <br>
     <div class="row">
 
-
-
-
-
-        <table width="100%">
+  <table width="100%">
             <tr>
                 <td style="vertical-align:top; width:75%;">
                     <b>24. Result of procedures / Tests carried out (report in brief of the invasive tests/procedures carried out):</b>
@@ -597,7 +592,7 @@
             {{TestResult}}
         </span>
 
-        <br><br><br><br><br>
+        <br>
     </div>
 
 
@@ -644,23 +639,22 @@
 
     <br><br>
 
-    <div class="row">
-        <b>Date :</b> <b>{{AnyOther2}}</b>
-        <br><br>
-        <b>Place :</b>  <b>{{AnyOther2}}</b>
-    </div>
-
-    <br><br><br>
-
-    <div style="text-align:right">
-        <b>{{AnyOther2}}</b><br>
-        <b>
-    </b><br><br>
-        Name, Signature and Registration Number with Seal of the<br>
-        Gynecologist / Radiologist / Registered Medical Practitioner
-    </div>
-
    
+<table width="100%" style="border-collapse:collapse;">
+    <tr>
+        <td width="55%" valign="top">
+            <b>Date :</b> <b>{{AnyOther2}}</b><br><br>
+            <b>Place :</b> <b>{{AnyOther2}}</b>
+        </td>
+        <td width="45%" valign="top" align="center">
+            <b>{{AnyOther2}}</b><br><br>
+            Name, Signature and Registration Number with Seal of the
+            Gynecologist / Radiologist / Registered Medical Practitioner
+        </td>
+    </tr>
+</table>
+
+
     <!-- ==================== END PAGE 4 ==================== -->
 
     <div class="page-break"></div>
@@ -684,11 +678,11 @@
         <!--<div class="row marathi-text">
             असे घोषित करते की, अल्ट्रा-सोनोग्राफी / चाचणी करून मी माझ्या गर्भाचे लिंग जाणून घेऊ इच्छित नाही.
         </div>-->
-        <div class="row marathi-text" style="font-size:18px;">
+        <div class="row marathi-text" style="font-size:22px;">
             असे घोषित करते की, अल्ट्रा-सोनोग्राफी / चाचणी करून मी माझ्या गर्भाचे लिंग जाणून घेऊ इच्छित नाही.
         </div>
 
-      
+
         <td style="width:50%; text-align:left;">
             <b>Date :</b>
             <span style="border-bottom:1px solid #000; padding:0 40px;">
@@ -740,7 +734,7 @@
             I , <b>{{DeclarationDoctor}}</b>
             (name of person conducting ultrasonography / image scanning)
             declare that while conducting ultrasonography / image scanning on Ms.
-                <span class="box"><b>{{PatientName}}</b></span>
+            <span class="box"><b>{{PatientName}}</b></span>
             (name of the pregnant woman or the person undergoing pre-natal diagnostic procedure/test) , I have neither detected
             nor disclosed the sex of her fetus to anybody in any manner.
         </div>
@@ -770,7 +764,7 @@
         <div style="text-align:center; width:50%; margin-left:auto;">
             <b>{{DeclarationDoctor}}</b><br><br>
             <b>{{DeclEducation}}</b><br>
-            <b>RegNo.</b> <b>{{DoctorRegNo}}</b><br><br>
+            <b>RegNo.</b> <b>{{DelDoctorRegNo}}</b><br><br>
             __________________________________<br>
             Name in Capitals, Registration Number with Seal<br>
             of Gynecologist / Radiologist / Registered Medical Practitioner<br>
