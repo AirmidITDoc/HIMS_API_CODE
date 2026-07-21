@@ -350,7 +350,7 @@ namespace HIMS.Services.Pathlogy
         "NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount",
         "AdvanceUsedAmount","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId",
         "TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer",
-        "SpeTaxAmt","CompDiscAmt","DiscComments","CreatedBy","BillNo","GovtApprovedAmt"
+        "SpeTaxAmt","CompDiscAmt","DiscComments","CreatedBy","BillNo","GovtApprovedAmt","CashCounterId"
     };
 
             var AEntity = new HashSet<string>(StringComparer.Ordinal)

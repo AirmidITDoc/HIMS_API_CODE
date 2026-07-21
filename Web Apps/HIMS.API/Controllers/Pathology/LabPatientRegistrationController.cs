@@ -180,7 +180,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.",model2.BillNo);
         }
         [HttpPost("PatientRegistrationPaidBill")]
-        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertPaidBill(LabRegistrationModels obj)
         {
             TLabPatientRegistration model = obj.LabPatientRegistration.MapTo<TLabPatientRegistration>();
