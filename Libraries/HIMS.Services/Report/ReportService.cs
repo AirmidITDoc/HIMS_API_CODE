@@ -23340,10 +23340,10 @@ namespace HIMS.Services.Report
             if (number == 0) return "ZERO";
             if (number < 0) return "minus " + ConvertNumbertoWords(Math.Abs(number));
             string words = "";
-            if ((number / 1000000) > 0)
+            if ((number / 100000) > 0)
             {
                 words += ConvertNumbertoWords(number / 100000) + " LAKES ";
-                number %= 1000000;
+                number %= 100000;
             }
             if ((number / 1000) > 0)
             {
