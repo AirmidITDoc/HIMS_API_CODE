@@ -51,8 +51,10 @@ namespace HIMS.API.Models.OutPatient
         public string? MedTourismResidentialAddress { get; set; }
         public string? MedTourismOfficeWorkAddress { get; set; }
         public string? EmailId { get; set; }
-        public long RegId { get; set; }
         public long? MembershipId { get; set; }
+        public long? AbhaTranId { get; set; }
+        public bool? IsMember { get; set; }
+        public long RegId { get; set; }
         public List<TPatientAbhaInformationModel>? TPatientAbhaInformations { get; set; }
 
     }
@@ -68,6 +70,10 @@ namespace HIMS.API.Models.OutPatient
             RuleFor(x => x.CityId).NotNull().NotEmpty().WithMessage("City is required");
             RuleFor(x => x.StateId).NotNull().NotEmpty().WithMessage("State is required");
             RuleFor(x => x.CountryId).NotNull().NotEmpty().WithMessage("Country is required");
+            RuleFor(x => x.RegDate).NotNull().NotEmpty().WithMessage("RegDate is required");
+            RuleFor(x => x.RegTime).NotNull().NotEmpty().WithMessage("RegTime is required");
+            RuleFor(x => x.DateofBirth).NotNull().NotEmpty().WithMessage("DateofBirth is required");
+
         }
     }
 

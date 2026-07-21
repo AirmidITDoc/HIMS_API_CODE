@@ -24,7 +24,7 @@ namespace HIMS.API.Controllers.ABHA.M2
             _abhaService = abhaService;
             _configuration = configuration;
         }
-        [HttpPatch("bridge/url")]
+        [HttpPost("bridge/url")]
         public async Task<ApiResponse> UpdateBridgeUrl([FromBody] UpdateBridgeUrlRequest req)
         {
             var result = await _abhaService.UpdateBridgeUrlAsync(req);
@@ -34,10 +34,21 @@ namespace HIMS.API.Controllers.ABHA.M2
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
 
-        [HttpPatch("bridge/callback")]
+        [HttpPost("bridge/callback")]
         public async Task<IActionResult> Callback([FromBody] JsonElement payload)
         {
-            string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callbak\\";
+            string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+            string filename = path + "\\" + AppTime.Now.ToString("dd_MM_yyyy") + ".txt";
+            System.IO.File.AppendAllText(filename, "\n New request come at" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " =>" + payload.ToString());
+            return Ok();
+        }
+
+        [HttpGet("bridge/callback")]
+        public async Task<IActionResult> Callback1([FromBody] JsonElement payload)
+        {
+            string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback1";
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
             string filename = path + "\\" + AppTime.Now.ToString("dd_MM_yyyy") + ".txt";

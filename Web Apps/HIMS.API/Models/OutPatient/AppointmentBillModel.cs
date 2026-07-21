@@ -55,10 +55,10 @@ namespace HIMS.API.Models.OutPatient
             public string? MedTourismResidentialAddress { get; set; }
             public string? MedTourismOfficeWorkAddress { get; set; }
             public string? EmailId { get; set; }
-            public long RegId { get; set; }
             public long? MembershipId { get; set; }
-
-
+            public long? AbhaTranId { get; set; }
+            public bool? IsMember { get; set; }
+            public long RegId { get; set; }
 
         }
         public class AppBillingMainModels

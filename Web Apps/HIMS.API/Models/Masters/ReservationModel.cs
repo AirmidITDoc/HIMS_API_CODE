@@ -45,6 +45,12 @@ namespace HIMS.API.Models.Masters
             RuleFor(x => x.SurgeryDate).NotNull().NotEmpty().WithMessage("SurgeryDate is required");
             RuleFor(x => x.EstimateTime).NotNull().NotEmpty().WithMessage("EstimateTime is required");
             RuleFor(x => x.IsCancelledDateTime).NotNull().NotEmpty().WithMessage("IsCancelledDateTime is required");
+            RuleFor(x => x.BloodGroup).NotNull().NotEmpty().WithMessage("BloodGroup is required");
+            RuleFor(x => x.CategoryType).NotNull().NotEmpty().WithMessage("CategoryType is required");
+            RuleFor(x => x.BloodGroup).NotNull().NotEmpty().WithMessage("BloodGroup is required");
+            RuleFor(x => x.ReservationType).NotNull().NotEmpty().WithMessage("ReservationType is required");
+
+
 
         }
     }
@@ -74,6 +80,17 @@ namespace HIMS.API.Models.Masters
         public int? SeqNo { get; set; }
 
     }
+    public class TOtReservationSurgeryDetailModelValidator : AbstractValidator<TOtReservationSurgeryDetailModel>
+    {
+        public TOtReservationSurgeryDetailModelValidator()
+        {
+            RuleFor(x => x.SurgeryFromTime).NotNull().NotEmpty().WithMessage("OtreservationDate is required");
+            RuleFor(x => x.SurgeryEndTime).NotNull().NotEmpty().WithMessage("OtreservationTime is required");
+            //RuleFor(x => x.SurgeryDuration).NotNull().NotEmpty().WithMessage("SurgeryDuration is required");
+           
+
+        }
+    }
     public class ReservationGetModel
     {
         public long OtreservationId { get; set; }
@@ -102,6 +119,17 @@ namespace HIMS.API.Models.Masters
         public DateTime? IsCancelledDateTime { get; set; }
         public int? AnesthesiaType { get; set; }
 
+    }
+    public class ReservationGetModelValidator : AbstractValidator<ReservationGetModel>
+    {
+        public ReservationGetModelValidator()
+        {
+            RuleFor(x => x.IsCancelledDateTime).NotNull().NotEmpty().WithMessage("IsCancelledDateTime is required");
+            RuleFor(x => x.SurgeryDate).NotNull().NotEmpty().WithMessage("SurgeryDate is required");
+            RuleFor(x => x.EstimateTime).NotNull().NotEmpty().WithMessage("EstimateTime is required");
+
+
+        }
     }
     public class ReservationDiagnosisModel
     {

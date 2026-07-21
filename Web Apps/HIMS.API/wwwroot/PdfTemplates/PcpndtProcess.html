@@ -254,7 +254,7 @@
             <div style="display:table-row;">
                 <div style="display:table-cell; padding:0; line-height:1.2;"></div>
                 <div style="display:table-cell; padding:0; line-height:1.2;">
-                    <b style="font-size:15px;">{{InvEducation}} REGNO {{RegNo}}</b>
+                    <b style="font-size:15px;">{{InvEducation}} REGNO {{InvRegNo}}</b>
                 </div>
             </div>
         </div>
@@ -324,7 +324,7 @@
                 14. Result of the non-invasive procedure carried out
                 (report in brief of the test including ultrasound carried out) :
             </b>
-            <br><br><br><br><br>
+            <br>
         </div>
 
         <div class="row">
@@ -340,7 +340,7 @@
             <b>On :</b> <b>{{ResultDate}}</b><br><br>
         </div>
 
-        <br><br>
+        <!--<br><br>-->
 
 
         <table width="100%">
@@ -354,7 +354,7 @@
             </tr>
         </table>
 
-        <br><br><br>
+        <br><br><br><br><br><br>
 
 
         <table width="100%" style="border-collapse:collapse;">
@@ -367,7 +367,7 @@
                 <td width="45%" valign="top" align="center">
                     <b>{{invasiveDoctorName}}</b><br>
                     <b>{{InvEducation}}</b><br>
-                    <b>REGNO. {{RegNo}}</b><br><br>
+                    <b>REGNO. {{InvRegNo}}</b><br><br>
                     Name, Signature and Registration Number with Seal of the
                     Gynecologist / Radiologist / Registered Medical Practitioner
                     performing Diagnostic Procedures
@@ -573,14 +573,9 @@
         <b style="font-style:italic;">{{AnyOtherSpecify}}</b>
     </div>
     </div>
-    <br>
     <div class="row">
 
-
-
-
-
-        <table width="100%">
+  <table width="100%">
             <tr>
                 <td style="vertical-align:top; width:75%;">
                     <b>24. Result of procedures / Tests carried out (report in brief of the invasive tests/procedures carried out):</b>
@@ -597,7 +592,7 @@
             {{TestResult}}
         </span>
 
-        <br><br><br><br><br>
+        <br>
     </div>
 
 
@@ -644,21 +639,20 @@
 
     <br><br>
 
-    <div class="row">
-        <b>Date :</b> <b>{{AnyOther2}}</b>
-        <br><br>
-        <b>Place :</b>  <b>{{AnyOther2}}</b>
-    </div>
-
-    <br><br><br>
-
-    <div style="text-align:right">
-        <b>{{AnyOther2}}</b><br>
-        <b>
-        </b><br><br>
-        Name, Signature and Registration Number with Seal of the<br>
-        Gynecologist / Radiologist / Registered Medical Practitioner
-    </div>
+   
+<table width="100%" style="border-collapse:collapse;">
+    <tr>
+        <td width="55%" valign="top">
+            <b>Date :</b> <b>{{AnyOther2}}</b><br><br>
+            <b>Place :</b> <b>{{AnyOther2}}</b>
+        </td>
+        <td width="45%" valign="top" align="center">
+            <b>{{AnyOther2}}</b><br><br>
+            Name, Signature and Registration Number with Seal of the
+            Gynecologist / Radiologist / Registered Medical Practitioner
+        </td>
+    </tr>
+</table>
 
 
     <!-- ==================== END PAGE 4 ==================== -->
@@ -770,7 +764,7 @@
         <div style="text-align:center; width:50%; margin-left:auto;">
             <b>{{DeclarationDoctor}}</b><br><br>
             <b>{{DeclEducation}}</b><br>
-            <b>RegNo.</b> <b>{{DoctorRegNo}}</b><br><br>
+            <b>RegNo.</b> <b>{{DelDoctorRegNo}}</b><br><br>
             __________________________________<br>
             Name in Capitals, Registration Number with Seal<br>
             of Gynecologist / Radiologist / Registered Medical Practitioner<br>
