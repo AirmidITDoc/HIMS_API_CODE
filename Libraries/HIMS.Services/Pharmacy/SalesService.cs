@@ -357,7 +357,7 @@ namespace HIMS.Services.Users
             "PaidAmount","BalanceAmount","ConcessionReasonId","ConcessionAuthorizationId","IsSellted",
             "IsPrint","IsFree","UnitId","ExternalPatientName","DoctorName","StoreId","IsPrescription",
             "AddedBy","CreditReason","CreditReasonId","WardId","BedId","DiscperH","IsPurBill",
-            "IsBillCheck","SalesHeadName","SalesTypeId","RegId","ExtMobileNo","RoundOff","ExtAddress","SalesId","doctorId" };
+            "IsBillCheck","SalesHeadName","SalesTypeId","RegId","ExtMobileNo","RoundOff","ExtAddress","SalesId","DoctorId" };
 
             var stockWhitelist = new HashSet<string>(StringComparer.Ordinal) { "ItemId", "IssueQty", "IstkId", "StoreId" };
             var prescriptionWhitelist = new HashSet<string>(StringComparer.Ordinal) { "OpIpId", "IsClosed" };
