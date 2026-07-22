@@ -9,6 +9,7 @@ using HIMS.Core.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text.Json;
+using System.IO;
 
 namespace HIMS.API.Controllers.ABHA.M2
 {
@@ -33,26 +34,20 @@ namespace HIMS.API.Controllers.ABHA.M2
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
-
-        [HttpPost("bridge/callback")]
-        public async Task<IActionResult> Callback([FromBody] JsonElement payload)
+        [HttpPost("~/api/v3/hip/token/on-generate-token")]
+        public async Task<IActionResult> OnGenerateToken([FromBody] LinkTokenCallbackPayload payload)
         {
             string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
-            if (!System.IO.Directory.Exists(path))
-                System.IO.Directory.CreateDirectory(path);
-            string filename = path + "\\" + AppTime.Now.ToString("dd_MM_yyyy") + ".txt";
-            System.IO.File.AppendAllText(filename, "\n New request come at" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " =>" + payload.ToString());
-            return Ok();
-        }
-
-        [HttpGet("bridge/callback")]
-        public async Task<IActionResult> Callback1([FromBody] JsonElement payload)
-        {
-            string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback1";
-            if (!System.IO.Directory.Exists(path))
-                System.IO.Directory.CreateDirectory(path);
-            string filename = path + "\\" + AppTime.Now.ToString("dd_MM_yyyy") + ".txt";
-            System.IO.File.AppendAllText(filename, "\n New request come at" + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " =>" + payload.ToString());
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            string filename = $"{path}\\{AppTime.Now:dd_MM_yyyy}.txt";
+            if (payload.IsSuccess)
+            {
+                await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] SUCCESS requestId={payload.Response.RequestId} abhaAddress={payload.AbhaAddress} linkToken={payload.LinkToken}");
+            }
+            else
+            {
+                await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] FAILURE requestId={payload.Response.RequestId} code={payload.Error?.Code} message={payload.Error?.Message}");
+            }
             return Ok();
         }
 
