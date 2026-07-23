@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+    <style>
+
+        body {
+            font: 13px Calibri, Arial;
+            color: #000;
+            margin: 0;
+        }
+
+        .report-wrapper {
+            padding: 3px;
+        }
+
+        .report-title {
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 1px solid #aaa;
+            padding-bottom: 4px;
+        }
+
+        .report-print-date,
+        .report-date-range {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .report-print-date {
+            text-align: right;
+            border-bottom: 1px solid #aaa;
+        }
+
+        /* table-layout:fixed is what makes colgroup widths authoritative in wkhtmltopdf */
+        #dataTable {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+            #dataTable th {
+                border: 1px solid #c9c9c9;
+                background: #e6e6e6;
+                padding: 2px 3px;
+                text-align: center;
+                font-weight: bold;
+                overflow: hidden;
+            }
+
+            #dataTable td {
+                border: 1px solid #c9c9c9;
+                padding: 2px 3px;
+                word-break: break-word;
+                overflow: hidden;
+            }
+
+        .groupHeader,
+        .subTotal,
+        .grandTotal {
+            font-weight: bold;
+        }
+
+        .groupHeader {
+            background: #f2f2f2;
+        }
+
+        .subTotal {
+            background: #efefef;
+            border-top: 1px solid #999;
+        }
+
+        .grandTotal {
+            background: #ececec;
+            border-top: 2px solid #000;
+        }
+
+        .align-right {
+            text-align: right;
+        }
+
+        .align-center {
+            text-align: center;
+        }
+
+        #dataTable thead {
+            display: table-header-group;
+        }
+
+        #dataTable tr {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-wrapper">
+        <table style="width:100%;">{{HospitalHeader}}</table>
+
+        <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="report-title">{{RepoertName}}</td>
+                <td class="report-print-date">Print Date : {{CurrentDate}}</td>
+            </tr>
+        </table>
+
+        <div class="report-date-range">From Date : {{FromDate}} — To Date : {{ToDate}}</div>
+
+        <table id="dataTable">
+            {{ColGroup}}
+            <thead>{{HeaderItems}}</thead>
+            <tbody>{{Items}}{{ItemsTotal}}</tbody>
+        </table>
+        {{SummaryBlock}}
+
+        {{ResultSetTables}}
+    </div>
+</body>
+</html>
