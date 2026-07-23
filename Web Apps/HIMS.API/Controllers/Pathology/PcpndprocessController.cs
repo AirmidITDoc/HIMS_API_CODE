@@ -43,8 +43,15 @@ namespace HIMS.API.Controllers.Pathology
         //[Permission]
         public ApiResponse SearchPatientNew()
         {
-            var data = _IPcpndprocesService.SearchPatient();
+            var data = _IPcpndprocesService.SearchPatientNew();
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiologist Doctor List", data);
+        }
+        [HttpGet("search_GynecologistDoctor")]
+        //[Permission]
+        public ApiResponse SearchPatient()
+        {
+            var data = _IPcpndprocesService.SearchPatient();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Gynecologist Doctor List", data);
         }
 
 

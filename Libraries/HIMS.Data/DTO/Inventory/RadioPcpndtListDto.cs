@@ -90,5 +90,11 @@ namespace HIMS.Data.DTO.Inventory
         public long? DoctorId { get; set; }
 
     }
+    public class GynecologistDoctorListDto
+    {
+        public string? DoctorName { get; set; }
+        public long? DoctorId { get; set; }
+
+    }
 
 }

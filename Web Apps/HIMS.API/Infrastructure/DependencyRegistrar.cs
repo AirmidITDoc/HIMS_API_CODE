@@ -95,6 +95,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IPurchaseRequisitionService, PurchaseRequisitionService>();
             services.AddScoped<IPathDispatchReportHistoryService, PathDispatchReportHistoryService>();
             services.AddScoped<IPurchaseRequisitionFinalService, PurchaseRequisitionFinalService>();
+            services.AddScoped<IHSNCodeMasterService, HSNCodeMasterService>();
+
 
             services.AddScoped<ITestMasterServices, TestMasterService>();
             services.AddScoped<IPriscriptionReturnService, PriscriptionReturnService>();

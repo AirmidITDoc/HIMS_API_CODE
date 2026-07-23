@@ -16,7 +16,9 @@ namespace HIMS.Services.Pathlogy
         Task UpdateAsync(TPcpndprocess ObjTPcpndprocess, int UserId, string Username, string[]? ignoreColumns = null);
         Task<IPagedList<RadioPcpndtListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<IndicationListDto>> GetList(GridRequestModel objGrid);
-        List<RadioLogistListDto> SearchPatient();
+        List<RadioLogistListDto> SearchPatientNew();
+        List<GynecologistDoctorListDto> SearchPatient();
+
 
 
 

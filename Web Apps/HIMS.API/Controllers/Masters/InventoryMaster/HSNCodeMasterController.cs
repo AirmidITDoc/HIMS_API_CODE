@@ -8,6 +8,8 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.Inventory;
+using HIMS.Services.Pathlogy;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.InventoryMaster
@@ -18,10 +20,15 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
     public class HSNCodeMasterController : BaseController
     {
         private readonly IGenericService<MHsncodeMaster> _repository;
-        public HSNCodeMasterController(IGenericService<MHsncodeMaster> repository)
+        private readonly IHSNCodeMasterService _IHSNCodeMasterService;
+
+        public HSNCodeMasterController(IGenericService<MHsncodeMaster> repository, IHSNCodeMasterService repository1)
         {
             _repository = repository;
+            _IHSNCodeMasterService = repository1;
         }
+
+        
         //List API
         [HttpPost]
         [Route("[action]")]
@@ -30,6 +37,13 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         {
             IPagedList<MHsncodeMaster> MHsncodeMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MHsncodeMasterList.ToGridResponse(objGrid, "MHsncodeMaster List"));
+        }
+        [HttpGet("search-HSNCode")]
+        //[Permission]
+        public ApiResponse SearchPatientNew()
+        {
+            var data = _IHSNCodeMasterService.SearchPatient();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "search-HSNCode", data);
         }
         //List API Get By Id
         [HttpGet("{id?}")]

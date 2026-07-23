@@ -32,14 +32,20 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<IndicationListDto>(model, "ps_RtrvIndicationbyProcessId");
         }
-        public List<RadioLogistListDto> SearchPatient()
+        public List<RadioLogistListDto> SearchPatientNew()
         {
             DatabaseHelper sql = new();
             SqlParameter[] para = Array.Empty<SqlParameter>();
             var data = sql.FetchListBySP<RadioLogistListDto>("Rtrv_RadiologistDoctorMasterForCombo", para);
             return data;
         }
-
+        public List<GynecologistDoctorListDto> SearchPatient()
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = Array.Empty<SqlParameter>();
+            var data = sql.FetchListBySP<GynecologistDoctorListDto>("Retrieve_GynecologistDoctorMasterForCombo", para);
+            return data;
+        }
 
 
         public virtual async Task InsertAsync( TPcpndprocess ObjTPcpndprocess, int UserId,string Username)
