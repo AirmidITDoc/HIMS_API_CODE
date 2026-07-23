@@ -6,6 +6,38 @@ namespace HIMS.ABHA.Models.M2
     {
         public string Url { get; set; } = string.Empty;
     }
+    public class LinkTokenCallbackPayload
+    {
+        [JsonPropertyName("abhaAddress")]
+        public string? AbhaAddress { get; set; }
+
+        [JsonPropertyName("linkToken")]
+        public string? LinkToken { get; set; }
+
+        [JsonPropertyName("error")]
+        public CallbackError? Error { get; set; }
+
+        [JsonPropertyName("response")]
+        public CallbackResponseMeta Response { get; set; } = new();
+
+        [JsonIgnore]
+        public bool IsSuccess => Error is null && !string.IsNullOrEmpty(LinkToken);
+    }
+
+    public class CallbackError
+    {
+        [JsonPropertyName("code")]
+        public string Code { get; set; } = string.Empty;
+
+        [JsonPropertyName("message")]
+        public string Message { get; set; } = string.Empty;
+    }
+
+    public class CallbackResponseMeta
+    {
+        [JsonPropertyName("requestId")]
+        public string RequestId { get; set; } = string.Empty;
+    }
     public class RegisterBridgeRequest
     {
         public string FacilityId { get; set; } = string.Empty;
