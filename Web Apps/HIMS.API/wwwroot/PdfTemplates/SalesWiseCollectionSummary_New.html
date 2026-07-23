@@ -125,8 +125,8 @@
                         <tr>
                             <th>Sr.No</th>
                             <th>PaymentDate</th>
-                            <th>SalesDate</th>
-                            <th>SalesNo</th>
+                            <th>BillDate</th>
+                            <th>BillNo</th>
                             <th>PatientName</th>
                             <th>TotalAmt</th>
                             <th>DiscAmt</th>
@@ -136,7 +136,7 @@
                             <th>CashPay</th>
                             <th>ChequePay</th>
                             <th>NeftPay</th>
-                            <th>PayTMPay</th>
+                            <th>MPesa</th>
                             <th>CardPay</th>
                             <th style="min-width: 90px; text-align: center;">Mpesa RefNo</th>
                         </tr>
@@ -147,25 +147,7 @@
         </tr>
         <tr>
             <td>
-                <!--<div class="summary-wrapper">
-                    <table class="summary-box">
-                        <tr><td>Net Amount</td>          <td>:</td><td>{{S_NetAmount}}</td></tr>
-                        <tr><td>Amount Received</td>     <td>:</td><td>{{S_AmountReceived}}</td></tr>
-                        <tr><td>Amount Returned</td>     <td>:</td><td>{{S_AmountReturned}}</td></tr>
-                        <tr><td>Corporate Amount</td>    <td>:</td><td>{{S_CorporateAmount}}</td></tr>
-                        <tr><td>Pen. Amt. Received</td>  <td>:</td><td>{{S_PendingAmtReceived}}</td></tr>
-                        <tr><td>Cash On Hand</td>        <td>:</td><td>{{S_CashOnHand}}</td></tr>
-                        <tr><td>Out. Amount</td>         <td>:</td><td>{{S_OutAmount}}</td></tr>
-                    </table>
-                    <table class="summary-box">
-                        <tr><td class="sh">Payment Type</td><td class="sh">Amount</td></tr>
-                        <tr><td>Cash</td>  <td>{{S_CashTotal}}</td></tr>
-                        <tr><td>Cheque</td><td>{{S_ChequeTotal}}</td></tr>
-                        <tr><td>NEFT</td>  <td>{{S_NeftTotal}}</td></tr>
-                        <tr><td>PayTM</td> <td>{{S_PayTMTotal}}</td></tr>
-                        <tr><td>Card</td>  <td>{{S_CardTotal}}</td></tr>
-                    </table>
-                </div>-->
+
             </td>
         </tr>
         <!--<table style="width:100%; margin-top:20px; border-collapse:collapse;">-->
@@ -176,20 +158,6 @@
                     <span style="float:right;">From Date : {{FromDate}} &nbsp;--&nbsp; To Date : {{ToDate}}</span>
                 </td>
             </tr>
-
-            <!--<tr style="background:#efefef; font-weight:bold; text-align:center;">
-                <td style="border:1px solid #999;">Header</td>
-                <td style="border:1px solid #999;">Total Sale</td>
-                <td style="border:1px solid #999;">Discount</td>
-                <td style="border:1px solid #999;">Net Sale</td>
-                <td style="border:1px solid #999;">PaidAmount</td>
-                <td style="border:1px solid #999;">BalanceAmount</td>
-                <td style="border:1px solid #999;">Cash</td>
-                <td style="border:1px solid #999;">Cheque</td>
-                <td style="border:1px solid #999;">NEFT</td>
-                <td style="border:1px solid #999;">UPI</td>
-                <td style="border:1px solid #999;">Card</td>
-            </tr>-->
             <tr>
                 <th>Header</th>
                 <th>Total Sale</th>
@@ -200,7 +168,7 @@
                 <th>Cash</th>
                 <th>Cheque</th>
                 <th>NEFT</th>
-                <th>UPI</th>
+                <th>MPesa</th>
                 <th>Card</th>
             </tr>
 
@@ -208,34 +176,9 @@
         </table>
         <table style="width:100%; margin-top:18px;">
             <tr>
-                <!--<td style="width:50%; vertical-align:top;">
-                    <table class="summary-box">
-                        <tr><td>Net Sale</td><td>:</td><td>{{S_NetAmount}}</td></tr>
-                        <tr><td>Amount Received</td><td>:</td><td>{{S_AmountReceived}}</td></tr>
-                        <tr><td>Amount Returned</td><td>:</td><td>{{S_AmountReturned}}</td></tr>
-                        <tr><td>Pending Amount Received</td><td>:</td><td>{{S_PendingAmtReceived}}</td></tr>
-                        <tr><td>Cash On Hand</td><td>:</td><td>{{S_CashOnHand}}</td></tr>
-                        <tr><td>Outstanding Amount</td><td>:</td><td>{{S_OutAmount}}</td></tr>
-                    </table>
-                </td>
-
-                <td style="width:50%; vertical-align:top; padding-left:20px;">
-                    <table class="summary-box">
-                        <tr><td class="sh">Payment Type</td><td class="sh">Amount</td></tr>
-                        <tr><td>Cash</td><td>{{S_CashTotal}}</td></tr>
-                        <tr><td>Cheque</td><td>{{S_ChequeTotal}}</td></tr>
-                        <tr><td>NEFT</td><td>{{S_NeftTotal}}</td></tr>
-                        <tr><td>PayTM</td><td>{{S_PayTMTotal}}</td></tr>
-                        <tr><td>Card</td><td>{{S_CardTotal}}</td></tr>
-                        <tr style="font-weight:bold; background:#e6e6e6;">
-                            <td>Total</td>
-                            <td>{{S_TotalPaymentModes}}</td>
-                        </tr>
-                    </table>
-                </td>-->
+               
             <tr>
-                <!--<td style="width:33%; vertical-align:top;">
-                <table class="summary-box">-->
+
             <tr>
                 <!-- LEFT -->
                 <td style="width:33%; vertical-align:top; text-align:left;">
@@ -275,7 +218,7 @@
                         <tr><td>Cash</td><td>{{S_CashTotal}}</td></tr>
                         <tr><td>Cheque</td><td>{{S_ChequeTotal}}</td></tr>
                         <tr><td>NEFT</td><td>{{S_NeftTotal}}</td></tr>
-                        <tr><td>PayTM</td><td>{{S_PayTMTotal}}</td></tr>
+                        <tr><td>MPesa</td><td>{{S_PayTMTotal}}</td></tr>
                         <tr><td>Card</td><td>{{S_CardTotal}}</td></tr>
                         <tr style="font-weight:bold; background:#e6e6e6;">
                             <td>Total</td>

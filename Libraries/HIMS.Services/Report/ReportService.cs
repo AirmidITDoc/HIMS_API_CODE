@@ -5084,6 +5084,146 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{S_NetReturn}}", N2(s_Ret));
                     }
                     break;
+                case "CompactSimpleMultiResultSetReportCustomSummary.html":
+                    {
+                        var dcFields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+
+                        SqlParameter[] dcPara = dcFields.Select(kv =>
+                        {
+                            bool isDate = kv.Key.Equals("FromDate", StringComparison.OrdinalIgnoreCase)
+                                       || kv.Key.Equals("ToDate", StringComparison.OrdinalIgnoreCase);
+                            return new SqlParameter("@" + kv.Key,
+                                isDate ? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                                       : (object)kv.Value);
+                        }).ToArray();
+
+                        List<DataTable> allSets = FetchAllResultSets(model.SPName, dcPara);
+
+                        if (allSets.Count > 0)
+                        {
+                            DataTable firstDt = allSets[0];
+
+                            string[] trimmedHeaders = model.headerList.Select(x => x.Trim()).ToArray();
+                            string[] trimmedColList = model.colList.Select(x => x.Trim()).ToArray();
+                            string[] trimmedWidths = (model.columnWidths ?? Array.Empty<string>()).Select(x => x.Trim()).ToArray();
+                            string[] dcTotalCols = totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                            string[] dcGroupCols = model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
+
+                            var allPairs = trimmedHeaders.Where(x => !x.Equals("Sr.No", StringComparison.OrdinalIgnoreCase))
+                                .Zip(trimmedColList, (h, c) => new { h, c })
+                                .Select((x, i) => new { x.h, x.c, Width = i < trimmedWidths.Length ? trimmedWidths[i] : "" })
+                                .ToList();
+
+                            var visiblePairs = allPairs.Where(x => !dcGroupCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
+
+                            string[] visibleHeaders = visiblePairs.Select(x => x.h).ToArray();
+                            string[] visibleCols = visiblePairs.Select(x => x.c).ToArray();
+                            string[] visibleWidths = visiblePairs.Select(x => x.Width).ToArray();
+
+                            // ---- Width normalization + font scale (the new logic) ----
+                            var (colGroupHtml, fontScale) = BuildColGroupWithScale(visibleWidths, srNoWidthPercent: 4.0);
+
+                            html = html.Replace("{{ColGroup}}", colGroupHtml);
+
+                            HeaderItems.Append(GetCompactHtmlTableHeaderNew(visibleHeaders, fontScale));
+                            items.Append(BuildCompactGroupedBody(firstDt, visibleHeaders, visibleCols, dcTotalCols, dcGroupCols, fontScale));
+                            ItemsTotal.Append(CreateCompactGrandTotal(firstDt, dcTotalCols, dcGroupCols, fontScale));
+
+                            string extraTables = allSets.Count > 1
+                                ? RenderMultiResultSetReport(allSets.Skip(1).ToList())
+                                : "";
+                            html = html.Replace("{{ResultSetTables}}", extraTables);
+
+                            string summaryBlock = $@"
+                            <div style='page-break-before: always;'></div>
+                            <table style='width:100%; border-collapse:collapse; margin-bottom:8px; border:1px solid #777;'>
+                                <tr style='background:#e6e6e6; font-weight:bold;'>
+                                    <td style='padding:6px; font-size:15px; text-align:left; border-right:1px solid #777;'>
+                                        Summary Report For {model.RepoertName}
+                                    </td>
+                                    <td style='padding:6px; font-size:13px; text-align:right;'>
+                                        From Date : {FromDate:dd/MM/yyyy} &nbsp;--&nbsp; To Date : {ToDate:dd/MM/yyyy}
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>";
+
+                            html = html.Replace("{{SummaryBlock}}", summaryBlock);
+                        }
+
+                        html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yyyy"));
+                        html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
+                    }
+                    break;
+
+                case "AutoSimpleMultiResultSetReportCustomSummary.html":
+                    {
+                        var dcFields = HIMS.Data.Extensions.SearchFieldExtension.GetSearchFields(model.SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+
+                        SqlParameter[] dcPara = dcFields.Select(kv =>
+                        {
+                            bool isDate = kv.Key.Equals("FromDate", StringComparison.OrdinalIgnoreCase)
+                                       || kv.Key.Equals("ToDate", StringComparison.OrdinalIgnoreCase);
+                            return new SqlParameter("@" + kv.Key,
+                                isDate ? DateTime.ParseExact(kv.Value, "yyyy-MM-dd", CultureInfo.InvariantCulture)
+                                       : (object)kv.Value);
+                        }).ToArray();
+
+                        List<DataTable> allSets = FetchAllResultSets(model.SPName, dcPara);
+
+                        if (allSets.Count > 0)
+                        {
+                            DataTable firstDt = allSets[0];
+
+                            string[] trimmedHeaders = model.headerList.Select(x => x.Trim()).ToArray();
+                            string[] trimmedColList = model.colList.Select(x => x.Trim()).ToArray();
+                            string[] dcTotalCols = totalColList.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                            string[] dcGroupCols = model.groupByLabel.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
+
+                            var allPairs = trimmedHeaders.Where(x => !x.Equals("Sr.No", StringComparison.OrdinalIgnoreCase))
+                                .Zip(trimmedColList, (h, c) => new { h, c })
+                                .ToList();
+
+                            var visiblePairs = allPairs.Where(x => !dcGroupCols.Contains(x.c, StringComparer.OrdinalIgnoreCase)).ToList();
+
+                            string[] visibleHeaders = visiblePairs.Select(x => x.h).ToArray();
+                            string[] visibleCols = visiblePairs.Select(x => x.c).ToArray();
+
+                            // ---- No widths supplied by admin — computed entirely from data ----
+                            var (colGroupHtml, fontScale) = BuildAutoColGroupAndScale(firstDt, visibleHeaders, visibleCols, srNoWidthPercent: 4.0);
+
+                            html = html.Replace("{{ColGroup}}", colGroupHtml);
+
+                            HeaderItems.Append(GetCompactHtmlTableHeaderNew(visibleHeaders, fontScale));
+                            items.Append(BuildCompactGroupedBody(firstDt, visibleHeaders, visibleCols, dcTotalCols, dcGroupCols, fontScale));
+                            ItemsTotal.Append(CreateCompactGrandTotal(firstDt, dcTotalCols, dcGroupCols, fontScale));
+
+                            string extraTables = allSets.Count > 1
+                                ? RenderMultiResultSetReport(allSets.Skip(1).ToList())
+                                : "";
+                            html = html.Replace("{{ResultSetTables}}", extraTables);
+
+                            string summaryBlock = $@"
+                            <div style='page-break-before: always;'></div>
+                            <table style='width:100%; border-collapse:collapse; margin-bottom:8px; border:1px solid #777;'>
+                                <tr style='background:#e6e6e6; font-weight:bold;'>
+                                    <td style='padding:6px; font-size:15px; text-align:left; border-right:1px solid #777;'>
+                                        Summary Report For {model.RepoertName}
+                                    </td>
+                                    <td style='padding:6px; font-size:13px; text-align:right;'>
+                                        From Date : {FromDate:dd/MM/yyyy} &nbsp;--&nbsp; To Date : {ToDate:dd/MM/yyyy}
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>";
+
+                            html = html.Replace("{{SummaryBlock}}", summaryBlock);
+                        }
+
+                        html = html.Replace("{{FromDate}}", FromDate.ToString("dd/MM/yyyy"));
+                        html = html.Replace("{{ToDate}}", ToDate.ToString("dd/MM/yyyy"));
+                    }
+                    break;
 
                     /* HELPERS */
                     string GetDoctorTotalRow(decimal g, decimal d, decimal n)
@@ -5122,7 +5262,255 @@ namespace HIMS.Services.Report
             return html;
 
         }
+        public static (string ColGroupHtml, double FontScale) BuildColGroupWithScale(string[] columnWidths, double srNoWidthPercent = 4.0)
+        {
+            int n = columnWidths.Length;
+            double[] widths = new double[n];
+            double sum = 0;
+            int missingCount = 0;
 
+            for (int i = 0; i < n; i++)
+            {
+                if (double.TryParse(columnWidths[i], out double w) && w > 0)
+                {
+                    widths[i] = w;
+                    sum += w;
+                }
+                else
+                {
+                    missingCount++;
+                }
+            }
+
+            double availableForData = 100.0 - srNoWidthPercent;
+            if (missingCount > 0)
+            {
+                double leftover = Math.Max(availableForData - sum, 0);
+                double eachMissing = leftover / missingCount;
+                for (int i = 0; i < n; i++)
+                {
+                    if (widths[i] == 0)
+                    {
+                        widths[i] = eachMissing;
+                        sum += eachMissing;
+                    }
+                }
+            }
+
+            double fontScale = 1.0;
+            double[] finalWidths = new double[n];
+
+            if (sum <= availableForData)
+            {
+                Array.Copy(widths, finalWidths, n);
+                double leftover = availableForData - sum;
+                if (n > 0) finalWidths[n - 1] += leftover;
+            }
+            else
+            {
+                for (int i = 0; i < n; i++)
+                    finalWidths[i] = (widths[i] / sum) * availableForData;
+
+                fontScale = availableForData / sum;
+                if (fontScale < 0.65) fontScale = 0.65; // floor so text never becomes unreadable
+            }
+
+            StringBuilder cg = new();
+            cg.Append("<colgroup>");
+            cg.Append($"<col style='width:{srNoWidthPercent.ToString("0.##", CultureInfo.InvariantCulture)}%;' />");
+            foreach (var w in finalWidths)
+                cg.Append($"<col style='width:{w.ToString("0.##", CultureInfo.InvariantCulture)}%;' />");
+            cg.Append("</colgroup>");
+
+            return (cg.ToString(), fontScale);
+        }
+
+        public static string GetCompactHtmlTableHeaderNew(string[] headers, double fontScale)
+        {
+            double fs = Math.Round(13 * fontScale, 1);
+            StringBuilder table = new();
+            table.Append("<tr>");
+            table.Append($"<th style='border:1px solid #c9c9c9; padding:2px 3px; font-size:{fs}px;'>Sr.No</th>");
+            foreach (var h in headers)
+                table.Append($"<th style='border:1px solid #c9c9c9; padding:2px 3px; font-size:{fs}px;'>{h}</th>");
+            table.Append("</tr>");
+            return table.ToString();
+        }
+        public static void CreateCompactRows(IEnumerable<DataRow> rows, StringBuilder table,string[] headers, string[] columnDataNames, ref int rowNo, double fontScale)
+        {
+            double fs = Math.Round(12.5 * fontScale, 1);
+            foreach (var row in rows)
+            {
+                table.Append("<tr style='text-align:center; border:1px solid #c9c9c9;'>");
+                table.Append($"<td style='border:1px solid #c9c9c9; padding:2px 3px; font-size:{fs}px;'>{rowNo}</td>");
+                rowNo++;
+
+                foreach (var col in columnDataNames)
+                {
+                    string val = row.Table.Columns.Contains(col) ? row[col]?.ToString() ?? "" : "";
+                    if (decimal.TryParse(val, out decimal num) && val.Contains("."))
+                        val = num.ToString("0.00");
+
+                    table.Append($"<td style='border:1px solid #c9c9c9; padding:2px 3px; font-size:{fs}px; word-break:break-word;'>{val}</td>");
+                }
+                table.Append("</tr>");
+            }
+        }
+        public static void AppendCompactGroupHeader(StringBuilder table, string label, int colSpan, int indent, double baseFontSize, double fontScale)
+        {
+            double fs = Math.Round((baseFontSize + 1) * fontScale, 1);
+            table.Append($"<tr class='groupHeader'><td colspan='{colSpan}' style='padding:2px 3px; text-indent:{indent}px; font-size:{fs}px; font-weight:bold; background:#f2f2f2; border:1px solid #c9c9c9;'>{label}</td></tr>");
+        }
+        public static void AppendCompactGroupSubTotal(StringBuilder table, IEnumerable<DataRow> rows,string[] totalCols, string label, int colSpan, string[] visibleCols, double fontScale)
+        {
+            double fs = Math.Round(12.5 * fontScale, 1);
+            int dataColStart = colSpan - visibleCols.Length;
+
+            table.Append($"<tr class='subTotal'><td colspan='{dataColStart}' style='text-align:right; padding:2px 3px; font-size:{fs}px; border:1px solid #c9c9c9;'>Total : {label}</td>");
+
+            foreach (var col in visibleCols)
+            {
+                if (totalCols.Contains(col, StringComparer.OrdinalIgnoreCase))
+                {
+                    decimal total = rows.Sum(r => r.IsNull(col) ? 0 : Convert.ToDecimal(r[col]));
+                    table.Append($"<td style='text-align:right; padding:2px 3px; font-size:{fs}px; border:1px solid #c9c9c9;'>{total:0.00}</td>");
+                }
+                else
+                {
+                    table.Append($"<td style='padding:2px 3px; border:1px solid #c9c9c9;'></td>");
+                }
+            }
+            table.Append("</tr>");
+        }
+        public static string BuildCompactGroupedBody(DataTable dt, string[] visibleHeaders, string[] visibleCols,string[] totalCols, string[] groupBy, double fontScale)
+        {
+            StringBuilder table = new();
+            int totalColSpan = visibleCols.Length + 1;
+            int rowNo = 1;
+
+            if (groupBy.Length == 0)
+            {
+                CreateCompactRows(dt.AsEnumerable(), table, visibleHeaders, visibleCols, ref rowNo, fontScale);
+                return table.ToString();
+            }
+
+            var level1Groups = dt.AsEnumerable().Select(r => r.Field<string>(groupBy[0])).Distinct().ToList();
+
+            foreach (string g1 in level1Groups)
+            {
+                var g1Rows = dt.Select($"{groupBy[0]} = '{g1}'").AsEnumerable();
+                AppendCompactGroupHeader(table, g1, totalColSpan, 0, 13, fontScale);
+
+                if (groupBy.Length > 1)
+                {
+                    var level2Groups = g1Rows.Select(r => r.Field<string>(groupBy[1])).Distinct().ToList();
+                    foreach (string g2 in level2Groups)
+                    {
+                        var g2Rows = g1Rows.Where(r => r[groupBy[1]].ToString().Equals(g2, StringComparison.OrdinalIgnoreCase));
+                        AppendCompactGroupHeader(table, g2, totalColSpan, 10, 12, fontScale);
+
+                        if (groupBy.Length > 2)
+                        {
+                            var level3Groups = g2Rows.Select(r => r.Field<string>(groupBy[2])).Distinct().ToList();
+                            foreach (string g3 in level3Groups)
+                            {
+                                var g3Rows = g2Rows.Where(r => r[groupBy[2]].ToString().Equals(g3, StringComparison.OrdinalIgnoreCase));
+                                AppendCompactGroupHeader(table, g3, totalColSpan, 20, 11, fontScale);
+                                CreateCompactRows(g3Rows, table, visibleHeaders, visibleCols, ref rowNo, fontScale);
+                                AppendCompactGroupSubTotal(table, g3Rows, totalCols, g3, totalColSpan, visibleCols, fontScale);
+                            }
+                        }
+                        else
+                        {
+                            CreateCompactRows(g2Rows, table, visibleHeaders, visibleCols, ref rowNo, fontScale);
+                        }
+                        AppendCompactGroupSubTotal(table, g2Rows, totalCols, g2, totalColSpan, visibleCols, fontScale);
+                    }
+                }
+                else
+                {
+                    CreateCompactRows(g1Rows, table, visibleHeaders, visibleCols, ref rowNo, fontScale);
+                }
+                AppendCompactGroupSubTotal(table, g1Rows, totalCols, g1, totalColSpan, visibleCols, fontScale);
+            }
+
+            return table.ToString();
+        }
+        public static string CreateCompactGrandTotal(DataTable dt, string[] totalColList, string[] summaries, double fontScale)
+        {
+            double fs = Math.Round(12.5 * fontScale, 1);
+            StringBuilder table = new();
+            int colspan = 1;
+
+            if (totalColList.Length > 0)
+            {
+                int col = 1;
+                table.Append("<tr class='grandTotal'>");
+                foreach (var colName in totalColList)
+                {
+                    if (colName == "space")
+                    {
+                        if (totalColList.Length == col)
+                            table.Append($"<td style='text-align:center; padding:2px 3px; font-size:{fs}px; border:1px solid #c9c9c9;' colspan='{colspan}'></td>");
+                        else
+                            colspan++;
+                    }
+                    else if (colName == "lableTotal")
+                    {
+                        table.Append($"<td style='text-align:center; padding:2px 3px; font-size:{fs}px; border:1px solid #c9c9c9;' colspan='{colspan}'>Total Amount</td>");
+                        colspan++;
+                    }
+                    else
+                    {
+                        string total = dt.AsEnumerable()
+                            .Sum(r => r.IsNull(colName) ? 0 : Convert.ToDecimal(r[colName]))
+                            .ToString("0.00");
+                        table.Append($"<td style='text-align:center; padding:2px 3px; font-size:{fs}px; border:1px solid #c9c9c9;'>{total}</td>");
+                    }
+                    col++;
+                }
+                table.Append("</tr>");
+            }
+            return table.ToString();
+        }
+
+        // ---- Auto width calculator: based on actual header + data content length, not user input ----
+        public static (string ColGroupHtml, double FontScale) BuildAutoColGroupAndScale(DataTable dt, string[] visibleHeaders, string[] visibleCols, double srNoWidthPercent = 4.0)
+        {
+            int n = visibleCols.Length;
+            double[] rawLengths = new double[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                string col = visibleCols[i];
+                int headerLen = visibleHeaders[i]?.Length ?? 0;
+
+                int maxDataLen = dt.AsEnumerable()
+                    .Where(r => r.Table.Columns.Contains(col) && !r.IsNull(col))
+                    .Select(r => r[col].ToString().Length)
+                    .DefaultIfEmpty(0)
+                    .Max();
+
+                // Give a little more weight to header if data is shorter, and a floor so no column collapses to near-zero
+                rawLengths[i] = Math.Max(Math.Max(headerLen, maxDataLen), 4);
+            }
+
+            double totalLen = rawLengths.Sum();
+            double availableForData = 100.0 - srNoWidthPercent;
+
+            double[] widths = rawLengths.Select(l => (l / totalLen) * availableForData).ToArray();
+
+            double fontScale = n <= 8 ? 1.0 : Math.Max(0.65, 8.0 / n);
+
+            StringBuilder cg = new();
+            cg.Append("<colgroup>");
+            cg.Append($"<col style='width:{srNoWidthPercent.ToString("0.##", CultureInfo.InvariantCulture)}%;' />");
+            foreach (var w in widths)
+                cg.Append($"<col style='width:{w.ToString("0.##", CultureInfo.InvariantCulture)}%;' />");
+            cg.Append("</colgroup>");
+
+            return (cg.ToString(), fontScale);
+        }
         public class DynamicReportMeta
         {
             public List<string> DisplayColumns { get; set; } = new();  
