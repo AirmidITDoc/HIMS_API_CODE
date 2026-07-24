@@ -21,7 +21,13 @@ namespace HIMS.API.Controllers.Administration
             _ITallyService = repository;
 
         }
-
+        [HttpPost("DaywisePharmacySalesOPDList")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+        public async Task<IActionResult> DaywisePharmacySalesOPDList(GridRequestModel objGrid)
+        {
+            IPagedList<DaywisePharmacySalesOPDListDto> DaywisePharmacySalesOPDList = await _ITallyService.DaywisePharmacySalesOPDAsync(objGrid);
+            return Ok(DaywisePharmacySalesOPDList.ToGridResponse(objGrid, "DaywisePharmacySalesOPD List "));
+        }
 
         [HttpPost("TallyOPBillCashCounterList")]
         [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
