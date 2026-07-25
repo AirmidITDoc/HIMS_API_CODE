@@ -403,6 +403,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<SsRoleTemplateMaster> SsRoleTemplateMasters { get; set; } = null!;
         public virtual DbSet<SsSmsConfig> SsSmsConfigs { get; set; } = null!;
         public virtual DbSet<StockLog> StockLogs { get; set; } = null!;
+        public virtual DbSet<TAbhaLinkTokenCallback> TAbhaLinkTokenCallbacks { get; set; } = null!;
         public virtual DbSet<TAbill> TAbills { get; set; } = null!;
         public virtual DbSet<TAbillDetail> TAbillDetails { get; set; } = null!;
         public virtual DbSet<TAddCharge> TAddCharges { get; set; } = null!;
@@ -660,7 +661,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -11442,6 +11443,24 @@ namespace HIMS.Data.Models
                     .HasForeignKey(d => d.StockId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_StockLogs_T_CurrentStock");
+            });
+
+            modelBuilder.Entity<TAbhaLinkTokenCallback>(entity =>
+            {
+                entity.HasKey(e => e.CallbackId)
+                    .HasName("PK__T_AbhaLi__65181491D612B761");
+
+                entity.ToTable("T_AbhaLinkTokenCallback");
+
+                entity.Property(e => e.AbhaAddress).HasMaxLength(200);
+
+                entity.Property(e => e.CallbackDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.ErrorCode).HasMaxLength(100);
+
+                entity.Property(e => e.RequestId).HasMaxLength(100);
             });
 
             modelBuilder.Entity<TAbill>(entity =>
