@@ -52,45 +52,87 @@ namespace HIMS.API.Controllers.ABHA.M2
             {
                 await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] FAILURE code={payload.Error?.Code} message={payload.Error?.Message}");
             }
-            return Ok();
 
-        }
-
-        [HttpPost("~/api/v3/hip/token/on-generate-token")]
-        public async Task<IActionResult> OnGenerateToken()
-        {
-            using var reader = new StreamReader(Request.Body);
-            var body = await reader.ReadToEndAsync();
-
-            // Save raw JSON to database
-            var log = new TAbhaLinkTokenCallback
+            // Insert into DB
+            var callback = new TAbhaLinkTokenCallback
             {
-                RawResponse = body,
-                CallbackDate = DateTime.Now
+                RequestId = payload.Response?.RequestId,
+                AbhaAddress = payload.AbhaAddress,
+                LinkToken = payload.LinkToken,
+                ErrorCode = payload.Error?.Code,
+                ErrorMessage = payload.Error?.Message,
+                IsSuccess = payload.Error == null,
+                CallbackDate = DateTime.Now,
+                RawResponse = JsonConvert.SerializeObject(payload)
+                //RawResponse = payload
             };
 
-            // Deserialize
-            var payload = System.Text.Json.JsonSerializer.Deserialize<LinkTokenCallbackPayload>(
-                body,
-                new System.Text.Json.JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-
-            if (payload != null)
-            {
-                log.RequestId = payload.Response?.RequestId;
-                log.AbhaAddress = payload.AbhaAddress;
-                log.LinkToken = payload.LinkToken;
-                log.ErrorCode = payload.Error?.Code;
-                log.ErrorMessage = payload.Error?.Message;
-                log.IsSuccess = payload.Error == null;
-            }
-
-            await _TAbhaLinkTokenCallback.Add(log, 1, "System");
+            await _TAbhaLinkTokenCallback.Add(callback, 1, "System");
 
             return Ok();
+
         }
+
+        //[HttpPost("~/api/v3/hip/token/on-generate-token-db")]
+        //public async Task<IActionResult> OnGenerateTokenDB()
+        //{
+        //    using var reader = new StreamReader(Request.Body);
+        //    var body = await reader.ReadToEndAsync();
+
+        //    var payload = JsonConvert.DeserializeObject<LinkTokenCallbackPayload>(body);
+
+        //    var callback = new TAbhaLinkTokenCallback
+        //    {
+        //        RequestId = payload?.Response?.RequestId,
+        //        AbhaAddress = payload?.AbhaAddress,
+        //        LinkToken = payload?.LinkToken,
+        //        ErrorCode = payload?.Error?.Code,
+        //        ErrorMessage = payload?.Error?.Message,
+        //        IsSuccess = payload?.Error == null,
+        //        CallbackDate = DateTime.Now,
+        //        RawResponse = body
+        //    };
+
+        //    await _TAbhaLinkTokenCallback.Add(callback, 1, "System");
+
+        //    return Ok();
+        //}
+
+        //[HttpPost("~/api/v3/hip/token/on-generate-token")]
+        //public async Task<IActionResult> OnGenerateToken()
+        //{
+        //    using var reader = new StreamReader(Request.Body);
+        //    var body = await reader.ReadToEndAsync();
+
+        //    // Save raw JSON to database
+        //    var log = new TAbhaLinkTokenCallback
+        //    {
+        //        RawResponse = body,
+        //        CallbackDate = DateTime.Now
+        //    };
+
+        //    // Deserialize
+        //    var payload = System.Text.Json.JsonSerializer.Deserialize<LinkTokenCallbackPayload>(
+        //        body,
+        //        new System.Text.Json.JsonSerializerOptions
+        //        {
+        //            PropertyNameCaseInsensitive = true
+        //        });
+
+        //    if (payload != null)
+        //    {
+        //        log.RequestId = payload.Response?.RequestId;
+        //        log.AbhaAddress = payload.AbhaAddress;
+        //        log.LinkToken = payload.LinkToken;
+        //        log.ErrorCode = payload.Error?.Code;
+        //        log.ErrorMessage = payload.Error?.Message;
+        //        log.IsSuccess = payload.Error == null;
+        //    }
+
+        //    await _TAbhaLinkTokenCallback.Add(log, 1, "System");
+
+        //    return Ok();
+        //}
 
         //[HttpPost("~/api/v3/hip/token/on-generate-token-db")]
         //public async Task<IActionResult> OnGenerateTokenDB([FromBody] LinkTokenCallbackPayload payload)
