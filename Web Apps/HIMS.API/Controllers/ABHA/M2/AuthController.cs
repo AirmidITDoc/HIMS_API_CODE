@@ -53,21 +53,21 @@ namespace HIMS.API.Controllers.ABHA.M2
                 await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] FAILURE code={payload.Error?.Code} message={payload.Error?.Message}");
             }
 
-            //// Insert into DB
-            //var callback = new TAbhaLinkTokenCallback
-            //{
-            //    RequestId = payload.Response?.RequestId,
-            //    AbhaAddress = payload.AbhaAddress,
-            //    LinkToken = payload.LinkToken,
-            //    ErrorCode = payload.Error?.Code,
-            //    ErrorMessage = payload.Error?.Message,
-            //    IsSuccess = payload.Error == null,
-            //    CallbackDate = DateTime.Now,
-            //    RawResponse = JsonConvert.SerializeObject(payload)
-            //    //RawResponse = payload
-            //};
+            // Insert into DB
+            var callback = new TAbhaLinkTokenCallback
+            {
+                RequestId = payload.Response?.RequestId,
+                AbhaAddress = payload.AbhaAddress,
+                LinkToken = payload.LinkToken,
+                ErrorCode = payload.Error?.Code,
+                ErrorMessage = payload.Error?.Message,
+                IsSuccess = payload.Error == null,
+                CallbackDate = DateTime.Now,
+                RawResponse = JsonConvert.SerializeObject(payload)
+                //RawResponse = payload
+            };
 
-            //await _TAbhaLinkTokenCallback.Add(callback, 1, "System");
+            await _TAbhaLinkTokenCallback.Add(callback, 1, "System");
 
             return Ok();
 
