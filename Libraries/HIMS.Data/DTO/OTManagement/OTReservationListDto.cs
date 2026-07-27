@@ -79,6 +79,8 @@ namespace HIMS.Data.DTO.OTManagement
         public string OPIPType { get; set; }
         public long OPIPID { get; set; }
         public string RegNo { get; set; }
+       public bool IsCancelled { get; set; }
+
     }
     public class requestAttendentListDto
     {
