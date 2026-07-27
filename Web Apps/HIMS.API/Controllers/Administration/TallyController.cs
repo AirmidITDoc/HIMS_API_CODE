@@ -288,6 +288,13 @@ namespace HIMS.API.Controllers.Administration
         }
 
 
+        [HttpPost("TallyDayWisePharmacyUPICardCollection")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+        public async Task<IActionResult> TallyDayWisePharmacyUPICardCollection(GridRequestModel objGrid)
+        {
+            IPagedList<TallyDayWisePharmacyUPICardCollectionDto> TallyDayWisePharmacyUPICardCollection = await _ITallyService.TallyDayWisePharmacyUPICardCollectionAsync(objGrid);
+            return Ok(TallyDayWisePharmacyUPICardCollection.ToGridResponse(objGrid, "Tally Day Wise Pharmacy UPI  Card Collection"));
+        }
 
 
     }
