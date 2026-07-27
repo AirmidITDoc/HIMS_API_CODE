@@ -29,6 +29,13 @@ namespace HIMS.API.Controllers.Administration
             return Ok(DaywisePharmacySalesOPDList.ToGridResponse(objGrid, "DaywisePharmacySalesOPD List "));
         }
 
+        [HttpPost("IPSalesAndSalesReturnPaymentDateWiseList")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+        public async Task<IActionResult> IPSalesAndSalesReturnPaymentDateWiseList(GridRequestModel objGrid)
+        {
+            IPagedList<IPSalesAndSalesReturnPaymentDateWiseDto> IPSalesAndSalesReturnPaymentDateWiseList = await _ITallyService.IPSalesAndSalesReturnPaymentDateWiseAsync(objGrid);
+            return Ok(IPSalesAndSalesReturnPaymentDateWiseList.ToGridResponse(objGrid, "IPSalesAndSalesReturnPaymentDateWise List "));
+        }
         [HttpPost("TallyOPBillCashCounterList")]
         [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> OPBillCashCounterList(GridRequestModel objGrid)
