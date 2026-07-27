@@ -34,6 +34,9 @@ namespace HIMS.API.Models.OutPatient
         public string? ChargesTime { get; set; }
         public long? PackageMainChargeId { get; set; }
         public long? ClassId { get; set; }
+        public long? UnitId { get; set; }
+        public long? TariffId { get; set; }
+        public int? CreatedBy { get; set; }
 
     }
 
