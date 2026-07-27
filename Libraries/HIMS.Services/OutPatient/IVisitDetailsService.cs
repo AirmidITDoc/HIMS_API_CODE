@@ -7,6 +7,8 @@ namespace HIMS.Services.OutPatient
     public partial interface IVisitDetailsService
     {
         Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<FollowupListDto>> FollowListAsync(GridRequestModel objGrid);
+
         Task<IPagedList<OPBillListDto>> GetBillListAsync(GridRequestModel objGrid);
         Task<IPagedList<OPPaymentListDto>> GeOpPaymentListAsync(GridRequestModel objGrid);
         Task<IPagedList<OPPaymentListDto>> GetPatientWisePaymentList(GridRequestModel objGrid);

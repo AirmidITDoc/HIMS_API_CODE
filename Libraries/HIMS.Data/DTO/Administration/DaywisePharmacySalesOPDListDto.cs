@@ -20,4 +20,17 @@ namespace HIMS.Data.DTO.Administration
         public decimal? LineTotal { get; set; }
         public decimal? TotalBillAmount { get; set; }
     }
+    public class IPSalesAndSalesReturnPaymentDateWiseDto
+    {
+        public DateTime Date { get; set; }
+        public string? PaymentDate { get; set; }
+        public string OPIPType { get; set; } = string.Empty;
+        public string PatientName { get; set; } = string.Empty;
+        public string RegNo { get; set; } = string.Empty;
+        public string IPDNo { get; set; } = string.Empty;
+        public string Label { get; set; } = string.Empty;
+        public string SalesNo { get; set; }
+        public decimal TotalAmount { get; set; }
+        public decimal NetAmount { get; set; }
+    }
 }
