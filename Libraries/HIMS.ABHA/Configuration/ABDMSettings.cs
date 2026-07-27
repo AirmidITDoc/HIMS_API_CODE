@@ -38,6 +38,7 @@ namespace HIMS.ABHA.Configuration
         public string ClientSecret { get; set; } = string.Empty;
         public string GrantType { get; set; } = "client_credentials";
         public string XCmId { get; set; } = "sbx";
+        public string XHipId { get; set; } = "ABHAHIMS";
     }
 
     public class Endpoints

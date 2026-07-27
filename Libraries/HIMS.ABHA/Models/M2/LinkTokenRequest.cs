@@ -4,13 +4,18 @@ namespace HIMS.ABHA.Models.M2
 {
     public class LinkTokenRequest
     {
+        [JsonPropertyName("abhaNumber")]
         public long AbhaNumber { get; set; }
+        [JsonPropertyName("abhaAddress")]
         public string AbhaAddress { get; set; } = string.Empty;
+        [JsonPropertyName("name")]
         public string Name { get; set; } = string.Empty;
+        [JsonPropertyName("gender")]
         public string Gender { get; set; } = string.Empty;
+        [JsonPropertyName("yearOfBirth")]
         public int YearOfBirth { get; set; }
-        public string HipId { get; set; }= string.Empty;
-        public string XCmId { get; set; }=string.Empty;
+        //public string HipId { get; set; }= string.Empty;
+        //public string XCmId { get; set; }=string.Empty;
     }
     public class LinkTokenResponse
     {
