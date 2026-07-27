@@ -1323,6 +1323,23 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+
+                #region :: IpBabyCasepaperReport ::
+                case "IpBabyCasepaperReport":
+                    {
+
+                        string[] colList = { "RegNo", "VisitDate", "PatientName" };
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "BabyIPDCasePaperSaneGuruji.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("m_rptAdmissionPrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "IPBabyCasepaper", "BabyIPDCasePaper" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
                 #region :: IptemplateCasepaperReport ::
                 case "IptemplateCasepaperReport":
                     {
@@ -12768,6 +12785,103 @@ namespace HIMS.Services.Report
 
                     }
                     break;
+
+                case "IpBabyCasepaperReport":
+                    {
+
+
+                        //string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
+
+                        //var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
+
+                        //html = html.Replace("{{Signature}}", signature);
+                        //html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
+
+
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            //html = html.Replace("{{DataContent}}", htmlHeader);
+
+
+                            html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName").ToUpper());
+                            html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName").ToUpper());
+
+                            html = html.Replace("{{Address}}", dt.GetColValue("Address").ToUpper());
+                            html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+                            html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
+
+                            html = html.Replace("{{DOT}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yy hh:mm tt"));
+                            html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo").ToUpper());
+
+                            html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName").ToUpper());
+                            html = html.Replace("{{BedName}}", dt.GetColValue("BedName").ToUpper());
+
+                            html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                            html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
+                            html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                            html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+
+
+                            html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName").ToUpper());
+                            html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName").ToUpper());
+
+                            html = html.Replace("{{MotherName}}", dt.GetColValue("MotherName").ToUpper());
+                            html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName").ToUpper());
+
+                            html = html.Replace("{{RelativeName}}", dt.GetColValue("RelativeName").ToUpper());
+                            html = html.Replace("{{RelativePhoneNo}}", dt.GetColValue("RelativePhoneNo"));
+
+                            html = html.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName").ToUpper());
+                            html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                            html = html.Replace("{{IsMLC}}", dt.GetColValue("IsMLC"));
+                            html = html.Replace("{{Signature}}", dt.GetColValue("Signature"));
+
+                            html = html.Replace("{{AdmittedDoctor1}}", dt.GetColValue("AdmittedDoctor1").ToUpper());
+                            html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName").ToUpper());
+
+                            html = html.Replace("{{MaritalStatusName}}", dt.GetColValue("MaritalStatusName").ToUpper());
+                            html = html.Replace("{{AadharcardNo}}", dt.GetColValue("AadharcardNo"));
+                            html = html.Replace("{{TariffName}}", dt.GetColValue("TariffName").ToUpper());
+                            html = html.Replace("{{AdmittedDoctor2}}", dt.GetColValue("AdmittedDoctor2").ToUpper());
+                            html = html.Replace("{{LoginUserSurname}}", dt.GetColValue("LoginUserSurname").ToUpper());
+                            html = html.Replace("{{DischargeDate}}", dt.GetColValue("DischargeDate").ToUpper());
+
+
+
+                            //html = html.Replace("{{chkMLCflag}}", dt.GetColValue("IsMLC").ToBool() == true ? "table-row " : "none");
+                            //html = html.Replace("{{chkMLCflag1}}", dt.GetColValue("IsMLC").ToBool() == false ? "table-row " : "none");
+
+
+
+                            //html = html.Replace("{{chkMLCflag}}", Convert.ToBoolean(dt.GetColValue("IsMLC")) ? "table-row" : "none");
+                            //changes by Ashu 27 May 2025
+                            bool isMLC = Convert.ToBoolean(dt.GetColValue("IsMLC"));
+
+                            html = html.Replace("{{chkMLCflag}}", isMLC ? "table-row" : "none");
+                            html = html.Replace("{{chkMLCflag1}}", !isMLC ? "table-row" : "none");
+
+                            html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
+
+                            html = html.Replace("{{DOA}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
+                            html = html.Replace("{{DateofBirth}}", dt.GetColValue("DateofBirth").ConvertToDateString("dd/MM/yyyy"));
+                            html = html.Replace("{{TimeOfBirth}}", dt.GetColValue("DateofBirth").ConvertToDateString("dd/MM/yyyy hh:mm tt"));
+
+
+
+                            html = html.Replace("{{chkSubTpaCompanyFlag}}", dt.GetColValue("SubTpaCompanyName").ConvertToString() != "" ? "table-row" : "none");
+                            html = html.Replace("{{chkCompanyNameFlag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "table-row" : "none");
+
+                            html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
+
+
+                            return html;
+
+                        }
+
+                    }
+                    break;
+
                 case "IptemplateCasepaperReport":
                     {
 

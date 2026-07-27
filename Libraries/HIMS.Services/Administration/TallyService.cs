@@ -152,6 +152,12 @@ namespace HIMS.Services.Administration
         }
 
 
+        public virtual async Task<IPagedList<TallyDayWisePharmacyCollectionDto>> TallyDayWisePharmacyCollectionAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TallyDayWisePharmacyCollectionDto>(model, "PS_tally_PharmacyCollection_Payment");
+        }
+
+
 
     }
 }

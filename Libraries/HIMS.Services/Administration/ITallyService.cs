@@ -63,6 +63,8 @@ namespace HIMS.Services.Administration
         Task<IPagedList<TallyOPPaymentMediforteDto>> TallyOPPaymentMediforteAsync(GridRequestModel objGrid);
 
         Task<IPagedList<TallyOPBillRefundPaymentMediforteDto>> TallyOPBillRefundPaymentMediforteAsync(GridRequestModel objGrid);
+        Task<IPagedList<TallyDayWisePharmacyCollectionDto>> TallyDayWisePharmacyCollectionAsync(GridRequestModel objGrid);
+
 
 
 
