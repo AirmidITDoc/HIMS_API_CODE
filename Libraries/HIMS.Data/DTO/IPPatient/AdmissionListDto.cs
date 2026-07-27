@@ -98,6 +98,8 @@
         public bool? IsMaterialReplacement { get; set; }
         public string? UserName { get; set; }
         public long AbhaTranId { get; set; }
+        public long? ParentOpipid { get; set; }
+
 
 
 

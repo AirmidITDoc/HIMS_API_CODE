@@ -113,6 +113,8 @@ namespace HIMS.API.Models.IPPatient
         public long AdmissionId { get; set; }
         public bool? Ischarity { get; set; }
         public bool? IsReimbursement { get; set; }
+        public long? ParentOpipid { get; set; }
+
 
 
 

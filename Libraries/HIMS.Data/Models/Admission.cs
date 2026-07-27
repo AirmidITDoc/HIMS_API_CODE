@@ -104,5 +104,6 @@ namespace HIMS.Data.Models
         public long? CompanyApprovedId { get; set; }
         public decimal? CompanyApprovedAmt { get; set; }
         public string? CompRefNo { get; set; }
+        public long? ParentOpipid { get; set; }
     }
 }
