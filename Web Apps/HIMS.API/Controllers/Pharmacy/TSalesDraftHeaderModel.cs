@@ -32,6 +32,7 @@ namespace HIMS.API.Models.Pharmacy
         public long? BedId { get; set; }
         public string? ExtMobileNo { get; set; }
         public string? ExtAddress { get; set; }
+        public long? DoctorId { get; set; }
 
     }
     public class TSalesDraftHeaderModelValidator : AbstractValidator<TSalesDraftHeaderModel>
