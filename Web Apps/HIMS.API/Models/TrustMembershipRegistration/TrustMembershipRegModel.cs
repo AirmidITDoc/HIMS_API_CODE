@@ -76,6 +76,10 @@ namespace HIMS.API.Models.TrustMembershipRegistration
         public decimal? FeeAmount { get; set; }
         public DateTime? ReceiptDate { get; set; }
         public DateTime? MembershipvalidDate { get; set; }
+        public DateTime? HdeathDate { get; set; }
+        public DateTime? WdeathDate { get; set; }
+        public string? HaayushmanId { get; set; }
+        public string? WaayushmanId { get; set; }
 
         public List<MembershipChildModel>? TMembershipChildren { get; set; }
         public List<MembershipEmrgencyModel>? TMembershipEmrgencies { get; set; }
@@ -93,7 +97,7 @@ namespace HIMS.API.Models.TrustMembershipRegistration
             //RuleFor(x => x.WifeFullBodyCheckupDate).NotNull().NotEmpty().WithMessage("WifeFullBodyCheckupDate is required");
             RuleFor(x => x.CityId).NotNull().NotEmpty().WithMessage("CityId is required");
             RuleFor(x => x.CityName).NotNull().NotEmpty().WithMessage("CityName is required");
-            RuleFor(x => x.NativePlace).NotNull().NotEmpty().WithMessage("NativePlace is required");
+            //RuleFor(x => x.NativePlace).NotNull().NotEmpty().WithMessage("NativePlace is required");
             RuleFor(x => x.DeclarationDate).NotNull().NotEmpty().WithMessage("DeclarationDate is required");
             RuleFor(x => x.ReceiptDate).NotNull().NotEmpty().WithMessage("ReceiptDate is required");
 

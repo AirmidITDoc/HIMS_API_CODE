@@ -7,6 +7,7 @@ namespace HIMS.API.Models.Masters
         public long AreaId { get; set; }
         public string? AreaName { get; set; }
         public long? CityId { get; set; }
+        public long? Pincode { get; set; }
 
     }
     public class AreaMasterModelValidator : AbstractValidator<AreaMasterModel>

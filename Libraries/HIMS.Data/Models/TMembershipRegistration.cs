@@ -87,6 +87,10 @@ namespace HIMS.Data.Models
         public DateTime? ModifiedDate { get; set; }
         public bool? IsActive { get; set; }
         public DateTime? MembershipvalidDate { get; set; }
+        public DateTime? HdeathDate { get; set; }
+        public DateTime? WdeathDate { get; set; }
+        public string? HaayushmanId { get; set; }
+        public string? WaayushmanId { get; set; }
 
         public virtual ICollection<TMembershipChild> TMembershipChildren { get; set; }
         public virtual ICollection<TMembershipEmrgency> TMembershipEmrgencies { get; set; }
