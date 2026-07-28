@@ -107,11 +107,8 @@
     {
         public DateTime? VisitDate { get; set; }
         public DateTime? VisitTime { get; set; }
-        public string? PrefixName { get; set; }
+        public string? PatientName { get; set; }
         public string? GenderName { get; set; }
-        public string? FirstName { get; set; }
-        public string? MiddleName { get; set; }
-        public string? LastName { get; set; }
         public long VisitId { get; set; }
         public long RegID { get; set; }
         public string? OPDNo { get; set; }
