@@ -37,5 +37,6 @@ namespace HIMS.Data.Models
         public long? BedId { get; set; }
         public string? ExtMobileNo { get; set; }
         public string? ExtAddress { get; set; }
+        public long? DoctorId { get; set; }
     }
 }

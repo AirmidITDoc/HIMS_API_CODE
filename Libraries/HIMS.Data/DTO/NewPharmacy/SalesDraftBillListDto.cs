@@ -21,6 +21,7 @@
         public string? RoomName { get; set; }
         public string? BedName { get; set; }
         public string? OP_IP_No { get; set; }
+        public long DoctorId { get; set; }
 
     }
 }

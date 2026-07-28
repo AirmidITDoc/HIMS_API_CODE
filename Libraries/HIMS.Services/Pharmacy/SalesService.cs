@@ -657,7 +657,7 @@ namespace HIMS.Services.Users
                 odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
                 string[] rEntity = { "DsalesId", "Date",  "Time", "OpIpId", "OpIpType", "TotalAmount", "VatAmount", "DiscAmount", "NetAmount", "PaidAmount", "BalanceAmount","ConcessionReasonId", "ConcessionAuthorizationId", "IsSellted",
-                    "IsPrint","UnitId","AddedBy","ExternalPatientName","DoctorName","StoreId","CreditReason","CreditReasonId","IsClosed","IsPrescription","WardId","BedId","ExtMobileNo", "ExtAddress"};
+                    "IsPrint","UnitId","AddedBy","ExternalPatientName","DoctorName","StoreId","CreditReason","CreditReasonId","IsClosed","IsPrescription","WardId","BedId","ExtMobileNo", "ExtAddress", "DoctorId" };
                 var entity = ObjDraftHeader.ToDictionary();
                 foreach (var rProperty in entity.Keys.ToList())
                 {
