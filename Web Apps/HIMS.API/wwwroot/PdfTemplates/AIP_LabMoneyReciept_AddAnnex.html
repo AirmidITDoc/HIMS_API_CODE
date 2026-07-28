@@ -21,16 +21,12 @@
                 <td style="width:35%; vertical-align:top;">
                     <b>Patient Name</b> : <b>{{PatientName}}</b><br>
                     <b>Reg. Number</b> : {{LabRequestNo}}<br>
-                    <b>Age/Sex</b> : {{AgeYear}} Years / {{GenderName}}<br>
+                    <b>Age/Sex</b> : {{AgeYear}} / {{GenderName}}<br>
                     <b>Referred By</b> : {{RefDocName}}<br>
-                    <!--<b>Address</b> :-->
                 </td>
 
 
                 <td style="width:30%; text-align:center; vertical-align:top;">
-                    <!--<img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{LabRequestNo}}"
-                     alt="QR Code"
-                     style="width:80px; height:80px; display:block; margin:0 auto;" />-->
                     <img src="{{QrCode}}"
                          alt="QR Code"
                          style="width:100px; height:100px; display:block; margin:0 auto;" />
@@ -50,16 +46,11 @@
                 </td>
             </tr>
         </table>
-        <!--<br />-->
-
-        <!-- TITLE -->
         <div style="text-align:center; margin:8px 0;">
             <span style="border:1px solid #000; padding:3px 18px; font-weight:bold; border-radius:6px;">
                 BILL / MONEY RECEIPT
             </span>
         </div>
-        <!--<br />-->
-        <!-- TABLE -->
         <table style="width:100%; border-collapse:collapse;">
             <tr style="border-top:1px solid #000; border-bottom:1px solid #000; font-weight:bold; text-align:center; background-color:#f2f2f2;">
                 <td style="padding:6px;">No</td>
@@ -72,25 +63,17 @@
 
             {{Items}}
         </table>
-        <!--<br />-->
-
-        <!-- BELOW LINE (IMPORTANT LIKE IMAGE) -->
         <div style="border-top:1px solid #000; margin-top:5px;"></div>
 
         <!-- WORD + SUMMARY -->
         <table style="width:100%; margin-top:5px; border-collapse:collapse;">
             <tr>
-                <b>
-                    <!-- LEFT -->
                 <td style="width:60%; vertical-align:top;">
                     <b>In word :</b> {{finalamt}} only<br>
                     from <b>{{PatientName}}</b><br><br>
 
                     <b>Details :</b> Received Rs. {{PaidAmount}} by {{PaymentMode}}
                 </td>
-                </b>
-                <b>
-                    <!-- RIGHT -->
                 <td style="width:40%; vertical-align:top;">
                     <table style="width:100%; border-left:1px solid #000; padding-left:4px; border-collapse:collapse;">
                         <tr>
@@ -115,7 +98,6 @@
                         </tr>
                     </table>
                 </td>
-                </b>
             </tr>
         </table>
 
@@ -147,16 +129,15 @@
                 <td style="width:35%; vertical-align:top;">
                     <b>Patient Name</b> : <b>{{PatientName}}</b><br>
                     <b>Reg. Number</b> : {{LabRequestNo}}<br>
-                    <b>Age/Sex</b> : {{AgeYear}} Years / {{GenderName}}<br>
+                    <b>Age/Sex</b> : {{AgeYear}} / {{GenderName}}<br>
                     <b>Referred By</b> : {{RefDocName}}<br>
-                    <!--<b>Address</b> :-->
                 </td>
 
 
                 <td style="width:30%; text-align:center; vertical-align:top;">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{LabRequestNo}}"
+                    <img src="{{QrCode}}"
                          alt="QR Code"
-                         style="width:80px; height:80px; display:block; margin:0 auto;" />
+                         style="width:100px; height:100px; display:block; margin:0 auto;" />
 
                     <div style="font-size:12px; margin-top:3px;">
                         Scan for report
@@ -201,17 +182,13 @@
         <!-- WORD + SUMMARY -->
         <table style="width:100%; margin-top:5px; border-collapse:collapse;">
             <tr>
-                <b>
-                    <!-- LEFT -->
+
                 <td style="width:60%; vertical-align:top;">
                     <b>In word :</b> {{finalamt}} only<br>
                     from <b>{{PatientName}}</b><br><br>
 
                     <b>Details :</b> Received Rs. {{PaidAmount}} by {{PaymentMode}}
                 </td>
-                </b>
-                <b>
-                    <!-- RIGHT -->
                 <td style="width:40%; vertical-align:top;">
                     <table style="width:100%; border-left:1px solid #000; padding-left:4px; border-collapse:collapse;">
                         <tr>
@@ -236,7 +213,6 @@
                         </tr>
                     </table>
                 </td>
-                </b>
             </tr>
         </table>
 

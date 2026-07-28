@@ -20,16 +20,12 @@
                 <td style="width:35%; vertical-align:top;">
                     <b>Patient Name</b> : <b>{{PatientName}}</b><br>
                     <b>Reg. Number</b> : {{LabRequestNo}}<br>
-                    <b>Age/Sex</b> : {{AgeYear}} Years / {{GenderName}}<br>
+                    <b>Age/Sex</b> : {{AgeYear}} / {{GenderName}}<br>
                     <b>Referred By</b> : {{RefDocName}}<br>
-                    <!--<b>Address</b> :-->
                 </td>
 
 
                 <td style="width:30%; text-align:center; vertical-align:top;">
-                    <!--<img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{LabRequestNo}}"
-                     alt="QR Code"
-                     style="width:80px; height:80px; display:block; margin:0 auto;" />-->
                     <img src="{{QrCode}}"
                          alt="QR Code"
                          style="width:100px; height:100px; display:block; margin:0 auto;" />
@@ -39,26 +35,19 @@
                     </div>
                 </td>
 
-                <!-- RIGHT (35%) -->
                 <td style="width:35%; vertical-align:top; text-align:left;">
                     <b>Bill Number</b> : {{BillNo}}<br>
                     <b>Bill Date</b> : {{BillDate}}<br>
                     <b>Phone No</b> : {{MobileNo}}<br>
                     <b>PatientType</b> : {{PatientType}}
-                    <!--<b>PIN / Area</b> :-->
                 </td>
             </tr>
         </table>
-        <!--<br />-->
-
-        <!-- TITLE -->
         <div style="text-align:center; margin:8px 0;">
             <span style="border:1px solid #000; padding:3px 18px; font-weight:bold; border-radius:6px;">
                 BILL / MONEY RECEIPT
             </span>
         </div>
-        <!--<br />-->
-        <!-- TABLE -->
         <table style="width:100%; border-collapse:collapse;">
             <tr style="border-top:1px solid #000; border-bottom:1px solid #000; font-weight:bold; text-align:center; background-color:#f2f2f2;">
                 <td style="padding:6px;">No</td>
@@ -71,29 +60,19 @@
 
             {{Items}}
         </table>
-        <!--<br />-->
 
-        <!-- BELOW LINE (IMPORTANT LIKE IMAGE) -->
         <div style="border-top:1px solid #000; margin-top:5px;"></div>
 
-        <!-- WORD + SUMMARY -->
         <table style="width:100%; margin-top:5px;">
             <tr>
-                <b>
-                    <!-- LEFT -->
                 <td style="width:60%; vertical-align:top;">
                     <b>In word :</b> {{finalamt}} only<br>
                     from <b>{{PatientName}}</b><br><br>
 
                     <b>Details :</b> Received Rs. {{PaidAmount}} by {{PaymentMode}}
                 </td>
-                </b>
-                <b>
-                    <!-- RIGHT -->
                 <td style="width:40%; vertical-align:top;">
                     <table style="width:100%; border-left:1px solid #000; padding-left:4px; border-collapse:collapse;">
-
-                        <!--<table style="width:100%; border-left:1px solid #000; padding-left:8px;">-->
                             <tr>
                                 <td>Gross Amount</td>
                                 <td style="text-align:right;">{{TotalBillAmount}}</td>
@@ -116,19 +95,13 @@
                             </tr>
                         </table>
                 </td>
-                </b>
             </tr>
         </table>
 
-        <!-- BOTTOM LINE ABOVE FOOTER -->
         <div style="border-top:1px solid #000; margin-top:8px;"></div>
-
-        <!-- FOOTER TEXT -->
         <div style="text-align:center; font-size:13px; margin-top:5px;">
             <b>E.& O.E : This is a computer-generated document and does not require any signature.</b>
         </div>
-
-        <!-- CREATED / PRINTED (MISSING IN YOUR VERSION) -->
         <div style="text-align:center; font-size:13px; margin-top:3px;">
             Created by <b> {{CreatedBy}} </b>at {{CreatedDate}} , Printed by <b>{{UserName}} </b>
         </div>
@@ -145,46 +118,35 @@
 
             <table style="width:100%; border-bottom:1px solid #000; padding-bottom:5px; ">
                 <tr>
-                    <!-- LEFT (35%) -->
                     <td style="width:35%; vertical-align:top;">
                         <b>Patient Name</b> : <b>{{PatientName}}</b><br>
                         <b>Reg. Number</b> : {{LabRequestNo}}<br>
-                        <b>Age/Sex</b> : {{AgeYear}} Years / {{GenderName}}<br>
+                        <b>Age/Sex</b> : {{AgeYear}} / {{GenderName}}<br>
                         <b>Referred By</b> : {{RefDocName}}<br>
-                        <!--<b>Address</b> :-->
                     </td>
-
-                    <!-- QR (30%) -->
                     <td style="width:30%; text-align:center; vertical-align:top;">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{LabRequestNo}}"
+                        <img src="{{QrCode}}"
                              alt="QR Code"
-                             style="width:80px; height:80px; display:block; margin:0 auto;" />
+                             style="width:100px; height:100px; display:block; margin:0 auto;" />
 
                         <div style="font-size:12px; margin-top:3px;">
                             Scan for report
                         </div>
                     </td>
-
-                    <!-- RIGHT (35%) -->
                     <td style="width:35%; vertical-align:top; text-align:left;">
                         <b>Bill Number</b> : {{BillNo}}<br>
                         <b>Bill Date</b> : {{BillDate}}<br>
                         <b>Phone No</b> : {{MobileNo}}<br>
                         <b>PatientType</b> : {{PatientType}}
-                        <!--<b>PIN / Area</b> :-->
                     </td>
                 </tr>
             </table>
-            <!--<br />-->
 
-            <!-- TITLE -->
             <div style="text-align:center; margin:8px 0;">
                 <span style="border:1px solid #000; padding:3px 18px; font-weight:bold; border-radius:6px;">
                     BILL / MONEY RECEIPT
                 </span>
             </div>
-            <!--<br />-->
-            <!-- TABLE -->
             <table style="width:100%; border-collapse:collapse;">
                 <tr style="border-top:1px solid #000; border-bottom:1px solid #000; font-weight:bold; text-align:center; background-color:#f2f2f2;">
                     <td style="padding:6px;">No</td>
@@ -197,25 +159,17 @@
 
                 {{Items}}
             </table>
-            <!--<br />-->
 
-            <!-- BELOW LINE (IMPORTANT LIKE IMAGE) -->
             <div style="border-top:1px solid #000; margin-top:5px;"></div>
 
-            <!-- WORD + SUMMARY -->
             <table style="width:100%; margin-top:5px; border-collapse:collapse;">
                 <tr>
-                    <b>
-                        <!-- LEFT -->
                     <td style="width:60%; vertical-align:top;">
                         <b>In word :</b> {{finalamt}} only<br>
                         from <b>{{PatientName}}</b><br><br>
 
                         <b>Details :</b> Received Rs. {{PaidAmount}} by {{PaymentMode}}
                     </td>
-                    </b>
-                    <b>
-                        <!-- RIGHT -->
                     <td style="width:40%; vertical-align:top;">
                         <table style="width:100%; border-left:1px solid #000; padding-left:4px; border-collapse:collapse;">
                             <tr>
@@ -240,155 +194,20 @@
                             </tr>
                         </table>
                     </td>
-                    </b>
                 </tr>
             </table>
-
-            <!-- BOTTOM LINE ABOVE FOOTER -->
             <div style="border-top:1px solid #000; margin-top:8px;"></div>
-
-            <!-- FOOTER TEXT -->
             <div style="text-align:center; font-size:13px; margin-top:5px;">
                 <b>E.& O.E : This is a computer-generated document and does not require any signature.</b>
             </div>
 
-            <!-- CREATED / PRINTED (MISSING IN YOUR VERSION) -->
             <div style="text-align:center; font-size:13px; margin-top:3px;">
                 Created by <b> {{CreatedBy}} </b>at {{CreatedDate}} , Printed by <b>{{UserName}} </b>
             </div>
 
         </div>
-
-
+    </div>
 </body>
-                </html>
+</html>
 
-                <!--<!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Money Receipt</title>
-                </head>
-
-                <body style="font-family: Calibri, Arial; font-size: 15px; margin: 10px; color: #000; margin-top: 90px;">
-
-                    <div style="text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 5px; padding-top: 90px ">
-                        Office Copy
-                    </div>-->
-                    <!-- HEADER -->
-                    <!--<table style="width:100%; border-bottom:1px solid #000; padding-bottom:5px; margin-top:90px;">
-                        <tr>-->
-                            <!-- LEFT (35%) -->
-                            <!--<td style="width:35%; vertical-align:top;">
-                                <b>Patient Name</b> : <b>{{PatientName}}</b><br>
-                                <b>Reg. Number</b> : {{LabRequestNo}}<br>
-                                <b>Age/Sex</b> : {{AgeYear}} Years / {{GenderName}}<br>
-                                <b>Referred By</b> : {{RefDocName}}<br>
-                                <b>Address</b> :
-                            </td>-->
-
-                            <!-- QR (30%) -->
-                            <!--<td style="width:30%; text-align:center; vertical-align:top;">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data={{LabRequestNo}}"
-                                     alt="QR Code"
-                                     style="width:80px; height:80px; display:block; margin:0 auto;" />
-
-                                <div style="font-size:12px; margin-top:3px;">
-                                    Scan for report
-                                </div>
-                            </td>-->
-
-                            <!-- RIGHT (35%) -->
-                            <!--<td style="width:35%; vertical-align:top; text-align:left;">
-                                <b>Bill Number</b> : {{BillNo}}<br>
-                                <b>Bill Date</b> : {{BillDate}}<br>
-                                <b>Phone No</b> : {{MobileNo}}<br>
-                                <b>Email Id</b> :<br>
-                                <b>PIN / Area</b> :
-                            </td>
-                        </tr>
-                    </table>
-                    <br />-->
-
-                    <!-- TITLE -->
-                    <!--<div style="text-align:center; margin:8px 0;">
-                        <span style="border:1px solid #000; padding:3px 18px; font-weight:bold; border-radius:6px;">
-                            BILL / MONEY RECEIPT
-                        </span>
-                    </div>
-                    <br />-->
-                    <!-- TABLE -->
-                    <!--<table style="width:100%; border-collapse:collapse;">
-                        <tr style="border-top:1px solid #000; border-bottom:1px solid #000; font-weight:bold; text-align:center; background-color:#f2f2f2;">
-                            <td style="padding:6px;">No</td>
-                            <td style="padding:6px;">Description</td>
-                            <td style="padding:6px;">Department</td>
-                            <td style="padding:6px;">Amount</td>
-                            <td style="padding:6px;">Qty</td>
-                            <td style="padding:6px;">NetAmount</td>
-                        </tr>
-
-                        {{Items}}
-                    </table>
-                    <br />-->
-
-                    <!-- BELOW LINE (IMPORTANT LIKE IMAGE) -->
-                    <!--<div style="border-top:1px solid #000; margin-top:5px;"></div>-->
-
-                    <!-- WORD + SUMMARY -->
-                    <!--<table style="width:100%; margin-top:5px;">
-                        <tr>
-                            <b>-->
-                                <!-- LEFT -->
-                            <!--<td style="width:60%; vertical-align:top;">
-                                <b>In word :</b> {{finalamt}} only<br>
-                                from <b>{{PatientName}}</b><br><br>
-
-                                <b>Details :</b> Received Rs. {{PaidAmount}} by {{PaymentMode}}
-                            </td>
-                            </b>
-                            <b>-->
-                                <!-- RIGHT -->
-                            <!--<td style="width:40%; vertical-align:top;">
-                                <table style="width:100%; border-left:1px solid #000; padding-left:8px;">
-                                    <tr>
-                                        <td>Gross Amount</td>
-                                        <td style="text-align:right;">{{TotalBillAmount}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Less: Discount Amount</td>
-                                        <td style="text-align:right;">{{ConcessionAmt}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Total Net Amount</b></td>
-                                        <td style="text-align:right;"><b>{{NetPayableAmt}}</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Less: Paid Amount</td>
-                                        <td style="text-align:right;">{{PaidAmount}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Total Due Amount</b></td>
-                                        <td style="text-align:right;"><b>{{BalanceAmt}}</b></td>
-                                    </tr>
-                                </table>
-                            </td>
-                            </b>
-                        </tr>
-                    </table>-->
-
-                    <!-- BOTTOM LINE ABOVE FOOTER -->
-                    <!--<div style="border-top:1px solid #000; margin-top:8px;"></div>-->
-
-                    <!-- FOOTER TEXT -->
-                    <!--<div style="text-align:center; font-size:13px; margin-top:5px;">
-                        <b>E.& O.E : This is a computer-generated document and does not require any signature.</b>
-                    </div>-->
-
-                    <!-- CREATED / PRINTED (MISSING IN YOUR VERSION) -->
-                    <!--<div style="text-align:center; font-size:13px; margin-top:3px;">
-                        Created by <b> {{CreatedBy}} </b>at {{CreatedDate}} , Printed by <b>{{UserName}} </b>
-                    </div>
-
-                </body>
-            </html>-->
+              
