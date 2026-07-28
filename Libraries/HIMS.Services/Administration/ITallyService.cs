@@ -13,6 +13,7 @@ namespace HIMS.Services.Administration
 
         Task<IPagedList<TallyListDto>> OPBillCashCounterListAsync(GridRequestModel objGrid);
         Task<IPagedList<DaywisePharmacySalesOPDListDto>> DaywisePharmacySalesOPDAsync(GridRequestModel objGrid);
+        Task<IPagedList<IPSalesAndSalesReturnPaymentDateWiseDto>> IPSalesAndSalesReturnPaymentDateWiseAsync(GridRequestModel objGrid);
 
 
         Task<IPagedList<OPRefundBillListCashCounterDto>> OPRefundBillListAsync(GridRequestModel objGrid);
@@ -62,6 +63,10 @@ namespace HIMS.Services.Administration
         Task<IPagedList<TallyOPPaymentMediforteDto>> TallyOPPaymentMediforteAsync(GridRequestModel objGrid);
 
         Task<IPagedList<TallyOPBillRefundPaymentMediforteDto>> TallyOPBillRefundPaymentMediforteAsync(GridRequestModel objGrid);
+        Task<IPagedList<TallyDayWisePharmacyCollectionDto>> TallyDayWisePharmacyCollectionAsync(GridRequestModel objGrid);
+        Task<IPagedList<TallyDayWisePharmacyUPICardCollectionDto>> TallyDayWisePharmacyUPICardCollectionAsync(GridRequestModel objGrid);
+
+
 
 
 

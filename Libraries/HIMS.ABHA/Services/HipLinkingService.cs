@@ -12,7 +12,7 @@ namespace HIMS.ABHA.Services
         private readonly AbdmHttpClient _client;
         private readonly ILogger<AbhaService> _logger;
 
-        public HipLinkingService(AbdmHttpClient client,  ILogger<AbhaService> logger)
+        public HipLinkingService(AbdmHttpClient client, ILogger<AbhaService> logger)
         {
             _client = client;
             _logger = logger;
@@ -23,7 +23,7 @@ namespace HIMS.ABHA.Services
             try
             {
                 var url = $"{AppSettings.Current.BaseUrls.GatewayBaseUrl}{AppSettings.Current.Endpoints.LinkTokenGenerate}";
-                return await _client.PostAsync<LinkTokenResponse>(url, request, new() { ["X-HIP-ID"] = request.HipId, ["X-CM-ID"] = request.XCmId });
+                return await _client.PostAsync<LinkTokenResponse>(url, request, new() { ["X-HIP-ID"] = AppSettings.Current.Credentials.XHipId, ["X-CM-ID"] = AppSettings.Current.Credentials.XCmId });
             }
             catch (Exception ex)
             {

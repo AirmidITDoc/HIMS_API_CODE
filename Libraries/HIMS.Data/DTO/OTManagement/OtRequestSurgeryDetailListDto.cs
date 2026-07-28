@@ -68,6 +68,9 @@ namespace HIMS.Data.DTO.OTManagement
         public DateTime? AdmissionDate { get; set; }
         public DateTime? VisitDate { get; set; }
         public bool? IsCancelled { get; set; }
+        public long? OTReservationId { get; set; }
+        public string? OTReservationCancel { get; set; }
+
 
 
     }

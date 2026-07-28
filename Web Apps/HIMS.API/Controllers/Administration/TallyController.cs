@@ -29,6 +29,13 @@ namespace HIMS.API.Controllers.Administration
             return Ok(DaywisePharmacySalesOPDList.ToGridResponse(objGrid, "DaywisePharmacySalesOPD List "));
         }
 
+        [HttpPost("IPSalesAndSalesReturnPaymentDateWiseList")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+        public async Task<IActionResult> IPSalesAndSalesReturnPaymentDateWiseList(GridRequestModel objGrid)
+        {
+            IPagedList<IPSalesAndSalesReturnPaymentDateWiseDto> IPSalesAndSalesReturnPaymentDateWiseList = await _ITallyService.IPSalesAndSalesReturnPaymentDateWiseAsync(objGrid);
+            return Ok(IPSalesAndSalesReturnPaymentDateWiseList.ToGridResponse(objGrid, "IPSalesAndSalesReturnPaymentDateWise List "));
+        }
         [HttpPost("TallyOPBillCashCounterList")]
         [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> OPBillCashCounterList(GridRequestModel objGrid)
@@ -279,6 +286,22 @@ namespace HIMS.API.Controllers.Administration
         }
 
 
+        [HttpPost("TallyDayWisePharmacyCollection")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+        public async Task<IActionResult> TallyDayWisePharmacyCollection(GridRequestModel objGrid)
+        {
+            IPagedList<TallyDayWisePharmacyCollectionDto> TallyDayWisePharmacyCollection = await _ITallyService.TallyDayWisePharmacyCollectionAsync(objGrid);
+            return Ok(TallyDayWisePharmacyCollection.ToGridResponse(objGrid, "Tally Day Wise Pharmacy Collection"));
+        }
+
+
+        [HttpPost("TallyDayWisePharmacyUPICardCollection")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+        public async Task<IActionResult> TallyDayWisePharmacyUPICardCollection(GridRequestModel objGrid)
+        {
+            IPagedList<TallyDayWisePharmacyUPICardCollectionDto> TallyDayWisePharmacyUPICardCollection = await _ITallyService.TallyDayWisePharmacyUPICardCollectionAsync(objGrid);
+            return Ok(TallyDayWisePharmacyUPICardCollection.ToGridResponse(objGrid, "Tally Day Wise Pharmacy UPI  Card Collection"));
+        }
 
 
     }

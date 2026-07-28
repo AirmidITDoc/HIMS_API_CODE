@@ -26,6 +26,10 @@ namespace HIMS.Services.Administration
         {
             return await DatabaseHelper.GetGridDataBySp<DaywisePharmacySalesOPDListDto>(model, "ps_Rtrv_DaywisePharmacySalesOPD");
         }
+        public virtual async Task<IPagedList<IPSalesAndSalesReturnPaymentDateWiseDto>> IPSalesAndSalesReturnPaymentDateWiseAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPSalesAndSalesReturnPaymentDateWiseDto>(model, "PS_rpt_IPSalesAndSalesReturn_PaymentDateWise");
+        }
 
 
         public virtual async Task<IPagedList<OPRefundBillListCashCounterDto>> OPRefundBillListAsync(GridRequestModel model)
@@ -145,6 +149,18 @@ namespace HIMS.Services.Administration
         public virtual async Task<IPagedList<TallyOPBillRefundPaymentMediforteDto>> TallyOPBillRefundPaymentMediforteAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<TallyOPBillRefundPaymentMediforteDto>(model, "Tally_OPBillRefund_Payment_Mediforte");
+        }
+
+
+        public virtual async Task<IPagedList<TallyDayWisePharmacyCollectionDto>> TallyDayWisePharmacyCollectionAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TallyDayWisePharmacyCollectionDto>(model, "PS_tally_PharmacyCollection_Payment");
+        }
+
+
+        public virtual async Task<IPagedList<TallyDayWisePharmacyUPICardCollectionDto>> TallyDayWisePharmacyUPICardCollectionAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<TallyDayWisePharmacyUPICardCollectionDto>(model, "PS_tally_PharmacyCollectionUPICARD_Payment");
         }
 
 

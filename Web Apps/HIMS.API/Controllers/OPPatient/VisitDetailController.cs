@@ -43,6 +43,14 @@ namespace HIMS.API.Controllers.OPPatient
             IPagedList<VisitDetailListDto> AppVisitList = await _visitDetailsService.GetListAsync(objGrid);
             return Ok(AppVisitList.ToGridResponse(objGrid, "App Visit List"));
         }
+        [HttpPost("Follow_up_List")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<IActionResult> FollowupList(GridRequestModel objGrid)
+        {
+            IPagedList<FollowupListDto> AppVisitList = await _visitDetailsService.FollowListAsync(objGrid);
+            return Ok(AppVisitList.ToGridResponse(objGrid, "Follow up List"));
+        }
+
 
         [HttpGet("{id?}")]
         [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
