@@ -28,6 +28,13 @@ namespace HIMS.API.Controllers.Administration
             IPagedList<DaywisePharmacySalesOPDListDto> DaywisePharmacySalesOPDList = await _ITallyService.DaywisePharmacySalesOPDAsync(objGrid);
             return Ok(DaywisePharmacySalesOPDList.ToGridResponse(objGrid, "DaywisePharmacySalesOPD List "));
         }
+        [HttpPost("DaywisePharmacySalesReturnOPDList")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+        public async Task<IActionResult> DaywisePharmacySalesReturnOPDList(GridRequestModel objGrid)
+        {
+            IPagedList<DaywisePharmacySalesOPDListDto> DaywisePharmacySalesReturnOPDList = await _ITallyService.DaywisePharmacySalesReturnOPDAsync(objGrid);
+            return Ok(DaywisePharmacySalesReturnOPDList.ToGridResponse(objGrid, "DaywisePharmacySalesReturnOPD List "));
+        }
 
         [HttpPost("IPSalesAndSalesReturnPaymentDateWiseList")]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
@@ -35,6 +42,14 @@ namespace HIMS.API.Controllers.Administration
         {
             IPagedList<IPSalesAndSalesReturnPaymentDateWiseDto> IPSalesAndSalesReturnPaymentDateWiseList = await _ITallyService.IPSalesAndSalesReturnPaymentDateWiseAsync(objGrid);
             return Ok(IPSalesAndSalesReturnPaymentDateWiseList.ToGridResponse(objGrid, "IPSalesAndSalesReturnPaymentDateWise List "));
+        }
+
+        [HttpPost("TallyDayWisePharmacyUPICardCollection")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+        public async Task<IActionResult> TallyDayWisePharmacyUPICardCollection(GridRequestModel objGrid)
+        {
+            IPagedList<TallyDayWisePharmacyUPICardCollectionDto> TallyDayWisePharmacyUPICardCollection = await _ITallyService.TallyDayWisePharmacyUPICardCollectionAsync(objGrid);
+            return Ok(TallyDayWisePharmacyUPICardCollection.ToGridResponse(objGrid, "Tally Day Wise Pharmacy UPI  Card Collection"));
         }
         [HttpPost("TallyOPBillCashCounterList")]
         [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
@@ -186,12 +201,6 @@ namespace HIMS.API.Controllers.Administration
             return Ok(TallyOPBillDetailListMediforte.ToGridResponse(objGrid, "Tally OPBill Detail List Mediforte"));
         }
 
-        // --------------------------
-
-
-
-
-
         [HttpPost("TallyIPBillRefundPaymentListMediforte")]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
 
@@ -295,13 +304,6 @@ namespace HIMS.API.Controllers.Administration
         }
 
 
-        [HttpPost("TallyDayWisePharmacyUPICardCollection")]
-        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
-        public async Task<IActionResult> TallyDayWisePharmacyUPICardCollection(GridRequestModel objGrid)
-        {
-            IPagedList<TallyDayWisePharmacyUPICardCollectionDto> TallyDayWisePharmacyUPICardCollection = await _ITallyService.TallyDayWisePharmacyUPICardCollectionAsync(objGrid);
-            return Ok(TallyDayWisePharmacyUPICardCollection.ToGridResponse(objGrid, "Tally Day Wise Pharmacy UPI  Card Collection"));
-        }
 
 
     }
