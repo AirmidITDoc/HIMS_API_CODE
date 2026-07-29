@@ -4,7 +4,11 @@ using HIMS.ABHA.Interface;
 using HIMS.ABHA.Models.M2;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
+using HIMS.Data;
+using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using static QRCoder.PayloadGenerator;
 
 namespace HIMS.API.Controllers.ABHA.M2
 {
@@ -14,17 +18,30 @@ namespace HIMS.API.Controllers.ABHA.M2
     public class HipLinkingController : BaseController
     {
         private readonly IHipLinkingService _abhaService;
-
-        public HipLinkingController(IHipLinkingService abhaService)
+        private readonly IGenericService<TAbhaLinkTokenCallback> _TAbhaLinkTokenCallback;
+        public HipLinkingController(IHipLinkingService abhaService, IGenericService<TAbhaLinkTokenCallback> TAbhaLinkTokenCallback)
         {
             _abhaService = abhaService;
+            _TAbhaLinkTokenCallback = TAbhaLinkTokenCallback;
         }
         [HttpPost("token/generate")]
         public async Task<ApiResponse> GenerateLinkToken([FromBody] LinkTokenRequest req)
         {
             var result = await _abhaService.GenerateLinkTokenAsync(req);
             if (result.Success)
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service found.", result.Data);
+            {
+                var objAbhaLinkToken = new TAbhaLinkTokenCallback
+                {
+                    AbhaAddress = req.AbhaAddress,
+                    AbhaNumber = req.AbhaNumber.ToString(),
+                    Name = req.Name,
+                    YearOfBirth = req.YearOfBirth.ToString(),
+                    RequestOn = DateTime.Now
+                };
+
+                await _TAbhaLinkTokenCallback.Add(objAbhaLinkToken, 1, "System");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service found.", null);
+            }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }

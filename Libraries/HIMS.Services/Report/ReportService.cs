@@ -187,6 +187,22 @@ namespace HIMS.Services.Report
             return await Task.FromResult(result);
         }
 
+        public virtual async Task<List<object>> SearchReportStatus(string keyword)
+        {
+            var statusList = new List<dynamic>
+    {
+        new { Text = "New", Value = 1 },
+        new { Text = "Follow-up", Value = 2 },
+    };
+
+            var result = statusList
+                .Where(x => x.Text.ToLower().Contains(keyword.ToLower()))
+                .Take(25)
+                .ToList<object>();
+
+            return await Task.FromResult(result);
+        }
+
 
         public virtual async Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel model)
         {

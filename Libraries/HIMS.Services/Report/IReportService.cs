@@ -41,6 +41,8 @@ namespace HIMS.Services.Report
 
         Task<List<PatientTypeMaster>> SearchPatientType(string str);
         Task<List<object>> SearchLabReportStatus(string keyword);
+        Task<List<object>> SearchReportStatus(string keyword);
+
 
 
         Task<List<MExpensesCategoryMaster>> SearchMExpensesCategoryMaster(string str);

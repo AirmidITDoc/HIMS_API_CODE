@@ -11456,13 +11456,21 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AbhaAddress).HasMaxLength(200);
 
+                entity.Property(e => e.AbhaNumber).HasMaxLength(50);
+
                 entity.Property(e => e.CallbackDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.ErrorCode).HasMaxLength(100);
 
+                entity.Property(e => e.Name).HasMaxLength(200);
+
                 entity.Property(e => e.RequestId).HasMaxLength(100);
+
+                entity.Property(e => e.RequestOn).HasColumnType("datetime");
+
+                entity.Property(e => e.YearOfBirth).HasMaxLength(10);
             });
 
             modelBuilder.Entity<TAbill>(entity =>

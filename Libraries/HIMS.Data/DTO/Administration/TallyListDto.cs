@@ -561,24 +561,18 @@ namespace HIMS.Data.DTO.Administration
 
     public class TallyDayWisePharmacyCollectionDto
     {
-        public DateTime? Date { get; set; }
-
-        public DateTime DateYYYYMMDD { get; set; }
-
-        public string Type { get; set; }
-
+        public string? Date { get; set; }
+        public string DateYYYYMMDD { get; set; }
+        public string TypeIPOP { get; set; }
         public decimal Amount { get; set; }
     }
 
 
     public class TallyDayWisePharmacyUPICardCollectionDto
     {
-        public DateTime? Date { get; set; }
-
-        public DateTime DateYYYYMMDD { get; set; }
-
+        public string Date { get; set; }
+        public string DateYYYYMMDD { get; set; }
         public string Type { get; set; }
-
         public decimal Amount { get; set; }
     }
 

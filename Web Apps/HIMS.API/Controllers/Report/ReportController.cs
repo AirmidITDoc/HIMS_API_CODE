@@ -354,6 +354,23 @@ namespace HIMS.API.Controllers.Report
         }
 
 
+        [HttpGet("PatientStatus/auto-complete")]
+        public async Task<ApiResponse> SearchReportStatus(string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword) || keyword == "%")
+            {
+                keyword = string.Empty;
+            }
+            var data = await _reportService.SearchReportStatus(keyword);
+
+            return ApiResponseHelper.GenerateResponse(
+                ApiStatusCode.Status200OK,
+                "Search Status",
+                data
+            );
+        }
+
+
         [HttpGet("{mode?}")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(string mode)

@@ -41,36 +41,36 @@ namespace HIMS.API.Controllers.ABHA.M2
         [HttpPost("~/api/v3/hip/token/on-generate-token")]
         public async Task<IActionResult> OnGenerateToken([FromBody] LinkTokenCallbackPayload payload)
         {
-            string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
-            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            string filename = $"{path}\\{AppTime.Now:dd_MM_yyyy}.txt";
-            if (payload.IsSuccess)
+            //string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
+            //if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            //string filename = $"{path}\\{AppTime.Now:dd_MM_yyyy}.txt";
+            //if (payload.IsSuccess)
+            //{
+            //    await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] SUCCESS requestId={payload.Response.RequestId} abhaAddress={payload.AbhaAddress} linkToken={payload.LinkToken}");
+            //}
+            //else
+            //{
+            //    await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] FAILURE code={payload.Error?.Code} message={payload.Error?.Message}");
+            //}
+            if (!string.IsNullOrWhiteSpace(payload.AbhaAddress))
             {
-                await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] SUCCESS requestId={payload.Response.RequestId} abhaAddress={payload.AbhaAddress} linkToken={payload.LinkToken}");
+                var lstToken = await _TAbhaLinkTokenCallback.GetAll(x => x.AbhaAddress == payload.AbhaAddress && x.LinkToken == null);
+                if (lstToken.Any())
+                {
+                    // Update existing record
+                    var existingToken = lstToken.FirstOrDefault();
+                    existingToken.RequestId = payload.Response?.RequestId;
+                    existingToken.LinkToken = payload.LinkToken;
+                    existingToken.ErrorCode = payload.Error?.Code;
+                    existingToken.ErrorMessage = payload.Error?.Message;
+                    existingToken.IsSuccess = payload.Error == null;
+                    existingToken.CallbackDate = DateTime.Now;
+                    existingToken.RawResponse = JsonConvert.SerializeObject(payload);
+
+                    await _TAbhaLinkTokenCallback.Update(existingToken, 1, "System", null);
+                }
             }
-            else
-            {
-                await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] FAILURE code={payload.Error?.Code} message={payload.Error?.Message}");
-            }
-
-            // Insert into DB
-            var callback = new TAbhaLinkTokenCallback
-            {
-                RequestId = payload.Response?.RequestId,
-                AbhaAddress = payload.AbhaAddress,
-                LinkToken = payload.LinkToken,
-                ErrorCode = payload.Error?.Code,
-                ErrorMessage = payload.Error?.Message,
-                IsSuccess = payload.Error == null,
-                CallbackDate = DateTime.Now,
-                RawResponse = JsonConvert.SerializeObject(payload)
-                //RawResponse = payload
-            };
-
-            await _TAbhaLinkTokenCallback.Add(callback, 1, "System");
-
             return Ok();
-
         }
 
         [HttpPost("bridge/register")]
