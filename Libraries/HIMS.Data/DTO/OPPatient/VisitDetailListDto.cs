@@ -115,7 +115,7 @@
         public DateTime? FollowupDate { get; set; }
         public long? DoctorId { get; set; }
         public string? MobileNo { get; set; }
-        public long? Age { get; set; }
+        public string? Age { get; set; }
         public string? Doctorname { get; set; }
         public long? RefDocId { get; set; }
         public string? RefDocName { get; set; }

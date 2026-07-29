@@ -38,6 +38,8 @@ namespace HIMS.Services.OutPatient
                 objVisit.IsCancelled = objVisitDetail.IsCancelled;
                 objVisit.IsCancelledBy = objVisitDetail.IsCancelledBy;
                 objVisit.IsCancelledDate = objVisitDetail.IsCancelledDate;
+                objVisit.Comments = objVisitDetail.Comments;
+
                 _context.VisitDetails.Update(objVisit);
                 _context.Entry(objVisit).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
@@ -529,6 +531,37 @@ namespace HIMS.Services.OutPatient
                         entity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_Update_ConsultationDoctor_Visit", CommandType.StoredProcedure, entity);
+                await _context.LogProcedureExecution(entity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                // SaveChanges
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                //  Rollback
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+        public virtual async Task FollowUpdateAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
+                string[] rEntity = { "FollowupDate", "VisitId" };
+                var entity = objVisitDetail.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+                odal.ExecuteNonQueryNew("ps_UpdateFollowupDate", CommandType.StoredProcedure,"", entity);
                 await _context.LogProcedureExecution(entity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
                 // SaveChanges
                 await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);

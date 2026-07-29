@@ -202,6 +202,8 @@ namespace HIMS.API.Controllers.OPPatient
                 model.IsCancelled = true;
                 model.IsCancelledBy = CurrentUserId;
                 model.IsCancelledDate = AppTime.Now;
+                model.Comments = obj.Comments;
+
                 await _visitDetailsService.CancelAsync(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -301,6 +303,20 @@ namespace HIMS.API.Controllers.OPPatient
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+        [HttpPut("FollowupDateUpdate/{id:int}")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> FollowUpdate(FollowupDateUpdateModel obj)
+        {
+            VisitDetail model = obj.MapTo<VisitDetail>();
+            if (obj.VisitId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                await _visitDetailsService.FollowUpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        }
+
 
 
         [HttpPut("RefDoctorUpdate")]

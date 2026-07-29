@@ -35,6 +35,8 @@ namespace HIMS.Services.OutPatient
         List<ServiceMasterDTO> SearchGetServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId, string SrvcName);
         List<UserCashCounterMasterDTO> SearchUserWiseCashCounterList(int LoginId, string CCType);
         Task VisitUpdateAsync(VisitDetail ObjVisitDetail, int UserId, string Username);
+        Task FollowUpdateAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName);
+
 
 
     }

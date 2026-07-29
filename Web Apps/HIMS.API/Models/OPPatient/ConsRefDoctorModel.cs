@@ -36,10 +36,11 @@ namespace HIMS.API.Models.OPPatient
 
         }
     }
-    //public class RefDoctorsModel
-    //{
-    //    public ConsRefDoctorModel ConsRefDoctor { get; set; }
-    //    //public RefDoctorModel RefDoctor { get; set; }
+    public class FollowupDateUpdateModel
+    {
+        public long VisitId { get; set; }
+        public DateTime? FollowupDate { get; set; }
 
-    //}
+
+    }
 }

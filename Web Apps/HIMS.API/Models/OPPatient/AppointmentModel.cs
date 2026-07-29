@@ -105,6 +105,8 @@ namespace HIMS.API.Models.OPPatient
     public class CancelAppointment
     {
         public long VisitId { get; set; }
+        public string? Comments { get; set; }
+
     }
     public class UpdateVitalInfModel
     {
