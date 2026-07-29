@@ -55,12 +55,15 @@ namespace HIMS.ABHA.Helper
                 _logger.LogWarning("ABDM POST failed {Status} {Body}", response.StatusCode, body);
                 return new ApiResult<T> { Success = false, Error = body, StatusCode = (int)response.StatusCode };
             }
-
+            if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
+            {
+                return new ApiResult<T> { Success = true, Data = Activator.CreateInstance<T>(), StatusCode = (int)response.StatusCode };
+            }
             var data = JsonSerializer.Deserialize<T>(body, JsonOpts);
             return new ApiResult<T> { Success = true, Data = data, StatusCode = (int)response.StatusCode };
         }
 
-        public async Task<ApiResult<T>> GetAsync<T>(string url, string? xToken = null, string? txnId = null,string? CmId=null)
+        public async Task<ApiResult<T>> GetAsync<T>(string url, string? xToken = null, string? txnId = null, string? CmId = null)
         {
             var token = await _tokenService.GetAccessTokenAsync();
             using var request = new HttpRequestMessage(HttpMethod.Get, url);
