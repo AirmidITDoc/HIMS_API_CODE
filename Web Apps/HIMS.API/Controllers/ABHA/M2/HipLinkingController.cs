@@ -1,9 +1,14 @@
 ﻿using Asp.Versioning;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using HIMS.ABHA.Helper;
 using HIMS.ABHA.Interface;
 using HIMS.ABHA.Models.M2;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
+using HIMS.API.Models.Masters;
+using HIMS.Core;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +49,17 @@ namespace HIMS.API.Controllers.ABHA.M2
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
+        }
+
+        [HttpGet("{id?}")]
+        public async Task<ApiResponse> Get(string id, string abhaAddress)
+        {
+            if (id == "")
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+            var data = await _TAbhaLinkTokenCallback.GetById(x => x.AbhaNumber == id.ToString() && x.AbhaAddress == abhaAddress);
+            return data.ToSingleResponse<TAbhaLinkTokenCallback, LinkTokenResponseModel>("LinkTokenResponseModel");
         }
 
         [HttpPost("link/carecontext")]
