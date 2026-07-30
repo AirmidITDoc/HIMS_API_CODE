@@ -7,5 +7,6 @@ namespace HIMS.Services.Common
         dynamic GetDDLByIdWithProc(DDLRequestModel model);
         dynamic GetDataSetByProc(string sp_Name, List<SearchGrid> SearchFields);
         List<T> GetSingleListByProc<T>(ListRequestModel model);
+        dynamic GetDataTableByProc(string sp_Name, List<SearchGrid> SearchFields);
     }
 }

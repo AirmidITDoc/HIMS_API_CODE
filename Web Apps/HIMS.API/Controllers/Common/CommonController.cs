@@ -163,6 +163,19 @@ namespace HIMS.API.Controllers.Common
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "invalid data");
         }
+        [HttpPost]
+        [Route("get-data-table-by-proc")]
+        public ApiResponse GetDataTableByProc(ListRequestModel model)
+        {
+            string SpName = "";
+            switch (model.Mode)
+            {
+                case "GetList": SpName = "GETLIST_VIMAL"; break;
+                default: break;
+            }
+            dynamic resultList = _ICommonService.GetDataTableByProc(SpName, model.SearchFields);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", resultList);
+        }
     }
     public class DashboardDto1
     {
