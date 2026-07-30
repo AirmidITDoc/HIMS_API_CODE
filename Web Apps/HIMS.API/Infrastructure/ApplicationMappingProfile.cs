@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HIMS.ABHA.Models.M2;
 using HIMS.API.Controllers.Pharmacy;
 using HIMS.API.Models.Administration;
 using HIMS.API.Models.Canteen;
@@ -442,6 +443,7 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<LocationMaster, LocationMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MBankMaster, BankMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TAbhaLinkTokenCallback, LinkTokenResponseModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<VisitDetail, CrossConsultationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 

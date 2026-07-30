@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace HIMS.ABHA.Models.M2
 {
@@ -33,5 +34,29 @@ namespace HIMS.ABHA.Models.M2
         [JsonPropertyName("requestId")]
         public string RequestId { get; set; } = string.Empty;
 
+    }
+    public class LinkTokenResponseModel
+    {
+        public int CallbackId { get; set; }
+
+        public string AbhaNumber { get; set; }
+
+        public string AbhaAddress { get; set; }
+
+        public string Name { get; set; }
+
+        public int? YearOfBirth { get; set; }
+
+        public DateTime? RequestOn { get; set; }
+
+        public string RequestId { get; set; }
+
+        public string LinkToken { get; set; }
+
+        public bool IsSuccess { get; set; }
+
+        public string ErrorCode { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }
