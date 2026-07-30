@@ -28,7 +28,7 @@ namespace HIMS.Services.Administration
         }
         public virtual async Task<IPagedList<DaywisePharmacySalesOPDListDto>> DaywisePharmacySalesReturnOPDAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<DaywisePharmacySalesOPDListDto>(model, "ps_Rtrv_DaywisePharmacySalesOPD");
+            return await DatabaseHelper.GetGridDataBySp<DaywisePharmacySalesOPDListDto>(model, "ps_Rtrv_DaywisePharmacySalesReturnOPD");
         }
         public virtual async Task<IPagedList<IPSalesAndSalesReturnPaymentDateWiseDto>> IPSalesAndSalesReturnPaymentDateWiseAsync(GridRequestModel model)
         {
