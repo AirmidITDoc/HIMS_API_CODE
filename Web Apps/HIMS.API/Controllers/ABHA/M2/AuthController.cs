@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.IO;
 using HIMS.Data.Models;
 using HIMS.Data;
+using System.Text.Json;
 
 namespace HIMS.API.Controllers.ABHA.M2
 {
@@ -52,6 +53,31 @@ namespace HIMS.API.Controllers.ABHA.M2
             {
                 await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] FAILURE code={payload.Error?.Code} message={payload.Error?.Message}");
             }
+
+            ////string path = Path.Combine(_configuration["ExceptionLogging:Directory"].TrimEnd('\\'), "M2Callback");
+            //if (!Directory.Exists(path))
+            //    Directory.CreateDirectory(path);
+
+            //string filename = Path.Combine(path, $"{AppTime.Now:dd_MM_yyyy}.txt");
+
+            // Convert complete payload object to JSON
+            string rawResponse = JsonConvert.SerializeObject(payload, Formatting.Indented);
+
+            string log = $@"
+                =========================================================
+                DateTime : {DateTime.Now:dd/MM/yyyy HH:mm:ss}
+                Status   : {(payload.IsSuccess ? "SUCCESS" : "FAILURE")}
+                RequestId: {payload.Response?.RequestId}
+                ABHA     : {payload.AbhaAddress}
+                LinkToken: {payload.LinkToken}
+
+                Raw Response:
+                {rawResponse}
+                =========================================================";
+
+            await System.IO.File.AppendAllTextAsync(filename, log);
+
+
             if (!string.IsNullOrWhiteSpace(payload.AbhaAddress))
             {
                 var lstToken = await _TAbhaLinkTokenCallback.GetAll(x => x.AbhaAddress == payload.AbhaAddress && x.LinkToken == null);
