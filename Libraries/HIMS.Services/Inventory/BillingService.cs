@@ -319,7 +319,7 @@ namespace HIMS.Services.Inventory
 
             }
         }
-        public virtual BillingServiceNewDto GetServiceListNew(int TariffId)
+        public virtual BillingServiceNewDto GetServiceListNew(int TariffId, string? ServiceName)
         {
             BillingServiceNewDto objMain = new() { Data = new List<BillingServiceNew>(), Columns = new() };
             DatabaseHelper sql = new();
