@@ -829,7 +829,7 @@ namespace HIMS.Services.Common
                 {
                     VisitId = Convert.ToInt32(VisitId)
                 };
-                odal1.ExecuteNonQuery("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, tokenObj.ToDictionary());
+                odal1.ExecuteNonQueryNew("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure,"", tokenObj.ToDictionary());
                 await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, currentUserName);
 
 
@@ -845,7 +845,7 @@ namespace HIMS.Services.Common
                 await _context.SaveChangesAsync();
 
 
-                DatabaseHelper odal = new();
+                //DatabaseHelper odal1 = new();
                 string[] BEntity = { "OpdIpdId", "RegNo",  "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId","PatientType", "CompanyName", "CompanyAmt",
                     "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments","CashCounterId","CreatedBy","GovtApprovedAmt","BillNo"};
                 var bentity = objBill.ToDictionary();
@@ -856,7 +856,7 @@ namespace HIMS.Services.Common
                     if (!BEntity.Contains(rProperty))
                         bentity.Remove(rProperty);
                 }
-                string vBillNo = odal.ExecuteNonQueryNew("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
+                string vBillNo = odal1.ExecuteNonQueryNew("ps_insert_Bill_1", CommandType.StoredProcedure, "BillNo", bentity);
                 objBill.BillNo = Convert.ToInt32(vBillNo);
                 await _context.LogProcedureExecution(bentity, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, currentUserName);
 
@@ -947,7 +947,7 @@ namespace HIMS.Services.Common
                             }
                             Packagescharge["PackageMainChargeId"] = objItem1.ChargesId;
                             Packagescharge["BillNo"] = objBill.BillNo;
-                            var VChargesId = odal.ExecuteNonQueryNew("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
+                            var VChargesId = odal1.ExecuteNonQueryNew("ps_insert_AddChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
                             item.ChargesId = Convert.ToInt32(VChargesId);
                             await _context.LogProcedureExecution(Packagescharge, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, currentUserName);
 
@@ -958,7 +958,7 @@ namespace HIMS.Services.Common
                                 ["ChargesId"] = VChargesId
                             };
 
-                            odal.ExecuteNonQueryNew("ps_insert_BillDetails_1", CommandType.StoredProcedure,"", OPBillDet2);
+                            odal1.ExecuteNonQueryNew("ps_insert_BillDetails_1", CommandType.StoredProcedure,"", OPBillDet2);
                             await _context.LogProcedureExecution(bentity, nameof(Bill), objBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, currentUserName);
 
 
@@ -966,20 +966,19 @@ namespace HIMS.Services.Common
                     }
                     // Save Log
                     await _context.SaveChangesAsync(CurrentUserId, currentUserName);
-                    // Commit Transaction
-                    await transaction.CommitAsync();
 
-                }
+                } 
+
+                // Commit Transaction (Only Once)
+                await transaction.CommitAsync();
             }
-
-
-
             catch (Exception)
             {
                 // Rollback Transaction
                 await transaction.RollbackAsync();
                 throw;
             }
+          
         }
     
 
