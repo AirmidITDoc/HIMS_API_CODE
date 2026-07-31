@@ -39,12 +39,18 @@ namespace HIMS.Services.Common
                 result = dt.ToDynamic();
             return result;
         }
-        public dynamic GetDataTableByProc(string sp_Name, List<SearchGrid> SearchFields)
+        public dynamic GetDataSetByProc(string sp_Name, List<SearchGrid> SearchFields)
         {
             DatabaseHelper odal = new();
             Dictionary<string, string> fields = SearchFieldExtension.GetSearchFields(SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+            //string SortingField = String.Empty;
+            //if (!string.IsNullOrEmpty(model.SortingField?.FieldName)) { SortingField = model.SortingField?.FieldName;}
+            //KeyValuePair<string, string> sortingFielsAndDirection = new KeyValuePair<string, string>(SortingField, model.SortingField?.Direction);
+            //KeyValuePair<int, int> pageNumberAndCount = new KeyValuePair<int, int>(model.PageNumber, model.PageSize);
+
             int sp_Para = 0;
             SqlParameter[] para = new SqlParameter[fields.Count];
+          
             foreach (var property in fields)
             {
                 var param = new SqlParameter
@@ -56,10 +62,14 @@ namespace HIMS.Services.Common
                 para[sp_Para] = param;
                 sp_Para++;
             }
-            DataTable dt = odal.FetchDataTableBySP(sp_Name, para);
+            DataSet ds = odal.FetchDataSetBySP(sp_Name, para);
             dynamic result = new ExpandoObject();
-            if (dt.Rows.Count > 0)
-                result = dt.ToDynamic();
+            foreach (DataTable dt in ds.Tables)
+            {
+                //var dict = (IDictionary<string, object>)result;
+                if (dt.Rows.Count > 0)
+                    result = dt.ToDynamic();
+            }
             return result;
         }
 
@@ -93,6 +103,30 @@ namespace HIMS.Services.Common
                 sp_Para++;
             }
             return odal.FetchListBySP<T>(sp_Name, para);
+        }
+
+        public dynamic GetDataTableByProc(string sp_Name, List<SearchGrid> SearchFields)
+        {
+            DatabaseHelper odal = new();
+            Dictionary<string, string> fields = SearchFieldExtension.GetSearchFields(SearchFields).ToDictionary(e => e.FieldName, e => e.FieldValueString);
+            int sp_Para = 0;
+            SqlParameter[] para = new SqlParameter[fields.Count];
+            foreach (var property in fields)
+            {
+                var param = new SqlParameter
+                {
+                    ParameterName = "@" + property.Key,
+                    Value = property.Value.ToString()
+                };
+
+                para[sp_Para] = param;
+                sp_Para++;
+            }
+            DataTable dt = odal.FetchDataTableBySP(sp_Name, para);
+            dynamic result = new ExpandoObject();
+            if (dt.Rows.Count > 0)
+                result = dt.ToDynamic();
+            return result;
         }
     }
 }
