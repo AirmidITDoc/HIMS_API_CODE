@@ -323,8 +323,10 @@ namespace HIMS.Services.Inventory
         {
             BillingServiceNewDto objMain = new() { Data = new List<BillingServiceNew>(), Columns = new() };
             DatabaseHelper sql = new();
-            SqlParameter[] para = new SqlParameter[1];
+            SqlParameter[] para = new SqlParameter[2];
             para[0] = new SqlParameter("@TariffId", TariffId);
+            para[1] = new SqlParameter("@ServiceName", ServiceName);
+
             DataTable dt = sql.FetchDataTableBySP("GET_SERVICES_NEW", para);
             foreach (DataColumn dc in dt.Columns)
             {

@@ -234,6 +234,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MFeedbackQuestion> MFeedbackQuestions { get; set; } = null!;
         public virtual DbSet<MGenericMaster> MGenericMasters { get; set; } = null!;
         public virtual DbSet<MHsncodeMaster> MHsncodeMasters { get; set; } = null!;
+        public virtual DbSet<MIcdDiagnosisMaster> MIcdDiagnosisMasters { get; set; } = null!;
         public virtual DbSet<MIcdcdeMainMaster> MIcdcdeMainMasters { get; set; } = null!;
         public virtual DbSet<MIcdcodingMaster> MIcdcodingMasters { get; set; } = null!;
         public virtual DbSet<MInstructionMaster> MInstructionMasters { get; set; } = null!;
@@ -491,6 +492,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TIpprescriptionReturnH> TIpprescriptionReturnHs { get; set; } = null!;
         public virtual DbSet<TIssueToDepartmentDetail> TIssueToDepartmentDetails { get; set; } = null!;
         public virtual DbSet<TIssueToDepartmentHeader> TIssueToDepartmentHeaders { get; set; } = null!;
+        public virtual DbSet<TIssuetrackerInformation> TIssuetrackerInformations { get; set; } = null!;
         public virtual DbSet<TItemMovementReport> TItemMovementReports { get; set; } = null!;
         public virtual DbSet<TLabAppServiceDetail> TLabAppServiceDetails { get; set; } = null!;
         public virtual DbSet<TLabAppointment> TLabAppointments { get; set; } = null!;
@@ -661,7 +663,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -7383,6 +7385,38 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UnitOfMeasure)
                     .HasMaxLength(50)
                     .HasColumnName("unit_of_measure");
+            });
+
+            modelBuilder.Entity<MIcdDiagnosisMaster>(entity =>
+            {
+                entity.HasKey(e => e.Icdid)
+                    .HasName("PK__M_ICD_Di__8A2BBBA406B3D64D");
+
+                entity.ToTable("M_ICD_Diagnosis_Master");
+
+                entity.Property(e => e.Icdid).HasColumnName("ICDId");
+
+                entity.Property(e => e.CreatedOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Icdcode)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ICDCode");
+
+                entity.Property(e => e.Icdversion)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("ICDVersion");
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ShortName).HasMaxLength(500);
+
+                entity.Property(e => e.UpdatedOn).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MIcdcdeMainMaster>(entity =>
@@ -14200,6 +14234,27 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Remark).HasMaxLength(200);
 
                 entity.Property(e => e.UnitId).HasColumnName("UnitID");
+            });
+
+            modelBuilder.Entity<TIssuetrackerInformation>(entity =>
+            {
+                entity.HasKey(e => e.IssueTrackerId);
+
+                entity.ToTable("T_IssuetrackerInformation");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IssueDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IssueName).HasMaxLength(255);
+
+                entity.Property(e => e.IssueTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ResolvedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ResolvedTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TItemMovementReport>(entity =>

@@ -28,6 +28,11 @@ namespace HIMS.Services.OutPatient
             return await DatabaseHelper.GetGridDataBySp<FollowupListDto>(model, "ps_Rtrv_FollowupList");
         }
 
+        public virtual async Task<IPagedList<AppointmentCancelListDto>> AppointmentCancelAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<AppointmentCancelListDto>(model, "ps_Rtrv_AppointmentCancelList");
+        }
+
 
         public virtual async Task CancelAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName)
         {

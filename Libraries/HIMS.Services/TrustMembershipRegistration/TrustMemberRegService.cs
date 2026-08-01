@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Microsoft.Data.SqlClient;
+
 
 
 namespace HIMS.Services.TrustMembershipRegistration
@@ -26,6 +28,14 @@ namespace HIMS.Services.TrustMembershipRegistration
         {
             return await DatabaseHelper.GetGridDataBySp<TrustMembershipRegDTO>(model, "ps_Rtrv_TrustMembershipList");
         }
+        public List<TruestMembershipDto> searchTruestMembership()
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = Array.Empty<SqlParameter>();
+            var data = sql.FetchListBySP<TruestMembershipDto>("ps_Rtrv_TruestMembershipSearch", para);
+            return data;
+        }
+
 
 
         public virtual async Task<TMembershipRegistration> GetById(int Id)
