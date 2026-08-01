@@ -91,6 +91,17 @@ namespace HIMS.Data.Models
         public DateTime? WdeathDate { get; set; }
         public string? HaayushmanId { get; set; }
         public string? WaayushmanId { get; set; }
+        public DateTime? WmembershipvalidDate { get; set; }
+        public DateTime? WreceiptDate { get; set; }
+        public bool? WfeeReceived { get; set; }
+        public long? WfeeAmount { get; set; }
+        public string? Wmediclaimpolicynumber { get; set; }
+        public DateTime? WmediclaimEndDate { get; set; }
+        public DateTime? WmediclaimStartDate { get; set; }
+        public long? WmonthlyIncomeRange { get; set; }
+        public double? WmediclaimIssuanceAmt { get; set; }
+        public bool? Whasmediclaim { get; set; }
+        public long? Wmediclaimcompany { get; set; }
 
         public virtual ICollection<TMembershipChild> TMembershipChildren { get; set; }
         public virtual ICollection<TMembershipEmrgency> TMembershipEmrgencies { get; set; }

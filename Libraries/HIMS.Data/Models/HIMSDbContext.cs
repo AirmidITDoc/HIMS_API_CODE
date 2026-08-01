@@ -7396,7 +7396,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Icdid).HasColumnName("ICDId");
 
-                entity.Property(e => e.CreatedOn)
+                entity.Property(e => e.CreatedDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
@@ -7414,9 +7414,9 @@ namespace HIMS.Data.Models
                     .IsRequired()
                     .HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ShortName).HasMaxLength(500);
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.UpdatedOn).HasColumnType("datetime");
+                entity.Property(e => e.ShortName).HasMaxLength(500);
             });
 
             modelBuilder.Entity<MIcdcdeMainMaster>(entity =>
@@ -14913,7 +14913,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.WdeathDate).HasColumnType("datetime");
 
+                entity.Property(e => e.WfeeAmount).HasColumnName("wfeeAmount");
+
+                entity.Property(e => e.WfeeReceived).HasColumnName("wfeeReceived");
+
                 entity.Property(e => e.WgenderId).HasColumnName("WGenderId");
+
+                entity.Property(e => e.Whasmediclaim).HasColumnName("whasmediclaim");
 
                 entity.Property(e => e.WifeAadhaar).HasMaxLength(12);
 
@@ -14953,7 +14959,33 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.WifePreviousMemberId).HasMaxLength(50);
 
+                entity.Property(e => e.WmediclaimEndDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("wmediclaimEndDate");
+
+                entity.Property(e => e.WmediclaimIssuanceAmt).HasColumnName("wmediclaimIssuanceAmt");
+
+                entity.Property(e => e.WmediclaimStartDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("wmediclaimStartDate");
+
+                entity.Property(e => e.Wmediclaimcompany).HasColumnName("wmediclaimcompany");
+
+                entity.Property(e => e.Wmediclaimpolicynumber)
+                    .HasMaxLength(100)
+                    .HasColumnName("wmediclaimpolicynumber");
+
+                entity.Property(e => e.WmembershipvalidDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("wmembershipvalidDate");
+
+                entity.Property(e => e.WmonthlyIncomeRange).HasColumnName("wmonthlyIncomeRange");
+
                 entity.Property(e => e.WprefixId).HasColumnName("WPrefixId");
+
+                entity.Property(e => e.WreceiptDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("wreceiptDate");
             });
 
             modelBuilder.Entity<TMembershipRelative>(entity =>
