@@ -19,6 +19,9 @@ namespace HIMS.ABHA.Models.M2
 
         [JsonPropertyName("response")]
         public CallbackResponseMeta Response { get; set; } = new();
+        
+        [JsonPropertyName("status")]
+        public string? Status { get; set; }
 
         [JsonIgnore]
         public bool IsSuccess => Error is null && !string.IsNullOrEmpty(LinkToken);

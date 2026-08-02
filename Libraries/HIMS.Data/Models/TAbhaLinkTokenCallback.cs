@@ -18,5 +18,9 @@ namespace HIMS.Data.Models
         public string? ErrorMessage { get; set; }
         public DateTime? CallbackDate { get; set; }
         public string? RawResponse { get; set; }
+        public string? Status { get; set; }
+        public string? OnCareRequestId { get; set; }
+        public long? PatientId { get; set; }
+        public string? OnCareRawResponse { get; set; }
     }
 }

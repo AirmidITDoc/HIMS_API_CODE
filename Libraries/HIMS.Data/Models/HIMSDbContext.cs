@@ -234,6 +234,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MFeedbackQuestion> MFeedbackQuestions { get; set; } = null!;
         public virtual DbSet<MGenericMaster> MGenericMasters { get; set; } = null!;
         public virtual DbSet<MHsncodeMaster> MHsncodeMasters { get; set; } = null!;
+        public virtual DbSet<MIcdDiagnosisMaster> MIcdDiagnosisMasters { get; set; } = null!;
         public virtual DbSet<MIcdcdeMainMaster> MIcdcdeMainMasters { get; set; } = null!;
         public virtual DbSet<MIcdcodingMaster> MIcdcodingMasters { get; set; } = null!;
         public virtual DbSet<MInstructionMaster> MInstructionMasters { get; set; } = null!;
@@ -491,6 +492,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TIpprescriptionReturnH> TIpprescriptionReturnHs { get; set; } = null!;
         public virtual DbSet<TIssueToDepartmentDetail> TIssueToDepartmentDetails { get; set; } = null!;
         public virtual DbSet<TIssueToDepartmentHeader> TIssueToDepartmentHeaders { get; set; } = null!;
+        public virtual DbSet<TIssuetrackerInformation> TIssuetrackerInformations { get; set; } = null!;
         public virtual DbSet<TItemMovementReport> TItemMovementReports { get; set; } = null!;
         public virtual DbSet<TLabAppServiceDetail> TLabAppServiceDetails { get; set; } = null!;
         public virtual DbSet<TLabAppointment> TLabAppointments { get; set; } = null!;
@@ -7385,6 +7387,38 @@ namespace HIMS.Data.Models
                     .HasColumnName("unit_of_measure");
             });
 
+            modelBuilder.Entity<MIcdDiagnosisMaster>(entity =>
+            {
+                entity.HasKey(e => e.Icdid)
+                    .HasName("PK__M_ICD_Di__8A2BBBA406B3D64D");
+
+                entity.ToTable("M_ICD_Diagnosis_Master");
+
+                entity.Property(e => e.Icdid).HasColumnName("ICDId");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Icdcode)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ICDCode");
+
+                entity.Property(e => e.Icdversion)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("ICDVersion");
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ShortName).HasMaxLength(500);
+            });
+
             modelBuilder.Entity<MIcdcdeMainMaster>(entity =>
             {
                 entity.HasKey(e => e.IcdcdeMid);
@@ -11466,9 +11500,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Name).HasMaxLength(200);
 
+                entity.Property(e => e.OnCareRequestId)
+                    .HasMaxLength(100)
+                    .HasColumnName("onCareRequestId");
+
                 entity.Property(e => e.RequestId).HasMaxLength(100);
 
                 entity.Property(e => e.RequestOn).HasColumnType("datetime");
+
+                entity.Property(e => e.Status).HasMaxLength(50);
 
                 entity.Property(e => e.YearOfBirth).HasMaxLength(10);
             });
@@ -14202,6 +14242,27 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UnitId).HasColumnName("UnitID");
             });
 
+            modelBuilder.Entity<TIssuetrackerInformation>(entity =>
+            {
+                entity.HasKey(e => e.IssueTrackerId);
+
+                entity.ToTable("T_IssuetrackerInformation");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IssueDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IssueName).HasMaxLength(255);
+
+                entity.Property(e => e.IssueTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ResolvedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ResolvedTime).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<TItemMovementReport>(entity =>
             {
                 entity.HasKey(e => e.MovementId);
@@ -14858,7 +14919,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.WdeathDate).HasColumnType("datetime");
 
+                entity.Property(e => e.WfeeAmount).HasColumnName("wfeeAmount");
+
+                entity.Property(e => e.WfeeReceived).HasColumnName("wfeeReceived");
+
                 entity.Property(e => e.WgenderId).HasColumnName("WGenderId");
+
+                entity.Property(e => e.Whasmediclaim).HasColumnName("whasmediclaim");
 
                 entity.Property(e => e.WifeAadhaar).HasMaxLength(12);
 
@@ -14898,7 +14965,33 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.WifePreviousMemberId).HasMaxLength(50);
 
+                entity.Property(e => e.WmediclaimEndDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("wmediclaimEndDate");
+
+                entity.Property(e => e.WmediclaimIssuanceAmt).HasColumnName("wmediclaimIssuanceAmt");
+
+                entity.Property(e => e.WmediclaimStartDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("wmediclaimStartDate");
+
+                entity.Property(e => e.Wmediclaimcompany).HasColumnName("wmediclaimcompany");
+
+                entity.Property(e => e.Wmediclaimpolicynumber)
+                    .HasMaxLength(100)
+                    .HasColumnName("wmediclaimpolicynumber");
+
+                entity.Property(e => e.WmembershipvalidDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("wmembershipvalidDate");
+
+                entity.Property(e => e.WmonthlyIncomeRange).HasColumnName("wmonthlyIncomeRange");
+
                 entity.Property(e => e.WprefixId).HasColumnName("WPrefixId");
+
+                entity.Property(e => e.WreceiptDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("wreceiptDate");
             });
 
             modelBuilder.Entity<TMembershipRelative>(entity =>
