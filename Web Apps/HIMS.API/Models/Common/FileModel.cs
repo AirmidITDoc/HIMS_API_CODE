@@ -52,6 +52,8 @@ namespace HIMS.API.Models.Common
         [Description("Emp\\Emp_Files")]
         Emp_Files = 12,
         [Description("Emp\\Employee_Photo")]
-        Employee_Photo = 13
+        Employee_Photo = 13,
+        [Description("Upload\\Stamp_Upload")]
+        Stamp_Upload = 14
     }
 }

@@ -294,7 +294,7 @@ namespace HIMS.Services.OPPatient
                             ["DRBNo"] = ObjTDrbill.Drbno
                         };
 
-                        odal.ExecuteNonQuery("PS_UpdateDraft", CommandType.StoredProcedure, tentity);
+                        odal.ExecuteNonQueryNew("PS_UpdateDraft", CommandType.StoredProcedure,"", tentity);
                         await _context.LogProcedureExecution(tentity, nameof(TDrbill), ObjTDrbill.Drbno.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                     }

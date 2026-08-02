@@ -50,6 +50,15 @@ namespace HIMS.API.Controllers.OPPatient
             IPagedList<FollowupListDto> AppVisitList = await _visitDetailsService.FollowListAsync(objGrid);
             return Ok(AppVisitList.ToGridResponse(objGrid, "Follow up List"));
         }
+      
+        [HttpPost("AppointmentCancelList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public async Task<IActionResult> AppointmentCancelList(GridRequestModel objGrid)
+        {
+            IPagedList<AppointmentCancelListDto> AppVisitList = await _visitDetailsService.AppointmentCancelAsync(objGrid);
+            return Ok(AppVisitList.ToGridResponse(objGrid, "AppointmentCancel List"));
+        }
+
 
 
         [HttpGet("{id?}")]

@@ -232,7 +232,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         public ApiResponse GetServices(int TariffId, string ServiceName)
         {
             var resultList = _BillingService.GetServiceListNew(TariffId, ServiceName);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList with Group Wise List.", resultList);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList.", resultList);
         }
         [HttpPost("save-services-new")]
         public async Task<ApiResponse> SaveServices(BillingServiceNewDto Data)
