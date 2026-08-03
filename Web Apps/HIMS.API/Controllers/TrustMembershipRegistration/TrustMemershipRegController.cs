@@ -40,12 +40,13 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
             IPagedList<TrustMembershipRegDTO> SupplierList = await _ITrustMembershipRegService.GetListAsync(objGrid);
             return Ok(SupplierList.ToGridResponse(objGrid, "TrustMembershipReg List"));
         }
+       
         [HttpGet("search_TruestMembership")]
-        //[Permission]
-        public ApiResponse searchTruestMembership()
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse PathologyServicesearch(string Keyword)
         {
-            var data = _ITrustMembershipRegService.searchTruestMembership();
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "TruestMembership  List", data);
+            var data = _ITrustMembershipRegService.searchTruestMembership(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PathologyService search  data", data);
         }
 
 

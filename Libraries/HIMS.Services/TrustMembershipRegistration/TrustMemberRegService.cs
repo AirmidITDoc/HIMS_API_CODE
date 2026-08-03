@@ -28,12 +28,13 @@ namespace HIMS.Services.TrustMembershipRegistration
         {
             return await DatabaseHelper.GetGridDataBySp<TrustMembershipRegDTO>(model, "ps_Rtrv_TrustMembershipList");
         }
-        public List<TruestMembershipDto> searchTruestMembership()
+       
+        public List<TruestMembershipDto> searchTruestMembership(string Keyword)
         {
             DatabaseHelper sql = new();
-            SqlParameter[] para = Array.Empty<SqlParameter>();
-            var data = sql.FetchListBySP<TruestMembershipDto>("ps_Rtrv_TruestMembershipSearch", para);
-            return data;
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@Keyword", Keyword);
+            return sql.FetchListBySP<TruestMembershipDto>("ps_Rtrv_TruestMembershipSearch", para);
         }
 
 

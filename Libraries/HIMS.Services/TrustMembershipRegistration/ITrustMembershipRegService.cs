@@ -18,7 +18,8 @@ namespace HIMS.Services.TrustMembershipRegistration
         Task<TMembershipRegistration> GetById(int Id);
         Task<IPagedList<TrustMembershipRegDTO>> GetListAsync(GridRequestModel objGrid);
         Task<List<TrustMembershipRegistrationDTO>> SearchTrust(string str);
-        List<TruestMembershipDto> searchTruestMembership();
+        List<TruestMembershipDto> searchTruestMembership(string Keyword);
+
 
 
 
