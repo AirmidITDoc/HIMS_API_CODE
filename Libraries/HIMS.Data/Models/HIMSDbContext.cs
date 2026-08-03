@@ -11500,9 +11500,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Name).HasMaxLength(200);
 
+                entity.Property(e => e.OnCareRequestId)
+                    .HasMaxLength(100)
+                    .HasColumnName("onCareRequestId");
+
                 entity.Property(e => e.RequestId).HasMaxLength(100);
 
                 entity.Property(e => e.RequestOn).HasColumnType("datetime");
+
+                entity.Property(e => e.Status).HasMaxLength(50);
 
                 entity.Property(e => e.YearOfBirth).HasMaxLength(10);
             });

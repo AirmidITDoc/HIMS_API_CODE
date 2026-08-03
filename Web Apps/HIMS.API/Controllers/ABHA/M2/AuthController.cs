@@ -99,6 +99,66 @@ namespace HIMS.API.Controllers.ABHA.M2
             return Ok();
         }
 
+        [HttpPost("~/api/v3/link/on_carecontext")]
+        public async Task<IActionResult> OnCareContextToken([FromBody] LinkTokenCallbackPayload payload)
+        {
+            string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            string filename = $"{path}\\{AppTime.Now:dd_MM_yyyy}.txt";
+            //if (payload.IsSuccess)
+            //{
+            //    await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] SUCCESS requestId={payload.Response.RequestId} abhaAddress={payload.AbhaAddress} linkToken={payload.LinkToken}");
+            //}
+            //else
+            //{
+            //    await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] FAILURE code={payload.Error?.Code} message={payload.Error?.Message}");
+            //}
+
+            ////string path = Path.Combine(_configuration["ExceptionLogging:Directory"].TrimEnd('\\'), "M2Callback");
+            //if (!Directory.Exists(path))
+            //    Directory.CreateDirectory(path);
+
+            //string filename = Path.Combine(path, $"{AppTime.Now:dd_MM_yyyy}.txt");
+
+            // Convert complete payload object to JSON
+            string rawResponse = JsonConvert.SerializeObject(payload, Formatting.Indented);
+
+            string log = $@"
+                =========================================================
+                DateTime : {DateTime.Now:dd/MM/yyyy HH:mm:ss}
+                Status   : {(payload.IsSuccess ? "SUCCESS" : "FAILURE")}
+                RequestId: {payload.Response?.RequestId}
+                ABHA     : {payload.AbhaAddress}
+                LinkToken: {payload.LinkToken}
+                Status   : {payload.Status}
+
+                Raw Response:
+                {rawResponse}
+                =========================================================";
+
+            await System.IO.File.AppendAllTextAsync(filename, log);
+
+
+            if (!string.IsNullOrWhiteSpace(payload.AbhaAddress))
+            {
+                var lstToken = await _TAbhaLinkTokenCallback.GetAll(x => x.AbhaAddress == payload.AbhaAddress);
+                if (lstToken.Any())
+                {
+                    // Update existing record
+                    var existingToken = lstToken.FirstOrDefault();
+                    existingToken.OnCareRequestId = payload.Response?.RequestId;
+                    existingToken.Status = payload.Status;
+                    existingToken.ErrorCode = payload.Error?.Code;
+                    existingToken.ErrorMessage = payload.Error?.Message;
+                    existingToken.IsSuccess = payload.Error == null;
+                    existingToken.OnCareRawResponse = JsonConvert.SerializeObject(payload);
+
+                    await _TAbhaLinkTokenCallback.Update(existingToken, 1, "System", null);
+                }
+            }
+            return Ok();
+        }
+
         [HttpPost("bridge/register")]
         public async Task<ApiResponse> RegisterBridgeServices([FromBody] RegisterBridgeRequest req)
         {
