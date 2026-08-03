@@ -320,8 +320,8 @@ namespace HIMS.Services.Dashboard
             para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
             para[2] = new SqlParameter("@Todate", SqlDbType.DateTime) { Value = ToDate };
 
-            var data = await sql.Get4ResultsFromSp
-            <CashlessPatientSummary, CompanyPatientCount, CompanyBillSummary, CashlessDailyTrend>
+            var data = await sql.Get2iResultsFromSp
+            <CashlessPatientSummary, CompanyPatientCount, CompanyBillSummary, CashlessDailyTrend, CashlessRevenueSummary, CashlessCollectionSummary>
             ("ps_rtrv_CashlessCompanyDashBoard", para);
 
             return new CashlessDashboard()
@@ -329,7 +329,9 @@ namespace HIMS.Services.Dashboard
                 CashlessPatientSummary = data.Item1 ?? new List<CashlessPatientSummary>(),
                 CompanyPatientCounts = data.Item2 ?? new List<CompanyPatientCount>(),
                 CompanyBillSummaries = data.Item3 ?? new List<CompanyBillSummary>(),
-                DailyTrend = data.Item4 ?? new List<CashlessDailyTrend>()
+                DailyTrend = data.Item4 ?? new List<CashlessDailyTrend>(),
+                RevenueSummaries = data.Item5 ?? new List<CashlessRevenueSummary>(),
+                CollectionSummaries = data.Item6 ?? new List<CashlessCollectionSummary>()
             };
         }
         public async Task<LabFinancialDashboard> GetLabFinancialDashboard(int UnitId, DateTime FromDate, DateTime ToDate)
