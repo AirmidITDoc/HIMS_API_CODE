@@ -8,6 +8,7 @@ namespace HIMS.Data.DTO.OPPatient
 {
     public  class AppointmentCancelListDto
     {
+        public DateTime? IsCancelledDate { get; set; }
         public DateTime VisitDate { get; set; }
         public DateTime VisitTime { get; set; }
         public string? GenderName { get; set; }
@@ -23,5 +24,6 @@ namespace HIMS.Data.DTO.OPPatient
         public long? RefDocId { get; set; }
         public string? RefDocName { get; set; }
         public string? DepartmentName { get; set; }
+
     }
 }

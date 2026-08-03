@@ -9,6 +9,9 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.Inventory;
+using HIMS.Services.IPPatient;
+using HIMS.Services.TrustMembershipRegistration;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.IPPatient
@@ -19,9 +22,13 @@ namespace HIMS.API.Controllers.IPPatient
     public class MIcdDiagnosisMasterController : BaseController
     {
         private readonly IGenericService<MIcdDiagnosisMaster> _repository;
-        public MIcdDiagnosisMasterController(IGenericService<MIcdDiagnosisMaster> repository)
+        private readonly IMIcdDiagnosisMasterService _IMIcdDiagnosisMasterService;
+
+        public MIcdDiagnosisMasterController(IGenericService<MIcdDiagnosisMaster> repository, IMIcdDiagnosisMasterService repository1)
         {
             _repository = repository;
+            _IMIcdDiagnosisMasterService = repository1;
+
         }
         //List API
         [HttpPost]
@@ -44,9 +51,17 @@ namespace HIMS.API.Controllers.IPPatient
             var data = await _repository.GetById(x => x.Icdid == id);
             return data.ToSingleResponse<MIcdDiagnosisMaster, MIcdDiagnosisMasterModel>("PatientType");
         }
+        [HttpGet("GetMIcdDiagnosisMaster")]
+        //[Permission]
+        public ApiResponse GetServices(string Icdcode, string DiagnosisName)
+        {
+            var resultList = _IMIcdDiagnosisMasterService.GetMIcdDiagnosis(Icdcode, DiagnosisName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get MIcdDiagnosis List.", resultList);
+        }
+
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        //[Permission]
         public async Task<ApiResponse> Post(MIcdDiagnosisMasterModel obj)
         {
             MIcdDiagnosisMaster model = obj.MapTo<MIcdDiagnosisMaster>();
@@ -65,7 +80,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        //[Permission]
         public async Task<ApiResponse> Edit(MIcdDiagnosisMasterModel obj)
         {
             MIcdDiagnosisMaster model = obj.MapTo<MIcdDiagnosisMaster>();
