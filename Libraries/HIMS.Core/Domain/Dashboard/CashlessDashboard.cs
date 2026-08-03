@@ -12,6 +12,8 @@ namespace HIMS.Core.Domain.Dashboard
         public List<CompanyPatientCount> CompanyPatientCounts { get; set; }
         public List<CompanyBillSummary> CompanyBillSummaries { get; set; }
         public List<CashlessDailyTrend> DailyTrend { get; set; }
+        public List<CashlessRevenueSummary> RevenueSummaries { get; set; }
+        public List<CashlessCollectionSummary> CollectionSummaries { get; set; }
     }
     public class CashlessPatientSummary
     {
@@ -43,5 +45,24 @@ namespace HIMS.Core.Domain.Dashboard
     {
         public string Date { get; set; }
         public long CashlessPatientCount { get; set; }
+    }
+
+    public class CashlessRevenueSummary
+    {
+        public string lbl { get; set; }
+        public decimal NetAmount { get; set; }
+        public decimal BalanceAmount { get; set; }
+    }
+
+    public class CashlessCollectionSummary
+    {  
+        public string lbl { get; set; }
+        public decimal CashCollection { get; set; }
+        public decimal ChequeCollection { get; set; }
+        public decimal CardCollection { get; set; }
+        public decimal UPICollection { get; set; }
+        public decimal NEFTCollection { get; set; }
+        public decimal TotalCollection { get; set; }
+
     }
 }

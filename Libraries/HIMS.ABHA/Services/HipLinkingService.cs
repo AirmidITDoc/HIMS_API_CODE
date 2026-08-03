@@ -37,7 +37,7 @@ namespace HIMS.ABHA.Services
             try
             {
                 var url = $"{AppSettings.Current.BaseUrls.GatewayBaseUrl}{AppSettings.Current.Endpoints.InitLinkSingle}";
-                return await _client.PostAsync<string>(url, request, new() { ["X-HIP-ID"] = AppSettings.Current.Credentials.XHipId, ["X-CM-ID"] = AppSettings.Current.Credentials.XCmId, ["X-LINK-TOKEN"] = request.LinkToken });
+                return await _client.PostAsync<string>(url, new { request.AbhaAddress, request.AbhaNumber, request.Patient }, new() { ["X-HIP-ID"] = AppSettings.Current.Credentials.XHipId, ["X-CM-ID"] = AppSettings.Current.Credentials.XCmId, ["X-LINK-TOKEN"] = request.LinkToken });
             }
             catch (Exception ex)
             {
