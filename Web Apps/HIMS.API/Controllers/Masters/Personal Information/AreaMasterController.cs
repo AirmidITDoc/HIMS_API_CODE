@@ -8,6 +8,8 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.Masters;
+using HIMS.Services.TrustMembershipRegistration;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
@@ -20,9 +22,20 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     {
 
         private readonly IGenericService<MAreaMaster> _repository;
-        public AreaMasterController(IGenericService<MAreaMaster> repository)
+        private readonly IAreaMasterService _IAreaMasterService;
+
+        public AreaMasterController(IGenericService<MAreaMaster> repository, IAreaMasterService repository1)
         {
             _repository = repository;
+            _IAreaMasterService = repository1;
+
+        }
+        [HttpGet("search_AreaMaster")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse PathologyServicesearch(string Keyword)
+        {
+            var data = _IAreaMasterService.searchAreaMaster(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "AreaMaster search  data", data);
         }
 
         //List API
