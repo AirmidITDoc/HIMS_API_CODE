@@ -18,7 +18,7 @@ namespace HIMS.Services.Inventory
         Task<List<ServiceMaster>> GetAllRadiologyTest();
         void UpdateDifferTariff(ServiceDetail serviceDetail, long OldTariffId, long NewTariffId, int userId, string userName);
         Task<List<ServiceMasterDTO>> GetServiceListwithTraiff(int TariffId, string ServiceName);
-        BillingServiceNewDto GetServiceListNew(int TariffId, string? ServiceName);
+        BillingServiceNewDto GetServiceListNew(int TariffId, string? ServiceName, int PageIndex, int PageSize);
         Task SaveServicesNew(int TariffId, List<BillingServiceNew> Data);
         void Insert(List<MPackageDetail> ObjMPackageDetail, int UserId, string Username, long? PackageTotalDays, long? PackageIcudays, decimal? PackageMedicineAmount, decimal? PackageConsumableAmount);
         Task<IPagedList<PackageDetListDto>> GetListAsyncD(GridRequestModel objGrid);

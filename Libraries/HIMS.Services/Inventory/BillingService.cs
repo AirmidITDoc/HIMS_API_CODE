@@ -319,14 +319,15 @@ namespace HIMS.Services.Inventory
 
             }
         }
-        public virtual BillingServiceNewDto GetServiceListNew(int TariffId, string? ServiceName)
+        public virtual BillingServiceNewDto GetServiceListNew(int TariffId, string? ServiceName, int PageIndex, int PageSize)
         {
             BillingServiceNewDto objMain = new() { Data = new List<BillingServiceNew>(), Columns = new() };
             DatabaseHelper sql = new();
-            SqlParameter[] para = new SqlParameter[2];
+            SqlParameter[] para = new SqlParameter[4];
             para[0] = new SqlParameter("@TariffId", TariffId);
             para[1] = new SqlParameter("@ServiceName", ServiceName);
-
+            para[2] = new SqlParameter("@PageIndex", PageIndex);
+            para[3] = new SqlParameter("@PageSize", PageSize);
             DataTable dt = sql.FetchDataTableBySP("GET_SERVICES_NEW", para);
             foreach (DataColumn dc in dt.Columns)
             {
