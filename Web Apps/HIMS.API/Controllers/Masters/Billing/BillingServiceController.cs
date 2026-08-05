@@ -229,9 +229,9 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpGet("GetServicesNew")]
-        public ApiResponse GetServices(int TariffId, string ServiceName, int PageIndex, int PageSize)
+        public ApiResponse GetServices(int TariffId, string ServiceName)
         {
-            var resultList = _BillingService.GetServiceListNew(TariffId, ServiceName, PageIndex, PageSize);
+            var resultList = _BillingService.GetServiceListNew(TariffId, ServiceName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList.", resultList);
         }
         [HttpPost("save-services-new")]
