@@ -326,7 +326,6 @@ namespace HIMS.Services.Inventory
             SqlParameter[] para = new SqlParameter[2];
             para[0] = new SqlParameter("@TariffId", TariffId);
             para[1] = new SqlParameter("@ServiceName", ServiceName);
-
             DataTable dt = sql.FetchDataTableBySP("GET_SERVICES_NEW", para);
             foreach (DataColumn dc in dt.Columns)
             {

@@ -127,7 +127,8 @@ namespace HIMS.API.Controllers.Common
         ["BankNameList"] = "ps_Rtrv_BankMaster",
         ["AdmissionCancleStaus"] = "Check_AdmissionCancleStaus",
         ["PharmacyAmtByAdminId"] = "Rtrv_PharmacyAmtByAdminId",
-        ["PCPNDTIndicationList"] = "ps_RtrvPCPNDT_IndicationList"
+        ["PCPNDTIndicationList"] = "ps_RtrvPCPNDT_IndicationList",
+        ["DoctorWiseCharges"] = "ps_rtrv_getDoctorWiseCharges"
     };
         public CommonController(ICommonService commonRepository)
         {

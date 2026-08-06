@@ -25,6 +25,8 @@ namespace HIMS.Data.DTO.Inventory
         public long CityId { get; set; }
         public string? ResidenceAddress { get; set; }
         public string? MemberType { get; set; }
+        public string? PatientName { get; set; }
+
     }
 }
 

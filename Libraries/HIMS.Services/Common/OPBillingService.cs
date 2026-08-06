@@ -622,11 +622,7 @@ namespace HIMS.Services.Common
                 //await _context.SaveChangesAsync();
                 //objBill.OpdIpdId = objVisitDetail.VisitId;
 
-                ConfigSetting objConfigSetting = await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
-                objConfigSetting.Opno = Convert.ToString(Convert.ToInt32(objConfigSetting.Opno) + 1);
-                _context.ConfigSettings.Update(objConfigSetting);
-                _context.Entry(objConfigSetting).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+           
 
 
                // DatabaseHelper odal = new();
@@ -838,11 +834,6 @@ namespace HIMS.Services.Common
                 //await _context.SaveChangesAsync();
                 //objBill.OpdIpdId = objVisitDetail.VisitId;
 
-                ConfigSetting objConfigSetting = await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
-                objConfigSetting.Opno = Convert.ToString(Convert.ToInt32(objConfigSetting.Opno) + 1);
-                _context.ConfigSettings.Update(objConfigSetting);
-                _context.Entry(objConfigSetting).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
 
 
                 //DatabaseHelper odal1 = new();
@@ -1026,12 +1017,7 @@ namespace HIMS.Services.Common
                 //await _context.SaveChangesAsync();
                 //objBill.OpdIpdId = objVisitDetail.VisitId;
 
-                ConfigSetting objConfigSetting = await _context.ConfigSettings.FindAsync(Convert.ToInt64(1));
-                objConfigSetting.Opno = Convert.ToString(Convert.ToInt32(objConfigSetting.Opno) + 1);
-                _context.ConfigSettings.Update(objConfigSetting);
-                _context.Entry(objConfigSetting).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
+                
 
                 string[] BEntity = { "OpdIpdId", "RegNo",  "PatientName", "Ipdno", "AgeYear", "AgeMonth", "AgeDays", "DoctorId", "DoctorName", "WardId", "BedId","PatientType", "CompanyName", "CompanyAmt",
                     "PatientAmt","TotalAmt","ConcessionAmt","NetPayableAmt","PaidAmt","BalanceAmt","BillDate","OpdIpdType","AddedBy","TotalAdvanceAmount","AdvanceUsedAmount","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","SpeTaxPer","SpeTaxAmt","CompDiscAmt","DiscComments","CashCounterId","CreatedBy","GovtApprovedAmt","BillNo"};

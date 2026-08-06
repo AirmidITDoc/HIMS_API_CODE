@@ -6,6 +6,7 @@ using HIMS.API.Models.Canteen;
 using HIMS.API.Models.Common;
 using HIMS.API.Models.Customer;
 using HIMS.API.Models.DoctorPayout;
+using HIMS.API.Models.DocumentManagement;
 using HIMS.API.Models.Employee;
 using HIMS.API.Models.FeedBack;
 using HIMS.API.Models.GastrologyMasterModel;
@@ -949,6 +950,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<TOtInOperationDiagnosis, OtInOperationDiagnosisModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtInOperationPostOperDiagnosis, OtInOperationPostOperDiagnosisModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TOtInOperationSurgeryDetail, OtInOperationSurgeryDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+
+            CreateMap<DocumentCategory, DocumentCategoryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

@@ -424,6 +424,8 @@ namespace HIMS.API.Controllers.Report
                 case "PurchaseRequisitionReport":
                 case "PcndtProcessForm":
                 case "TrustMembershipRegistrationForm":
+                case "AppointmentCancelReport":
+
 
 
 

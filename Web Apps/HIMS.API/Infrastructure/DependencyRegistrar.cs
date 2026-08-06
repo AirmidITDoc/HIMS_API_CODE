@@ -97,6 +97,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IPurchaseRequisitionFinalService, PurchaseRequisitionFinalService>();
             services.AddScoped<IHSNCodeMasterService, HSNCodeMasterService>();
             services.AddScoped<IMIcdDiagnosisMasterService, MIcdDiagnosisMasterService>();
+            services.AddScoped<IAreaMasterService, AreaMasterService>();
+
 
 
 

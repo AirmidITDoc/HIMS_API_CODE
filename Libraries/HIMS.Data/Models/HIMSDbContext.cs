@@ -50,6 +50,9 @@ namespace HIMS.Data.Models
         public virtual DbSet<DoctorName> DoctorNames { get; set; } = null!;
         public virtual DbSet<DoctorShare> DoctorShares { get; set; } = null!;
         public virtual DbSet<DoctorTypeMaster> DoctorTypeMasters { get; set; } = null!;
+        public virtual DbSet<DocumentAdmission> DocumentAdmissions { get; set; } = null!;
+        public virtual DbSet<DocumentCategory> DocumentCategories { get; set; } = null!;
+        public virtual DbSet<DocumentFile> DocumentFiles { get; set; } = null!;
         public virtual DbSet<DynamicExecuteSchedule> DynamicExecuteSchedules { get; set; } = null!;
         public virtual DbSet<DynamicExecuteScheduleLog> DynamicExecuteScheduleLogs { get; set; } = null!;
         public virtual DbSet<EmailConfiguration> EmailConfigurations { get; set; } = null!;
@@ -663,7 +666,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -1879,6 +1882,57 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DoctorType).HasMaxLength(100);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<DocumentAdmission>(entity =>
+            {
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DocNo).HasMaxLength(250);
+
+                entity.HasOne(d => d.Admission)
+                    .WithMany(p => p.DocumentAdmissions)
+                    .HasForeignKey(d => d.AdmissionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DocumentAdmissions_Admission");
+
+                entity.HasOne(d => d.Reg)
+                    .WithMany(p => p.DocumentAdmissions)
+                    .HasForeignKey(d => d.RegId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DocumentAdmissions_Registration");
+            });
+
+            modelBuilder.Entity<DocumentCategory>(entity =>
+            {
+                entity.Property(e => e.DocCategory).HasMaxLength(250);
+
+                entity.Property(e => e.Icon).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<DocumentFile>(entity =>
+            {
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DocNo).HasMaxLength(250);
+
+                entity.Property(e => e.FileTags).HasMaxLength(250);
+
+                entity.Property(e => e.OrgFileName).HasMaxLength(250);
+
+                entity.Property(e => e.SavedFileName).HasMaxLength(250);
+
+                entity.HasOne(d => d.DocAdmission)
+                    .WithMany(p => p.DocumentFiles)
+                    .HasForeignKey(d => d.DocAdmissionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DocumentFiles_Registration");
+
+                entity.HasOne(d => d.DocCat)
+                    .WithMany(p => p.DocumentFiles)
+                    .HasForeignKey(d => d.DocCatId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DocumentFiles_DocumentCategories");
             });
 
             modelBuilder.Entity<DynamicExecuteSchedule>(entity =>

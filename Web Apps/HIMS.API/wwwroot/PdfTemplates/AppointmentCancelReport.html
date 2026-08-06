@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Appointment Cancelled Report</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            margin: 20px;
+        }
+
+        .report-header {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #d9eaf7;
+            border: 1px solid #000;
+            padding: 7px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        td {
+            border: 1px solid #000;
+            padding: 6px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .date-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+            .date-table td {
+                border: none;
+                padding: 0;
+                vertical-align: middle;
+            }
+
+        .date-left {
+            text-align: left;
+        }
+
+        .date-right {
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        @media print {
+            body {
+                margin: 10px;
+            }
+
+            table {
+                page-break-inside: auto;
+            }
+
+            tr {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="report-header">
+        Appointment Cancelled Report
+    </div>
+
+    <!-- Date Section -->
+    <table class="date-table">
+        <tr>
+            <td class="date-left">
+                <b>From Date :</b> {{FromDate}}
+                &nbsp;&nbsp;&nbsp;
+                <b>To Date :</b> {{ToDate}}
+            </td>
+            <td class="date-right">
+                <b>Print Date :</b> {{CurrentDate}}
+            </td>
+        </tr>
+    </table>
+
+    <!-- Report Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Sr.No</th>
+                <th>Followup Date</th>
+                <th>UHID</th>
+                <th>OPD No</th>
+                <th>Visit Time</th>
+                <th>Patient Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Mobile No</th>
+                <th>Doctor Name</th>
+                <th>Ref Doctor Name</th>
+                <th>Department Name</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <!--ITEMS_SP1-->
+            <tr>
+                <td class="center">{{SrNo}}</td>
+                <td class="center">{{FollowupDate}}</td>
+                <td class="center">{{RegistrationID}}</td>
+                <td class="center">{{OPDNo}}</td>
+                <td class="center">{{VisitTime}}</td>
+                <td>{{PatientName}}</td>
+                <td class="center">{{GenderName}}</td>
+                <td class="center">{{Age}}</td>
+                <td class="center">{{MobileNo}}</td>
+                <td>{{DoctorName}}</td>
+                <td>{{RefDoctorName}}</td>
+                <td>{{DepartmentName}}</td>
+            </tr>
+            <!--/ITEMS_SP1-->
+        </tbody>
+    </table>
+
+</body>
+</html>

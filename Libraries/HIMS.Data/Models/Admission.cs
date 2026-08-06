@@ -5,6 +5,11 @@ namespace HIMS.Data.Models
 {
     public partial class Admission
     {
+        public Admission()
+        {
+            DocumentAdmissions = new HashSet<DocumentAdmission>();
+        }
+
         public long AdmissionId { get; set; }
         public long? RegId { get; set; }
         public DateTime? AdmissionDate { get; set; }
@@ -105,5 +110,7 @@ namespace HIMS.Data.Models
         public decimal? CompanyApprovedAmt { get; set; }
         public string? CompRefNo { get; set; }
         public long? ParentOpipid { get; set; }
+
+        public virtual ICollection<DocumentAdmission> DocumentAdmissions { get; set; }
     }
 }
