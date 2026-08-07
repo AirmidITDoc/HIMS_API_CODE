@@ -33,7 +33,8 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
+        //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ConsentMasterDto> ConsentMasterList = await _IConsentMasterService.ConsentMasterListAsync(objGrid);
