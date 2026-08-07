@@ -8,6 +8,7 @@ namespace HIMS.Data.Models
         public long LoginCashCounterDetId { get; set; }
         public long LoginId { get; set; }
         public long CashCounterId { get; set; }
+        public bool? IsDefault { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
