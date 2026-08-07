@@ -8,7 +8,7 @@ namespace HIMS.Data.DTO.DashBoard
 {
     public  class CashlessPatientWiseSummaryDto
     {
-        public DateTime? BillDate { get; set; }
+        public string? BillDate { get; set; }
         public string? PatientName { get; set; }
         public string? RegNo { get; set; }
         public string? VisitCompanyName { get; set; }
