@@ -78,8 +78,8 @@ namespace HIMS.API.Controllers.Pathology
         //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown1()
         {
-            var MMasterList = await _radiorepository1.GetAll();
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorNotes Template dropdown", MMasterList.Select(x => new { x.DocNoteTempId, x.DocsTempName, x.TemplateDesc }));
+            var MMasterList = await _radiorepository2.GetAll();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorNotes Template dropdown", MMasterList.Where(x => x.Category == "1").Select(x => new { x.NursingId, x.NursTempName, x.TemplateDesc }));
         }
         [HttpGet]
         [Route("get-NursingTemplateMaster")]
@@ -87,7 +87,7 @@ namespace HIMS.API.Controllers.Pathology
         public async Task<ApiResponse> GetDropdown2()
         {
             var MMasterList = await _radiorepository2.GetAll();
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DoctorNotes Template dropdown", MMasterList.Select(x => new { x.NursingId, x.NursTempName, x.TemplateDesc }));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "NusingNote Template dropdown", MMasterList.Where(x => x.Category == "0").Select(x => new { x.NursingId, x.NursTempName, x.TemplateDesc }));
         }
 
 
