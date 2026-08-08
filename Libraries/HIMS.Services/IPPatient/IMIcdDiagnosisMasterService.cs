@@ -1,4 +1,5 @@
-﻿using HIMS.Data.DTO.IPPatient;
+﻿using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,7 @@ namespace HIMS.Services.IPPatient
 {
     public partial interface IMIcdDiagnosisMasterService
     {
-        MIcdDiagnosisMasterDto GetMIcdDiagnosis(string Icdcode, string? DiagnosisName);
-
+        List<MIcdDiagnosisMasterDto> GetMIcdDiagnosis(string Keyword);
     }
 
 }
