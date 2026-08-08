@@ -59,7 +59,7 @@ namespace HIMS.Services.IPPatient
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[1];
             para[0] = new SqlParameter("@Keyword", Keyword);
-            return sql.FetchListBySP<MIcdDiagnosisMasterDto>("Retrieve_IcdDiagnosisMasterForCombo", para);
+            return sql.FetchListBySP<MIcdDiagnosisMasterDto>("ps_Retrieve_IcdDiagnosisMasterForCombo", para);
         }
     }
 }

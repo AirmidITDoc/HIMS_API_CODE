@@ -57,7 +57,7 @@ namespace HIMS.API.Controllers.IPPatient
         public ApiResponse PathologyServicesearch(string Keyword)
         {
             var data = _IMIcdDiagnosisMasterService.GetMIcdDiagnosis(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "AreaMaster search  data", data);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "search MIcdDiagnosisMaster data", data);
         }
 
         //Add API
