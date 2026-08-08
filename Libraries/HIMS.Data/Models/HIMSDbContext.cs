@@ -8235,6 +8235,12 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DescriptionName).HasMaxLength(500);
 
                 entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.DiagnosisName).HasMaxLength(500);
+
+                entity.Property(e => e.Icdcode)
+                    .HasMaxLength(50)
+                    .HasColumnName("ICDCode");
             });
 
             modelBuilder.Entity<MOtSiteDescriptionMaster>(entity =>

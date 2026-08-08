@@ -115,6 +115,8 @@ namespace HIMS.API.Models.Inventory
         public long LoginCashCounterDetId { get; set; }
         public long LoginId { get; set; }
         public long CashCounterId { get; set; }
+        public bool? IsDefault { get; set; }
+
 
     }
 }

@@ -82,6 +82,8 @@ namespace HIMS.Data.DTO.Inventory
         public bool? IsLASA { get; set; }
         public string FormattedText { get { return this.ItemTypeName + " " + this.ItemName + " | " + this.BalanceQty; } }
         public long? InstructionId { get; set; }
+        public string? Instruction { get; set; }
+
 
     }
 
