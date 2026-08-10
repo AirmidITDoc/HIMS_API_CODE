@@ -1,4 +1,5 @@
 ﻿using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.IPPatient;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
@@ -23,47 +24,42 @@ namespace HIMS.Services.IPPatient
         {
             _context = HIMSDbContext;
         }
+      
         //public virtual MIcdDiagnosisMasterDto GetMIcdDiagnosis(string? Icdcode, string? DiagnosisName)
         //{
         //    MIcdDiagnosisMasterDto objMain = new();
 
         //    DatabaseHelper sql = new();
+
         //    SqlParameter[] para = new SqlParameter[2];
         //    para[0] = new SqlParameter("@Icdcode", Icdcode);
         //    para[1] = new SqlParameter("@DiagnosisName", DiagnosisName);
 
         //    DataTable dt = sql.FetchDataTableBySP("Retrieve_IcdDiagnosisMasterForCombo", para);
 
+        //    if (dt.Rows.Count > 0)
+        //    {
+        //        DataRow dr = dt.Rows[0];
+
+        //        objMain.Icdid = Convert.ToInt32(dr["Icdid"]);
+        //        objMain.Icdcode = dr["Icdcode"].ToString() ?? "";
+        //        objMain.DiagnosisName = dr["DiagnosisName"].ToString() ?? "";
+
+        //        if (dt.Columns.Contains("Icdversion"))
+        //            objMain.Icdversion = dr["Icdversion"].ToString() ?? "";
+
+        //        if (dt.Columns.Contains("ShortName"))
+        //            objMain.ShortName = dr["ShortName"].ToString();
+        //    }
+
         //    return objMain;
         //}
-        public virtual MIcdDiagnosisMasterDto GetMIcdDiagnosis(string? Icdcode, string? DiagnosisName)
+        public List<MIcdDiagnosisMasterDto> GetMIcdDiagnosis(string Keyword)
         {
-            MIcdDiagnosisMasterDto objMain = new();
-
             DatabaseHelper sql = new();
-
-            SqlParameter[] para = new SqlParameter[2];
-            para[0] = new SqlParameter("@Icdcode", Icdcode);
-            para[1] = new SqlParameter("@DiagnosisName", DiagnosisName);
-
-            DataTable dt = sql.FetchDataTableBySP("Retrieve_IcdDiagnosisMasterForCombo", para);
-
-            if (dt.Rows.Count > 0)
-            {
-                DataRow dr = dt.Rows[0];
-
-                objMain.Icdid = Convert.ToInt32(dr["Icdid"]);
-                objMain.Icdcode = dr["Icdcode"].ToString() ?? "";
-                objMain.DiagnosisName = dr["DiagnosisName"].ToString() ?? "";
-
-                if (dt.Columns.Contains("Icdversion"))
-                    objMain.Icdversion = dr["Icdversion"].ToString() ?? "";
-
-                if (dt.Columns.Contains("ShortName"))
-                    objMain.ShortName = dr["ShortName"].ToString();
-            }
-
-            return objMain;
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@Keyword", Keyword);
+            return sql.FetchListBySP<MIcdDiagnosisMasterDto>("ps_Retrieve_IcdDiagnosisMasterForCombo", para);
         }
     }
 }

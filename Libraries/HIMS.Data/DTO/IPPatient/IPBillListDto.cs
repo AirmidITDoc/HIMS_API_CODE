@@ -58,6 +58,8 @@
         public string? GovtRefNo { get; set; }
         public long? CompanyApprovedId { get; set; }
         public string? CompRefNo { get; set; }
+        public long? CompanyId { get; set; }
+
 
     }
 }

@@ -9,5 +9,7 @@ namespace HIMS.Data.Models
         public long? VisitId { get; set; }
         public string? DescriptionName { get; set; }
         public string? DescriptionType { get; set; }
+        public string? Icdcode { get; set; }
+        public string? DiagnosisName { get; set; }
     }
 }

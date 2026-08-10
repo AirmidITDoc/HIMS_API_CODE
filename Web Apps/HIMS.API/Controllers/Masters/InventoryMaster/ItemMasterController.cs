@@ -123,14 +123,12 @@ namespace HIMS.API.Controllers.Inventory
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
 
-
         [HttpGet("GetItemListForPrescription")]
         public async Task<ApiResponse> GetItemListForPrescription(int StoreId, string ItemName)
         {
             var resultList = await _ItemMasterServices.GetItemListForPrescription(StoreId, ItemName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get Item List For Prescription List.", resultList);
         }
-
 
         [HttpGet("GetItemListForPrescriptionSearch")]
         public  ApiResponse GetItemListForPrescriptionSearch(string ItemName, int StoreId)

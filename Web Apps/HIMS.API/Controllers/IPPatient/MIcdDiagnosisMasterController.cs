@@ -51,12 +51,13 @@ namespace HIMS.API.Controllers.IPPatient
             var data = await _repository.GetById(x => x.Icdid == id);
             return data.ToSingleResponse<MIcdDiagnosisMaster, MIcdDiagnosisMasterModel>("PatientType");
         }
-        [HttpGet("GetMIcdDiagnosisMaster")]
-        //[Permission]
-        public ApiResponse GetServices(string Icdcode, string DiagnosisName)
+       
+        [HttpGet("search_MIcdDiagnosisMaster")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse PathologyServicesearch(string Keyword)
         {
-            var resultList = _IMIcdDiagnosisMasterService.GetMIcdDiagnosis(Icdcode, DiagnosisName);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get MIcdDiagnosis List.", resultList);
+            var data = _IMIcdDiagnosisMasterService.GetMIcdDiagnosis(Keyword);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "search MIcdDiagnosisMaster data", data);
         }
 
         //Add API
