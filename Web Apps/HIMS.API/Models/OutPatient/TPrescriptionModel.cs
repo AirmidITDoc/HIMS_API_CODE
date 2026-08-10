@@ -82,8 +82,11 @@ namespace HIMS.API.Models.OutPatient
     {
 
         public long? VisitId { get; set; }
-        public string DescriptionType { get; set; }
-        public string DescriptionName { get; set; }
+        public string? DescriptionName { get; set; }
+        public string? DescriptionType { get; set; }
+        public string? Icdcode { get; set; }
+        public string? DiagnosisName { get; set; }
+
     }
     public class MOPCasepaperDignosisMasterModelValidator : AbstractValidator<MOPCasepaperDignosisMasterModel>
     {
@@ -91,6 +94,10 @@ namespace HIMS.API.Models.OutPatient
         {
             RuleFor(x => x.DescriptionType).NotNull().NotEmpty().WithMessage("DescriptionType is required");
             RuleFor(x => x.DescriptionName).NotNull().NotEmpty().WithMessage("DescriptionName is required");
+            RuleFor(x => x.Icdcode).NotNull().NotEmpty().WithMessage("Icdcode is required");
+            RuleFor(x => x.DiagnosisName).NotNull().NotEmpty().WithMessage("DiagnosisName is required");
+
+
 
         }
     }
