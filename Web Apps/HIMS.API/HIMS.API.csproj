@@ -65,6 +65,7 @@
 
   <ItemGroup>
     <Folder Include="DbData\" />
+    <Folder Include="App_Data\" />
   </ItemGroup>
 
   <ItemGroup>
