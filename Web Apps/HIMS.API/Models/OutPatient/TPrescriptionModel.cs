@@ -4,8 +4,6 @@ namespace HIMS.API.Models.OutPatient
 {
     public class TPrescriptionModel
     {
-
-
         public long? OpdIpdIp { get; set; }
         public byte? OpdIpdType { get; set; }
         public DateTime? Date { get; set; }
@@ -43,6 +41,8 @@ namespace HIMS.API.Models.OutPatient
         public long? IsAddBy { get; set; }
         public string? Allergy { get; set; }
         public string? BloodGroup { get; set; }
+        public long? DepartmentId { get; set; }
+        public string? HistoryOfIllness { get; set; }
 
 
     }

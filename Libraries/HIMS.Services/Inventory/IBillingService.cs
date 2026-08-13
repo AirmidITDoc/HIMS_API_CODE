@@ -7,7 +7,7 @@ namespace HIMS.Services.Inventory
 {
     public partial interface IBillingService
     {
-        Task InsertAsync(ServiceMaster objService, int UserId, string Username);
+        Task InsertAsync(ServiceMaster objService, int UserId, string Username, int OldTariffId);
         //Task InsertAsyncSP(ServiceMaster objService, int UserId, string Username);
         Task UpdateAsync(ServiceMaster objService, int UserId, string Username, int tariffId,string[]? references);
         Task CancelAsync(ServiceMaster objService, int CurrentUserId, string CurrentUserName);

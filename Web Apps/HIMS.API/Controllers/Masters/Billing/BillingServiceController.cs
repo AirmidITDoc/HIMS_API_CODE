@@ -68,8 +68,24 @@ namespace HIMS.API.Controllers.Masters.Billing
 
 
 
+        //[HttpPost("InsertEDMX")]
+        ////[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> InsertEDMX(BillingServiceModel obj)
+        //{
+        //    ServiceMaster model = obj.MapTo<ServiceMaster>();
+        //    if (obj.ServiceId == 0)
+        //    {
+        //        model.CreatedDate = AppTime.Now;
+        //        model.CreatedBy = CurrentUserId;
+        //        model.IsActive = true;
+        //        await _BillingService.InsertAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        //}
+
         [HttpPost("InsertEDMX")]
-        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(BillingServiceModel obj)
         {
             ServiceMaster model = obj.MapTo<ServiceMaster>();
@@ -78,7 +94,10 @@ namespace HIMS.API.Controllers.Masters.Billing
                 model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.IsActive = true;
-                await _BillingService.InsertAsync(model, CurrentUserId, CurrentUserName);
+
+                long oldTariffId = obj.ServiceMaster?.FirstOrDefault()?.OldTariffId ?? 0;   
+
+                await _BillingService.InsertAsync(model, CurrentUserId, CurrentUserName, (int)oldTariffId);  
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
