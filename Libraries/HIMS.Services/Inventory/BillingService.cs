@@ -9,9 +9,10 @@ using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using System.Transactions;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace HIMS.Services.Inventory
@@ -40,45 +41,48 @@ namespace HIMS.Services.Inventory
             return await DatabaseHelper.GetGridDataBySp<PackageServiceInfoListDto>(model, "m_Rtrv_ServiceClassdetail");
         }
 
-        public virtual async Task InsertAsync(ServiceMaster objService, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.ServiceMasters.Add(objService);
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-            }
-        }
-        //public virtual async Task UpdateAsync(ServiceMaster objService, int UserId, string Username, string[]? ignoreColumns = null)
+        //public virtual async Task InsertAsync(ServiceMaster objService, int UserId, string Username)
         //{
         //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
         //    {
-        //        // 1. Attach the entity without marking everything as modified
-        //        _context.Attach(objService);
-        //        _context.Entry(objService).State = EntityState.Modified;
-
-        //        // 2. Ignore specific columns
-        //        if (ignoreColumns?.Length > 0)
-        //        {
-        //            foreach (var column in ignoreColumns)
-        //            {
-        //                _context.Entry(objService).Property(column).IsModified = false;
-        //            }
-        //        }
-
-        //        // 3. Delete details related to the service
-        //        var lst = await _context.ServiceDetails.Where(x => x.ServiceId == objService.ServiceId).ToListAsync();
-        //        if (lst.Count > 0)
-        //        {
-        //            _context.ServiceDetails.RemoveRange(lst);
-        //        }
-
-        //        // 4. Save changes once
+        //        _context.ServiceMasters.Add(objService);
         //        await _context.SaveChangesAsync();
+
         //        scope.Complete();
         //    }
         //}
+
+
+        public virtual async Task InsertAsync(ServiceMaster objService, int UserId, string Username, int OldTariffId)
+        {
+            using var scope = new TransactionScope( TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+            _context.ServiceMasters.Add(objService);
+            await _context.SaveChangesAsync();
+
+            if (_context.Database.GetDbConnection().State != ConnectionState.Open)
+                await _context.Database.OpenConnectionAsync();
+
+            DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection());          
+            if (_context.Database.CurrentTransaction != null)
+                odal.SetTransaction(_context.Database.CurrentTransaction.GetDbTransaction()); 
+
+            string[] allowedKeys = { "OldTariffId" };
+            var entity = objService.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!allowedKeys.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+
+            entity["OldTariffId"] = OldTariffId;
+
+            odal.ExecuteNonQueryNew("ps_Assign_Service", CommandType.StoredProcedure, "", entity);
+
+            scope.Complete();
+        }
+
 
         public virtual async Task UpdateAsync(ServiceMaster objService, int userId, string username, int tariffId, string[]? ignoreColumns = null)
         {

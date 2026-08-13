@@ -138,6 +138,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TMembershipRelative, MembershipRelativeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPatientAbhaInformation, PatientAbhaInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPatientAbhaInformation, PatientAbhaInformationUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<ServiceMaster, TarrifModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 

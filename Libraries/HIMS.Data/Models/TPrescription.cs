@@ -41,6 +41,8 @@ namespace HIMS.Data.Models
         public string? Bp { get; set; }
         public long? StoreId { get; set; }
         public long? PatientReferDocId { get; set; }
+        public long? DepartmentId { get; set; }
+        public string? HistoryOfIllness { get; set; }
         public string? Advice { get; set; }
         public long? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }

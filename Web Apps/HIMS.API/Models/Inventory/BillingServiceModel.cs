@@ -37,8 +37,10 @@ namespace HIMS.API.Models.Inventory
         public decimal? PackageConsumableAmount { get; set; }
         public long? TariffId { get; set; }
         public bool? IsOtherService { get; set; }
+        public List<TarrifModel> ServiceMaster { get; set; }
 
         public List<ServiceDetailModel> serviceDetails { get; set; }
+
     }
     public class BillingServiceModelValidator : AbstractValidator<BillingServiceModel>
     {
@@ -104,5 +106,10 @@ namespace HIMS.API.Models.Inventory
         public long ServiceId { get; set; }
         public long TariffId { get; set; }
         public long ClassId { get; set; }
+    }
+    public class TarrifModel
+    {
+        public long OldTariffId { get; set; }
+
     }
 }

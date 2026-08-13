@@ -172,7 +172,13 @@ namespace HIMS.API.Controllers.Common
             switch (model.Mode)
             {
                 case "GetList": SpName = "GETLIST_VIMAL"; break;
-                default: break;
+
+                case "IPAdvanceRefundPayment": SpName = "ps_NewTally_IPAdvanceRefund_Payment_Mediforte"; break;
+                case "OPBillRefundPayment": SpName = "ps_NewTally_OPBillRefund_Payment_Mediforte"; break;
+                case "IPBillPayment": SpName = "ps_NewTally_IPBill_Payment_Mediforte"; break;
+                case "IPAdvancePayment": SpName = "ps_NewTally_IPAdvance_Payment_Mediforte"; break;
+
+                 default: break;
             }
             dynamic resultList = _ICommonService.GetDataTableByProc(SpName, model.SearchFields);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", resultList);

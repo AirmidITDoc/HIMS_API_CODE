@@ -659,6 +659,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<ViewTallyPharSalesReceiptNewOld> ViewTallyPharSalesReceiptNewOlds { get; set; } = null!;
         public virtual DbSet<VisitDetail> VisitDetails { get; set; } = null!;
         public virtual DbSet<VwDoctormaster> VwDoctormasters { get; set; } = null!;
+        public virtual DbSet<VwInpatientSalesAmount> VwInpatientSalesAmounts { get; set; } = null!;
         public virtual DbSet<VwPatientRegistrationInfo> VwPatientRegistrationInfos { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -19515,6 +19516,17 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DoctorName).HasMaxLength(253);
 
                 entity.Property(e => e.GenderName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<VwInpatientSalesAmount>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_INPATIENT_SALES_AMOUNT");
+
+                entity.Property(e => e.NetAmount).HasColumnType("money");
+
+                entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
             });
 
             modelBuilder.Entity<VwPatientRegistrationInfo>(entity =>
