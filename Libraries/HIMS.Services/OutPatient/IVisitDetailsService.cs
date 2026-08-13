@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
+using WkHtmlToPdfDotNet;
 
 namespace HIMS.Services.OutPatient
 {
@@ -13,7 +14,7 @@ namespace HIMS.Services.OutPatient
         Task<IPagedList<OPBillListDto>> GetBillListAsync(GridRequestModel objGrid);
         Task<IPagedList<OPPaymentListDto>> GeOpPaymentListAsync(GridRequestModel objGrid);
         Task<IPagedList<OPPaymentListDto>> GetPatientWisePaymentList(GridRequestModel objGrid);
-        Task<IPagedList<OPRefundListDto>> GeOpRefundListAsync(GridRequestModel objGrid);
+        Task<IPagedList<OPRefundListDto>> GeOpRefundListAsync(GridRequestModel objGrid,long UnitId);
         Task<IPagedList<OPRegistrationList>> GeOPRgistrationListAsync(GridRequestModel objGrid);
         Task<IPagedList<PrevDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel objGrid);
         Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, TPatientPolicyInformation ObjTPatientPolicyInformation, int currentUserId, string currentUserName);

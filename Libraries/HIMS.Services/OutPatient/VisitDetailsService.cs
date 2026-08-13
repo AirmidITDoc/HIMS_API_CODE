@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using System.Transactions;
+using WkHtmlToPdfDotNet;
 
 namespace HIMS.Services.OutPatient
 {
@@ -256,7 +257,7 @@ namespace HIMS.Services.OutPatient
             return await DatabaseHelper.GetGridDataBySp<OPPaymentListDto>(model, "ps_Rtrv_PatientWisePaymentList");
         }
 
-        public virtual async Task<IPagedList<OPRefundListDto>> GeOpRefundListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<OPRefundListDto>> GeOpRefundListAsync(GridRequestModel model, long UnitId)
         {
             return await DatabaseHelper.GetGridDataBySp<OPRefundListDto>(model, "ps_Rtrv_BrowseOPDRefundBillList");
         }

@@ -57,6 +57,7 @@ namespace HIMS.Data.DTO.DashBoard
         public decimal? PharmacyAmount { get; set; }
         public decimal? ApprovedAmount { get; set; }
         public decimal? RemainingAmount { get; set; }
+        public string? OpdIpdType { get; set; }
 
     }
     public class CashlessPatientBillDto
@@ -82,6 +83,7 @@ namespace HIMS.Data.DTO.DashBoard
         public string? CompRefNo { get; set; }
         public long? BillNo { get; set; }
         public string? OPDIPDype { get; set; }
+        public long? SalesId { get; set; }
 
 
     }

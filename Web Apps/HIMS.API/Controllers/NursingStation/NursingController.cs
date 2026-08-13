@@ -100,7 +100,7 @@ namespace HIMS.API.Controllers.NursingStation
         //List API
         [HttpPost]
         [Route("NursingTemplateList")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MNursingTemplateMaster> MNursingTemplateList = await _repository1.GetAllPagedAsync(objGrid);
@@ -268,7 +268,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("NursingTemplateInsert")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(NursingTemplateModel obj)
         {
             MNursingTemplateMaster model = obj.MapTo<MNursingTemplateMaster>();
@@ -290,7 +290,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPut("NursingTemplateUpdate/{id:int}")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Update(NursingTemplateModel obj)
         {
             MNursingTemplateMaster model = obj.MapTo<MNursingTemplateMaster>();
@@ -310,7 +310,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Delete API
         [HttpDelete("NursingTemplateCanel")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Cancel(int Id)
         {
             MNursingTemplateMaster model = await _repository1.GetById(x => x.NursingId == Id);
