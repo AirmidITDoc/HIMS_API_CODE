@@ -15,6 +15,7 @@
         public string? BillingUser { get; set; }
         public string? AddedByDate { get; set; }
         public decimal? price { get; set; }
+        public bool? IsAllowZeroPrice { get; set; }
     }
 
 }

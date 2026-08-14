@@ -1439,7 +1439,61 @@ namespace HIMS.Data.DataProviders
         #endregion ExecuteDatasetAsync 
 
         #region Grid By SP
-        public static async Task<IPagedList<T>> GetGridDataBySp<T>(GridRequestModel objGrid, string procedureName)
+        //public static async Task<IPagedList<T>> GetGridDataBySp<T>(GridRequestModel objGrid, string procedureName)
+        //{
+        //    List<SqlParameter> parameters = new();
+        //    foreach (var filter in objGrid.Filters)
+        //    {
+        //        parameters.Add(new SqlParameter
+        //        {
+        //            ParameterName = "@" + filter.FieldName,
+        //            Value = filter.FieldValue
+        //        });
+        //    }
+        //    parameters.Add(new SqlParameter() { ParameterName = "@Start", Value = objGrid.First });
+        //    parameters.Add(new SqlParameter() { ParameterName = "@Length", Value = objGrid.Rows });
+        //    if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
+        //    using var dataContext = new SqlConnection(ConnectionStrings.MainDbConnectionString);
+        //    var cmd = new SqlCommand
+        //    {
+        //        CommandTimeout = 180,
+        //        CommandText = procedureName,
+        //        CommandType = CommandType.StoredProcedure,
+        //        Connection = dataContext
+        //    };
+        //    await dataContext.OpenAsync();
+        //    cmd.Parameters.AddRange(parameters.ToArray());
+        //    List<T> results = new();
+        //    int totalRows = 0;
+        //    using (SqlDataReader dataReader = await cmd.ExecuteReaderAsync())
+        //    {
+        //        bool IsSetTotal = false;
+        //        do
+        //        {
+        //            if (IsSetTotal)
+        //            {
+        //                results = DataReaderMapToList<T>(dataReader);
+        //            }
+        //            else
+        //            {
+        //                if (await dataReader.ReadAsync())
+        //                {
+        //                    string[] fieldNames = Enumerable.Range(0, dataReader.FieldCount).Select(i => dataReader.GetName(i)).ToArray();
+
+        //                    if (fieldNames[0].ToLower() == "total_row")
+        //                    {
+        //                        totalRows = Convert.ToInt32(dataReader.GetValue(0));
+        //                        IsSetTotal = true;
+        //                    }
+        //                }
+        //            }
+        //        } while (await dataReader.NextResultAsync());
+        //    }
+        //    await dataContext.CloseAsync();
+        //    var data = new PagedList<T>(results, objGrid.First, objGrid.Rows, totalRows);
+        //    return data;
+        //}
+        public static async Task<IPagedList<T>> GetGridDataBySp<T>(GridRequestModel objGrid,string procedureName,List<SqlParameter> extraParameters = null)
         {
             List<SqlParameter> parameters = new();
             foreach (var filter in objGrid.Filters)
@@ -1452,6 +1506,12 @@ namespace HIMS.Data.DataProviders
             }
             parameters.Add(new SqlParameter() { ParameterName = "@Start", Value = objGrid.First });
             parameters.Add(new SqlParameter() { ParameterName = "@Length", Value = objGrid.Rows });
+
+            if (extraParameters != null && extraParameters.Count > 0)
+            {
+                parameters.AddRange(extraParameters);
+            }
+
             if (string.IsNullOrEmpty(ConnectionStrings.MainDbConnectionString)) throw new ArgumentNullException("connectionString");
             using var dataContext = new SqlConnection(ConnectionStrings.MainDbConnectionString);
             var cmd = new SqlCommand
@@ -1479,7 +1539,6 @@ namespace HIMS.Data.DataProviders
                         if (await dataReader.ReadAsync())
                         {
                             string[] fieldNames = Enumerable.Range(0, dataReader.FieldCount).Select(i => dataReader.GetName(i)).ToArray();
-
                             if (fieldNames[0].ToLower() == "total_row")
                             {
                                 totalRows = Convert.ToInt32(dataReader.GetValue(0));
