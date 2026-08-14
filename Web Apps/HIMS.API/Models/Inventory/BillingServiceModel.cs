@@ -37,6 +37,8 @@ namespace HIMS.API.Models.Inventory
         public decimal? PackageConsumableAmount { get; set; }
         public long? TariffId { get; set; }
         public bool? IsOtherService { get; set; }
+        public bool? IsAllowZeroPrice { get; set; }
+
         public List<TarrifModel> ServiceMaster { get; set; }
 
         public List<ServiceDetailModel> serviceDetails { get; set; }

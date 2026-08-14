@@ -257,11 +257,19 @@ namespace HIMS.Services.OutPatient
             return await DatabaseHelper.GetGridDataBySp<OPPaymentListDto>(model, "ps_Rtrv_PatientWisePaymentList");
         }
 
+        //public virtual async Task<IPagedList<OPRefundListDto>> GeOpRefundListAsync(GridRequestModel model, long UnitId)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<OPRefundListDto>(model, "ps_Rtrv_BrowseOPDRefundBillList");
+        //}
         public virtual async Task<IPagedList<OPRefundListDto>> GeOpRefundListAsync(GridRequestModel model, long UnitId)
         {
-            return await DatabaseHelper.GetGridDataBySp<OPRefundListDto>(model, "ps_Rtrv_BrowseOPDRefundBillList");
-        }
+            var extraParams = new List<SqlParameter>
+{
+    new SqlParameter("@UnitId", SqlDbType.BigInt) { Value = UnitId }
+};
 
+            return await DatabaseHelper.GetGridDataBySp<OPRefundListDto>(model, "ps_Rtrv_BrowseOPDRefundBillList", extraParams);
+        }
         public virtual async Task<IPagedList<OPRegistrationList>> GeOPRgistrationListAsync(GridRequestModel model)
         {
 
