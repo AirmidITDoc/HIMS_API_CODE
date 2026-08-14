@@ -1170,7 +1170,7 @@ namespace HIMS.Services.Common
             }
         }
 
-        public virtual async Task InsertAsyncTDrbill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDet, List<TDraddCharge> ObjTDraddCharge, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncTDrbill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDet, List<TDraddCharge> ObjTDraddCharge, TApprovalHeader ObjTApprovalHeader, int CurrentUserId, string CurrentUserName)
         {
             // Begin Transaction
             using var transaction = await _context.Database.BeginTransactionAsync();
@@ -1216,6 +1216,17 @@ namespace HIMS.Services.Common
                    
                     odal.ExecuteNonQueryNew("PS_Insert_T_DRBillDet", CommandType.StoredProcedure,"",tokenObj);
                     await _context.LogProcedureExecution( tokenObj, nameof(TDrbillDet), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+                    string[] AEntity = { "ApprovalId", "ApprovalNo", "Date", "Time", "TranId", "TransactionType", "ApprovalStatus", "AuthorizeBy", "ApprovedDateTime", "Comment","CreatedBy" };
+                    var aentity = ObjTApprovalHeader.ToDictionary();
+                    foreach (var rProperty in aentity.Keys.ToList())
+                    {
+                        if (!AEntity.Contains(rProperty))
+                            aentity.Remove(rProperty);
+                    }
+                    string Approval = odal.ExecuteNonQueryNew("PS_Insert_T_ApprovalHeader", CommandType.StoredProcedure, "ApprovalId", aentity);
+                    ObjTApprovalHeader.ApprovalId = Convert.ToInt32(Approval);
+                    await _context.LogProcedureExecution(tokenObj, nameof(TApprovalHeader), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                 }
                 // Commit Transaction

@@ -264,12 +264,14 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("OPDraftBillInsert")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OPDraftBillInsert(DraftBillModel obj)
         {
             TDrbill model = obj.DRBill.MapTo<TDrbill>();
             List<TDrbillDet> model1 = obj.TDrbillDet.MapTo<List<TDrbillDet>>();
             List<TDraddCharge> model2 = obj.TDraddCharge.MapTo<List<TDraddCharge>>();
+            TApprovalHeader model3 = obj.ApprovalHeader.MapTo<TApprovalHeader>();
+
 
             if (obj.DRBill.Drbno == 0)
             {
@@ -277,7 +279,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.BillTime = Convert.ToDateTime(model.BillTime);
                 model.AddedBy = CurrentUserId;
 
-                await _oPBillingService.InsertAsyncTDrbill(model, model1, model2, CurrentUserId, CurrentUserName);
+                await _oPBillingService.InsertAsyncTDrbill(model, model1, model2, model3, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

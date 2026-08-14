@@ -27,7 +27,7 @@ namespace HIMS.Services.Common
         Task InsertAsync(TCertificateInformation TCertificateInformation, int UserId, string Username);
 
         Task UpdateAsync(TCertificateInformation TCertificateInformation, int UserId, string Username);
-        Task InsertAsyncTDrbill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDet, List<TDraddCharge> ObjTDraddCharge, int currentUserId, string currentUserName);
+        Task InsertAsyncTDrbill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDet, List<TDraddCharge> ObjTDraddCharge, TApprovalHeader ObjTApprovalHeader, int currentUserId, string currentUserName);
         Task UpdateAsyncTDrbill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDet, List<TDraddCharge> ObjTDraddCharge, int currentUserId, string currentUserName);
 
 
