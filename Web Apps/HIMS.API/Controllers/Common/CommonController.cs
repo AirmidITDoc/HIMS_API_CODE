@@ -172,7 +172,6 @@ namespace HIMS.API.Controllers.Common
             switch (model.Mode)
             {
                 case "GetList": SpName = "GETLIST_VIMAL"; break;
-
                 case "IPAdvanceRefundPayment": SpName = "ps_NewTally_IPAdvanceRefund_Payment_Mediforte"; break;
                 case "OPBillRefundPayment": SpName = "ps_NewTally_OPBillRefund_Payment_Mediforte"; break;
                 case "IPBillPayment": SpName = "ps_NewTally_IPBill_Payment_Mediforte"; break;
