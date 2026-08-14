@@ -32,6 +32,8 @@ namespace HIMS.API.Models.OutPatient
         public long? ConcessionAuthorizationName { get; set; }
         public double? TaxPer { get; set; }
         public decimal? TaxAmount { get; set; }
+        public bool? IsApproved { get; set; }
+        public string? StageStatus { get; set; }
     }
     public  class TDrbillDetModel
     {

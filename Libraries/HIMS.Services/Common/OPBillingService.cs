@@ -1182,7 +1182,7 @@ namespace HIMS.Services.Common
                 odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
                 string[] DEntity = { "Drbno", "OpdIpdId",  "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "IsCancelled", "PbillNo","TotalAdvanceAmount", "AdvanceUsedAmount", "AddedBy",
-                    "CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","TaxPer", "TaxAmount"};
+                    "CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","TaxPer", "TaxAmount","IsApproved","StageStatus"};
                 var bentity = ObjTDrbill.ToDictionary();
                 foreach (var rProperty in bentity.Keys.ToList())
                 {
@@ -1248,7 +1248,7 @@ namespace HIMS.Services.Common
             await _context.LogProcedureExecution(tokensObj.ToDictionary(),nameof(TDrbill),ObjTDrbill.Drbno.ToInt(),Core.Domain.Logging.LogAction.Delete,CurrentUserId,CurrentUserName);
 
             string[] DEntity = { "Drbno", "OpdIpdId",  "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "IsCancelled", "PbillNo","TotalAdvanceAmount", "AdvanceUsedAmount", "AddedBy",
-                    "CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","TaxPer", "TaxAmount"};
+                    "CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","TaxPer", "TaxAmount","IsApproved","StageStatus"};
             var bentity = ObjTDrbill.ToDictionary();
             foreach (var rProperty in bentity.Keys.ToList())
             {
