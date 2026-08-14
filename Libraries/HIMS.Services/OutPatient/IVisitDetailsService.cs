@@ -7,12 +7,13 @@ namespace HIMS.Services.OutPatient
 {
     public partial interface IVisitDetailsService
     {
-        Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel objGrid,long UnitId);
+
         Task<IPagedList<FollowupListDto>> FollowListAsync(GridRequestModel objGrid);
         Task<IPagedList<AppointmentCancelListDto>> AppointmentCancelAsync(GridRequestModel objGrid);
 
         Task<IPagedList<OPBillListDto>> GetBillListAsync(GridRequestModel objGrid);
-        Task<IPagedList<OPPaymentListDto>> GeOpPaymentListAsync(GridRequestModel objGrid);
+        Task<IPagedList<OPPaymentListDto>> GeOpPaymentListAsync(GridRequestModel objGrid,long UnitId);
         Task<IPagedList<OPPaymentListDto>> GetPatientWisePaymentList(GridRequestModel objGrid);
         Task<IPagedList<OPRefundListDto>> GeOpRefundListAsync(GridRequestModel objGrid,long UnitId);
         Task<IPagedList<OPRegistrationList>> GeOPRgistrationListAsync(GridRequestModel objGrid);

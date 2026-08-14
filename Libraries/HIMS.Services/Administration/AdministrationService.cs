@@ -2,9 +2,11 @@
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Transactions;
@@ -19,9 +21,19 @@ namespace HIMS.Services.Administration
             _context = HIMSDbContext;
         }
 
-        public virtual async Task<IPagedList<BrowseOPDBillPagiListDto>> BrowseOPDBillPagiList(GridRequestModel model)
+        //public virtual async Task<IPagedList<BrowseOPDBillPagiListDto>> BrowseOPDBillPagiList(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<>(model, "ps_Rtrv_BrowseOPDBill_Pagi");
+        //}
+
+        public virtual async Task<IPagedList<BrowseOPDBillPagiListDto>> BrowseOPDBillPagiList(GridRequestModel model, long UnitId)
         {
-            return await DatabaseHelper.GetGridDataBySp<BrowseOPDBillPagiListDto>(model, "ps_Rtrv_BrowseOPDBill_Pagi");
+            var extraParams = new List<SqlParameter>
+{
+    new SqlParameter("@UnitId", SqlDbType.BigInt) { Value = UnitId }
+};
+
+            return await DatabaseHelper.GetGridDataBySp<BrowseOPDBillPagiListDto>(model, "ps_Rtrv_VisitDetailsList_1_Pagi", extraParams);
         }
 
         public virtual async Task<IPagedList<RoleMasterListDto>> RoleMasterList(GridRequestModel model)
