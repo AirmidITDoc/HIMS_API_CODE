@@ -187,7 +187,7 @@ namespace HIMS.API.Controllers.Common
                 case "IPBillRefundPayment": SpName = "ps_NewTally_IPBillRefund_Payment_Mediforte"; break;
                 case "OPIPSalsePayment": SpName = "ps_NewTally_OPIPSalsePayment_Mediforte"; break;
                 case "OPIPSalesDetailList": SpName = "PS_NewTally_OP_IP_Sales_DetailList_Mediforte"; break;
-                case "OPIPSalesReturnBillDetailList]": SpName = "ps_NewTally_OPIP_Sales_ReturnBillDetailList_Mediforte"; break;
+                case "OPIPSalesReturnBillDetailList": SpName = "ps_NewTally_OPIP_Sales_ReturnBillDetailList_Mediforte"; break;
 
 
 
