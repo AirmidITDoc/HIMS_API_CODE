@@ -20,9 +20,19 @@ namespace HIMS.Services.OutPatient
         {
             _context = HIMSDbContext;
         }
-        public virtual async Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel model)
+        //public virtual async Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<VisitDetailListDto>(model, "ps_Rtrv_VisitDetailsList_1_Pagi");
+        //}
+
+        public virtual async Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel model, long UnitId)
         {
-            return await DatabaseHelper.GetGridDataBySp<VisitDetailListDto>(model, "ps_Rtrv_VisitDetailsList_1_Pagi");
+            var extraParams = new List<SqlParameter>
+{
+    new SqlParameter("@UnitId", SqlDbType.BigInt) { Value = UnitId }
+};
+
+            return await DatabaseHelper.GetGridDataBySp<VisitDetailListDto>(model, "ps_Rtrv_VisitDetailsList_1_Pagi", extraParams);
         }
         public virtual async Task<IPagedList<FollowupListDto>> FollowListAsync(GridRequestModel model)
         {
@@ -247,11 +257,19 @@ namespace HIMS.Services.OutPatient
             return await DatabaseHelper.GetGridDataBySp<OPBillListDto>(model, "ps_Rtrv_BrowseOPDBill_Pagi");
         }
 
-        public virtual async Task<IPagedList<OPPaymentListDto>> GeOpPaymentListAsync(GridRequestModel model)
+        //public virtual async Task<IPagedList<OPPaymentListDto>> GeOpPaymentListAsync(GridRequestModel model)
+        //{
+        //    return await DatabaseHelper.GetGridDataBySp<OPPaymentListDto>(model, "ps_Rtrv_BrowseOPPaymentList");
+        //}
+        public virtual async Task<IPagedList<OPPaymentListDto>> GeOpPaymentListAsync(GridRequestModel model, long UnitId)
         {
-            return await DatabaseHelper.GetGridDataBySp<OPPaymentListDto>(model, "ps_Rtrv_BrowseOPPaymentList");
-        }
+            var extraParams = new List<SqlParameter>
+{
+    new SqlParameter("@UnitId", SqlDbType.BigInt) { Value = UnitId }
+};
 
+            return await DatabaseHelper.GetGridDataBySp<OPPaymentListDto>(model, "ps_Rtrv_BrowseOPPaymentList", extraParams);
+        }
         public virtual async Task<IPagedList<OPPaymentListDto>> GetPatientWisePaymentList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<OPPaymentListDto>(model, "ps_Rtrv_PatientWisePaymentList");

@@ -8,7 +8,7 @@ namespace HIMS.Services.Administration
     {
         Task<IPagedList<PaymentModeDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<RoleMasterListDto>> RoleMasterList(GridRequestModel objGrid);
-        Task<IPagedList<BrowseOPDBillPagiListDto>> BrowseOPDBillPagiList(GridRequestModel objGrid);
+        Task<IPagedList<BrowseOPDBillPagiListDto>> BrowseOPDBillPagiList(GridRequestModel objGrid,long UnitId);
         Task<IPagedList<BrowseIPAdvPayPharReceiptListDto>> BrowseIPAdvPayPharReceiptList(GridRequestModel objGrid);
         Task<IPagedList<ReportTemplateListDto>> BrowseReportTemplateList(GridRequestModel objGrid);
         Task DeleteAsync(Admission ObjAdmission, int UserId, string Username);
