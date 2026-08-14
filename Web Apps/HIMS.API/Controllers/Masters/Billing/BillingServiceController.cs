@@ -86,6 +86,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         //}
 
         [HttpPost("InsertEDMX")]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(BillingServiceModel obj)
         {
             ServiceMaster model = obj.MapTo<ServiceMaster>();
