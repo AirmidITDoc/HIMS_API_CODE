@@ -13180,6 +13180,8 @@ namespace HIMS.Data.Models
                     .HasMaxLength(50)
                     .HasColumnName("PBillNo");
 
+                entity.Property(e => e.StageStatus).HasMaxLength(20);
+
                 entity.Property(e => e.TaxAmount).HasColumnType("money");
 
                 entity.Property(e => e.TotalAdvanceAmount).HasColumnType("money");
