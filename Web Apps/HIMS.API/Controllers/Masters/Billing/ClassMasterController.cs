@@ -2,12 +2,16 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.Common;
+using HIMS.Services.Inventory;
+using HIMS.Services.Masters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Billing
@@ -18,9 +22,13 @@ namespace HIMS.API.Controllers.Masters.Billing
     public class ClassMasterController : BaseController
     {
         private readonly IGenericService<ClassMaster> _repository;
-        public ClassMasterController(IGenericService<ClassMaster> repository)
+        private readonly IClassMasterService _IClassMasterService;
+
+        public ClassMasterController(IGenericService<ClassMaster> repository, IClassMasterService repository1)
         {
             _repository = repository;
+            _IClassMasterService = repository1;
+
         }
 
         //List API
@@ -45,7 +53,44 @@ namespace HIMS.API.Controllers.Masters.Billing
             var data = await _repository.GetById(x => x.ClassId == id);
             return data.ToSingleResponse<ClassMaster, ClassMasterModel>("Class Master");
         }
+        //[HttpPost("classApplyToAllService")]
+        ////[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> InsertEDMX(ApplytoAllServiceModel obj)
+        //{
+        //    ServiceDetail model = obj.MapTo<ServiceDetail>();
+        //    if (obj.ServiceDetailId == 0)
+        //    {
+                
 
+        //        long oldTariffId = obj.ServiceDetail?.FirstOrDefault()?.OldTariffId ?? 0;
+
+        //        await _IClassMasterService.InsertAsync(model, CurrentUserId, CurrentUserName, (int)oldTariffId);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        //}
+       
+        [HttpPost("classApplyToAllService")]
+        // [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertEDMX(ApplytoAllServiceModel obj)
+        {
+            if (obj == null)
+            {
+                return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status500InternalServerError,  "Invalid params");
+            }
+
+            if (obj.OldClassId <= 0 || obj.NewClassId <= 0)
+            {
+                return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status500InternalServerError,   "Invalid tariff parameters");
+            }
+            ServiceDetail model = obj.MapTo<ServiceDetail>();
+            await _IClassMasterService.InsertAsync( model, CurrentUserId, CurrentUserName, (int)obj.OldClassId, (int)obj.NewClassId);
+
+            return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status200OK,  "Record added successfully.");
+        }
+
+        
         //Add API
         [HttpPost]
         [Permission(PageCode = "ClassMaster", Permission = PagePermission.Add)]
@@ -97,7 +142,7 @@ namespace HIMS.API.Controllers.Masters.Billing
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
             }
             else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
 
 

@@ -130,6 +130,7 @@ namespace HIMS.API.Controllers.Common
         ["PCPNDTIndicationList"] = "ps_RtrvPCPNDT_IndicationList",
         ["PathologyResultListabnormal"] = "ps_Rtrv_PathologyResultList_abnormal",
         ["DoctorWiseCharges"] = "ps_rtrv_getDoctorWiseCharges",
+        ["BrowseIPRefundAdvanceAdmin"] = "ps_Rtrv_BrowseIPRefundAdvance_Admin",
 
 
 
@@ -184,6 +185,13 @@ namespace HIMS.API.Controllers.Common
                 case "IPBillList": SpName = "ps_NewTally_IPBillList_Mediforte"; break;
                 case "IPBillDetailList": SpName = "ps_NewTally_IPBillDetailList_Mediforte"; break;
                 case "IPBillRefundPayment": SpName = "ps_NewTally_IPBillRefund_Payment_Mediforte"; break;
+                case "OPIPSalsePayment": SpName = "ps_NewTally_OPIPSalsePayment_Mediforte"; break;
+                case "OPIPSalesDetailList": SpName = "PS_NewTally_OP_IP_Sales_DetailList_Mediforte"; break;
+                case "OPIPSalesReturnBillDetailList]": SpName = "ps_NewTally_OPIP_Sales_ReturnBillDetailList_Mediforte"; break;
+
+
+
+
 
                 default: break;
             }

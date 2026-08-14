@@ -98,6 +98,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IHSNCodeMasterService, HSNCodeMasterService>();
             services.AddScoped<IMIcdDiagnosisMasterService, MIcdDiagnosisMasterService>();
             services.AddScoped<IAreaMasterService, AreaMasterService>();
+            services.AddScoped<IClassMasterService, ClassMasterService>();
 
 
 
