@@ -14,7 +14,6 @@
         public long? IsRadiology { get; set; }
         public long? IsPackage { get; set; }
         public string ClassName { get; set; }
-
-
+        public bool? IsAllowZeroPrice { get; set; }
     }
 }
