@@ -30,6 +30,8 @@ namespace HIMS.Data.DTO.OPPatient
         public long CashCounterId { get; set; }
         public string? CashCounterName { get; set; }
         public bool IsDefault { get; set; }
+        public string? CashCounterType { get; set; }
+        public string? BillNo { get; set; }
 
     }
 }
