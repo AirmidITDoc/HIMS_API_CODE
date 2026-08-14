@@ -33,7 +33,7 @@ namespace HIMS.Services.Administration
     new SqlParameter("@UnitId", SqlDbType.BigInt) { Value = UnitId }
 };
 
-            return await DatabaseHelper.GetGridDataBySp<BrowseOPDBillPagiListDto>(model, "ps_Rtrv_VisitDetailsList_1_Pagi", extraParams);
+            return await DatabaseHelper.GetGridDataBySp<BrowseOPDBillPagiListDto>(model, "ps_Rtrv_BrowseOPDBill_Pagi", extraParams);
         }
 
         public virtual async Task<IPagedList<RoleMasterListDto>> RoleMasterList(GridRequestModel model)
