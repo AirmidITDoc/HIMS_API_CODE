@@ -128,7 +128,11 @@ namespace HIMS.API.Controllers.Common
         ["AdmissionCancleStaus"] = "Check_AdmissionCancleStaus",
         ["PharmacyAmtByAdminId"] = "Rtrv_PharmacyAmtByAdminId",
         ["PCPNDTIndicationList"] = "ps_RtrvPCPNDT_IndicationList",
-        ["DoctorWiseCharges"] = "ps_rtrv_getDoctorWiseCharges"
+        ["PathologyResultListabnormal"] = "ps_Rtrv_PathologyResultList_abnormal",
+        ["DoctorWiseCharges"] = "ps_rtrv_getDoctorWiseCharges",
+
+
+
     };
         public CommonController(ICommonService commonRepository)
         {
@@ -176,8 +180,12 @@ namespace HIMS.API.Controllers.Common
                 case "OPBillRefundPayment": SpName = "ps_NewTally_OPBillRefund_Payment_Mediforte"; break;
                 case "IPBillPayment": SpName = "ps_NewTally_IPBill_Payment_Mediforte"; break;
                 case "IPAdvancePayment": SpName = "ps_NewTally_IPAdvance_Payment_Mediforte"; break;
+                case "OPPayment": SpName = "ps_NewTally_OP_Payment_Mediforte"; break;
+                case "IPBillList": SpName = "ps_NewTally_IPBillList_Mediforte"; break;
+                case "IPBillDetailList": SpName = "ps_NewTally_IPBillDetailList_Mediforte"; break;
+                case "IPBillRefundPayment": SpName = "ps_NewTally_IPBillRefund_Payment_Mediforte"; break;
 
-                 default: break;
+                default: break;
             }
             dynamic resultList = _ICommonService.GetDataTableByProc(SpName, model.SearchFields);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", resultList);
