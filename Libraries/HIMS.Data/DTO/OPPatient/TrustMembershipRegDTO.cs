@@ -100,6 +100,10 @@ namespace HIMS.Data.DTO.OPPatient
         public double? WmediclaimIssuanceAmt { get; set; }
         public bool? Whasmediclaim { get; set; }
         public long? Wmediclaimcompany { get; set; }
+        public string? WfamilyDoctorName { get; set; }
+        public string? WfamilyDoctorContact { get; set; }
+        public string? WresidenceAddress { get; set; }
+        public string? Wresidencetype { get; set; }
 
 
 

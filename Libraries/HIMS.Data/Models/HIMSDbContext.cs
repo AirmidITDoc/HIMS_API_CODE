@@ -15008,6 +15008,14 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.WdeathDate).HasColumnType("datetime");
 
+                entity.Property(e => e.WfamilyDoctorContact)
+                    .HasMaxLength(50)
+                    .HasColumnName("wfamilyDoctorContact");
+
+                entity.Property(e => e.WfamilyDoctorName)
+                    .HasMaxLength(200)
+                    .HasColumnName("wfamilyDoctorName");
+
                 entity.Property(e => e.WfeeAmount).HasColumnName("wfeeAmount");
 
                 entity.Property(e => e.WfeeReceived).HasColumnName("wfeeReceived");
@@ -15081,6 +15089,14 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.WreceiptDate)
                     .HasColumnType("datetime")
                     .HasColumnName("wreceiptDate");
+
+                entity.Property(e => e.WresidenceAddress)
+                    .HasMaxLength(500)
+                    .HasColumnName("wresidenceAddress");
+
+                entity.Property(e => e.Wresidencetype)
+                    .HasMaxLength(100)
+                    .HasColumnName("wresidencetype");
             });
 
             modelBuilder.Entity<TMembershipRelative>(entity =>

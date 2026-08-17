@@ -132,6 +132,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TPcpndprocessDetail, PcpndprocessDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TApprovalHeader, ApprovalHeaderUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TApprovalHeader, ApprovalModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TDrbill, ApprovalHeaderUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TMembershipRegistration, TrustMembershipRegModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TMembershipChild, MembershipChildModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPost("BillingList")]
-        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<BillingServiceDto> BillingList = await _BillingService.GetListAsync(objGrid);
@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         //}
 
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(BillingServiceModel obj)
         {
             ServiceMaster model = obj.MapTo<ServiceMaster>();
