@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         {
             string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            string filename = $"{path}\\{AppTime.Now:dd_MM_yyyy}.txt";
+            string filename = $"{path}\\on-generate-token_{AppTime.Now:dd_MM_yyyy}.txt";
             if (payload.IsSuccess)
             {
                 await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] SUCCESS requestId={payload.Response.RequestId} abhaAddress={payload.AbhaAddress} linkToken={payload.LinkToken}");
@@ -53,12 +53,6 @@ namespace HIMS.API.Controllers.ABHA.M2
             {
                 await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] FAILURE code={payload.Error?.Code} message={payload.Error?.Message}");
             }
-
-            ////string path = Path.Combine(_configuration["ExceptionLogging:Directory"].TrimEnd('\\'), "M2Callback");
-            //if (!Directory.Exists(path))
-            //    Directory.CreateDirectory(path);
-
-            //string filename = Path.Combine(path, $"{AppTime.Now:dd_MM_yyyy}.txt");
 
             // Convert complete payload object to JSON
             string rawResponse = JsonConvert.SerializeObject(payload, Formatting.Indented);
@@ -104,21 +98,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         {
             string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            string filename = $"{path}\\{AppTime.Now:dd_MM_yyyy}.txt";
-            //if (payload.IsSuccess)
-            //{
-            //    await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] SUCCESS requestId={payload.Response.RequestId} abhaAddress={payload.AbhaAddress} linkToken={payload.LinkToken}");
-            //}
-            //else
-            //{
-            //    await System.IO.File.AppendAllTextAsync(filename, $"\n[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] FAILURE code={payload.Error?.Code} message={payload.Error?.Message}");
-            //}
-
-            ////string path = Path.Combine(_configuration["ExceptionLogging:Directory"].TrimEnd('\\'), "M2Callback");
-            //if (!Directory.Exists(path))
-            //    Directory.CreateDirectory(path);
-
-            //string filename = Path.Combine(path, $"{AppTime.Now:dd_MM_yyyy}.txt");
+            string filename = $"{path}\\on_carecontext_{AppTime.Now:dd_MM_yyyy}.txt";
 
             // Convert complete payload object to JSON
             string rawResponse = JsonConvert.SerializeObject(payload, Formatting.Indented);
@@ -156,6 +136,69 @@ namespace HIMS.API.Controllers.ABHA.M2
                     await _TAbhaLinkTokenCallback.Update(existingToken, 1, "System", null);
                 }
             }
+            return Ok();
+        }
+
+        [HttpPost("~/api/v3/consent/request/hip/notify")]
+        public async Task<IActionResult> OnConsentNotification([FromBody] ConsentNotificationPayload payload)
+        {
+            string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            string filename = $"{path}\\Notify_{AppTime.Now:dd_MM_yyyy}.txt";
+            // Convert complete payload object to JSON
+            string rawResponse = JsonConvert.SerializeObject(payload, Formatting.Indented);
+
+            string log = $@"
+                    =========================================================
+                    DateTime        : {DateTime.Now:dd/MM/yyyy HH:mm:ss}
+                    Status          : {payload.Notification?.Status}
+                    ConsentId       : {payload.Notification?.ConsentId}
+                    Patient         : {payload.Notification?.ConsentDetail?.Patient?.Id}
+                    SchemaVersion   : {payload.Notification?.ConsentDetail?.SchemaVersion}
+                    CreatedAt       : {payload.Notification?.ConsentDetail?.CreatedAt}
+
+                    Raw Response:
+                    {rawResponse}
+                    =========================================================";
+
+            await System.IO.File.AppendAllTextAsync(filename, log);
+            return Ok();
+        }
+        [HttpPost("~/api/v3/links/context/on-notify")]
+        public async Task<IActionResult> OnNotify([FromBody] OnNotifyResponse payload)
+        {
+            string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            string filename = $"{path}\\OnNotify_{AppTime.Now:dd_MM_yyyy}.txt";
+            // Convert complete payload object to JSON
+            string rawResponse = JsonConvert.SerializeObject(payload, Formatting.Indented);
+
+            string log = $@"
+                    =========================================================
+                    Raw Response:
+                    {rawResponse}
+                    =========================================================";
+
+            await System.IO.File.AppendAllTextAsync(filename, log);
+            return Ok();
+        }
+
+        [HttpPost("~/api/v3/hip/patient/care-context/discover")]
+        public async Task<IActionResult> onCareContextDiscoverRequest([FromBody] CareContextDiscoverRequest payload)
+        {
+            string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            string filename = $"{path}\\CareContextDiscover_{AppTime.Now:dd_MM_yyyy}.txt";
+            // Convert complete payload object to JSON
+            string rawResponse = JsonConvert.SerializeObject(payload, Formatting.Indented);
+
+            string log = $@"
+                    =========================================================
+                    Raw Response:
+                    {rawResponse}
+                    =========================================================";
+
+            await System.IO.File.AppendAllTextAsync(filename, log);
             return Ok();
         }
 
