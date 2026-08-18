@@ -657,20 +657,21 @@
             </tr>
         </table>
         <!--<div class="section-title">8. HOBBIES</div>
-        <div class="field-row">
-            <span class="field-label">Man/Husband's hobbies:</span>
-            <span class="field-line">{{HusbandHobbies}}</span>
-        </div>
-        <div class="field-row">
-            <span class="field-label">Woman/Wife's hobbies:</span>
-            <span class="field-line">{{WifeHobbies}}</span>
-        </div>-->
+    <div class="field-row">
+        <span class="field-label">Man/Husband's hobbies:</span>
+        <span class="field-line">{{HusbandHobbies}}</span>
+    </div>
+    <div class="field-row">
+        <span class="field-label">Woman/Wife's hobbies:</span>
+        <span class="field-line">{{WifeHobbies}}</span>
+    </div>-->
 
 
         <div class="section-title">9. FAMILY - RELATED INFORMATION</div>
 
         <div class="sub-heading">- &nbsp;Information about Children</div>
-        <table>
+
+        <table class="family-info-table" id="childrenTable">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -678,6 +679,7 @@
                     <th>Address</th>
                 </tr>
             </thead>
+
             <tbody>
                 <!--ITEMS_SP1-->
                 <tr>
@@ -686,13 +688,56 @@
                     <td>{{ChildAddress}}</td>
                 </tr>
                 <!--/ITEMS_SP1-->
-
-
             </tbody>
         </table>
 
+        <script type="text/javascript">
+            (function () {
+
+                var table = document.getElementById("childrenTable");
+
+                if (!table) return;
+
+                var tbody = table.getElementsByTagName("tbody")[0];
+
+                if (!tbody) return;
+
+                var rows = tbody.getElementsByTagName("tr");
+                var seen = {};
+                var rowKey;
+                var cells;
+                var i;
+                var j;
+                var value;
+
+                for (i = rows.length - 1; i >= 0; i--) {
+
+                    cells = rows[i].getElementsByTagName("td");
+                    rowKey = "";
+
+                    for (j = 0; j < cells.length; j++) {
+
+                        value = cells[j].innerHTML;
+                        value = value.replace(/<[^>]*>/g, "");
+                        value = value.replace(/&nbsp;/g, " ");
+                        value = value.replace(/\s+/g, " ");
+                        value = value.replace(/^\s+|\s+$/g, "");
+
+                        rowKey += "|" + value;
+                    }
+
+                    if (seen[rowKey]) {
+                        rows[i].parentNode.removeChild(rows[i]);
+                    } else {
+                        seen[rowKey] = true;
+                    }
+                }
+
+            })();
+        </script>
+
         <div class="sub-heading">-&nbsp; Close Relative / Guardian</div>
-        <table>
+        <table class="family-info-table">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -717,7 +762,7 @@
         </table>
 
         <div class="sub-heading">- &nbsp;Emergency Contact Of Neighbours</div>
-        <table>
+        <table class="family-info-table">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -744,7 +789,7 @@
 
     </div>
 
-    
+
     <!-- ==================== PAGE 3 ==================== -->
     <div class="page page-3">
 
@@ -785,40 +830,39 @@
                         </tr>
                     </table>
 
-                  </div>
+    </div>
 
-                    <!-- FIX: SP ke actual columns AyushmanEnrolled (bit), MaleFemaleEnrolled, AyushmanSpouseDetails hain -->
-                    <div class="section-title">11. AYUSHMAN BHARAT SCHEME</div>
+    <!-- FIX: SP ke actual columns AyushmanEnrolled (bit), MaleFemaleEnrolled, AyushmanSpouseDetails hain -->
+    <div class="section-title">11. AYUSHMAN BHARAT SCHEME</div>
 
-                    <div class="note-line">Are You Enrolled In The Ayushman Bharat Scheme?</div>
+    <div class="note-line">Are You Enrolled In The Ayushman Bharat Scheme?</div>
 
-                    <div class="gender-header">
-                        <span>&nbsp;</span>
-                        <span>Male /</span>
-                        <span>Female /</span>
-                    </div>
+    <div class="gender-header">
+        <span>&nbsp;</span>
+        <span>Male /</span>
+        <span>Female /</span>
+    </div>
 
-                    <div class="yn-row">
-                        <span class="field-label">No</span><span class="chk-box chk-{{AyushmanEnrolledNo}}"></span>
-                        <span class="field-label">Yes</span><span class="chk-box chk-{{AyushmanEnrolledYes}}"></span>
-                    </div>
+    <div class="yn-row">
+        <span class="field-label">No</span><span class="chk-box chk-{{AyushmanEnrolledNo}}"></span>
+        <span class="field-label">Yes</span><span class="chk-box chk-{{AyushmanEnrolledYes}}"></span>
+    </div>
 
-                    <div class="field-row">
-                        <span class="field-label">Then Spouse Details:</span>
-                        <span class="field-line">{{AyushmanSpouseDetails}}</span>
-                        <span class="field-label">Spouse :</span>
-                        <span class="field-line">{{AyushmanSpouseDetails}}</span>
-                    </div>
+    <div class="field-row">
+        <span class="field-label">Then Spouse Details:</span>
+        <span class="field-line">{{AyushmanSpouseDetails}}</span>
+        <span class="field-label">Spouse :</span>
+        <span class="field-line">{{AyushmanSpouseDetails}}</span>
+    </div>
 
-                </td>
-            </tr>
-        </table>
+    </td>
+    </tr>
+    </table>
 
-        <!--<div class="footer-page">Page 2 </div>-->
-
+    <!--<div class="footer-page">Page 2 </div>-->
     </div>
     <br>
-    
+
     <!-- ==================== PAGE 2 ==================== -->
     <div class="page page-2">
 
@@ -855,10 +899,10 @@
                         <span class="field-line">{{MediclaimIssuanceAmt}}</span>
 
                         <!--<span class="field-label" style="margin-left:20px;">Start:</span>
-                    <span class="dob-seg" style="min-width:26px;">{{MediclaimStartDate}}</span>&nbsp;/&nbsp;
+                        <span class="dob-seg" style="min-width:26px;">{{MediclaimStartDate}}</span>&nbsp;/&nbsp;
 
-                    <span class="field-label" style="margin-left:20px;">End:</span>
-                    <span class="dob-seg" style="min-width:26px;">{{MediclaimEndDate}}</span>&nbsp;/&nbsp;-->
+                        <span class="field-label" style="margin-left:20px;">End:</span>
+                        <span class="dob-seg" style="min-width:26px;">{{MediclaimEndDate}}</span>&nbsp;/&nbsp;-->
                         <span class="field-label" style="margin-left:20px;">Start:</span>
                         <span class="dob-seg" style="min-width:26px;">{{MediclaimStartDate}}</span>
                         <span class="field-label" style="margin-left:20px;">End:</span>
@@ -872,16 +916,16 @@
 
         <!--<div class="section-title">13. FAMILY DOCTOR DETAILS</div>
 
-    <div class="two-field-row">
-        <div class="field-row">
-            <span class="field-label">Doctor's Name:</span>
-            <span class="field-line">{{FamilyDoctorName}}</span>
-        </div>
-        <div class="field-row">
-            <span class="field-label">Contact Number:</span>
-            <span class="field-line">{{FamilyDoctorContact}}</span>
-        </div>
-    </div>-->
+        <div class="two-field-row">
+            <div class="field-row">
+                <span class="field-label">Doctor's Name:</span>
+                <span class="field-line">{{FamilyDoctorName}}</span>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Contact Number:</span>
+                <span class="field-line">{{FamilyDoctorContact}}</span>
+            </div>
+        </div>-->
         <div class="section-title">13. FAMILY DOCTOR DETAILS</div>
         <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
             <tr>
@@ -993,4 +1037,5 @@
     </div>
 
 </body>
+
 </html>

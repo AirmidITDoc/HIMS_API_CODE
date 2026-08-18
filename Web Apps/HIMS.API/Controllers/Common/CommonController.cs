@@ -128,7 +128,7 @@ namespace HIMS.API.Controllers.Common
         ["AdmissionCancleStaus"] = "Check_AdmissionCancleStaus",
         ["PharmacyAmtByAdminId"] = "Rtrv_PharmacyAmtByAdminId",
         ["PCPNDTIndicationList"] = "ps_RtrvPCPNDT_IndicationList",
-        ["PathologyResultListabnormal"] = "ps_Rtrv_PathologyResultList_abnormal",
+        ["PathologyResultListabnormal"] = "ps_Rtrv_PathologyResultList_abnormal_PerVisit",
         ["DoctorWiseCharges"] = "ps_rtrv_getDoctorWiseCharges",
         ["BrowseIPRefundAdvanceAdmin"] = "ps_Rtrv_BrowseIPRefundAdvance_Admin",
 
