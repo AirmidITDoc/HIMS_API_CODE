@@ -94,7 +94,7 @@ namespace HIMS.API.Models.TrustMembershipRegistration
         public string? WfamilyDoctorName { get; set; }
         public string? WfamilyDoctorContact { get; set; }
         public string? WresidenceAddress { get; set; }
-        public string? Wresidencetype { get; set; }
+        public bool? Wresidencetype { get; set; }
 
         public List<MembershipChildModel>? TMembershipChildren { get; set; }
         public List<MembershipEmrgencyModel>? TMembershipEmrgencies { get; set; }

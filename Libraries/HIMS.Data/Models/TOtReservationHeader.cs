@@ -23,7 +23,7 @@ namespace HIMS.Data.Models
         public long? CategoryType { get; set; }
         public long? Ottable { get; set; }
         public DateTime? SurgeryDate { get; set; }
-        public DateTime? EstimateTime { get; set; }
+        public double? EstimateTime { get; set; }
         public string? Diagnosis { get; set; }
         public string? Comments { get; set; }
         public bool? ReservationType { get; set; }

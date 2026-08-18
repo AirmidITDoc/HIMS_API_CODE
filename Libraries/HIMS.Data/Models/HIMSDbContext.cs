@@ -15094,9 +15094,7 @@ namespace HIMS.Data.Models
                     .HasMaxLength(500)
                     .HasColumnName("wresidenceAddress");
 
-                entity.Property(e => e.Wresidencetype)
-                    .HasMaxLength(100)
-                    .HasColumnName("wresidencetype");
+                entity.Property(e => e.Wresidencetype).HasColumnName("wresidencetype");
             });
 
             modelBuilder.Entity<TMembershipRelative>(entity =>
@@ -16368,8 +16366,6 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Diagnosis).HasMaxLength(255);
 
-                entity.Property(e => e.EstimateTime).HasColumnType("datetime");
-
                 entity.Property(e => e.IsCancelledDateTime).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
@@ -16584,8 +16580,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Diagnosis).HasMaxLength(255);
-
-                entity.Property(e => e.EstimateTime).HasColumnType("datetime");
 
                 entity.Property(e => e.IsCancelledDateTime).HasColumnType("datetime");
 

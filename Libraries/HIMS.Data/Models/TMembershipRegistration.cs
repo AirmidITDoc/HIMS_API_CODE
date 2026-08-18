@@ -105,7 +105,7 @@ namespace HIMS.Data.Models
         public string? WfamilyDoctorName { get; set; }
         public string? WfamilyDoctorContact { get; set; }
         public string? WresidenceAddress { get; set; }
-        public string? Wresidencetype { get; set; }
+        public bool? Wresidencetype { get; set; }
 
         public virtual ICollection<TMembershipChild> TMembershipChildren { get; set; }
         public virtual ICollection<TMembershipEmrgency> TMembershipEmrgencies { get; set; }
