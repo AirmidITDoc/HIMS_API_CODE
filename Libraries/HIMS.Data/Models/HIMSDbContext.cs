@@ -315,7 +315,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<MReportConfiguration> MReportConfigurations { get; set; } = null!;
         public virtual DbSet<MReportSetupOperational> MReportSetupOperationals { get; set; } = null!;
         public virtual DbSet<MReportTemplateConfig> MReportTemplateConfigs { get; set; } = null!;
-        public virtual DbSet<MReportconfigBackup> MReportconfigBackups { get; set; } = null!;
         public virtual DbSet<MSalesTypeMaster> MSalesTypeMasters { get; set; } = null!;
         public virtual DbSet<MSmsmappingTemplate> MSmsmappingTemplates { get; set; } = null!;
         public virtual DbSet<MStateMaster> MStateMasters { get; set; } = null!;
@@ -9062,23 +9061,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.TemplateName).HasMaxLength(255);
-            });
-
-            modelBuilder.Entity<MReportconfigBackup>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("m_reportconfig_backup");
-
-                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
-
-                entity.Property(e => e.ReportId).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.ReportSpname).HasColumnName("ReportSPName");
-
-                entity.Property(e => e.SummaryLabel).HasColumnName("summaryLabel");
-
-                entity.Property(e => e.UpdatedOn).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MSalesTypeMaster>(entity =>
