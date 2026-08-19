@@ -12,6 +12,7 @@ using HIMS.Services.Canteen;
 using HIMS.Services.Common;
 using HIMS.Services.Dashboard;
 using HIMS.Services.DoctorPayout;
+using HIMS.Services.DocumentManagement;
 using HIMS.Services.FeedBack;
 using HIMS.Services.GastrologyService;
 using HIMS.Services.Inventory;
@@ -235,6 +236,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IFeedBackQuestionService, FeedBackQuestionService>();
             services.AddScoped<IHomeCollectionPatientRegService, HomeCollectionPatientRegService>();
 
+            services.AddScoped<IDocumentCategoryService, DocumentCategoryService>();
 
 
 
