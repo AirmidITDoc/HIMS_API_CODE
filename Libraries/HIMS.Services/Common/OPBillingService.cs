@@ -435,7 +435,8 @@ namespace HIMS.Services.Common
                     {
                         Dictionary<string, object> tentity = new()
                         {
-                            ["DRBNo"] = ObjTDrbill.Drbno
+                            ["DRBNo"] = ObjTDrbill.Drbno,
+                            ["PBillNo"] = vBillNo
                         };
 
                         odal.ExecuteNonQuery("PS_UpdateDraft", CommandType.StoredProcedure, tentity);

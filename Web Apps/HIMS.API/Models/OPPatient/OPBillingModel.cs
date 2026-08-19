@@ -289,7 +289,7 @@ namespace HIMS.API.Models.OPPatient
     {
         public long Drbno { get; set; }
         public long? IsCancelled { get; set; }
-
+        public string? PBillNo { get; set; }
 
     }
 

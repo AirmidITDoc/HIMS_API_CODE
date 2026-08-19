@@ -422,5 +422,13 @@ namespace HIMS.API.Controllers.OPPatient
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+
+        [HttpGet("AssignUserWiseCashCounterList")]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse AssignUserWiseCashCounterList()
+        {
+            var data = _visitDetailsService.AssignUserWiseCashCounterList();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CashCounter List.", data);
+        }
     }
 }

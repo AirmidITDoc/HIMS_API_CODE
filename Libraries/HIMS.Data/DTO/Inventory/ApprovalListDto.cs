@@ -22,8 +22,13 @@ namespace HIMS.Data.DTO.Inventory
         public string? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string? AuthorizedBy { get; set; }
+        public decimal? TotalAmt { get; set; }
+        public double? ConcessionAmt { get; set; }
+        public decimal? NetPayableAmt { get; set; }
+        public decimal? PaidAmt { get; set; }
+        public decimal? BalanceAmt { get; set; }
 
-        
+
     }
     public class UserApprovalNamelistDto
     {

@@ -714,6 +714,15 @@ namespace HIMS.Services.OutPatient
                 throw;
             }
         }
+
+        public List<CashCounterDTO> AssignUserWiseCashCounterList()
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[0];
+
+            List<CashCounterDTO> lstUserCashCounterList = sql.FetchListBySP<CashCounterDTO>("ps_Rtrv_Assign_CashCounter", para);
+            return lstUserCashCounterList;
+        }
     }
 }
         

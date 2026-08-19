@@ -291,7 +291,8 @@ namespace HIMS.Services.OPPatient
                     {
                         Dictionary<string, object> tentity = new()
                         {
-                            ["DRBNo"] = ObjTDrbill.Drbno
+                            ["DRBNo"] = ObjTDrbill.Drbno,
+                            ["PBillNo"] = vBillNo
                         };
 
                         odal.ExecuteNonQueryNew("PS_UpdateDraft", CommandType.StoredProcedure,"", tentity);
