@@ -20,6 +20,7 @@
         public long BillNo { get; set; }
         public object? ServiceWiseDisc { get; set; }
         public bool IsSampleCollection { get; set; }
+        public bool IsCompleted { get; set; }
 
     }
 }

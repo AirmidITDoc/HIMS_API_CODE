@@ -56,6 +56,7 @@ namespace HIMS.Data.DTO.Administration
         public string ReportCompletedUser { get; set; }
         public long AddedBy { get; set; }
         public long UpdatedBy { get; set; }
+        public int? IsRefunded { get; set; }
 
     }
         public class pathologistdoctorDto

@@ -23,6 +23,7 @@
         public long AdmissionID { get; set; }
         public bool IsApprovedByCamp { get; set; }
         public long PatientTypeId { get; set; }
+        public int? IsRefunded { get; set; }
 
     }
 }
