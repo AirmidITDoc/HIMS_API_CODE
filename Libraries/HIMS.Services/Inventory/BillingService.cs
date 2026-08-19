@@ -323,17 +323,19 @@ namespace HIMS.Services.Inventory
 
             }
         }
-        public virtual BillingServiceNewDto GetServiceListNew(int TariffId, string? ServiceName)
+        public virtual BillingServiceNewListDto GetServiceListNew(int TariffId, string? ServiceName, int PageIndex, int PageSize)
         {
-            BillingServiceNewDto objMain = new() { Data = new List<BillingServiceNew>(), Columns = new() };
+            BillingServiceNewListDto objMain = new() { Data = new List<BillingServiceList>(), Columns = new() };
             DatabaseHelper sql = new();
-            SqlParameter[] para = new SqlParameter[2];
+            SqlParameter[] para = new SqlParameter[4];
             para[0] = new SqlParameter("@TariffId", TariffId);
             para[1] = new SqlParameter("@ServiceName", ServiceName);
+            para[2] = new SqlParameter("@PageIndex", PageIndex);
+            para[3] = new SqlParameter("@PageSize", PageSize);
             DataTable dt = sql.FetchDataTableBySP("GET_SERVICES_NEW", para);
             foreach (DataColumn dc in dt.Columns)
             {
-                if (dc.ColumnName != "ServiceId" && dc.ColumnName != "ServiceName")
+                if (dc.ColumnName != "TotalCount" && dc.ColumnName != "ServiceId" && dc.ColumnName != "ServiceName")
                 {
                     objMain.Columns.Add(new BillingServiceColumns()
                     {
@@ -344,15 +346,16 @@ namespace HIMS.Services.Inventory
             }
             foreach (DataRow dr in dt.Rows)
             {
-                BillingServiceNew obj = new()
+                BillingServiceList obj = new()
                 {
+                    TotalCount = dr["TotalCount"].ToInt(),
                     ServiceId = dr["ServiceId"].ToInt(),
                     ServiceName = HIMS.Data.Extensions.DynamicLinqExpressionBuilder.ConvertToString(dr["ServiceName"]), // Explicitly specify the namespace
                     ColumnValues = new List<BillingServiceColumnValue>()
                 };
                 foreach (DataColumn dc in dt.Columns)
                 {
-                    if (dc.ColumnName != "ServiceId" && dc.ColumnName != "ServiceName")
+                    if (dc.ColumnName != "TotalCount" && dc.ColumnName != "ServiceId" && dc.ColumnName != "ServiceName" )
                     {
                         obj.ColumnValues.Add(new BillingServiceColumnValue()
                         {

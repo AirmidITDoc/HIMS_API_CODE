@@ -109,5 +109,19 @@
         public string? Status { get; set; }
 
     }
+    public class BillingServiceNewListDto
+    {
+        public List<BillingServiceList> Data { get; set; }
+        public List<BillingServiceColumns> Columns { get; set; }
+        public int TariffId { get; set; }
+    }
+
+    public class BillingServiceList
+    {
+        public int TotalCount { get; set; }
+        public int ServiceId { get; set; }
+        public string? ServiceName { get; set; }
+        public List<BillingServiceColumnValue> ColumnValues { get; set; }
+    }
 
 }
