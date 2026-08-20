@@ -1218,19 +1218,21 @@ namespace HIMS.Services.Common
                     odal.ExecuteNonQueryNew("PS_Insert_T_DRBillDet", CommandType.StoredProcedure,"",tokenObj);
                     await _context.LogProcedureExecution( tokenObj, nameof(TDrbillDet), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-                    ObjTApprovalHeader.TranId = Convert.ToInt32(VDrbno);
-                    string[] AEntity = { "ApprovalId", "ApprovalNo", "Date", "Time", "TranId", "TransactionType", "ApprovalStatus", "AuthorizeBy", "ApprovedDateTime", "Comment","CreatedBy" };
-                    var aentity = ObjTApprovalHeader.ToDictionary();
-                    foreach (var rProperty in aentity.Keys.ToList())
+                    if (ObjTApprovalHeader != null)
                     {
-                        if (!AEntity.Contains(rProperty))
-                            aentity.Remove(rProperty);
+                        ObjTApprovalHeader.TranId = Convert.ToInt32(VDrbno);
+                        string[] AEntity = { "ApprovalId", "ApprovalNo", "Date", "Time", "TranId", "TransactionType", "ApprovalStatus", "AuthorizeBy", "ApprovedDateTime", "Comment", "CreatedBy" };
+                        var aentity = ObjTApprovalHeader.ToDictionary();
+                        foreach (var rProperty in aentity.Keys.ToList())
+                        {
+                            if (!AEntity.Contains(rProperty))
+                                aentity.Remove(rProperty);
+                        }
+                        string Approval = odal.ExecuteNonQueryNew("PS_Insert_T_ApprovalHeader", CommandType.StoredProcedure, "ApprovalId", aentity);
+                        ObjTApprovalHeader.ApprovalId = Convert.ToInt32(Approval);
+
+                        await _context.LogProcedureExecution(tokenObj, nameof(TApprovalHeader), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                     }
-                    string Approval = odal.ExecuteNonQueryNew("PS_Insert_T_ApprovalHeader", CommandType.StoredProcedure, "ApprovalId", aentity);
-                    ObjTApprovalHeader.ApprovalId = Convert.ToInt32(Approval);
-
-                    await _context.LogProcedureExecution(tokenObj, nameof(TApprovalHeader), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
                 }
                 // Commit Transaction
                 await transaction.CommitAsync();
