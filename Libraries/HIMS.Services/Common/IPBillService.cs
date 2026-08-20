@@ -888,82 +888,54 @@ namespace HIMS.Services.Common
 
 
         }
-        //public virtual async Task IPDraftBill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int CurrentUserId, string CurrentUserName)
-        //{
-        //    // Begin Transaction
-        //    await using var transaction = await _context.Database.BeginTransactionAsync();
-        //    try
-        //    {
-        //        DatabaseHelper odal = new();
-        //        odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
-        //        odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
-
-        //        string[] rEntity = { "Drbno", "OpdIpdId", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "TotalAdvanceAmount", "AddedBy", "BillTime", "ConcessionReasonId", "IsSettled", "IsPrinted", "IsFree", "CompanyId", "UnitId", "InterimOrFinal", "CompanyRefNo", "ConcessionAuthorizationName", "TaxPer", "TaxAmount" };
-        //        var entity = ObjTDrbill.ToDictionary();
-        //        foreach (var rProperty in entity.Keys.ToList())
-        //        {
-        //            if (!rEntity.Contains(rProperty))
-        //                entity.Remove(rProperty);
-        //        }
-        //        string vDRBNo = odal.ExecuteNonQuery("ps_insert_DRBill_1", CommandType.StoredProcedure, "Drbno", entity);
-        //        ObjTDrbill.Drbno = Convert.ToInt32(vDRBNo);
-        //        await _context.LogProcedureExecution(entity, nameof(TDrbill), ObjTDrbill.Drbno.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
-        //        foreach (var item in ObjTDrbillDetList)
-        //        {
-        //            item.Drno = Convert.ToInt32(vDRBNo);
-        //            string[] TEntity = { "Drno", "ChargesId" };
-        //            var Dentity = item.ToDictionary();
-        //            foreach (var rProperty in Dentity.Keys.ToList())
-        //            {
-        //                if (!TEntity.Contains(rProperty))
-        //                    Dentity.Remove(rProperty);
-        //            }
-        //            odal.ExecuteNonQuery("ps_insert_T_DRBillDet_1", CommandType.StoredProcedure, Dentity);
-        //            await _context.LogProcedureExecution(Dentity, nameof(TDrbillDet), item.DrbillDetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
-        //        }
-        //        // Save Log
-        //        await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
-        //        // Commit Transaction
-        //        await transaction.CommitAsync();
-
-        //    }
-        //    catch (Exception)
-        //    {
-        //        // Rollback Transaction
-        //        await transaction.RollbackAsync();
-        //        throw;
-        //    }
-
-        //}
-
-        public virtual async Task IPDraftBill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int UserId, string UserName)
+        
+        public virtual async Task IPDraftBill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDetList, int CurrentUserId, string CurrentUserName)
         {
-
-            DatabaseHelper odal = new();
-            string[] rEntity = { "IsCancelled", "PbillNo", "CashCounterId", "AdvanceUsedAmount" };
-            var entity = ObjTDrbill.ToDictionary();
-            foreach (var rProperty in rEntity)
+            // Begin Transaction
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                entity.Remove(rProperty);
-            }
-            string vDRBNo = odal.ExecuteNonQuery("ps_insert_DRBill_1", CommandType.StoredProcedure, "Drbno", entity);
-            ObjTDrbill.Drbno = Convert.ToInt32(vDRBNo);
+                DatabaseHelper odal = new();
 
-
-            foreach (var item in ObjTDrbillDetList)
-            {
-                item.Drno = Convert.ToInt32(vDRBNo);
-                string[] TEntity = { "DrbillDetId", };
-                var Dentity = item.ToDictionary();
-                foreach (var rProperty in TEntity)
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+                string[] rEntity = { "Drbno", "OpdIpdId", "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "TotalAdvanceAmount", "AdvanceUsedAmount", "AddedBy", "BillTime", "ConcessionReasonId", "IsSettled", "IsPrinted", "IsFree", "CompanyId", "TariffId", "UnitId", "InterimOrFinal", "CompanyRefNo", "ConcessionAuthorizationName", "TaxPer", "TaxAmount" };
+                var entity = ObjTDrbill.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
                 {
-                    Dentity.Remove(rProperty);
+                    if (!rEntity.Contains(rProperty))
+                        entity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("ps_insert_T_DRBillDet_1", CommandType.StoredProcedure, Dentity);
-            }
+                string vDRBNo = odal.ExecuteNonQuery("ps_insert_DRBill_1", CommandType.StoredProcedure, "Drbno", entity);
+                ObjTDrbill.Drbno = Convert.ToInt32(vDRBNo);
+                await _context.LogProcedureExecution(entity, nameof(TDrbill), ObjTDrbill.Drbno.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
+                foreach (var item in ObjTDrbillDetList)
+                {
+                    item.Drno = Convert.ToInt32(vDRBNo);
+                    string[] TEntity = { "Drno", "ChargesId" };
+                    var Dentity = item.ToDictionary();
+                    foreach (var rProperty in Dentity.Keys.ToList())
+                    {
+                        if (!TEntity.Contains(rProperty))
+                            Dentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("ps_insert_T_DRBillDet_1", CommandType.StoredProcedure, Dentity);
+                    await _context.LogProcedureExecution(Dentity, nameof(TDrbillDet), item.DrbillDetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+                }
+                // Save Log
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit Transaction
+                await transaction.CommitAsync();
+
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         public virtual async Task  IPAddcharges(AddCharge ObjaddCharge, List<AddCharge> objAddCharges, int CurrentUserId, string CurrentUserName)
