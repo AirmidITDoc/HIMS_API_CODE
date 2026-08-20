@@ -15092,6 +15092,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.PrefixName).HasMaxLength(50);
 
+                entity.Property(e => e.RelationName).HasMaxLength(50);
+
                 entity.Property(e => e.RelativeAddress).HasMaxLength(255);
 
                 entity.Property(e => e.RelativeMobile).HasMaxLength(15);

@@ -10,7 +10,7 @@ namespace HIMS.Data.Models
         public long PrefixId { get; set; }
         public long RelationId { get; set; }
         public string? RelativeName { get; set; }
-        public long? RelationNameId { get; set; }
+        public string? RelationName { get; set; }
         public string? RelativeMobile { get; set; }
         public string? RelativeAddress { get; set; }
         public int CreatedBy { get; set; }

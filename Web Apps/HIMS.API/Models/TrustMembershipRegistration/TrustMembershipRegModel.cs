@@ -170,9 +170,11 @@ namespace HIMS.API.Models.TrustMembershipRegistration
         public long PrefixId { get; set; }
         public long RelationId { get; set; }
         public string? RelativeName { get; set; }
+        public string? RelationName { get; set; }
         public string? RelativeMobile { get; set; }
         public string? RelativeAddress { get; set; }
         public string? PrefixName { get; set; }
+
 
     }
     public class MembershipRelativeModelValidator : AbstractValidator<MembershipRelativeModel>
