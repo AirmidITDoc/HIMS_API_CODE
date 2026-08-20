@@ -670,196 +670,178 @@
         <div class="section-title">9. FAMILY - RELATED INFORMATION</div>
 
         <div class="sub-heading">- &nbsp;Information about Children</div>
-
         <table class="family-info-table" id="childrenTable">
             <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Mobile Number</th>
-                    <th>Address</th>
-                </tr>
+                <tr><th>Name</th><th>Mobile Number</th><th>Address</th></tr>
             </thead>
+            <tbody></tbody>
+        </table>
 
+        <div class="sub-heading">-&nbsp; Close Relative / Guardian</div>
+        <table class="family-info-table" id="relativeTable">
+            <thead>
+                <tr><th>Name</th><th>Relation</th><th>Mobile number</th><th>mail address</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <div class="sub-heading">- &nbsp;Emergency Contact Of Neighbours</div>
+        <table class="family-info-table" id="emergencyTable">
+            <thead>
+                <tr><th>Name</th><th>Mobile number</th><th>Email address</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- Hidden raw data carrier: ONLY ITEMS_SP1 block in the whole document -->
+        <table id="rawFamilyData" style="display:none;">
             <tbody>
                 <!--ITEMS_SP1-->
                 <tr>
                     <td>{{ChildName}}</td>
                     <td>{{ChildMobile}}</td>
                     <td>{{ChildAddress}}</td>
+                    <td>{{RelativeName}}</td>
+                    <td>{{RelationshipName}}</td>
+                    <td>{{RelativeMobile}}</td>
+                    <td>{{RelativeAddress}}</td>
+                    <td>{{EmrgencyName}}</td>
+                    <td>{{EmrgencyMobile}}</td>
+                    <td>{{EmrgencyAddress}}</td>
                 </tr>
                 <!--/ITEMS_SP1-->
             </tbody>
         </table>
 
         <script type="text/javascript">
-            (function () {
+            window.onload = function () {
 
-                var table = document.getElementById("childrenTable");
+                function cellText(tr, idx) {
+                    var tds = tr.getElementsByTagName("td");
+                    if (!tds[idx]) return "";
+                    var v = tds[idx].textContent.replace(/\s+/g, " ").trim();
+                    return (v === "NULL") ? "" : v;
+                }
 
-                if (!table) return;
+                var raw = document.getElementById("rawFamilyData");
+                if (!raw) return;
+                var rows = raw.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
 
-                var tbody = table.getElementsByTagName("tbody")[0];
+                var children = [], childKeys = {};
+                var relatives = [], relKeys = {};
+                var emergencies = [], emgKeys = {};
 
-                if (!tbody) return;
+                for (var i = 0; i < rows.length; i++) {
+                    var r = rows[i];
 
-                var rows = tbody.getElementsByTagName("tr");
-                var seen = {};
-                var rowKey;
-                var cells;
-                var i;
-                var j;
-                var value;
+                    var cName = cellText(r, 0), cMobile = cellText(r, 1), cAddress = cellText(r, 2);
+                    var rName = cellText(r, 3), rRel = cellText(r, 4), rMobile = cellText(r, 5), rAddress = cellText(r, 6);
+                    var eName = cellText(r, 7), eMobile = cellText(r, 8), eAddress = cellText(r, 9);
 
-                for (i = rows.length - 1; i >= 0; i--) {
+                    var cKey = cName + "|" + cMobile + "|" + cAddress;
+                    if (cName && !childKeys[cKey]) { childKeys[cKey] = true; children.push([cName, cMobile, cAddress]); }
 
-                    cells = rows[i].getElementsByTagName("td");
-                    rowKey = "";
+                    var rKey = rName + "|" + rRel + "|" + rMobile + "|" + rAddress;
+                    if (rName && !relKeys[rKey]) { relKeys[rKey] = true; relatives.push([rName, rRel, rMobile, rAddress]); }
 
-                    for (j = 0; j < cells.length; j++) {
+                    var eKey = eName + "|" + eMobile + "|" + eAddress;
+                    if (eName && !emgKeys[eKey]) { emgKeys[eKey] = true; emergencies.push([eName, eMobile, eAddress]); }
+                }
 
-                        value = cells[j].innerHTML;
-                        value = value.replace(/<[^>]*>/g, "");
-                        value = value.replace(/&nbsp;/g, " ");
-                        value = value.replace(/\s+/g, " ");
-                        value = value.replace(/^\s+|\s+$/g, "");
-
-                        rowKey += "|" + value;
-                    }
-
-                    if (seen[rowKey]) {
-                        rows[i].parentNode.removeChild(rows[i]);
-                    } else {
-                        seen[rowKey] = true;
+                function fill(tableId, dataArr) {
+                    var table = document.getElementById(tableId);
+                    if (!table) return;
+                    var tbody = table.getElementsByTagName("tbody")[0];
+                    for (var i = 0; i < dataArr.length; i++) {
+                        var tr = document.createElement("tr");
+                        for (var j = 0; j < dataArr[i].length; j++) {
+                            var td = document.createElement("td");
+                            td.textContent = dataArr[i][j];
+                            tr.appendChild(td);
+                        }
+                        tbody.appendChild(tr);
                     }
                 }
 
-            })();
+                fill("childrenTable", children);
+                fill("relativeTable", relatives);
+                fill("emergencyTable", emergencies);
+
+                raw.parentNode.removeChild(raw);
+            };
         </script>
 
-        <div class="sub-heading">-&nbsp; Close Relative / Guardian</div>
-        <table class="family-info-table">
-            <thead>
+
+        <!-- ==================== PAGE 3 ==================== -->
+        <div class="page page-3">
+
+            <table style="page-break-inside:avoid; border:none; margin-bottom:22px;">
                 <tr>
-                    <th>Name</th>
-                    <th>Relation</th>
-                    <th>Mobile number</th>
-                    <th>mail address</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!--ITEMS_SP1-->
-                <tr>
-                    <td>{{RelativeName}}</td>
-                    <td>{{RelationshipName}}</td>
-                    <td>{{RelativeMobile}}</td>
-                    <td>{{RelativeAddress}}</td>
+                    <td style="border:none; padding:0;">
 
-                </tr>
-                <!--/ITEMS_SP1-->
+                        <div class="section-title">10. HEALTH INFORMATION</div>
 
+                        <div class="note-line">If You Have Any Breathing Problems Or Allergies To Any Substances, Then The Details</div>
 
-            </tbody>
+                        <div class="field-row">
+                            <span class="field-label">Male / Husband Current Medications / Treatment :</span>
+                            <span class="field-line">{{HusbandMedications}}</span>
+                        </div>
+                        <div class="blank-line"></div>
+                        <div class="blank-line"></div>
+                        <div class="blank-line"></div>
+
+                        <div class="field-row">
+                            <span class="field-label">Female / Wife Current Medications / Treatment :</span>
+                            <span class="field-line">{{WifeMedications}}</span>
+                        </div>
+                        <div class="blank-line"></div>
+                        <div class="blank-line"></div>
+                        <div class="blank-line"></div>
+
+                        <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
+                            <tr>
+                                <td class="field-cell" style="width:50%;">
+                                    <span class="field-label">Husband Recent Full Body Check-up:</span>
+                                    <span class="dob-seg">{{HusbandFullBodyCheckupDate}}</span>
+                                </td>
+                                <td class="field-cell" style="width:50%;">
+                                    <span class="field-label">Wife Recent Full Body Check-up:</span>
+                                    <span class="dob-seg">{{WifeFullBodyCheckupDate}}</span>
+                                </td>
+                            </tr>
+                        </table>
+
+        </div>
+
+        <!-- FIX: SP ke actual columns AyushmanEnrolled (bit), MaleFemaleEnrolled, AyushmanSpouseDetails hain -->
+        <div class="section-title">11. AYUSHMAN BHARAT SCHEME</div>
+
+        <div class="note-line">Are You Enrolled In The Ayushman Bharat Scheme?</div>
+
+        <div class="gender-header">
+            <span>&nbsp;</span>
+            <span>Male /</span>
+            <span>Female /</span>
+        </div>
+
+        <div class="yn-row">
+            <span class="field-label">No</span><span class="chk-box chk-{{AyushmanEnrolledNo}}"></span>
+            <span class="field-label">Yes</span><span class="chk-box chk-{{AyushmanEnrolledYes}}"></span>
+        </div>
+
+        <div class="field-row">
+            <span class="field-label">Then Spouse Details:</span>
+            <span class="field-line">{{AyushmanSpouseDetails}}</span>
+            <span class="field-label">Spouse :</span>
+            <span class="field-line">{{AyushmanSpouseDetails}}</span>
+        </div>
+
+        </td>
+        </tr>
         </table>
 
-        <div class="sub-heading">- &nbsp;Emergency Contact Of Neighbours</div>
-        <table class="family-info-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Mobile number</th>
-                    <th>Email address</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                <!--ITEMS_SP1-->
-                <tr>
-                    <td>{{EmrgencyName}}</td>
-                    <td>{{EmrgencyMobile}}</td>
-                    <td>{{EmrgencyAddress}}</td>
-
-                </tr>
-                <!--/ITEMS_SP1-->
-
-
-            </tbody>
-        </table>
-
-        <!--<div class="footer-page">Page 2 of 4</div>-->
-
-    </div>
-
-
-    <!-- ==================== PAGE 3 ==================== -->
-    <div class="page page-3">
-
-        <table style="page-break-inside:avoid; border:none; margin-bottom:22px;">
-            <tr>
-                <td style="border:none; padding:0;">
-
-                    <div class="section-title">10. HEALTH INFORMATION</div>
-
-                    <div class="note-line">If You Have Any Breathing Problems Or Allergies To Any Substances, Then The Details</div>
-
-                    <div class="field-row">
-                        <span class="field-label">Male / Husband Current Medications / Treatment :</span>
-                        <span class="field-line">{{HusbandMedications}}</span>
-                    </div>
-                    <div class="blank-line"></div>
-                    <div class="blank-line"></div>
-                    <div class="blank-line"></div>
-
-                    <div class="field-row">
-                        <span class="field-label">Female / Wife Current Medications / Treatment :</span>
-                        <span class="field-line">{{WifeMedications}}</span>
-                    </div>
-                    <div class="blank-line"></div>
-                    <div class="blank-line"></div>
-                    <div class="blank-line"></div>
-
-                    <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
-                        <tr>
-                            <td class="field-cell" style="width:50%;">
-                                <span class="field-label">Husband Recent Full Body Check-up:</span>
-                                <span class="dob-seg">{{HusbandFullBodyCheckupDate}}</span>
-                            </td>
-                            <td class="field-cell" style="width:50%;">
-                                <span class="field-label">Wife Recent Full Body Check-up:</span>
-                                <span class="dob-seg">{{WifeFullBodyCheckupDate}}</span>
-                            </td>
-                        </tr>
-                    </table>
-
-    </div>
-
-    <!-- FIX: SP ke actual columns AyushmanEnrolled (bit), MaleFemaleEnrolled, AyushmanSpouseDetails hain -->
-    <div class="section-title">11. AYUSHMAN BHARAT SCHEME</div>
-
-    <div class="note-line">Are You Enrolled In The Ayushman Bharat Scheme?</div>
-
-    <div class="gender-header">
-        <span>&nbsp;</span>
-        <span>Male /</span>
-        <span>Female /</span>
-    </div>
-
-    <div class="yn-row">
-        <span class="field-label">No</span><span class="chk-box chk-{{AyushmanEnrolledNo}}"></span>
-        <span class="field-label">Yes</span><span class="chk-box chk-{{AyushmanEnrolledYes}}"></span>
-    </div>
-
-    <div class="field-row">
-        <span class="field-label">Then Spouse Details:</span>
-        <span class="field-line">{{AyushmanSpouseDetails}}</span>
-        <span class="field-label">Spouse :</span>
-        <span class="field-line">{{AyushmanSpouseDetails}}</span>
-    </div>
-
-    </td>
-    </tr>
-    </table>
-
-    <!--<div class="footer-page">Page 2 </div>-->
+        <!--<div class="footer-page">Page 2 </div>-->
     </div>
     <br>
 
