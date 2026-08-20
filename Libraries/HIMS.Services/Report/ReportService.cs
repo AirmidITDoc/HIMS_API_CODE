@@ -2080,6 +2080,25 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+                #region :: PathologyTestDetailForDischargeSummary ::
+                case "PathologyTestDetailForDischargeSummary":
+
+                    {
+
+                        model.RepoertName = "PathologyReportWithHeader";
+                        string[] headerList = Array.Empty<string>();
+                        string[] colList = Array.Empty<string>();
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PathologyTestDetailForDischargeSummary.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("ps_rptPathologyTestDetailForDischargeSummary", model, htmlFilePath, htmlHeaderFilePath, colList, headerList);
+                        //html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "PathologyTestDetailForDischargeSummary", "PathologyTestDetailForDischargeSummary" + vDate, Orientation.Portrait);
+
+                        break;
+                    }
+                #endregion
+
                 #region :: PathologyReportWithImgHeader ::
                 case "PathologyReportWithImgHeader":
                     {
@@ -2904,7 +2923,7 @@ namespace HIMS.Services.Report
             font += "\nbody {font-family: " + fonts + " sans-serif;}";
             return html.Replace("{{LoadFont}}", font);
         }
-        public Tuple<byte[], string> GetNewReportSetByProc(ReportConfigDto model, long StoreId = 2)
+        public Tuple<byte[], string> GetNewReportSetByProc(ReportConfigDto model, long StoreId = 2, long UnitId = 1)
         {
 
             string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
@@ -2935,7 +2954,7 @@ namespace HIMS.Services.Report
             }
             else
             {
-                htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, UnitId);
             }
 
 
@@ -18731,7 +18750,207 @@ namespace HIMS.Services.Report
 
 
 
+                case "PathologyTestDetailForDischargeSummary":
+                    {
 
+                        Boolean chkresonflag = false;
+                        string chkflag = "";
+                        int Suggflag = 0;
+                        int i = 0, j = 0, k = 0, testlength = 0, m;
+                        String Label = "", Suggchk = "", Suggestion = "";
+                        string previousLabel = "", previoussubLabel = "";
+
+                        string signatureFileName = dt.Rows[0]["Signature"].ConvertToString();
+
+                        var signature = string.IsNullOrWhiteSpace(signatureFileName) ? "" : _pdfUtility.GetBase64FromFolder("Doctors\\Signature", dt.Rows[0]["Signature"].ConvertToString());
+
+                        html = html.Replace("{{Signature}}", signature);
+                        html = html.Replace("{{chkSignature}}", !string.IsNullOrWhiteSpace(signatureFileName) ? "inline-block" : "none");
+
+                        html = html.Replace("{{FooterComment}}", dt.GetColValue("FooterComment").ConvertToString());
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("RegNo")?.ToString()));
+
+
+                        // 1 Means small font and other than 1 shows large font
+                        string FontFlag = dt.GetColValue("FontFlag").ConvertToString();
+
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                i++;
+
+                                string currentTestName = dr["PrintTestName"].ConvertToString();
+                                string currentSubTestName = dr["SubTestName"].ConvertToString();
+                                string resultValue = dr["ResultValue"].ConvertToString();
+                                string normalRange = dr["NormalRange"].ConvertToString();
+
+                                // ================= TEST NAME HEADER =================
+                                if (previousLabel != currentTestName)
+                                {
+                                    items.Append("<tr style=\"font-size:18px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
+                                         .Append("<td colspan=\"4\" style=\"padding:6px;text-align:center;\">")
+                                         .Append("<span style=\"border-bottom:2px solid #000;\">")
+                                         .Append(currentTestName)
+                                         .Append("</span>")
+                                         .Append("</td></tr>");
+
+                                    previoussubLabel = "";
+                                }
+
+                                // ================= RESULT ROWS =================
+                                if (!string.IsNullOrWhiteSpace(resultValue))
+                                {
+                                    // ================= SUB TEST HEADER =================
+                                    if (!string.IsNullOrWhiteSpace(currentSubTestName) &&
+                                        previoussubLabel != currentSubTestName)
+                                    {
+                                        items.Append("<tr style=\"font-size:16px;font-family:Verdana, Arial, sans-serif;font-weight:bold;\">")
+                                             .Append("<td colspan=\"4\" style=\"padding:5px;text-align:left;\">")
+                                             .Append(currentSubTestName)
+                                             .Append("</td></tr>");
+
+                                        previoussubLabel = currentSubTestName;
+                                    }
+
+                                    items.Append("<tr style=\"font-family:Verdana, Arial, sans-serif;color:#000;\">");
+
+                                    // ================= PARAMETER NAME =================
+                                    if (dr["IsBoldFlag"].ConvertToString() == "B")
+                                        items.Append("<td style=\"font-size:16px;font-weight:bold;padding:5px;text-align:left;\">");
+                                    else
+                                        items.Append("<td style=\"font-size:16px;padding:5px;text-align:left;\">");
+
+                                    items.Append(dr["PrintParameterName"].ConvertToString());
+
+                                    if (!string.IsNullOrWhiteSpace(dr["MethodName"].ConvertToString()))
+                                    {
+                                        items.Append("<br/>")
+                                             .Append("<span style=\"font-size:14px;font-style:italic;color:#555;\">")
+                                             .Append(dr["MethodName"].ConvertToString())
+                                             .Append("</span>");
+                                    }
+
+                                    items.Append("</td>");
+
+                                    // ================= HIGH / LOW LOGIC =================
+                                    string arrow = "";
+                                    decimal numericResult;
+
+                                    if (decimal.TryParse(resultValue, out numericResult) &&
+                                        !string.IsNullOrWhiteSpace(normalRange))
+                                    {
+                                        try
+                                        {
+                                            var numbers = System.Text.RegularExpressions.Regex
+                                                .Matches(normalRange, @"\d+(\.\d+)?");
+
+                                            if (numbers.Count >= 2)
+                                            {
+                                                decimal minRange = Convert.ToDecimal(numbers[0].Value);
+                                                decimal maxRange = Convert.ToDecimal(numbers[1].Value);
+
+                                                if (numericResult > maxRange)
+                                                {
+                                                    arrow = " <span style='color:red;font-weight:bold;font-size:16px;'>&uarr;</span>";
+                                                }
+                                                else if (numericResult < minRange)
+                                                {
+                                                    arrow = " <span style='color:blue;font-weight:bold;font-size:16px;'>&darr;</span>";
+                                                }
+                                            }
+                                        }
+                                        catch
+                                        {
+                                            arrow = "";
+                                        }
+                                    }
+
+                                    // ================= OBSERVED VALUE =================
+                                    if (dr["ParaBoldFlag"].ConvertToString() == "B")
+                                        items.Append("<td style=\"font-size:16px;font-weight:bold;padding:6px;text-align:center;\">");
+                                    else
+                                        items.Append("<td style=\"font-size:16px;padding:6px;text-align:center;\">");
+
+
+                                    if (arrow.Contains("blue"))
+                                    {
+                                        items.Append("<span style='color:blue;font-weight:bold;font-size:16px;'>&darr;</span> ")
+                                             .Append(resultValue);
+                                    }
+
+                                    else
+                                    {
+                                        items.Append(resultValue)
+                                             .Append(arrow);
+                                    }
+
+                                    items.Append("</td>");
+
+                                    // ================= REFERENCE RANGE =================
+                                    items.Append("<td style=\"font-size:16px;padding:6px;text-align:left;\">")
+                                         .Append(normalRange)
+                                         .Append("</td>");
+
+                                    // ================= UNITS =================
+                                    items.Append("<td style=\"font-size:16px;padding:6px;text-align:left;\">")
+                                         .Append(dr["UnitNamePathTran"].ConvertToString())
+                                         .Append("</td>");
+
+                                    items.Append("</tr>");
+                                }
+
+                                previousLabel = currentTestName;
+                            }
+                            html = html.Replace("{{Items}}", items.ToString());
+                        
+
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo").ConvertToString());
+
+
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName").ConvertToString());
+                        html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear").ConvertToString());
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName").ConvertToString());
+
+                        html = html.Replace("{{ConsultantDocName}}", dt.GetColValue("ConsultantDocName").ConvertToString());
+                        html = html.Replace("{{SampleCollectionTime}}", dt.GetColValue("SampleCollectionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{ReportTime}}", dt.GetColValue("ReportTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{PathTime}}", dt.GetColValue("PathTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+                        html = html.Replace("{{Expr1}}", dt.GetColValue("Expr1").ConvertToString());
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName").ConvertToString());
+                        html = html.Replace("{{PathResultDr1}}", dt.GetColValue("PathResultDr1").ConvertToString());
+                        html = html.Replace("{{Adm_Visit_Time}}", dt.GetColValue("Adm_Visit_Time").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+                        html = html.Replace("{{UserName}}", dt.GetColValue("UserName").ConvertToString());
+
+                        html = html.Replace("{{CategoryName}}", dt.GetColValue("CategoryName").ConvertToString());
+
+
+
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("OP_IP_Number").ConvertToString());
+
+
+                        html = html.Replace("{{SampleNo}}", dt.GetColValue("SampleNo").ConvertToString());
+
+
+
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("ConsultantDocName").ConvertToString());
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName").ConvertToString());
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName").ConvertToString());
+                        html = html.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName").ConvertToString());
+                        html = html.Replace("{{AdharCardNo}}", dt.GetColValue("AdharCardNo").ConvertToString());
+                        html = html.Replace("{{Education}}", dt.GetColValue("Education").ConvertToString());
+                        html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo").ConvertToString());
+                        html = html.Replace("{{SuggestionNote}}", dt.GetColValue("SuggestionNote"));
+
+                        html = html.Replace("{{PathResultDr1}}", dt.GetColValue("PathResultDr1").ConvertToString());
+                        html = html.Replace("{{chkSuggestionNote}}", dt.GetColValue("SuggestionNote").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
+
+
+
+                        return html;
+                    }
+                    break;
 
                 case "PathologyReportWithImgHeader":
                     {
