@@ -237,6 +237,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IHomeCollectionPatientRegService, HomeCollectionPatientRegService>();
 
             services.AddScoped<IDocumentCategoryService, DocumentCategoryService>();
+            services.AddScoped<IDocumentUploadService, DocumentUploadService>();
 
 
 

@@ -558,6 +558,8 @@ namespace HIMS.API.Controllers.Report
                 case "PathologyReportWithImgHeader":
 
                 case "PathologySampleBarcode":
+                case "PathologyTestDetailForDischargeSummary":
+
 
 
 
@@ -631,7 +633,7 @@ namespace HIMS.API.Controllers.Report
                     break;
             }
             // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
-         //   long UnitId = 1;
+        //    long UnitId = 1;
             long UnitId = Context.UnitId;
             model.BaseUrl = AppSettings.Settings.BaseUrl;
             model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
@@ -653,7 +655,7 @@ namespace HIMS.API.Controllers.Report
 
                 model.BaseUrl = AppSettings.Settings.BaseUrl;
                 model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
-                var byteFile = await _reportService.GetReportSetByProcDB(model, AppSettings.Settings.PdfFontPath, UnitId, StoreId);
+                var byteFile = await _reportService.GetReportSetByProcDB(model, AppSettings.Settings.PdfFontPath,  StoreId, UnitId);
                 if (byteFile?.Item1 == null || byteFile.Item1.Length < 100)
                     throw new Exception($"Invalid PDF generated. Size: {byteFile?.Item1?.Length ?? 0} bytes.");
                 return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = Convert.ToBase64String(byteFile.Item1) }));
@@ -685,8 +687,11 @@ namespace HIMS.API.Controllers.Report
             objGrid.First = 0;
             objGrid.Rows = 0;
 
-             //  long StoreId = 2;
-           long StoreId = Context.StoreId;
+            //  long StoreId = 2;
+            //long UnitId = 1;
+            long StoreId = Context.StoreId;
+            long UnitId = Context.UnitId;
+
             IPagedList<MReportListDto> MReportConfigList = await _reportService.MReportListDto(objGrid);
             if (MReportConfigList.Count > 0)
             {
@@ -707,7 +712,7 @@ namespace HIMS.API.Controllers.Report
                 model.vPageOrientation = MReportConfigList[0].ReportPageOrientation;
             }
             model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
-            var tuple = _reportService.GetNewReportSetByProc(model, StoreId);
+            var tuple = _reportService.GetNewReportSetByProc(model, StoreId, UnitId);
             string byteFile = Convert.ToBase64String(tuple.Item1);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
