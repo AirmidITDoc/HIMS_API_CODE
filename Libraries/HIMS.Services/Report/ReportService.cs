@@ -204,6 +204,28 @@ namespace HIMS.Services.Report
         }
 
 
+        public virtual async Task<List<object>> SearchPaymentmode(string keyword)
+        {
+            var statusList = new List<dynamic>
+    {
+        new { Text = "Cash", Value = 1 },
+        new { Text = "Card", Value = 2 },
+        new { Text = "Check", Value = 3 },
+        new { Text = "UPI", Value = 4 },
+        new { Text = "NEFT", Value = 5 },
+
+
+
+    };
+
+            var result = statusList
+                .Where(x => x.Text.ToLower().Contains(keyword.ToLower()))
+                .Take(25)
+                .ToList<object>();
+
+            return await Task.FromResult(result);
+        }
+
         public virtual async Task<IPagedList<MReportListDto>> MReportListDto(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<MReportListDto>(model, "ps_ReportList");
@@ -1222,7 +1244,7 @@ namespace HIMS.Services.Report
                         var html = GetHTMLView("m_rpt_T_Doctors_Notes", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                         html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
 
-                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "DoctorNotesReceipt", "DoctorNotesReceipt" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "DoctorNotesReceipt", "DoctorNotesReceipt" + vDate, Orientation.Landscape);
                         break;
                     }
                 #endregion
@@ -12370,10 +12392,21 @@ namespace HIMS.Services.Report
                         foreach (DataRow dr in dt.Rows)
                         {
                             i++;
+                            items.Append("<tr style=\"font-family: 'Helvetica Neue', 'Helvetica', Arial, sans-serif;\">").Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px; font-size:18px;\">") .Append(dr["TTime"].ConvertToString()).Append("</td>");
 
-                            items.Append("<tr style\"font-family: 'Helvetica Neue', 'Helvetica',, Arial, sans-serif;\"><td style=\" border: 1px solid #d4c3c3; text-align: center; padding: 6px;font-size:18px;\">").Append(dr["TTime"].ConvertToString()).Append("</td>");
-                            items.Append("<td style=\" border: 1px solid #d4c3c3; text-align: left; padding: 6px;font-size:18px;\">").Append(dr["DoctorsNotes"].ConvertToString()).Append("</td></tr>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-size:18px;\">")
+                                 .Append(dr["DoctorsNotes"].ConvertToString())
+                                 .Append("</td>");
 
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-size:18px;\">")
+                                 .Append(dr["ConDoctorName"].ConvertToString())
+                                 .Append("</td>");
+
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: left; padding: 6px; font-size:18px;\">")
+                                 .Append(dr["RMODoctorName"].ConvertToString())
+                                 .Append("</td>");
+
+                            items.Append("</tr>");
                         }
                         html = html.Replace("{{Items}}", items.ToString());
                         html = html.Replace("{{AdmID}}", dt.GetColValue("AdmId"));
