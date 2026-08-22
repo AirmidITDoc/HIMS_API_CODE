@@ -7670,6 +7670,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ItemTypeId).HasColumnName("ItemTypeID");
 
+                entity.Property(e => e.LocalLanguageName).HasMaxLength(255);
+
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ProdLocation).HasMaxLength(100);

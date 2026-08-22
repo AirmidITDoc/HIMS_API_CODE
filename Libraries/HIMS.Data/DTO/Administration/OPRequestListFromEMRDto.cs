@@ -15,7 +15,7 @@
         public long? IsPackage { get; set; }
         public string ClassName { get; set; }
         public bool? IsAllowZeroPrice { get; set; }
-        public string IsEditable { get; set; }
+        public bool IsEditable { get; set; }
 
     }
 }
