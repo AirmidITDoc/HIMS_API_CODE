@@ -370,6 +370,22 @@ namespace HIMS.API.Controllers.Report
             );
         }
 
+        [HttpGet("Paymentmode/auto-complete")]
+        public async Task<ApiResponse> SearchPaymentmode(string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword) || keyword == "%")
+            {
+                keyword = string.Empty;
+            }
+            var data = await _reportService.SearchPaymentmode(keyword);
+
+            return ApiResponseHelper.GenerateResponse(
+                ApiStatusCode.Status200OK,
+                "Search Status",
+                data
+            );
+        }
+
 
         [HttpGet("{mode?}")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
