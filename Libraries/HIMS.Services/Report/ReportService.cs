@@ -210,7 +210,7 @@ namespace HIMS.Services.Report
     {
         new { Text = "Cash", Value = 1 },
         new { Text = "Card", Value = 2 },
-        new { Text = "Check", Value = 3 },
+        new { Text = "Cheque", Value = 3 },
         new { Text = "UPI", Value = 4 },
         new { Text = "NEFT", Value = 5 },
 
