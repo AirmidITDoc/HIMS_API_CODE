@@ -18,7 +18,6 @@ namespace HIMS.Services.IPPatient
     public  class MIcdDiagnosisMasterService: IMIcdDiagnosisMasterService
     {
         private readonly HIMSDbContext _context;
-        private MIcdDiagnosisMasterDto objMain;
 
         public MIcdDiagnosisMasterService(HIMSDbContext HIMSDbContext)
         {
@@ -54,12 +53,12 @@ namespace HIMS.Services.IPPatient
 
         //    return objMain;
         //}
-        public List<MIcdDiagnosisMasterDto> GetMIcdDiagnosis(string Keyword)
+        public List<MIcdDiagnosisMasterNewDto> GetMIcdDiagnosis(string Keyword)
         {
             DatabaseHelper sql = new();
             SqlParameter[] para = new SqlParameter[1];
             para[0] = new SqlParameter("@Keyword", Keyword);
-            return sql.FetchListBySP<MIcdDiagnosisMasterDto>("ps_Retrieve_IcdDiagnosisMasterForCombo", para);
+            return sql.FetchListBySP<MIcdDiagnosisMasterNewDto>("ps_Retrieve_IcdDiagnosisMasterForCombo", para);
         }
     }
 }

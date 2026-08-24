@@ -412,6 +412,7 @@
         .two-field-row td {
             border: none !important;
         }
+
         .section-title {
             font-weight: bold;
             margin: 18px 0 9px 0;
@@ -462,23 +463,23 @@
                     <span class="field-line">{{WifeParentalDetails}}</span>
                 </div>
 
+
                 <div class="dob-row">
                     <span class="field-label">Man/Husband's Date of Birth:</span>
-                    <span class="dob-seg">{{HusbandDOB}}</span>
-                    <!--<span class="dob-seg">{{HusbandAgeM}}</span>-->
-                    <!--<span class="dob-seg" style="min-width:52px;">{{HusbandAgeY}}</span>-->
-                    <!--<span class="field-label">Age:</span>
-                    <span class="age-line">{{HusbandAgeY}}</span> Years-->
+                    <span class="dob-seg" style="margin-left: 8px;">{{HusbandDOB}}</span>
+
+                    <span class="field-label" style="margin-left: 15px;">Age:</span>
+                    <span class="age-line" style="margin-left: 5px;">{{HusbandAgeY}}</span>
+                    <span style="margin-left: 5px;">Years</span>
                 </div>
 
                 <div class="dob-row">
                     <span class="field-label">Woman/Wife's Date of Birth:</span>
-                    <span class="dob-seg">{{WifeDOB}}</span>
-                    <!--<span class="dob-seg">{{WifeAgeM}}</span> /
-                    <span class="dob-seg" style="min-width:52px;">{{WifeAgeY}}</span>
+                    <span class="dob-seg" style="margin-left: 8px;">{{WifeDOB}}</span>
 
-                    <span class="field-label">Age:</span>
-                    <span class="age-line">{{WifeAgeY}}</span> Years-->
+                    <span class="field-label" style="margin-left: 15px;">Age:</span>
+                    <span class="age-line" style="margin-left: 5px;">{{WifeAgeY}}</span>
+                    <span style="margin-left: 5px;">Years</span>
                 </div>
 
             </div>
@@ -522,18 +523,29 @@
         <div class="section-title">3 Residence and Personal Information</div>
 
         <div class="field-row multiline">
-            <span class="field-label">Residence Address:</span>
+            <span class="field-label">Husband Residence Address:</span>
             <span class="field-line">{{ResidenceAddress}}</span>
-        </div>
-        <div class="field-row multiline">
-            <span class="field-label" style="visibility:hidden;">Residence Address:</span>
-            <span class="field-line">&nbsp;</span>
         </div>
 
         <div class="checkbox-row">
             <span class="field-label">Residence Type:</span>
             <label>Own</label><span class="chk-box chk-{{ResidenceTypeOwn}}"></span>
             <label>Rented</label><span class="chk-box chk-{{ResidenceTypeRented}}"></span>
+        </div>
+
+        <div class="field-row multiline">
+            <span class="field-label">Wife Residence Address:</span>
+            <span class="field-line">{{wresidenceAddress}}</span>
+        </div>
+        <!--<div class="field-row multiline">
+        <span class="field-label" style="visibility:hidden;">Residence Address:</span>
+        <span class="field-line">&nbsp;</span>
+    </div>-->
+
+        <div class="checkbox-row">
+            <span class="field-label">Residence Type:</span>
+            <label>Own</label><span class="chk-box chk-{{WResidenceTypeOwn}}"></span>
+            <label>Rented</label><span class="chk-box chk-{{WResidenceTypeRented}}"></span>
         </div>
 
 
@@ -656,15 +668,6 @@
                 </td>
             </tr>
         </table>
-        <!--<div class="section-title">8. HOBBIES</div>
-    <div class="field-row">
-        <span class="field-label">Man/Husband's hobbies:</span>
-        <span class="field-line">{{HusbandHobbies}}</span>
-    </div>
-    <div class="field-row">
-        <span class="field-label">Woman/Wife's hobbies:</span>
-        <span class="field-line">{{WifeHobbies}}</span>
-    </div>-->
 
 
         <div class="section-title">9. FAMILY - RELATED INFORMATION</div>
@@ -771,91 +774,68 @@
             };
         </script>
 
+        <!--<div class="footer-page">Page 2</div>-->
 
-        <!-- ==================== PAGE 3 ==================== -->
-        <div class="page page-3">
-
-            <table style="page-break-inside:avoid; border:none; margin-bottom:22px;">
-                <tr>
-                    <td style="border:none; padding:0;">
-
-                        <div class="section-title">10. HEALTH INFORMATION</div>
-
-                        <div class="note-line">If You Have Any Breathing Problems Or Allergies To Any Substances, Then The Details</div>
-
-                        <div class="field-row">
-                            <span class="field-label">Male / Husband Current Medications / Treatment :</span>
-                            <span class="field-line">{{HusbandMedications}}</span>
-                        </div>
-                        <div class="blank-line"></div>
-                        <div class="blank-line"></div>
-                        <div class="blank-line"></div>
-
-                        <div class="field-row">
-                            <span class="field-label">Female / Wife Current Medications / Treatment :</span>
-                            <span class="field-line">{{WifeMedications}}</span>
-                        </div>
-                        <div class="blank-line"></div>
-                        <div class="blank-line"></div>
-                        <div class="blank-line"></div>
-
-                        <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
-                            <tr>
-                                <td class="field-cell" style="width:50%;">
-                                    <span class="field-label">Husband Recent Full Body Check-up:</span>
-                                    <span class="dob-seg">{{HusbandFullBodyCheckupDate}}</span>
-                                </td>
-                                <td class="field-cell" style="width:50%;">
-                                    <span class="field-label">Wife Recent Full Body Check-up:</span>
-                                    <span class="dob-seg">{{WifeFullBodyCheckupDate}}</span>
-                                </td>
-                            </tr>
-                        </table>
-
-        </div>
-
-        <!-- FIX: SP ke actual columns AyushmanEnrolled (bit), MaleFemaleEnrolled, AyushmanSpouseDetails hain -->
-        <div class="section-title">11. AYUSHMAN BHARAT SCHEME</div>
-
-        <div class="note-line">Are You Enrolled In The Ayushman Bharat Scheme?</div>
-
-        <div class="gender-header">
-            <span>&nbsp;</span>
-            <span>Male /</span>
-            <span>Female /</span>
-        </div>
-
-        <div class="yn-row">
-            <span class="field-label">No</span><span class="chk-box chk-{{AyushmanEnrolledNo}}"></span>
-            <span class="field-label">Yes</span><span class="chk-box chk-{{AyushmanEnrolledYes}}"></span>
-        </div>
-
-        <div class="field-row">
-            <span class="field-label">Then Spouse Details:</span>
-            <span class="field-line">{{AyushmanSpouseDetails}}</span>
-            <span class="field-label">Spouse :</span>
-            <span class="field-line">{{AyushmanSpouseDetails}}</span>
-        </div>
-
-        </td>
-        </tr>
-        </table>
-
-        <!--<div class="footer-page">Page 2 </div>-->
     </div>
-    <br>
 
-    <!-- ==================== PAGE 2 ==================== -->
-    <div class="page page-2">
+    <!-- ==================== PAGE 3 ==================== -->
+    <div class="page page-3">
 
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
         <table style="page-break-inside:avoid; border:none; margin-bottom:22px;">
             <tr>
                 <td style="border:none; padding:0;">
+
+                    <div class="section-title">10. HEALTH INFORMATION</div>
+
+                    <div class="note-line">If You Have Any Breathing Problems Or Allergies To Any Substances, Then The Details</div>
+
+                    <div class="field-row">
+                        <span class="field-label">Male / Husband Current Medications / Treatment :</span>
+                        <span class="field-line">{{HusbandMedications}}</span>
+                    </div>
+                    <div class="blank-line"></div>
+                    <div class="blank-line"></div>
+                    <div class="blank-line"></div>
+
+                    <div class="field-row">
+                        <span class="field-label">Female / Wife Current Medications / Treatment :</span>
+                        <span class="field-line">{{WifeMedications}}</span>
+                    </div>
+                    <div class="blank-line"></div>
+                    <div class="blank-line"></div>
+                    <div class="blank-line"></div>
+
+                    <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
+                        <tr>
+                            <td class="field-cell" style="width:50%;">
+                                <span class="field-label">Husband Recent Full Body Check-up:</span>
+                                <span class="dob-seg">{{HusbandFullBodyCheckupDate}}</span>
+                            </td>
+                            <td class="field-cell" style="width:50%;">
+                                <span class="field-label">Wife Recent Full Body Check-up:</span>
+                                <span class="dob-seg">{{WifeFullBodyCheckupDate}}</span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- FIX: SP ke actual columns AyushmanEnrolled (bit), MaleFemaleEnrolled, AyushmanSpouseDetails hain -->
+                    <div class="section-title">11. AYUSHMAN BHARAT SCHEME</div>
+
+                    <div class="note-line">Are You Enrolled In The Ayushman Bharat Scheme?</div>
+
+                    <div class="yn-row">
+                        <span class="field-label"><strong>Male </strong></span>
+                        <span class="field-label">No</span>
+                        <span class="chk-box chk-{{AyushmanEnrolledNo}}"></span>
+                        <span class="field-label">Yes</span>
+                        <span class="chk-box chk-{{AyushmanEnrolledYes}}"></span>
+
+                        <span class="field-label"><strong>Female </strong></span>
+                        <span class="field-label">No</span>
+                        <span class="chk-box chk-{{WAyushmanEnrolledNo}}"></span>
+                        <span class="field-label">Yes</span>
+                        <span class="chk-box chk-{{WAyushmanEnrolledYes}}"></span>
+                    </div>
 
 
                     <div class="section-title">12. MEDICAL INSURANCE / MEDICLAIM DETAILS</div>
@@ -863,15 +843,19 @@
                     <div class="note-line">Do you have a Mediclaim Policy?</div>
 
                     <div class="yn-row">
-                        <span class="field-label">No</span><span class="chk-box chk-{{HasMediclaimNo}}"></span>
-                        <span class="field-label">Yes</span><span class="chk-box chk-{{HasMediclaimYes}}"></span>
-                    </div>
+                        <span class="field-label"><strong>Male </strong></span>
+                        <span class="field-label">No</span>
+                        <span class="chk-box chk-{{HasMediclaimNo}}"></span>
+                        <span class="field-label">Yes</span>
+                        <span class="chk-box chk-{{HasMediclaimYes}}"></span>
 
+                       
+                    </div>
                     <div class="note-line">then details:</div>
 
                     <div class="field-row">
                         <span class="field-label">Company Name:</span>
-                        <span class="field-line">{{CompanyName}}</span>
+                        <span class="field-line">{{MediclaimCompany}}</span>
                         <span class="field-label" style="margin-left:20px;">Policy Number:</span>
                         <span class="field-line">{{MediclaimPolicyNumber}}</span>
                     </div>
@@ -880,75 +864,96 @@
                         <span class="field-label">Issuance:</span>
                         <span class="field-line">{{MediclaimIssuanceAmt}}</span>
 
-                        <!--<span class="field-label" style="margin-left:20px;">Start:</span>
-                    <span class="dob-seg" style="min-width:26px;">{{MediclaimStartDate}}</span>&nbsp;/&nbsp;
-
-                    <span class="field-label" style="margin-left:20px;">End:</span>
-                    <span class="dob-seg" style="min-width:26px;">{{MediclaimEndDate}}</span>&nbsp;/&nbsp;-->
                         <span class="field-label" style="margin-left:20px;">Start:</span>
                         <span class="dob-seg" style="min-width:26px;">{{MediclaimStartDate}}</span>
                         <span class="field-label" style="margin-left:20px;">End:</span>
                         <span class="dob-seg" style="min-width:26px;">{{MediclaimEndDate}}</span>
 
                     </div>
+                    <div class="yn-row">
+
+
+                        <span class="field-label"><strong>Female </strong></span>
+                        <span class="field-label">No</span>
+                        <span class="chk-box chk-{{whasmediclaimNo}}"></span>
+                        <span class="field-label">Yes</span>
+                        <span class="chk-box chk-{{whasmediclaimYes}}"></span>
+                    </div>
+                    <div class="note-line">then details:</div>
+
+                    <div class="field-row">
+                        <span class="field-label">Company Name:</span>
+                        <span class="field-line">{{CompanyName}}</span>
+                        <span class="field-label" style="margin-left:20px;">Policy Number:</span>
+                        <span class="field-line">{{wmediclaimpolicynumber}}</span>
+                    </div>
+
+                    <div class="field-row">
+                        <span class="field-label">Issuance:</span>
+                        <span class="field-line">{{wmediclaimIssuanceAmt}}</span>
+
+                        <span class="field-label" style="margin-left:20px;">Start:</span>
+                        <span class="dob-seg" style="min-width:26px;">{{wmediclaimStartDate}}</span>
+                        <span class="field-label" style="margin-left:20px;">End:</span>
+                        <span class="dob-seg" style="min-width:26px;">{{wmediclaimEndDate}}</span>
+
+                    </div>
+                    <br><br>
+
+                    <div class="section-title">13. FAMILY DOCTOR DETAILS</div>
+                    <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
+                        <tr>
+                            <td class="field-cell" style="width:50%;">
+                                <span class="field-label">Husband Family Doctor's Name:</span>
+                                <span class="field-line">{{FamilyDoctorName}}</span>
+                            </td>
+                            <td class="field-cell" style="width:50%;">
+                                <span class="field-label">Contact Number:</span>
+                                <span class="field-line">{{FamilyDoctorContact}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="field-cell" style="width:50%;">
+                                <span class="field-label">Wife Family Doctor's Name:</span>
+                                <span class="field-line">{{wfamilyDoctorName}}</span>
+                            </td>
+                            <td class="field-cell" style="width:50%;">
+                                <span class="field-label">Contact Number:</span>
+                                <span class="field-line">{{wfamilyDoctorContact}}</span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="section-title">14. Income Information</div>
+
+                    <div class="field-row">
+                        <span class="field-label">Monthly Income (Approx.):</span>
+                    </div>
+
+                    <div class="checkbox-row">
+                        <span class="chk-box chk-{{HIncome1}}"></span><label>₹0 - ₹6,00,000</label>
+                        <span class="chk-box chk-{{HIncome2}}"></span><label>₹6,00,001 - ₹12,00,000</label>
+                        <span class="chk-box chk-{{HIncome3}}"></span><label>₹12,00,001 - ₹18,00,000</label>
+                        <span class="chk-box chk-{{HIncome4}}"></span><label>₹18,00,000 And Above</label>
+                    </div>
+
+                    <!-- FIX: SP columns HusbandPreviousMemberId / WifePreviousMemberId hain -->
+                    <div class="section-title">15. Member Status Past</div>
+
+                    <div class="note-line">Man / Husband Shree Thana Sangh Member Id Number: {{HusbandPreviousMemberId}}</div>
+                    <div class="note-line">Female / Wife Shree Thana Sangh Member Id Number: {{WifePreviousMemberId}}</div>
+                    <div class="note-line">Member Fees ₹ 1000 Per Person (valid For 5 Years)</div>
 
                 </td>
             </tr>
         </table>
-
-        <!--<div class="section-title">13. FAMILY DOCTOR DETAILS</div>
-
-    <div class="two-field-row">
-        <div class="field-row">
-            <span class="field-label">Doctor's Name:</span>
-            <span class="field-line">{{FamilyDoctorName}}</span>
-        </div>
-        <div class="field-row">
-            <span class="field-label">Contact Number:</span>
-            <span class="field-line">{{FamilyDoctorContact}}</span>
-        </div>
-    </div>-->
-        <div class="section-title">13. FAMILY DOCTOR DETAILS</div>
-        <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
-            <tr>
-                <td class="field-cell" style="width:50%;">
-                    <span class="field-label">Doctor's Name:</span>
-                    <span class="field-line">{{FamilyDoctorName}}</span>
-                </td>
-                <td class="field-cell" style="width:50%;">
-                    <span class="field-label">Contact Number:</span>
-                    <span class="field-line">{{FamilyDoctorContact}}</span>
-                </td>
-            </tr>
-        </table>
-
-        <div class="section-title">14. Income Information</div>
-
-        <div class="field-row">
-            <span class="field-label">Monthly Income (Approx.):</span>
-        </div>
-
-      
-        <div class="checkbox-row">
-            <span class="chk-box chk-{{HIncome1}}"></span><label>₹0 - ₹6,00,000</label>
-            <span class="chk-box chk-{{HIncome2}}"></span><label>₹6,00,001 - ₹12,00,000</label>
-            <span class="chk-box chk-{{HIncome3}}"></span><label>₹12,00,001 - ₹18,00,000</label>
-            <span class="chk-box chk-{{HIncome4}}"></span><label>₹18,00,000 And Above</label>
-        </div>
-
-        <!-- FIX: SP columns HusbandPreviousMemberId / WifePreviousMemberId hain -->
-        <div class="section-title">15. Member Status Past</div>
-
-        <div class="note-line">Man / Husband Shree Thana Sangh Member Id Number: {{HusbandPreviousMemberId}}</div>
-        <div class="note-line">Female / Wife Shree Thana Sangh Member Id Number: {{WifePreviousMemberId}}</div>
-        <div class="note-line">Member Fees ₹ 1000 Per Person (valid For 5 Years)</div>
 
         <!--<div class="footer-page">Page 3 of 4</div>-->
 
     </div>
 
-    <!-- ==================== PAGE 3 ==================== -->
-    <div class="page page-3">
+    <!-- ==================== PAGE 4 ==================== -->
+    <div class="page page-4">
 
         <div class="section-title">16. Declamation</div>
 
@@ -993,11 +998,6 @@
             <span class="chk-box chk-{{FeeReceivedNo}}"></span><label>No</label>
         </div>
 
-        <!--<div class="field-row">
-            <span class="field-label">Fee Amount:</span>
-            <span class="field-line">{{FeeAmount}}</span>
-        </div>-->
-
         <div class="spacer"></div>
 
         <div class="field-row">
@@ -1015,7 +1015,7 @@
             </ol>
         </div>
 
-        <!--<div class="footer-page">Page 3 </div>-->
+        <!--<div class="footer-page">Page 4</div>-->
 
     </div>
 
