@@ -488,6 +488,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<THomeDeliveryOrder> THomeDeliveryOrders { get; set; } = null!;
         public virtual DbSet<TIndentDetail> TIndentDetails { get; set; } = null!;
         public virtual DbSet<TIndentHeader> TIndentHeaders { get; set; } = null!;
+        public virtual DbSet<TIpAdmissionDiagnosisInformation> TIpAdmissionDiagnosisInformations { get; set; } = null!;
         public virtual DbSet<TIpPrescription> TIpPrescriptions { get; set; } = null!;
         public virtual DbSet<TIpPrescriptionDischarge> TIpPrescriptionDischarges { get; set; } = null!;
         public virtual DbSet<TIpmedicalRecord> TIpmedicalRecords { get; set; } = null!;
@@ -14134,6 +14135,23 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.UnitId).HasColumnName("UnitID");
+            });
+
+            modelBuilder.Entity<TIpAdmissionDiagnosisInformation>(entity =>
+            {
+                entity.HasKey(e => e.IpdiagnosisId);
+
+                entity.ToTable("T_IP_AdmissionDiagnosisInformation");
+
+                entity.Property(e => e.IpdiagnosisId).HasColumnName("IPDiagnosisId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.FlagCode).HasMaxLength(20);
+
+                entity.Property(e => e.Icdcode).HasColumnName("ICDCode");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TIpPrescription>(entity =>
