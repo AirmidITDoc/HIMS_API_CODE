@@ -1,0 +1,393 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indoor Case Paper</title>
+</head>
+
+<body style="margin:0; padding:0; background:#fff; font-family:Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif; color:#101828;">
+
+    <div style="width:100%; max-width:794px; min-height:1123px; margin:0 auto; border:1px solid #aaa; overflow:hidden; font-size:13px;">
+
+        <!-- Existing HIMS Header -->
+        <table style="width:100%; border-collapse:collapse; line-height:inherit; text-align:left; font-family:Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif; color:#101828;">
+            {{NewHeader}}
+
+            <tr>
+                <td style="padding:6px;">
+                    <table style="width:100%; border-collapse:collapse;">
+                        <tr style="font-size:20px;">
+                            <td style="padding:2px; text-align:center; background-color:dimgray; color:#000;">
+                                <b>INDOOR CASE PAPER</b>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- Patient Details -->
+            <tr>
+                <td style="padding:6px;">
+                    <table style="width:100%; border-collapse:collapse; font-size:15px;">
+
+                        <tr>
+                            <td style="width:50%; padding:2px;">
+                                <span style="font-weight:bold;">UHID : </span>
+                                <span>{{RegNo}}</span>
+                            </td>
+                            <td style="width:50%; padding:2px;">
+                                <span style="font-weight:bold;">Admission Date/Time : </span>
+                                <span>{{DOT}}</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">IPD No : </span>
+                                <span>{{IPDNo}}</span>
+                            </td>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Ward / Bed Name : </span>
+                                <span>{{RoomName}} / {{BedName}}</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Patient Name : </span>
+                                <span>{{PatientName}}</span>
+                            </td>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Age / Gender : </span>
+                                <span>{{AgeYear}} Y | {{AgeMonth}} M | {{AgeDay}} D / {{GenderName}}</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Address : </span>
+                                <span>{{Address}}</span>
+                            </td>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Marital Status : </span>
+                                <span>{{MaritalStatusName}}</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Phone : </span>
+                                <span>{{PhoneNo}}</span>
+                            </td>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Mobile No : </span>
+                                <span>{{MobileNo}}</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Department Name : </span>
+                                <span>{{DepartmentName}}</span>
+                            </td>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Consultant Doctor : </span>
+                                <span>{{AdmittedDoctorName}}</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Patient Type : </span>
+                                <span>{{PatientType}}</span>
+                            </td>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Tariff Name : </span>
+                                <span>{{TariffName}}</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Admitted Doctor Name : </span>
+                                <span>{{AdmittedDoctor1}}</span>
+                            </td>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">AdharCardNo : </span>
+                                <span>{{AadharcardNo}}</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Ref.Doc Name : </span>
+                                <span>{{RefDoctorName}}</span>
+                            </td>
+                            <td style="padding:2px; display:{{chkCompanyNameFlag}};">
+                                <span style="font-weight:bold;">Company Name : </span>
+                                <span>{{CompanyName}}</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Relative Name : </span>
+                                <span>{{RelativeName}}</span>
+                            </td>
+                            <td style="padding:2px; display:{{chkSubTpaCompanyFlag}};">
+                                <span style="font-weight:bold;">SubTPA Company : </span>
+                                <span>{{SubTpaCompanyName}}</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Relationship : </span>
+                                <span>{{RelationshipName}}</span>
+                            </td>
+                            <td style="padding:2px;"></td>
+                        </tr>
+
+                        <tr style="display:{{chkMLCflag}};">
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Relative PhoneNo : </span>
+                                <span>{{RelativePhoneNo}}</span>
+                            </td>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">IsMLC : </span>
+                                <span>{{IsMLC}}</span>
+                                <span style="display:inline-block; width:11px; height:11px; border:1px solid red; vertical-align:middle; margin-left:3px;"></span>
+                            </td>
+                        </tr>
+
+                        <tr style="display:{{chkMLCflag1}};">
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">Relative PhoneNo : </span>
+                                <span>{{RelativePhoneNo}}</span>
+                            </td>
+                            <td style="padding:2px;">
+                                <span style="font-weight:bold;">IsMLC : </span>
+                                <span style="display:inline-block; width:11px; height:11px; vertical-align:middle; margin-left:3px; position:relative;">
+                                    <span style="position:absolute; width:14px; height:1px; background:red; transform:rotate(45deg); top:5px; left:-1px;"></span>
+                                    <span style="position:absolute; width:14px; height:1px; background:red; transform:rotate(-45deg); top:5px; left:-1px;"></span>
+                                </span>
+                            </td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Separator -->
+        <div style="border-top:1px solid #777; margin:2px 0 0 0;"></div>
+
+        <!-- Consent Form -->
+        <div style="font-family:'Noto Sans Devanagari','Mangal',Calibri,Arial,sans-serif; font-size:13px; color:#000;">
+
+            <!-- Top Blank Area -->
+            <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+                <tr>
+                    <td colspan="3" style="height:82px; border:none; padding:0;"></td>
+                </tr>
+            </table>
+
+            <!-- Header -->
+            <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+                <tr style="height:20px;">
+                    <td style="width:40%; border:1px solid #777; padding:2px 5px; font-family:Arial,sans-serif; font-size:13px; white-space:nowrap;">
+                        नातेवाईकास पास मिळाले नग
+                    </td>
+                    <td style="width:36%; border:1px solid #777; padding:2px 5px; font-family:Arial,sans-serif; font-size:13px; white-space:nowrap;">
+                        Reimbursable / Non Reimbursable
+                    </td>
+                    <td style="width:24%; border:1px solid #777; padding:2px 5px; font-family:Arial,sans-serif; font-size:13px; white-space:nowrap;">
+                        Doctor's Referral Letter
+                    </td>
+                </tr>
+            </table>
+
+            <!-- First Consent -->
+            <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+                <tr>
+                    <td colspan="3" style="height:330px; border:1px solid #777; padding:8px 6px; vertical-align:top; line-height:1.18;">
+
+                        <div style="font-weight:bold; margin-bottom:2px;">
+                            पास घेण्याची सही / डाव्या अंगठाचा ठसा :-
+                        </div>
+
+                        <div style="font-weight:bold; margin-bottom:3px;">
+                            हमीपत्र :- माझा /माझी/माझे
+                            <span style="display:inline-block; width:170px; border-bottom:1px solid #000; height:13px; vertical-align:bottom;"></span>
+                            श्री/श्रीमती
+                        </div>
+
+                        <div style="font-size:13px; text-align:left; line-height:1.18;">
+                            यांना आपल्या रुग्णालयात दाखल करण्यात आले आहे. सदर रुग्णाच्या औषधोपचारासाठी
+                            जे बिल होईल ते पूर्णपणे भरण्याची जबाबदारी आहे. तसेच रुग्णालयाचे दैनंदिन
+                            बिलाप्रमाणे होणाऱ्या बिलापोटी मी वेळोवेळी अॅडव्हान्स रक्कम भरेन.
+                            सदर रुग्णाच्या उपचारासाठी खर्चाला आमची पूर्ण संमती आहे. तसेच या हॉस्पिटलमध्ये
+                            सर्व निर्णय व अटी मान्य आहेत याची मला पूर्ण जाणीव आहे. अॅडव्हान्स
+                            कपातीसाठी सर्व संमती मी संपूर्ण वाचलेली असून, ते मला समजली आहे वरील अटींबाबत
+                            माझी / माझी कुठलीही आशंका / तक्रार राहणार नाही. याची माझ्या रुग्णालयात
+                            दाखल करण्याच्या वेळी माझ्या स्वेच्छेने सही करीत आहे. सदर रुग्णाच्या
+                            औषधोपचारासाठी जे बिल होईल ते पूर्णपणे भरण्याची जबाबदारी मी घेत आहे.
+                            तसेच रुग्णालयाचे दैनंदिन बिलाप्रमाणे होणाऱ्या बिलापोटी मी वेळोवेळी
+                            अॅडव्हान्स रक्कम भरेन. सदर रुग्णाच्या उपचारासाठी होणाऱ्या खर्चाला आमची
+                            पूर्ण संमती आहे. तसेच या हॉस्पिटलचे सर्व नियम व अटी मला मान्य आहेत याची
+                            मला पूर्ण जाणीव आहे. अॅडव्हान्स कपातीसाठी सर्व संमती मी संपूर्ण वाचलेली
+                            असून, ते मला समजली आहे वरील अटींबाबत माझी / माझी कुठलीही आशंका / तक्रार
+                            राहणार नाही.
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Signature Row -->
+            <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+                <tr style="height:28px;">
+                    <td style="width:55%; border:1px solid #777; padding:3px 6px; font-weight:bold;">
+                        हमी देणाऱ्याची सही
+                    </td>
+                    <td style="width:45%; border:1px solid #777; padding:3px 6px; font-weight:bold;">
+                        सही/डाव्या अंगठाचा ठसा :-
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Second Consent -->
+            <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+                <tr>
+                    <td colspan="3" style="height:275px; border:1px solid #777; padding:5px 6px; vertical-align:top;">
+
+                        <div style="font-weight:bold; margin-bottom:2px;">
+                            संमतीपत्र :-
+                        </div>
+
+                        <div style="font-size:12.5px; line-height:1.18; text-align:left;">
+                            मी खाली सही करणारा माझा/माझी/माझे मी स्वतः संमतीने रुग्णालयात दाखल होत आहे/
+                            करीत आहे. रुग्णालयात दाखल होत असताना करावयाच्या लागणाऱ्या सर्वसाधारण उपचाराच्या
+                            व उपचार (उदा. बेडफी, तपासणी, रक्त, तपासणी, औषधोपचार अथवा इतर सर्व) बाबत
+                            मला पूर्णपणे समजले आहे. उपचारामध्ये कोणत्याही प्रकारचा धोका अथवा परिणाम
+                            होण्याची शक्यता आहे याची मला जाणीव आहे.
+                            <br>
+                            मी/आम्ही संमती देत आहे/आहोत. श्री/श्रीमती यांच्या वतीने उपचार करण्यास
+                            ऑपरेशन / ऑपरेशन याच्या या रुग्णास संमती आहे. मी/आम्ही संमती देत आहे/आहोत.
+                            मला या रुग्णाच्या आजाराची व उपचाराची पूर्ण माहिती डॉक्टरांनी दिली आहे.
+                            तसेच उपचाराच्या वेळी कोणत्याही प्रकारची गुंतागुंत निर्माण होऊ शकते याची
+                            मला पूर्ण कल्पना आहे.
+                            <br>
+                            माझ्यावर/माझ्या रोगनिदानासाठी / प्रकृतीवरील संभाव्य परिणाम जाणून घेण्यासाठी /
+                            प्रकृतीवरील औषधोपचारासाठी आवश्यक असे सर्व तपास करण्यात यावेत यास माझी
+                            संमती आहे. या तपासण्या केल्याने कोणताही आजार व प्रकृतीसंबंधी निदान
+                            होण्याची शक्यता आहे याची मला जाणीव आहे.
+                            <br>
+                            तसेच रुग्णालयातील सर्व उपचारांसाठी महत्त्व देण्यात माझी संमती आहे.
+                            या हॉस्पिटलमध्ये माझ्या उपचारासाठी आवश्यक असलेली सर्व माहिती डॉक्टरांना
+                            देण्यात माझी संमती आहे.
+                            <br>
+                            मला उपचारासाठी येणाऱ्या सर्व खर्चाचा अंदाज देण्यात आलेला आहे.
+                            मला / आम्हाला कल्पना आहे कि उपचाराचा खर्च हा किती निश्चित स्वरूपाचा
+                            नसून उपचाराच्या वेळेस तो वाढू शकतो.
+                            <br>
+                            यासाठी माझी / आमची संमती आहे. प्रत्यक्ष होणारा सर्व खर्च मी मान्य करीन.
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Consent Signature -->
+            <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+                <tr style="height:28px;">
+                    <td style="width:55%; border:1px solid #777; padding:3px 6px; font-weight:bold;">
+                        संमती देणाऱ्याचे नाव :
+                        <span style="display:inline-block; width:45%; border-bottom:1px solid #000; height:14px; vertical-align:bottom;"></span>
+                    </td>
+                    <td style="width:45%; border:1px solid #777; padding:3px 6px; font-weight:bold;">
+                        सही/डाव्या अंगठाचा ठसा :-
+                    </td>
+                </tr>
+            </table>
+
+            <!-- On Discharge -->
+            <table style="width:100%; border-collapse:collapse; table-layout:fixed; font-family:Arial,sans-serif; font-size:12px;">
+
+                <tr>
+                    <td colspan="3" style="height:20px; border:1px solid #777; padding:2px 5px; font-weight:bold;">
+                        On Discharge
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width:42%; height:25px; border:1px solid #777; padding:3px 5px;">
+                        Mode of Discharge
+                    </td>
+                    <td style="width:38%; border:1px solid #777; padding:3px 5px;">
+                        D.O.D. with Time:
+                    </td>
+                    <td rowspan="3" style="width:20%; border:1px solid #777; padding:25px 5px 3px 5px; text-align:center; vertical-align:bottom;">
+                        Name &amp; Sign of Relative
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="height:25px; border:1px solid #777; padding:3px 5px;">
+                        Cured
+                        <span style="display:inline-block; width:10px; height:10px; border:1px solid #000; vertical-align:middle; margin-left:3px;"></span>
+                        Relieved
+                        <span style="display:inline-block; width:10px; height:10px; border:1px solid #000; vertical-align:middle; margin-left:3px;"></span>
+                        Abscond
+                        <span style="display:inline-block; width:10px; height:10px; border:1px solid #000; vertical-align:middle; margin-left:3px;"></span>
+                    </td>
+                    <td style="border:1px solid #777; padding:3px 5px;">
+                        MLC Informed to:
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="height:25px; border:1px solid #777; padding:3px 5px;">
+                        AMA
+                        <span style="display:inline-block; width:10px; height:10px; border:1px solid #000; vertical-align:middle; margin-left:3px;"></span>
+                        Died
+                        <span style="display:inline-block; width:10px; height:10px; border:1px solid #000; vertical-align:middle; margin-left:3px;"></span>
+                        Other
+                        <span style="display:inline-block; width:10px; height:10px; border:1px solid #000; vertical-align:middle; margin-left:3px;"></span>
+                    </td>
+                    <td style="border:1px solid #777; padding:3px 5px;">
+                        MLC Informed by:
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="height:25px; border:1px solid #777; padding:3px 5px;">
+                        Operation Procedure
+                    </td>
+                    <td style="border:1px solid #777; padding:3px 5px;"></td>
+                    <td rowspan="2" style="border:1px solid #777; padding:25px 5px 3px 5px; text-align:center; vertical-align:bottom;">
+                        Signature of Consultant
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="height:25px; border:1px solid #777; padding:3px 5px;">
+                        Final Diagnosis
+                    </td>
+                    <td style="border:1px solid #777; padding:3px 5px;"></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="height:25px; border:1px solid #777; padding:3px 5px;">
+                        ICD Codes
+                    </td>
+                    <td style="border:1px solid #777; padding:3px 5px;"></td>
+                </tr>
+
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>
