@@ -2,7 +2,9 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Masters;
 using HIMS.API.Models.MRD;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
@@ -24,7 +26,7 @@ namespace HIMS.API.Controllers.MRD
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TMedicolegalCertificate> MedicolegalCertificateList = await _repository.GetAllPagedAsync(objGrid);
@@ -32,7 +34,7 @@ namespace HIMS.API.Controllers.MRD
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        //[Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -44,7 +46,7 @@ namespace HIMS.API.Controllers.MRD
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        //[Permission]
         public async Task<ApiResponse> Post(MedicolegalCertificateModel obj)
         {
             TMedicolegalCertificate model = obj.MapTo<TMedicolegalCertificate>();
@@ -60,6 +62,21 @@ namespace HIMS.API.Controllers.MRD
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
+        }
+        //Edit API
+        [HttpPut("{id:int}")]
+        //[Permission]
+        public async Task<ApiResponse> Edit(MedicolegalCertificateModel obj)
+        {
+            TMedicolegalCertificate model = obj.MapTo<TMedicolegalCertificate>();
+            if (obj.DocId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                model.UpdatedBy = CurrentUserId;
+                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[] { "AddedBy", "Mlcdate" });
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
     }
 }

@@ -30,10 +30,11 @@ namespace HIMS.API.Models.MRD
             RuleFor(x => x.OpIpId).NotNull().NotEmpty().WithMessage("OpIpId  is required");
             RuleFor(x => x.AccidentDate).NotNull().NotEmpty().WithMessage("AccidentDate  is required");
             RuleFor(x => x.AccidentTime).NotNull().NotEmpty().WithMessage("AccidentTime  is required");
-            //RuleFor(x => x.Mlcdate).NotNull().NotEmpty().WithMessage("Mlcdate  is required");
-            //RuleFor(x => x.Mlcdate).NotNull().NotEmpty().WithMessage("Mlcdate  is required");
-            //RuleFor(x => x.Mlcdate).NotNull().NotEmpty().WithMessage("Mlcdate  is required");
-            //RuleFor(x => x.Mlcdate).NotNull().NotEmpty().WithMessage("Mlcdate  is required");
+            RuleFor(x => x.DetailsInjuries).NotNull().NotEmpty().WithMessage("DetailsInjuries  is required");
+            RuleFor(x => x.CauseofInjuries).NotNull().NotEmpty().WithMessage("CauseofInjuries  is required");
+            RuleFor(x => x.TreatingDoctorId).NotNull().NotEmpty().WithMessage("TreatingDoctorId  is required");
+            RuleFor(x => x.TreatingDoctorId1).NotNull().NotEmpty().WithMessage("TreatingDoctorId1  is required");
+            RuleFor(x => x.TreatingDoctorId2).NotNull().NotEmpty().WithMessage("TreatingDoctorId2  is required");
 
         }
     }

@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
         }
 
         [HttpPost("TrustMembershipRegList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TrustMembershipRegDTO> SupplierList = await _ITrustMembershipRegService.GetListAsync(objGrid);
@@ -90,7 +90,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
 
 
         [HttpPost("Insert")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Insert(TrustMembershipRegModel obj)
         {
             TMembershipRegistration model = obj.MapTo<TMembershipRegistration>();
@@ -135,6 +135,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
         }
        
         [HttpPut("Edit/{id:int}")]
+        [Permission]
         public async Task<ApiResponse> Edit(TrustMembershipRegModel obj)
         {
             try
@@ -155,8 +156,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
                     q.ModifiedBy = CurrentUserId;
                     q.ModifiedDate = AppTime.Now;
 
-                    // Remove this line if you are updating an existing record.            
-                    // q.ChildId = 0;
+                 
                 }
 
                 foreach (var v in model.TMembershipEmrgencies)
@@ -202,7 +202,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
         }
         //Delete API
         [HttpDelete]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             TMembershipRegistration model = await _repository.GetById(x => x.MembershipId == Id);
