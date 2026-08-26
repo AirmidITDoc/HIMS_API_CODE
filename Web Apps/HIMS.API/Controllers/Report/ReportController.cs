@@ -671,7 +671,7 @@ namespace HIMS.API.Controllers.Report
 
                 model.BaseUrl = AppSettings.Settings.BaseUrl;
                 model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
-                var byteFile = await _reportService.GetReportSetByProcDB(model, AppSettings.Settings.PdfFontPath,  StoreId, UnitId);
+                var byteFile = await _reportService.GetReportSetByProcDB(model, AppSettings.Settings.PdfFontPath, UnitId, StoreId);
                 if (byteFile?.Item1 == null || byteFile.Item1.Length < 100)
                     throw new Exception($"Invalid PDF generated. Size: {byteFile?.Item1?.Length ?? 0} bytes.");
                 return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = Convert.ToBase64String(byteFile.Item1) }));
