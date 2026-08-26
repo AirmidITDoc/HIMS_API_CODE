@@ -823,18 +823,35 @@
 
                     <div class="note-line">Are You Enrolled In The Ayushman Bharat Scheme?</div>
 
-                    <div class="yn-row">
-                        <span class="field-label"><strong>Male </strong></span>
-                        <span class="field-label">No</span>
-                        <span class="chk-box chk-{{AyushmanEnrolledNo}}"></span>
-                        <span class="field-label">Yes</span>
-                        <span class="chk-box chk-{{AyushmanEnrolledYes}}"></span>
+                    <!--<div class="yn-row">
+        <span class="field-label"><strong>Male </strong></span>
+        <span class="field-label">No</span>
+        <span class="chk-box chk-{{AyushmanEnrolledNo}}"></span>
+        <span class="field-label">Yes</span>
+        <span class="chk-box chk-{{AyushmanEnrolledYes}}"></span>
 
+        <span class="field-label"><strong>Female </strong></span>
+        <span class="field-label">No</span>
+        <span class="chk-box chk-{{WAyushmanEnrolledNo}}"></span>
+        <span class="field-label">Yes</span>
+        <span class="chk-box chk-{{WAyushmanEnrolledYes}}"></span>
+    </div>-->
+                <div class="yn-row">
+                    <span class="field-label"><strong>Male </strong></span>
+                    <span class="field-label">No</span>
+                    <span class="chk-box chk-{{AyushmanEnrolledNo}}"></span>
+                    <span class="field-label">Yes</span>
+                    <span class="chk-box chk-{{AyushmanEnrolledYes}}"></span>
+                    <span class="field-label" style="margin-left: 20px;"><strong> Aayushman Id:</strong> {{HaayushmanId}}</span>
+
+                </div>
+                    <div class="yn-row">
                         <span class="field-label"><strong>Female </strong></span>
                         <span class="field-label">No</span>
                         <span class="chk-box chk-{{WAyushmanEnrolledNo}}"></span>
                         <span class="field-label">Yes</span>
                         <span class="chk-box chk-{{WAyushmanEnrolledYes}}"></span>
+                        <span class="field-label" style="margin-left: 20px;"><strong> Aayushman Id:</strong> {{WaayushmanId}}</span>
                     </div>
 
 
@@ -849,7 +866,7 @@
                         <span class="field-label">Yes</span>
                         <span class="chk-box chk-{{HasMediclaimYes}}"></span>
 
-                       
+
                     </div>
                     <div class="note-line">then details:</div>
 
@@ -978,20 +995,33 @@
             <span class="field-line">{{DeclarationDate}}</span>
         </div>
 
+        
         <div class="section-title">17. For Office Use</div>
 
+        <div class="field-label"><strong>Male</strong></div>
         <div class="field-row">
             <span class="field-label">Membership No:.</span>
-            <span class="field-line">{{MembershipNo}}</span>
+            <span class="field-line" style="margin-left: 10px;">{{MembershipNo}}</span>
         </div>
-
-        <!-- FIX: SP column ReceiptDate hai -->
         <div class="dob-row">
             <span class="field-label">Date Of Receipt Of Form:.</span>
             <span class="dob-seg">{{ReceiptDate}}</span>
         </div>
+        <div class="yn-row">
+            <span class="field-label">Fee Received</span>
+            <span class="chk-box chk-{{FeeReceivedYes}}"></span><label>Yes</label>
+            <span class="chk-box chk-{{FeeReceivedNo}}"></span><label>No</label>
+        </div>
 
-        <!-- FIX: SP column FeeReceived (bit) -->
+        <div class="field-label"><strong>Female</strong></div>
+        <div class="field-row">
+            <span class="field-label">Membership No:.</span>
+            <span class="field-line" style="margin-left: 10px;">{{MembershipNo}}</span>
+        </div>
+        <div class="dob-row">
+            <span class="field-label">Date Of Receipt Of Form:.</span>
+            <span class="dob-seg">{{ReceiptDate}}</span>
+        </div>
         <div class="yn-row">
             <span class="field-label">Fee Received</span>
             <span class="chk-box chk-{{FeeReceivedYes}}"></span><label>Yes</label>
