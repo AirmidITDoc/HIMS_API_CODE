@@ -17794,19 +17794,53 @@ namespace HIMS.Services.Report
                                 string resultValue = dr["ResultValue"].ConvertToString();
                                 string normalRange = dr["NormalRange"].ConvertToString();
 
+                                //// ================= TEST NAME HEADER =================
+                                //if (previousLabel != currentTestName)
+                                //{
+                                //    items.Append("<tr style=\"font-size:14px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
+                                //         .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
+                                //         .Append("<span style=\"border-bottom:2px solid #000;\">")
+                                //         .Append(currentTestName)
+                                //         .Append("</span>")
+                                //         .Append("</td></tr>");
+
+                                //    previoussubLabel = "";
+                                //}
                                 // ================= TEST NAME HEADER =================
                                 if (previousLabel != currentTestName)
                                 {
+                                    string specimenName = "";
+
+                                    if (dt.Columns.Contains("SpecimenName"))
+                                    {
+                                        specimenName = dr["SpecimenName"] == DBNull.Value
+                                            ? ""
+                                            : dr["SpecimenName"].ToString().Trim();
+                                    }
+
                                     items.Append("<tr style=\"font-size:14px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
                                          .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
+
+                                         // Test Name
                                          .Append("<span style=\"border-bottom:2px solid #000;\">")
                                          .Append(currentTestName)
-                                         .Append("</span>")
-                                         .Append("</td></tr>");
+                                         .Append("</span>");
+
+                                    // Sample Type
+                                    if (!string.IsNullOrWhiteSpace(specimenName))
+                                    {
+                                        items.Append("&nbsp;&nbsp;&nbsp;")
+                                             .Append("<span style=\"font-size:12px;font-weight:normal;\">")
+                                             .Append("(Sample Type : ")
+                                             .Append(specimenName)
+                                             .Append(")")
+                                             .Append("</span>");
+                                    }
+
+                                    items.Append("</td></tr>");
 
                                     previoussubLabel = "";
                                 }
-
                                 // ================= RESULT ROWS =================
                                 if (!string.IsNullOrWhiteSpace(resultValue))
                                 {
@@ -17925,15 +17959,50 @@ namespace HIMS.Services.Report
                                 string resultValue = dr["ResultValue"].ConvertToString();
                                 string normalRange = dr["NormalRange"].ConvertToString();
 
+                                //// ================= TEST NAME HEADER =================
+                                //if (previousLabel != currentTestName)
+                                //{
+                                //    items.Append("<tr style=\"font-size:18px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
+                                //         .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
+                                //         .Append("<span style=\"border-bottom:2px solid #000;\">")
+                                //         .Append(currentTestName)
+                                //         .Append("</span>")
+                                //         .Append("</td></tr>");
+
+                                //    previoussubLabel = "";
+                                //}
                                 // ================= TEST NAME HEADER =================
                                 if (previousLabel != currentTestName)
                                 {
+                                    string specimenName = "";
+
+                                    if (dt.Columns.Contains("SpecimenName"))
+                                    {
+                                        specimenName = dr["SpecimenName"] == DBNull.Value
+                                            ? ""
+                                            : dr["SpecimenName"].ToString().Trim();
+                                    }
+
                                     items.Append("<tr style=\"font-size:18px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
                                          .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
+
+                                         // Test Name
                                          .Append("<span style=\"border-bottom:2px solid #000;\">")
                                          .Append(currentTestName)
-                                         .Append("</span>")
-                                         .Append("</td></tr>");
+                                         .Append("</span>");
+
+                                    // Sample Type
+                                    if (!string.IsNullOrWhiteSpace(specimenName))
+                                    {
+                                        items.Append("&nbsp;&nbsp;&nbsp;")
+                                             .Append("<span style=\"font-size:12px;font-weight:normal;\">")
+                                             .Append("(Sample Type : ")
+                                             .Append(specimenName)
+                                             .Append(")")
+                                             .Append("</span>");
+                                    }
+
+                                    items.Append("</td></tr>");
 
                                     previoussubLabel = "";
                                 }
@@ -18247,19 +18316,54 @@ namespace HIMS.Services.Report
                                 string resultValue = dr["ResultValue"].ConvertToString();
                                 string normalRange = dr["NormalRange"].ConvertToString();
 
+                                //// ================= TEST NAME HEADER =================
+                                //if (previousLabel != currentTestName)
+                                //{
+                                //    items.Append("<tr style=\"font-size:14px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
+                                //         .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
+                                //         .Append("<span style=\"border-bottom:2px solid #000;\">")
+                                //         .Append(currentTestName)
+                                //         .Append("</span>")
+                                //         .Append("</td></tr>");
+
+                                //    previoussubLabel = "";
+                                //}
+
                                 // ================= TEST NAME HEADER =================
                                 if (previousLabel != currentTestName)
                                 {
+                                    string specimenName = "";
+
+                                    if (dt.Columns.Contains("SpecimenName"))
+                                    {
+                                        specimenName = dr["SpecimenName"] == DBNull.Value
+                                            ? ""
+                                            : dr["SpecimenName"].ToString().Trim();
+                                    }
+
                                     items.Append("<tr style=\"font-size:14px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
                                          .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
+
+                                         // Test Name
                                          .Append("<span style=\"border-bottom:2px solid #000;\">")
                                          .Append(currentTestName)
-                                         .Append("</span>")
-                                         .Append("</td></tr>");
+                                         .Append("</span>");
+
+                                    // Sample Type
+                                    if (!string.IsNullOrWhiteSpace(specimenName))
+                                    {
+                                        items.Append("&nbsp;&nbsp;&nbsp;")
+                                             .Append("<span style=\"font-size:12px;font-weight:normal;\">")
+                                             .Append("(Sample Type : ")
+                                             .Append(specimenName)
+                                             .Append(")")
+                                             .Append("</span>");
+                                    }
+
+                                    items.Append("</td></tr>");
 
                                     previoussubLabel = "";
                                 }
-
                                 // ================= RESULT ROWS =================
                                 if (!string.IsNullOrWhiteSpace(resultValue))
                                 {
@@ -18378,15 +18482,51 @@ namespace HIMS.Services.Report
                                 string resultValue = dr["ResultValue"].ConvertToString();
                                 string normalRange = dr["NormalRange"].ConvertToString();
 
+                                //// ================= TEST NAME HEADER =================
+                                //if (previousLabel != currentTestName)
+                                //{
+                                //    items.Append("<tr style=\"font-size:18px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
+                                //         .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
+                                //         .Append("<span style=\"border-bottom:2px solid #000;\">")
+                                //         .Append(currentTestName)
+                                //         .Append("</span>")
+                                //         .Append("</td></tr>");
+
+                                //    previoussubLabel = "";
+                                //}
+
                                 // ================= TEST NAME HEADER =================
                                 if (previousLabel != currentTestName)
                                 {
+                                    string specimenName = "";
+
+                                    if (dt.Columns.Contains("SpecimenName"))
+                                    {
+                                        specimenName = dr["SpecimenName"] == DBNull.Value
+                                            ? ""
+                                            : dr["SpecimenName"].ToString().Trim();
+                                    }
+
                                     items.Append("<tr style=\"font-size:18px;font-family:Verdana, Arial, sans-serif;color:#000;font-weight:bold;\">")
                                          .Append("<td colspan=\"4\" style=\"padding:6px;text-align:left;\">")
+
+                                         // Test Name
                                          .Append("<span style=\"border-bottom:2px solid #000;\">")
                                          .Append(currentTestName)
-                                         .Append("</span>")
-                                         .Append("</td></tr>");
+                                         .Append("</span>");
+
+                                    // Sample Type
+                                    if (!string.IsNullOrWhiteSpace(specimenName))
+                                    {
+                                        items.Append("&nbsp;&nbsp;&nbsp;")
+                                             .Append("<span style=\"font-size:14px;font-weight:normal;\">")
+                                             .Append("(Sample Type : ")
+                                             .Append(specimenName)
+                                             .Append(")")
+                                             .Append("</span>");
+                                    }
+
+                                    items.Append("</td></tr>");
 
                                     previoussubLabel = "";
                                 }
