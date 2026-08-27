@@ -151,7 +151,7 @@ namespace HIMS.Services.IPPatient
 
         }
 
-        public virtual async Task InsertTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, List<TIpAdmissionDiagnosisInformation> ObjTIpAdmissionDiagnosisInformation, int CurrentUserId, string CurrentUserName)
         {
             // Open transaction
             using var transaction = await _context.Database.BeginTransactionAsync();
@@ -169,7 +169,7 @@ namespace HIMS.Services.IPPatient
                 if (!rEntity.Contains(rProperty))
                     Tentity.Remove(rProperty);
             }
-            string TDischargeSummaryId = odal.ExecuteNonQuery("ps_insert_DischargeSummaryTemplate", CommandType.StoredProcedure, "DischargeSummaryId", Tentity);
+            string TDischargeSummaryId = odal.ExecuteNonQueryNew("ps_insert_DischargeSummaryTemplate", CommandType.StoredProcedure, "DischargeSummaryId", Tentity);
             ObjDischargeTemplate.DischargeSummaryId = Convert.ToInt32(TDischargeSummaryId);
             await _context.LogProcedureExecution(Tentity, nameof(DischargeSummary), Convert.ToInt32(ObjDischargeTemplate.DischargeSummaryId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
@@ -183,10 +183,28 @@ namespace HIMS.Services.IPPatient
                     if (!DEntity.Contains(rProperty))
                         pentity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
+                odal.ExecuteNonQueryNew("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, "", pentity);
                 await _context.LogProcedureExecution(pentity, nameof(TIpPrescriptionDischarge), Convert.ToInt32(item.PrecriptionId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             }
+            foreach (var item in ObjTIpAdmissionDiagnosisInformation)
+            {
+
+                string[] IEntity = { "IpdiagnosisId", "AdmId", "Diagnosis", "Icdcode", "Diagnosisinformation", "FlagCode", "CreatedBy" };
+                var ientity = item.ToDictionary();
+                foreach (var rProperty in ientity.Keys.ToList())
+                {
+                    if (!IEntity.Contains(rProperty))
+                            ientity.Remove(rProperty);
+                }
+                string VIpdiagnosisId = odal.ExecuteNonQueryNew("ps_Insert_IP_AdmissionDiagnosisInformation", CommandType.StoredProcedure, "IpdiagnosisId", ientity);
+                item.IpdiagnosisId = Convert.ToInt32(VIpdiagnosisId);
+                await _context.LogProcedureExecution(ientity, nameof(TIpAdmissionDiagnosisInformation), Convert.ToInt32(item.IpdiagnosisId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+
+            }
+
+
             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
             //Commit if all good
             await transaction.CommitAsync();
@@ -198,7 +216,7 @@ namespace HIMS.Services.IPPatient
                 throw;
             }
         }
-        public virtual async Task  UpdateTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, int CurrentUserId, string CurrentUserName)
+        public virtual async Task  UpdateTemplate(DischargeSummary ObjDischargeTemplate, List<TIpPrescriptionDischarge> ObjTIpPrescriptionTemplate, List<TIpAdmissionDiagnosisInformation> ObjTIpAdmissionDiagnosisInformation, int CurrentUserId, string CurrentUserName)
         {
             // Open transaction
             using var transaction = await _context.Database.BeginTransactionAsync();
@@ -216,7 +234,7 @@ namespace HIMS.Services.IPPatient
                 if (!rEntity.Contains(rProperty))
                     Sentity.Remove(rProperty);
             }
-            odal.ExecuteNonQuery("ps_update_DischargeSummaryTemplate", CommandType.StoredProcedure, Sentity);
+            odal.ExecuteNonQueryNew("ps_update_DischargeSummaryTemplate", CommandType.StoredProcedure, "", Sentity);
             await _context.LogProcedureExecution(Sentity, nameof(DischargeSummary), Convert.ToInt32(ObjDischargeTemplate.DischargeSummaryId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
             var tokensObj = new
@@ -224,11 +242,11 @@ namespace HIMS.Services.IPPatient
                 OPDIPDID = Convert.ToInt32(ObjDischargeTemplate.AdmissionId)
             };
        
-            odal.ExecuteNonQuery("ps_Delete_T_IP_Prescription_Discharge", CommandType.StoredProcedure, tokensObj.ToDictionary());
+            odal.ExecuteNonQuery("ps_Delete_T_IP_Prescription_Discharge", CommandType.StoredProcedure,tokensObj.ToDictionary());
             await _context.LogProcedureExecution(tokensObj.ToDictionary(), "ps_Delete_T_IP_Prescription_Discharge", ObjDischargeTemplate.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
 
 
-                foreach (var item in ObjTIpPrescriptionTemplate)
+            foreach (var item in ObjTIpPrescriptionTemplate)
             {
                 string[] DEntity = { "OpdIpdId", "OpdIpdType", "Date", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "InstructionId", "QtyPerDay", "TotalQty", "Instruction", "Remark", "IsEnglishOrIsMarathi", "StoreId", "CreatedBy" };
                 var pentity = item.ToDictionary();
@@ -237,10 +255,26 @@ namespace HIMS.Services.IPPatient
                     if (!DEntity.Contains(rProperty))
                         pentity.Remove(rProperty);
                 }
-                odal.ExecuteNonQuery("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure, pentity);
+                odal.ExecuteNonQueryNew("ps_insert_T_IP_Prescription_Discharge_1", CommandType.StoredProcedure,"", pentity);
                 await _context.LogProcedureExecution(pentity, nameof(TIpPrescriptionDischarge), Convert.ToInt32(item.PrecriptionId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
             }
-            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                foreach (var item in ObjTIpAdmissionDiagnosisInformation)
+                {
+
+                    string[] IEntity = { "IpdiagnosisId", "AdmId", "Diagnosis", "Icdcode", "Diagnosisinformation", "FlagCode", "ModifiedBy" };
+                    var ientity = item.ToDictionary();
+                    foreach (var rProperty in ientity.Keys.ToList())
+                    {
+                        if (!IEntity.Contains(rProperty))
+                            ientity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQueryNew("ps_Update_AdmissionDiagnosisInformation", CommandType.StoredProcedure, "", ientity);
+                    await _context.LogProcedureExecution(ientity, nameof(TIpAdmissionDiagnosisInformation), Convert.ToInt32(item.IpdiagnosisId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+
+                }
+
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
                 //Commit if all good
             await transaction.CommitAsync();
             }

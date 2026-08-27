@@ -114,13 +114,15 @@ namespace HIMS.API.Controllers.IPPatient
         {
             DischargeSummary model = obj.Discharge.MapTo<DischargeSummary>();
             List<TIpPrescriptionDischarge> Prescription = obj.PrescriptionTemplate.MapTo<List<TIpPrescriptionDischarge>>();
+            List<TIpAdmissionDiagnosisInformation> AdmissionDiagnosisInformation = obj.AdmissionDiagnosisInformation.MapTo<List<TIpAdmissionDiagnosisInformation>>();
+
             if (obj.Discharge.DischargeSummaryId == 0)
             {
                 model.Followupdate = Convert.ToDateTime(obj.Discharge.Followupdate);
                 model.AddedBy = CurrentUserId;
                 Prescription.ForEach(x => { x.OpdIpdId = obj.Discharge.AdmissionId; x.CreatedBy = CurrentUserId; x.ModifiedBy = CurrentUserId; });
 
-                await _IDischargeSummaryService.InsertTemplate(model, Prescription, CurrentUserId, CurrentUserName);
+                await _IDischargeSummaryService.InsertTemplate(model, Prescription, AdmissionDiagnosisInformation, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -133,6 +135,8 @@ namespace HIMS.API.Controllers.IPPatient
         {
             DischargeSummary model = obj.Discharge.MapTo<DischargeSummary>();
             List<TIpPrescriptionDischarge> Prescription = obj.PrescriptionTemplate.MapTo<List<TIpPrescriptionDischarge>>();
+            List<TIpAdmissionDiagnosisInformation> AdmissionDiagnosisInformation = obj.AdmissionDiagnosisInformation.MapTo<List<TIpAdmissionDiagnosisInformation>>();
+
             if (obj.Discharge.DischargeSummaryId != 0)
             {
                 model.Followupdate = Convert.ToDateTime(obj.Discharge.Followupdate);
@@ -140,7 +144,7 @@ namespace HIMS.API.Controllers.IPPatient
 
                 Prescription.ForEach(x => { x.OpdIpdId = model.AdmissionId; x.CreatedBy = CurrentUserId; x.ModifiedBy = CurrentUserId; });
 
-                await _IDischargeSummaryService.UpdateTemplate(model, Prescription, CurrentUserId, CurrentUserName);
+                await _IDischargeSummaryService.UpdateTemplate(model, Prescription, AdmissionDiagnosisInformation, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
