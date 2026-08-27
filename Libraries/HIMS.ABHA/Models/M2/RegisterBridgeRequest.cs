@@ -196,14 +196,14 @@ public class ConsentNotificationPayload
         public string Id { get; set; }
     }
 
-    public class CareContext
-    {
-        [JsonPropertyName("patientReference")]
-        public string PatientReference { get; set; }
+    //public class CareContext
+    //{
+    //    [JsonPropertyName("patientReference")]
+    //    public string PatientReference { get; set; }
 
-        [JsonPropertyName("careContextReference")]
-        public string CareContextReference { get; set; }
-    }
+    //    [JsonPropertyName("careContextReference")]
+    //    public string CareContextReference { get; set; }
+    //}
 
     public class Purpose
     {
