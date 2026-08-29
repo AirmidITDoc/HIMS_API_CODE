@@ -15,7 +15,7 @@ namespace HIMS.Services.IPPatient
         Task<IPagedList<LabOrRadRequestListDto>> LGetListAsync(GridRequestModel objGrid);
         Task<IPagedList<LabOrRadRequestDetailListDto>> LGetListAsync1(GridRequestModel objGrid);
         Task<IPagedList<PathRadServiceListDto>> GetListAsync1(GridRequestModel objGrid);
-
+        Task CancelAsync(TPathologyReportHeader ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName);
 
 
     }

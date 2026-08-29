@@ -46,27 +46,27 @@ namespace HIMS.API.Controllers.ABHA.M1
 
         // ===== Existing ABHA =====
         [HttpPost("existing/request-abha-otp")]
-        public async Task<ApiResponse> RequestAbhaOtp([FromBody] AadhaarOtpDto dto)
+        public async Task<ApiResponse> RequestAbhaOtp([FromBody] AbhaAddresOtpDto dto)
         {
             List<string> scope = new();
             string otpsystem;
             string loginhint;
 
-            if (dto.OtpType == 1)
+            if (dto.OtpType == "1")
             {
                 scope.Add("abha-login");
                 scope.Add("aadhaar-verify");
                 loginhint = "abha-number";
                 otpsystem = "aadhaar";
             }
-            else if (dto.OtpType == 2)
+            else if (dto.OtpType == "2")
             {
                 scope.Add("abha-login");
                 scope.Add("mobile-verify");
                 loginhint = "abha-number";
                 otpsystem = "abdm";
             }
-            else if (dto.OtpType == 3)
+            else if (dto.OtpType == "3")
             {
                 scope.Add("abha-address-login");
                 scope.Add("aadhaar-verify");
