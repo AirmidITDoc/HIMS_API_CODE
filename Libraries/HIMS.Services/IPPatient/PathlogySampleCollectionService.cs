@@ -6,7 +6,9 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
+using System.Transactions;
 
 namespace HIMS.Services.IPPatient
 {
@@ -81,6 +83,21 @@ namespace HIMS.Services.IPPatient
                 odal.ExecuteNonQuery("ps_Update_samplecollectionDatetime", CommandType.StoredProcedure, entity);
               //  await _context.LogProcedureExecution(entity, "SampleCollection", objTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, Username);
             
+        }
+        public virtual async Task CancelAsync(TPathologyReportHeader ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+            var existing = await _context.TPathologyReportHeaders.FirstOrDefaultAsync(x => x.PathReportId == ObjTPathologyReportHeader.PathReportId);
+
+            existing.IsSampleReceviedCancel = true;
+            existing.SampleReceviedCancelReason = ObjTPathologyReportHeader.SampleReceviedCancelReason;
+            existing.SampleReceviedCanceledBy = CurrentUserId;
+            existing.IsSampleCollection = false;
+            existing.SampleReceivedCancelDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+            scope.Complete();
         }
 
     }

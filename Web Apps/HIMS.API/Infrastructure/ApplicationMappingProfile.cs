@@ -73,6 +73,7 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<TCurrentStock, UpdateCurrentStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TMedicolegalCertificate, MedicolegalCertificateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TDeathCertificate, DeathCertificateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             CreateMap<TGrnreturnHeader, GRNUpdatedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -360,6 +361,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<Bedmaster, BedMasterModel1>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<DischargeSummary, DischargeSummaryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIpPrescriptionDischarge, PrescriptionDischargeModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TIpAdmissionDiagnosisInformation, TIpAdmissionDiagnosisInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TIpAdmissionDiagnosisInformation, TIpAdmissionDiagnosisInformationUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
             CreateMap<DischargeSummary, DischargeSummaryUpdate>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<DischargeSummary, DischargeTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIpPrescriptionDischarge, PrescriptionTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

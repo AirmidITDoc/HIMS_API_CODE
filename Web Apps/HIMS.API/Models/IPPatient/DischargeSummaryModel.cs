@@ -83,6 +83,8 @@ namespace HIMS.API.Models.IPPatient
         public DischargeSummaryModel DischargModel { get; set; }
         public List<PrescriptionDischargeModel> PrescriptionDischarge { get; set; }
 
+
+
     }
 
     public class DischargeSummaryUpdate
@@ -182,6 +184,8 @@ namespace HIMS.API.Models.IPPatient
     {
         public DischargeTemplateModel Discharge { get; set; }
         public List<PrescriptionTemplateModel> PrescriptionTemplate { get; set; }
+        public List<TIpAdmissionDiagnosisInformationModel> AdmissionDiagnosisInformation { get; set; }
+
 
     }
     public class DischargeTemplateUpdate
@@ -240,6 +244,32 @@ namespace HIMS.API.Models.IPPatient
     {
         public DischargeTemplateUpdate Discharge { get; set; }
         public List<PrescriptionTemplatUpdate> PrescriptionTemplate { get; set; }
+        public List<TIpAdmissionDiagnosisInformationUpdate> AdmissionDiagnosisInformation { get; set; }
+
+
+    }
+    public  class TIpAdmissionDiagnosisInformationModel
+    {
+        public long IpdiagnosisId { get; set; }
+        public long? AdmId { get; set; }
+        public string? Diagnosis { get; set; }
+        public string? Icdcode { get; set; }
+        public string? Diagnosisinformation { get; set; }
+        public string? FlagCode { get; set; }
+        public int? CreatedBy { get; set; }
+
+
+    }
+    public class TIpAdmissionDiagnosisInformationUpdate
+    {
+        public long IpdiagnosisId { get; set; }
+        public long? AdmId { get; set; }
+        public string? Diagnosis { get; set; }
+        public string? Icdcode { get; set; }
+        public string? Diagnosisinformation { get; set; }
+        public string? FlagCode { get; set; }
+        public int? ModifiedBy { get; set; }
+
 
     }
 }
