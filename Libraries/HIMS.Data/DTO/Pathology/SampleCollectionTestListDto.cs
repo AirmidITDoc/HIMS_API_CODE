@@ -24,6 +24,10 @@
         public bool IsApprovedByCamp { get; set; }
         public long PatientTypeId { get; set; }
         public int? IsRefunded { get; set; }
+        public bool? IsSampleReceviedCancel { get; set; }
+        public string? SampleReceviedCancelReason { get; set; }
+        public long? SampleReceviedCanceledBy { get; set; }
+        public DateTime SampleReceivedCancelDate { get; set; }
 
     }
 }
