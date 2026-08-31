@@ -3,8 +3,12 @@ using DocumentFormat.OpenXml.Office2010.Excel;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Common;
+using HIMS.API.Models.DocumentManagement;
+using HIMS.API.Utility;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.DocumentManagement;
 using HIMS.Data.Models;
 using HIMS.Services.DocumentManagement;
@@ -18,9 +22,11 @@ namespace HIMS.API.Controllers.DocumentManagement
     public class DocumentUploadController : BaseController
     {
         private readonly IDocumentUploadService _repository;
-        public DocumentUploadController(IDocumentUploadService repository)
+        private readonly IFileUtility _FileUtility;
+        public DocumentUploadController(IDocumentUploadService repository,IFileUtility fileUtility)
         {
             _repository = repository;
+            _FileUtility = fileUtility;
         }
 
         //List API
@@ -39,6 +45,25 @@ namespace HIMS.API.Controllers.DocumentManagement
         {
             var RegList = await _repository.GetRegistrationsByPatientId(PatientId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Category tree retrieved successfully.", RegList.Select(x => new { x.AdmissionDate, x.Ipdno, x.Ipnumber, x.RegId,x.PatientTypeId }));
+        }
+
+        [HttpPost("save-files")]
+        [Permission]
+        public async Task<ApiResponse> SaveFiles([FromForm] DocumentAdmissionModel model)
+        {
+            List<FileMaster> Files = new();
+            foreach (var item in model.DocumentFiles.Where(x => x.IsDelete && x.Id == 0))
+            {
+                if (item.OrgFileName != null)
+                {
+                    item.SavedFileName = await _FileUtility.UploadFileAsync(item.Document, "DocumentManagement");
+                    item.CreatedBy = CurrentUserId;
+                    item.CreatedDate = DateTime.Now;
+                    item.IsActive = true;
+                }
+            }
+            await _repository.Add(model.MapTo<DocumentAdmission>(),CurrentUserId,CurrentUserName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Files are saved successfully.", Files);
         }
         ////List API Get By Id
         //[HttpGet("{id?}")]

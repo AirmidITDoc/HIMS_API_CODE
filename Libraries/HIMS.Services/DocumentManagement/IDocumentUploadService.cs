@@ -12,7 +12,7 @@ namespace HIMS.Services.DocumentManagement
         Task<List<Admission>> GetRegistrationsByPatientId(long PatientId);
         Task<IPagedList<DocumentFile>> GetAllPagedAsync(GridRequestModel objGrid, IQueryable<DocumentFile> query = null, Func<IQueryable<DocumentFile>, IQueryable<DocumentFile>> func = null);
         Task<DocumentFile?> GetById(Expression<Func<DocumentFile, bool>> predicateToGetId, params string[] includes);
-        Task<DocumentFile> Add(DocumentFile entity, int UserId, string Username, params Expression<Func<DocumentFile, object>>[] references);
+        Task<DocumentAdmission> Add(DocumentAdmission entity, int UserId, string Username);
         Task<DocumentFile> Update(DocumentFile entity, int UserId, string Username, string[]? ignoreColumns = null);
         Task<bool> SoftDelete(DocumentFile entity, int UserId, string Username);
     }

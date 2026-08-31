@@ -57,10 +57,13 @@ namespace HIMS.Services.DocumentManagement
             var query = ApplyIncludes(_context.DocumentFiles, includes);
             return await query.FirstOrDefaultAsync(predicateToGetId);
         }
-        public async Task<DocumentFile> Add(DocumentFile entity, int UserId, string Username, params Expression<Func<DocumentFile, object>>[] references)
+        public async Task<DocumentAdmission> Add(DocumentAdmission entity, int UserId, string Username)
         {
-            _context.DocumentFiles.Add(entity);
-            await LoadReferences(entity, references);
+            foreach (var item in entity.DocumentFiles)
+            {
+                item.DocAdmissionId = item.Id;
+            }
+            _context.DocumentAdmissions.Add(entity);
             await _context.SaveChangesAsync(UserId, Username);
 
             return entity;
