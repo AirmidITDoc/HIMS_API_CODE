@@ -28,75 +28,63 @@ using WkHtmlToPdfDotNet.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
-
 AppSettings.Initialize(builder.Configuration);
 
 // Add services to the container.
 ConfigurationManager Configuration = builder.Configuration;
 ConfigurationHelper.Initialize(Configuration);
+
 builder.Services.AddSignalR();
 builder.Services.AddControllers();
-////Changes by Ashu 28 May 2025
-//builder.Services.AddControllers().AddJsonOptions(options =>
-//{
-//    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-//    options.JsonSerializerOptions.MaxDepth = 64;
-//});//
 
-builder.Services.AddEndpointsApiExplorer();
 builder.Services.Configure<FormOptions>(o =>
 {
     o.ValueLengthLimit = int.MaxValue;
     o.MultipartBodyLengthLimit = long.MaxValue;
     o.MemoryBufferThreshold = int.MaxValue;
 });
-//Entity Framework  
+
+// Entity Framework with Retry on Failure (Transient error handling fixed)
 builder.Services.AddEntityFrameworkSqlServer();
 builder.Services.AddDbContextPool<HIMSDbContext>((provider, options) =>
 {
-    options.UseSqlServer(AppSettings.Settings.CONNECTION_STRING);
-    options.UseInternalServiceProvider(provider);
+    options.UseSqlServer(AppSettings.Settings.CONNECTION_STRING, sqlServerOptionsAction: sqlOptions =>
+    {
+        sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5,
+            maxRetryDelay: TimeSpan.FromSeconds(30),
+            errorNumbersToAdd: null);
+    });
 });
+
 ConnectionStrings.SetConnectionString(AppSettings.Settings.CONNECTION_STRING);
 CommonExtensions.PreloadDinkToPdfDll();
 
-// Bind ABDM settings
-//builder.Services.Configure<ABDMSettings>(builder.Configuration.GetSection("ABDMSettings"));
 HIMS.ABHA.Configuration.AppSettings.Initialize(builder.Configuration.GetSection("ABDMSettings"));
-
-//var abdmSettings = builder.Configuration
-//    .GetSection("ABDMSettings")
-//    .Get<ABDMSettings>() ?? new ABDMSettings();
-
-// Retry policy
-//var retryPolicy = HttpPolicyExtensions
-//    .HandleTransientHttpError()
-//    .WaitAndRetryAsync(HIMS.ABHA.Configuration.AppSettings.Current.RetryCount, attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt)));
-
-//builder.Services.AddHttpClient<AbdmHttpClient>(c =>
-//{
-//    c.Timeout = TimeSpan.FromSeconds(HIMS.ABHA.Configuration.AppSettings.Current.RequestTimeoutSeconds);
-//}).AddPolicyHandler(retryPolicy);
-//// Typed HttpClients
-//builder.Services.AddHttpClient<IAbdmTokenService, AbdmTokenService>(c =>
-//{
-//    c.Timeout = TimeSpan.FromSeconds(HIMS.ABHA.Configuration.AppSettings.Current.RequestTimeoutSeconds);
-//}).AddPolicyHandler(retryPolicy);
-
 builder.Services.AddAbhaServices(HIMS.ABHA.Configuration.AppSettings.Current.RequestTimeoutSeconds);
 DependencyRegistrar.Register(builder.Services);
 
+// Startup Scope with Try-Catch for Database configuration
 using (var serviceProvider = builder.Services.BuildServiceProvider())
 using (var scope = serviceProvider.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<HIMSDbContext>();
+    try
+    {
+        var db = scope.ServiceProvider.GetRequiredService<HIMSDbContext>();
 
-    var offsetMinutes = db.AppSettings.FirstOrDefault(x => x.SettingKey == "TimeOffsetMinutes")?.SettingValue.ToInt() ?? 0;
-    string CurrencySymbol = db.MSystemConfigs.FirstOrDefault(x => x.SystemName == "CurrencySymbol")?.SystemInputValue ?? "$";
-    CurrencyHelper.Configure(CurrencySymbol);
+        var offsetMinutes = db.AppSettings.FirstOrDefault(x => x.SettingKey == "TimeOffsetMinutes")?.SettingValue.ToInt() ?? 0;
+        string CurrencySymbol = db.MSystemConfigs.FirstOrDefault(x => x.SystemName == "CurrencySymbol")?.SystemInputValue ?? "$";
+        CurrencyHelper.Configure(CurrencySymbol);
 
-    AppTime.Configure(offsetMinutes);
+        AppTime.Configure(offsetMinutes);
+    }
+    catch (Exception)
+    {
+        CurrencyHelper.Configure("$");
+        AppTime.Configure(0);
+    }
 }
+
 builder.Services.AddMvc(opt =>
 {
     opt.EnableEndpointRouting = false;
@@ -121,7 +109,6 @@ builder.Services.AddMvc().AddJsonOptions(jsonOptions =>
     jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     jsonOptions.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-    // jsonOptions.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
 
 builder.Services.AddApiVersioning(config =>
@@ -132,8 +119,6 @@ builder.Services.AddApiVersioning(config =>
     config.ApiVersionReader = new HeaderApiVersionReader("api-version");
 });
 
-//Configure JWT Token Authentication
-//AuthenticationSettings config = builder.Configuration.GetSection("AuthenticationSettings").Get<AuthenticationSettings>();
 byte[] secretKey = Encoding.ASCII.GetBytes(AppSettings.Settings.AuthenticationSettings.SecretKey);
 builder.Services.AddAuthentication(auth =>
 {
@@ -152,7 +137,9 @@ builder.Services.AddAuthentication(auth =>
         ValidateAudience = false
     };
 });
+
 builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API.Project", Version = "v1" });
@@ -168,21 +155,21 @@ builder.Services.AddSwaggerGen(c =>
     });
     c.CustomSchemaIds(type => type.FullName!.Replace("+", "."));
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
                 {
-                    {
-                          new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference
-                                {
-                                    Type = ReferenceType.SecurityScheme,
-                                    Id = "Bearer"
-                                }
-                            },
-                            Array.Empty<string>()
-
-                    }
-                });
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
 });
+
 string[] CorsAllowUrls = AppSettings.Settings.CorsAllowUrls.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(url => url.Trim()).ToArray();
 builder.Services.AddCors(options =>
 {
@@ -210,32 +197,29 @@ builder.Services.AddCors(options =>
         });
 });
 
-
 var app = builder.Build();
+
 app.UseStaticFiles();
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint(AppSettings.Settings.SwaggerUrl, "API v1"));
-
 app.UseAuthentication();
 app.UseCors("CorsPolicy");
-//app.UseWebSockets();
 app.MapHub<NotificationHub>("/himshub");
 app.MapControllers();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseMiddleware<RequestContextMiddleware>();
 app.UseRouting();
 app.UseAuthorization();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
+
 using (var scope = app.Services.CreateScope())
 {
     var pdfService = scope.ServiceProvider.GetRequiredService<DinkToPdfService>();
     CommonExtensions.Initialize(pdfService);
 }
 
-
-
 app.Run();
-
