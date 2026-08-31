@@ -70,19 +70,34 @@ namespace HIMS.API.Controllers.IPPatient
             var data1 = await _repository.GetById(x => x.AdmissionId == id);
             return data1.ToSingleResponse<Discharge, DischargeModel>("Discharge");
         }
-        //List API Get By Id
-        [HttpGet("IpAdmissionDiagnosisInformation/{id?}")]
+        ////List API Get By Id
+        //[HttpGet("IpAdmissionDiagnosisInformation/{id?}")]
 
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        ////[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> IPGet(int id)
+        //{
+        //    if (id == 0)
+        //    {
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+        //    }
+        //    var data = await _repository1.GetById(x => x.AdmId == id);
+        //    return data.ToSingleResponse<TIpAdmissionDiagnosisInformation, TIpAdmissionDiagnosisInformationModel>("IpAdmissionDiagnosisInformation");
+        //}
+        // List API Get By Id
+        [HttpGet("IpAdmissionDiagnosisInformation/{id?}")]
         public async Task<ApiResponse> IPGet(int id)
         {
             if (id == 0)
             {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+                return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status400BadRequest, "No data found.");
             }
-            var data = await _repository1.GetById(x => x.AdmId == id);
-            return data.ToSingleResponse<TIpAdmissionDiagnosisInformation, TIpAdmissionDiagnosisInformationModel>("IpAdmissionDiagnosisInformation");
+
+            var data = _IDischargeSummaryService.GetIPDiagnosis(id);
+
+            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "Data loaded", data);
         }
+
+
 
         [HttpPost("DischargeSummaryInsert")]
         [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
