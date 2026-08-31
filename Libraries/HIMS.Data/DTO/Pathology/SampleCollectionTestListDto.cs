@@ -26,8 +26,8 @@
         public int? IsRefunded { get; set; }
         public bool? IsSampleReceviedCancel { get; set; }
         public string? SampleReceviedCancelReason { get; set; }
-        public long? SampleReceviedCanceledBy { get; set; }
-        public DateTime SampleReceivedCancelDate { get; set; }
+        public string? SampleReceviedCanceledBy { get; set; }
+        public string? SampleReceivedCancelDate { get; set; }
 
     }
 }

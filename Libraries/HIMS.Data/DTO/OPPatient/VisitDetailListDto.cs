@@ -69,6 +69,7 @@
         public string UserName { get; set; }
         public long AbhaTranId { get; set; }
         public string? DisplayAge { get; set; }
+        public string? GenderName { get; set; }
 
 
     }
