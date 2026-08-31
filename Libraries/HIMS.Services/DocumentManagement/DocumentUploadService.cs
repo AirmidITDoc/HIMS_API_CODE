@@ -41,6 +41,10 @@ namespace HIMS.Services.DocumentManagement
                       };
             return await qry.Take(25).ToListAsync();
         }
+        public virtual async Task<List<Admission>> GetRegistrationsByPatientId(long PatientId)
+        {
+            return await _context.Admissions.Where(x => x.RegId == PatientId).ToListAsync();
+        }
         public virtual async Task<IPagedList<DocumentFile>> GetAllPagedAsync(GridRequestModel objGrid, IQueryable<DocumentFile> query = null, Func<IQueryable<DocumentFile>, IQueryable<DocumentFile>> func = null)
         {
             query ??= _context.DocumentFiles.AsQueryable();

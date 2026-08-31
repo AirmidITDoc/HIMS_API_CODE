@@ -32,6 +32,14 @@ namespace HIMS.API.Controllers.DocumentManagement
             var PatientList = await _repository.SearchRegistration(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Category tree retrieved successfully.", PatientList);
         }
+        [HttpGet]
+        [Route("patient-admissions")]
+        [Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
+        public async Task<ApiResponse> SearchPatient(long PatientId)
+        {
+            var RegList = await _repository.GetRegistrationsByPatientId(PatientId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Category tree retrieved successfully.", RegList.Select(x => new { x.AdmissionDate, x.Ipdno, x.Ipnumber, x.RegId,x.PatientTypeId }));
+        }
         ////List API Get By Id
         //[HttpGet("{id?}")]
         //[Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
