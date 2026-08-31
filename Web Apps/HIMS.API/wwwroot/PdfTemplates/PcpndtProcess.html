@@ -289,15 +289,6 @@
 
         <!--ITEMS_SP2--><div class="chk"><span class="chk-box chk-{{IndicationValues}}"></span>&nbsp; {{RomanNo}}.{{IndicationDesc}}</div><!--/ITEMS_SP2-->
 
-
-    </div>
-    <!-- ==================== END PAGE 2 ==================== -->
-
-    <div class="page-break"></div>
-
-    <!-- ==================== PAGE 3 ==================== -->
-    <div class="page">
-
         <div class="row">
             <b>11. Procedure carried out (non-invasive) (Put a "Tick" on the appropriate procedure)</b>
             <br>
@@ -343,6 +334,14 @@
             <b>On :</b> <b>{{ResultDate}}</b><br>
         </div>
 
+    </div>
+    <!-- ==================== END PAGE 2 ==================== -->
+
+    <div class="page-break"></div>
+
+    <!-- ==================== PAGE 3 ==================== -->
+    <div class="page">
+
         <!--<br><br>-->
 
 
@@ -357,7 +356,7 @@
             </tr>
         </table>
 
-        <br><br><br>
+        <br><br><br><br><br><br>
 
 
         <table width="100%" style="border-collapse:collapse;">
@@ -370,7 +369,8 @@
                 <td width="45%" valign="top" align="center">
                     <b>{{invasiveDoctorName}}</b><br>
                     <b>{{InvEducation}}</b>
-                    <b>REGNO. {{InvRegNo}}</b><br><br>
+                    <b>REGNO. {{InvRegNo}}</b><br>
+                    <div style="height:20px;"></div>
                     Name, Signature and Registration Number with Seal of the
                     Gynecologist / Radiologist / Registered Medical Practitioner
                     performing Diagnostic Procedures
@@ -651,6 +651,7 @@
 
     <!-- ==================== PAGE 5 (Section D - Declaration) ==================== -->
     <div class="page">
+        <br><br>
 
         <div class="section"><b>SECTION D : Declaration</b></div>
         <br>
@@ -727,7 +728,7 @@
             declare that while conducting ultrasonography / image scanning on Ms.
             <span class="box"><b>{{PatientName}}</b></span>
             (name of the pregnant woman or the person undergoing pre-natal diagnostic procedure/test) , I have neither detected
-            nor disclosed the sex of her fetus to anybody in any manner.</b>
+            nor disclosed the sex of her fetus to anybody in any manner.</br>
         </div>
 
         <br>
@@ -750,7 +751,7 @@
             </tr>
         </table>
 
-        <br><br>
+        <br><br><br><br><br><br>
 
         <div style="text-align:center; width:50%; margin-left:auto;">
             <b>{{DeclarationDoctor}}</b><br>
@@ -765,3 +766,5 @@
     </div>
     <!-- ==================== END PAGE 5 ==================== -->
 
+</body>
+</html>
