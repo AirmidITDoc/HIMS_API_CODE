@@ -8,7 +8,10 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.MRD;
 using HIMS.Data.Models;
+using HIMS.Services.Dashboard;
+using HIMS.Services.MRD;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.MRD
@@ -19,10 +22,14 @@ namespace HIMS.API.Controllers.MRD
     public class DeathCertificateController : BaseController
     {
         private readonly IGenericService<TDeathCertificate> _repository;
+        private readonly IDeathCertificateService _IDeathCertificateService;
 
-        public DeathCertificateController(IGenericService<TDeathCertificate> repository)
+
+        public DeathCertificateController(IDeathCertificateService repository ,IGenericService<TDeathCertificate> repository1)
         {
-            _repository = repository;
+            _repository = repository1;
+            _IDeathCertificateService = repository;
+
         }
 
         // 1. LIST API (Pagination & Filtering)
@@ -39,6 +46,15 @@ namespace HIMS.API.Controllers.MRD
             IPagedList<TDeathCertificate> list = await _repository.GetAllPagedAsync(objGrid);
             return Ok(list.ToGridResponse(objGrid, "DeathCertificate List"));
         }
+
+        [HttpPost("CertificateList")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+        public async Task<IActionResult> CertificateList(GridRequestModel objGrid)
+        {
+            IPagedList<CertifiCateListDto> CertificateList = await _IDeathCertificateService.CertificateListAsync(objGrid);
+            return Ok(CertificateList.ToGridResponse(objGrid, "CertificateList"));
+        }
+
 
         // 2. GET BY ID API (Fetch single record)
         [HttpGet]
@@ -106,14 +122,6 @@ namespace HIMS.API.Controllers.MRD
             await _repository.Update(model, CurrentUserId, CurrentUserName, new string[1] { "AddedBy" });
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
-        }
-
-        [HttpPost("CertificateList")]
-        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
-        public async Task<IActionResult> CertificateList(GridRequestModel objGrid)
-        {
-            IPagedList<CertificateListDto> CertificateList = await _IDeathCertificateService.CertificateListAsync(objGrid);
-            return Ok(CertificateList.ToGridResponse(objGrid, "CertificateList"));
         }
 
 

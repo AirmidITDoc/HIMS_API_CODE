@@ -196,6 +196,32 @@ namespace HIMS.Services.Dashboard
                 WeeklyTestReport = data.Item8 ?? new List<WeeklyTestReport>()
             };
         }
+        public async Task<DailyDashBoardIPSubModule> GetDailyDashBoardIPSubModuleDashBoard(int UnitId, DateTime FromDate, DateTime ToDate)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[3];
+            para[0] = new SqlParameter("@UnitId", SqlDbType.Int) { Value = UnitId };
+            para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
+            para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+
+            var data = await sql.Get8ResultsFromSp<TodayvsYesterdayModel>("ps_rtrv_FinancialDashBoard", para);
+
+            return new DailyDashBoardIPSubModule()
+            {
+                TodayvsYesterdayModel = data.Item1 ?? new List<TodayvsYesterdayModel>()
+                //ServiceCharges = data.Item2 ?? new List<ServiceCharges>(),
+                //ReceiptPayment = data.Item3 ?? new List<ReceiptPayment>(),
+                //BillSummary = data.Item4 ?? new List<BillSummary>(),
+                //ReceiptOPIP = data.Item5 ?? new List<ReceiptOPIP>(),
+                //AdvanceOPIP = data.Item6 ?? new List<AdvanceOPIP>(),
+                //RefundOPIP = data.Item7 ?? new List<RefundOPIP>(),
+                //PharmacyReturn = data.Item8 ?? new List<PharmacyReturn>(),
+
+
+
+
+            };
+        }
         public async Task<FinancialDashboard> GetFinancialDashBoard(int UnitId, DateTime FromDate, DateTime ToDate)
         {
             DatabaseHelper sql = new();

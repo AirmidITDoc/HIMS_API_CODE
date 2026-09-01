@@ -1136,6 +1136,100 @@ namespace HIMS.Data.DataProviders
             }
 
         }
+        public async Task<(List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>, List<T8>, List<T9>, List<T10>, List<T11>, List<T12>, List<T13>, List<T14>, List<T15>, List<T16>, List<T17>, List<T18>, List<T19>, List<T20>, List<T21>, List<T22>)> Get10ResultsFromSp<T, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>(string Spname, SqlParameter[] para) where T : new() where T1 : new() where T2 : new() where T3 : new() where T4 : new() where T5 : new() where T6 : new() where T7 : new() where T8 : new() where T9 : new() where T10 : new() where T11 : new() where T12 : new() where T13 : new() where T14 : new() where T15 : new() where T16 : new() where T17 : new() where T18 : new() where T19 : new() where T20 : new() where T21 : new() where T22 : new()
+        {
+
+            Command.CommandType = CommandType.StoredProcedure; Command.Parameters.AddRange(para); Command.CommandText = Spname;
+            try
+            {
+                objConnection.Open();
+                using var reader = await Command.ExecuteReaderAsync();
+                // Table 1
+                var item1 = reader.MapToList<T>();
+
+                // Table 2
+                await reader.NextResultAsync();
+                var item2 = reader.MapToList<T1>();
+                // Table 3
+                await reader.NextResultAsync();
+                var item3 = reader.MapToList<T2>();
+                // Table 4
+                await reader.NextResultAsync();
+                var item4 = reader.MapToList<T3>();
+                // Table 5
+                await reader.NextResultAsync();
+                var item5 = reader.MapToList<T4>();
+                // Table 6
+                await reader.NextResultAsync();
+                var item6 = reader.MapToList<T5>();
+                // Table 6
+                await reader.NextResultAsync();
+                var item7 = reader.MapToList<T6>();
+
+                await reader.NextResultAsync();
+                var item8 = reader.MapToList<T7>();
+
+                await reader.NextResultAsync();
+                var item9 = reader.MapToList<T8>();
+
+                await reader.NextResultAsync();
+                var item10 = reader.MapToList<T9>();
+
+                await reader.NextResultAsync();
+                var item11 = reader.MapToList<T10>();
+
+                await reader.NextResultAsync();
+                var item12 = reader.MapToList<T11>();
+
+                await reader.NextResultAsync();
+                var item13 = reader.MapToList<T12>();
+
+                await reader.NextResultAsync();
+                var item14 = reader.MapToList<T13>();
+
+                await reader.NextResultAsync();
+                var item15 = reader.MapToList<T14>();
+
+                await reader.NextResultAsync();
+                var item16 = reader.MapToList<T15>();
+                await reader.NextResultAsync();
+                var item17 = reader.MapToList<T16>();
+                await reader.NextResultAsync();
+                var item18 = reader.MapToList<T17>();
+                await reader.NextResultAsync();
+                var item19 = reader.MapToList<T18>();
+                await reader.NextResultAsync();
+                var item20 = reader.MapToList<T19>();
+                await reader.NextResultAsync();
+                var item21 = reader.MapToList<T20>();
+                await reader.NextResultAsync();
+                var item22 = reader.MapToList<T21>();
+                await reader.NextResultAsync();
+                var item23 = reader.MapToList<T22>();
+
+
+                return (item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, item17, item18, item19, item20, item21, item22, item23);
+
+            }
+
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, Spname); throw;
+
+            }
+
+            finally
+            {
+                if (Command.Transaction == null)
+
+                {
+                    objConnection.Close();
+
+                }
+
+            }
+
+        }
         public async Task<(List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>)> Get6ResultsFromSp<T1, T2, T3, T4, T5, T6, T7>(string spName, SqlParameter[] parameters) where T1 : new() where T2 : new() where T3 : new() where T4 : new() where T5 : new() where T6 : new() where T7 : new()
         {
             Command.CommandType = CommandType.StoredProcedure;
