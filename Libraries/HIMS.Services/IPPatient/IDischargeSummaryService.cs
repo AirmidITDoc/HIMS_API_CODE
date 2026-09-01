@@ -19,6 +19,9 @@ namespace HIMS.Services.IPPatient
         Task<IPagedList<PatientClearanceApprovalListDto>> GetListAsyncP(GridRequestModel objGrid);
         Task<IPagedList<DischrageSummaryListDTo>> IPDischargesummaryList(GridRequestModel objGrid);
         Task<IPagedList<IPPrescriptiononDischargeListDto>> IPPrescriptionDischargesummaryList(GridRequestModel objGrid);
+       
+            List<TIpAdmissionDiagnosisInformation> GetIPDiagnosis(int AdmId);
+        
 
     }
 }

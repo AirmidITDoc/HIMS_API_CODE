@@ -7,6 +7,7 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
@@ -40,6 +41,15 @@ namespace HIMS.Services.IPPatient
         public virtual async Task<IPagedList<IPPrescriptiononDischargeListDto>> IPPrescriptionDischargesummaryList(GridRequestModel objGrid)
         {
             return await DatabaseHelper.GetGridDataBySp<IPPrescriptiononDischargeListDto>(objGrid, "ps_Rtrv_IP_Prescription_Discharge");
+        }
+        public List<TIpAdmissionDiagnosisInformation> GetIPDiagnosis(int AdmId)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@AdmId", AdmId);
+
+            return sql.FetchListByQuery<TIpAdmissionDiagnosisInformation>( "EXEC ps_RrvAdmissionDiagnosisInformation @AdmId", para);
         }
 
         public virtual async Task InsertAsync(DischargeSummary ObjDischargeSummary, List<TIpPrescriptionDischarge> ObjTIpPrescriptionDischarge, int CurrentUserId, string CurrentUserName)
