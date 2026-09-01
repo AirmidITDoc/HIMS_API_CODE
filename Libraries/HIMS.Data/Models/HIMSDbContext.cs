@@ -1899,6 +1899,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.DocNo).HasMaxLength(250);
 
+                entity.Property(e => e.FileKind).HasMaxLength(50);
+
+                entity.Property(e => e.FileSize).HasMaxLength(50);
+
                 entity.Property(e => e.FileTags).HasMaxLength(250);
 
                 entity.Property(e => e.OrgFileName).HasMaxLength(250);

@@ -88,7 +88,6 @@
         public long? GenderId { get; set; }
         public long? AbhaTranId { get; set; }
         public string Gender { get; set; }
-        public int DocumentCount { get; set; }
         public string PhotoInitials { get; set; }
 
     }

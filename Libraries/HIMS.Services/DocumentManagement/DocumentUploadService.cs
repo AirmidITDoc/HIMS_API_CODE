@@ -36,7 +36,6 @@ namespace HIMS.Services.DocumentManagement
                           AgeYear = x.AgeYear,
                           DateofBirth = x.DateofBirth,
                           Gender = g != null ? g.GenderName : null,
-                          DocumentCount = _context.DocumentAdmissions.Count(doc => doc.RegId == x.RegId),
                           PhotoInitials = x.FirstName.Substring(0, 1).ToUpper() + (string.IsNullOrEmpty(x.LastName) ? "" : x.LastName.Substring(0, 1).ToUpper())
                       };
             return await qry.Take(25).ToListAsync();
