@@ -14847,10 +14847,6 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CertificateNo).HasMaxLength(50);
 
-                entity.Property(e => e.DepartmentName)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.DetailsInjuries)
                     .HasColumnType("text")
                     .HasColumnName("Details_Injuries");
