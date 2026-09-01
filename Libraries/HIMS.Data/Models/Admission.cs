@@ -7,7 +7,7 @@ namespace HIMS.Data.Models
     {
         public Admission()
         {
-            DocumentAdmissions = new HashSet<DocumentAdmission>();
+            DocumentFiles = new HashSet<DocumentFile>();
         }
 
         public long AdmissionId { get; set; }
@@ -111,6 +111,6 @@ namespace HIMS.Data.Models
         public string? CompRefNo { get; set; }
         public long? ParentOpipid { get; set; }
 
-        public virtual ICollection<DocumentAdmission> DocumentAdmissions { get; set; }
+        public virtual ICollection<DocumentFile> DocumentFiles { get; set; }
     }
 }
