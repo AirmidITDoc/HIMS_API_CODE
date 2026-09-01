@@ -49,10 +49,10 @@ namespace HIMS.API.Controllers.DocumentManagement
 
         [HttpPost("save-files")]
         [Permission]
-        public async Task<ApiResponse> SaveFiles([FromForm] DocumentAdmissionModel model)
+        public async Task<ApiResponse> SaveFiles([FromForm] List<DocumentFileModel> model)
         {
-            List<FileMaster> Files = new();
-            foreach (var item in model.DocumentFiles.Where(x => x.IsDelete && x.Id == 0))
+            List<DocumentFile> Files = new();
+            foreach (var item in model.Where(x => x.IsDelete && x.Id == 0))
             {
                 if (item.OrgFileName != null)
                 {
@@ -61,8 +61,9 @@ namespace HIMS.API.Controllers.DocumentManagement
                     item.CreatedDate = DateTime.Now;
                     item.IsActive = true;
                 }
+                Files.Add(item.MapTo<DocumentFile>());
             }
-            await _repository.Add(model.MapTo<DocumentAdmission>(),CurrentUserId,CurrentUserName);
+            await _repository.Add(Files,CurrentUserId,CurrentUserName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Files are saved successfully.", Files);
         }
         ////List API Get By Id

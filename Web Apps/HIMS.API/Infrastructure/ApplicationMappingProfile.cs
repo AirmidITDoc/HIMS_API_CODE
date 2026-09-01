@@ -963,7 +963,6 @@ namespace HIMS.API.Infrastructure
 
 
             CreateMap<DocumentCategory, DocumentCategoryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<DocumentAdmission, DocumentAdmissionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<DocumentFile, DocumentFileModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
