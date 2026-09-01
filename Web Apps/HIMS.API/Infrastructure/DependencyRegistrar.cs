@@ -100,6 +100,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IMIcdDiagnosisMasterService, MIcdDiagnosisMasterService>();
             services.AddScoped<IAreaMasterService, AreaMasterService>();
             services.AddScoped<IClassMasterService, ClassMasterService>();
+            services.AddScoped<ISurgeryMasterService, SurgeryMasterService>();
 
 
 
