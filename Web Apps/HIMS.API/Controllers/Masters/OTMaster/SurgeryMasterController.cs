@@ -9,6 +9,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.SurgeryMasterController
@@ -20,9 +21,13 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
     public class SurgeryMasterController : BaseController
     {
         private readonly IGenericService<MOtSurgeryMaster> _repository;
-        public SurgeryMasterController(IGenericService<MOtSurgeryMaster> repository)
+        private readonly ISurgeryMasterService _ISurgeryMasterService;
+
+        public SurgeryMasterController(ISurgeryMasterService repository ,IGenericService<MOtSurgeryMaster> repository1)
         {
-            _repository = repository;
+            _ISurgeryMasterService = repository;
+            _repository = repository1;
+
         }
 
 
@@ -56,7 +61,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
 
 
         [HttpGet("{id?}")]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
+        //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -65,6 +70,19 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
             }
             var data = await _repository.GetById(x => x.SurgeryId == id);
             return data.ToSingleResponse<MOtSurgeryMaster, SurgeryMasterModel>("SurgeryMaster");
+        }
+       
+        [HttpGet("GetSurgeryNameBySurgeryType/{id?}")]
+        public async Task<ApiResponse> GetSurgeryName(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+
+            var data = _ISurgeryMasterService.GetSurgeryNameBySurgeryType(id);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Data loaded", data);
         }
         //Insert API
         [HttpPost]
