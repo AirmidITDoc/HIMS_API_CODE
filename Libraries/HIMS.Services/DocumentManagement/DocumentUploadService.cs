@@ -41,6 +41,10 @@ namespace HIMS.Services.DocumentManagement
                       };
             return await qry.Take(25).ToListAsync();
         }
+        public virtual async Task<List<Admission>> GetRegistrationsByPatientId(long PatientId)
+        {
+            return await _context.Admissions.Where(x => x.RegId == PatientId).ToListAsync();
+        }
         public virtual async Task<IPagedList<DocumentFile>> GetAllPagedAsync(GridRequestModel objGrid, IQueryable<DocumentFile> query = null, Func<IQueryable<DocumentFile>, IQueryable<DocumentFile>> func = null)
         {
             query ??= _context.DocumentFiles.AsQueryable();
@@ -53,10 +57,13 @@ namespace HIMS.Services.DocumentManagement
             var query = ApplyIncludes(_context.DocumentFiles, includes);
             return await query.FirstOrDefaultAsync(predicateToGetId);
         }
-        public async Task<DocumentFile> Add(DocumentFile entity, int UserId, string Username, params Expression<Func<DocumentFile, object>>[] references)
+        public async Task<DocumentAdmission> Add(DocumentAdmission entity, int UserId, string Username)
         {
-            _context.DocumentFiles.Add(entity);
-            await LoadReferences(entity, references);
+            foreach (var item in entity.DocumentFiles)
+            {
+                item.DocAdmissionId = item.Id;
+            }
+            _context.DocumentAdmissions.Add(entity);
             await _context.SaveChangesAsync(UserId, Username);
 
             return entity;
