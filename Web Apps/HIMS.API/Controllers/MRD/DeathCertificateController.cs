@@ -7,6 +7,7 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,7 +50,7 @@ namespace HIMS.API.Controllers.MRD
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid Certificate ID");
             }
 
-            // Correct expression predicate passing to repository GetById
+            
             var record = await _repository.GetById(x => x.CertificateId == id);
 
             if (record == null)
@@ -106,5 +107,15 @@ namespace HIMS.API.Controllers.MRD
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
+
+        [HttpPost("CertificateList")]
+        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+        public async Task<IActionResult> CertificateList(GridRequestModel objGrid)
+        {
+            IPagedList<CertificateListDto> CertificateList = await _IDeathCertificateService.CertificateListAsync(objGrid);
+            return Ok(CertificateList.ToGridResponse(objGrid, "CertificateList"));
+        }
+
+
     }
 }

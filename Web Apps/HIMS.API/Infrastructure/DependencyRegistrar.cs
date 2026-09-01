@@ -250,6 +250,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IRisApiHelper, RisApiHelper>();
             services.AddHttpContextAccessor();
             services.AddMemoryCache(opts => opts.SizeLimit = 1024);
+            services.AddScoped<IDeathCertificateService, DeathCertificateService>();
         }
     }
 }
