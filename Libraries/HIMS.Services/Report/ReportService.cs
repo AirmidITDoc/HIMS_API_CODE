@@ -10850,7 +10850,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
                         html = html.Replace("{{PDate}}", dt.GetColValue("PTime").ConvertToDateString("dd/MM/yyyy|hh:mm tt"));
-                        html = html.Replace("{{VisitTime}}", dt.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy|hh:mm tt"));
+                        html = html.Replace("{{VisitTime}}", dt.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{FollowupDate}}", dt.GetColValue("FollowupDate").ConvertToDateString("dd/MM/yyyy"));
 
 
@@ -10886,6 +10886,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
                         html = html.Replace("{{Education}}", dt.GetColValue("Education"));
                         html = html.Replace("{{Advice}}", dt.GetColValue("Advice"));
+                        html = html.Replace("{{HistoryOfIllness}}", dt.GetColValue("HistoryOfIllness"));
 
                         html = html.Replace("{{chkBPflag}}", dt.GetColValue("BP").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkPulseflag}}", dt.GetColValue("Pulse").ConvertToString() != "" ? "visible" : "none");
@@ -10897,6 +10898,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkSpO2flag}}", dt.GetColValue("SpO2").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkBloodGroupflag}}", dt.GetColValue("BloodGroup").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkAllergyflag}}", dt.GetColValue("Allergy").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkHistoryOfIllnessflag}}", dt.GetColValue("HistoryOfIllness").ConvertToString() != "" ? "visible" : "none");
 
 
                         html = html.Replace("{{chkEdu}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
@@ -10994,6 +10996,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
                         html = html.Replace("{{Education}}", dt.GetColValue("Education"));
                         html = html.Replace("{{Advice}}", dt.GetColValue("Advice"));
+                        html = html.Replace("{{HistoryOfIllness}}", dt.GetColValue("HistoryOfIllness"));
 
                         html = html.Replace("{{chkBPflag}}", dt.GetColValue("BP").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkPulseflag}}", dt.GetColValue("Pulse").ConvertToString() != "" ? "visible" : "none");
@@ -11005,6 +11008,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkSpO2flag}}", dt.GetColValue("SpO2").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkBloodGroupflag}}", dt.GetColValue("BloodGroup").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkAllergyflag}}", dt.GetColValue("Allergy").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkHistoryOfIllnessflag}}", dt.GetColValue("HistoryOfIllness").ConvertToString() != "" ? "visible" : "none");
 
 
                         html = html.Replace("{{chkEdu}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
@@ -11106,6 +11110,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
                         html = html.Replace("{{Education}}", dt.GetColValue("Education"));
                         html = html.Replace("{{Advice}}", dt.GetColValue("Advice"));
+                        html = html.Replace("{{HistoryOfIllness}}", dt.GetColValue("HistoryOfIllness"));
 
                         html = html.Replace("{{chkBPflag}}", dt.GetColValue("BP").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkPulseflag}}", dt.GetColValue("Pulse").ConvertToString() != "" ? "visible" : "none");
@@ -11117,6 +11122,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkSpO2flag}}", dt.GetColValue("SpO2").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkBloodGroupflag}}", dt.GetColValue("BloodGroup").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkAllergyflag}}", dt.GetColValue("Allergy").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkHistoryOfIllnessflag}}", dt.GetColValue("HistoryOfIllness").ConvertToString() != "" ? "visible" : "none");
 
 
                         html = html.Replace("{{chkEdu}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
@@ -11235,7 +11241,7 @@ namespace HIMS.Services.Report
 
                         html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
                         html = html.Replace("{{PDate}}", dt.GetColValue("PTime").ConvertToDateString("dd/MM/yyyy|hh:mm tt"));
-                        html = html.Replace("{{VisitTime}}", dt.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy|hh:mm tt"));
+                        html = html.Replace("{{VisitTime}}", dt.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{FollowupDate}}", dt.GetColValue("FollowupDate").ConvertToDateString("dd/MM/yyyy"));
 
 
@@ -11269,6 +11275,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
                         html = html.Replace("{{Education}}", dt.GetColValue("Education"));
                         html = html.Replace("{{Advice}}", dt.GetColValue("Advice"));
+                        html = html.Replace("{{HistoryOfIllness}}", dt.GetColValue("HistoryOfIllness"));
+
 
                         html = html.Replace("{{chkBPflag}}", dt.GetColValue("BP").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkPulseflag}}", dt.GetColValue("Pulse").ConvertToString() != "" ? "visible" : "none");
@@ -11280,6 +11288,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{chkSpO2flag}}", dt.GetColValue("SpO2").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkBloodGroupflag}}", dt.GetColValue("BloodGroup").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkAllergyflag}}", dt.GetColValue("Allergy").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkHistoryOfIllnessflag}}", dt.GetColValue("HistoryOfIllness").ConvertToString() != "" ? "visible" : "none");
+
 
                         html = html.Replace("{{chkRequestList}}", dt.GetColValue("RequestList").ConvertToString() != "" ? "table-row" : "none");
 
