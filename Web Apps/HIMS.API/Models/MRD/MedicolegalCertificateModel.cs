@@ -19,7 +19,7 @@ namespace HIMS.API.Models.MRD
         public long? TreatingDoctorId { get; set; }
         public long? TreatingDoctorId1 { get; set; }
         public long? TreatingDoctorId2 { get; set; }
-        public string? DepartmentName { get; set; }
+        public long? DepartmentId { get; set; }
 
     }
     public class MedicolegalCertificateModelValidator : AbstractValidator<MedicolegalCertificateModel>
@@ -37,7 +37,7 @@ namespace HIMS.API.Models.MRD
             RuleFor(x => x.TreatingDoctorId).NotNull().NotEmpty().WithMessage("TreatingDoctorId  is required");
             RuleFor(x => x.TreatingDoctorId1).NotNull().NotEmpty().WithMessage("TreatingDoctorId1  is required");
             RuleFor(x => x.TreatingDoctorId2).NotNull().NotEmpty().WithMessage("TreatingDoctorId2  is required");
-            RuleFor(x => x.DepartmentName).NotNull().NotEmpty().WithMessage("DepartmentName  is required");
+            RuleFor(x => x.DepartmentId).NotNull().NotEmpty().WithMessage("DepartmentId  is required");
 
 
         }
