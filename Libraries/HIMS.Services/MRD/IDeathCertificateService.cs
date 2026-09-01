@@ -1,5 +1,5 @@
 ﻿using HIMS.Core.Domain.Grid;
-
+using HIMS.Data.DTO.MRD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +10,6 @@ namespace HIMS.Services.MRD
 {
     public partial interface IDeathCertificateService
     {
-        Task<IPagedList<CertificateListDto>> CertificateListAsync(GridRequestModel objGrid);
+        Task<IPagedList<CertifiCateListDto>> CertificateListAsync(GridRequestModel objGrid);
     }
 }

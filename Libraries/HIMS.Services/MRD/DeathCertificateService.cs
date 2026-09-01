@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.MRD;
 using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,10 @@ namespace HIMS.Services.MRD
         {
             _context = context;
         }
-        public virtual async Task<IPagedList<CertificateListDto>> CertificateListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<CertifiCateListDto>> CertificateListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<CertificateListDto>(model, "ps_rtrv_Medico_Death_Certificate_List");
+            return await DatabaseHelper.GetGridDataBySp<CertifiCateListDto>(model, "ps_rtrv_Medico_Death_Certificate_List");
         }
+
     }
 }
