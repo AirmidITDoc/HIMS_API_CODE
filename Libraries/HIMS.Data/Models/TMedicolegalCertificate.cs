@@ -21,5 +21,6 @@ namespace HIMS.Data.Models
         public long? TreatingDoctorId2 { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
+        public string? DepartmentName { get; set; }
     }
 }
