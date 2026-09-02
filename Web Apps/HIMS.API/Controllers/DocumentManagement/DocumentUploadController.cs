@@ -63,66 +63,13 @@ namespace HIMS.API.Controllers.DocumentManagement
             await _repository.Add(Files, CurrentUserId, CurrentUserName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Files are saved successfully.", Files);
         }
-        ////List API Get By Id
-        //[HttpGet("{id?}")]
-        //[Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
-        //public async Task<ApiResponse> Get(int id)
-        //{
-        //    if (id == 0)
-        //    {
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
-        //    }
-        //    var data = await _repository.GetById(x => x.Id == id);
-        //    return data.ToSingleResponse<DocumentCategory, DocumentCategory>("DocumentCategory");
-        //}
-        ////Add API
-        //[HttpPost]
-        //[Permission(PageCode = "DocumentCategory", Permission = PagePermission.Add)]
-        //public async Task<ApiResponse> Post(DocumentCategory obj)
-        //{
-        //    DocumentCategory model = obj.MapTo<DocumentCategory>();
-        //    model.IsActive = true;
-        //    if (obj.Id == 0)
-        //    {
-        //        await _repository.Add(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
-        //}
-        ////Edit API
-        //[HttpPut("{id:int}")]
-        //[Permission(PageCode = "DocumentCategory", Permission = PagePermission.Edit)]
-        //public async Task<ApiResponse> Edit(DocumentCategory obj)
-        //{
-        //    if (obj.Id == 0)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    else
-        //    {
-        //        var data = await _repository.GetById(x => x.Id == obj.Id);
-        //        if (data == null)
-        //            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Record not found.");
-
-        //        data.Icon = obj.Icon;
-        //        data.DocCategory = obj.DocCategory;
-        //        await _repository.Update(data, CurrentUserId, CurrentUserName,null);
-        //    }
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
-        //}
-        ////Delete API
-        //[HttpDelete]
-        //[Permission(PageCode = "DocumentCategory", Permission = PagePermission.Delete)]
-        //public async Task<ApiResponse> Delete(int Id)
-        //{
-        //    DocumentCategory model = await _repository.GetById(x => x.Id == Id);
-        //    if ((model?.Id ?? 0) > 0)
-        //    {
-        //        model.IsDeleted = true;
-        //        await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //}
+        [HttpGet]
+        [Route("get-files")]
+        [Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetFiles()
+        {
+            var PatientList = await _repository.GetAllDocuments();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Category tree retrieved successfully.", PatientList);
+        }
     }
 }

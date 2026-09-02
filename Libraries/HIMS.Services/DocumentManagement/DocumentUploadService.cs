@@ -23,6 +23,22 @@ namespace HIMS.Services.DocumentManagement
         {
             _context = context;
         }
+        public virtual async Task<List<DocumentFile>> GetAllDocuments(int count = 50)
+        {
+            var qry = from d in _context.DocumentFiles
+                      join a in _context.Admissions on d.AdmissionId equals a.AdmissionId
+                      join c in _context.DocumentCategories on d.DocCatId equals c.Id
+                      select new DocumentFile()
+                      {
+                          CategoryName = c.DocCategory,
+                          OrgFileName = d.OrgFileName,
+                          FileTags = d.FileTags,
+                          DocNo = d.DocNo,
+                          FileKind = d.FileKind,
+                          FileSize = d.FileSize,
+                      };
+            return await qry.Take(count).ToListAsync();
+        }
         public virtual async Task<List<RegistrationAutoCompleteDto>> SearchRegistration(string str)
         {
             var qry = from x in _context.Registrations
