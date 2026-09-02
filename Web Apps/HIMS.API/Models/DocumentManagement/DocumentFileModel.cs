@@ -18,8 +18,9 @@ namespace HIMS.API.Models.DocumentManagement
         public bool IsDeleted { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string DocNo { get; set; } = null!;
-        public bool IsDelete {  get; set; }
+        public string? DocNo { get; set; } = null!;
+        public string FileKind { get; set; } = null!;
+        public string FileSize { get; set; } = null!;
     }
     public class DocumentFileModelValidator : AbstractValidator<DocumentFileModel>
     {

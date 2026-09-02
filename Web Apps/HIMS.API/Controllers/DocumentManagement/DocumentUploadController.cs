@@ -23,7 +23,7 @@ namespace HIMS.API.Controllers.DocumentManagement
     {
         private readonly IDocumentUploadService _repository;
         private readonly IFileUtility _FileUtility;
-        public DocumentUploadController(IDocumentUploadService repository,IFileUtility fileUtility)
+        public DocumentUploadController(IDocumentUploadService repository, IFileUtility fileUtility)
         {
             _repository = repository;
             _FileUtility = fileUtility;
@@ -44,15 +44,15 @@ namespace HIMS.API.Controllers.DocumentManagement
         public async Task<ApiResponse> SearchPatient(long PatientId)
         {
             var RegList = await _repository.GetRegistrationsByPatientId(PatientId);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Category tree retrieved successfully.", RegList.Select(x => new { x.AdmissionDate, x.Ipdno, x.Ipnumber, x.RegId,x.PatientTypeId }));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Category tree retrieved successfully.", RegList.Select(x => new { x.AdmissionDate, x.Ipdno, x.Ipnumber, x.RegId, x.PatientTypeId, x.AdmissionId }));
         }
 
-        [HttpPost("save-files")]
+        [HttpPost("upload-files")]
         [Permission]
         public async Task<ApiResponse> SaveFiles([FromForm] List<DocumentFileModel> model)
         {
             List<DocumentFile> Files = new();
-            foreach (var item in model.Where(x => x.IsDelete && x.Id == 0))
+            foreach (var item in model.Where(x => x.Id == 0))
             {
                 if (item.OrgFileName != null)
                 {
@@ -60,10 +60,11 @@ namespace HIMS.API.Controllers.DocumentManagement
                     item.CreatedBy = CurrentUserId;
                     item.CreatedDate = DateTime.Now;
                     item.IsActive = true;
+                    item.DocNo = "123";
                 }
                 Files.Add(item.MapTo<DocumentFile>());
             }
-            await _repository.Add(Files,CurrentUserId,CurrentUserName);
+            await _repository.Add(Files, CurrentUserId, CurrentUserName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Files are saved successfully.", Files);
         }
         ////List API Get By Id
