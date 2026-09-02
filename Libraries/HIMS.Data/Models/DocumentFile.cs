@@ -18,6 +18,7 @@ namespace HIMS.Data.Models
         public string DocNo { get; set; } = null!;
         public string FileKind { get; set; } = null!;
         public string FileSize { get; set; } = null!;
+        public int? DocRunningNo { get; set; }
 
         public virtual Admission Admission { get; set; } = null!;
         public virtual DocumentCategory DocCat { get; set; } = null!;

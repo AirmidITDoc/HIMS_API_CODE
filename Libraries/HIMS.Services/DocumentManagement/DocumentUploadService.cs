@@ -1,12 +1,17 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.DocumentManagement;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using LinqToDB;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Linq.Expressions;
+using WkHtmlToPdfDotNet;
 
 namespace HIMS.Services.DocumentManagement
 {
@@ -46,8 +51,28 @@ namespace HIMS.Services.DocumentManagement
         }
         public async Task<List<DocumentFile>> Add(List<DocumentFile> entity, int UserId, string Username)
         {
-            _context.DocumentFiles.AddRange(entity);
-            await _context.SaveChangesAsync(UserId, Username);
+            foreach (var entityItem in entity)
+            {
+
+                var extraParams = new SqlParameter[]
+{
+    new("@AdmissionId", SqlDbType.BigInt) { Value = entityItem.AdmissionId },
+    new("@DocCatId", SqlDbType.BigInt) { Value = entityItem.DocCatId },
+    new("@OrgFileName", SqlDbType.NVarChar,250) { Value = entityItem.OrgFileName },
+    new("@SavedFileName", SqlDbType.NVarChar,250) { Value = entityItem.SavedFileName },
+    new("@FileTags", SqlDbType.NVarChar,250) { Value = entityItem.FileTags },
+    new("@CreatedBy", SqlDbType.Int) { Value = UserId },
+    new("@FileKing", SqlDbType.NVarChar,50) { Value = entityItem.FileKind },
+    new("@FileSize", SqlDbType.NVarChar,50) { Value = entityItem.FileSize }
+};
+
+
+                DataTable dt = await DatabaseHelper.FetchDataTableBySPAsync("AddDocuments", extraParams);
+                entityItem.Id = dt.Rows[0][0].ToInt();
+                entityItem.DocNo = dt.Rows[0][1].ConvertToString();
+            }
+            //_context.DocumentFiles.AddRange(entity);
+            //await _context.SaveChangesAsync(UserId, Username);
             return entity;
         }
     }

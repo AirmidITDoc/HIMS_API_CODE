@@ -57,10 +57,6 @@ namespace HIMS.API.Controllers.DocumentManagement
                 if (item.OrgFileName != null)
                 {
                     item.SavedFileName = await _FileUtility.UploadFileAsync(item.Document, "DocumentManagement");
-                    item.CreatedBy = CurrentUserId;
-                    item.CreatedDate = DateTime.Now;
-                    item.IsActive = true;
-                    item.DocNo = "123";
                 }
                 Files.Add(item.MapTo<DocumentFile>());
             }
