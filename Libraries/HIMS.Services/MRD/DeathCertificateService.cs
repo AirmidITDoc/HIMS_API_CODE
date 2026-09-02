@@ -20,7 +20,7 @@ namespace HIMS.Services.MRD
         }
         public virtual async Task<IPagedList<CertifiCateListDto>> CertificateListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<CertifiCateListDto>(model, "ps_rtrv_Medico_Death_Certificate_List");
+            return await DatabaseHelper.GetGridDataBySp<CertifiCateListDto>(model, "ps_Rtrv_MedicoDeathCertificateList");
         }
 
     }

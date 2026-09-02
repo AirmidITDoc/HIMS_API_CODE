@@ -1,12 +1,17 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.DocumentManagement;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using LinqToDB;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Linq.Expressions;
+using WkHtmlToPdfDotNet;
 
 namespace HIMS.Services.DocumentManagement
 {
@@ -36,7 +41,6 @@ namespace HIMS.Services.DocumentManagement
                           AgeYear = x.AgeYear,
                           DateofBirth = x.DateofBirth,
                           Gender = g != null ? g.GenderName : null,
-                          DocumentCount = _context.DocumentAdmissions.Count(doc => doc.RegId == x.RegId),
                           PhotoInitials = x.FirstName.Substring(0, 1).ToUpper() + (string.IsNullOrEmpty(x.LastName) ? "" : x.LastName.Substring(0, 1).ToUpper())
                       };
             return await qry.Take(25).ToListAsync();
@@ -45,59 +49,31 @@ namespace HIMS.Services.DocumentManagement
         {
             return await _context.Admissions.Where(x => x.RegId == PatientId).ToListAsync();
         }
-        public virtual async Task<IPagedList<DocumentFile>> GetAllPagedAsync(GridRequestModel objGrid, IQueryable<DocumentFile> query = null, Func<IQueryable<DocumentFile>, IQueryable<DocumentFile>> func = null)
+        public async Task<List<DocumentFile>> Add(List<DocumentFile> entity, int UserId, string Username)
         {
-            query ??= _context.DocumentFiles.AsQueryable();
-
-            query = func != null ? func(query) : query;
-            return await query.BuildPredicate(objGrid);
-        }
-        public async Task<DocumentFile?> GetById(Expression<Func<DocumentFile, bool>> predicateToGetId, params string[] includes)
-        {
-            var query = ApplyIncludes(_context.DocumentFiles, includes);
-            return await query.FirstOrDefaultAsync(predicateToGetId);
-        }
-        public async Task<DocumentAdmission> Add(DocumentAdmission entity, int UserId, string Username)
-        {
-            foreach (var item in entity.DocumentFiles)
+            foreach (var entityItem in entity)
             {
-                item.DocAdmissionId = item.Id;
-            }
-            _context.DocumentAdmissions.Add(entity);
-            await _context.SaveChangesAsync(UserId, Username);
 
+                var extraParams = new SqlParameter[]
+{
+    new("@AdmissionId", SqlDbType.BigInt) { Value = entityItem.AdmissionId },
+    new("@DocCatId", SqlDbType.BigInt) { Value = entityItem.DocCatId },
+    new("@OrgFileName", SqlDbType.NVarChar,250) { Value = entityItem.OrgFileName },
+    new("@SavedFileName", SqlDbType.NVarChar,250) { Value = entityItem.SavedFileName },
+    new("@FileTags", SqlDbType.NVarChar,250) { Value = entityItem.FileTags },
+    new("@CreatedBy", SqlDbType.Int) { Value = UserId },
+    new("@FileKing", SqlDbType.NVarChar,50) { Value = entityItem.FileKind },
+    new("@FileSize", SqlDbType.NVarChar,50) { Value = entityItem.FileSize }
+};
+
+
+                DataTable dt = await DatabaseHelper.FetchDataTableBySPAsync("AddDocuments", extraParams);
+                entityItem.Id = dt.Rows[0][0].ToInt();
+                entityItem.DocNo = dt.Rows[0][1].ConvertToString();
+            }
+            //_context.DocumentFiles.AddRange(entity);
+            //await _context.SaveChangesAsync(UserId, Username);
             return entity;
-        }
-        public async Task<DocumentFile> Update(DocumentFile entity, int UserId, string Username, string[]? ignoreColumns = null)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
-            if ((ignoreColumns?.Length ?? 0) > 0)
-            {
-                foreach (var column in ignoreColumns)
-                {
-                    _context.Entry(entity).Property(column).IsModified = false;
-                }
-            }
-            await _context.SaveChangesAsync(UserId, Username);
-            return entity;
-
-        }
-        public async Task<bool> SoftDelete(DocumentFile entity, int UserId, string Username)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync(UserId, Username, true);
-            return true;
-        }
-        private async Task LoadReferences(DocumentFile entity, IEnumerable<Expression<Func<DocumentFile, object>>> references)
-        {
-            foreach (var reference in references)
-            {
-                await _context.Entry(entity).Reference(reference!).LoadAsync();
-            }
-        }
-        private static IQueryable<DocumentFile> ApplyIncludes(IQueryable<DocumentFile> query, IEnumerable<string> includes)
-        {
-            return includes.Aggregate(query, (current, include) => current.Include(include));
         }
     }
 }

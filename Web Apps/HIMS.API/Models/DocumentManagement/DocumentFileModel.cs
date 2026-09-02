@@ -7,6 +7,7 @@ namespace HIMS.API.Models.DocumentManagement
     public class DocumentFileModel
     {
         public long Id { get; set; }
+        public long AdmissionId { get; set; }
         public long DocCatId { get; set; }
         public IFormFile? Document { get; set; }
         public long DocAdmissionId { get; set; }
@@ -17,21 +18,9 @@ namespace HIMS.API.Models.DocumentManagement
         public bool IsDeleted { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string DocNo { get; set; } = null!;
-        public bool IsDelete {  get; set; }
-    }
-    public partial class DocumentAdmissionModel
-    {
-
-        public long Id { get; set; }
-        public long AdmissionId { get; set; }
-        public long RegId { get; set; }
-        public bool IsActive { get; set; }
-        public long IsDeleted { get; set; }
-        public int CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string DocNo { get; set; } = null!;
-        public virtual List<DocumentFileModel> DocumentFiles { get; set; }
+        public string? DocNo { get; set; } = null!;
+        public string FileKind { get; set; } = null!;
+        public string FileSize { get; set; } = null!;
     }
     public class DocumentFileModelValidator : AbstractValidator<DocumentFileModel>
     {
