@@ -9,6 +9,7 @@ namespace HIMS.Services.DocumentManagement
     public interface IDocumentUploadService
     {
         Task<List<RegistrationAutoCompleteDto>> SearchRegistration(string str);
+        Task<List<DocumentFile>> GetAllDocuments(int count = 50);
         Task<List<Admission>> GetRegistrationsByPatientId(long PatientId);
         Task<List<DocumentFile>> Add(List<DocumentFile> entity, int UserId, string Username);
     }

@@ -12,7 +12,7 @@ namespace HIMS.Data.DTO.MRD
         public DateTime? MLCDate { get; set; }
         public string? MLCTime { get; set; }
         public string? CertificateNo { get; set; }
-        public long OP_IP_Id { get; set; }
+        public long OpIpId { get; set; }
         public string? PatientName { get; set; }
         public string? RegNo { get; set; }
         public string? DepartmentName { get; set; }
@@ -36,6 +36,6 @@ namespace HIMS.Data.DTO.MRD
         public string CompanyName { get; set; }
         public string TariffName { get; set; }
         public bool IsCancelled { get; set; }
-        public long OP_IP_Type { get; set; }
+        public long OpIpType { get; set; }
     }
 }

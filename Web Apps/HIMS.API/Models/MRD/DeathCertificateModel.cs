@@ -6,7 +6,6 @@ namespace HIMS.API.Models.MRD
     public class DeathCertificateModel
     {
         public long CertificateId { get; set; }
-        public string? CertificateNo { get; set; }
         public DateTime? CertificateDate { get; set; }
         public DateTime? CertificateTime { get; set; }
         public long? OpIpId { get; set; }
@@ -20,11 +19,11 @@ namespace HIMS.API.Models.MRD
         public string? Diagnsis { get; set; }
     }
 
-    public class DeathCertificateModelValidator : AbstractValidator<DeathCertificateModel>
-    {
-        public DeathCertificateModelValidator()
-        {
-            RuleFor(x => x.CertificateNo).NotNull().NotEmpty().WithMessage("Certificate No is required");
-        }
-    }
+    //public class DeathCertificateModelValidator : AbstractValidator<DeathCertificateModel>
+    //{
+    //    public DeathCertificateModelValidator()
+    //    {
+    //        RuleFor(x => x.CertificateNo).NotNull().NotEmpty().WithMessage("Certificate No is required");
+    //    }
+    //}
 }
