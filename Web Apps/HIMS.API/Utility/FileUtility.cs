@@ -43,17 +43,34 @@ namespace HIMS.API.Utility
             }
             return contentType;
         }
+        //public string SaveImageFromBase64(string Base64, string Folder)
+        //{
+        //    var DestinationPath = "";
+        //    //_Sales.GetFilePath();
+        //    if (string.IsNullOrWhiteSpace(DestinationPath))
+        //        DestinationPath =AppSettings.Settings.StorageBaseUrl;
+        //    if (!Directory.Exists(DestinationPath))
+        //        Directory.CreateDirectory(DestinationPath);
+        //    if (!Directory.Exists($"{DestinationPath.Trim('\\')}\\{Folder}"))
+        //        Directory.CreateDirectory($"{DestinationPath.Trim('\\')}\\{Folder}");
+        //    string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
+        //    string FileName = Guid.NewGuid().ToString() + ".png";
+        //    File.WriteAllBytes(Path.Combine(FilePath, FileName), Convert.FromBase64String(Base64.Replace("data:image/png;base64,", "")));
+        //    return FileName;
+        //}
         public string SaveImageFromBase64(string Base64, string Folder)
         {
             var DestinationPath = "";
             //_Sales.GetFilePath();
             if (string.IsNullOrWhiteSpace(DestinationPath))
-                DestinationPath =AppSettings.Settings.StorageBaseUrl;
+                DestinationPath = AppSettings.Settings.StorageBaseUrl;
             if (!Directory.Exists(DestinationPath))
                 Directory.CreateDirectory(DestinationPath);
-            if (!Directory.Exists($"{DestinationPath.Trim('\\')}\\{Folder}"))
-                Directory.CreateDirectory($"{DestinationPath.Trim('\\')}\\{Folder}");
-            string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
+
+            string FilePath = Path.Combine(DestinationPath.TrimEnd('\\', '/'), Folder.Trim('\\', '/'));
+            if (!Directory.Exists(FilePath))
+                Directory.CreateDirectory(FilePath);
+
             string FileName = Guid.NewGuid().ToString() + ".png";
             File.WriteAllBytes(Path.Combine(FilePath, FileName), Convert.FromBase64String(Base64.Replace("data:image/png;base64,", "")));
             return FileName;
