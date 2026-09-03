@@ -244,7 +244,7 @@ namespace HIMS.API.Models.IPPatient
     {
         public DischargeTemplateUpdate Discharge { get; set; }
         public List<PrescriptionTemplatUpdate> PrescriptionTemplate { get; set; }
-        public List<TIpAdmissionDiagnosisInformationUpdate> AdmissionDiagnosisInformation { get; set; }
+        public List<TIpAdmissionDiagnosisInformationModel> AdmissionDiagnosisInformation { get; set; }
 
 
     }
