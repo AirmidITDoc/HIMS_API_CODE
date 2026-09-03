@@ -64,6 +64,17 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<LabResultPrintedListDto>(model, "ps_Rtrv_LabResultPrintedList");
         }
+       
+        public virtual async Task<IPagedList<LabSamcollectionTestwiseListDto>> LabSamcollectionTestwiseListAsynch(GridRequestModel model, long UnitId)
+        {
+            var extraParams = new List<SqlParameter>
+         {
+         new SqlParameter("@UnitId", SqlDbType.BigInt) { Value = UnitId }
+        };
+
+            return await DatabaseHelper.GetGridDataBySp<LabSamcollectionTestwiseListDto>(model, "ps_Rtrv_LabSamcollection_Testwise_List", extraParams);
+        }
+
         public List<CompanyComboDto> CompanyComboList(string keywoard)
         {
             DatabaseHelper sql = new();
