@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.MRD;
+using HIMS.API.Models.OPPatient;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
@@ -79,7 +80,6 @@ namespace HIMS.API.Controllers.MRD
         // 3. INSERT (CREATE) API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "DeathCertificate", Permission = Permission.Add)]
         public async Task<ApiResponse> Insert(DeathCertificateModel obj)
         {
             if (obj == null || obj.CertificateId != 0)
@@ -92,13 +92,11 @@ namespace HIMS.API.Controllers.MRD
             model.CertificateDate = AppTime.Now.Date;
             model.CertificateTime = AppTime.Now;
             model.AddedBy = CurrentUserId;
-            model.UpdatedBy = null;
 
-            await _repository.Add(model, CurrentUserId, CurrentUserName);
+            await _IDeathCertificateService.InsertAsync(model, CurrentUserId, CurrentUserName);
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.CertificateId);
         }
-
         // 4. UPDATE API 
         [HttpPut]
         [Route("[action]/{id}")]
@@ -108,13 +106,9 @@ namespace HIMS.API.Controllers.MRD
             if (id <= 0 || obj == null)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params for updation");
-            }
-
-            
+            }       
             obj.CertificateId = id;
-
             TDeathCertificate model = obj.MapTo<TDeathCertificate>();
-
             model.CertificateDate = AppTime.Now.Date;
             model.CertificateTime = AppTime.Now;
             model.UpdatedBy = CurrentUserId;
