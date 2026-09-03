@@ -25,12 +25,10 @@ namespace HIMS.API.Controllers.MRD
         private readonly IGenericService<TDeathCertificate> _repository;
         private readonly IDeathCertificateService _IDeathCertificateService;
 
-
-        public DeathCertificateController(IDeathCertificateService repository ,IGenericService<TDeathCertificate> repository1)
+        public DeathCertificateController(IDeathCertificateService repository, IGenericService<TDeathCertificate> repository1)
         {
             _repository = repository1;
             _IDeathCertificateService = repository;
-
         }
 
         // 1. LIST API (Pagination & Filtering)
@@ -56,7 +54,6 @@ namespace HIMS.API.Controllers.MRD
             return Ok(CertificateList.ToGridResponse(objGrid, "CertificateList"));
         }
 
-
         // 2. GET BY ID API (Fetch single record)
         [HttpGet]
         [Route("[action]/{id}")]
@@ -67,7 +64,6 @@ namespace HIMS.API.Controllers.MRD
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid Certificate ID");
             }
 
-            
             var record = await _repository.GetById(x => x.CertificateId == id);
 
             if (record == null)
@@ -77,6 +73,7 @@ namespace HIMS.API.Controllers.MRD
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record fetched successfully.", record);
         }
+
         // 3. INSERT (CREATE) API
         [HttpPost]
         [Route("[action]")]
@@ -97,6 +94,7 @@ namespace HIMS.API.Controllers.MRD
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.CertificateId);
         }
+
         // 4. UPDATE API 
         [HttpPut]
         [Route("[action]/{id}")]
@@ -106,18 +104,19 @@ namespace HIMS.API.Controllers.MRD
             if (id <= 0 || obj == null)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params for updation");
-            }       
+            }
+
             obj.CertificateId = id;
             TDeathCertificate model = obj.MapTo<TDeathCertificate>();
+
             model.CertificateDate = AppTime.Now.Date;
             model.CertificateTime = AppTime.Now;
             model.UpdatedBy = CurrentUserId;
 
-            await _repository.Update(model, CurrentUserId, CurrentUserName, new string[1] { "AddedBy" });
+          
+            await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CertificateNo", "AddedBy" });
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
-
-
     }
 }
