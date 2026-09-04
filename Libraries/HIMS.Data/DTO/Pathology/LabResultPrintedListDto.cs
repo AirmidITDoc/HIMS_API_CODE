@@ -43,4 +43,37 @@ namespace HIMS.Data.DTO.Pathology
         public string? RefDoctorName { get; set; }
         public string? UserName { get; set; }
     }
+    public class LabSamcollectionTestwiseListDto
+    {
+        public long LabPatientId { get; set; }
+        public string? DoctorName { get; set; }
+        public string? LBL { get; set; }
+        public string? PBillNo { get; set; }
+        public string? BillNo { get; set; }
+        public DateTime? PathDate { get; set; }
+        public string? WardName { get; set; }
+        public string? DepartmentName { get; set; }
+        public string? PatientType { get; set; }
+        public DateTime? VADate { get; set; }
+        public DateTime? VATime { get; set; }
+        public string? LabRequestNo { get; set; }
+        public string? PatientName { get; set; }
+        public DateTime? DateofBirth { get; set; }
+        public string? MobileNo { get; set; }
+        public int? AgeYear { get; set; }
+        public int? AgeMonth { get; set; }
+        public int? AgeDay { get; set; }
+        public int? OPD_IPD_Type { get; set; }
+        public string? GenderName { get; set; }
+        public string? HospitalName { get; set; }
+        public string? CompanyName { get; set; }
+        public string? RefDoctorName { get; set; }
+        public long? PathReportID { get; set; }
+        public string? ServiceNames { get; set; }
+        public string? TestCountStatus { get; set; }
+        public int? IsPathOutSource { get; set; }
+        public int? IsRadOutSource { get; set; }
+        public string? OutSourceLabName { get; set; }
+    }
+
 }
