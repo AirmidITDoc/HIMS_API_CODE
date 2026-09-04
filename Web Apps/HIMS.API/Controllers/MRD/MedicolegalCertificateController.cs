@@ -23,15 +23,7 @@ namespace HIMS.API.Controllers.MRD
         {
             _repository = repository;
         }
-        //List API
-        [HttpPost]
-        [Route("[action]")]
-        //[Permission]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
-        {
-            IPagedList<TMedicolegalCertificate> MedicolegalCertificateList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MedicolegalCertificateList.ToGridResponse(objGrid, "MedicolegalCertificate List"));
-        }
+       
         //List API Get By Id
         [HttpGet("{id?}")]
         //[Permission]
@@ -55,13 +47,12 @@ namespace HIMS.API.Controllers.MRD
             {
                 model.AddedBy = CurrentUserId;
                 model.Mlcdate = AppTime.Now;
-                //model.ModifiedBy = CurrentUserId;
-                //model.ModifiedDate = AppTime.Now;
+                model.Mlctime = AppTime.Now;
                 await _repository.Add(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", model);
         }
         //Edit API
         [HttpPut("{id:int}")]
@@ -74,9 +65,11 @@ namespace HIMS.API.Controllers.MRD
             else
             {
                 model.UpdatedBy = CurrentUserId;
+                model.Mlcdate = AppTime.Now;
+                model.Mlctime = AppTime.Now;
                 await _repository.Update(model, CurrentUserId, CurrentUserName, new string[] { "AddedBy", "Mlcdate" });
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.", model);
         }
     }
 }
