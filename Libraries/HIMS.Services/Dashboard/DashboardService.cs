@@ -196,32 +196,48 @@ namespace HIMS.Services.Dashboard
                 WeeklyTestReport = data.Item8 ?? new List<WeeklyTestReport>()
             };
         }
-        //public async Task<DailyDashBoardIPSubModule> GetDailyDashBoardIPSubModuleDashBoard(int UnitId, DateTime FromDate, DateTime ToDate)
-        //{
-        //    DatabaseHelper sql = new();
-        //    SqlParameter[] para = new SqlParameter[3];
-        //    para[0] = new SqlParameter("@UnitId", SqlDbType.Int) { Value = UnitId };
-        //    para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
-        //    para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+        public async Task<DailyDashBoardIPSubModule> GetDailyDashBoardIPSubModuleDashBoard(int UnitId)
+        {
+            DatabaseHelper sql = new();
 
-        //    var data = await sql.Get8ResultsFromSp<TodayvsYesterdayModel>("ps_rtrv_FinancialDashBoard", para);
+            SqlParameter[] para = new SqlParameter[1];
 
-        //    return new DailyDashBoardIPSubModule()
-        //    {
-        //        TodayvsYesterdayModel = data.Item1 ?? new List<TodayvsYesterdayModel>()
-        //        //ServiceCharges = data.Item2 ?? new List<ServiceCharges>(),
-        //        //ReceiptPayment = data.Item3 ?? new List<ReceiptPayment>(),
-        //        //BillSummary = data.Item4 ?? new List<BillSummary>(),
-        //        //ReceiptOPIP = data.Item5 ?? new List<ReceiptOPIP>(),
-        //        //AdvanceOPIP = data.Item6 ?? new List<AdvanceOPIP>(),
-        //        //RefundOPIP = data.Item7 ?? new List<RefundOPIP>(),
-        //        //PharmacyReturn = data.Item8 ?? new List<PharmacyReturn>(),
+            para[0] = new SqlParameter("@StorId", SqlDbType.BigInt)
+            {
+                Value = UnitId
+            };
 
+            var data = await sql.Get13ResultsFromSp< TodayvsYesterdayModel, IPBillCashCreditModel, IPCollectionModel, RevenueCollectionModel, AdmissionAgeWiseModel, CompanyWiseCountModel, ReferDoctorWiseCountModel, DoctorWiseCountModel, DepartmentWiseDischargeRevenueModel, WardWiseOccupancyModel,DischargeCountTrendModel, RevenueTrendModel,AdmissionTrendModel >( "ps_Daily_DashBoard_IP_SubModule_OverView", para);
 
+            return new DailyDashBoardIPSubModule()
+            {
+                TodayvsYesterdayModel = data.Item1 ?? new List<TodayvsYesterdayModel>(),
 
+                IPBillCashCreditModel = data.Item2 ?? new List<IPBillCashCreditModel>(),
 
-        //    };
-        //}
+                IPCollectionModel = data.Item3 ?? new List<IPCollectionModel>(),
+
+                RevenueCollectionModel = data.Item4 ?? new List<RevenueCollectionModel>(),
+
+                AdmissionAgeWiseModel = data.Item5 ?? new List<AdmissionAgeWiseModel>(),
+
+                CompanyWiseCountModel = data.Item6 ?? new List<CompanyWiseCountModel>(),
+
+                ReferDoctorWiseCountModel = data.Item7 ?? new List<ReferDoctorWiseCountModel>(),
+
+                DoctorWiseCountModel = data.Item8 ?? new List<DoctorWiseCountModel>(),
+
+                DepartmentWiseDischargeRevenueModel = data.Item9 ?? new List<DepartmentWiseDischargeRevenueModel>(),
+
+                WardWiseOccupancyModel = data.Item10 ?? new List<WardWiseOccupancyModel>(),
+
+                DischargeCountTrendModel = data.Item11 ?? new List<DischargeCountTrendModel>(),
+
+                RevenueTrendModel = data.Item12 ?? new List<RevenueTrendModel>(),
+
+                AdmissionTrendModel = data.Item13 ?? new List<AdmissionTrendModel>()
+            };
+        }
         public async Task<FinancialDashboard> GetFinancialDashBoard(int UnitId, DateTime FromDate, DateTime ToDate)
         {
             DatabaseHelper sql = new();
