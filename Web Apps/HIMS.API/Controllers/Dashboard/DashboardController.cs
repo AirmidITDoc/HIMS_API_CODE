@@ -68,14 +68,14 @@ namespace HIMS.API.Controllers.Dashboard
             var data = await _IDashboardService.GetFinancialDashBoard(UnitId, FromDate, ToDate);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Financial DashBoard", data);
         }
-        //[HttpGet("DailyDashBoardIPSubModule-dashboard")]
-        ////[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
-        //public async Task<ApiResponse> DailyDashBoardIPSubModuleDashBoard(int UnitId, DateTime FromDate, DateTime ToDate)
-        //{
-        //    //int UnitId = Context.UnitId;
-        //    var data = await _IDashboardService.GetDailyDashBoardIPSubModuleDashBoard(UnitId, FromDate, ToDate);
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Financial DashBoard", data);
-        //}
+        [HttpGet("DailyDashBoardIPSubModule-dashboard")]
+        //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        public async Task<ApiResponse> DailyDashBoardIPSubModuleDashBoard(int UnitId)
+        {
+            //int UnitId = Context.UnitId;
+            var data = await _IDashboardService.GetDailyDashBoardIPSubModuleDashBoard(UnitId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DailyDashBoardIPSubModule DashBoard", data);
+        }
 
         [HttpGet("radiology-dashboard")]
         //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]

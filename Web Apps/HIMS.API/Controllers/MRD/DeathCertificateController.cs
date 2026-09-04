@@ -31,32 +31,19 @@ namespace HIMS.API.Controllers.MRD
             _IDeathCertificateService = repository;
         }
 
-        // 1. LIST API (Pagination & Filtering)
-        [HttpPost]
-        [Route("[action]")]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
-        {
-            if (objGrid != null)
-            {
-                objGrid.SortField = string.IsNullOrEmpty(objGrid.SortField) ? string.Empty : objGrid.SortField;
-                objGrid.Filters ??= new List<SearchGrid>();
-            }
-
-            IPagedList<TDeathCertificate> list = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(list.ToGridResponse(objGrid, "DeathCertificate List"));
-        }
 
         [HttpPost("CertificateList")]
-        //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
+        //[Permission]
         public async Task<IActionResult> CertificateList(GridRequestModel objGrid)
         {
             IPagedList<CertifiCateListDto> CertificateList = await _IDeathCertificateService.CertificateListAsync(objGrid);
             return Ok(CertificateList.ToGridResponse(objGrid, "CertificateList"));
         }
 
-        // 2. GET BY ID API (Fetch single record)
+        // 2. GET BY ID API 
         [HttpGet]
         [Route("[action]/{id}")]
+        //[Permission]
         public async Task<ApiResponse> GetById(int id)
         {
             if (id <= 0)
@@ -77,6 +64,8 @@ namespace HIMS.API.Controllers.MRD
         // 3. INSERT (CREATE) API
         [HttpPost]
         [Route("[action]")]
+        //[Permission]
+
         public async Task<ApiResponse> Insert(DeathCertificateModel obj)
         {
             if (obj == null || obj.CertificateId != 0)
@@ -98,7 +87,7 @@ namespace HIMS.API.Controllers.MRD
         // 4. UPDATE API 
         [HttpPut]
         [Route("[action]/{id}")]
-        //[Permission(PageCode = "DeathCertificate", Permission = Permission.Edit)]
+        //[Permission]
         public async Task<ApiResponse> Update(int id, DeathCertificateModel obj)
         {
             if (id <= 0 || obj == null)
@@ -116,7 +105,7 @@ namespace HIMS.API.Controllers.MRD
           
             await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CertificateNo", "AddedBy" });
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.CertificateId);
         }
     }
 }

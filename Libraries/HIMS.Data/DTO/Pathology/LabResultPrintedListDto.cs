@@ -60,10 +60,10 @@ namespace HIMS.Data.DTO.Pathology
         public string? PatientName { get; set; }
         public DateTime? DateofBirth { get; set; }
         public string? MobileNo { get; set; }
-        public int? AgeYear { get; set; }
-        public int? AgeMonth { get; set; }
-        public int? AgeDay { get; set; }
-        public int? OPD_IPD_Type { get; set; }
+        public string? AgeYear { get; set; }
+        public string? AgeMonth { get; set; }
+        public string? AgeDay { get; set; }
+        public byte? OPD_IPD_Type { get; set; }
         public string? GenderName { get; set; }
         public string? HospitalName { get; set; }
         public string? CompanyName { get; set; }
