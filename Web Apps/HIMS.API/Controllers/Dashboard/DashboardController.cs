@@ -118,11 +118,19 @@ namespace HIMS.API.Controllers.Dashboard
         }
 
         [HttpGet("Lab-Financial-Department-Summary")]
-        public async Task<ApiResponse> LabFinancialDepartmentSummary(int UnitId,int GroupId,DateTime FromDate,DateTime ToDate)
+        public async Task<ApiResponse> LabFinancialDepartmentSummary(int UnitId, int GroupId, DateTime FromDate, DateTime ToDate)
         {
             var data = await _IDashboardService.GetLabFinancialDepartmentSummary(UnitId, GroupId, FromDate, ToDate);
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Lab Financial Department Summary",data);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Lab Financial Department Summary", data);
+        }
+
+        [HttpGet("Procurement-DashBoard")]
+        public async Task<ApiResponse> ProcurementDashboard(int UnitId)
+        {
+           
+            var data = await _IDashboardService.GetProcurementDashboard(UnitId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Procurement DashBoard", data);
         }
     }
 }

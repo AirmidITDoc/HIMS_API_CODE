@@ -425,5 +425,40 @@ namespace HIMS.Services.Dashboard
 
             return await sql.Get1ResultFromSp<LabDepartmentSummary>("ps_LabFinacialDashboarddept", para) ?? new List<LabDepartmentSummary>();
         }
+
+
+        public async Task<ProcurementDashboard> GetProcurementDashboard(int UnitId)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@UnitId", SqlDbType.BigInt) { Value = UnitId };
+
+
+            var data = await sql.Get9ResultsFromSp<
+                POModel,
+                IndentModel,
+                GRNModel,
+                PurchaseModel,
+                SupplierModel,
+                ItemModel,
+                TrendModel,
+               PurchaseTrendModel,
+               IndentTrendModel
+            >("ps_DashBoard_Procurement_SubModule", para);
+
+            return new ProcurementDashboard
+            {
+                POModel = data.Item1.FirstOrDefault() ?? new POModel(),
+                IndentModel = data.Item2.FirstOrDefault() ?? new IndentModel(),
+                GRNModel = data.Item3.FirstOrDefault() ?? new GRNModel(),
+                PurchaseModel = data.Item4.FirstOrDefault() ?? new PurchaseModel(),
+                SupplierModel = data.Item5.FirstOrDefault() ?? new SupplierModel(),
+                ItemModel = data.Item6.FirstOrDefault() ?? new ItemModel(),
+                TrendModel = data.Item7 ?? new List<TrendModel>(),
+                PurchaseTrendModel = data.Item8 ?? new List<PurchaseTrendModel>(),
+                IndentTrendModel = data.Item9 ?? new List<IndentTrendModel>(),           
+            };
+        }
     }
 }
