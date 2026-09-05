@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.DTO.IPPatient
 {
-    public  class MIcdDiagnosisMasterDto
+    
+    public class MIcdDiagnosisMasterNewDto
     {
         public string Icdcode { get; set; } = null!;
         public string DiagnosisName { get; set; } = null!;
-        public string? ICDCodeWithDiagnosis { get; set; }
+        public string ICDCodeWithDignosis { get; set; } = null!;
+
     }
 }

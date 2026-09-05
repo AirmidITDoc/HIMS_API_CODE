@@ -11,7 +11,7 @@ namespace HIMS.Services.IPPatient
 {
     public partial interface IMIcdDiagnosisMasterService
     {
-        List<MIcdDiagnosisMasterDto> GetMIcdDiagnosis(string Keyword);
+        List<MIcdDiagnosisMasterNewDto> GetMIcdDiagnosis(string Keyword);
     }
 
 }

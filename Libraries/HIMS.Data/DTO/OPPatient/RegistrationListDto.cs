@@ -67,7 +67,6 @@
         public long? AbhaTranId { get; set; }
         public string? AbhaAddress { get; set; }
         public string? AbhaNumber { get; set; }
-
     }
 
     public class RegistrationAutoCompleteDto
@@ -88,6 +87,8 @@
         public string? AadharCardNo { get; set; }
         public long? GenderId { get; set; }
         public long? AbhaTranId { get; set; }
+        public string Gender { get; set; }
+        public string PhotoInitials { get; set; }
 
     }
 }

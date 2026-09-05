@@ -66,18 +66,20 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
         [HttpPut("{id:int}")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Update(ApprovalHeaderUpdateModel obj)
         {
             TApprovalHeader model = obj.MapTo<TApprovalHeader>();
+            TDrbill drBill = obj.MapTo<TDrbill>();
+
             if (obj.ApprovalId == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {     
-                await _IApprovalService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _IApprovalService.UpdateAsync(model, drBill, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model);
         }
-
+      
     }
 }

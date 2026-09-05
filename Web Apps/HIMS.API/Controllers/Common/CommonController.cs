@@ -128,7 +128,12 @@ namespace HIMS.API.Controllers.Common
         ["AdmissionCancleStaus"] = "Check_AdmissionCancleStaus",
         ["PharmacyAmtByAdminId"] = "Rtrv_PharmacyAmtByAdminId",
         ["PCPNDTIndicationList"] = "ps_RtrvPCPNDT_IndicationList",
-        ["DoctorWiseCharges"] = "ps_rtrv_getDoctorWiseCharges"
+        ["PathologyResultListabnormal"] = "ps_Rtrv_PathologyResultList_abnormal_PerVisit",
+        ["DoctorWiseCharges"] = "ps_rtrv_getDoctorWiseCharges",
+        ["BrowseIPRefundAdvanceAdmin"] = "ps_Rtrv_BrowseIPRefundAdvance_Admin",
+
+
+
     };
         public CommonController(ICommonService commonRepository)
         {
@@ -172,6 +177,23 @@ namespace HIMS.API.Controllers.Common
             switch (model.Mode)
             {
                 case "GetList": SpName = "GETLIST_VIMAL"; break;
+                case "IPAdvanceRefundPayment": SpName = "ps_NewTally_IPAdvanceRefund_Payment_Mediforte"; break;
+                case "OPBillRefundPayment": SpName = "ps_NewTally_OPBillRefund_Payment_Mediforte"; break;
+                case "IPBillPayment": SpName = "ps_NewTally_IPBill_Payment_Mediforte"; break;
+                case "IPAdvancePayment": SpName = "ps_NewTally_IPAdvance_Payment_Mediforte"; break;
+
+                case "OPPayment": SpName = "ps_NewTally_OP_Payment_Mediforte"; break;
+                case "IPBillList": SpName = "ps_NewTally_IPBillList_Mediforte"; break;
+                case "IPBillDetailList": SpName = "ps_NewTally_IPBillDetailList_Mediforte"; break;
+                case "IPBillRefundPayment": SpName = "ps_NewTally_IPBillRefund_Payment_Mediforte"; break;
+                case "OPIPSalsePayment": SpName = "ps_NewTally_OPIPSalsePayment_Mediforte"; break;
+                case "OPIPSalesDetailList": SpName = "PS_NewTally_OP_IP_Sales_DetailList_Mediforte"; break;
+                case "OPIPSalesReturnBillDetailList": SpName = "ps_NewTally_OPIP_Sales_ReturnBillDetailList_Mediforte"; break;
+
+
+
+
+
                 default: break;
             }
             dynamic resultList = _ICommonService.GetDataTableByProc(SpName, model.SearchFields);

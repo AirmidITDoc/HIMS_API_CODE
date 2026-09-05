@@ -7,7 +7,6 @@ namespace HIMS.Data.Models
     {
         public Registration()
         {
-            DocumentAdmissions = new HashSet<DocumentAdmission>();
             TPatientAbhaInformations = new HashSet<TPatientAbhaInformation>();
         }
 
@@ -72,7 +71,6 @@ namespace HIMS.Data.Models
         public long? MembershipId { get; set; }
         public long? AbhaTranId { get; set; }
 
-        public virtual ICollection<DocumentAdmission> DocumentAdmissions { get; set; }
         public virtual ICollection<TPatientAbhaInformation> TPatientAbhaInformations { get; set; }
     }
 }

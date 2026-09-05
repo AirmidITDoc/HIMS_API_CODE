@@ -18,6 +18,8 @@
         public string? RefundAmount { get; set; }
         public decimal? PreviousRefundAmt { get; set; }
         public decimal? BalanceAmount { get; set; }
+        public bool? IsCompleted { get; set; }
+        public bool? IsSampleCollection { get; set; }
 
     }
 }

@@ -42,5 +42,7 @@
         public long? DaysOption3 { get; set; }
         public string? Allergy { get; set; }
         public string? BloodGroup { get; set; }
+        public long? DepartmentId { get; set; }
+        public string? HistoryOfIllness { get; set; }
     }
 }

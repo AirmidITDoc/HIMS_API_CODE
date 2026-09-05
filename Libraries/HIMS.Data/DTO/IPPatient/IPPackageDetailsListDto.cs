@@ -20,5 +20,7 @@
         public long? DoctorId { get; set; }
         public long? IsPackage { get; set; }
         public string? DoctorName { get; set; }
+        public string? IsPathTestCompleted { get; set; }
+        public string? IsRadTestCompleted { get; set; }
     }
 }

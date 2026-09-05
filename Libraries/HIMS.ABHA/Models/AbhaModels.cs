@@ -427,6 +427,11 @@ namespace HIMS.ABHA.Models
         public string AadhaarNumber { get; set; } = string.Empty;
         public int OtpType { get; set; } = 1;
     }
+    public class AbhaAddresOtpDto
+    {
+        public string AadhaarNumber { get; set; } = string.Empty;
+        public string OtpType { get; set; } = string.Empty;
+    }
     public class VerifyOtpDto
     {
         public string TxnId { get; set; } = string.Empty;

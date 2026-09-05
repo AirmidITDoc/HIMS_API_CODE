@@ -435,7 +435,8 @@ namespace HIMS.Services.Common
                     {
                         Dictionary<string, object> tentity = new()
                         {
-                            ["DRBNo"] = ObjTDrbill.Drbno
+                            ["DRBNo"] = ObjTDrbill.Drbno,
+                            ["PBillNo"] = vBillNo
                         };
 
                         odal.ExecuteNonQuery("PS_UpdateDraft", CommandType.StoredProcedure, tentity);
@@ -1170,7 +1171,7 @@ namespace HIMS.Services.Common
             }
         }
 
-        public virtual async Task InsertAsyncTDrbill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDet, List<TDraddCharge> ObjTDraddCharge, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncTDrbill(TDrbill ObjTDrbill, List<TDrbillDet> ObjTDrbillDet, List<TDraddCharge> ObjTDraddCharge, TApprovalHeader ObjTApprovalHeader, int CurrentUserId, string CurrentUserName)
         {
             // Begin Transaction
             using var transaction = await _context.Database.BeginTransactionAsync();
@@ -1182,7 +1183,7 @@ namespace HIMS.Services.Common
                 odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
                 string[] DEntity = { "Drbno", "OpdIpdId",  "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "IsCancelled", "PbillNo","TotalAdvanceAmount", "AdvanceUsedAmount", "AddedBy",
-                    "CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","TaxPer", "TaxAmount"};
+                    "CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","TaxPer", "TaxAmount","IsApproved","StageStatus"};
                 var bentity = ObjTDrbill.ToDictionary();
                 foreach (var rProperty in bentity.Keys.ToList())
                 {
@@ -1217,6 +1218,21 @@ namespace HIMS.Services.Common
                     odal.ExecuteNonQueryNew("PS_Insert_T_DRBillDet", CommandType.StoredProcedure,"",tokenObj);
                     await _context.LogProcedureExecution( tokenObj, nameof(TDrbillDet), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
+                    if (ObjTApprovalHeader != null)
+                    {
+                        ObjTApprovalHeader.TranId = Convert.ToInt32(VDrbno);
+                        string[] AEntity = { "ApprovalId", "ApprovalNo", "Date", "Time", "TranId", "TransactionType", "ApprovalStatus", "AuthorizeBy", "ApprovedDateTime", "Comment", "CreatedBy" };
+                        var aentity = ObjTApprovalHeader.ToDictionary();
+                        foreach (var rProperty in aentity.Keys.ToList())
+                        {
+                            if (!AEntity.Contains(rProperty))
+                                aentity.Remove(rProperty);
+                        }
+                        string Approval = odal.ExecuteNonQueryNew("PS_Insert_T_ApprovalHeader", CommandType.StoredProcedure, "ApprovalId", aentity);
+                        ObjTApprovalHeader.ApprovalId = Convert.ToInt32(Approval);
+
+                        await _context.LogProcedureExecution(tokenObj, nameof(TApprovalHeader), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                    }
                 }
                 // Commit Transaction
                 await transaction.CommitAsync();
@@ -1248,7 +1264,7 @@ namespace HIMS.Services.Common
             await _context.LogProcedureExecution(tokensObj.ToDictionary(),nameof(TDrbill),ObjTDrbill.Drbno.ToInt(),Core.Domain.Logging.LogAction.Delete,CurrentUserId,CurrentUserName);
 
             string[] DEntity = { "Drbno", "OpdIpdId",  "TotalAmt", "ConcessionAmt", "NetPayableAmt", "PaidAmt", "BalanceAmt", "BillDate", "OpdIpdType", "IsCancelled", "PbillNo","TotalAdvanceAmount", "AdvanceUsedAmount", "AddedBy",
-                    "CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","TaxPer", "TaxAmount"};
+                    "CashCounterId","BillTime","ConcessionReasonId","IsSettled","IsPrinted","IsFree","CompanyId","TariffId","UnitId","InterimOrFinal","CompanyRefNo","ConcessionAuthorizationName","TaxPer", "TaxAmount","IsApproved","StageStatus"};
             var bentity = ObjTDrbill.ToDictionary();
             foreach (var rProperty in bentity.Keys.ToList())
             {

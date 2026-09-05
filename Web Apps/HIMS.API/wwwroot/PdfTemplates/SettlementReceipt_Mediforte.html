@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="invoice-box" style="font-size: 14px; line-height: 25px; font-family: Calibri,'Helvetica Neue', 'Helvetica',Helvetica, Arial, sans-serif; color: #101828;">
+            <table style="width: 100%;line-height: inherit;text-align: left;">
+                <tr class="top-header-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            {{NewHeader}}
+                        </table>
+                    </td>
+                </tr>
+                <tr class="title-date-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="font-size: 18px">
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b> SETTELMENT RECEIPT</b></td>
+                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="bill-info-row">
+                    <td style="padding: 6px;">
+                        <table style="width: 100%; border-collapse: collapse;font-size:20px;border-bottom: 1px solid #d4c3c3">
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Receipt No:</span>
+                                    <span>{{ReceiptNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">IPD No:</span>
+                                    <span>{{IPDNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Date|Time:</span>
+                                    <span>{{PaymentTime}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">UHID No:</span>
+                                    <span>{{RegNo}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Age|Gender:</span>
+                                    <span> {{Age}} |{{GenderName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">DOA | Time:</span>
+                                    <span>{{AdmissionTime}}</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Patient Name:</span>
+                                    <span>{{PatientName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Patient Type:</span>
+                                    <span>{{PatientType}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">DOD | Time:</span>
+                                    <span>{{DischargeDate}} | {{DischargeTime}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Doctor Name:</span>
+                                    <span>{{DoctorName}}</span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Department :</span>
+                                    <span>{{DepartmentName}} </span>
+                                </td>
+                                <td style="padding: 2px;">
+                                    <span style="font-weight:bold;">Ward|Bed Name : </span>
+                                    <span>{{RoomName}} | {{BedName}}</span>
+                                </td>
+                            </tr>
+                            <tr style="display: {{chkCompanyflag}}">
+                                <td style="padding: 2px; white-space: nowrap;">
+                                    <span><b>Company Name:</b> {{CompanyName}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <th style=" text-align: left;" colspan="5">
+                        <h4 style="margin: 1px 0px;font-size: 22px;" ">
+                            Bill Information
+                        </h4>
+                    </th>
+                </tr>
+                <table style="width:100%; border-collapse:collapse; font-size:22px; margin-top:6px;">
+
+                    <tr>
+                        <td style="padding: 2px;">
+                            <span>Bill No:</span><br>
+                            <span>{{PBillNo}}</span>
+
+                        <td style="padding: 2px;">
+                            <span>Bill Date:</span><br>
+                            <span>{{BillDate}}</span>
+                        </td>
+                        <td style="padding: 2px;">
+                            <span>Bill Amount:</span><br>
+                            <span>{{CurrSymbol}} {{TotalAmt}}</span>
+                        </td>
+                        <td style="padding: 2px; display: {{chkConcessionflag}};">
+                            <span>Disc Amount:</span><br>
+                            <span>{{CurrSymbol}} {{ConcessionAmt}}</span>
+                        </td>
+                        <td style="padding: 2px;">
+                            <span>Paid Amount:</span><br>
+                            <span>{{CurrSymbol}} {{PaidAmount}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 2px;">
+                            <span>Remark:</span>
+                            <span>{{Remark}}</span>
+                        </td>
+                    </tr>
+
+                </table>
+                <div style="border-top: 1px solid #d4c3c3; margin-top: 6px;"></div>
+
+                <tr>
+                    <th style=" text-align: left;" colspan="5">
+                        <h4 style="margin: 1px 0px;font-size: 22px;" ">
+                            Payment Information
+                        </h4>
+                    </th>
+                </tr>
+                <table style="width:100%; border-collapse:collapse; font-size:22px; margin-top:6px;">
+                    <tr style="display: {{chkCashPayAmountflag}};">
+                        <td style="padding: 2px;">
+                            <span>Cash Pay:</span>
+                            <span>{{CurrSymbol}} {{CashPayAmount}}</span>
+                        </td>
+
+                    </tr>
+                    <tr style="display: {{chkCardPayAmountflag}};">
+                        <td style="padding: 2px;">
+                            <span>Card Pay:</span>
+                            <span>{{CurrSymbol}} {{CardPayAmount}}</span>
+                        </td>
+                        <td style="padding: 2px;">
+                            <span>Card No:</span>
+                            <span>{{CardNo}}</span>
+                        </td>
+                        <td style="padding: 2px;">
+                            <span>Card Bank Name :</span>
+                            <span>{{CardBankName}}</span>
+                        </td>
+
+                    </tr>
+                    <tr style="display: {{chkChequePayAmountflag}};">
+                        <td style="padding: 2px;">
+                            <span>Cheque Pay:</span>
+                            <span>{{CurrSymbol}} {{ChequePayAmount}}</span>
+                        </td>
+                        <td style="padding: 2px;">
+                            <span>Cheque No:</span>
+                            <span>{{ChequeNo}}</span>
+                        </td>
+                        <td style="padding: 2px;">
+                            <span>Bank Name :</span>
+                            <span>{{BankName}}</span>
+                        </td>
+                    </tr>
+
+                    <tr style="display: {{chkOnlinePayAmountflag}};">
+                        <td style="padding: 2px;">
+                            <span>MPesa Amount:</span>
+                            <span>{{CurrSymbol}} {{OnlinePayAmount}}</span>
+                        </td>
+                        <td style="padding: 2px;" colspan="3">
+                            <div>MPesa Tran No: {{PayTMTranNo}}</div>
+                            <div style="display: {{chkNeftTxnFlag}};">NEFT No: {{NEFTNo}}</div>
+                        </td>
+                        <td style="padding: 2px;">
+                            <div style="display: {{chkNEFTBankFlag}};">Bank Name: {{NEFTBankMaster}}</div>
+                        </td>
+                    </tr>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 22px;">
+                        <tr class="payment-info-row">
+                            <td style="padding: 6px;">
+                                <table style="width: 100%; border-collapse: collapse; font-weight: bold;">
+                                    <tr>
+                                        <td> Amount in words :-{{finalamt}}</td>
+                                    </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+
+                    </table>
+                </table>
+
+
+                <div style="width:100%; margin-top:30px;">
+                    <div style="float:right; text-align:center; font-size:18px; margin-top:6px; margin-right:30px;">
+                        {{UserName}}<br><b>Cashier</b>
+                    </div>
+                </div>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

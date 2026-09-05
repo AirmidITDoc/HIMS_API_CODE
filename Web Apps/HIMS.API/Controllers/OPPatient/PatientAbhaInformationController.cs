@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -42,6 +43,39 @@ namespace HIMS.API.Controllers.OPPatient
             }
             var data = await _repository.GetById(x => x.AbhaTranId == id);
             return data.ToSingleResponse<TPatientAbhaInformation, PatientAbhaInformationModel>("PatientType");
+        }
+
+        [HttpGet("ByAbhaNumber/{AbhaNumber?}")]
+        //[Permission]
+        public async Task<ApiResponse> GetListByAbhaNumber(string AbhaNumber)
+        {
+            if (string.IsNullOrWhiteSpace(AbhaNumber))
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "ABHA Number is required.");
+            }
+
+            var data = await _repository.GetAll(x => x.AbhaNumber == AbhaNumber);
+
+            if (data == null || !data.Any())
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status404NotFound,"No data found." );
+            }
+
+            var result = data.Select(x => new PatientAbhaInformationModel
+            {
+                AbhaTranId = x.AbhaTranId,
+                RegId = x.RegId,
+                AbhaNumber = x.AbhaNumber,
+                AbhaFullName = x.AbhaFullName,
+                AbhaAddress = x.AbhaAddress,
+                Gender = x.Gender,
+                YearOfBirth = x.YearOfBirth,
+                Verified = x.Verified,
+                VerifiedDateTime = x.VerifiedDateTime,
+                CreatedBy = x.CreatedBy
+            }).ToList();
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Data found.",result);
         }
         [HttpPost("Insert")]
         //[Permission]

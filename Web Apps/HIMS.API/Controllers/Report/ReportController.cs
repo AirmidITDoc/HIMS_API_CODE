@@ -370,6 +370,22 @@ namespace HIMS.API.Controllers.Report
             );
         }
 
+        [HttpGet("Paymentmode/auto-complete")]
+        public async Task<ApiResponse> SearchPaymentmode(string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword) || keyword == "%")
+            {
+                keyword = string.Empty;
+            }
+            var data = await _reportService.SearchPaymentmode(keyword);
+
+            return ApiResponseHelper.GenerateResponse(
+                ApiStatusCode.Status200OK,
+                "Search Status",
+                data
+            );
+        }
+
 
         [HttpGet("{mode?}")]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
@@ -558,6 +574,8 @@ namespace HIMS.API.Controllers.Report
                 case "PathologyReportWithImgHeader":
 
                 case "PathologySampleBarcode":
+                case "PathologyTestDetailForDischargeSummary":
+
 
 
 
@@ -631,7 +649,7 @@ namespace HIMS.API.Controllers.Report
                     break;
             }
             // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
-         //   long UnitId = 1;
+        //    long UnitId = 1;
             long UnitId = Context.UnitId;
             model.BaseUrl = AppSettings.Settings.BaseUrl;
             model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
@@ -646,7 +664,7 @@ namespace HIMS.API.Controllers.Report
             {
 
                 // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
-                //long UnitId = 1;
+               // long UnitId = 1;
                 //long StoreId = 2;
                 long UnitId = Context.UnitId;
                 long StoreId = Context.StoreId;
@@ -685,8 +703,11 @@ namespace HIMS.API.Controllers.Report
             objGrid.First = 0;
             objGrid.Rows = 0;
 
-             //  long StoreId = 2;
-           long StoreId = Context.StoreId;
+            //  long StoreId = 2;
+            //long UnitId = 1;
+            long StoreId = Context.StoreId;
+            long UnitId = Context.UnitId;
+
             IPagedList<MReportListDto> MReportConfigList = await _reportService.MReportListDto(objGrid);
             if (MReportConfigList.Count > 0)
             {
@@ -707,7 +728,7 @@ namespace HIMS.API.Controllers.Report
                 model.vPageOrientation = MReportConfigList[0].ReportPageOrientation;
             }
             model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
-            var tuple = _reportService.GetNewReportSetByProc(model, StoreId);
+            var tuple = _reportService.GetNewReportSetByProc(model, StoreId, UnitId);
             string byteFile = Convert.ToBase64String(tuple.Item1);
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }

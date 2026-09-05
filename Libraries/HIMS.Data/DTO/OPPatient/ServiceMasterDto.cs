@@ -21,6 +21,7 @@ namespace HIMS.Data.DTO.OPPatient
         public string? CompanyServicePrint { get; set; }
         public bool? IsInclusionOrExclusion { get; set; }
         public bool? IsOtherService { get; set; }
+        public bool? IsAllowZeroPrice { get; set; }
         public string FormattedText { get { return this.ServiceName + " | Price : " + this.Price.ToString("F2"); } }
 
     }
@@ -29,8 +30,15 @@ namespace HIMS.Data.DTO.OPPatient
         public long CashCounterId { get; set; }
         public string? CashCounterName { get; set; }
         public bool IsDefault { get; set; }
-
+        public string? CashCounterType { get; set; }
+        public string? BillNo { get; set; }
 
     }
+    public class CashCounterDTO
+    {
+        public long CashCounterId { get; set; }
+        public string? CashCounterName { get; set; }
+        public string? CashCounterType { get; set; }
 
+    }
 }

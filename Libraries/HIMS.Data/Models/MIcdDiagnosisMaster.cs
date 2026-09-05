@@ -7,9 +7,9 @@ namespace HIMS.Data.Models
     {
         public int Icdid { get; set; }
         public string Icdversion { get; set; } = null!;
+        public string? ShortName { get; set; }
         public string Icdcode { get; set; } = null!;
         public string DiagnosisName { get; set; } = null!;
-        public string? ShortName { get; set; }
         public bool? IsActive { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }

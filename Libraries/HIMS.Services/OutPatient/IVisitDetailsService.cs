@@ -1,19 +1,21 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
+using WkHtmlToPdfDotNet;
 
 namespace HIMS.Services.OutPatient
 {
     public partial interface IVisitDetailsService
     {
-        Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<VisitDetailListDto>> GetListAsync(GridRequestModel objGrid,long UnitId);
+
         Task<IPagedList<FollowupListDto>> FollowListAsync(GridRequestModel objGrid);
         Task<IPagedList<AppointmentCancelListDto>> AppointmentCancelAsync(GridRequestModel objGrid);
 
         Task<IPagedList<OPBillListDto>> GetBillListAsync(GridRequestModel objGrid);
-        Task<IPagedList<OPPaymentListDto>> GeOpPaymentListAsync(GridRequestModel objGrid);
+        Task<IPagedList<OPPaymentListDto>> GeOpPaymentListAsync(GridRequestModel objGrid,long UnitId);
         Task<IPagedList<OPPaymentListDto>> GetPatientWisePaymentList(GridRequestModel objGrid);
-        Task<IPagedList<OPRefundListDto>> GeOpRefundListAsync(GridRequestModel objGrid);
+        Task<IPagedList<OPRefundListDto>> GeOpRefundListAsync(GridRequestModel objGrid,long UnitId);
         Task<IPagedList<OPRegistrationList>> GeOPRgistrationListAsync(GridRequestModel objGrid);
         Task<IPagedList<PrevDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel objGrid);
         Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, TPatientPolicyInformation ObjTPatientPolicyInformation, int currentUserId, string currentUserName);
@@ -37,8 +39,7 @@ namespace HIMS.Services.OutPatient
         List<UserCashCounterMasterDTO> SearchUserWiseCashCounterList(int LoginId, string CCType);
         Task VisitUpdateAsync(VisitDetail ObjVisitDetail, int UserId, string Username);
         Task FollowUpdateAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName);
-
-
+        List<CashCounterDTO> AssignUserWiseCashCounterList();
 
     }
 }

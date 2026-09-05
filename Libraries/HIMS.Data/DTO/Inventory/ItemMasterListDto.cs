@@ -51,6 +51,8 @@ namespace HIMS.Data.DTO.Inventory
         public string? Content { get; set; }
         public bool IsValidContent { get; set; }
         public string? DoseName { get; set; }
+        public string? LocalLanguageName { get; set; }
+
 
 
 

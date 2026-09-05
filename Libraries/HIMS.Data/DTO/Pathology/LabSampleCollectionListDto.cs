@@ -39,6 +39,8 @@ namespace HIMS.Data.DTO.Pathology
         public string? RefDoctorName { get; set; }
         public string? TestCountStatus { get; set; }
         public string? CompanyName { get; set; }
+        public long? PathReportID { get; set; }
+
 
 
     }

@@ -196,6 +196,48 @@ namespace HIMS.Services.Dashboard
                 WeeklyTestReport = data.Item8 ?? new List<WeeklyTestReport>()
             };
         }
+        public async Task<DailyDashBoardIPSubModule> GetDailyDashBoardIPSubModuleDashBoard(int UnitId)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para = new SqlParameter[1];
+
+            para[0] = new SqlParameter("@StorId", SqlDbType.BigInt)
+            {
+                Value = UnitId
+            };
+
+            var data = await sql.Get13ResultsFromSp< TodayvsYesterdayModel, IPBillCashCreditModel, IPCollectionModel, RevenueCollectionModel, AdmissionAgeWiseModel, CompanyWiseCountModel, ReferDoctorWiseCountModel, DoctorWiseCountModel, DepartmentWiseDischargeRevenueModel, WardWiseOccupancyModel,DischargeCountTrendModel, RevenueTrendModel,AdmissionTrendModel >( "ps_Daily_DashBoard_IP_SubModule_OverView", para);
+
+            return new DailyDashBoardIPSubModule()
+            {
+                TodayvsYesterdayModel = data.Item1 ?? new List<TodayvsYesterdayModel>(),
+
+                IPBillCashCreditModel = data.Item2 ?? new List<IPBillCashCreditModel>(),
+
+                IPCollectionModel = data.Item3 ?? new List<IPCollectionModel>(),
+
+                RevenueCollectionModel = data.Item4 ?? new List<RevenueCollectionModel>(),
+
+                AdmissionAgeWiseModel = data.Item5 ?? new List<AdmissionAgeWiseModel>(),
+
+                CompanyWiseCountModel = data.Item6 ?? new List<CompanyWiseCountModel>(),
+
+                ReferDoctorWiseCountModel = data.Item7 ?? new List<ReferDoctorWiseCountModel>(),
+
+                DoctorWiseCountModel = data.Item8 ?? new List<DoctorWiseCountModel>(),
+
+                DepartmentWiseDischargeRevenueModel = data.Item9 ?? new List<DepartmentWiseDischargeRevenueModel>(),
+
+                WardWiseOccupancyModel = data.Item10 ?? new List<WardWiseOccupancyModel>(),
+
+                DischargeCountTrendModel = data.Item11 ?? new List<DischargeCountTrendModel>(),
+
+                RevenueTrendModel = data.Item12 ?? new List<RevenueTrendModel>(),
+
+                AdmissionTrendModel = data.Item13 ?? new List<AdmissionTrendModel>()
+            };
+        }
         public async Task<FinancialDashboard> GetFinancialDashBoard(int UnitId, DateTime FromDate, DateTime ToDate)
         {
             DatabaseHelper sql = new();
@@ -383,5 +425,127 @@ namespace HIMS.Services.Dashboard
 
             return await sql.Get1ResultFromSp<LabDepartmentSummary>("ps_LabFinacialDashboarddept", para) ?? new List<LabDepartmentSummary>();
         }
+
+
+        public async Task<ProcurementDashboard> GetProcurementDashboard(int UnitId)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@UnitId", SqlDbType.BigInt) { Value = UnitId };
+
+
+            var data = await sql.Get9ResultsFromSp<
+                POModel,
+                IndentModel,
+                GRNModel,
+                PurchaseModel,
+                SupplierModel,
+                ItemModel,
+                TrendModel,
+               PurchaseTrendModel,
+               IndentTrendModel
+            >("ps_DashBoard_Procurement_SubModule", para);
+
+            return new ProcurementDashboard
+            {
+                POModel = data.Item1.FirstOrDefault() ?? new POModel(),
+                IndentModel = data.Item2.FirstOrDefault() ?? new IndentModel(),
+                GRNModel = data.Item3.FirstOrDefault() ?? new GRNModel(),
+                PurchaseModel = data.Item4.FirstOrDefault() ?? new PurchaseModel(),
+                SupplierModel = data.Item5.FirstOrDefault() ?? new SupplierModel(),
+                ItemModel = data.Item6.FirstOrDefault() ?? new ItemModel(),
+                TrendModel = data.Item7 ?? new List<TrendModel>(),
+                PurchaseTrendModel = data.Item8 ?? new List<PurchaseTrendModel>(),
+                IndentTrendModel = data.Item9 ?? new List<IndentTrendModel>(),           
+            };
+        }
+        public async Task<DailyDashboardWeeklySummary> GetDailyDashboardWeeklySummary(long StoreId)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para =
+            {
+         new SqlParameter("@StoreId", SqlDbType.BigInt)
+        {
+         Value = StoreId
+        }
+    };
+
+            var data = await sql.Get13ResultsFromSp<
+                DailyPatientStatus,
+                DailyPaymentSummary,
+                WeeklyOPTrend,
+                WeeklyAdmissionDischarge,
+                WeeklyWalkInPrescriptionIP,
+                WeeklyPOGRNReturn,
+                WeeklyOPRevenue,
+                WeeklyIPRevenue,
+                WeeklyPharmacyRevenue,
+                WeeklyGRNValueReturn,
+                CollectionSummary,
+                RevenueBillSummary,
+                PurchaseDetailsSummary
+            >("ps_Daily_DashBoard_WeeklySummary", para);
+
+            return new DailyDashboardWeeklySummary
+            {
+                PatientStatus = data.Item1.FirstOrDefault() ?? new DailyPatientStatus(),
+                PaymentSummary = data.Item2.FirstOrDefault() ?? new DailyPaymentSummary(),
+                WeeklyOPTrend = data.Item3 ?? new(),
+                WeeklyAdmissionDischarge = data.Item4 ?? new(),
+                WeeklyWalkInPrescriptionIP = data.Item5 ?? new(),
+                WeeklyPOGRNReturn = data.Item6 ?? new(),
+                WeeklyOPRevenue = data.Item7 ?? new(),
+                WeeklyIPRevenue = data.Item8 ?? new(),
+                WeeklyPharmacyRevenue = data.Item9 ?? new(),
+                WeeklyGRNValueReturn = data.Item10 ?? new(),
+                CollectionSummary = data.Item11 ?? new(),
+                RevenueBillSummary = data.Item12 ?? new(),
+                PurchaseDetailsSummary = data.Item13 ?? new()
+            };
+        }
+
+        public async Task<DailyDashboard_Pharmacy_SubModule> GetPharmacyDashboard(long StoreId)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para =
+            {new SqlParameter("@StoreId", SqlDbType.BigInt){ Value = StoreId}};
+
+            var data = await sql.Get13ResultsFromSp<
+                PharmacyRXSummary,
+                PharmacyWalkingSalesSummary,
+                PharmacyDischargeSummary,
+                PharmacyIPIssuedSummary,
+                PharmacyStockSummary,
+                PharmacyBillSummary,
+                PharmacyDepartmentWiseSales,
+                PharmacyDoctorWiseSales,
+                PharmacyRefDoctorWiseSales,
+                PharmacyWalkInPrescriptionTrend,
+                PharmacyRevenueTrend,
+                PharmacyCollectionSummary,
+                PharmacyRevenueSummary
+            >("ps_Dashboard_Pharmacy_SubModule", para);
+
+            return new DailyDashboard_Pharmacy_SubModule
+            {
+                RXSummary = data.Item1.FirstOrDefault() ?? new PharmacyRXSummary(),
+                WalkingSales = data.Item2.FirstOrDefault() ?? new PharmacyWalkingSalesSummary(),
+                DischargeSummary = data.Item3.FirstOrDefault() ?? new PharmacyDischargeSummary(),
+                IPIssued = data.Item4.FirstOrDefault() ?? new PharmacyIPIssuedSummary(),
+                StockSummary = data.Item5.FirstOrDefault() ?? new PharmacyStockSummary(),
+                BillSummary = data.Item6.FirstOrDefault() ?? new PharmacyBillSummary(),
+                DepartmentWiseSales = data.Item7 ?? new List<PharmacyDepartmentWiseSales>(),
+                DoctorWiseSales = data.Item8 ?? new List<PharmacyDoctorWiseSales>(),
+                RefDoctorWiseSales = data.Item9 ?? new List<PharmacyRefDoctorWiseSales>(),
+                WalkInPrescriptionTrend = data.Item10 ?? new List<PharmacyWalkInPrescriptionTrend>(),
+                RevenueTrend = data.Item11 ?? new List<PharmacyRevenueTrend>(),
+                CollectionSummary = data.Item12.FirstOrDefault() ?? new PharmacyCollectionSummary(),
+                RevenueSummary = data.Item13.FirstOrDefault() ?? new PharmacyRevenueSummary()
+            };
+        }
+
     }
 }

@@ -52,7 +52,10 @@ namespace HIMS.API.Controllers.OPPatient
         //   [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> OPRefundList(GridRequestModel objGrid)
         {
-            IPagedList<OPRefundListDto> OpRefundlist = await _IVisitDetailsService.GeOpRefundListAsync(objGrid);
+
+          //  long UnitId = 1;
+                long UnitId = Context.UnitId;
+            IPagedList<OPRefundListDto> OpRefundlist = await _IVisitDetailsService.GeOpRefundListAsync(objGrid, UnitId);
             return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Refund List"));
         }
         [HttpPost("BrowseOPDBillPagiList")]
@@ -60,14 +63,18 @@ namespace HIMS.API.Controllers.OPPatient
         //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> BrowseOPDBillPagList(GridRequestModel objGrid)
         {
-            IPagedList<BrowseOPDBillPagiListDto> BrowseOPDBillPagList = await _IAdministrationService.BrowseOPDBillPagiList(objGrid);
+
+            long UnitId = Context.UnitId;
+
+            IPagedList<BrowseOPDBillPagiListDto> BrowseOPDBillPagList = await _IAdministrationService.BrowseOPDBillPagiList(objGrid, UnitId);
             return Ok(BrowseOPDBillPagList.ToGridResponse(objGrid, "Browse OPD Bill Pagi App List"));
         }
         [HttpPost("BrowseOPPaymentList")]
         //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> OPPaymentList(GridRequestModel objGrid)
         {
-            IPagedList<OPPaymentListDto> OpPaymentlist = await _IVisitDetailsService.GeOpPaymentListAsync(objGrid);
+            long UnitId = Context.UnitId;
+            IPagedList<OPPaymentListDto> OpPaymentlist = await _IVisitDetailsService.GeOpPaymentListAsync(objGrid,UnitId);
             return Ok(OpPaymentlist.ToGridResponse(objGrid, "OP Payment List"));
         }
 
@@ -263,6 +270,8 @@ namespace HIMS.API.Controllers.OPPatient
             TDrbill model = obj.DRBill.MapTo<TDrbill>();
             List<TDrbillDet> model1 = obj.TDrbillDet.MapTo<List<TDrbillDet>>();
             List<TDraddCharge> model2 = obj.TDraddCharge.MapTo<List<TDraddCharge>>();
+            TApprovalHeader model3 = obj.ApprovalHeader.MapTo<TApprovalHeader>();
+
 
             if (obj.DRBill.Drbno == 0)
             {
@@ -270,7 +279,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.BillTime = Convert.ToDateTime(model.BillTime);
                 model.AddedBy = CurrentUserId;
 
-                await _oPBillingService.InsertAsyncTDrbill(model, model1, model2, CurrentUserId, CurrentUserName);
+                await _oPBillingService.InsertAsyncTDrbill(model, model1, model2, model3, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

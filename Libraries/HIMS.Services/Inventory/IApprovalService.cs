@@ -15,7 +15,7 @@ namespace HIMS.Services.Inventory
         Task<IPagedList<ApprovalListDto>> GetListAsync(GridRequestModel objGrid);
         Task InsertAsync(TApprovalHeader ObjTApprovalHeader, int UserId, string Username);
         Task<IPagedList<UserApprovalNamelistDto>> NewGetListAsync(GridRequestModel objGrid);
-        Task UpdateAsync(TApprovalHeader objApproval, int currentUserId, string currentUserName);
+        Task UpdateAsync(TApprovalHeader objApproval, TDrbill ObjTDrbill, int currentUserId, string currentUserName);
 
 
 

@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OPPatient;
+using HIMS.API.Models.Pathology;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
@@ -90,6 +91,35 @@ namespace HIMS.API.Controllers.Pathology
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated successfully.");
+        }
+
+        [HttpPost("PathSampleCollectionCancel")]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        //[Permission]
+
+        public async Task<ApiResponse> Delete(PathlogySampleCollectionCancelModel obj)
+        {
+            if (obj.PathReportId != 0)
+            {
+                if (obj.IsSampleCollection != true)
+                {
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError,"sample not collected");
+                }
+
+                var model = new TPathologyReportHeader
+                {
+                    PathReportId = obj.PathReportId,
+                    SampleReceviedCancelReason = obj.SampleReceviedCancelReason?.ToString()
+                };
+
+                await _IPathlogySampleCollectionService.CancelAsync(model,CurrentUserId,CurrentUserName);
+            }
+            else
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError,"Invalid params");
+            }
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Sample collection has been canceled successfully.");
         }
 
     }

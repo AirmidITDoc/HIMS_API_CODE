@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
        
         [HttpGet("search_MIcdDiagnosisMaster")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        //[Permission]
         public ApiResponse PathologyServicesearch(string Keyword)
         {
             var data = _IMIcdDiagnosisMasterService.GetMIcdDiagnosis(Keyword);
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         //Add API
         [HttpPost]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Post(MIcdDiagnosisMasterModel obj)
         {
             MIcdDiagnosisMaster model = obj.MapTo<MIcdDiagnosisMaster>();
@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(MIcdDiagnosisMasterModel obj)
         {
             MIcdDiagnosisMaster model = obj.MapTo<MIcdDiagnosisMaster>();
@@ -98,7 +98,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             MIcdDiagnosisMaster model = await _repository.GetById(x => x.Icdid == Id);

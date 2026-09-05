@@ -66,5 +66,6 @@ namespace HIMS.Data.Models
         public long? UnitId { get; set; }
         public long? TestId { get; set; }
         public long? CategoryId { get; set; }
+        public DateTime? SampleReceivedCancelDate { get; set; }
     }
 }

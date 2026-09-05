@@ -129,6 +129,18 @@ namespace HIMS.API.Controllers.Pathology
             IPagedList<LabResultPrintedListDto> LabResultPrintedList = await _ILabPatientRegistrationService.LabResultPrintedListAsync(objGrid);
             return Ok(LabResultPrintedList.ToGridResponse(objGrid, " Lab Result Printed List "));
         }
+        [HttpPost("LabSamcollectionTestwiseList")]
+        //[Permission]
+        public async Task<IActionResult> LabSamcollectionTestwiseList(GridRequestModel objGrid)
+        {
+            long UnitId = Context.UnitId;
+            //long UnitId = 1;
+
+
+            IPagedList<LabSamcollectionTestwiseListDto> LabSamcollectionTestwiseList = await _ILabPatientRegistrationService.LabSamcollectionTestwiseListAsynch(objGrid, UnitId);
+            return Ok(LabSamcollectionTestwiseList.ToGridResponse(objGrid, " LabSamcollectionTestwise List"));
+        }
+
 
         [HttpGet("CompanyComboList")]
         //[Permission]

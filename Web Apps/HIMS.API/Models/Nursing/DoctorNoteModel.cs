@@ -10,6 +10,9 @@ namespace HIMS.API.Models.Nursing
         public string? Ttime { get; set; }
         public string? DoctorsNotes { get; set; }
         public long? IsAddedBy { get; set; }
+        public long? ConDoctorId { get; set; }
+        public long? RmoDoctorId { get; set; }
+
     }
     public class DoctorNoteModelValidator : AbstractValidator<DoctorNoteModel>
     {
@@ -18,6 +21,8 @@ namespace HIMS.API.Models.Nursing
             RuleFor(x => x.AdmId).NotNull().NotEmpty().WithMessage("AdmId  is required");
             RuleFor(x => x.Tdate).NotNull().NotEmpty().WithMessage("Tdate  is required");
             RuleFor(x => x.Ttime).NotNull().NotEmpty().WithMessage("Ttime  is required");
+            RuleFor(x => x.DoctorsNotes).NotNull().NotEmpty().WithMessage("DoctorsNotes  is required");
+
 
 
         }

@@ -27,4 +27,15 @@ namespace HIMS.API.Models.OPPatient
         public List<PathlogySampleCollectionModel> PathlogySampleCollection { get; set; }
 
     }
+
+    public class PathlogySampleCollectionCancelModel
+    {
+        public long PathReportId { get; set; }
+        public bool? IsSampleCollection { get; set; }
+        public string? SampleReceivedCancelDate { get; set; }   
+        public long? IsSampleReceviedCancel { get; set; }
+        public long? SampleReceviedCanceledBy { get; set; }
+        public string? SampleReceviedCancelReason { get; set; }
+        
+    }
 }

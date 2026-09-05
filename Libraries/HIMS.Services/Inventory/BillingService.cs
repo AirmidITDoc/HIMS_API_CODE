@@ -9,9 +9,10 @@ using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using System.Transactions;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace HIMS.Services.Inventory
@@ -40,45 +41,48 @@ namespace HIMS.Services.Inventory
             return await DatabaseHelper.GetGridDataBySp<PackageServiceInfoListDto>(model, "m_Rtrv_ServiceClassdetail");
         }
 
-        public virtual async Task InsertAsync(ServiceMaster objService, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.ServiceMasters.Add(objService);
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-            }
-        }
-        //public virtual async Task UpdateAsync(ServiceMaster objService, int UserId, string Username, string[]? ignoreColumns = null)
+        //public virtual async Task InsertAsync(ServiceMaster objService, int UserId, string Username)
         //{
         //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
         //    {
-        //        // 1. Attach the entity without marking everything as modified
-        //        _context.Attach(objService);
-        //        _context.Entry(objService).State = EntityState.Modified;
-
-        //        // 2. Ignore specific columns
-        //        if (ignoreColumns?.Length > 0)
-        //        {
-        //            foreach (var column in ignoreColumns)
-        //            {
-        //                _context.Entry(objService).Property(column).IsModified = false;
-        //            }
-        //        }
-
-        //        // 3. Delete details related to the service
-        //        var lst = await _context.ServiceDetails.Where(x => x.ServiceId == objService.ServiceId).ToListAsync();
-        //        if (lst.Count > 0)
-        //        {
-        //            _context.ServiceDetails.RemoveRange(lst);
-        //        }
-
-        //        // 4. Save changes once
+        //        _context.ServiceMasters.Add(objService);
         //        await _context.SaveChangesAsync();
+
         //        scope.Complete();
         //    }
         //}
+
+
+        public virtual async Task InsertAsync(ServiceMaster objService, int UserId, string Username, int OldTariffId)
+        {
+            using var scope = new TransactionScope( TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+            _context.ServiceMasters.Add(objService);
+            await _context.SaveChangesAsync();
+
+            if (_context.Database.GetDbConnection().State != ConnectionState.Open)
+                await _context.Database.OpenConnectionAsync();
+
+            DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection());          
+            if (_context.Database.CurrentTransaction != null)
+                odal.SetTransaction(_context.Database.CurrentTransaction.GetDbTransaction()); 
+
+            string[] allowedKeys = { "OldTariffId" };
+            var entity = objService.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!allowedKeys.Contains(rProperty))
+                    entity.Remove(rProperty);
+            }
+
+            entity["OldTariffId"] = OldTariffId;
+
+            odal.ExecuteNonQueryNew("ps_Assign_Service", CommandType.StoredProcedure, "", entity);
+
+            scope.Complete();
+        }
+
 
         public virtual async Task UpdateAsync(ServiceMaster objService, int userId, string username, int tariffId, string[]? ignoreColumns = null)
         {
@@ -319,17 +323,19 @@ namespace HIMS.Services.Inventory
 
             }
         }
-        public virtual BillingServiceNewDto GetServiceListNew(int TariffId, string? ServiceName)
+        public virtual BillingServiceNewListDto GetServiceListNew(int TariffId, string? ServiceName, int PageIndex, int PageSize)
         {
-            BillingServiceNewDto objMain = new() { Data = new List<BillingServiceNew>(), Columns = new() };
+            BillingServiceNewListDto objMain = new() { Data = new List<BillingServiceList>(), Columns = new() };
             DatabaseHelper sql = new();
-            SqlParameter[] para = new SqlParameter[2];
+            SqlParameter[] para = new SqlParameter[4];
             para[0] = new SqlParameter("@TariffId", TariffId);
             para[1] = new SqlParameter("@ServiceName", ServiceName);
+            para[2] = new SqlParameter("@PageIndex", PageIndex);
+            para[3] = new SqlParameter("@PageSize", PageSize);
             DataTable dt = sql.FetchDataTableBySP("GET_SERVICES_NEW", para);
             foreach (DataColumn dc in dt.Columns)
             {
-                if (dc.ColumnName != "ServiceId" && dc.ColumnName != "ServiceName")
+                if (dc.ColumnName != "TotalCount" && dc.ColumnName != "ServiceId" && dc.ColumnName != "ServiceName")
                 {
                     objMain.Columns.Add(new BillingServiceColumns()
                     {
@@ -340,15 +346,16 @@ namespace HIMS.Services.Inventory
             }
             foreach (DataRow dr in dt.Rows)
             {
-                BillingServiceNew obj = new()
+                BillingServiceList obj = new()
                 {
+                    TotalCount = dr["TotalCount"].ToInt(),
                     ServiceId = dr["ServiceId"].ToInt(),
                     ServiceName = HIMS.Data.Extensions.DynamicLinqExpressionBuilder.ConvertToString(dr["ServiceName"]), // Explicitly specify the namespace
                     ColumnValues = new List<BillingServiceColumnValue>()
                 };
                 foreach (DataColumn dc in dt.Columns)
                 {
-                    if (dc.ColumnName != "ServiceId" && dc.ColumnName != "ServiceName")
+                    if (dc.ColumnName != "TotalCount" && dc.ColumnName != "ServiceId" && dc.ColumnName != "ServiceName" )
                     {
                         obj.ColumnValues.Add(new BillingServiceColumnValue()
                         {

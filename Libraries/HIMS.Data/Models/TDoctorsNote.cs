@@ -15,5 +15,7 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public int? CreatedBy { get; set; }
+        public long? ConDoctorId { get; set; }
+        public long? RmoDoctorId { get; set; }
     }
 }

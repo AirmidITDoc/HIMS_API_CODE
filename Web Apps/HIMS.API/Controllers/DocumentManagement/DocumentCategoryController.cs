@@ -1,11 +1,13 @@
 ﻿using Asp.Versioning;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
-using HIMS.Data;
+using HIMS.Data.DTO.DocumentManagement;
 using HIMS.Data.Models;
+using HIMS.Services.DocumentManagement;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.DocumentManagement
@@ -15,20 +17,20 @@ namespace HIMS.API.Controllers.DocumentManagement
     [ApiVersion("1")]
     public class DocumentCategoryController : BaseController
     {
-        private readonly IGenericService<DocumentCategory> _repository;
-        public DocumentCategoryController(IGenericService<DocumentCategory> repository)
+        private readonly IDocumentCategoryService _repository;
+        public DocumentCategoryController(IDocumentCategoryService repository)
         {
             _repository = repository;
         }
 
         //List API
-        [HttpPost]
+        [HttpGet]
         [Route("[action]")]
         [Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
+        public async Task<ApiResponse> List()
         {
-            IPagedList<DocumentCategory> DocumentCategoryList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(DocumentCategoryList.ToGridResponse(objGrid, "Document Category List"));
+            List<DocumentCategoryDto> DocumentCategoryList = await _repository.GetTreeAsync();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Category tree retrieved successfully.", DocumentCategoryList);
         }
         //List API Get By Id
         [HttpGet("{id?}")]
@@ -62,13 +64,17 @@ namespace HIMS.API.Controllers.DocumentManagement
         [Permission(PageCode = "DocumentCategory", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DocumentCategory obj)
         {
-            DocumentCategory model = obj.MapTo<DocumentCategory>();
-            model.IsActive = true;
             if (obj.Id == 0)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+                var data = await _repository.GetById(x => x.Id == obj.Id);
+                if (data == null)
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Record not found.");
+
+                data.Icon = obj.Icon;
+                data.DocCategory = obj.DocCategory;
+                await _repository.Update(data, CurrentUserId, CurrentUserName,null);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }

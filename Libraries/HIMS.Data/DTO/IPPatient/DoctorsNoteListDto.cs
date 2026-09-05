@@ -14,6 +14,11 @@
         public string? Age { get; set; }
         public string? RegNo { get; set; }
         public string? UserName { get; set; }
+        public long? ConDoctorId { get; set; }
+        public long? RmoDoctorId { get; set; }
+        public string? ConDoctorName { get; set; }
+        public string? RmoDoctorName { get; set; }
+
 
     }
 }

@@ -412,6 +412,7 @@
         .two-field-row td {
             border: none !important;
         }
+
         .section-title {
             font-weight: bold;
             margin: 18px 0 9px 0;
@@ -462,23 +463,23 @@
                     <span class="field-line">{{WifeParentalDetails}}</span>
                 </div>
 
+
                 <div class="dob-row">
                     <span class="field-label">Man/Husband's Date of Birth:</span>
-                    <span class="dob-seg">{{HusbandDOB}}</span>
-                    <!--<span class="dob-seg">{{HusbandAgeM}}</span>-->
-                    <!--<span class="dob-seg" style="min-width:52px;">{{HusbandAgeY}}</span>-->
-                    <!--<span class="field-label">Age:</span>
-                    <span class="age-line">{{HusbandAgeY}}</span> Years-->
+                    <span class="dob-seg" style="margin-left: 8px;">{{HusbandDOB}}</span>
+
+                    <span class="field-label" style="margin-left: 15px;">Age:</span>
+                    <span class="age-line" style="margin-left: 5px;">{{HusbandAgeY}}</span>
+                    <span style="margin-left: 5px;">Years</span>
                 </div>
 
                 <div class="dob-row">
                     <span class="field-label">Woman/Wife's Date of Birth:</span>
-                    <span class="dob-seg">{{WifeDOB}}</span>
-                    <!--<span class="dob-seg">{{WifeAgeM}}</span> /
-                    <span class="dob-seg" style="min-width:52px;">{{WifeAgeY}}</span>
+                    <span class="dob-seg" style="margin-left: 8px;">{{WifeDOB}}</span>
 
-                    <span class="field-label">Age:</span>
-                    <span class="age-line">{{WifeAgeY}}</span> Years-->
+                    <span class="field-label" style="margin-left: 15px;">Age:</span>
+                    <span class="age-line" style="margin-left: 5px;">{{WifeAgeY}}</span>
+                    <span style="margin-left: 5px;">Years</span>
                 </div>
 
             </div>
@@ -522,18 +523,29 @@
         <div class="section-title">3 Residence and Personal Information</div>
 
         <div class="field-row multiline">
-            <span class="field-label">Residence Address:</span>
+            <span class="field-label">Husband Residence Address:</span>
             <span class="field-line">{{ResidenceAddress}}</span>
-        </div>
-        <div class="field-row multiline">
-            <span class="field-label" style="visibility:hidden;">Residence Address:</span>
-            <span class="field-line">&nbsp;</span>
         </div>
 
         <div class="checkbox-row">
             <span class="field-label">Residence Type:</span>
             <label>Own</label><span class="chk-box chk-{{ResidenceTypeOwn}}"></span>
             <label>Rented</label><span class="chk-box chk-{{ResidenceTypeRented}}"></span>
+        </div>
+
+        <div class="field-row multiline">
+            <span class="field-label">Wife Residence Address:</span>
+            <span class="field-line">{{wresidenceAddress}}</span>
+        </div>
+        <!--<div class="field-row multiline">
+        <span class="field-label" style="visibility:hidden;">Residence Address:</span>
+        <span class="field-line">&nbsp;</span>
+    </div>-->
+
+        <div class="checkbox-row">
+            <span class="field-label">Residence Type:</span>
+            <label>Own</label><span class="chk-box chk-{{WResidenceTypeOwn}}"></span>
+            <label>Rented</label><span class="chk-box chk-{{WResidenceTypeRented}}"></span>
         </div>
 
 
@@ -656,95 +668,116 @@
                 </td>
             </tr>
         </table>
-        <!--<div class="section-title">8. HOBBIES</div>
-        <div class="field-row">
-            <span class="field-label">Man/Husband's hobbies:</span>
-            <span class="field-line">{{HusbandHobbies}}</span>
-        </div>
-        <div class="field-row">
-            <span class="field-label">Woman/Wife's hobbies:</span>
-            <span class="field-line">{{WifeHobbies}}</span>
-        </div>-->
 
 
         <div class="section-title">9. FAMILY - RELATED INFORMATION</div>
 
         <div class="sub-heading">- &nbsp;Information about Children</div>
-        <table>
+        <table class="family-info-table" id="childrenTable">
             <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Mobile Number</th>
-                    <th>Address</th>
-                </tr>
+                <tr><th>Name</th><th>Mobile Number</th><th>Address</th></tr>
             </thead>
+            <tbody></tbody>
+        </table>
+
+        <div class="sub-heading">-&nbsp; Close Relative / Guardian</div>
+        <table class="family-info-table" id="relativeTable">
+            <thead>
+                <tr><th>Name</th><th>Relation</th><th>Mobile number</th><th>mail address</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <div class="sub-heading">- &nbsp;Emergency Contact Of Neighbours</div>
+        <table class="family-info-table" id="emergencyTable">
+            <thead>
+                <tr><th>Name</th><th>Mobile number</th><th>Email address</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- Hidden raw data carrier: ONLY ITEMS_SP1 block in the whole document -->
+        <table id="rawFamilyData" style="display:none;">
             <tbody>
                 <!--ITEMS_SP1-->
                 <tr>
                     <td>{{ChildName}}</td>
                     <td>{{ChildMobile}}</td>
                     <td>{{ChildAddress}}</td>
-                </tr>
-                <!--/ITEMS_SP1-->
-
-
-            </tbody>
-        </table>
-
-        <div class="sub-heading">-&nbsp; Close Relative / Guardian</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Relation</th>
-                    <th>Mobile number</th>
-                    <th>mail address</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!--ITEMS_SP1-->
-                <tr>
                     <td>{{RelativeName}}</td>
                     <td>{{RelationshipName}}</td>
                     <td>{{RelativeMobile}}</td>
                     <td>{{RelativeAddress}}</td>
-
-                </tr>
-                <!--/ITEMS_SP1-->
-
-
-            </tbody>
-        </table>
-
-        <div class="sub-heading">- &nbsp;Emergency Contact Of Neighbours</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Mobile number</th>
-                    <th>Email address</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                <!--ITEMS_SP1-->
-                <tr>
                     <td>{{EmrgencyName}}</td>
                     <td>{{EmrgencyMobile}}</td>
                     <td>{{EmrgencyAddress}}</td>
-
                 </tr>
                 <!--/ITEMS_SP1-->
-
-
             </tbody>
         </table>
 
-        <!--<div class="footer-page">Page 2 of 4</div>-->
+        <script type="text/javascript">
+            window.onload = function () {
+
+                function cellText(tr, idx) {
+                    var tds = tr.getElementsByTagName("td");
+                    if (!tds[idx]) return "";
+                    var v = tds[idx].textContent.replace(/\s+/g, " ").trim();
+                    return (v === "NULL") ? "" : v;
+                }
+
+                var raw = document.getElementById("rawFamilyData");
+                if (!raw) return;
+                var rows = raw.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+                var children = [], childKeys = {};
+                var relatives = [], relKeys = {};
+                var emergencies = [], emgKeys = {};
+
+                for (var i = 0; i < rows.length; i++) {
+                    var r = rows[i];
+
+                    var cName = cellText(r, 0), cMobile = cellText(r, 1), cAddress = cellText(r, 2);
+                    var rName = cellText(r, 3), rRel = cellText(r, 4), rMobile = cellText(r, 5), rAddress = cellText(r, 6);
+                    var eName = cellText(r, 7), eMobile = cellText(r, 8), eAddress = cellText(r, 9);
+
+                    var cKey = cName + "|" + cMobile + "|" + cAddress;
+                    if (cName && !childKeys[cKey]) { childKeys[cKey] = true; children.push([cName, cMobile, cAddress]); }
+
+                    var rKey = rName + "|" + rRel + "|" + rMobile + "|" + rAddress;
+                    if (rName && !relKeys[rKey]) { relKeys[rKey] = true; relatives.push([rName, rRel, rMobile, rAddress]); }
+
+                    var eKey = eName + "|" + eMobile + "|" + eAddress;
+                    if (eName && !emgKeys[eKey]) { emgKeys[eKey] = true; emergencies.push([eName, eMobile, eAddress]); }
+                }
+
+                function fill(tableId, dataArr) {
+                    var table = document.getElementById(tableId);
+                    if (!table) return;
+                    var tbody = table.getElementsByTagName("tbody")[0];
+                    for (var i = 0; i < dataArr.length; i++) {
+                        var tr = document.createElement("tr");
+                        for (var j = 0; j < dataArr[i].length; j++) {
+                            var td = document.createElement("td");
+                            td.textContent = dataArr[i][j];
+                            tr.appendChild(td);
+                        }
+                        tbody.appendChild(tr);
+                    }
+                }
+
+                fill("childrenTable", children);
+                fill("relativeTable", relatives);
+                fill("emergencyTable", emergencies);
+
+                raw.parentNode.removeChild(raw);
+            };
+        </script>
+
+        <!--<div class="footer-page">Page 2</div>-->
 
     </div>
 
-    
     <!-- ==================== PAGE 3 ==================== -->
     <div class="page page-3">
 
@@ -785,51 +818,29 @@
                         </tr>
                     </table>
 
-                  </div>
-
                     <!-- FIX: SP ke actual columns AyushmanEnrolled (bit), MaleFemaleEnrolled, AyushmanSpouseDetails hain -->
                     <div class="section-title">11. AYUSHMAN BHARAT SCHEME</div>
 
                     <div class="note-line">Are You Enrolled In The Ayushman Bharat Scheme?</div>
 
-                    <div class="gender-header">
-                        <span>&nbsp;</span>
-                        <span>Male /</span>
-                        <span>Female /</span>
-                    </div>
-
+                   
                     <div class="yn-row">
-                        <span class="field-label">No</span><span class="chk-box chk-{{AyushmanEnrolledNo}}"></span>
-                        <span class="field-label">Yes</span><span class="chk-box chk-{{AyushmanEnrolledYes}}"></span>
+                        <span class="field-label"><strong>Male </strong></span>
+                        <span class="field-label">No</span>
+                        <span class="chk-box chk-{{AyushmanEnrolledNo}}"></span>
+                        <span class="field-label">Yes</span>
+                        <span class="chk-box chk-{{AyushmanEnrolledYes}}"></span>
+                        <span class="field-label" style="margin-left: 20px;"><strong> Aayushman Id:</strong> {{HaayushmanId}}</span>
+
                     </div>
-
-                    <div class="field-row">
-                        <span class="field-label">Then Spouse Details:</span>
-                        <span class="field-line">{{AyushmanSpouseDetails}}</span>
-                        <span class="field-label">Spouse :</span>
-                        <span class="field-line">{{AyushmanSpouseDetails}}</span>
+                    <div class="yn-row">
+                        <span class="field-label"><strong>Female </strong></span>
+                        <span class="field-label">No</span>
+                        <span class="chk-box chk-{{WAyushmanEnrolledNo}}"></span>
+                        <span class="field-label">Yes</span>
+                        <span class="chk-box chk-{{WAyushmanEnrolledYes}}"></span>
+                        <span class="field-label" style="margin-left: 20px;"><strong> Aayushman Id:</strong> {{WaayushmanId}}</span>
                     </div>
-
-                </td>
-            </tr>
-        </table>
-
-        <!--<div class="footer-page">Page 2 </div>-->
-
-    </div>
-    <br>
-    
-    <!-- ==================== PAGE 2 ==================== -->
-    <div class="page page-2">
-
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <table style="page-break-inside:avoid; border:none; margin-bottom:22px;">
-            <tr>
-                <td style="border:none; padding:0;">
 
 
                     <div class="section-title">12. MEDICAL INSURANCE / MEDICLAIM DETAILS</div>
@@ -837,91 +848,118 @@
                     <div class="note-line">Do you have a Mediclaim Policy?</div>
 
                     <div class="yn-row">
-                        <span class="field-label">No</span><span class="chk-box chk-{{HasMediclaimNo}}"></span>
-                        <span class="field-label">Yes</span><span class="chk-box chk-{{HasMediclaimYes}}"></span>
+                        <span class="field-label"><strong>Male </strong></span>
+                        <span class="field-label">No</span>
+                        <span class="chk-box chk-{{HasMediclaimNo}}"></span>
+                        <span class="field-label">Yes</span>
+                        <span class="chk-box chk-{{HasMediclaimYes}}"></span>
                     </div>
 
-                    <div class="note-line">then details:</div>
+                    <div id="maleMediclaimDetails" style="display:{{MaleMediclaimDisplay}};">
+                        <div class="note-line">then details:</div>
+
+                        <div class="field-row">
+                            <span class="field-label">Company Name:</span>
+                            <span class="field-line">{{MediclaimCompany}}</span>
+                            <span class="field-label" style="margin-left:20px;">Policy Number:</span>
+                            <span class="field-line">{{MediclaimPolicyNumber}}</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span class="field-label">Issuance:</span>
+                            <span class="field-line">{{MediclaimIssuanceAmt}}</span>
+
+                            <span class="field-label" style="margin-left:20px;">Start:</span>
+                            <span class="dob-seg" style="min-width:26px;">{{MediclaimStartDate}}</span>
+                            <span class="field-label" style="margin-left:20px;">End:</span>
+                            <span class="dob-seg" style="min-width:26px;">{{MediclaimEndDate}}</span>
+                        </div>
+                    </div>
+
+                    <div class="yn-row">
+                        <span class="field-label"><strong>Female </strong></span>
+                        <span class="field-label">No</span>
+                        <span class="chk-box chk-{{whasmediclaimNo}}"></span>
+                        <span class="field-label">Yes</span>
+                        <span class="chk-box chk-{{whasmediclaimYes}}"></span>
+                    </div>
+
+                    <div id="femaleMediclaimDetails" style="display:{{FemaleMediclaimDisplay}};">
+                        <div class="note-line">then details:</div>
+
+                        <div class="field-row">
+                            <span class="field-label">Company Name:</span>
+                            <span class="field-line">{{wmediclaimcompany}}</span>
+                            <span class="field-label" style="margin-left:20px;">Policy Number:</span>
+                            <span class="field-line">{{wmediclaimpolicynumber}}</span>
+                        </div>
+
+                        <div class="field-row">
+                            <span class="field-label">Issuance:</span>
+                            <span class="field-line">{{wmediclaimIssuanceAmt}}</span>
+
+                            <span class="field-label" style="margin-left:20px;">Start:</span>
+                            <span class="dob-seg" style="min-width:26px;">{{wmediclaimStartDate}}</span>
+                            <span class="field-label" style="margin-left:20px;">End:</span>
+                            <span class="dob-seg" style="min-width:26px;">{{wmediclaimEndDate}}</span>
+                        </div>
+                    </div>
+                    <br><br><br>
+
+                    <div class="section-title">13. FAMILY DOCTOR DETAILS</div>
+                    <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
+                        <tr>
+                            <td class="field-cell" style="width:50%;">
+                                <span class="field-label">Husband Family Doctor's Name:</span>
+                                <span class="field-line">{{FamilyDoctorName}}</span>
+                            </td>
+                            <td class="field-cell" style="width:50%;">
+                                <span class="field-label">Contact Number:</span>
+                                <span class="field-line">{{FamilyDoctorContact}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="field-cell" style="width:50%;">
+                                <span class="field-label">Wife Family Doctor's Name:</span>
+                                <span class="field-line">{{wfamilyDoctorName}}</span>
+                            </td>
+                            <td class="field-cell" style="width:50%;">
+                                <span class="field-label">Contact Number:</span>
+                                <span class="field-line">{{wfamilyDoctorContact}}</span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="section-title">14. Income Information</div>
 
                     <div class="field-row">
-                        <span class="field-label">Company Name:</span>
-                        <span class="field-line">{{CompanyName}}</span>
-                        <span class="field-label" style="margin-left:20px;">Policy Number:</span>
-                        <span class="field-line">{{MediclaimPolicyNumber}}</span>
+                        <span class="field-label">Monthly Income (Approx.):</span>
                     </div>
 
-                    <div class="field-row">
-                        <span class="field-label">Issuance:</span>
-                        <span class="field-line">{{MediclaimIssuanceAmt}}</span>
-
-                        <!--<span class="field-label" style="margin-left:20px;">Start:</span>
-                    <span class="dob-seg" style="min-width:26px;">{{MediclaimStartDate}}</span>&nbsp;/&nbsp;
-
-                    <span class="field-label" style="margin-left:20px;">End:</span>
-                    <span class="dob-seg" style="min-width:26px;">{{MediclaimEndDate}}</span>&nbsp;/&nbsp;-->
-                        <span class="field-label" style="margin-left:20px;">Start:</span>
-                        <span class="dob-seg" style="min-width:26px;">{{MediclaimStartDate}}</span>
-                        <span class="field-label" style="margin-left:20px;">End:</span>
-                        <span class="dob-seg" style="min-width:26px;">{{MediclaimEndDate}}</span>
-
+                    <div class="checkbox-row">
+                        <span class="chk-box chk-{{HIncome1}}"></span><label>₹0 - ₹6,00,000</label>
+                        <span class="chk-box chk-{{HIncome2}}"></span><label>₹6,00,001 - ₹12,00,000</label>
+                        <span class="chk-box chk-{{HIncome3}}"></span><label>₹12,00,001 - ₹18,00,000</label>
+                        <span class="chk-box chk-{{HIncome4}}"></span><label>₹18,00,000 And Above</label>
                     </div>
+
+                    <!-- FIX: SP columns HusbandPreviousMemberId / WifePreviousMemberId hain -->
+                    <div class="section-title">15. Member Status Past</div>
+
+                    <div class="note-line">Man / Husband Shree Thana Sangh Member Id Number: {{HusbandPreviousMemberId}}</div>
+                    <div class="note-line">Female / Wife Shree Thana Sangh Member Id Number: {{WifePreviousMemberId}}</div>
+                    <div class="note-line">Member Fees ₹ 1000 Per Person (valid For 5 Years)</div>
 
                 </td>
             </tr>
         </table>
-
-        <!--<div class="section-title">13. FAMILY DOCTOR DETAILS</div>
-
-    <div class="two-field-row">
-        <div class="field-row">
-            <span class="field-label">Doctor's Name:</span>
-            <span class="field-line">{{FamilyDoctorName}}</span>
-        </div>
-        <div class="field-row">
-            <span class="field-label">Contact Number:</span>
-            <span class="field-line">{{FamilyDoctorContact}}</span>
-        </div>
-    </div>-->
-        <div class="section-title">13. FAMILY DOCTOR DETAILS</div>
-        <table class="two-field-row" cellpadding="0" cellspacing="0" style="width:100%;">
-            <tr>
-                <td class="field-cell" style="width:50%;">
-                    <span class="field-label">Doctor's Name:</span>
-                    <span class="field-line">{{FamilyDoctorName}}</span>
-                </td>
-                <td class="field-cell" style="width:50%;">
-                    <span class="field-label">Contact Number:</span>
-                    <span class="field-line">{{FamilyDoctorContact}}</span>
-                </td>
-            </tr>
-        </table>
-
-        <div class="section-title">14. Income Information</div>
-
-        <div class="field-row">
-            <span class="field-label">Monthly Income (Approx.):</span>
-        </div>
-
-        <div class="checkbox-row">
-            <span class="chk-box chk-{{HIncome}}"></span><label>₹0 - ₹6,00,000</label>
-            <span class="chk-box chk-{{HIncome}}"></span><label>₹6,00,001 - ₹12,00,000</label>
-            <span class="chk-box chk-{{HIncome}}"></span><label>₹12,00,001 - ₹18,00,000</label>
-            <span class="chk-box chk-{{HIncome}}"></span><label>₹18,00,000 And Above</label>
-        </div>
-
-        <!-- FIX: SP columns HusbandPreviousMemberId / WifePreviousMemberId hain -->
-        <div class="section-title">15. Member Status Past</div>
-
-        <div class="note-line">Man / Husband Shree Thana Sangh Member Id Number: {{HusbandPreviousMemberId}}</div>
-        <div class="note-line">Female / Wife Shree Thana Sangh Member Id Number: {{WifePreviousMemberId}}</div>
-        <div class="note-line">Member Fees ₹ 1000 Per Person (valid For 5 Years)</div>
 
         <!--<div class="footer-page">Page 3 of 4</div>-->
 
     </div>
 
-    <!-- ==================== PAGE 3 ==================== -->
-    <div class="page page-3">
+    <!-- ==================== PAGE 4 ==================== -->
+    <div class="page page-4">
 
         <div class="section-title">16. Declamation</div>
 
@@ -946,30 +984,43 @@
             <span class="field-line">{{DeclarationDate}}</span>
         </div>
 
+
+       
         <div class="section-title">17. For Office Use</div>
 
-        <div class="field-row">
-            <span class="field-label">Membership No:.</span>
-            <span class="field-line">{{MembershipNo}}</span>
+        <div class="field-label"><strong>Male</strong></div>
+        <div style="display: {{FeeDetailsDisplay}};">
+            <div class="field-row">
+                <span class="field-label">Membership No:.</span>
+                <span class="field-line" style="margin-left: 10px;">{{MembershipNo}}</span>
+            </div>
+            <div class="dob-row">
+                <span class="field-label">Date Of Receipt Of Form:.</span>
+                <span class="dob-seg">{{ReceiptDate}}</span>
+            </div>
         </div>
-
-        <!-- FIX: SP column ReceiptDate hai -->
-        <div class="dob-row">
-            <span class="field-label">Date Of Receipt Of Form:.</span>
-            <span class="dob-seg">{{ReceiptDate}}</span>
-        </div>
-
-        <!-- FIX: SP column FeeReceived (bit) -->
         <div class="yn-row">
             <span class="field-label">Fee Received</span>
             <span class="chk-box chk-{{FeeReceivedYes}}"></span><label>Yes</label>
             <span class="chk-box chk-{{FeeReceivedNo}}"></span><label>No</label>
         </div>
 
-        <!--<div class="field-row">
-            <span class="field-label">Fee Amount:</span>
-            <span class="field-line">{{FeeAmount}}</span>
-        </div>-->
+        <div class="field-label"><strong>Female</strong></div>
+        <div style="display: {{FeeDetailsDisplay}};">
+            <div class="field-row">
+                <span class="field-label">Membership No:.</span>
+                <span class="field-line" style="margin-left: 10px;">{{MembershipNo}}</span>
+            </div>
+            <div class="dob-row">
+                <span class="field-label">Date Of Receipt Of Form:.</span>
+                <span class="dob-seg">{{ReceiptDate}}</span>
+            </div>
+        </div>
+        <div class="yn-row">
+            <span class="field-label">Fee Received</span>
+            <span class="chk-box chk-{{FeeReceivedYes}}"></span><label>Yes</label>
+            <span class="chk-box chk-{{FeeReceivedNo}}"></span><label>No</label>
+        </div>
 
         <div class="spacer"></div>
 
@@ -988,9 +1039,10 @@
             </ol>
         </div>
 
-        <!--<div class="footer-page">Page 3 </div>-->
+        <!--<div class="footer-page">Page 4</div>-->
 
     </div>
 
 </body>
+
 </html>

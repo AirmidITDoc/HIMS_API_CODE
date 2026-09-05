@@ -57,6 +57,7 @@ namespace HIMS.Data.Models
         public string? Content { get; set; }
         public bool IsValidContent { get; set; }
         public long? InstructionId { get; set; }
+        public string? LocalLanguageName { get; set; }
 
         public virtual ICollection<MAssignItemToDrug> MAssignItemToDrugs { get; set; }
         public virtual ICollection<MAssignItemToStore> MAssignItemToStores { get; set; }

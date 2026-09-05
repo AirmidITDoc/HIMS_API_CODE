@@ -12,6 +12,7 @@ using HIMS.Services.Canteen;
 using HIMS.Services.Common;
 using HIMS.Services.Dashboard;
 using HIMS.Services.DoctorPayout;
+using HIMS.Services.DocumentManagement;
 using HIMS.Services.FeedBack;
 using HIMS.Services.GastrologyService;
 using HIMS.Services.Inventory;
@@ -98,6 +99,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IHSNCodeMasterService, HSNCodeMasterService>();
             services.AddScoped<IMIcdDiagnosisMasterService, MIcdDiagnosisMasterService>();
             services.AddScoped<IAreaMasterService, AreaMasterService>();
+            services.AddScoped<IClassMasterService, ClassMasterService>();
+            services.AddScoped<ISurgeryMasterService, SurgeryMasterService>();
 
 
 
@@ -175,7 +178,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IIPrescriptionService, IPPrescriptionService>();
             services.AddScoped<IDischargeServiceSP, DischargeServiceSP>();
             services.AddScoped<IOPSettlementService, OPSettlementService>();
-            services.AddScoped<IOPBillShilpaService, OPBillShilpaService>();
+            //services.AddScoped<IOPBillShilpaService, OPBillShilpaService>();
             services.AddScoped<ILabPatientRegistrationService, LabPatientRegistrationService>();
             services.AddScoped<ILabBrowseListService, LabBrowseListService>();
             services.AddScoped<IMRDFileService, MRDFileService>();
@@ -234,6 +237,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IFeedBackQuestionService, FeedBackQuestionService>();
             services.AddScoped<IHomeCollectionPatientRegService, HomeCollectionPatientRegService>();
 
+            services.AddScoped<IDocumentCategoryService, DocumentCategoryService>();
+            services.AddScoped<IDocumentUploadService, DocumentUploadService>();
 
 
 
@@ -246,6 +251,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IRisApiHelper, RisApiHelper>();
             services.AddHttpContextAccessor();
             services.AddMemoryCache(opts => opts.SizeLimit = 1024);
+            services.AddScoped<IDeathCertificateService, DeathCertificateService>();
         }
     }
 }

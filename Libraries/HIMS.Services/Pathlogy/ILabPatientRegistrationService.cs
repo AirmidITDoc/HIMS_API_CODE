@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WkHtmlToPdfDotNet;
 
 
 namespace HIMS.Services.Pathlogy
@@ -39,6 +40,8 @@ namespace HIMS.Services.Pathlogy
         Task InsertAsync(TDiscApprovalDetail ObjTDiscApprovalDetail, int UserId, string Username);
         Task<List<MConstant>> GetMConstant(string type);
         List<ServiceMasterDTO> SearchLabServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId, string SrvcName);
+        Task<IPagedList<LabSamcollectionTestwiseListDto>> LabSamcollectionTestwiseListAsynch(GridRequestModel objGrid, long UnitId);
+
 
 
 

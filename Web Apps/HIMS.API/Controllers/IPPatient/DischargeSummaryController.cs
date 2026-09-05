@@ -3,6 +3,7 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.IPPatient;
+using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
@@ -22,10 +23,14 @@ namespace HIMS.API.Controllers.IPPatient
     {
         private readonly IDischargeSummaryService _IDischargeSummaryService;
         private readonly IGenericService<Discharge> _repository;
-        public DischargeSummaryController(IDischargeSummaryService repository, IGenericService<Discharge> repository1)
+        private readonly IGenericService<TIpAdmissionDiagnosisInformation> _repository1;
+
+        public DischargeSummaryController(IDischargeSummaryService repository, IGenericService<Discharge> repository1, IGenericService<TIpAdmissionDiagnosisInformation> repository2)
         {
             _IDischargeSummaryService = repository;
             _repository = repository1;
+            _repository1 = repository2;
+
         }
         [HttpPost("IPDischargeSummaryData")]
         ////[Permission(PageCode = "Bill", Permission = PagePermission.View)]
@@ -65,6 +70,34 @@ namespace HIMS.API.Controllers.IPPatient
             var data1 = await _repository.GetById(x => x.AdmissionId == id);
             return data1.ToSingleResponse<Discharge, DischargeModel>("Discharge");
         }
+        ////List API Get By Id
+        //[HttpGet("IpAdmissionDiagnosisInformation/{id?}")]
+
+        ////[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        //public async Task<ApiResponse> IPGet(int id)
+        //{
+        //    if (id == 0)
+        //    {
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+        //    }
+        //    var data = await _repository1.GetById(x => x.AdmId == id);
+        //    return data.ToSingleResponse<TIpAdmissionDiagnosisInformation, TIpAdmissionDiagnosisInformationModel>("IpAdmissionDiagnosisInformation");
+        //}
+        // List API Get By Id
+        [HttpGet("IpAdmissionDiagnosisInformation/{id?}")]
+        public async Task<ApiResponse> IPGet(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+
+            var data = _IDischargeSummaryService.GetIPDiagnosis(id);
+
+            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "Data loaded", data);
+        }
+
+
 
         [HttpPost("DischargeSummaryInsert")]
         [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
@@ -114,13 +147,15 @@ namespace HIMS.API.Controllers.IPPatient
         {
             DischargeSummary model = obj.Discharge.MapTo<DischargeSummary>();
             List<TIpPrescriptionDischarge> Prescription = obj.PrescriptionTemplate.MapTo<List<TIpPrescriptionDischarge>>();
+            List<TIpAdmissionDiagnosisInformation> AdmissionDiagnosisInformation = obj.AdmissionDiagnosisInformation.MapTo<List<TIpAdmissionDiagnosisInformation>>();
+
             if (obj.Discharge.DischargeSummaryId == 0)
             {
                 model.Followupdate = Convert.ToDateTime(obj.Discharge.Followupdate);
                 model.AddedBy = CurrentUserId;
                 Prescription.ForEach(x => { x.OpdIpdId = obj.Discharge.AdmissionId; x.CreatedBy = CurrentUserId; x.ModifiedBy = CurrentUserId; });
 
-                await _IDischargeSummaryService.InsertTemplate(model, Prescription, CurrentUserId, CurrentUserName);
+                await _IDischargeSummaryService.InsertTemplate(model, Prescription, AdmissionDiagnosisInformation, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -128,11 +163,13 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPut("DischargeTemplateUpdate")]
-        [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
         public async Task<ApiResponse> DischargeTemplateUpdate(DischargeTemUpdate obj)
         {
             DischargeSummary model = obj.Discharge.MapTo<DischargeSummary>();
             List<TIpPrescriptionDischarge> Prescription = obj.PrescriptionTemplate.MapTo<List<TIpPrescriptionDischarge>>();
+            List<TIpAdmissionDiagnosisInformation> AdmissionDiagnosisInformation = obj.AdmissionDiagnosisInformation.MapTo<List<TIpAdmissionDiagnosisInformation>>();
+
             if (obj.Discharge.DischargeSummaryId != 0)
             {
                 model.Followupdate = Convert.ToDateTime(obj.Discharge.Followupdate);
@@ -140,7 +177,7 @@ namespace HIMS.API.Controllers.IPPatient
 
                 Prescription.ForEach(x => { x.OpdIpdId = model.AdmissionId; x.CreatedBy = CurrentUserId; x.ModifiedBy = CurrentUserId; });
 
-                await _IDischargeSummaryService.UpdateTemplate(model, Prescription, CurrentUserId, CurrentUserName);
+                await _IDischargeSummaryService.UpdateTemplate(model, Prescription, AdmissionDiagnosisInformation, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

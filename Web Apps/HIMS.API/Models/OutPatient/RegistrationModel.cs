@@ -141,6 +141,8 @@ namespace HIMS.API.Models.OutPatient
         public long RegId { get; set; }
         public string? RegNo { get; set; }
         public string? EmailId { get; set; }
+        public long? AbhaTranId { get; set; }
+
         public List<TPatientAbhaInformationModel>? TPatientAbhaInformations { get; set; }
 
     }

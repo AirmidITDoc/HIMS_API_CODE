@@ -74,7 +74,7 @@ namespace HIMS.Services.Inventory
                 scope.Complete();
             }
         }
-        public virtual async Task UpdateAsync(TApprovalHeader objApproval, int currentUserId, string currentUserName)
+        public virtual async Task UpdateAsync(TApprovalHeader objApproval, TDrbill ObjTDrbill, int currentUserId, string currentUserName)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
 
@@ -84,7 +84,7 @@ namespace HIMS.Services.Inventory
                 odal.SetConnection(_context.Database.GetDbConnection());// <-- Share same DbConnection
                 odal.SetTransaction(transaction.GetDbTransaction());    // <-- Share same DbTransaction
 
-                string[] Entity ={ "ApprovalId", "ApprovalStatus", "ApprovedDateTime" };
+                string[] Entity ={ "ApprovalId", "ApprovalStatus", "ApprovedDateTime", "TranId", "IsApproved", "StageStatus" };
 
                 var entity = objApproval.ToDictionary();
 
@@ -93,6 +93,8 @@ namespace HIMS.Services.Inventory
                     if (!Entity.Contains(rProperty))
                         entity.Remove(rProperty);
                 }
+                entity["IsApproved"] = ObjTDrbill.IsApproved;
+                entity["StageStatus"] = ObjTDrbill.StageStatus;
 
                 odal.ExecuteNonQueryNew( "ps_UpdateApprovalStatus", CommandType.StoredProcedure, "", entity);
 

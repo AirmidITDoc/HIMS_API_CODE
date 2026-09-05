@@ -49,6 +49,9 @@
         public long UnitId { get; set; }
         public int? WardId { get; set; }
         public int? BedId { get; set; }
+        public bool? IsEditable { get; set; }
+        public bool? IsAllowZeroPrice { get; set; }
+
     }
 
 }

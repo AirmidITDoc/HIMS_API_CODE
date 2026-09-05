@@ -35,6 +35,7 @@ namespace HIMS.Data.DTO.DashBoard
         public string? PBillNo { get; set; }
         public long? OPIPID { get; set; }
         public string? OPIPType { get; set; }
+        public string? BillNo { get; set; }
     }
     public class CashlessCountSummaryDto
     {

@@ -36,5 +36,10 @@ namespace HIMS.Data.DTO.Administration
         public long? ConcessionAuthorizationName { get; set; }
         public double? TaxPer { get; set; }
         public decimal? TaxAmount { get; set; }
+        public bool? IsApproved { get; set; }
+        public string? StageStatus { get; set; }
+        public DateTime? ApprovedDateTime { get; set; }
+        public string? AuthorizeBy { get; set; }
+
     }
 }

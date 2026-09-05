@@ -42,7 +42,7 @@ namespace HIMS.Data.DTO.OTManagement
         public string? OTTableName { get; set; }
         public long? Ottable { get; set; }
         public DateTime? SurgeryDate { get; set; }
-        public DateTime? EstimateTime { get; set; }
+        public double? EstimateTime { get; set; }
         public bool? RequestType { get; set; }
         public bool? Pacrequired { get; set; }
         public bool? EquipmentsRequired { get; set; }

@@ -44,6 +44,9 @@ namespace HIMS.API.Models.Inventory
         public string? Instruction { get; set; }
         public string? Content { get; set; }
         public bool IsValidContent { get; set; }
+        public string? LocalLanguageName { get; set; }
+
+
 
         public List<AssignItemToStoreModel> MAssignItemToStores { get; set; }
         public List<MAssignItemToDrugModel> MAssignItemToDrugs { get; set; }

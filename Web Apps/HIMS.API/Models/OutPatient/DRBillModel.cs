@@ -1,4 +1,5 @@
-﻿using HIMS.API.Models.OPPatient;
+﻿using HIMS.API.Models.Masters;
+using HIMS.API.Models.OPPatient;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -32,6 +33,8 @@ namespace HIMS.API.Models.OutPatient
         public long? ConcessionAuthorizationName { get; set; }
         public double? TaxPer { get; set; }
         public decimal? TaxAmount { get; set; }
+        public bool? IsApproved { get; set; }
+        public string? StageStatus { get; set; }
     }
     public  class TDrbillDetModel
     {
@@ -164,14 +167,18 @@ namespace HIMS.API.Models.OutPatient
         public DRBillModel DRBill { get; set; }
         public List<TDrbillDetModel> TDrbillDet { get; set; }
         public List<TDraddChargeModel> TDraddCharge { get; set; }
+        public ApprovalModel? ApprovalHeader { get; set; }
 
-        }
+
+
+    }
     public class DraftBillUpdateModel
     {
         public DRBillModel DRBill { get; set; }
         public List<TDrbillDetUpdateModel> TDrbillDet { get; set; }
         public List<TDraddChargeUpdateModel> TDraddCharge { get; set; }
 
+        
 
     }
     public class DRBillCancel
@@ -180,6 +187,21 @@ namespace HIMS.API.Models.OutPatient
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
+    }
+    public class ApprovalModel
+    {
+        public long ApprovalId { get; set; }
+        public string ApprovalNo { get; set; } = null!;
+        public DateTime Date { get; set; }
+        public string? Time { get; set; }
+        public long TranId { get; set; }
+        public string TransactionType { get; set; } = null!;
+        public byte ApprovalStatus { get; set; }
+        public long? AuthorizeBy { get; set; }
+        public DateTime? ApprovedDateTime { get; set; }
+        public string? Comment { get; set; }
+        public long CreatedBy { get; set; }
+
     }
 }
 

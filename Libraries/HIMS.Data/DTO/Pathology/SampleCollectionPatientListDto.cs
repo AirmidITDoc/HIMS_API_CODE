@@ -22,6 +22,7 @@
         public string? CompanyName { get; set; }
         public string? PatientType { get; set; }
         public string? DepartmentName { get; set; }
+        public int? IsRefunded { get; set; }
 
     }
 }
