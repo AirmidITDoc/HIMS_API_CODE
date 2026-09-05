@@ -1,0 +1,439 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Death Certificate</title>
+
+    <style>
+        @page {
+            size: A4;
+            margin: 18mm 18mm;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        /* ==============================
+           HEADER
+        ============================== */
+
+        .header {
+            width: 100%;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #000;
+        }
+
+        .hospital-name {
+            font-size: 21px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .hospital-address {
+            font-size: 12px;
+            margin-bottom: 2px;
+        }
+
+        /* ==============================
+           PRINT DATE
+        ============================== */
+
+        .print-date {
+            text-align: right;
+            font-size: 10px;
+            margin-top: 5px;
+        }
+
+        /* ==============================
+           CERTIFICATE TITLE
+        ============================== */
+
+        .certificate-title {
+            text-align: center;
+            font-size: 19px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 22px 0 20px 0;
+            text-decoration: underline;
+        }
+
+        /* ==============================
+           PATIENT DETAILS
+        ============================== */
+
+        .details {
+            width: 100%;
+            margin-bottom: 18px;
+        }
+
+            .details td {
+                padding: 5px 3px;
+                vertical-align: top;
+                font-size: 13px;
+            }
+
+        .label {
+            width: 145px;
+            font-weight: bold;
+        }
+
+        .colon {
+            width: 15px;
+            text-align: center;
+        }
+
+        .value {
+            width: auto;
+        }
+
+        /* ==============================
+           CERTIFICATE TEXT
+        ============================== */
+
+        .certificate-text {
+            text-align: justify;
+            font-size: 13px;
+            line-height: 1.7;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* ==============================
+           INFORMATION
+        ============================== */
+
+        .info-line {
+            margin: 9px 0;
+            font-size: 13px;
+        }
+
+        .info-label {
+            font-weight: bold;
+        }
+
+        /* ==============================
+           CAUSE / DIAGNOSIS
+        ============================== */
+
+        .section {
+            margin-top: 15px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        .section-content {
+            min-height: 35px;
+            border-bottom: 1px solid #000;
+            padding: 3px 2px;
+        }
+
+        /* ==============================
+           RESPONSIBLE PERSON
+        ============================== */
+
+        .responsible {
+            margin-top: 15px;
+        }
+
+        /* ==============================
+           SIGNATURE
+        ============================== */
+
+        .signature-table {
+            width: 100%;
+            margin-top: 75px;
+        }
+
+            .signature-table td {
+                width: 33.33%;
+                text-align: center;
+                vertical-align: bottom;
+                padding: 0 10px;
+                font-size: 11px;
+            }
+
+        .signature-line {
+            border-top: 1px solid #000;
+            padding-top: 5px;
+            margin-top: 35px;
+        }
+
+        /* ==============================
+           FOOTER
+        ============================== */
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 5px;
+            border-top: 1px solid #999;
+            font-size: 9px;
+            color: #555;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==============================
+         HOSPITAL HEADER
+    ============================== -->
+
+    <div class="header">
+
+        <div class="hospital-name">
+            {{HospitalName}}
+        </div>
+
+        <div class="hospital-address">
+            {{HospitalAddress}}
+        </div>
+
+        <div class="hospital-address">
+            Phone: {{HospitalPhone}} | Email: {{HospitalEmail}}
+        </div>
+
+        <!--LOGO_IMG-->
+
+    </div>
+
+
+    <!-- ==============================
+         PRINT DATE
+    ============================== -->
+
+    <div class="print-date">
+        Print Date/Time: {{PrintDateTime}}
+    </div>
+
+
+    <!-- ==============================
+         TITLE
+    ============================== -->
+
+    <div class="certificate-title">
+        Death Certificate
+    </div>
+
+
+    <!-- ==============================
+         PATIENT DETAILS
+    ============================== -->
+
+    <table class="details">
+
+        <tr>
+            <td class="label">Registration No</td>
+            <td class="colon">:</td>
+            <td class="value">{{RegNo}}</td>
+
+            <td class="label">IP No</td>
+            <td class="colon">:</td>
+            <td class="value">{{IPNo}}</td>
+        </tr>
+
+        <tr>
+            <td class="label">Patient Name</td>
+            <td class="colon">:</td>
+            <td class="value" colspan="4">{{PatientName}}</td>
+        </tr>
+
+        <tr>
+            <td class="label">Age</td>
+            <td class="colon">:</td>
+            <td class="value">{{Age}}</td>
+
+            <td class="label">Gender</td>
+            <td class="colon">:</td>
+            <td class="value">{{Gender}}</td>
+        </tr>
+
+        <tr>
+            <td class="label">Consultant Doctor</td>
+            <td class="colon">:</td>
+            <td class="value">{{ConsultantDoctor}}</td>
+
+            <td class="label">Department</td>
+            <td class="colon">:</td>
+            <td class="value">{{Department}}</td>
+        </tr>
+
+        <tr>
+            <td class="label">Date of Admission</td>
+            <td class="colon">:</td>
+            <td class="value">{{DOADateTime}}</td>
+
+            <td class="label">SMC No</td>
+            <td class="colon">:</td>
+            <td class="value">{{SMCNo}}</td>
+        </tr>
+
+        <tr>
+            <td class="label">Date of Death</td>
+            <td class="colon">:</td>
+            <td class="value">{{DateOfDeath}}</td>
+
+            <td class="label">Time of Death</td>
+            <td class="colon">:</td>
+            <td class="value">{{TimeOfDeath}}</td>
+        </tr>
+
+    </table>
+
+
+    <!-- ==============================
+         CERTIFICATE STATEMENT
+    ============================== -->
+
+    <div class="certificate-text">
+
+        This is to certify that
+        <strong>{{PatientName}}</strong>
+        was under the care of
+        <strong>{{ConsultantDoctor}}</strong>
+        and expired on
+        <strong>{{DateOfDeath}}</strong>
+        at
+        <strong>{{TimeOfDeath}}</strong>.
+
+    </div>
+
+
+    <!-- ==============================
+         CAUSE OF DEATH
+    ============================== -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Cause of Death
+        </div>
+
+        <div class="section-content">
+            {{CauseOfDeath}}
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         PLACE OF DEATH
+    ============================== -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Place of Death
+        </div>
+
+        <div class="section-content">
+            {{PlaceOfDeath}}
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         DIAGNOSIS
+    ============================== -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Diagnosis
+        </div>
+
+        <div class="section-content">
+            {{Diagnosis}}
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         RESPONSIBLE PERSON
+    ============================== -->
+
+    <div class="section responsible">
+
+        <div class="section-title">
+            Responsible Person Name / Address
+        </div>
+
+        <div class="section-content">
+            {{ResponsiblePersonNameAddress}}
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         SIGNATURES
+    ============================== -->
+
+    <table class="signature-table">
+
+        <tr>
+
+            <td>
+
+                <!--CONSULTANT_SIGN_IMG-->
+
+                <div class="signature-line">
+                    {{ConsultantDoctor}}
+                    <br>
+                    Consultant Doctor
+                </div>
+
+            </td>
+
+            <td>
+
+                <div class="signature-line">
+                    Medical Superintendent
+                </div>
+
+            </td>
+
+            <td>
+
+                <div class="signature-line">
+                    Authorized Signatory / Seal
+                </div>
+
+            </td>
+
+        </tr>
+
+    </table>
+
+
+    <!-- ==============================
+         FOOTER
+    ============================== -->
+
+    <div class="footer">
+
+        This is a computer generated document.
+        Generated on {{PrintDateTime}} via
+        {{HospitalName}} - Airmid HIMS.
+
+    </div>
+
+</body>
+</html>
