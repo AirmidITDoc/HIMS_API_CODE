@@ -45,6 +45,21 @@ namespace HIMS.API.Controllers.Inventory
             var data = await _ItemMasterServices.GetById(id);
             return data.ToSingleResponse<MItemMaster, ItemMasterModel>("Item Master");
         }
+        
+        // List API Get By HSNcode
+        [HttpGet("ItemInformationByHSNcode")]
+        public async Task<ApiResponse> IPGet(string HSNcode)
+        {
+            if (string.IsNullOrWhiteSpace(HSNcode))
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+
+            var data = _ItemMasterServices.GetInformationHSNCode(HSNcode);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Data loaded", data);
+        }
+
 
 
 

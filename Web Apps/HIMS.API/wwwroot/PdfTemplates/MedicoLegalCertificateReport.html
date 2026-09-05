@@ -1,0 +1,497 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MedicoLegal Wound Certificate</title>
+
+    <style>
+        @page {
+            size: A4;
+            margin: 8mm;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #fff;
+            color: #000;
+            font-family: "Times New Roman", serif;
+            font-size: 13px;
+        }
+
+        .page {
+            width: 194mm;
+            min-height: 281mm;
+            margin: auto;
+            padding: 2mm 3mm;
+        }
+
+       
+
+        .title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: underline;
+            margin: 2px 0 9px;
+        }
+
+      
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 5px 6px;
+            vertical-align: middle;
+            font-size: 12px;
+        }
+
+      
+
+        .top-info {
+            margin-bottom: 10px;
+        }
+
+            .top-info td {
+                border: 1px solid #555;
+                height: 28px;
+                font-size: 12px;
+            }
+
+            .top-info .blank {
+                width: 46%;
+                border: none;
+            }
+
+            .top-info .box {
+                width: 27%;
+            }
+
+
+        .patient-box {
+            border: 1px solid #555;
+            padding: 7px 8px;
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+
+        .patient-row {
+            margin-bottom: 7px;
+            line-height: 1.35;
+            font-size: 12px;
+        }
+
+        .patient-details {
+            display: flex;
+            gap: 30px;
+            font-size: 12px;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+       
+
+        .main-info {
+            width: 100%;
+            margin-bottom: 4px;
+        }
+
+        .main-info-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+            .main-info-table > tbody > tr > td {
+                width: 50%;
+                vertical-align: top;
+                padding: 0;
+                border: none;
+            }
+
+                .main-info-table > tbody > tr > td:first-child {
+                    padding-right: 18px;
+                }
+
+                .main-info-table > tbody > tr > td:last-child {
+                    padding-left: 18px;
+                }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .info-table td {
+                border: 1px solid #555;
+                height: 28px;
+                font-size: 12px;
+                padding: 5px 6px;
+            }
+
+        .center {
+            text-align: center;
+        }
+
+      
+
+        .section-title {
+            font-weight: bold;
+            border-bottom: 1px solid #555;
+            padding: 3px 0 4px;
+            font-size: 12px;
+        }
+
+        .injury-box {
+            border: 1px solid #888;
+            height: 198px;
+            padding: 6px;
+            margin-top: 2px;
+            line-height: 1.6;
+            overflow: hidden;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 12px;
+        }
+
+     
+
+        .line-section {
+            margin-top: 6px;
+        }
+
+        .line-title {
+            font-weight: bold;
+            border-bottom: 1px solid #555;
+            padding-bottom: 4px;
+            font-size: 12px;
+        }
+
+        .line-value {
+            min-height: 28px;
+            padding-top: 6px;
+            border-bottom: 1px solid #555;
+            font-size: 12px;
+        }
+
+
+        @media print {
+
+            html,
+            body {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .page {
+                width: 100%;
+                min-height: auto;
+                margin: 0;
+                padding: 2mm 3mm;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+
+        <!-- 
+             TITLE
+        ->
+
+        <div class="title">
+            MEDICOLEGAL WOUND CERTIFICATE
+        </div>
+
+
+        <!-- 
+             MLC / CERTIFICATE INFORMATION
+        -->
+
+        <table class="top-info">
+
+            <tr>
+
+                <td class="box">
+                    <strong>M.L.C.No</strong>
+                    &nbsp;&nbsp;
+                    {{DocId}}
+                </td>
+
+                <td class="blank"></td>
+
+                <td class="box">
+                    <strong>Certificate No</strong>
+                    &nbsp;&nbsp;
+                    {{CertificateNo}}
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>
+                    <strong>Date</strong>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{MLCDate}}
+                </td>
+
+                <td class="blank"></td>
+
+                <td>
+                    <strong>Date</strong>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{MLCDate}}
+                </td>
+
+            </tr>
+
+        </table>
+
+
+        <!-- 
+             PATIENT INFORMATION
+         -->
+
+        <div class="patient-box">
+
+            <div class="patient-row">
+
+                <span class="label">Name :</span>
+                &nbsp;&nbsp;
+                {{PatientName}}
+
+            </div>
+
+
+            <div class="patient-row">
+
+                <span class="label">Address :</span>
+                &nbsp;
+                {{PatientAddress}}
+
+            </div>
+
+
+            <div class="patient-details">
+
+                <div>
+                    <span class="label">Age</span>
+                    :
+                    {{Age}} Yrs
+                </div>
+
+                <div>
+                    <span class="label">Sex</span>
+                    :
+                    {{GenderName}}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- 
+             REGISTRATION / ACCIDENT DETAILS
+        === -->
+
+        <div class="main-info">
+
+            <table class="main-info-table">
+
+                <tr>
+
+                    <!-- LEFT SIDE -->
+
+                    <td>
+
+                        <table class="info-table">
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        Reg. No / I.P.D. No
+                                    </strong>
+                                </td>
+
+                                <td colspan="2">
+                                    : {{RegNo}} &nbsp;&nbsp; IP / {{IPDNo}}
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        Examination Date
+                                    </strong>
+                                </td>
+
+                                <td colspan="2">
+                                    : {{MLCDate}}
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        Examination Time
+                                    </strong>
+                                </td>
+
+                                <td colspan="2">
+                                    : {{MLCTime}}
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                    </td>
+
+
+                    <!-- RIGHT SIDE -->
+
+                    <td>
+
+                        <table class="info-table">
+
+                            <tr>
+
+                                <td colspan="2"
+                                    class="center">
+
+                                    <strong>
+                                        ACCIDENT / ASSAULT DETAILS
+                                    </strong>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        Acc. / Assault Date
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    : {{Accident_Date}}
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        Acc. / Assault Time
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    : {{Accident_Time}}
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+        <!-- 
+             DETAILS OF INJURIES
+         -->
+
+        <div class="section-title">
+            Details of Injuries/ Clinical Features
+        </div>
+
+
+        <div class="injury-box">
+            {{Details_Injuries}}
+        </div>
+
+
+        <!-- 
+             AGE OF INJURY
+        -->
+
+        <div class="line-section">
+
+            <div class="line-title">
+                Age of Injury
+            </div>
+
+            <div class="line-value">
+                {{AgeofInjuries}}
+            </div>
+
+        </div>
+
+
+        <!-- 
+             CAUSE OF INJURY
+         -->
+
+        <div class="line-section">
+
+            <div class="line-title">
+                Cause of Injury
+            </div>
+
+            <div class="line-value">
+                {{CauseofInjuries}}
+            </div>
+
+        </div>
+
+
+        <!-- 
+             DETAILS OF INJURIES / CLINICAL FEATURES
+         -->
+
+        <div class="line-section">
+
+            <div class="line-title">
+                Details of Injuries / Clinical Features
+            </div>
+
+            <div class="line-value">
+                {{Details_Injuries}}
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
