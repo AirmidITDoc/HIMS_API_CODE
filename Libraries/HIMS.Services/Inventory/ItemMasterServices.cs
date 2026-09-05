@@ -49,7 +49,16 @@ namespace HIMS.Services.Inventory
         {
             return await this._context.MItemMasters.Include(x => x.MAssignItemToStores).Include(x => x.MAssignItemToDrugs).FirstOrDefaultAsync(x => x.ItemId == Id);
         }
-      
+        public List<InformationByHSNcodeDto> GetInformationHSNCode(string Hsncode)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@Hsncode", Hsncode);
+
+            return sql.FetchListByQuery<InformationByHSNcodeDto>("EXEC ps_RrvItemInformationByHSNcode @Hsncode", para);
+        }
+
         public virtual async Task InsertAsyncSP(MItemMaster objItemMaster, int UserId, string Username)
         {
             try
