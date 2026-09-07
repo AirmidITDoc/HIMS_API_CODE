@@ -270,6 +270,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<MOctroiMaster> MOctroiMasters { get; set; } = null!;
         public virtual DbSet<MOpcasepaperDignosisMaster> MOpcasepaperDignosisMasters { get; set; } = null!;
         public virtual DbSet<MOtSiteDescriptionMaster> MOtSiteDescriptionMasters { get; set; } = null!;
+        public virtual DbSet<MOtSpecialtyMaster> MOtSpecialtyMasters { get; set; } = null!;
+        public virtual DbSet<MOtSubSpecialtyMaster> MOtSubSpecialtyMasters { get; set; } = null!;
         public virtual DbSet<MOtSurgeryCategoryMaster> MOtSurgeryCategoryMasters { get; set; } = null!;
         public virtual DbSet<MOtSurgeryMaster> MOtSurgeryMasters { get; set; } = null!;
         public virtual DbSet<MOtcomplicationsMaster> MOtcomplicationsMasters { get; set; } = null!;
@@ -8277,6 +8279,34 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SurgeryCategoryId).HasColumnName("SurgeryCategoryID");
             });
 
+            modelBuilder.Entity<MOtSpecialtyMaster>(entity =>
+            {
+                entity.HasKey(e => e.SpecialtyId);
+
+                entity.ToTable("M_OT_SpecialtyMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SpecialtyName).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<MOtSubSpecialtyMaster>(entity =>
+            {
+                entity.HasKey(e => e.SubSpecialtyId);
+
+                entity.ToTable("M_OT_SubSpecialtyMaster");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SpecialtyId).HasColumnName("SpecialtyID");
+
+                entity.Property(e => e.SubSpecialtyName).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<MOtSurgeryCategoryMaster>(entity =>
             {
                 entity.HasKey(e => e.SurgeryCategoryId)
@@ -8300,15 +8330,21 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.IsCancelledDateTime).HasColumnType("datetime");
+                entity.Property(e => e.GradeLevel).HasColumnName("Grade_Level");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OttemplateId).HasColumnName("OTTemplateID");
 
+                entity.Property(e => e.PreferredOtroom).HasColumnName("PreferredOTRoom");
+
+                entity.Property(e => e.ShortName).HasMaxLength(255);
+
                 entity.Property(e => e.SurgeryAmount).HasColumnType("money");
 
-                entity.Property(e => e.SurgeryName).HasMaxLength(100);
+                entity.Property(e => e.SurgeryCode).HasMaxLength(10);
+
+                entity.Property(e => e.SurgeryName).HasMaxLength(255);
             });
 
             modelBuilder.Entity<MOtcomplicationsMaster>(entity =>
