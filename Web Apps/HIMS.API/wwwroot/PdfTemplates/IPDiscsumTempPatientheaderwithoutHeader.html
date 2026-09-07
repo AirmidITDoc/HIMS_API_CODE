@@ -29,22 +29,22 @@
                                     </b>
                                 </td>
 
-                                <!--<td style="border-bottom: 1px solid #d4c3c3; padding: 6px; padding-top: 135px; text-align: right;">
-            <b>
-                Print
-                Date : {{CurrentDate}}
-            </b>
-        </td>-->
-
                             </tr>
 
-                            <tr class="bill-info-row">
-                                <td style="padding: 6px;">
+                            <tr>
+                                <td style="padding-left:6px; padding-right:6px;padding-bottom:6px;">
 
-                                    <table style="width: 100%; border-collapse: collapse; font-size: 18px;">
+                                    <table style="width:100%; border-collapse:collapse;font-size:22px;">
+
+                                        <!-- Patient Header -->
                                         {{PatientHeader}}
-
                                     </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left:6px; padding-right:6px; padding-bottom:6px;">
+                                    <!-- Multiple Diagnosis Rows -->
+                                    {{Diagnosisinformation}}
                                 </td>
                             </tr>
                         </table>
@@ -68,9 +68,6 @@
 
 
         </div>
-    </div>
-    </div>
-    </div>
     </div>
 
 </body>

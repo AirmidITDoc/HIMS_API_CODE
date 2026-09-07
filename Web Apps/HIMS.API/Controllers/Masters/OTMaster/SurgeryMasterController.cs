@@ -47,18 +47,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
             var MOttableMasterList = await _repository.GetAll(x => x.IsActive.Value);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "getlocationByOttable dropdown", MOttableMasterList.Select(x => new { x.SurgeryId, x.SiteDescId, x.SurgeryName,x.TotalDuration}));
         }
-        //[HttpGet("GetSurgeryTypeByOTSurgery/{id?}")]
-        //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
-        //public async Task<ApiResponse> GetOt(int id)
-        //{
-        //    if (id == 0)
-        //    {
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
-        //    }
-        //    var data = await _repository.GetById(x => x.SurgeryId == id);
-        //    return data.ToSingleResponse<MOtSurgeryMaster, SurgeryModel>("MOtSurgeryMaster");
-        //}
-
+       
 
         [HttpGet("{id?}")]
         //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]

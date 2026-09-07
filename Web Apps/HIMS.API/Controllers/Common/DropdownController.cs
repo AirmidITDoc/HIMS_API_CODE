@@ -117,8 +117,12 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MEmployeeDesignationMaster> _MEmployeeDesignationMaster;
         private readonly IGenericService<MExternalDoctorMaster> _MExternalDoctorMaster;
         private readonly IGenericService<MLoginAccessConfig> _MLoginAccessConfig;
+        private readonly IGenericService<MOtSpecialtyMaster> _MOtSpecialtyMaster;
+        private readonly IGenericService<MOtSubSpecialtyMaster> _MOtSubSpecialtyMaster;
 
-        
+
+
+
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
                                   IGenericService<MMaritalStatusMaster> iMaritalStatusMaster, IGenericService<MReligionMaster> iMreligionMaster, IGenericService<PatientTypeMaster> iPatientTypeMaster, IGenericService<TariffMaster> tariffMaster,
                                   IGenericService<MDepartmentMaster> iMDepartmentMaster, IGenericService<DoctorMaster> iDoctorMaster, IGenericService<DbPurposeMaster> iMDoPurposeMaster, IGenericService<MCityMaster> iMDoCityMaster
@@ -177,7 +181,11 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MEmployeeDepartmentMaster> MEmployeeDepartmentMaster,
                               IGenericService<MEmployeeDesignationMaster> MEmployeeDesignationMaster,
                               IGenericService<MExternalDoctorMaster> MExternalDoctorMaster,
-                              IGenericService<MLoginAccessConfig> MLoginAccessConfig
+                              IGenericService<MLoginAccessConfig> MLoginAccessConfig,
+                              IGenericService<MOtSpecialtyMaster> MOtSpecialtyMaster,
+                              IGenericService<MOtSubSpecialtyMaster> MOtSubSpecialtyMaster
+
+
                              )
         {
 
@@ -281,10 +289,14 @@ namespace HIMS.API.Controllers.Common
             _MEmployeeDesignationMaster = MEmployeeDesignationMaster;
             _MExternalDoctorMaster = MExternalDoctorMaster;
             _MLoginAccessConfig = MLoginAccessConfig;
+            _MOtSpecialtyMaster = MOtSpecialtyMaster;
+            _MOtSubSpecialtyMaster = MOtSubSpecialtyMaster;
 
 
 
-            
+
+
+
 
 
         }
@@ -504,6 +516,8 @@ namespace HIMS.API.Controllers.Common
                 "TrustOccupation" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TrustOccupation")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 //"LoginAccessConfig" => (await _MLoginAccessConfig.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MLoginAccessConfig.LoginConfigId), nameof(MLoginAccessConfig.AccessValueId)),
                 "LoginAccessConfig" => (await _MLoginAccessConfig.GetAll()).ToList() .ToDropDown(nameof(MLoginAccessConfig.LoginConfigId), nameof(MLoginAccessConfig.AccessValueId)),
+                "MOtSpecialtyMaster" => (await _MOtSpecialtyMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSpecialtyMaster.SpecialtyId), nameof(MOtSpecialtyMaster.SpecialtyName)),
+                "MOtSubSpecialtyMaster" => (await _MOtSubSpecialtyMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSpecialtyMaster.SpecialtyId), nameof(MOtSubSpecialtyMaster.SubSpecialtyName)),
 
 
                 _ => new List<SelectListItem>()
