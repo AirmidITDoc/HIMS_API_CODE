@@ -5,6 +5,7 @@ using HIMS.ABHA.Interface;
 using HIMS.ABHA.Models.M2;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.PaymentGateway;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
@@ -25,12 +26,14 @@ namespace HIMS.API.Controllers.ABHA.M2
         private readonly IAbdmAuthService _abhaService;
         private readonly IConfiguration _configuration;
         private readonly IGenericService<TAbhaLinkTokenCallback> _TAbhaLinkTokenCallback;
+        private readonly IGenericService<TAbhaOnDiscover> _TAbhaOnDiscover;
         private readonly IUserLinkingService _userLinkingService;
-        public AuthController(IAbdmAuthService abhaService, IConfiguration configuration, IGenericService<TAbhaLinkTokenCallback> genericService, IUserLinkingService userLinkingService)
+        public AuthController(IAbdmAuthService abhaService, IConfiguration configuration, IGenericService<TAbhaLinkTokenCallback> genericService, IGenericService<TAbhaOnDiscover> tAbhaOnDiscover, IUserLinkingService userLinkingService)
         {
             _abhaService = abhaService;
             _configuration = configuration;
             _TAbhaLinkTokenCallback = genericService;
+            _TAbhaOnDiscover = tAbhaOnDiscover;
             _userLinkingService = userLinkingService;
         }
         [HttpPost("bridge/url")]
@@ -187,7 +190,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         }
 
         [HttpPost("~/api/v3/hip/patient/care-context/discover")]
-        public async Task<IActionResult> onCareContextDiscoverRequest([FromBody] CareContextDiscoverRequest payload)
+        public async Task<IActionResult> onCareContextDiscoverRequest([FromBody] Rootobject payload)
         {
             string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
@@ -203,9 +206,78 @@ namespace HIMS.API.Controllers.ABHA.M2
 
             await System.IO.File.AppendAllTextAsync(filename, log);
 
+            //////if (!string.IsNullOrWhiteSpace(payload.patient.id))
+            //////{
+            //////    var lstToken = await _TAbhaOnDiscover.GetAll(x => x.AbhaAddress == payload.patient.id);
+            //////    if (lstToken.Any())
+            //////    {
+            //////        // Update existing record
+            //////        var existingToken = lstToken.FirstOrDefault();
+            //////        existingToken.TransactionId = payload.transactionId;
+            //////        existingToken.PatientId = payload.patient.id;
+            //////        existingToken.PatientName = payload.patient.name;
+            //////        existingToken.Gender = payload.patient.gender;
+            //////        existingToken.YearOfBirth = payload.patient.yearOfBirth;
+            //////        existingToken.Mobile = payload.patient.verifiedIdentifiers?.FirstOrDefault(x => x.type == "MOBILE")?.value;
+            //////        existingToken.AbhaAddress = payload.patient.verifiedIdentifiers?.FirstOrDefault(x => x.type == "ABHA_ADDRESS")?.value;
+            //////        existingToken.AbhaNumber = payload.patient.verifiedIdentifiers?.FirstOrDefault(x => x.type == "ABHA_NUMBER")?.value;
+            //////        existingToken.UnverifiedIdentifiers = JsonConvert.SerializeObject(payload.patient.unverifiedIdentifiers);
+            //////        existingToken.RawRequest = JsonConvert.SerializeObject(payload);
+
+            //////        await _TAbhaOnDiscover.Update(existingToken, 1, "System", null);
+            //////    }
+            ////// }
+
+            //if (!string.IsNullOrWhiteSpace(payload.patient?.id))
+            //{
+            //    var abhaAddress = payload.patient.id;
+            //    // Check existing record
+            //    var lstToken = await _TAbhaOnDiscover.GetAll(x => x.AbhaAddress == abhaAddress);
+
+            //    if (lstToken != null && lstToken.Any())
+            //    {
+            //        // =========================
+            //        // UPDATE EXISTING RECORD
+            //        // =========================
+            //        var existingToken = lstToken.First();
+            //        existingToken.TransactionId = payload.transactionId;
+            //        existingToken.PatientId = payload.patient.id;
+            //        existingToken.PatientName = payload.patient.name;
+            //        existingToken.Gender = payload.patient.gender;
+            //        existingToken.YearOfBirth = payload.patient.yearOfBirth;
+            //        existingToken.Mobile = payload.patient.verifiedIdentifiers?.FirstOrDefault(x => x.type == "MOBILE")?.value;
+            //        existingToken.AbhaAddress = payload.patient.verifiedIdentifiers?.FirstOrDefault(x => x.type == "abhaAddress")?.value;
+            //        existingToken.AbhaNumber = payload.patient.verifiedIdentifiers?.FirstOrDefault(x => x.type == "ABHA_NUMBER")?.value;
+            //        existingToken.UnverifiedIdentifiers = JsonConvert.SerializeObject(payload.patient.unverifiedIdentifiers);
+            //        existingToken.RawRequest = JsonConvert.SerializeObject(payload);
+            //        await _TAbhaOnDiscover.Update(existingToken, 1, "System", null);
+            //    }
+            //    else
+            //    {
+            //        // =========================
+            //        // INSERT NEW RECORD
+            //        // =========================
+            //        var newToken = new TAbhaOnDiscover
+            //        {
+            //            TransactionId = payload.transactionId,
+            //            PatientId = payload.patient.id,
+            //            PatientName = payload.patient.name,
+            //            Gender = payload.patient.gender,
+            //            YearOfBirth = payload.patient.yearOfBirth,
+            //            Mobile = payload.patient.verifiedIdentifiers?.FirstOrDefault(x => x.type == "MOBILE")?.value,
+            //            AbhaAddress = payload.patient.verifiedIdentifiers?.FirstOrDefault(x => x.type == "abhaAddress")?.value,
+            //            AbhaNumber = payload.patient.verifiedIdentifiers?.FirstOrDefault(x => x.type == "ABHA_NUMBER")?.value,
+            //            UnverifiedIdentifiers = JsonConvert.SerializeObject(payload.patient.unverifiedIdentifiers),
+            //            RawRequest = JsonConvert.SerializeObject(payload),
+            //            CreatedDate = DateTime.Now
+            //        };
+
+            //        await _TAbhaOnDiscover.Add(newToken, 1, "System", null);
+            //    }
+            //}
             // call api to get care context and send response back to abha bridge
-            
-            var result = await _userLinkingService.OnDiscoverAsync(payload.TransactionId, payload.PatientCare.Id, Request.Headers["request-id"].ToString());
+
+            var result = await _userLinkingService.OnDiscoverAsync(payload.transactionId, payload.patient.id, Request.Headers["request-id"].ToString());
             return Ok();
         }
 
