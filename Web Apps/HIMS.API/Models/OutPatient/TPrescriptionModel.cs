@@ -43,7 +43,7 @@ namespace HIMS.API.Models.OutPatient
         public string? BloodGroup { get; set; }
         public long? DepartmentId { get; set; }
         public string? HistoryOfIllness { get; set; }
-        public long? PrescDoctorId { get; set; }
+        //public long? PrescDoctorId { get; set; }
 
 
 

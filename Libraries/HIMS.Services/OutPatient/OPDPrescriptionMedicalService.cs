@@ -85,7 +85,7 @@ namespace HIMS.Services.OutPatient
                 objTOprequestList.ForEach(x => { x.OpIpId = modelItem.OpdIpdIp; x.CreatedBy = UserId; x.ModifiedBy = UserId; });
                 objmOpcasepaperDignosisMaster.ForEach(x => { x.VisitId = modelItem.OpdIpdIp; });
 
-                string[] rEntity = { "PrecriptionId", "CreatedBy", "CreatedOn", "ModifiedBy", "ModifiedOn" };
+                string[] rEntity = { "PrecriptionId", "CreatedBy", "CreatedOn", "ModifiedBy", "ModifiedOn" , "PrescDoctorId" };
                 var entity = modelItem.ToDictionary();
                 foreach (var rProperty in rEntity)
                 {
