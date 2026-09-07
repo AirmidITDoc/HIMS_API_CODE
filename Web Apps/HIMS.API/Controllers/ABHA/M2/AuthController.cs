@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using DocumentFormat.OpenXml.Drawing;
 using HIMS.ABHA.Helper;
 using HIMS.ABHA.Interface;
 using HIMS.ABHA.Models.M2;
@@ -6,12 +7,12 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Models.PaymentGateway;
 using HIMS.Core.Infrastructure;
+using HIMS.Data;
+using HIMS.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 //using System.Text.Json;
 using System.IO;
-using HIMS.Data.Models;
-using HIMS.Data;
 using System.Text.Json;
 
 namespace HIMS.API.Controllers.ABHA.M2
@@ -24,11 +25,13 @@ namespace HIMS.API.Controllers.ABHA.M2
         private readonly IAbdmAuthService _abhaService;
         private readonly IConfiguration _configuration;
         private readonly IGenericService<TAbhaLinkTokenCallback> _TAbhaLinkTokenCallback;
-        public AuthController(IAbdmAuthService abhaService, IConfiguration configuration, IGenericService<TAbhaLinkTokenCallback> genericService)
+        private readonly IUserLinkingService _userLinkingService;
+        public AuthController(IAbdmAuthService abhaService, IConfiguration configuration, IGenericService<TAbhaLinkTokenCallback> genericService, IUserLinkingService userLinkingService)
         {
             _abhaService = abhaService;
             _configuration = configuration;
             _TAbhaLinkTokenCallback = genericService;
+            _userLinkingService = userLinkingService;
         }
         [HttpPost("bridge/url")]
         public async Task<ApiResponse> UpdateBridgeUrl([FromBody] UpdateBridgeUrlRequest req)
@@ -199,6 +202,10 @@ namespace HIMS.API.Controllers.ABHA.M2
                     =========================================================";
 
             await System.IO.File.AppendAllTextAsync(filename, log);
+
+            // call api to get care context and send response back to abha bridge
+            
+            var result = await _userLinkingService.OnDiscoverAsync(payload.TransactionId, payload.PatientCare.Id, Request.Headers["request-id"].ToString());
             return Ok();
         }
 
@@ -232,4 +239,5 @@ namespace HIMS.API.Controllers.ABHA.M2
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
     }
+
 }
