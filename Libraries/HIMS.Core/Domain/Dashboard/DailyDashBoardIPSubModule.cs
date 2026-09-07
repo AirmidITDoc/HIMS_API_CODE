@@ -51,12 +51,12 @@ namespace HIMS.Core.Domain.Dashboard
 
     public class IPCollectionModel
     {
-        //public decimal Cash { get; set; }
-        //public decimal Card { get; set; }
-        //public decimal Cheque { get; set; }
-        //public decimal UPI { get; set; }
-        //public decimal Bank { get; set; }
-        //public decimal TotalIPCollection { get; set; }
+        public decimal Cash { get; set; }
+        public decimal Card { get; set; }
+        public decimal Cheque { get; set; }
+        public decimal UPI { get; set; }
+        public decimal Bank { get; set; }
+        public decimal TotalIPCollection { get; set; }
     }
 
     public class RevenueCollectionModel
