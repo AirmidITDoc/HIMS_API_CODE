@@ -70,10 +70,10 @@ namespace HIMS.API.Controllers.Dashboard
         }
         [HttpGet("DailyDashBoardIPSubModule-dashboard")]
         //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
-        public async Task<ApiResponse> DailyDashBoardIPSubModuleDashBoard(int UnitId)
+        public async Task<ApiResponse> DailyDashBoardIPSubModuleDashBoard(int storId)
         {
             //int UnitId = Context.UnitId;
-            var data = await _IDashboardService.GetDailyDashBoardIPSubModuleDashBoard(UnitId);
+            var data = await _IDashboardService.GetDailyDashBoardIPSubModuleDashBoard(storId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DailyDashBoardIPSubModule DashBoard", data);
         }
 

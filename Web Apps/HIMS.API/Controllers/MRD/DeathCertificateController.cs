@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.MRD
             return Ok(CertificateList.ToGridResponse(objGrid, "CertificateList"));
         }
 
-        // 2. GET BY ID API (Fetch single record)
+        // 2. GET BY ID API 
         [HttpGet]
         [Route("[action]/{id}")]
         //[Permission]

@@ -32,11 +32,11 @@ namespace HIMS.Core.Domain.Dashboard
         public long DischargePending { get; set; }
         public long OPTOIP { get; set; }
 
-        //public decimal TodaysAdmissionsDiff { get; set; }
-        //public decimal CurrentOccupancyDiff { get; set; }
-        //public decimal TodaysDischargeDiff { get; set; }
-        //public decimal DischargePendingDiff { get; set; }
-        //public decimal OPTOIPDiff { get; set; }
+        public decimal TodaysAdmissionsDiff { get; set; }
+        public decimal CurrentOccupancyDiff { get; set; }
+        public decimal TodaysDischargeDiff { get; set; }
+        public decimal DischargePendingDiff { get; set; }
+        public decimal OPTOIPDiff { get; set; }
     }
 
     public class IPBillCashCreditModel
@@ -44,28 +44,28 @@ namespace HIMS.Core.Domain.Dashboard
         public long IPBillCash { get; set; }
         public long IPBillCredit { get; set; }
         public long RefundCount { get; set; }
-        //public decimal IPBillCashDiff { get; set; }
-        //public decimal IPBillCreditDiff { get; set; }
-        //public decimal RefundCountDiff { get; set; }
+        public decimal IPBillCashDiff { get; set; }
+        public decimal IPBillCreditDiff { get; set; }
+        public decimal RefundCountDiff { get; set; }
     }
 
     public class IPCollectionModel
     {
-        //public decimal Cash { get; set; }
-        //public decimal Card { get; set; }
-        //public decimal Cheque { get; set; }
-        //public decimal UPI { get; set; }
-        //public decimal Bank { get; set; }
-        //public decimal TotalIPCollection { get; set; }
+        public decimal Cash { get; set; }
+        public decimal Card { get; set; }
+        public decimal Cheque { get; set; }
+        public decimal UPI { get; set; }
+        public decimal Bank { get; set; }
+        public decimal TotalIPCollection { get; set; }
     }
 
     public class RevenueCollectionModel
     {
-        //public decimal Gross { get; set; }
-        //public decimal Discount { get; set; }
-        //public decimal Net { get; set; }
-        //public decimal PaidAmount { get; set; }
-        //public decimal Outstanding { get; set; }
+        public decimal Gross { get; set; }
+        public double Discount { get; set; }
+        public decimal Net { get; set; }
+        public decimal PaidAmount { get; set; }
+        public decimal Outstanding { get; set; }
     }
 
     public class AdmissionAgeWiseModel

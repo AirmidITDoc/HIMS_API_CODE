@@ -48,5 +48,6 @@ namespace HIMS.Data.Models
         public DateTime? CreatedOn { get; set; }
         public long? ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
+        public long? PrescDoctorId { get; set; }
     }
 }

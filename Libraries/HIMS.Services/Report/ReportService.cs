@@ -7372,6 +7372,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{PrintBillNo}}", dt.GetColValue("PrintBillNo"));
 
 
                         html = html.Replace("{{AdmissionDate}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
@@ -8748,6 +8749,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{InvoiceType}}", dt.GetColValue("InvoiceType"));
                         html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));
                         html = html.Replace("{{TariffName}}", dt.GetColValue("TariffName"));
+                        html = html.Replace("{{PrintBillNo}}", dt.GetColValue("PrintBillNo"));
 
                         html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
                         html = html.Replace("{{ApprovedAmount}}", dt.GetColValue("ApprovedAmount").ConvertToDouble().ToString("F2"));
@@ -13101,7 +13103,9 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
                         html = html.Replace("{{chkpaidflag}}", dt.GetColValue("PaidAmount").ConvertToDouble() > 0 ? "table-row " : "none");
                         html = html.Replace("{{chkbalflag}}", dt.GetColValue("BalanceAmt").ConvertToDouble().ConvertToDouble() > 0 ? "table-row " : "none");
-                     
+                        html = html.Replace("{{chkConcessionAmtflag}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().ConvertToDouble() > 0 ? "table-row " : "none");
+
+
                         html = html.Replace("{{chkdiscflag}}", dt.GetColValue("DiscComments").ConvertToString() != "" ? "visible" : "none");
 
                         //      html = html.Replace("{{chkdiscflag}}", dt.GetColValue("ConcessionAmt").ConvertToDouble().ConvertToDouble() > 0 ? "table-row " : "none");
@@ -14498,6 +14502,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
                         html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{PrintBillNo}}", dt.GetColValue("PrintBillNo"));
 
                         html = html.Replace("{{DischargeDate}}", dt.GetColValue("DischargeTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
@@ -14697,6 +14702,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                        html = html.Replace("{{PrintBillNo}}", dt.GetColValue("PrintBillNo"));
 
                         html = html.Replace("{{DischargeDate}}", dt.GetColValue("DischargeTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{BillDate}}", dt.GetColValue("BillTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
@@ -14961,6 +14967,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
                         html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
                         html = html.Replace("{{Address}}", dt.GetColValue("Address"));
+                        html = html.Replace("{{PrintBillNo}}", dt.GetColValue("PrintBillNo"));
+
 
                         html = html.Replace("{{PolicyNo}}", dt.GetColValue("PolicyNo"));
                         html = html.Replace("{{AadharCardNo}}", dt.GetColValue("AadharCardNo"));

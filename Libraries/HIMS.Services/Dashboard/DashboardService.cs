@@ -196,7 +196,7 @@ namespace HIMS.Services.Dashboard
                 WeeklyTestReport = data.Item8 ?? new List<WeeklyTestReport>()
             };
         }
-        public async Task<DailyDashBoardIPSubModule> GetDailyDashBoardIPSubModuleDashBoard(int UnitId)
+        public async Task<DailyDashBoardIPSubModule> GetDailyDashBoardIPSubModuleDashBoard(int storId)
         {
             DatabaseHelper sql = new();
 
@@ -204,7 +204,7 @@ namespace HIMS.Services.Dashboard
 
             para[0] = new SqlParameter("@StorId", SqlDbType.BigInt)
             {
-                Value = UnitId
+                Value = storId
             };
 
             var data = await sql.Get13ResultsFromSp< TodayvsYesterdayModel, IPBillCashCreditModel, IPCollectionModel, RevenueCollectionModel, AdmissionAgeWiseModel, CompanyWiseCountModel, ReferDoctorWiseCountModel, DoctorWiseCountModel, DepartmentWiseDischargeRevenueModel, WardWiseOccupancyModel,DischargeCountTrendModel, RevenueTrendModel,AdmissionTrendModel >( "ps_Daily_DashBoard_IP_SubModule_OverView", para);

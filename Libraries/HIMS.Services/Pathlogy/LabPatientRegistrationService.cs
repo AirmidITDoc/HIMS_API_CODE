@@ -855,28 +855,7 @@ namespace HIMS.Services.Pathlogy
         }
 
 
-        //public virtual async Task UpdateAsync(TLabPatientRegisteredMaster ObjTLabPatientRegistration, int UserId, string Username, string[]? ignoreColumns = null)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        // 1. Attach the entity without marking everything as modified
-        //        _context.Attach(ObjTLabPatientRegistration);
-        //        _context.Entry(ObjTLabPatientRegistration).State = EntityState.Modified;
-        //        // Always ignore LabRequestNo (auto-increment column)
-        //        _context.Entry(ObjTLabPatientRegistration).Property(x => x.LabRequestNo).IsModified = false;
-
-        //        // 2. Ignore specific columns
-        //        if (ignoreColumns?.Length > 0)
-        //        {
-        //            foreach (var column in ignoreColumns)
-        //            {
-        //                _context.Entry(ObjTLabPatientRegistration).Property(column).IsModified = false;
-        //            }
-        //        }
-        //        await _context.SaveChangesAsync();
-        //        scope.Complete();
-        //    }
-        //}
+       
 
         public virtual async Task UpdateAsync(TLabPatientRegisteredMaster ObjTLabPatientRegistrationMaster, TLabPatientRegistration ObjTLabPatientRegistration, int CurrentUserId, string CurrentUserName)
         {
