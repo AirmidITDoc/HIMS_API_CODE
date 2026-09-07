@@ -460,92 +460,39 @@ namespace HIMS.Services.Dashboard
                 IndentTrendModel = data.Item9 ?? new List<IndentTrendModel>(),           
             };
         }
-        public async Task<DailyDashboardWeeklySummary> GetDailyDashboardWeeklySummary(long StoreId)
+
+        public async Task<DailyDashBoardOpSubModule> GetDailyDashBoardOPSubModuleDashBoard(int UnitId)
         {
             DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@UnitId", SqlDbType.Int) { Value = UnitId };
 
-            SqlParameter[] para =
+            var data = await sql.Get10ResultsFromSp<
+                OpTopCountersModel,
+                OpAppointmentCountModel,
+                OpBillOverviewModel,
+                OpCollectionModel,
+                RegistrationAgeWiseModel,
+                ConsultingDoctorWiseModel,
+                ReferralDoctorWiseModel,
+                DepartmentWiseRevenueModel,
+                RegistrationTrendModel,
+                OpRevenueTrendModel
+            >("ps_Daily_DashBoard_OP_SubModule_OverView", para);
+
+            return new DailyDashBoardOpSubModule()
             {
-         new SqlParameter("@StoreId", SqlDbType.BigInt)
-        {
-         Value = StoreId
-        }
-    };
-
-            var data = await sql.Get13ResultsFromSp<
-                DailyPatientStatus,
-                DailyPaymentSummary,
-                WeeklyOPTrend,
-                WeeklyAdmissionDischarge,
-                WeeklyWalkInPrescriptionIP,
-                WeeklyPOGRNReturn,
-                WeeklyOPRevenue,
-                WeeklyIPRevenue,
-                WeeklyPharmacyRevenue,
-                WeeklyGRNValueReturn,
-                CollectionSummary,
-                RevenueBillSummary,
-                PurchaseDetailsSummary
-            >("ps_Daily_DashBoard_WeeklySummary", para);
-
-            return new DailyDashboardWeeklySummary
-            {
-                PatientStatus = data.Item1.FirstOrDefault() ?? new DailyPatientStatus(),
-                PaymentSummary = data.Item2.FirstOrDefault() ?? new DailyPaymentSummary(),
-                WeeklyOPTrend = data.Item3 ?? new(),
-                WeeklyAdmissionDischarge = data.Item4 ?? new(),
-                WeeklyWalkInPrescriptionIP = data.Item5 ?? new(),
-                WeeklyPOGRNReturn = data.Item6 ?? new(),
-                WeeklyOPRevenue = data.Item7 ?? new(),
-                WeeklyIPRevenue = data.Item8 ?? new(),
-                WeeklyPharmacyRevenue = data.Item9 ?? new(),
-                WeeklyGRNValueReturn = data.Item10 ?? new(),
-                CollectionSummary = data.Item11 ?? new(),
-                RevenueBillSummary = data.Item12 ?? new(),
-                PurchaseDetailsSummary = data.Item13 ?? new()
+                OpTopCountersModel = data.Item1 ?? new List<OpTopCountersModel>(),
+                OpAppointmentCountModel = data.Item2 ?? new List<OpAppointmentCountModel>(),
+                OpBillOverviewModel = data.Item3 ?? new List<OpBillOverviewModel>(),
+                OpCollectionModel = data.Item4 ?? new List<OpCollectionModel>(),
+                RegistrationAgeWiseModel = data.Item5 ?? new List<RegistrationAgeWiseModel>(),
+                ConsultingDoctorWiseModel = data.Item6 ?? new List<ConsultingDoctorWiseModel>(),
+                ReferralDoctorWiseModel = data.Item7 ?? new List<ReferralDoctorWiseModel>(),
+                DepartmentWiseRevenueModel = data.Item8 ?? new List<DepartmentWiseRevenueModel>(),
+                RegistrationTrendModel = data.Item9 ?? new List<RegistrationTrendModel>(),
+                OpRevenueTrendModel = data.Item10 ?? new List<OpRevenueTrendModel>() // Model madhlya navanech thevle
             };
         }
-
-        public async Task<DailyDashboard_Pharmacy_SubModule> GetPharmacyDashboard(long StoreId)
-        {
-            DatabaseHelper sql = new();
-
-            SqlParameter[] para =
-            {new SqlParameter("@StoreId", SqlDbType.BigInt){ Value = StoreId}};
-
-            var data = await sql.Get13ResultsFromSp<
-                PharmacyRXSummary,
-                PharmacyWalkingSalesSummary,
-                PharmacyDischargeSummary,
-                PharmacyIPIssuedSummary,
-                PharmacyStockSummary,
-                PharmacyBillSummary,
-                PharmacyDepartmentWiseSales,
-                PharmacyDoctorWiseSales,
-                PharmacyRefDoctorWiseSales,
-                PharmacyWalkInPrescriptionTrend,
-                PharmacyRevenueTrend,
-                PharmacyCollectionSummary,
-                PharmacyRevenueSummary
-            >("ps_Dashboard_Pharmacy_SubModule", para);
-
-            return new DailyDashboard_Pharmacy_SubModule
-            {
-                RXSummary = data.Item1.FirstOrDefault() ?? new PharmacyRXSummary(),
-                WalkingSales = data.Item2.FirstOrDefault() ?? new PharmacyWalkingSalesSummary(),
-                DischargeSummary = data.Item3.FirstOrDefault() ?? new PharmacyDischargeSummary(),
-                IPIssued = data.Item4.FirstOrDefault() ?? new PharmacyIPIssuedSummary(),
-                StockSummary = data.Item5.FirstOrDefault() ?? new PharmacyStockSummary(),
-                BillSummary = data.Item6.FirstOrDefault() ?? new PharmacyBillSummary(),
-                DepartmentWiseSales = data.Item7 ?? new List<PharmacyDepartmentWiseSales>(),
-                DoctorWiseSales = data.Item8 ?? new List<PharmacyDoctorWiseSales>(),
-                RefDoctorWiseSales = data.Item9 ?? new List<PharmacyRefDoctorWiseSales>(),
-                WalkInPrescriptionTrend = data.Item10 ?? new List<PharmacyWalkInPrescriptionTrend>(),
-                RevenueTrend = data.Item11 ?? new List<PharmacyRevenueTrend>(),
-                CollectionSummary = data.Item12.FirstOrDefault() ?? new PharmacyCollectionSummary(),
-                RevenueSummary = data.Item13.FirstOrDefault() ?? new PharmacyRevenueSummary()
-            };
-        }
-
     }
 }

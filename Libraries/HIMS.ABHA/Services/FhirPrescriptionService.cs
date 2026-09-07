@@ -74,11 +74,11 @@ namespace HIMS.ABHA.Services
         private DocumentBundle CreateBundle(
     //Composition composition,
     Patient patient
-    //Practitioner practitioner,
-    //Organization organization,
-    //Encounter encounter,
-    //List<MedicationRequest> medications,
-    //List<Condition> conditions
+            //Practitioner practitioner,
+            //Organization organization,
+            //Encounter encounter,
+            //List<MedicationRequest> medications,
+            //List<Condition> conditions
             )
         {
             var bundle = new DocumentBundle
@@ -174,28 +174,28 @@ namespace HIMS.ABHA.Services
             return await _context.Registrations.FirstOrDefaultAsync(x => x.RegId == regId);
         }
 
-    //    private async Task<DoctorEntity> GetDoctor(
-    //string registrationId)
-    //    {
-    //        return await _context.T_Doctor
-    //            .FirstOrDefaultAsync(x =>
-    //                x.RegistrationId == registrationId);
-    //    }
+        //    private async Task<DoctorEntity> GetDoctor(
+        //string registrationId)
+        //    {
+        //        return await _context.T_Doctor
+        //            .FirstOrDefaultAsync(x =>
+        //                x.RegistrationId == registrationId);
+        //    }
 
-    //    private async Task<PrescriptionHeader> GetPrescription(
-    //string registrationId)
-    //    {
-    //        return await _context.T_PrescriptionHeader
-    //            .FirstOrDefaultAsync(x =>
-    //                x.RegistrationId == registrationId);
-    //    }
-    //    private async Task<List<PrescriptionDetail>> GetMedicines(
-    //int prescriptionId)
-    //    {
-    //        return await _context.T_PrescriptionDetails
-    //            .Where(x => x.PrescriptionId == prescriptionId)
-    //            .ToListAsync();
-    //    }
+        //    private async Task<PrescriptionHeader> GetPrescription(
+        //string registrationId)
+        //    {
+        //        return await _context.T_PrescriptionHeader
+        //            .FirstOrDefaultAsync(x =>
+        //                x.RegistrationId == registrationId);
+        //    }
+        //    private async Task<List<PrescriptionDetail>> GetMedicines(
+        //int prescriptionId)
+        //    {
+        //        return await _context.T_PrescriptionDetails
+        //            .Where(x => x.PrescriptionId == prescriptionId)
+        //            .ToListAsync();
+        //    }
 
 
         //==================
@@ -230,108 +230,108 @@ namespace HIMS.ABHA.Services
             };
         }
 
-    //    private Practitioner CreatePractitioner(
-    //DoctorEntity data)
-    //    {
-    //        return new Practitioner
-    //        {
-    //            ResourceType = "Practitioner",
+        //    private Practitioner CreatePractitioner(
+        //DoctorEntity data)
+        //    {
+        //        return new Practitioner
+        //        {
+        //            ResourceType = "Practitioner",
 
-    //            Id = data.Id.ToString(),
+        //            Id = data.Id.ToString(),
 
-    //            Identifier = new List<Identifier>
-    //    {
-    //        new Identifier
-    //        {
-    //            System = "https://doctor.abdm.gov.in",
-    //            Value = data.Id.ToString()
-    //        }
-    //    },
+        //            Identifier = new List<Identifier>
+        //    {
+        //        new Identifier
+        //        {
+        //            System = "https://doctor.abdm.gov.in",
+        //            Value = data.Id.ToString()
+        //        }
+        //    },
 
-    //            Name = new List<HumanName>
-    //    {
-    //        new HumanName
-    //        {
-    //            Text = data.DoctorName
-    //        }
-    //    }
-    //        };
-    //    }
+        //            Name = new List<HumanName>
+        //    {
+        //        new HumanName
+        //        {
+        //            Text = data.DoctorName
+        //        }
+        //    }
+        //        };
+        //    }
 
-    //    private List<MedicationRequest> CreateMedications(List<PrescriptionDetail> medicines,
-    //Patient patient,
-    //Practitioner practitioner,
-    //PrescriptionHeader prescription)
-    //    {
-    //        var result = new List<MedicationRequest>();
+        //    private List<MedicationRequest> CreateMedications(List<PrescriptionDetail> medicines,
+        //Patient patient,
+        //Practitioner practitioner,
+        //PrescriptionHeader prescription)
+        //    {
+        //        var result = new List<MedicationRequest>();
 
-    //        foreach (var medicine in medicines)
-    //        {
-    //            var medication = new MedicationRequest
-    //            {
-    //                ResourceType = "MedicationRequest",
+        //        foreach (var medicine in medicines)
+        //        {
+        //            var medication = new MedicationRequest
+        //            {
+        //                ResourceType = "MedicationRequest",
 
-    //                Id = Guid.NewGuid().ToString(),
+        //                Id = Guid.NewGuid().ToString(),
 
-    //                Status = "active",
+        //                Status = "active",
 
-    //                Intent = "order",
+        //                Intent = "order",
 
-    //                MedicationCodeableConcept =
-    //                    new CodeableConcept
-    //                    {
-    //                        Coding = new List<Coding>
-    //                        {
-    //                    new Coding
-    //                    {
-    //                        System =
-    //                            "http://snomed.info/sct",
+        //                MedicationCodeableConcept =
+        //                    new CodeableConcept
+        //                    {
+        //                        Coding = new List<Coding>
+        //                        {
+        //                    new Coding
+        //                    {
+        //                        System =
+        //                            "http://snomed.info/sct",
 
-    //                        Code =
-    //                            medicine.SnomedCode,
+        //                        Code =
+        //                            medicine.SnomedCode,
 
-    //                        Display =
-    //                            medicine.MedicineName
-    //                    }
-    //                        },
+        //                        Display =
+        //                            medicine.MedicineName
+        //                    }
+        //                        },
 
-    //                        Text = medicine.MedicineName
-    //                    },
+        //                        Text = medicine.MedicineName
+        //                    },
 
-    //                Subject = new Reference
-    //                {
-    //                    ReferenceValue =
-    //                        $"Patient/{patient.Id}",
+        //                Subject = new Reference
+        //                {
+        //                    ReferenceValue =
+        //                        $"Patient/{patient.Id}",
 
-    //                    Display =
-    //                        patient.Name.FirstOrDefault()?.Text
-    //                },
+        //                    Display =
+        //                        patient.Name.FirstOrDefault()?.Text
+        //                },
 
-    //                AuthoredOn =
-    //                    prescription.PrescriptionDate
-    //                    .ToString("yyyy-MM-ddTHH:mm:ssZ"),
+        //                AuthoredOn =
+        //                    prescription.PrescriptionDate
+        //                    .ToString("yyyy-MM-ddTHH:mm:ssZ"),
 
-    //                Requester = new Reference
-    //                {
-    //                    ReferenceValue =
-    //                        $"Practitioner/{practitioner.Id}"
-    //                },
+        //                Requester = new Reference
+        //                {
+        //                    ReferenceValue =
+        //                        $"Practitioner/{practitioner.Id}"
+        //                },
 
-    //                DosageInstruction =
-    //                    new List<DosageInstruction>
-    //                    {
-    //                new DosageInstruction
-    //                {
-    //                    Text =
-    //                        medicine.Dosage
-    //                }
-    //                    }
-    //            };
+        //                DosageInstruction =
+        //                    new List<DosageInstruction>
+        //                    {
+        //                new DosageInstruction
+        //                {
+        //                    Text =
+        //                        medicine.Dosage
+        //                }
+        //                    }
+        //            };
 
-    //            result.Add(medication);
-    //        }
+        //            result.Add(medication);
+        //        }
 
-    //        return result;
-    //    }
+        //        return result;
+        //    }
     }
 }
