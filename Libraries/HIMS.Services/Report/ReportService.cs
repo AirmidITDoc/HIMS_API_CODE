@@ -7208,6 +7208,8 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
                         html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
+                 
+
 
 
 
@@ -7791,8 +7793,75 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
                         html = html.Replace("{{TemplateDescriptionHtml}}", dt.GetColValue("TemplateDescriptionHtml"));
                         html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
+                        html = html.Replace("{{DiagnosisName}}", dt.GetColValue("DiagnosisName"));
+                        // ============================================================
+                        // MULTIPLE DIAGNOSIS INFORMATION
+                        // ============================================================
 
-                        //html = html.Replace("{{chkSurgeryPrescriptionflag}}", length != 0 ? "table-row" : "none");
+                        StringBuilder diagnosisInformation = new StringBuilder();
+
+                        bool isFirstDiagnosis = true;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            string diagnosisValue = dr["Diagnosisinformation"].ConvertToString();
+
+                            if (string.IsNullOrWhiteSpace(diagnosisValue))
+                                continue;
+
+                            // Split comma-separated diagnosis
+                            string[] diagnoses = diagnosisValue
+                                .Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+                            foreach (string diagnosisItem in diagnoses)
+                            {
+                                string diagnosis = diagnosisItem.Trim();
+
+                                if (string.IsNullOrWhiteSpace(diagnosis))
+                                    continue;
+
+                                if (isFirstDiagnosis)
+                                {
+                                    diagnosisInformation.Append(@"
+<tr>
+    <td style=""padding:6px;font-size:25px;"">
+        <span style=""font-weight:bold;"">Final Diagnosis : </span>
+        <span>"
+                                    );
+
+                                    diagnosisInformation.Append(diagnosis);
+
+                                    diagnosisInformation.Append(@"
+        </span>
+    </td>
+</tr>
+");
+
+                                    isFirstDiagnosis = false;
+                                }
+                                else
+                                {
+                                    diagnosisInformation.Append(@"
+<tr>
+    <td style=""padding:2px 6px 2px 190px;font-size:25px;"">
+        <span>"
+                                    );
+
+                                    diagnosisInformation.Append(diagnosis);
+
+                                    diagnosisInformation.Append(@"
+        </span>
+    </td>
+</tr>
+");
+                                }
+                            }
+                        }
+
+                        html = html.Replace(
+                            "{{Diagnosisinformation}}",
+                            diagnosisInformation.ToString()
+                        );                      //html = html.Replace("{{chkSurgeryPrescriptionflag}}", length != 0 ? "table-row" : "none");
                         string chkSurgeryPrescriptionflag = (dt2.Rows.Count > 0) ? "table-row" : "none";
                         html = html.Replace("{{chkSurgeryPrescriptionflag}}", chkSurgeryPrescriptionflag);
 
@@ -7890,7 +7959,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
                         html = html.Replace("{{TemplateDescriptionHtml}}", dt.GetColValue("TemplateDescriptionHtml"));
                         html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
-
+             
                         //html = html.Replace("{{chkSurgeryPrescriptionflag}}", length != 0 ? "table-row" : "none");
                         string chkSurgeryPrescriptionflag = (dt2.Rows.Count > 0) ? "table-row" : "none";
                         html = html.Replace("{{chkSurgeryPrescriptionflag}}", chkSurgeryPrescriptionflag);
@@ -8007,7 +8076,73 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
                         html = html.Replace("{{TemplateDescriptionHtml}}", dt.GetColValue("TemplateDescriptionHtml"));
                         html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
+                        // ============================================================
+                        // MULTIPLE DIAGNOSIS INFORMATION
+                        // ============================================================
 
+                        StringBuilder diagnosisInformation = new StringBuilder();
+
+                        bool isFirstDiagnosis = true;
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            string diagnosisValue = dr["Diagnosisinformation"].ConvertToString();
+
+                            if (string.IsNullOrWhiteSpace(diagnosisValue))
+                                continue;
+
+                            // Split comma-separated diagnosis
+                            string[] diagnoses = diagnosisValue
+                                .Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+                            foreach (string diagnosisItem in diagnoses)
+                            {
+                                string diagnosis = diagnosisItem.Trim();
+
+                                if (string.IsNullOrWhiteSpace(diagnosis))
+                                    continue;
+
+                                if (isFirstDiagnosis)
+                                {
+                                    diagnosisInformation.Append(@"
+<tr>
+    <td style=""padding:6px;font-size:25px;"">
+        <span style=""font-weight:bold;"">Final Diagnosis : </span>
+        <span>"
+                                    );
+
+                                    diagnosisInformation.Append(diagnosis);
+
+                                    diagnosisInformation.Append(@"
+        </span>
+    </td>
+</tr>
+");
+
+                                    isFirstDiagnosis = false;
+                                }
+                                else
+                                {
+                                    diagnosisInformation.Append(@"
+<tr>
+    <td style=""padding:2px 6px 2px 190px;font-size:25px;"">
+        <span>"
+                                    );
+
+                                    diagnosisInformation.Append(diagnosis);
+                                    diagnosisInformation.Append(@"
+        </span>
+    </td>
+</tr>
+");
+                                }
+                            }
+                        }
+
+                        html = html.Replace(
+                            "{{Diagnosisinformation}}",
+                            diagnosisInformation.ToString()
+                        );
                         //html = html.Replace("{{chkSurgeryPrescriptionflag}}", length != 0 ? "table-row" : "none");
                         string chkSurgeryPrescriptionflag = (dt2.Rows.Count > 0) ? "table-row" : "none";
                         html = html.Replace("{{chkSurgeryPrescriptionflag}}", chkSurgeryPrescriptionflag);
