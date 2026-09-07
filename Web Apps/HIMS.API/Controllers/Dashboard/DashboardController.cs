@@ -132,5 +132,13 @@ namespace HIMS.API.Controllers.Dashboard
             var data = await _IDashboardService.GetProcurementDashboard(UnitId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Procurement DashBoard", data);
         }
+
+        [HttpGet("DailyDashBoardOPSubModule-dashboard")]
+        //[Permission(PageCode = "Dashboard", Permission = Permission.View)]
+        public async Task<ApiResponse> DailyDashBoardOPSubModuleDashBoard(int UnitId)
+        {
+            var data = await _IDashboardService.GetDailyDashBoardOPSubModuleDashBoard(UnitId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DailyDashBoard OP SubModule DashBoard", data);
+        }
     }
 }

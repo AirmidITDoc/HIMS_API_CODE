@@ -460,5 +460,39 @@ namespace HIMS.Services.Dashboard
                 IndentTrendModel = data.Item9 ?? new List<IndentTrendModel>(),           
             };
         }
+
+        public async Task<DailyDashBoardOpSubModule> GetDailyDashBoardOPSubModuleDashBoard(int UnitId)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = new SqlParameter[1];
+            para[0] = new SqlParameter("@UnitId", SqlDbType.Int) { Value = UnitId };
+
+            var data = await sql.Get10ResultsFromSp<
+                OpTopCountersModel,
+                OpAppointmentCountModel,
+                OpBillOverviewModel,
+                OpCollectionModel,
+                RegistrationAgeWiseModel,
+                ConsultingDoctorWiseModel,
+                ReferralDoctorWiseModel,
+                DepartmentWiseRevenueModel,
+                RegistrationTrendModel,
+                OpRevenueTrendModel
+            >("ps_Daily_DashBoard_OP_SubModule_OverView", para);
+
+            return new DailyDashBoardOpSubModule()
+            {
+                OpTopCountersModel = data.Item1 ?? new List<OpTopCountersModel>(),
+                OpAppointmentCountModel = data.Item2 ?? new List<OpAppointmentCountModel>(),
+                OpBillOverviewModel = data.Item3 ?? new List<OpBillOverviewModel>(),
+                OpCollectionModel = data.Item4 ?? new List<OpCollectionModel>(),
+                RegistrationAgeWiseModel = data.Item5 ?? new List<RegistrationAgeWiseModel>(),
+                ConsultingDoctorWiseModel = data.Item6 ?? new List<ConsultingDoctorWiseModel>(),
+                ReferralDoctorWiseModel = data.Item7 ?? new List<ReferralDoctorWiseModel>(),
+                DepartmentWiseRevenueModel = data.Item8 ?? new List<DepartmentWiseRevenueModel>(),
+                RegistrationTrendModel = data.Item9 ?? new List<RegistrationTrendModel>(),
+                OpRevenueTrendModel = data.Item10 ?? new List<OpRevenueTrendModel>() // Model madhlya navanech thevle
+            };
+        }
     }
 }

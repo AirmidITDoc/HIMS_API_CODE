@@ -102,7 +102,7 @@ namespace HIMS.API.Controllers.MRD
             model.CertificateTime = AppTime.Now;
             model.UpdatedBy = CurrentUserId;
 
-          
+
             await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CertificateNo", "AddedBy" });
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.CertificateId);

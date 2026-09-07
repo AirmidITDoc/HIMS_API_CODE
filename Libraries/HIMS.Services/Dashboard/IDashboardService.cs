@@ -19,6 +19,7 @@ namespace HIMS.Services.Dashboard
         Task<List<LabDepartmentSummary>> GetLabFinancialDepartmentSummary(int UnitId, int GroupId, DateTime FromDate, DateTime ToDate);
         Task<ProcurementDashboard> GetProcurementDashboard(int UnitId);
         Task<DailyDashBoardIPSubModule> GetDailyDashBoardIPSubModuleDashBoard(int UnitId);
+        Task<DailyDashBoardOpSubModule> GetDailyDashBoardOPSubModuleDashBoard(int UnitId);
 
     }
 }
