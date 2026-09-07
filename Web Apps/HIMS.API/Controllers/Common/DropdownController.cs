@@ -182,7 +182,7 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MEmployeeDesignationMaster> MEmployeeDesignationMaster,
                               IGenericService<MExternalDoctorMaster> MExternalDoctorMaster,
                               IGenericService<MLoginAccessConfig> MLoginAccessConfig,
-                              IGenericService<MOtSpecialtyMaster> MOtSpecialtyMaster
+                              IGenericService<MOtSpecialtyMaster> MOtSpecialtyMaster,
                               IGenericService<MOtSubSpecialtyMaster> MOtSubSpecialtyMaster
 
 
@@ -517,7 +517,7 @@ namespace HIMS.API.Controllers.Common
                 //"LoginAccessConfig" => (await _MLoginAccessConfig.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MLoginAccessConfig.LoginConfigId), nameof(MLoginAccessConfig.AccessValueId)),
                 "LoginAccessConfig" => (await _MLoginAccessConfig.GetAll()).ToList() .ToDropDown(nameof(MLoginAccessConfig.LoginConfigId), nameof(MLoginAccessConfig.AccessValueId)),
                 "MOtSpecialtyMaster" => (await _MOtSpecialtyMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSpecialtyMaster.SpecialtyId), nameof(MOtSpecialtyMaster.SpecialtyName)),
-                "MOtSubSpecialtyMaster" => (await _MOtSubSpecialtyMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSpecialtyMaster.SubSpecialtyId), nameof(MOtSubSpecialtyMaster.SubSpecialtyName)),
+                "MOtSubSpecialtyMaster" => (await _MOtSubSpecialtyMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSpecialtyMaster.SpecialtyId), nameof(MOtSubSpecialtyMaster.SubSpecialtyName)),
 
 
                 _ => new List<SelectListItem>()

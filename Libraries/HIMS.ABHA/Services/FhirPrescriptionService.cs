@@ -1,7 +1,7 @@
 ﻿using HIMS.ABHA.Interface;
 using HIMS.ABHA.Models.M2.PrescriptionDataTransfer;
-using HIMS.Data;
 using HIMS.Data.Models;
+using LinqToDB;
 
 namespace HIMS.ABHA.Services
 {
