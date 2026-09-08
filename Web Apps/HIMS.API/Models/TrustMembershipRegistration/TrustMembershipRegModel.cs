@@ -7,7 +7,8 @@ namespace HIMS.API.Models.TrustMembershipRegistration
     public class TrustMembershipRegModel
     {
         public long MembershipId { get; set; }
-        public string MembershipNo { get; set; } = null!;
+        public string? MembershipNo { get; set; }
+        public string? FemaleMembershipNo { get; set; }
         public DateTime MembershipDate { get; set; }
         public string? MembershipTime { get; set; }
         public long HprefixId { get; set; }
