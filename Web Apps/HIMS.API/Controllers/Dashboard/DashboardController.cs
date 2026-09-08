@@ -138,7 +138,7 @@ namespace HIMS.API.Controllers.Dashboard
         public async Task<ApiResponse> DailyDashBoardOPSubModuleDashBoard(int UnitId)
         {
             var data = await _IDashboardService.GetDailyDashBoardOPSubModuleDashBoard(UnitId);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DailyDashBoard OP SubModule DashBoard", data);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DailyDashBoard OP SubModule DashBoard", data); 
         }
     }
 }

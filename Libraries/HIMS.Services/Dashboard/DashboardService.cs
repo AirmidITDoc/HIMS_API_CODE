@@ -491,7 +491,7 @@ namespace HIMS.Services.Dashboard
                 ReferralDoctorWiseModel = data.Item7 ?? new List<ReferralDoctorWiseModel>(),
                 DepartmentWiseRevenueModel = data.Item8 ?? new List<DepartmentWiseRevenueModel>(),
                 RegistrationTrendModel = data.Item9 ?? new List<RegistrationTrendModel>(),
-                OpRevenueTrendModel = data.Item10 ?? new List<OpRevenueTrendModel>() // Model madhlya navanech thevle
+                OpRevenueTrendModel = data.Item10 ?? new List<OpRevenueTrendModel>() 
             };
         }
     }
