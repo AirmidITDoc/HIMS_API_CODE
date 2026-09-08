@@ -205,29 +205,7 @@ namespace HIMS.API.Controllers.ABHA.M2
                     =========================================================";
 
             await System.IO.File.AppendAllTextAsync(filename, log);
-
-            //////if (!string.IsNullOrWhiteSpace(payload.patient.id))
-            //////{
-            //////    var lstToken = await _TAbhaOnDiscover.GetAll(x => x.AbhaAddress == payload.patient.id);
-            //////    if (lstToken.Any())
-            //////    {
-            //////        // Update existing record
-            //////        var existingToken = lstToken.FirstOrDefault();
-            //////        existingToken.TransactionId = payload.transactionId;
-            //////        existingToken.PatientId = payload.patient.id;
-            //////        existingToken.PatientName = payload.patient.name;
-            //////        existingToken.Gender = payload.patient.gender;
-            //////        existingToken.YearOfBirth = payload.patient.yearOfBirth;
-            //////        existingToken.Mobile = payload.patient.verifiedIdentifiers?.FirstOrDefault(x => x.type == "MOBILE")?.value;
-            //////        existingToken.AbhaAddress = payload.patient.verifiedIdentifiers?.FirstOrDefault(x => x.type == "ABHA_ADDRESS")?.value;
-            //////        existingToken.AbhaNumber = payload.patient.verifiedIdentifiers?.FirstOrDefault(x => x.type == "ABHA_NUMBER")?.value;
-            //////        existingToken.UnverifiedIdentifiers = JsonConvert.SerializeObject(payload.patient.unverifiedIdentifiers);
-            //////        existingToken.RawRequest = JsonConvert.SerializeObject(payload);
-
-            //////        await _TAbhaOnDiscover.Update(existingToken, 1, "System", null);
-            //////    }
-            ////// }
-
+           
             //if (!string.IsNullOrWhiteSpace(payload.patient?.id))
             //{
             //    var abhaAddress = payload.patient.id;
@@ -271,12 +249,11 @@ namespace HIMS.API.Controllers.ABHA.M2
             //            RawRequest = JsonConvert.SerializeObject(payload),
             //            CreatedDate = DateTime.Now
             //        };
-
             //        await _TAbhaOnDiscover.Add(newToken, 1, "System", null);
             //    }
             //}
-            // call api to get care context and send response back to abha bridge
 
+            // call api to get care context and send response back to abha bridge
             var result = await _userLinkingService.OnDiscoverAsync(payload.transactionId, payload.patient.id, Request.Headers["request-id"].ToString());
             return Ok();
         }
