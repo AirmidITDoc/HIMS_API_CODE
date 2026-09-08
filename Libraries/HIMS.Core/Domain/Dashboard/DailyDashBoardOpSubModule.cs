@@ -26,7 +26,7 @@ namespace HIMS.Core.Domain.Dashboard
         public long CheckedIn { get; set; }
         public long CheckedOut { get; set; }
         public long Waiting { get; set; }
-        public decimal AvgWaitingTimeMinutes { get; set; }
+        public double AvgWaitingTimeMinutes { get; set; }
         public decimal RegistrationDiff { get; set; }
         public decimal AppointmentsDiff { get; set; }
         public decimal AppointmentCancelledDiff { get; set; }
@@ -56,7 +56,7 @@ namespace HIMS.Core.Domain.Dashboard
         public long OPBillDue { get; set; }
         public long HCPCount { get; set; }
         public decimal Gross { get; set; }
-        public decimal Discount { get; set; }
+        public double Discount { get; set; }
         public decimal Net { get; set; }
         public decimal PaidAmt { get; set; }
         public decimal Outstanding { get; set; }
@@ -115,7 +115,7 @@ namespace HIMS.Core.Domain.Dashboard
     {
         public DateTime TrendDate { get; set; }
         public decimal Total { get; set; }
-        public decimal Discount { get; set; }
+        public double Discount { get; set; }
         public decimal NetAmount { get; set; }
     }
 }
