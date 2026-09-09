@@ -63,7 +63,7 @@ namespace HIMS.Data.DTO.OPPatient
         public bool? HasMediclaim { get; set; }
         public long? MediclaimCompany { get; set; }
         public string? MediclaimPolicyNumber { get; set; }
-        public decimal? MediclaimIssuanceAmt { get; set; }
+        public double? MediclaimIssuanceAmt { get; set; }
         public DateTime? MediclaimStartDate { get; set; }
         public DateTime? MediclaimEndDate { get; set; }
         public string? FamilyDoctorName { get; set; }
@@ -97,13 +97,19 @@ namespace HIMS.Data.DTO.OPPatient
         public DateTime? WmediclaimEndDate { get; set; }
         public DateTime? WmediclaimStartDate { get; set; }
         public long? WmonthlyIncomeRange { get; set; }
-        public double? WmediclaimIssuanceAmt { get; set; }
+        public decimal? WmediclaimIssuanceAmt { get; set; }
         public bool? Whasmediclaim { get; set; }
         public long? Wmediclaimcompany { get; set; }
         public string? WfamilyDoctorName { get; set; }
         public string? WfamilyDoctorContact { get; set; }
         public string? WresidenceAddress { get; set; }
         public bool? Wresidencetype { get; set; }
+        public long? HconsultDoctorId { get; set; }
+        public long? FamilyDoctorId { get; set; }
+        public long? WconsultDoctorId { get; set; }
+        public long? WfamilyDoctorId { get; set; }
+        public string? HusbandMobileNo { get; set; }
+        public string? WifeMobileNo { get; set; }
 
 
 
