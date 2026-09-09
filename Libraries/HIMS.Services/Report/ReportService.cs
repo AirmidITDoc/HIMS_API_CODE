@@ -10988,12 +10988,12 @@ StringBuilder diagnosisInformation = new StringBuilder();
 
                         html = html.Replace("{{Signature}}", dt.GetColValue("Signature"));
 
-                        html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
-                        html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
-                        html = html.Replace("{{Education}}", dt.GetColValue("Education"));
-                        html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
-                        html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
-                        html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
+                        //html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
+                        //html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
+                        //html = html.Replace("{{Education}}", dt.GetColValue("Education"));
+                        //html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
+                        //html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
+                        //html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
                         html = html.Replace("{{Advice}}", dt.GetColValue("Advice"));
                         html = html.Replace("{{HistoryOfIllness}}", dt.GetColValue("HistoryOfIllness"));
                         html = html.Replace("{{OtherServiceList}}", dt.GetColValue("OtherServiceList"));
@@ -11031,7 +11031,32 @@ StringBuilder diagnosisInformation = new StringBuilder();
 
 
                         html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
+                        string drugName = dt.GetColValue("DrugName").ConvertToString();
 
+                        if (!string.IsNullOrWhiteSpace(drugName))
+                        {
+                            // Drug is available -> Show Prescription Doctor
+                            html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
+                            html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
+                            html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
+
+                            // Hide Normal Doctor
+                            html = html.Replace("{{PathResultDr1}}", "");
+                            html = html.Replace("{{Education}}", "");
+                            html = html.Replace("{{MahRegNo}}", "");
+                        }
+                        else
+                        {
+                            // No Drug -> Show Normal Doctor
+                            html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
+                            html = html.Replace("{{Education}}", dt.GetColValue("Education"));
+                            html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
+
+                            // Hide Prescription Doctor
+                            html = html.Replace("{{PrescDoctorName}}", "");
+                            html = html.Replace("{{PrescEducation}}", "");
+                            html = html.Replace("{{PrescMahRegNo}}", "");
+                        }
 
                         return html;
                     }
@@ -11105,16 +11130,16 @@ StringBuilder diagnosisInformation = new StringBuilder();
                         html = html.Replace("{{Allergy}}", dt.GetColValue("Allergy"));
                         html = html.Replace("{{BloodGroup}}", dt.GetColValue("BloodGroup"));
 
-                        html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
-                        html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
-                        html = html.Replace("{{Education}}", dt.GetColValue("Education"));
+                        //html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
+                        //html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
+                        //html = html.Replace("{{Education}}", dt.GetColValue("Education"));
                         html = html.Replace("{{Advice}}", dt.GetColValue("Advice"));
                         html = html.Replace("{{HistoryOfIllness}}", dt.GetColValue("HistoryOfIllness"));
                         html = html.Replace("{{OtherServiceList}}", dt.GetColValue("OtherServiceList"));
 
-                        html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
-                        html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
-                        html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
+                        //html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
+                        //html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
+                        //html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
                         html = html.Replace("{{chkPrescEducation}}", dt.GetColValue("PrescDoctorName").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkPrescMahRegNo}}", dt.GetColValue("PrescDoctorName").ConvertToString() != "" ? "table-row" : "none");
 
@@ -11151,7 +11176,30 @@ StringBuilder diagnosisInformation = new StringBuilder();
                         html = html.Replace("{{chkExamination}}", dt.GetColValue("Examination").ConvertToString() != "" ? "table-row" : "none");
 
                         html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
+                        if (!string.IsNullOrWhiteSpace(drugName))
+                        {
+                            // Drug is available -> Show Prescription Doctor
+                            html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
+                            html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
+                            html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
 
+                            // Hide Normal Doctor
+                            html = html.Replace("{{PathResultDr1}}", "");
+                            html = html.Replace("{{Education}}", "");
+                            html = html.Replace("{{MahRegNo}}", "");
+                        }
+                        else
+                        {
+                            // No Drug -> Show Normal Doctor
+                            html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
+                            html = html.Replace("{{Education}}", dt.GetColValue("Education"));
+                            html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
+
+                            // Hide Prescription Doctor
+                            html = html.Replace("{{PrescDoctorName}}", "");
+                            html = html.Replace("{{PrescEducation}}", "");
+                            html = html.Replace("{{PrescMahRegNo}}", "");
+                        }
 
                         return html;
                     }
@@ -11233,12 +11281,17 @@ StringBuilder diagnosisInformation = new StringBuilder();
                         html = html.Replace("{{Allergy}}", dt.GetColValue("Allergy"));
                         html = html.Replace("{{BloodGroup}}", dt.GetColValue("BloodGroup"));
 
-                        html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
-                        html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
-                        html = html.Replace("{{Education}}", dt.GetColValue("Education"));
+                        //html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
+                        //html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
+                        //html = html.Replace("{{Education}}", dt.GetColValue("Education"));
                         html = html.Replace("{{Advice}}", dt.GetColValue("Advice"));
                         html = html.Replace("{{HistoryOfIllness}}", dt.GetColValue("HistoryOfIllness"));
                         html = html.Replace("{{OtherServiceList}}", dt.GetColValue("OtherServiceList"));
+                        //html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
+                        //html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
+                        //html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
+                        html = html.Replace("{{chkPrescEducation}}", dt.GetColValue("PrescDoctorName").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkPrescMahRegNo}}", dt.GetColValue("PrescDoctorName").ConvertToString() != "" ? "table-row" : "none");
 
                         html = html.Replace("{{chkBPflag}}", dt.GetColValue("BP").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkPulseflag}}", dt.GetColValue("Pulse").ConvertToString() != "" ? "visible" : "none");
@@ -11274,6 +11327,31 @@ StringBuilder diagnosisInformation = new StringBuilder();
 
                         html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
 
+
+                        if (!string.IsNullOrWhiteSpace(drugName))
+                        {
+                            // Drug is available -> Show Prescription Doctor
+                            html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
+                            html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
+                            html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
+
+                            // Hide Normal Doctor
+                            html = html.Replace("{{PathResultDr1}}", "");
+                            html = html.Replace("{{Education}}", "");
+                            html = html.Replace("{{MahRegNo}}", "");
+                        }
+                        else
+                        {
+                            // No Drug -> Show Normal Doctor
+                            html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
+                            html = html.Replace("{{Education}}", dt.GetColValue("Education"));
+                            html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
+
+                            // Hide Prescription Doctor
+                            html = html.Replace("{{PrescDoctorName}}", "");
+                            html = html.Replace("{{PrescEducation}}", "");
+                            html = html.Replace("{{PrescMahRegNo}}", "");
+                        }
 
                         return html;
                     }
@@ -11400,16 +11478,16 @@ StringBuilder diagnosisInformation = new StringBuilder();
                         html = html.Replace("{{Allergy}}", dt.GetColValue("Allergy"));
                         html = html.Replace("{{BloodGroup}}", dt.GetColValue("BloodGroup"));
 
-                        html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
-                        html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
-                        html = html.Replace("{{Education}}", dt.GetColValue("Education"));
+                        //html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
+                        //html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
+                        //html = html.Replace("{{Education}}", dt.GetColValue("Education"));
                         html = html.Replace("{{Advice}}", dt.GetColValue("Advice"));
                         html = html.Replace("{{HistoryOfIllness}}", dt.GetColValue("HistoryOfIllness"));
                         html = html.Replace("{{OtherServiceList}}", dt.GetColValue("OtherServiceList"));
 
-                        html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
-                        html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
-                        html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
+                        //html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
+                        //html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
+                        //html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
                         html = html.Replace("{{chkPrescEducation}}", dt.GetColValue("PrescDoctorName").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkPrescMahRegNo}}", dt.GetColValue("PrescDoctorName").ConvertToString() != "" ? "table-row" : "none");
 
@@ -11443,6 +11521,31 @@ StringBuilder diagnosisInformation = new StringBuilder();
 
                         html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
 
+
+                        if (!string.IsNullOrWhiteSpace(drugName))
+                        {
+                            // Drug is available -> Show Prescription Doctor
+                            html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
+                            html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
+                            html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
+
+                            // Hide Normal Doctor
+                            html = html.Replace("{{PathResultDr1}}", "");
+                            html = html.Replace("{{Education}}", "");
+                            html = html.Replace("{{MahRegNo}}", "");
+                        }
+                        else
+                        {
+                            // No Drug -> Show Normal Doctor
+                            html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
+                            html = html.Replace("{{Education}}", dt.GetColValue("Education"));
+                            html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
+
+                            // Hide Prescription Doctor
+                            html = html.Replace("{{PrescDoctorName}}", "");
+                            html = html.Replace("{{PrescEducation}}", "");
+                            html = html.Replace("{{PrescMahRegNo}}", "");
+                        }
 
                         return html;
                     }
