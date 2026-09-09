@@ -11176,6 +11176,8 @@ StringBuilder diagnosisInformation = new StringBuilder();
                         html = html.Replace("{{chkExamination}}", dt.GetColValue("Examination").ConvertToString() != "" ? "table-row" : "none");
 
                         html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
+                        string drugName = dt.GetColValue("DrugName").ConvertToString();
+
                         if (!string.IsNullOrWhiteSpace(drugName))
                         {
                             // Drug is available -> Show Prescription Doctor
@@ -11326,6 +11328,7 @@ StringBuilder diagnosisInformation = new StringBuilder();
                         html = html.Replace("{{chkExamination}}", dt.GetColValue("Examination").ConvertToString() != "" ? "table-row" : "none");
 
                         html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
+                        string drugName = dt.GetColValue("DrugName").ConvertToString();
 
 
                         if (!string.IsNullOrWhiteSpace(drugName))
@@ -11521,6 +11524,7 @@ StringBuilder diagnosisInformation = new StringBuilder();
 
                         html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
 
+                        string drugName = dt.GetColValue("DrugName").ConvertToString();
 
                         if (!string.IsNullOrWhiteSpace(drugName))
                         {
