@@ -10991,6 +10991,9 @@ StringBuilder diagnosisInformation = new StringBuilder();
                         html = html.Replace("{{PathResultDr1}}", dt.GetColValue("DoctorName"));
                         html = html.Replace("{{MahRegNo}}", dt.GetColValue("MahRegNo"));
                         html = html.Replace("{{Education}}", dt.GetColValue("Education"));
+                        html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
+                        html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
+                        html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
                         html = html.Replace("{{Advice}}", dt.GetColValue("Advice"));
                         html = html.Replace("{{HistoryOfIllness}}", dt.GetColValue("HistoryOfIllness"));
                         html = html.Replace("{{OtherServiceList}}", dt.GetColValue("OtherServiceList"));
@@ -11010,6 +11013,8 @@ StringBuilder diagnosisInformation = new StringBuilder();
 
                         html = html.Replace("{{chkEdu}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkRegNo}}", dt.GetColValue("PathResultDr1").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkPrescEducation}}", dt.GetColValue("PrescDoctorName").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkPrescMahRegNo}}", dt.GetColValue("PrescDoctorName").ConvertToString() != "" ? "table-row" : "none");
 
                         html = html.Replace("{{chkChiefComplaint}}", dt.GetColValue("ChiefComplaint").ConvertToString() != "" ? "table-row" : "none");
                         html = html.Replace("{{chkDiagnosis}}", dt.GetColValue("Diagnosis").ConvertToString() != "" ? "table-row" : "none");
@@ -11107,6 +11112,12 @@ StringBuilder diagnosisInformation = new StringBuilder();
                         html = html.Replace("{{HistoryOfIllness}}", dt.GetColValue("HistoryOfIllness"));
                         html = html.Replace("{{OtherServiceList}}", dt.GetColValue("OtherServiceList"));
 
+                        html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
+                        html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
+                        html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
+                        html = html.Replace("{{chkPrescEducation}}", dt.GetColValue("PrescDoctorName").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkPrescMahRegNo}}", dt.GetColValue("PrescDoctorName").ConvertToString() != "" ? "table-row" : "none");
+
                         html = html.Replace("{{chkBPflag}}", dt.GetColValue("BP").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkPulseflag}}", dt.GetColValue("Pulse").ConvertToString() != "" ? "visible" : "none");
                         html = html.Replace("{{chkHeightflag}}", dt.GetColValue("Height").ConvertToString() != "" ? "visible" : "none");
@@ -11189,6 +11200,12 @@ StringBuilder diagnosisInformation = new StringBuilder();
                         html = html.Replace("{{VisitTime}}", dt.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy|hh:mm tt"));
                         html = html.Replace("{{FollowupDate}}", dt.GetColValue("FollowupDate").ConvertToDateString("dd/MM/yyyy"));
 
+
+                        html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
+                        html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
+                        html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
+                        html = html.Replace("{{chkPrescEducation}}", dt.GetColValue("PrescDoctorName").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkPrescMahRegNo}}", dt.GetColValue("PrescDoctorName").ConvertToString() != "" ? "table-row" : "none");
 
                         html = html.Replace("{{PrecriptionId}}", dt.GetColValue("PrecriptionId"));
 
@@ -11390,6 +11407,11 @@ StringBuilder diagnosisInformation = new StringBuilder();
                         html = html.Replace("{{HistoryOfIllness}}", dt.GetColValue("HistoryOfIllness"));
                         html = html.Replace("{{OtherServiceList}}", dt.GetColValue("OtherServiceList"));
 
+                        html = html.Replace("{{PrescDoctorName}}", dt.GetColValue("PrescDoctorName"));
+                        html = html.Replace("{{PrescEducation}}", dt.GetColValue("PrescEducation"));
+                        html = html.Replace("{{PrescMahRegNo}}", dt.GetColValue("PrescMahRegNo"));
+                        html = html.Replace("{{chkPrescEducation}}", dt.GetColValue("PrescDoctorName").ConvertToString() != "" ? "table-row" : "none");
+                        html = html.Replace("{{chkPrescMahRegNo}}", dt.GetColValue("PrescDoctorName").ConvertToString() != "" ? "table-row" : "none");
 
 
                         html = html.Replace("{{chkBPflag}}", dt.GetColValue("BP").ConvertToString() != "" ? "visible" : "none");
