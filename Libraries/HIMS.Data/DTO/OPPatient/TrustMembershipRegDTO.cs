@@ -104,6 +104,10 @@ namespace HIMS.Data.DTO.OPPatient
         public string? WfamilyDoctorContact { get; set; }
         public string? WresidenceAddress { get; set; }
         public bool? Wresidencetype { get; set; }
+
+
+
+
         public long? HconsultDoctorId { get; set; }
         public long? FamilyDoctorId { get; set; }
         public long? WconsultDoctorId { get; set; }
