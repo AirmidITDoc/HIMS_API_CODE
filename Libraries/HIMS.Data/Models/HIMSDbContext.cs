@@ -14977,6 +14977,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.FamilyDoctorContact).HasMaxLength(15);
 
+                entity.Property(e => e.FamilyDoctorId).HasColumnName("familyDoctorId");
+
                 entity.Property(e => e.FamilyDoctorName).HasMaxLength(150);
 
                 entity.Property(e => e.FeeAmount).HasColumnType("decimal(10, 2)");
@@ -14984,6 +14986,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.FemaleMembershipNo).HasMaxLength(100);
 
                 entity.Property(e => e.HaayushmanId).HasMaxLength(20);
+
+                entity.Property(e => e.HconsultDoctorId).HasColumnName("hconsultDoctorId");
 
                 entity.Property(e => e.HdeathDate).HasColumnType("datetime");
 
@@ -15016,6 +15020,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.HusbandMiddleName).HasMaxLength(50);
 
                 entity.Property(e => e.HusbandMobile).HasMaxLength(15);
+
+                entity.Property(e => e.HusbandMobileNo)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.HusbandPan)
                     .HasMaxLength(20)
@@ -15055,11 +15063,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.WaayushmanId).HasMaxLength(20);
 
+                entity.Property(e => e.WconsultDoctorId).HasColumnName("wconsultDoctorId");
+
                 entity.Property(e => e.WdeathDate).HasColumnType("datetime");
 
                 entity.Property(e => e.WfamilyDoctorContact)
                     .HasMaxLength(50)
                     .HasColumnName("wfamilyDoctorContact");
+
+                entity.Property(e => e.WfamilyDoctorId).HasColumnName("wfamilyDoctorId");
 
                 entity.Property(e => e.WfamilyDoctorName)
                     .HasMaxLength(200)
@@ -15098,6 +15110,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.WifeMiddleName).HasMaxLength(50);
 
                 entity.Property(e => e.WifeMobile).HasMaxLength(15);
+
+                entity.Property(e => e.WifeMobileNo)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.WifePan)
                     .HasMaxLength(20)
