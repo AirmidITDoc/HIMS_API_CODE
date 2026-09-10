@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
         }
        
         [HttpGet("search_TruestMembership")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public ApiResponse PathologyServicesearch(string Keyword)
         {
             var data = _ITrustMembershipRegService.searchTruestMembership(Keyword);
@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
 
 
         [HttpGet("{id?}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
             return data.ToSingleResponse<TMembershipRegistration, TrustMembershipRegModel>("Doctor Master");
         }
         [HttpGet("auto-complete")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
             var data = await _ITrustMembershipRegService.SearchTrust(Keyword);
@@ -79,6 +79,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
                 PatientName = x.HusbandFirstName + " " + x.HusbandMiddleName + " " + x.HusbandLastName,
                 HusbandEmail = x.HusbandEmail,
                 MembershipNo = x.MembershipNo,
+                FemaleMembershipNo = x.FemaleMembershipNo,
                 HusbandAadhaar = x.HusbandAadhaar,
                 HusbandDob = x.HusbandDob,
                 //Gender = x.Gender

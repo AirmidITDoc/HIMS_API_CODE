@@ -11,6 +11,7 @@ namespace HIMS.Data.DTO.OPPatient
 
         public long MembershipId { get; set; }
         public string? MembershipNo { get; set; }
+        public string? FemaleMembershipNo { get; set; }
         public DateTime? MembershipDate { get; set; }
         public string? MembershipTime { get; set; }
         public long HprefixId { get; set; }
@@ -105,24 +106,14 @@ namespace HIMS.Data.DTO.OPPatient
         public string? WresidenceAddress { get; set; }
         public bool? Wresidencetype { get; set; }
 
-
-
-
-        public long? HconsultDoctorId { get; set; }
-        public long? FamilyDoctorId { get; set; }
-        public long? WconsultDoctorId { get; set; }
-        public long? WfamilyDoctorId { get; set; }
-        public string? HusbandMobileNo { get; set; }
-        public string? WifeMobileNo { get; set; }
-
-
-
     }
     public class TrustMembershipRegistrationDTO
     {
 
         public long MembershipId { get; set; }
-        public string MembershipNo { get; set; } = null!;
+        public string? MembershipNo { get; set; }
+        public string? FemaleMembershipNo { get; set; }
+
         //public DateTime MembershipDate { get; set; }
         //public DateTime MembershipTime { get; set; }
         public long HprefixId { get; set; }

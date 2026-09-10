@@ -37,5 +37,15 @@ namespace HIMS.Data.DTO.MRD
         public string TariffName { get; set; }
         public bool IsCancelled { get; set; }
         public long OpIpType { get; set; }
+        public long CertificateId { get; set; }
+        public DateTime CertificateDate { get; set; }
+        public DateTime CertificateTime { get; set; }
+        public DateTime? DateofDeath { get; set; }
+        public DateTime? TimeOfDeath { get; set; }
+        public string? CauseofDeath { get; set; }
+        public string? PlaceOfDeath { get; set; }
+        public string? ResponsiblePersonName { get; set; }
+        public string? Smcno { get; set; }
+        public string? Diagnsis { get; set; }
     }
 }

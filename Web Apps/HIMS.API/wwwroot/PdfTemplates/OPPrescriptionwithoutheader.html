@@ -85,7 +85,7 @@
                                             <span>{{Examination}}</span>
                                         </td>
                                     </tr>
-<td style="padding: 6px; font-size: 18px;">
+                                <td style="padding: 6px; font-size: 18px;">
                                     <span style="font-size: 42px; font-style: italic; vertical-align: middle; padding-right: 10px;">
                                         ℞
                                     </span>
@@ -121,6 +121,15 @@
                                         </div>
                                     </td>
                                 </tr>
+
+                                <tr>
+                                    <td style="padding: 6px; font-size: 18px;">
+                                        <div style="display:{{chkOtherServiceList}};">
+                                            <span style="font-weight: bold;">Other Services: </span>
+                                            <span>{{OtherServiceList}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td style="padding: 6px; font-size: 18px;">
                                         <div style="display:{{chkReferDrName}};">
@@ -151,8 +160,11 @@
                                                     <img src="{{Signature}}" width="200" height="100" style="display:{{chkSignature}}">
                                                 </span>
                                                 <div style="font-weight:bold;">{{PathResultDr1}}</div>
-                                                <div style="font-weight:bold;" style="display:{{chkEdu}}">{{Education}}</div>
-                                                <div style="font-weight:bold;" style="display:{{chkRegNo}}">{{MahRegNo}}</div>
+                                                <div style="font-weight:bold;" style="display:{{chkEdu}};">{{Education}}</div>
+                                                <div style="font-weight:bold;" style="display:{{chkRegNo}};">{{MahRegNo}}</div>
+                                                <div style="font-weight:bold;">{{PrescDoctorName}}</div>
+                                                <div style="font-weight:bold;" style="display:{{chkPrescEducation}};">{{PrescEducation}}</div>
+                                                <div style="font-weight:bold;" style="display:{{chkPrescMahRegNo}};">{{PrescMahRegNo}}</div>
                                             </footer>
                                         </td>
                                     </table>
