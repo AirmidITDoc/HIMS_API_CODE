@@ -75,7 +75,7 @@ namespace HIMS.ABHA.Models.M2
         [JsonPropertyName("meta")]
         public Meta1? Meta { get; set; }
         [JsonPropertyName("identifier")]
-        public object? Identifier { get; set; }
+        public Identifier[]? Identifier { get; set; }
         [JsonPropertyName("status")]
         public string? Status { get; set; }
         [JsonPropertyName("type")]
@@ -95,12 +95,12 @@ namespace HIMS.ABHA.Models.M2
         [JsonPropertyName("section")]
         public Section[]? Section { get; set; }
         [JsonPropertyName("name")]
-        public object? Name { get; set; }
+        public object[]? Name { get; set; }
         [JsonPropertyName("gender")]
         public string? Gender { get; set; }
         [JsonPropertyName("birthDate")]
         public string? BirthDate { get; set; }
-        [JsonPropertyName("_class")]
+        [JsonPropertyName("class")]
         public Class1? _Class { get; set; }
         [JsonPropertyName("period")]
         public Period? Period { get; set; }
