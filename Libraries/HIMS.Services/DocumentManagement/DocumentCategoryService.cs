@@ -68,7 +68,7 @@ namespace HIMS.Services.DocumentManagement
         {
             return includes.Aggregate(query, (current, include) => current.Include(include));
         }
-        public async Task<List<DocumentCategoryDto>> GetTreeAsync()
+        public async Task<List<DocumentCategoryDto>> GetTreeAsync(int Id)
         {
             var list = await _context.DocumentCategories.Where(x => x.IsActive && !x.IsDeleted).OrderBy(x => x.SortOrder).Select(x => new DocumentCategoryDto
             {
@@ -76,8 +76,8 @@ namespace HIMS.Services.DocumentManagement
                 ParentId = x.ParentId,
                 DocCategory = x.DocCategory,
                 Icon = x.Icon,
-                DocumentCount = 0
-            }).ToListAsync();
+                DocumentCount = Id > 0 ? _context.DocumentFiles.Count(c => c.AdmissionId == Id && c.DocCatId == x.Id) : 0
+            }).AsNoTracking().ToListAsync();
             return BuildTree(list);
         }
 

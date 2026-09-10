@@ -12,6 +12,6 @@ namespace HIMS.Services.DocumentManagement
         Task<DocumentCategory> Add(DocumentCategory entity, int UserId, string Username, params Expression<Func<DocumentCategory, object>>[] references);
         Task<DocumentCategory> Update(DocumentCategory entity, int UserId, string Username, string[]? ignoreColumns = null);
         Task<bool> SoftDelete(DocumentCategory entity, int UserId, string Username);
-        Task<List<DocumentCategoryDto>> GetTreeAsync();
+        Task<List<DocumentCategoryDto>> GetTreeAsync(int Id);
     }
 }
