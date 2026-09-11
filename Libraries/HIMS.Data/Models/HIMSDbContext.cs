@@ -16790,9 +16790,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Hid).HasColumnName("HId");
 
-                entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
+                entity.Property(e => e.OP_IP_Id).HasColumnName("OP_IP_ID");
 
-                entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
+                entity.Property(e => e.OP_IP_Type).HasColumnName("OP_IP_Type");
 
                 entity.Property(e => e.ReqDate).HasColumnType("datetime");
 

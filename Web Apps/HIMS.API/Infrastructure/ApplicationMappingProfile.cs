@@ -970,7 +970,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<DocumentFile, DocumentFileModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
-
+            CreateMap<TPatIcdcdeH, ICDUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TPatIcdcdeD, TPatIcdcdeDModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
