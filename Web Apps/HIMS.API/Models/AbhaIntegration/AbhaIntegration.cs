@@ -1,7 +1,7 @@
 ﻿namespace HIMS.API.Models.AbhaIntegration
 {
 
-    public class initateClientModel
+    public class InitiateClientModel
     {
         public int clientId { get; set; }
         public int hospitalId { get; set; }

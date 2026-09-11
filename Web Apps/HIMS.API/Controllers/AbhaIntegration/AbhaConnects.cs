@@ -1,12 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HIMS.API.Models.AbhaIntegration;
+using HIMS.Services.AbhaIntegration;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.AbhaIntegration
 {
-    public class AbhaConnects : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AbhaConnects : ControllerBase
     {
-        public IActionResult Index()
+        private readonly IAbhaConnectService _abhaConnectService;
+        public AbhaConnects(IAbhaConnectService abhaConnectService)
         {
-            return View();
+            _abhaConnectService = abhaConnectService;
+        }
+
+        [HttpPost("InitiateClient")]
+        public async Task<IActionResult> InitiateClient(InitiateClientModel model)
+        {
+            var result = await _abhaConnectService.InitiateClient(model);
+            return Ok(result);
         }
     }
 }

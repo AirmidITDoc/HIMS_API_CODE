@@ -6,6 +6,7 @@ using HIMS.API.Utility;
 using HIMS.Data;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.AbhaIntegration;
 using HIMS.Services.Administration;
 using HIMS.Services.Audit;
 using HIMS.Services.Canteen;
@@ -256,6 +257,10 @@ namespace HIMS.API.Infrastructure
             services.AddHttpContextAccessor();
             services.AddMemoryCache(opts => opts.SizeLimit = 1024);
             services.AddScoped<IDeathCertificateService, DeathCertificateService>();
+
+
+            //ABHA testing 
+            services.AddScoped<IAbhaConnectService, AbhaConnectService>();
         }
     }
 }
