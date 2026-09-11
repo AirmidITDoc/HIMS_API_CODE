@@ -11,7 +11,7 @@ namespace HIMS.Data.Models
         //{
         //}
 
-        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
+        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)ssss
         //    : base(options)
         //{
         //}
@@ -60,6 +60,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<EmployeeMasterDetail> EmployeeMasterDetails { get; set; } = null!;
         public virtual DbSet<EmployeeUnitMapping> EmployeeUnitMappings { get; set; } = null!;
         public virtual DbSet<FileMaster> FileMasters { get; set; } = null!;
+        public virtual DbSet<FoodItemMaster> FoodItemMasters { get; set; } = null!;
         public virtual DbSet<GeTIpPrescriptionItemDet> GeTIpPrescriptionItemDets { get; set; } = null!;
         public virtual DbSet<GeTTPrescriptionItemDet> GeTTPrescriptionItemDets { get; set; } = null!;
         public virtual DbSet<GeniusBufferresult> GeniusBufferresults { get; set; } = null!;
@@ -671,7 +672,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -2301,6 +2302,23 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DocName).HasMaxLength(500);
 
                 entity.Property(e => e.DocSavedName).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<FoodItemMaster>(entity =>
+            {
+                entity.HasKey(e => e.FoodItemId);
+
+                entity.ToTable("Food_Item_Master");
+
+                entity.Property(e => e.FoodCode).HasMaxLength(50);
+
+                entity.Property(e => e.FoodName).HasMaxLength(225);
+
+                entity.Property(e => e.LocalName).HasMaxLength(225);
+
+                entity.Property(e => e.ServingSize).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.Unit).HasColumnName("unit");
             });
 
             modelBuilder.Entity<GeTIpPrescriptionItemDet>(entity =>
@@ -14985,6 +15003,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.FemaleMembershipNo).HasMaxLength(100);
 
+                entity.Property(e => e.HConsultDoctorContact)
+                    .HasMaxLength(15)
+                    .HasColumnName("hConsultDoctorContact");
+
                 entity.Property(e => e.HaayushmanId).HasMaxLength(20);
 
                 entity.Property(e => e.HconsultDoctorId).HasColumnName("hconsultDoctorId");
@@ -15060,6 +15082,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ReceiptDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ResidenceAddress).HasMaxLength(255);
+
+                entity.Property(e => e.WConsultDoctorContact)
+                    .HasMaxLength(15)
+                    .HasColumnName("wConsultDoctorContact");
 
                 entity.Property(e => e.WaayushmanId).HasMaxLength(20);
 
@@ -16790,9 +16816,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Hid).HasColumnName("HId");
 
-                entity.Property(e => e.OP_IP_Id).HasColumnName("OP_IP_ID");
+                entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
 
-                entity.Property(e => e.OP_IP_Type).HasColumnName("OP_IP_Type");
+                entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
 
                 entity.Property(e => e.ReqDate).HasColumnType("datetime");
 

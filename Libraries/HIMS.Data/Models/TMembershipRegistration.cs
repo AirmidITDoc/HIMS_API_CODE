@@ -113,6 +113,8 @@ namespace HIMS.Data.Models
         public long? WfamilyDoctorId { get; set; }
         public string? HusbandMobileNo { get; set; }
         public string? WifeMobileNo { get; set; }
+        public string? HConsultDoctorContact { get; set; }
+        public string? WConsultDoctorContact { get; set; }
 
         public virtual ICollection<TMembershipChild> TMembershipChildren { get; set; }
         public virtual ICollection<TMembershipEmrgency> TMembershipEmrgencies { get; set; }
