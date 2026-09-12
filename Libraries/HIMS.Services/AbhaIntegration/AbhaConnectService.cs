@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HIMS.Core.Domain.Common;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,13 +13,21 @@ namespace HIMS.Services.AbhaIntegration
 {
     public class AbhaConnectService : IAbhaConnectService
     {
+
+        private readonly IConfiguration _configuration;
+        public AbhaConnectService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public async Task<object> InitiateClient(object model)
         {
             using var client = new HttpClient();
 
+            var abhaClientSessionUrl = _configuration["ABDMIntegration:ClientSessionUrl"];
+            var abhaBaseUrl = _configuration["ABDMIntegration:BaseUrl"];
+
             var request = new HttpRequestMessage(
-                HttpMethod.Post,
-                "https://api.kanaad.co.in/api/user/v1/abdm/clientSession/saveSessionByUserIdAndClientId"
+                HttpMethod.Post, $"{abhaClientSessionUrl}"
             );
 
             request.Headers.Add("accept", "*/*");
@@ -37,7 +47,7 @@ namespace HIMS.Services.AbhaIntegration
                 return jsonObject;
             }
             var transactionId = jsonObject["responseData"]?["transactionId"]?.GetValue<string>();
-            var callbackUrl =$"http://13.207.45.186:8090/abdm/client-login/1/{transactionId}";
+            var callbackUrl =$"{abhaBaseUrl}/{transactionId}";
 
             jsonObject["responseData"]["callbackUrl"] = callbackUrl;
             return jsonObject;
