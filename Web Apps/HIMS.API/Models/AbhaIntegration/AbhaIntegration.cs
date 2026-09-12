@@ -14,19 +14,19 @@
 
     public class AbhaCallbackModel
     {
-        public object patientId { get; set; }
-        public string patientName { get; set; }
-        public string sbxId { get; set; }
-        public string gender { get; set; }
-        public string mobileNumber { get; set; }
-        public string dob { get; set; }
-        public string name { get; set; }
-        public string status { get; set; }
-        public string createdDate { get; set; }
-        public int clientId { get; set; }
-        public string abhaNumber { get; set; }
-        public string json { get; set; }
-        public string transactionId { get; set; }
+        public string? PatientId { get; set; }
+        public string PatientName { get; set; }
+        public string SbxId { get; set; }
+        public string Gender { get; set; }
+        public string MobileNumber { get; set; }
+        public string Dob { get; set; }
+        public string Name { get; set; }
+        public string Status { get; set; }
+        public string CreatedDate { get; set; }
+        public int ClientId { get; set; }
+        public string AbhaNumber { get; set; }
+        public string Json { get; set; }
+        public string TransactionId { get; set; }
     }
 
 

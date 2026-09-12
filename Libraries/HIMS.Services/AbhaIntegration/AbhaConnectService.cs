@@ -1,4 +1,6 @@
 ﻿using HIMS.Core.Domain.Common;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.Models;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -8,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace HIMS.Services.AbhaIntegration
 {
@@ -15,9 +18,11 @@ namespace HIMS.Services.AbhaIntegration
     {
 
         private readonly IConfiguration _configuration;
-        public AbhaConnectService(IConfiguration configuration)
+        private readonly HIMSDbContext _context;
+        public AbhaConnectService(IConfiguration configuration, HIMSDbContext context)
         {
             _configuration = configuration;
+            _context = context;
         }
         public async Task<object> InitiateClient(object model)
         {
@@ -62,6 +67,16 @@ namespace HIMS.Services.AbhaIntegration
                 ResponseMessage = responseMessage,
                 ResponseData = jsonObject["responseData"]
             };
+        }
+
+        public virtual async Task InsertAsync(TAbhaCallbackformation obj)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.TAbhaCallbackformations.Add(obj);
+                await _context.SaveChangesAsync();
+                scope.Complete();
+            }
         }
     }
 }

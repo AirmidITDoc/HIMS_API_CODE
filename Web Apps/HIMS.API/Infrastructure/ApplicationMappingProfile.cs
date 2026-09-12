@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HIMS.ABHA.Models.M2;
 using HIMS.API.Controllers.Pharmacy;
+using HIMS.API.Models.AbhaIntegration;
 using HIMS.API.Models.Administration;
 using HIMS.API.Models.Canteen;
 using HIMS.API.Models.Common;
@@ -973,7 +974,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TPatIcdcdeH, ICDUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TPatIcdcdeD, TPatIcdcdeDModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-
+            CreateMap<TAbhaCallbackformation, AbhaCallbackModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
         }
     }

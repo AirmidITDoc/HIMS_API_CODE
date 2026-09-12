@@ -1,6 +1,11 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.API.Models.AbhaIntegration;
+using HIMS.API.Models.MRD;
+using HIMS.Core.Infrastructure;
+using HIMS.Data;
+using HIMS.Data.Models;
 using HIMS.Services.AbhaIntegration;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -16,9 +21,11 @@ namespace HIMS.API.Controllers.AbhaIntegration
     public class AbhaConnects : ControllerBase
     {
         private readonly IAbhaConnectService _abhaConnectService;
-        public AbhaConnects(IAbhaConnectService abhaConnectService)
+        private readonly IGenericService<TAbhaCallbackformation> _repository;
+        public AbhaConnects(IAbhaConnectService abhaConnectService, IGenericService<TAbhaCallbackformation> repository)
         {
-            _abhaConnectService = abhaConnectService;
+            _abhaConnectService = abhaConnectService; 
+            _repository = repository;
         }
 
         [HttpPost("InitiateClient")]
@@ -38,6 +45,14 @@ namespace HIMS.API.Controllers.AbhaIntegration
                 responseMessage,
                 responseData
             );
+        }
+
+        [HttpPost("AbhaCallback")]
+        public async Task<ApiResponse> Insert(AbhaCallbackModel obj)
+        {
+            TAbhaCallbackformation model = obj.MapTo<TAbhaCallbackformation>();
+            await _abhaConnectService.InsertAsync(model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.TransactionId);
         }
     }
 }
