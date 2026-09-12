@@ -15,6 +15,7 @@ namespace HIMS.API.Models.Inventory
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
         public long? AdmId { get; set; }
+        public int? CreatedBy { get; set; }
         public long MaterialConsumptionId { get; set; }
 
         public List<MaterialConsumptionDetailModel> TMaterialConsumptionDetails { get; set; }
