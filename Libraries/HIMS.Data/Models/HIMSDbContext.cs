@@ -11,7 +11,7 @@ namespace HIMS.Data.Models
         //{
         //}
 
-        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)ssss
+        //public HIMSDbContext(DbContextOptions<HIMSDbContext> options)
         //    : base(options)
         //{
         //}
@@ -14878,7 +14878,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ConsumptionTime).HasColumnType("datetime");
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.LandedTotalAmount).HasColumnType("money");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.MrptotalAmount)
                     .HasColumnType("money")

@@ -3,7 +3,10 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
+using HIMS.Data.Extensions;
 
 namespace HIMS.Services.Inventory
 {
@@ -52,8 +55,15 @@ namespace HIMS.Services.Inventory
 
         public virtual async Task InsertAsync(TMaterialConsumptionHeader ObjTMaterialConsumptionHeader, List<TCurrentStock> ObjTCurrentStock, int UserId, string Username)
         {
-            DatabaseHelper odal = new();
-            string[] rEntity = { "TMaterialConsumptionDetails" };
+            // Begin Transaction
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
+                string[] rEntity = { "TMaterialConsumptionDetails","CreatedDate", "ModifiedBy", "ModifiedDate" };
             var entity = ObjTMaterialConsumptionHeader.ToDictionary();
             foreach (var rProperty in rEntity)
             {
@@ -61,8 +71,10 @@ namespace HIMS.Services.Inventory
             }
             string vMaterialConsumptionId = odal.ExecuteNonQuery("ps_insert_MaterialConsumption_1", CommandType.StoredProcedure, "MaterialConsumptionId", entity);
             ObjTMaterialConsumptionHeader.MaterialConsumptionId = Convert.ToInt32(vMaterialConsumptionId);
-            // Add details table records
-            foreach (var objissue in ObjTMaterialConsumptionHeader.TMaterialConsumptionDetails)
+           await _context.LogProcedureExecution(entity, nameof(TMaterialConsumptionHeader), ObjTMaterialConsumptionHeader.MaterialConsumptionId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, Username);
+
+                // Add details table records
+                foreach (var objissue in ObjTMaterialConsumptionHeader.TMaterialConsumptionDetails)
             {
                 objissue.MaterialConsumptionId = ObjTMaterialConsumptionHeader.MaterialConsumptionId;
             }
@@ -77,6 +89,19 @@ namespace HIMS.Services.Inventory
                     Centity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_Upd_T_Curstk_MatC_1", CommandType.StoredProcedure, Centity);
+                await _context.LogProcedureExecution(Centity, nameof(AddCharge), item.StockId.ToInt(), Core.Domain.Logging.LogAction.Add, UserId, Username);
+
+                }
+                await _context.SaveChangesAsync(UserId, Username);
+                // Commit Transaction
+                await transaction.CommitAsync();
+
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
             }
         }
     }

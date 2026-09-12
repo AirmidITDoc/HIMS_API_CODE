@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
@@ -49,7 +50,7 @@ namespace HIMS.API.Controllers.Inventory
             List<TCurrentStock> ObjCurrentStock = obj.CurrentStockUpdate.MapTo<List<TCurrentStock>>();
             if (obj.MaterialConsumption.MaterialConsumptionId == 0)
             {
-
+                
                 model.AddedBy = CurrentUserId;
                 await _IMaterialConsumption.InsertAsync(model, ObjCurrentStock, CurrentUserId, CurrentUserName);
             }
