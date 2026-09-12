@@ -112,7 +112,7 @@ namespace HIMS.API.Models.TrustMembershipRegistration
     {
         public TrustMembershipRegModelValidator()
         {
-            RuleFor(x => x.MembershipNo).NotNull().NotEmpty().WithMessage("MembershipNo is required");
+            //RuleFor(x => x.MembershipNo).NotNull().NotEmpty().WithMessage("MembershipNo is required");
             RuleFor(x => x.MembershipDate).NotNull().NotEmpty().WithMessage("MembershipDate is required");
             RuleFor(x => x.MembershipTime).NotNull().NotEmpty().WithMessage("MembershipTime  is required");
             //RuleFor(x => x.HusbandDob).NotNull().NotEmpty().WithMessage(" HusbandDob required");
@@ -121,8 +121,8 @@ namespace HIMS.API.Models.TrustMembershipRegistration
             //RuleFor(x => x.CityId).NotNull().NotEmpty().WithMessage("CityId is required");
             //RuleFor(x => x.CityName).NotNull().NotEmpty().WithMessage("CityName is required");
             //RuleFor(x => x.NativePlace).NotNull().NotEmpty().WithMessage("NativePlace is required");
-            RuleFor(x => x.DeclarationDate).NotNull().NotEmpty().WithMessage("DeclarationDate is required");
-            RuleFor(x => x.ReceiptDate).NotNull().NotEmpty().WithMessage("ReceiptDate is required");
+            //RuleFor(x => x.DeclarationDate).NotNull().NotEmpty().WithMessage("DeclarationDate is required");
+            //RuleFor(x => x.ReceiptDate).NotNull().NotEmpty().WithMessage("ReceiptDate is required");
 
         }
     }
