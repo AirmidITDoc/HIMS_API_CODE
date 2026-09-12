@@ -17,7 +17,6 @@ namespace HIMS.API.Controllers.IPPatient
     [ApiVersion("1")]
     public class ICDUpdateController : BaseController
     {
-
         private readonly I_ICDUpdateService _ICDUpdateService;
 
         public ICDUpdateController(I_ICDUpdateService repository)
@@ -45,8 +44,8 @@ namespace HIMS.API.Controllers.IPPatient
                 await _ICDUpdateService.InsertICDSp(Model, DetModel, CurrentUserId, CurrentUserName);
             }
             else
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", Model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", Model);
         } 
     }
 }
