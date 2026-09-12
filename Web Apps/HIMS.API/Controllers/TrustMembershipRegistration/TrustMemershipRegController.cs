@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
         }
        
         [HttpGet("search_TruestMembership")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission]
         public ApiResponse PathologyServicesearch(string Keyword)
         {
             var data = _ITrustMembershipRegService.searchTruestMembership(Keyword);
