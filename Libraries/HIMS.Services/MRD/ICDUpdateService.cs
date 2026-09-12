@@ -21,52 +21,30 @@ namespace HIMS.Services.MRD
         {
             _context = HIMSDbContext;
         }
-        //public virtual async Task InsertICDSp(TPatIcdcdeH ObjTPatIcdcdeH, int CurrentUserId, string CurrentUserName)
-        //{
-        //    // Begin Transaction
-        //    await using var transaction = await _context.Database.BeginTransactionAsync();
-        //    try
-        //    {
-        //        DatabaseHelper odal = new();
-        //        odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
-        //        odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
-
-        //        string[] rEntity = { "ReqDate", "ReqTime", "OPIPID", "OPIPType", "UpdatedBy", "AddedBy", "Hid"};
-        //        var entity = ObjTPatIcdcdeH.ToDictionary();
-        //        foreach (var rProperty in entity.Keys.ToList())
-        //        {
-        //            if (!rEntity.Contains(rProperty))
-        //                entity.Remove(rProperty);
-        //        }
-        //        string vHId = odal.ExecuteNonQuery("insert_T_PatICDCdeH_1", CommandType.StoredProcedure, "Hid", entity);
-        //        ObjTPatIcdcdeH.Hid = Convert.ToInt32(vHId);
-        //        // Save Log
-        //        await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
-        //        // Commit Transaction
-        //        await transaction.CommitAsync();
-
-        //    }
-        //    catch (Exception)
-        //    {
-        //        // Rollback Transaction
-        //        await transaction.RollbackAsync();
-        //        throw;
-        //    }
-        //}
-
+     
         public virtual  async Task InsertICDSp(TPatIcdcdeH ObjTPatIcdcdeH, List<TPatIcdcdeD> ObjTPatIcdcdeDList,  int CurrentUserId, string CurrentUserName)
         {
-            DatabaseHelper odal = new();
-            string[] AEntity = { };
-            var entity = ObjTPatIcdcdeH.ToDictionary();
-            foreach (var rProperty in AEntity)
+            // Begin Transaction
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-
-                entity.Remove(rProperty);
+            DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+            string[] AEntity = {"Hid", "ReqDate", "ReqTime", "OpIpType", "OpIpId", "AddedBy", "UpdatedBy" };
+            var entity = ObjTPatIcdcdeH.ToDictionary();
+            foreach (var rProperty in entity.Keys.ToList())
+            {
+                if (!AEntity.Contains(rProperty))
+                {
+                    entity.Remove(rProperty);
+                }
             }
-
-            string vHid = odal.ExecuteNonQuery("insert_T_PatICDCdeH_1", CommandType.StoredProcedure, "Hid",entity);
+            string vHid = odal.ExecuteNonQueryNew("insert_T_PatICDCdeH_1", CommandType.StoredProcedure, "Hid",entity);
             ObjTPatIcdcdeH.Hid = Convert.ToInt32(vHid);
+            await _context.LogProcedureExecution(entity, nameof(TPatIcdcdeH), ObjTPatIcdcdeH.Hid.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
 
             foreach (var item in ObjTPatIcdcdeDList)
             {
@@ -95,7 +73,19 @@ namespace HIMS.Services.MRD
                     }
                 }
 
-                odal.ExecuteNonQuery( "insert_T_PatICDCdeD_1", CommandType.StoredProcedure,Dentity);
+                odal.ExecuteNonQueryNew( "insert_T_PatICDCdeD_1", CommandType.StoredProcedure,"",Dentity);
+                await _context.LogProcedureExecution(Dentity, nameof(TPatIcdcdeD), item.Did.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            }
+            // Save Logs
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit Transaction
+            await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
             }
         }
 
