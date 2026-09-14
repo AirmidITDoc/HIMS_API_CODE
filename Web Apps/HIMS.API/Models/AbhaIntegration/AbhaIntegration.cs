@@ -1,6 +1,7 @@
-﻿namespace HIMS.API.Models.AbhaIntegration
-{
+﻿using System.Text.Json.Serialization;
 
+namespace HIMS.API.Models.AbhaIntegration
+{
     public class InitiateClientModel
     {
         public int clientId { get; set; }
@@ -29,5 +30,20 @@
         public string TransactionId { get; set; }
     }
 
+    public class CareContextModel
+    {
+        public string abhaId { get; set; }
+        public string abhaNumber { get; set; }
+        public string patientReferenceNumber { get; set; }
+        public string yearOfBirth { get; set; }
+        public List<CareContext2> careContexts { get; set; }
+        public string hipId { get; set; }
+    }
+
+    public class CareContext2
+    {
+        public string referenceNumber { get; set; }
+        public string comment { get; set; }
+    }
 
 }

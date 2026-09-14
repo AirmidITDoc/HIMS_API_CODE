@@ -103,7 +103,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IClassMasterService, ClassMasterService>();
             services.AddScoped<ISurgeryMasterService, SurgeryMasterService>();
             services.AddScoped<IConstantService, ConstantService>();
-
+            services.AddScoped<IAbhaConnectService, AbhaConnectService>();
 
 
 
