@@ -5,7 +5,6 @@ namespace HIMS.Data.Models
 {
     public partial class MFoodItemMaster
     {
-        [Key]
         public long FoodItemId { get; set; }
         public string FoodCode { get; set; } = null!;
         public string FoodName { get; set; } = null!;
