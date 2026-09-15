@@ -76,7 +76,15 @@ namespace HIMS.API.Controllers.DocumentManagement
         [Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetFiles(long AdmissionId, int CategoryId)
         {
-            var PatientList = await _repository.GEtDocumentsByCategoryAndAdmissionId(AdmissionId, CategoryId);
+            var PatientList = await _repository.GetDocumentsByCategoryAndAdmissionId(AdmissionId, CategoryId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Category tree retrieved successfully.", PatientList);
+        }
+        [HttpGet]
+        [Route("get-patient-files")]
+        [Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetPatientFiles(long PatientId)
+        {
+            var PatientList = await _repository.GetDocumentsByPatientId(PatientId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Category tree retrieved successfully.", PatientList);
         }
     }
