@@ -205,7 +205,7 @@ namespace HIMS.API.Controllers.ABHA.M2
                     =========================================================";
 
             await System.IO.File.AppendAllTextAsync(filename, log);
-           
+
             //if (!string.IsNullOrWhiteSpace(payload.patient?.id))
             //{
             //    var abhaAddress = payload.patient.id;

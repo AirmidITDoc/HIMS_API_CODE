@@ -27,9 +27,9 @@ namespace HIMS.API.Controllers.DocumentManagement
         [HttpGet]
         [Route("[action]")]
         [Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
-        public async Task<ApiResponse> List()
+        public async Task<ApiResponse> List(int Id)
         {
-            List<DocumentCategoryDto> DocumentCategoryList = await _repository.GetTreeAsync();
+            List<DocumentCategoryDto> DocumentCategoryList = await _repository.GetTreeAsync(Id);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Category tree retrieved successfully.", DocumentCategoryList);
         }
         //List API Get By Id

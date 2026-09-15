@@ -233,8 +233,11 @@ namespace HIMS.Services.Inventory
             var qry = (from itemMaster in _context.MItemMasters
                        join uomMaster in _context.MUnitofMeasurementMasters
                        on itemMaster.PurchaseUomid equals uomMaster.UnitofMeasurementId
+                       //join genericNameMaster in _context.MItemGenericNameMasters
+                       //on itemMaster.ItemGenericNameId equals genericNameMaster.ItemGenericNameId
                        join genericNameMaster in _context.MItemGenericNameMasters
-                       on itemMaster.ItemGenericNameId equals genericNameMaster.ItemGenericNameId
+                       on itemMaster.ItemGenericNameId equals genericNameMaster.ItemGenericNameId into genericGroup
+                       from genericName in genericGroup.DefaultIfEmpty()
                        join assignItemToStore in _context.MAssignItemToStores
                        on itemMaster.ItemId equals assignItemToStore.ItemId into storeGroup
                        from assignItem in storeGroup.DefaultIfEmpty()

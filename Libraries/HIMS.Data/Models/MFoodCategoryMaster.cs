@@ -3,16 +3,11 @@ using System.Collections.Generic;
 
 namespace HIMS.Data.Models
 {
-    public partial class MFoodItemMaster
+    public partial class MFoodCategoryMaster
     {
-        [Key]
-        public long FoodItemId { get; set; }
-        public string FoodCode { get; set; } = null!;
-        public string FoodName { get; set; } = null!;
         public long FoodCategoryId { get; set; }
-        public string? LocalName { get; set; }
-        public long? Unit { get; set; }
-        public bool? IsVegetarian { get; set; }
+        public string FoodCategoryCode { get; set; } = null!;
+        public string FoodCategoryName { get; set; } = null!;
         public bool? Active { get; set; }
         public long CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }

@@ -39,6 +39,23 @@ namespace HIMS.Services.DocumentManagement
                       };
             return await qry.Take(count).ToListAsync();
         }
+        public virtual async Task<List<DocumentFile>> GEtDocumentsByCategoryAndAdmissionId(long AdmissionId,int CategoryId)
+        {
+            var qry = from d in _context.DocumentFiles
+                      join a in _context.Admissions on d.AdmissionId equals a.AdmissionId
+                      join c in _context.DocumentCategories on d.DocCatId equals c.Id
+                      where d.AdmissionId == AdmissionId && d.DocCatId==CategoryId
+                      select new DocumentFile()
+                      {
+                          CategoryName = c.DocCategory,
+                          OrgFileName = d.OrgFileName,
+                          FileTags = d.FileTags,
+                          DocNo = d.DocNo,
+                          FileKind = d.FileKind,
+                          FileSize = d.FileSize,
+                      };
+            return await qry.ToListAsync();
+        }
         public virtual async Task<List<RegistrationAutoCompleteDto>> SearchRegistration(string str)
         {
             var qry = from x in _context.Registrations
