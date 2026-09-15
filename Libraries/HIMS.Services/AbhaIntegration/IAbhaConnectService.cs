@@ -12,6 +12,6 @@ namespace HIMS.Services.AbhaIntegration
         Task<object> InitiateClient(object model);
         Task InsertAsync(TAbhaCallbackformation obj);
         Task<object> AuthenticateUserAsync();
-        Task<string> CareContextAsync(CareContextModel model);
+        Task<string> CareContextAsync(object model, string jwtToken);
     }
 }

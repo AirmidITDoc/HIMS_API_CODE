@@ -70,32 +70,32 @@ namespace HIMS.API.Controllers.AbhaIntegration
             );
         }
 
-        //[HttpPost("linkCareContext")]
-        //public async Task<ApiResponse> LinkCareContext(CareContextModel model)
-        //{
-        //    // Step 1: Authenticate with Kanaad
-        //    var authResult = await _abhaConnectService.AuthenticateUserAsync();
-        //    var json = JsonSerializer.Serialize(authResult);
-        //    var obj = JsonSerializer.Deserialize<JsonElement>(json);
-        //    var responseData = obj.GetProperty("ResponseData");
-            
-        //    //string jwtTokenvalue = responseData.GetProperty("jwttoken").ToString();
-        //    // Get JWT token from your authentication flow
-        //    string jwtToken = responseData.GetProperty("jwttoken").ToString();
+        [HttpPost("linkCareContext")]
+        public async Task<ApiResponse> LinkCareContext(CareContextModel model)
+        {
+            // Step 1: Authenticate with Kanaad
+            var authResult = await _abhaConnectService.AuthenticateUserAsync();
+            var json = JsonSerializer.Serialize(authResult);
+            var obj = JsonSerializer.Deserialize<JsonElement>(json);
+            var responseData = obj.GetProperty("ResponseData");
+
+            //string jwtTokenvalue = responseData.GetProperty("jwttoken").ToString();
+            // Get JWT token from your authentication flow
+            string jwtToken = responseData.GetProperty("jwttoken").ToString();
 
 
-        //    var result = await _abhaConnectService.CareContextAsync(model);
-        //    return ApiResponseHelper.GenerateResponse(
-        //         ApiStatusCode.Status200OK,
-        //         "Link care context request sent successfully.",
-        //         new
-        //         {
-        //             //workflowId = result.workflowId,
-        //             //message = result.message,
-        //             //hipId = result.hipId,
-        //             //errMessage = result.errMessage
-        //         }
-        //     );
-        //}
+            var result = await _abhaConnectService.CareContextAsync(model, jwtToken);
+            return ApiResponseHelper.GenerateResponse(
+                 ApiStatusCode.Status200OK,
+                 "Link care context request sent successfully.",
+                 new
+                 {
+                     //workflowId = result.workflowId,
+                     //message = result.message,
+                     //hipId = result.hipId,
+                     //errMessage = result.errMessage
+                 }
+             );
+        }
     }
 }
