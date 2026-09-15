@@ -60,6 +60,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<EmployeeMasterDetail> EmployeeMasterDetails { get; set; } = null!;
         public virtual DbSet<EmployeeUnitMapping> EmployeeUnitMappings { get; set; } = null!;
         public virtual DbSet<FileMaster> FileMasters { get; set; } = null!;
+        public virtual DbSet<MFoodItemMaster> FoodItemMasters { get; set; } = null!;
         public virtual DbSet<GeTIpPrescriptionItemDet> GeTIpPrescriptionItemDets { get; set; } = null!;
         public virtual DbSet<GeTTPrescriptionItemDet> GeTTPrescriptionItemDets { get; set; } = null!;
         public virtual DbSet<GeniusBufferresult> GeniusBufferresults { get; set; } = null!;
