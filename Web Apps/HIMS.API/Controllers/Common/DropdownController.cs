@@ -335,8 +335,6 @@ namespace HIMS.API.Controllers.Common
                 })
                 .ToList().ToDropDown("DoctorId", "FirstName", "Phone"),
 
-               
-
                 "RMODoctor" => (await _IMDoctorMaster.GetAll(x => x.IsInHouseDoctor.Value)).Select(x => new
                 {
                     DoctorId = x.DoctorId,
