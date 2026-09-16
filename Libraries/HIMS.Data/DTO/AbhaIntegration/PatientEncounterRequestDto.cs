@@ -7,6 +7,15 @@ using System.Threading.Tasks;
 namespace HIMS.Data.DTO.AbhaIntegration
 {
 
+    public class PatientVisitRequest
+    {
+        public string AbhaNumber { get; set; }
+        public string AbhaAddress { get; set; }
+        public string HipId { get; set; }
+        public string OpIpId { get; set; }
+        public string OpIpType { get; set; }
+    }
+
     public class PatientVisitResponse
     {
         public Patient Patient { get; set; }
@@ -35,8 +44,8 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public string VisitNumber { get; set; }
         public string VisitReason { get; set; }
         public Doctor Doctor { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public string Status { get; set; }
         public string VisitType { get; set; }
         public EncounterCode EncounterCode { get; set; }

@@ -163,18 +163,23 @@ namespace HIMS.Services.AbhaIntegration
 
 
 
-        public async Task<List<PatientVisitResponse>> GetPatientVisitsAsync(int visitId)
+        public async Task<List<PatientVisitResponse>> GetPatientVisitsAsync(PatientVisitRequest model)
         {
             string sp = "ps_GetPatientVisitDetails";
 
             DatabaseHelper sql = new();
 
             SqlParameter[] para =
-            {
-               new SqlParameter
+             {
+                new SqlParameter
                 {
-                    ParameterName = "@VisitId",
-                    Value = visitId
+                    ParameterName = "@OpIpId",
+                    Value = model.OpIpId
+                },
+                new SqlParameter
+                {
+                    ParameterName = "@OpIpType",
+                    Value = model.OpIpType
                 }
             };
 
@@ -197,16 +202,14 @@ namespace HIMS.Services.AbhaIntegration
                     Gender = patientRow["Gender"].ToString(),
                     Mobile = patientRow["Mobile"].ToString(),
                     Email = patientRow["Email"].ToString(),
-                    HealthId = patientRow["HealthId"].ToString(),
-                    HealthIdNumber = patientRow["HealthIdNumber"].ToString(),
+                    HealthId = model.AbhaAddress,
+                    HealthIdNumber = model.AbhaNumber,
                     DayOfBirth = patientRow["DayOfBirth"].ToString(),
                     MonthOfBirth = patientRow["MonthOfBirth"].ToString(),
                     YearOfBirth = patientRow["YearOfBirth"].ToString(),
-                    HipId = patientRow["HipId"].ToString()
+                    HipId = model.HipId
                 },
-
-                HipId = patientRow["HipId"].ToString(),
-
+                HipId = model.HipId,
                 Visits = new List<Visit>()
             };
 
@@ -228,8 +231,10 @@ namespace HIMS.Services.AbhaIntegration
                         Speciality = row["Speciality"].ToString()
                     },
 
-                    StartDate = Convert.ToDateTime(row["StartDate"]),
-                    EndDate = Convert.ToDateTime(row["EndDate"]),
+                    //StartDate = Convert.ToDateTime(row["StartDate"]),
+                    //EndDate = Convert.ToDateTime(row["EndDate"]),
+                    StartDate = row["StartDate"] == DBNull.Value ? null : Convert.ToDateTime(row["StartDate"]),
+                    EndDate = row["EndDate"] == DBNull.Value ? null : Convert.ToDateTime(row["EndDate"]),
                     Status = row["Status"].ToString(),
                     VisitType = row["VisitType"].ToString(),
 
@@ -239,7 +244,7 @@ namespace HIMS.Services.AbhaIntegration
 
                         Code = new EncounterCodeDetails
                         {
-                            HospitalId = row["HospitalId"].ToString(),
+                            HospitalId = model.HipId,
                             Category = row["Category"].ToString(),
                             Url = row["EncounterUrl"].ToString(),
                             Code = row["EncounterCode"].ToString(),
