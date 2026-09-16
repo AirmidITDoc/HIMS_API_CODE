@@ -46,4 +46,27 @@ namespace HIMS.API.Models.AbhaIntegration
         public string comment { get; set; }
     }
 
+    public class PatientEncounterRequest
+    {
+        public PatientModel Patient { get; set; }
+        public string VisitId { get; set; }
+        public string HipId { get; set; }
+        public List<string> Types { get; set; }
+    }
+
+    public class PatientModel
+    {
+        public string PatientRegistrationNumber { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Gender { get; set; }
+        public string Mobile { get; set; }
+        public string Email { get; set; }
+        public string HealthId { get; set; }
+        public string HealthIdNumber { get; set; }
+        public string DayOfBirth { get; set; }
+        public string MonthOfBirth { get; set; }
+        public string YearOfBirth { get; set; }
+    }
+
 }

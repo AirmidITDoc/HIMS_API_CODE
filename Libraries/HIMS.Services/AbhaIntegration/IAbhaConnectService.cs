@@ -1,9 +1,10 @@
-﻿using System;
+﻿using HIMS.Data.DTO.AbhaIntegration;
+using HIMS.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HIMS.Data.Models;
 
 namespace HIMS.Services.AbhaIntegration
 {
@@ -13,5 +14,7 @@ namespace HIMS.Services.AbhaIntegration
         Task InsertAsync(TAbhaCallbackformation obj);
         Task<object> AuthenticateUserAsync();
         Task<string> CareContextAsync(object model, string jwtToken);
+
+        Task<List<PatientVisitResponse>> GetPatientVisitsAsync(int visitId);
     }
 }

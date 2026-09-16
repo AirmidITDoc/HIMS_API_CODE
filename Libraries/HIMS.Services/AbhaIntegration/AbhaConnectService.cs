@@ -1,11 +1,16 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.AbhaIntegration;
+using HIMS.Data.Models;
+using HIMS.Services.AbhaIntegration;
+using HIMS.Services.Common;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System.Data;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Transactions;
-using HIMS.Services.AbhaIntegration;
 
 namespace HIMS.Services.AbhaIntegration
 {
@@ -14,12 +19,14 @@ namespace HIMS.Services.AbhaIntegration
 
         private readonly IConfiguration _configuration;
         private readonly HIMSDbContext _context;
+        private readonly ICommonService _ICommonService;
         //private readonly IAbhaConnectService _abhaConnectService;
-        public AbhaConnectService(IConfiguration configuration, HIMSDbContext context //, IAbhaConnectService abhaConnectService
+        public AbhaConnectService(IConfiguration configuration, HIMSDbContext context, ICommonService ICommonService //, IAbhaConnectService abhaConnectService
             )
         {
             _configuration = configuration;
             _context = context;
+            _ICommonService = ICommonService;
             //_abhaConnectService = abhaConnectService;
         }
         public async Task<object> InitiateClient(object model)
@@ -127,7 +134,7 @@ namespace HIMS.Services.AbhaIntegration
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
             //HIP ID header
-            request.Headers.Add("X-HIP-ID", model.hipId);
+            request.Headers.Add("X-HIP-ID", "AIRMIDABHA");
 
             //            Serialize request model
             var jsonContent = JsonSerializer.Serialize(model);
@@ -153,6 +160,98 @@ namespace HIMS.Services.AbhaIntegration
             return responseObject;
         }
 
+
+
+
+        public async Task<List<PatientVisitResponse>> GetPatientVisitsAsync(int visitId)
+        {
+            string sp = "ps_GetPatientVisitDetails";
+
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para =
+            {
+               new SqlParameter
+                {
+                    ParameterName = "@VisitId",
+                    Value = visitId
+                }
+            };
+
+            DataSet ds = sql.FetchDataSetBySP(sp, para);
+
+            List<PatientVisitResponse> result = new();
+
+            if (ds == null || ds.Tables.Count < 2 || ds.Tables[0].Rows.Count == 0)
+                return result;
+
+            DataRow patientRow = ds.Tables[0].Rows[0];
+
+            PatientVisitResponse response = new()
+            {
+                Patient = new Patient
+                {
+                    PatientRegistrationNumber = patientRow["PatientRegistrationNumber"].ToString(),
+                    FirstName = patientRow["FirstName"].ToString(),
+                    LastName = patientRow["LastName"].ToString(),
+                    Gender = patientRow["Gender"].ToString(),
+                    Mobile = patientRow["Mobile"].ToString(),
+                    Email = patientRow["Email"].ToString(),
+                    HealthId = patientRow["HealthId"].ToString(),
+                    HealthIdNumber = patientRow["HealthIdNumber"].ToString(),
+                    DayOfBirth = patientRow["DayOfBirth"].ToString(),
+                    MonthOfBirth = patientRow["MonthOfBirth"].ToString(),
+                    YearOfBirth = patientRow["YearOfBirth"].ToString(),
+                    HipId = patientRow["HipId"].ToString()
+                },
+
+                HipId = patientRow["HipId"].ToString(),
+
+                Visits = new List<Visit>()
+            };
+
+            foreach (DataRow row in ds.Tables[1].Rows)
+            {
+                response.Visits.Add(new Visit
+                {
+                    VisitNumber = row["VisitNumber"].ToString(),
+                    VisitReason = row["VisitReason"].ToString(),
+
+                    Doctor = new Doctor
+                    {
+                        Id = row["DoctorId"].ToString(),
+                        FirstName = row["DoctorFirstName"].ToString(),
+                        LastName = row["DoctorLastName"].ToString(),
+                        Prefix = row["DoctorPrefix"].ToString(),
+                        Designation = row["Designation"].ToString(),
+                        Degree = row["Degree"].ToString(),
+                        Speciality = row["Speciality"].ToString()
+                    },
+
+                    StartDate = Convert.ToDateTime(row["StartDate"]),
+                    EndDate = Convert.ToDateTime(row["EndDate"]),
+                    Status = row["Status"].ToString(),
+                    VisitType = row["VisitType"].ToString(),
+
+                    EncounterCode = new EncounterCode
+                    {
+                        Text = row["EncounterText"].ToString(),
+
+                        Code = new EncounterCodeDetails
+                        {
+                            HospitalId = row["HospitalId"].ToString(),
+                            Category = row["Category"].ToString(),
+                            Url = row["EncounterUrl"].ToString(),
+                            Code = row["EncounterCode"].ToString(),
+                            Display = row["EncounterDisplay"].ToString()
+                        }
+                    }
+                });
+            }
+
+            result.Add(response);
+            return result;
+        }
 
     }
 }
