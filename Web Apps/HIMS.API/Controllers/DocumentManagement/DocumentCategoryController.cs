@@ -74,6 +74,7 @@ namespace HIMS.API.Controllers.DocumentManagement
 
                 data.Icon = obj.Icon;
                 data.DocCategory = obj.DocCategory;
+                data.SortOrder = obj.SortOrder;
                 await _repository.Update(data, CurrentUserId, CurrentUserName,null);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
