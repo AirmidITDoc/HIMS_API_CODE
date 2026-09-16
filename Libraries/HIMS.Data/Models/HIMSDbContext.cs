@@ -60,7 +60,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<EmployeeMasterDetail> EmployeeMasterDetails { get; set; } = null!;
         public virtual DbSet<EmployeeUnitMapping> EmployeeUnitMappings { get; set; } = null!;
         public virtual DbSet<FileMaster> FileMasters { get; set; } = null!;
-        public virtual DbSet<MFoodItemMaster> FoodItemMasters { get; set; } = null!;
         public virtual DbSet<GeTIpPrescriptionItemDet> GeTIpPrescriptionItemDets { get; set; } = null!;
         public virtual DbSet<GeTTPrescriptionItemDet> GeTTPrescriptionItemDets { get; set; } = null!;
         public virtual DbSet<GeniusBufferresult> GeniusBufferresults { get; set; } = null!;
@@ -463,6 +462,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<TCustomerPayment> TCustomerPayments { get; set; } = null!;
         public virtual DbSet<TDeathCertificate> TDeathCertificates { get; set; } = null!;
         public virtual DbSet<TDialysi> TDialyses { get; set; } = null!;
+        public virtual DbSet<TDietPatReqDetail> TDietPatReqDetails { get; set; } = null!;
+        public virtual DbSet<TDietPatientRequestHeader> TDietPatientRequestHeaders { get; set; } = null!;
         public virtual DbSet<TDiscApprovalDetail> TDiscApprovalDetails { get; set; } = null!;
         public virtual DbSet<TDiscCaseSheet> TDiscCaseSheets { get; set; } = null!;
         public virtual DbSet<TDiscountTransactionHistory> TDiscountTransactionHistories { get; set; } = null!;
@@ -684,7 +685,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -13109,6 +13110,58 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
 
                 entity.Property(e => e.TechinicianName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<TDietPatReqDetail>(entity =>
+            {
+                entity.HasKey(e => e.DietReqDetId);
+
+                entity.ToTable("T_DietPatReqDetails");
+
+                entity.Property(e => e.CancelledReason).HasMaxLength(255);
+
+                entity.Property(e => e.Comments).HasMaxLength(255);
+
+                entity.Property(e => e.IsAcceptedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsDelivedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OrderTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.DietReq)
+                    .WithMany(p => p.TDietPatReqDetails)
+                    .HasForeignKey(d => d.DietReqId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_DietPatReqDetails_T_DietPatientRequestHeader");
+            });
+
+            modelBuilder.Entity<TDietPatientRequestHeader>(entity =>
+            {
+                entity.HasKey(e => e.DietReqId);
+
+                entity.ToTable("T_DietPatientRequestHeader");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.DietReqNo).HasMaxLength(50);
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Time).HasColumnType("datetime");
+
+                entity.Property(e => e.UnitId).HasColumnName("UnitID");
             });
 
             modelBuilder.Entity<TDiscApprovalDetail>(entity =>

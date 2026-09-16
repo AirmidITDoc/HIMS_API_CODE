@@ -7,6 +7,7 @@ using HIMS.API.Models.Canteen;
 using HIMS.API.Models.Common;
 using HIMS.API.Models.Customer;
 using HIMS.API.Models.Diet;
+using HIMS.API.Models.DietKitchen;
 using HIMS.API.Models.DoctorPayout;
 using HIMS.API.Models.DocumentManagement;
 using HIMS.API.Models.Employee;
@@ -118,7 +119,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<MOtSubSpecialtyMaster, SubSpecialtyMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MOtSpecialtyMaster, SpecialtyMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MFoodItemMaster, FoodItemMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            
+            CreateMap<TDietPatReqDetail, DietPatientRequestDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TDietPatientRequestHeader, DietPatientRequestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 
