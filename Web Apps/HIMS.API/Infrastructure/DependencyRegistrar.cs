@@ -12,6 +12,7 @@ using HIMS.Services.Audit;
 using HIMS.Services.Canteen;
 using HIMS.Services.Common;
 using HIMS.Services.Dashboard;
+using HIMS.Services.DietKitchen;
 using HIMS.Services.DoctorPayout;
 using HIMS.Services.DocumentManagement;
 using HIMS.Services.FeedBack;
