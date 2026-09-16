@@ -5,6 +5,7 @@ using HIMS.API.Models.AbhaIntegration;
 using HIMS.API.Models.MRD;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.AbhaIntegration;
 using HIMS.Data.Models;
 using HIMS.Services.AbhaIntegration;
 using Microsoft.AspNetCore.Mvc;
@@ -52,7 +53,7 @@ namespace HIMS.API.Controllers.AbhaIntegration
         {
             TAbhaCallbackformation model = obj.MapTo<TAbhaCallbackformation>();
             await _abhaConnectService.InsertAsync(model);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.TransactionId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.AbhaNumber,model.SbxId);
         }
 
         [HttpPost("authenticateUser")]
@@ -96,6 +97,26 @@ namespace HIMS.API.Controllers.AbhaIntegration
                      //errMessage = result.errMessage
                  }
              );
+        }
+
+        [HttpGet("GetPatientEncounterDetails")]
+        public async Task<ApiResponse> GetPatientVisits(int visitId)
+        {
+            try
+            {
+                var result = await _abhaConnectService.GetPatientVisitsAsync(visitId);
+
+                return ApiResponseHelper.GenerateResponse(
+                    ApiStatusCode.Status200OK,
+                    "Patient visit details fetched successfully.",
+                    result);
+            }
+            catch (Exception ex)
+            {
+                return ApiResponseHelper.GenerateResponse(
+                    ApiStatusCode.Status500InternalServerError,
+                    ex.Message);
+            }
         }
     }
 }
