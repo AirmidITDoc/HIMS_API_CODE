@@ -39,7 +39,7 @@ namespace HIMS.Services.DocumentManagement
                       };
             return await qry.Take(count).ToListAsync();
         }
-        public virtual async Task<List<DocumentFile>> GEtDocumentsByCategoryAndAdmissionId(long AdmissionId,int CategoryId)
+        public virtual async Task<List<DocumentFile>> GetDocumentsByCategoryAndAdmissionId(long AdmissionId,int CategoryId)
         {
             var qry = from d in _context.DocumentFiles
                       join a in _context.Admissions on d.AdmissionId equals a.AdmissionId
@@ -53,6 +53,24 @@ namespace HIMS.Services.DocumentManagement
                           DocNo = d.DocNo,
                           FileKind = d.FileKind,
                           FileSize = d.FileSize,
+                      };
+            return await qry.ToListAsync();
+        }
+        public virtual async Task<List<DocumentFile>> GetDocumentsByPatientId(long PatientId)
+        {
+            var qry = from d in _context.DocumentFiles
+                      join a in _context.Admissions on d.AdmissionId equals a.AdmissionId
+                      join c in _context.DocumentCategories on d.DocCatId equals c.Id
+                      where a.RegId == PatientId
+                      select new DocumentFile()
+                      {
+                          CategoryName = c.DocCategory,
+                          OrgFileName = d.OrgFileName,
+                          FileTags = d.FileTags,
+                          DocNo = d.DocNo,
+                          FileKind = d.FileKind,
+                          FileSize = d.FileSize,
+                          DocCatId=d.DocCatId
                       };
             return await qry.ToListAsync();
         }
