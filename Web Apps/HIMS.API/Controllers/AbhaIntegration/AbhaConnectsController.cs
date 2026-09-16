@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.AbhaIntegration
         {
             TAbhaCallbackformation model = obj.MapTo<TAbhaCallbackformation>();
             await _abhaConnectService.InsertAsync(model);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.AbhaNumber,model.SbxId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model);
         }
 
         [HttpPost("authenticateUser")]
@@ -99,12 +99,12 @@ namespace HIMS.API.Controllers.AbhaIntegration
              );
         }
 
-        [HttpGet("GetPatientEncounterDetails")]
-        public async Task<ApiResponse> GetPatientVisits(int visitId)
+        [HttpPost("GetPatientEncounterDetails")]
+        public async Task<ApiResponse> GetPatientVisits(PatientVisitRequest model)
         {
             try
             {
-                var result = await _abhaConnectService.GetPatientVisitsAsync(visitId);
+                var result = await _abhaConnectService.GetPatientVisitsAsync(model);
 
                 return ApiResponseHelper.GenerateResponse(
                     ApiStatusCode.Status200OK,
