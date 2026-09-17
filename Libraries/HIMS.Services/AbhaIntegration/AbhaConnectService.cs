@@ -253,7 +253,192 @@ namespace HIMS.Services.AbhaIntegration
                     }
                 });
             }
+            DatabaseHelper sql1 = new();
+            DataSet prescriptionDs = sql1.FetchDataSetBySP(
+      "ps_GetPrescriptionPayload",
+      new SqlParameter[]
+      {
+        new SqlParameter
+        {
+            ParameterName = "@OpIpId",
+            Value = model.OpIpId
+        },
+        new SqlParameter
+        {
+            ParameterName = "@OpIpType",
+            Value = model.OpIpType
+        }
+      }
+  );
+            // Diagnosis
+            if (prescriptionDs != null &&
+                prescriptionDs.Tables.Count > 0 &&
+                prescriptionDs.Tables[0].Rows.Count > 0)
+            {
+                response.Diagnoses = new List<Diagnosis>();
 
+                foreach (DataRow row in prescriptionDs.Tables[0].Rows)
+                {
+                    response.Diagnoses.Add(new Diagnosis
+                    {
+                        Summary = row["DiagnosisSummary"].ToString(),
+
+                        ConditionCode = new ConditionCode
+                        {
+                            Text = row["DiagnosisConditionText"].ToString(),
+
+                            Code = new CodeDetails
+                            {
+                                HospitalId = model.HipId,
+                                Category = row["ConditionCategory"].ToString(),
+                                Url = row["ConditionUrl"].ToString(),
+                                Code = row["ConditionCode"].ToString(),
+                                Display = row["DiagnosisConditionText"].ToString()
+                            }
+                        },
+
+                        RecordedDate = row["RecordedDate"].ToString()
+                    });
+                }
+            }
+
+            // Chief Complaints
+            if (prescriptionDs != null &&
+                prescriptionDs.Tables.Count > 1 &&
+                prescriptionDs.Tables[1].Rows.Count > 0)
+            {
+                response.ChiefComplaints = new List<ChiefComplaint>();
+
+                foreach (DataRow row in prescriptionDs.Tables[1].Rows)
+                {
+                    response.ChiefComplaints.Add(new ChiefComplaint
+                    {
+                        Summary = row["Summary"].ToString(),
+
+                        ConditionCode = new ConditionCode
+                        {
+                            Text = row["ConditionText"].ToString(),
+
+                            Code = new CodeDetails
+                            {
+                                HospitalId = model.HipId,
+                                Category = row["ConditionCategory"].ToString(),
+                                Url = row["ConditionUrl"].ToString(),
+                                Code = row["ConditionCode"].ToString(),
+                                Display = row["ConditionText"].ToString()
+                            }
+                        },
+
+                        RecordedDate = row["RecordedDate"].ToString()
+                    });
+                }
+            }
+
+
+            // Prescriptions
+            if (prescriptionDs != null &&
+                prescriptionDs.Tables.Count > 2 &&
+                prescriptionDs.Tables[2].Rows.Count > 0)
+            {
+                response.Prescriptions = new List<Prescription>();
+
+                foreach (DataRow row in prescriptionDs.Tables[2].Rows)
+                {
+                    response.Prescriptions.Add(new Prescription
+                    {
+                        Status = row["Status"].ToString(),
+                        Intent = row["Intent"].ToString(),
+                        AuthoredOn = row["AuthoredOn"].ToString(),
+
+                        Drug = new Drug
+                        {
+                            DrugCode = new DrugCode
+                            {
+                                Text = row["DrugText"].ToString(),
+
+                                Code = new CodeDetails
+                                {
+                                    HospitalId = model.HipId,
+                                    Category = row["DrugCategory"].ToString(),
+                                    Url = row["DrugUrl"].ToString(),
+                                    Code = row["DrugCode"].ToString(),
+                                    Display = row["DrugDisplay"].ToString()
+                                }
+                            }
+                        },
+
+                        Manufacturer = row["Manufacturer"].ToString(),
+
+                        Brand = row["Brand"].ToString() == "1" ||
+                                row["Brand"].ToString().ToLower() == "true",
+
+                        Reason = new Reason
+                        {
+                            Text = row["ReasonText"].ToString(),
+
+                            Code = new CodeDetails
+                            {
+                                HospitalId = model.HipId,
+                                Category = row["ReasonCategory"].ToString(),
+                                Url = row["ReasonUrl"].ToString(),
+                                Code = row["ReasonCode"].ToString(),
+                                Display = row["ReasonDisplay"].ToString()
+                            }
+                        },
+
+                        Dosage = new Dosage
+                        {
+                            Text = row["DosageText"].ToString(),
+
+                            AdditionalInstruction = new AdditionalInstruction
+                            {
+                                Text = row["AdditionalInstructionText"].ToString(),
+
+                                Code = new CodeDetails
+                                {
+                                    HospitalId = model.HipId,
+                                    Category = row["InstructionCategory"].ToString(),
+                                    Url = row["InstructionUrl"].ToString(),
+                                    Code = row["InstructionCode"].ToString(),
+                                    Display = row["InstructionDisplay"].ToString()
+                                }
+                            },
+
+                            Frequency = row["Frequency"].ToString(),
+                            Period = row["Period"].ToString(),
+                            PeriodUnit = row["PeriodUnit"].ToString(),
+
+                            Route = new Route
+                            {
+                                Text = row["RouteText"].ToString(),
+
+                                Code = new CodeDetails
+                                {
+                                    HospitalId = model.HipId,
+                                    Category = row["RouteCategory"].ToString(),
+                                    Url = row["RouteUrl"].ToString(),
+                                    Code = row["RouteCode"].ToString(),
+                                    Display = row["RouteDisplay"].ToString()
+                                }
+                            },
+
+                            Method = new Method
+                            {
+                                Text = row["MethodText"].ToString(),
+
+                                Code = new CodeDetails
+                                {
+                                    HospitalId = model.HipId,
+                                    Category = row["MethodCategory"].ToString(),
+                                    Url = row["MethodUrl"].ToString(),
+                                    Code = row["MethodCode"].ToString(),
+                                    Display = row["MethodDisplay"].ToString()
+                                }
+                            }
+                        }
+                    });
+                }
+            }
             result.Add(response);
             return result;
         }
