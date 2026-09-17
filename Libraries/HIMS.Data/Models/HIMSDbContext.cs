@@ -7050,17 +7050,9 @@ namespace HIMS.Data.Models
                 entity.HasIndex(e => e.CategoryCode, "UQ_M_DietCategoryMaster_CategoryCode")
                     .IsUnique();
 
-                entity.Property(e => e.DietCategoryId).ValueGeneratedNever();
-
-                entity.Property(e => e.Active)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
                 entity.Property(e => e.CategoryCode).HasMaxLength(100);
 
                 entity.Property(e => e.CategoryName).HasMaxLength(255);
-
-                entity.Property(e => e.CreatedBy).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
@@ -7620,8 +7612,6 @@ namespace HIMS.Data.Models
 
                 entity.HasIndex(e => e.FoodCategoryCode, "UQ_M_FoodCategoryMaster_Code")
                     .IsUnique();
-
-                entity.Property(e => e.FoodCategoryId).ValueGeneratedNever();
 
                 entity.Property(e => e.Active)
                     .IsRequired()
@@ -13148,6 +13138,10 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.DietReqId);
 
                 entity.ToTable("T_DietPatientRequestHeader");
+
+                entity.Property(e => e.CancelledReason)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
