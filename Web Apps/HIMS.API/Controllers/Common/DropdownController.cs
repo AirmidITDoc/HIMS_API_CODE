@@ -119,6 +119,12 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MLoginAccessConfig> _MLoginAccessConfig;
         private readonly IGenericService<MOtSpecialtyMaster> _MOtSpecialtyMaster;
         private readonly IGenericService<MOtSubSpecialtyMaster> _MOtSubSpecialtyMaster;
+        private readonly IGenericService<MFoodCategoryMaster> _MFoodCategoryMaster;
+        private readonly IGenericService<MMealTypeMaster> _MMealTypeMaster;
+        private readonly IGenericService<MDietMenuMaster> _MDietMenuMaster;
+
+
+
 
 
 
@@ -183,7 +189,13 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MExternalDoctorMaster> MExternalDoctorMaster,
                               IGenericService<MLoginAccessConfig> MLoginAccessConfig,
                               IGenericService<MOtSpecialtyMaster> MOtSpecialtyMaster,
-                              IGenericService<MOtSubSpecialtyMaster> MOtSubSpecialtyMaster
+                              IGenericService<MOtSubSpecialtyMaster> MOtSubSpecialtyMaster,
+                              IGenericService<MFoodCategoryMaster> MFoodCategoryMaster,
+                              IGenericService<MMealTypeMaster> MMealTypeMaster,
+                              IGenericService<MDietMenuMaster> MDietMenuMaster
+
+
+
 
 
                              )
@@ -291,6 +303,13 @@ namespace HIMS.API.Controllers.Common
             _MLoginAccessConfig = MLoginAccessConfig;
             _MOtSpecialtyMaster = MOtSpecialtyMaster;
             _MOtSubSpecialtyMaster = MOtSubSpecialtyMaster;
+            _MFoodCategoryMaster = MFoodCategoryMaster;
+            _MMealTypeMaster = MMealTypeMaster;
+            _MDietMenuMaster = MDietMenuMaster;
+
+
+
+
 
 
 
@@ -518,9 +537,11 @@ namespace HIMS.API.Controllers.Common
                 "LoginAccessConfig" => (await _MLoginAccessConfig.GetAll()).ToList() .ToDropDown(nameof(MLoginAccessConfig.LoginConfigId), nameof(MLoginAccessConfig.AccessValueId)),
                 "MOtSpecialtyMaster" => (await _MOtSpecialtyMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSpecialtyMaster.SpecialtyId), nameof(MOtSpecialtyMaster.SpecialtyName)),
                 "MOtSubSpecialtyMaster" => (await _MOtSubSpecialtyMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSpecialtyMaster.SpecialtyId), nameof(MOtSubSpecialtyMaster.SubSpecialtyName)),
+                "MFoodCategoryMaster" => (await _MFoodCategoryMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MFoodCategoryMaster.FoodCategoryId), nameof(MFoodCategoryMaster.FoodCategoryName)),
+                "MMealTypeMaster" => (await _MMealTypeMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MMealTypeMaster.MealId), nameof(MMealTypeMaster.MealName)),
+                "MDietMenuMaster" => (await _MDietMenuMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MDietMenuMaster.DietMenuId), nameof(MDietMenuMaster.DietMenuName)),
 
-
-                _ => new List<SelectListItem>()
+                             _ => new List<SelectListItem>()
             };
             return Result.Select(x => new { x.Value, x.Text }).ToResponse("Get Data Successfully.");
         }
