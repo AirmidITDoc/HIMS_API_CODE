@@ -24,7 +24,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MDietTypeMaster> DietTypeMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
         //Add API
         [HttpPost]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Post(DietTypeMasterModel obj)
         {
             MDietTypeMaster model = obj.MapTo<MDietTypeMaster>();
@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
        
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(DietTypeMasterModel obj)
         {
             MDietTypeMaster model = obj.MapTo<MDietTypeMaster>();
@@ -81,7 +81,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
         //Delete API
         [HttpDelete]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             MDietTypeMaster model = await _repository.GetById(x => x.DietTypeId == Id);
