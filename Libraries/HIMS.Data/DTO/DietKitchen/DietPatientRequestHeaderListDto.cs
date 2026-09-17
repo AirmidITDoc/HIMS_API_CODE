@@ -21,9 +21,14 @@ namespace HIMS.Data.DTO.DietKitchen
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
+        public string UserName { get; set; }
+        public string ModifiedUser { get; set; }
+        public string CancelUser { get; set; }
+
     }
     public class DietPatientRequestDetailsListDto
     {
+        public long DietReqDetId { get; set; }
         public long DietReqId { get; set; }
         public DateTime Date { get; set; }
         public string? DietReqNo { get; set; }
@@ -62,5 +67,9 @@ namespace HIMS.Data.DTO.DietKitchen
         public long? GenderId { get; set; }
         public string? PatientName { get; set; }
         public string? RoomName { get; set; }
+        public string? UserName { get; set; }
+        public string? CancelledUser { get; set; }
+        public string? IsAcceptedUser { get; set; }
+
     }
 }

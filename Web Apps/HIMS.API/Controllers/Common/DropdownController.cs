@@ -203,10 +203,6 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MDietMenuMaster> MDietMenuMaster,
                               IGenericService<MDietTypeMaster> MDietTypeMaster,
 
-
-
-
-                              IGenericService<MOtSubSpecialtyMaster> MOtSubSpecialtyMaster,
                               IGenericService<MFoodItemMaster> MFoodItemMaster,
                               IGenericService<MDietRestrictionMaster> MDietRestrictionMaster,
                               IGenericService<MFeedingRouteMaster> MFeedingRouteMaster,

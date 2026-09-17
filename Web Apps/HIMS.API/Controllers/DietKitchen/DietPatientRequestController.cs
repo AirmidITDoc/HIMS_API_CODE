@@ -32,21 +32,21 @@ namespace HIMS.API.Controllers.DietKitchen
 
         }
         [HttpPost("DietPatientRequestHeaderList")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> DietPatientRequestHeaderList(GridRequestModel objGrid)
         {
             IPagedList<DietPatientRequestHeaderListDto> ReservationAttendingDetailList = await _IDietPatientRequestService.GetListAsync(objGrid);
             return Ok(ReservationAttendingDetailList.ToGridResponse(objGrid, "DietPatientRequestHeader List"));
         }
         [HttpPost("DietPatientRequestDetailsList")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> DietPatientRequestDetailsList(GridRequestModel objGrid)
         {
             IPagedList<DietPatientRequestDetailsListDto> ReservationAttendingDetailList = await _IDietPatientRequestService.GetListDetailsAsync(objGrid);
             return Ok(ReservationAttendingDetailList.ToGridResponse(objGrid, "DietPatientRequestDetails List"));
         }
         [HttpPost("Insert")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Insert(DietPatientRequestModel obj)
         {
             TDietPatientRequestHeader model = obj.MapTo<TDietPatientRequestHeader>();
@@ -75,7 +75,7 @@ namespace HIMS.API.Controllers.DietKitchen
       
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(DietPatientRequestModel obj)
         {
             if (obj.DietReqId == 0)
@@ -99,7 +99,7 @@ namespace HIMS.API.Controllers.DietKitchen
         }
 
         [HttpPost("DietPatientReqHeaderCancel")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Cancel(DietPatientRequestCancel obj)
         {
             TDietPatientRequestHeader model = obj.MapTo<TDietPatientRequestHeader>();
@@ -113,7 +113,7 @@ namespace HIMS.API.Controllers.DietKitchen
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
         [HttpPost("DietPatReqDetailCanel")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Cancels(DietPatientRequestDetailsCancel obj)
         {
             TDietPatReqDetail model = obj.MapTo<TDietPatReqDetail>();
@@ -128,7 +128,7 @@ namespace HIMS.API.Controllers.DietKitchen
         }
 
         [HttpPost("DietPatReqDetailAccept")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Accepts(DietPatientRequestDetailsAccept obj)
         {
             TDietPatReqDetail model = obj.MapTo<TDietPatReqDetail>();
