@@ -170,18 +170,18 @@ namespace HIMS.Services.AbhaIntegration
             DatabaseHelper sql = new();
 
             SqlParameter[] para =
-             {
-                new SqlParameter
-                {
-                    ParameterName = "@OpIpId",
-                    Value = model.OpIpId
-                },
-                new SqlParameter
-                {
-                    ParameterName = "@OpIpType",
-                    Value = model.OpIpType
-                }
-            };
+            {
+        new SqlParameter
+        {
+            ParameterName = "@OpIpId",
+            Value = model.OpIpId
+        },
+        new SqlParameter
+        {
+            ParameterName = "@OpIpType",
+            Value = model.OpIpType
+        }
+    };
 
             DataSet ds = sql.FetchDataSetBySP(sp, para);
 
@@ -209,13 +209,19 @@ namespace HIMS.Services.AbhaIntegration
                     YearOfBirth = patientRow["YearOfBirth"].ToString(),
                     HipId = model.HipId
                 },
+
                 HipId = model.HipId,
+
                 Visits = new List<Visit>()
             };
 
+            // =====================================================
+            // VISITS
+            // =====================================================
+
             foreach (DataRow row in ds.Tables[1].Rows)
             {
-                response.Visits.Add(new Visit
+                Visit visit = new Visit
                 {
                     VisitNumber = row["VisitNumber"].ToString(),
                     VisitReason = row["VisitReason"].ToString(),
@@ -231,10 +237,22 @@ namespace HIMS.Services.AbhaIntegration
                         Speciality = row["Speciality"].ToString()
                     },
 
-                    //StartDate = Convert.ToDateTime(row["StartDate"]),
-                    //EndDate = Convert.ToDateTime(row["EndDate"]),
-                    StartDate = row["StartDate"] == DBNull.Value ? null : Convert.ToDateTime(row["StartDate"]),
-                    EndDate = row["EndDate"] == DBNull.Value ? null : Convert.ToDateTime(row["EndDate"]),
+                    //StartDate = row["StartDate"] == DBNull.Value
+                    //    ? null
+                    //    : Convert.ToDateTime(row["StartDate"]),
+
+                    //EndDate = row["EndDate"] == DBNull.Value
+                    //    ? null
+                    //    : Convert.ToDateTime(row["EndDate"]),
+                    StartDate = row["StartDate"] == DBNull.Value
+    ? ""
+    : Convert.ToDateTime(row["StartDate"]).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
+
+                    EndDate = row["EndDate"] == DBNull.Value
+    ? ""
+    : Convert.ToDateTime(row["EndDate"]).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
+
+
                     Status = row["Status"].ToString(),
                     VisitType = row["VisitType"].ToString(),
 
@@ -250,36 +268,54 @@ namespace HIMS.Services.AbhaIntegration
                             Code = row["EncounterCode"].ToString(),
                             Display = row["EncounterDisplay"].ToString()
                         }
-                    }
-                });
+                    },
+
+                    Diagnosis = new List<Diagnosis>(),
+                    ChiefComplaints = new List<ChiefComplaint>(),
+                    Prescriptions = new List<Prescription>(),
+                    Reports = new List<Reports>()
+                };
+
+                response.Visits.Add(visit);
             }
+
+
+            // =====================================================
+            // SECOND PROCEDURE
+            // =====================================================
+
             DatabaseHelper sql1 = new();
+
             DataSet prescriptionDs = sql1.FetchDataSetBySP(
-      "ps_GetPrescriptionPayload",
-      new SqlParameter[]
-      {
-        new SqlParameter
-        {
-            ParameterName = "@OpIpId",
-            Value = model.OpIpId
-        },
-        new SqlParameter
-        {
-            ParameterName = "@OpIpType",
-            Value = model.OpIpType
-        }
-      }
-  );
-            // Diagnosis
+                "ps_GetPrescriptionPayload",
+                new SqlParameter[]
+                {
+            new SqlParameter
+            {
+                ParameterName = "@OpIpId",
+                Value = model.OpIpId
+            },
+
+            new SqlParameter
+            {
+                ParameterName = "@OpIpType",
+                Value = model.OpIpType
+            }
+                }
+            );
+
+
+            // =====================================================
+            // DIAGNOSIS
+            // =====================================================
+
             if (prescriptionDs != null &&
                 prescriptionDs.Tables.Count > 0 &&
                 prescriptionDs.Tables[0].Rows.Count > 0)
             {
-                response.Diagnoses = new List<Diagnosis>();
-
                 foreach (DataRow row in prescriptionDs.Tables[0].Rows)
                 {
-                    response.Diagnoses.Add(new Diagnosis
+                    response.Visits[0].Diagnosis.Add(new Diagnosis
                     {
                         Summary = row["DiagnosisSummary"].ToString(),
 
@@ -297,21 +333,24 @@ namespace HIMS.Services.AbhaIntegration
                             }
                         },
 
-                        RecordedDate = row["RecordedDate"].ToString()
+                       // RecordedDate = row["RecordedDate"].ToString()
+                        RecordedDate = row["RecordedDate"] == DBNull.Value? null: Convert.ToDateTime(row["RecordedDate"]).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
                     });
                 }
             }
 
-            // Chief Complaints
+
+            // =====================================================
+            // CHIEF COMPLAINTS
+            // =====================================================
+
             if (prescriptionDs != null &&
                 prescriptionDs.Tables.Count > 1 &&
                 prescriptionDs.Tables[1].Rows.Count > 0)
             {
-                response.ChiefComplaints = new List<ChiefComplaint>();
-
                 foreach (DataRow row in prescriptionDs.Tables[1].Rows)
                 {
-                    response.ChiefComplaints.Add(new ChiefComplaint
+                    response.Visits[0].ChiefComplaints.Add(new ChiefComplaint
                     {
                         Summary = row["Summary"].ToString(),
 
@@ -329,26 +368,29 @@ namespace HIMS.Services.AbhaIntegration
                             }
                         },
 
-                        RecordedDate = row["RecordedDate"].ToString()
+                        //RecordedDate = row["RecordedDate"].ToString()
+                         RecordedDate = row["RecordedDate"] == DBNull.Value ? null : Convert.ToDateTime(row["RecordedDate"]).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
                     });
                 }
             }
 
 
-            // Prescriptions
+            // =====================================================
+            // PRESCRIPTIONS
+            // =====================================================
+
             if (prescriptionDs != null &&
                 prescriptionDs.Tables.Count > 2 &&
                 prescriptionDs.Tables[2].Rows.Count > 0)
             {
-                response.Prescriptions = new List<Prescription>();
-
                 foreach (DataRow row in prescriptionDs.Tables[2].Rows)
                 {
-                    response.Prescriptions.Add(new Prescription
+                    response.Visits[0].Prescriptions.Add(new Prescription
                     {
                         Status = row["Status"].ToString(),
                         Intent = row["Intent"].ToString(),
-                        AuthoredOn = row["AuthoredOn"].ToString(),
+                        // AuthoredOn = row["AuthoredOn"].ToString(),
+                        AuthoredOn = row["AuthoredOn"] == DBNull.Value ? null : Convert.ToDateTime(row["AuthoredOn"]).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
 
                         Drug = new Drug
                         {
@@ -364,13 +406,13 @@ namespace HIMS.Services.AbhaIntegration
                                     Code = row["DrugCode"].ToString(),
                                     Display = row["DrugDisplay"].ToString()
                                 }
-                            }
+                            },
+                            Manufacturer = row["Manufacturer"].ToString(),
+
+                            Brand = row["Brand"].ToString() == "1" ||
+                                row["Brand"].ToString().ToLower() == "true"
                         },
 
-                        Manufacturer = row["Manufacturer"].ToString(),
-
-                        Brand = row["Brand"].ToString() == "1" ||
-                                row["Brand"].ToString().ToLower() == "true",
 
                         Reason = new Reason
                         {
@@ -439,7 +481,14 @@ namespace HIMS.Services.AbhaIntegration
                     });
                 }
             }
+
+
+            // =====================================================
+            // FINAL RESULT
+            // =====================================================
+
             result.Add(response);
+
             return result;
         }
 

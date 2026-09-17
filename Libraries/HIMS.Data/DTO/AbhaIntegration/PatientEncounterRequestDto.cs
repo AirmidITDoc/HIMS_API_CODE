@@ -21,9 +21,6 @@ namespace HIMS.Data.DTO.AbhaIntegration
     {
         public Patient Patient { get; set; }
         public List<Visit> Visits { get; set; }
-        public List<Diagnosis> Diagnoses { get; set; }
-        public List<ChiefComplaint> ChiefComplaints { get; set; }
-        public List<Prescription> Prescriptions { get; set; }
         public string HipId { get; set; }
     }
 
@@ -48,11 +45,21 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public string VisitNumber { get; set; }
         public string VisitReason { get; set; }
         public Doctor Doctor { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
         public string Status { get; set; }
         public string VisitType { get; set; }
         public EncounterCode EncounterCode { get; set; }
+        public List<Diagnosis> Diagnosis { get; set; }
+        public List<ChiefComplaint> ChiefComplaints { get; set; }
+        public List<Prescription> Prescriptions { get; set; }
+
+        // keep reports at end
+        public List<Reports> Reports { get; set; }
+    }
+
+    public class Reports
+    {
     }
 
     public class Doctor
@@ -105,8 +112,8 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public string Intent { get; set; }
         public string AuthoredOn { get; set; }
         public Drug Drug { get; set; }
-        public string Manufacturer { get; set; }
-        public bool Brand { get; set; }
+        //public string Manufacturer { get; set; }
+        //public bool Brand { get; set; }
         public Reason Reason { get; set; }
         public Dosage Dosage { get; set; }
     }
@@ -114,6 +121,8 @@ namespace HIMS.Data.DTO.AbhaIntegration
     public class Drug
     {
         public DrugCode DrugCode { get; set; }
+        public string Manufacturer { get; set; }
+        public bool Brand { get; set; }
     }
 
     public class DrugCode
