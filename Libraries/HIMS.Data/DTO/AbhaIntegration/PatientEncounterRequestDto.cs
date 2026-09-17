@@ -45,14 +45,21 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public string VisitNumber { get; set; }
         public string VisitReason { get; set; }
         public Doctor Doctor { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
         public string Status { get; set; }
         public string VisitType { get; set; }
         public EncounterCode EncounterCode { get; set; }
         public List<Diagnosis> Diagnosis { get; set; }
         public List<ChiefComplaint> ChiefComplaints { get; set; }
         public List<Prescription> Prescriptions { get; set; }
+
+        // keep reports at end
+        public List<Reports> Reports { get; set; }
+    }
+
+    public class Reports
+    {
     }
 
     public class Doctor

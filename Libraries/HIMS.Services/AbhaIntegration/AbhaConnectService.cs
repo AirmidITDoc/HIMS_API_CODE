@@ -237,13 +237,21 @@ namespace HIMS.Services.AbhaIntegration
                         Speciality = row["Speciality"].ToString()
                     },
 
+                    //StartDate = row["StartDate"] == DBNull.Value
+                    //    ? null
+                    //    : Convert.ToDateTime(row["StartDate"]),
+
+                    //EndDate = row["EndDate"] == DBNull.Value
+                    //    ? null
+                    //    : Convert.ToDateTime(row["EndDate"]),
                     StartDate = row["StartDate"] == DBNull.Value
-                        ? null
-                        : Convert.ToDateTime(row["StartDate"]),
+    ? ""
+    : Convert.ToDateTime(row["StartDate"]).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
 
                     EndDate = row["EndDate"] == DBNull.Value
-                        ? null
-                        : Convert.ToDateTime(row["EndDate"]),
+    ? ""
+    : Convert.ToDateTime(row["EndDate"]).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
+
 
                     Status = row["Status"].ToString(),
                     VisitType = row["VisitType"].ToString(),
@@ -264,7 +272,8 @@ namespace HIMS.Services.AbhaIntegration
 
                     Diagnosis = new List<Diagnosis>(),
                     ChiefComplaints = new List<ChiefComplaint>(),
-                    Prescriptions = new List<Prescription>()
+                    Prescriptions = new List<Prescription>(),
+                    Reports = new List<Reports>()
                 };
 
                 response.Visits.Add(visit);
@@ -324,7 +333,8 @@ namespace HIMS.Services.AbhaIntegration
                             }
                         },
 
-                        RecordedDate = row["RecordedDate"].ToString()
+                       // RecordedDate = row["RecordedDate"].ToString()
+                        RecordedDate = row["RecordedDate"] == DBNull.Value? null: Convert.ToDateTime(row["RecordedDate"]).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
                     });
                 }
             }
@@ -358,7 +368,8 @@ namespace HIMS.Services.AbhaIntegration
                             }
                         },
 
-                        RecordedDate = row["RecordedDate"].ToString()
+                        //RecordedDate = row["RecordedDate"].ToString()
+                         RecordedDate = row["RecordedDate"] == DBNull.Value ? null : Convert.ToDateTime(row["RecordedDate"]).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
                     });
                 }
             }
@@ -378,7 +389,8 @@ namespace HIMS.Services.AbhaIntegration
                     {
                         Status = row["Status"].ToString(),
                         Intent = row["Intent"].ToString(),
-                        AuthoredOn = row["AuthoredOn"].ToString(),
+                        // AuthoredOn = row["AuthoredOn"].ToString(),
+                        AuthoredOn = row["AuthoredOn"] == DBNull.Value ? null : Convert.ToDateTime(row["AuthoredOn"]).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
 
                         Drug = new Drug
                         {
