@@ -2,6 +2,7 @@
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.AbhaIntegration;
+using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.MRD;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
@@ -117,6 +118,12 @@ namespace HIMS.API.Controllers.AbhaIntegration
                     ApiStatusCode.Status500InternalServerError,
                     ex.Message);
             }
+        }
+        [HttpGet("{id?}")]
+        public async Task<ApiResponse> Get(string id)
+        {
+            var data = await _repository.GetById(x => x.TransactionId == id);
+            return data.ToSingleResponse<TAbhaCallbackformation, AbhaCallbackModel>("Callbackformation");
         }
     }
 }
