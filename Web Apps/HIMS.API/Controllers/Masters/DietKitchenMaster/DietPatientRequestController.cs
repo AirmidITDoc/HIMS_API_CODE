@@ -11,7 +11,7 @@ using HIMS.Services.DietKitchen;
 using HIMS.Services.Transaction;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.DietKitchen
+namespace HIMS.API.Controllers.Masters.DietMaster
 {
 
     [Route("api/v{version:apiVersion}/[controller]")]

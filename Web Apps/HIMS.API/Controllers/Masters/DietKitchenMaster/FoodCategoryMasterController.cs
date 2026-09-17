@@ -14,34 +14,34 @@ using HIMS.Services.DietKitchen;
 using HIMS.Services.Transaction;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HIMS.API.Controllers.DietKitchen
+namespace HIMS.API.Controllers.Masters.DietMaster
 {
 
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
 
-    public class MealTypeMasterController : BaseController
+    public class FoodCategoryMasterController : BaseController
     {
-        private readonly IGenericService<MMealTypeMaster> _repository;
+        private readonly IGenericService<MFoodCategoryMaster> _repository;
 
-        public MealTypeMasterController(IGenericService<MMealTypeMaster> repository)
+        public FoodCategoryMasterController(IGenericService<MFoodCategoryMaster> repository)
         {
             _repository = repository;
         }
         // List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "DietMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MMealTypeMaster> list = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(list.ToGridResponse(objGrid, "Meal Item List"));
+            IPagedList<MFoodCategoryMaster> list = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(list.ToGridResponse(objGrid, "Food Item List"));
         }
 
         // Get By Id API
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "MFoodCategoryMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -49,17 +49,17 @@ namespace HIMS.API.Controllers.DietKitchen
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
 
-            var data = await _repository.GetById(x => x.MealId == id);
-            return data.ToSingleResponse<MMealTypeMaster, MealTypeMasterModel>("FoodItemMaster");
+            var data = await _repository.GetById(x => x.FoodCategoryId == id);
+            return data.ToSingleResponse<MFoodCategoryMaster, FoodCategorymasterModel>("FoodItemMaster");
         }
 
         [HttpPost]
-        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(MealTypeMasterModel obj)
+        //[Permission(PageCode = "MFoodCategoryMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(FoodCategorymasterModel obj)
         {
-            MMealTypeMaster model = obj.MapTo<MMealTypeMaster>();
+            MFoodCategoryMaster model = obj.MapTo<MFoodCategoryMaster>();
             model.Active = true;
-            if (obj.MealId == 0)
+            if (obj.FoodCategoryId == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
@@ -75,12 +75,12 @@ namespace HIMS.API.Controllers.DietKitchen
 
 
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(MealTypeMasterModel obj)
+        //[Permission(PageCode = "MFoodCategoryMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(FoodCategorymasterModel obj)
         {
-            MMealTypeMaster model = obj.MapTo<MMealTypeMaster>();
+            MFoodCategoryMaster model = obj.MapTo<MFoodCategoryMaster>();
             model.Active = true;
-            if (obj.MealId == 0)
+            if (obj.FoodCategoryId == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
@@ -95,11 +95,11 @@ namespace HIMS.API.Controllers.DietKitchen
 
 
         [HttpDelete]
-        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "MFoodCategoryMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(long Id)
         {
-            MMealTypeMaster? model = await _repository.GetById(x => x.MealId == Id);
-            if ((model?.MealId ?? 0) > 0)
+            MFoodCategoryMaster? model = await _repository.GetById(x => x.FoodCategoryId == Id);
+            if ((model?.FoodCategoryId ?? 0) > 0)
             {
                 model!.Active = model.Active == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
