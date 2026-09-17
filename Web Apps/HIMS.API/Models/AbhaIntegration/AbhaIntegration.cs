@@ -15,6 +15,7 @@ namespace HIMS.API.Models.AbhaIntegration
 
     public class AbhaCallbackModel
     {
+        public long? AbhaPatientInformationId { get; set; }
         public string? PatientId { get; set; }
         public string PatientName { get; set; }
         public string SbxId { get; set; }
@@ -68,5 +69,5 @@ namespace HIMS.API.Models.AbhaIntegration
         public string MonthOfBirth { get; set; }
         public string YearOfBirth { get; set; }
     }
-
+    
 }
