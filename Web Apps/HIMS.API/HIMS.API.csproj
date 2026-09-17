@@ -64,7 +64,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\DietKitchen\" />
     <Folder Include="Controllers\NewFolder1\" />
     <Folder Include="DbData\" />
     <Folder Include="Models\Masters\NewFolder\" />
