@@ -128,6 +128,10 @@ namespace HIMS.API.Infrastructure
             CreateMap<TDietPatReqDetail, DietPatientRequestDetailsCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TDietPatReqDetail, DietPatientRequestDetailsAccept>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MDietCategoryMaster, DietCategoryMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MDietRestrictionMaster, DietRestrictionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MFeedingRouteMaster, FeedingRouteModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MFoodPreferenceMaster, FoodPreferenceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MAllergyMaster, AllergyModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
