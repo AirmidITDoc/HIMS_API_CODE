@@ -3,55 +3,63 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Diet;
+using HIMS.API.Models.DietKitchen;
+using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.DietKitchen;
+using HIMS.Services.Transaction;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.DietMaster
 {
+
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class DietRestrictionController : BaseController
-    {
-        private readonly IGenericService<MDietRestrictionMaster> _repository;
 
-        public DietRestrictionController(IGenericService<MDietRestrictionMaster> repository)
+    public class MealTypeMasterController : BaseController
+    {
+        private readonly IGenericService<MMealTypeMaster> _repository;
+
+        public MealTypeMasterController(IGenericService<MMealTypeMaster> repository)
         {
             _repository = repository;
         }
-
         // List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MDietRestrictionMaster> list = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(list.ToGridResponse(objGrid, "Diet Restriction List"));
+            IPagedList<MMealTypeMaster> list = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(list.ToGridResponse(objGrid, "Meal Item List"));
         }
 
         // Get By Id API
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
-            if (id == 0) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
-            var data = await _repository.GetById(x => x.RestrictionId == id);
-            return data.ToSingleResponse<MDietRestrictionMaster, DietRestrictionModel>("DietRestrictionMaster");
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+
+            var data = await _repository.GetById(x => x.MealId == id);
+            return data.ToSingleResponse<MMealTypeMaster, MealTypeMasterModel>("FoodItemMaster");
         }
 
-        // Post / Insert API
         [HttpPost]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(DietRestrictionModel obj)
+        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Post(MealTypeMasterModel obj)
         {
-            MDietRestrictionMaster model = obj.MapTo<MDietRestrictionMaster>();
+            MMealTypeMaster model = obj.MapTo<MMealTypeMaster>();
             model.Active = true;
-            if (obj.RestrictionId == 0)
+            if (obj.MealId == 0)
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
@@ -61,17 +69,18 @@ namespace HIMS.API.Controllers.Masters.DietMaster
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
+
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
-        // Edit / Update API
+
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> Edit(DietRestrictionModel obj)
+        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(MealTypeMasterModel obj)
         {
-            MDietRestrictionMaster model = obj.MapTo<MDietRestrictionMaster>();
+            MMealTypeMaster model = obj.MapTo<MMealTypeMaster>();
             model.Active = true;
-            if (obj.RestrictionId == 0)
+            if (obj.MealId == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
@@ -84,13 +93,13 @@ namespace HIMS.API.Controllers.Masters.DietMaster
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
 
-        // Delete API (Soft Delete / Toggle Status)
+
         [HttpDelete]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(long Id)
         {
-            MDietRestrictionMaster? model = await _repository.GetById(x => x.RestrictionId == Id);
-            if ((model?.RestrictionId ?? 0) > 0)
+            MMealTypeMaster? model = await _repository.GetById(x => x.MealId == Id);
+            if ((model?.MealId ?? 0) > 0)
             {
                 model!.Active = model.Active == true ? false : true;
                 model.ModifiedBy = CurrentUserId;
@@ -103,5 +112,10 @@ namespace HIMS.API.Controllers.Masters.DietMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
         }
+
     }
+
 }
+
+
+

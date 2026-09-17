@@ -12,6 +12,7 @@ using HIMS.Services.Audit;
 using HIMS.Services.Canteen;
 using HIMS.Services.Common;
 using HIMS.Services.Dashboard;
+using HIMS.Services.DietKitchen;
 using HIMS.Services.DoctorPayout;
 using HIMS.Services.DocumentManagement;
 using HIMS.Services.FeedBack;
@@ -245,6 +246,9 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDocumentCategoryService, DocumentCategoryService>();
             services.AddScoped<IDocumentUploadService, DocumentUploadService>();
             services.AddScoped<I_ICDUpdateService, ICDUpdateService>();
+            services.AddScoped<IDietMenuMasterService, DietMenuMasterService>();
+
+
 
 
 

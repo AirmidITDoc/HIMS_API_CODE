@@ -15,6 +15,6 @@ namespace HIMS.Services.AbhaIntegration
         Task<object> AuthenticateUserAsync();
         Task<string> CareContextAsync(object model, string jwtToken);
 
-        Task<List<PatientVisitResponse>> GetPatientVisitsAsync(int visitId);
+        Task<List<PatientVisitResponse>> GetPatientVisitsAsync(PatientVisitRequest model);
     }
 }
