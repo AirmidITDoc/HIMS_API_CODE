@@ -32,6 +32,7 @@ using HIMS.API.Models.TrustMembershipRegistration;
 using HIMS.Data.DTO.Purchase;
 using HIMS.Data.Models;
 using static HIMS.API.Models.Administration.NewTPaymentModel;
+using static HIMS.API.Models.DietKitchen.DietPatientRequestDetailModelValidator;
 using static HIMS.API.Models.GastrologyMasterModel.MSubQuestionMasterModel;
 using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 using static HIMS.API.Models.Masters.CompanyMasterModelValidator;
@@ -121,6 +122,12 @@ namespace HIMS.API.Infrastructure
             CreateMap<MFoodItemMaster, FoodItemMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TDietPatReqDetail, DietPatientRequestDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TDietPatientRequestHeader, DietPatientRequestModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
+            CreateMap<TDietPatientRequestHeader, DietPatientRequestCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TDietPatReqDetail, DietPatientRequestDetailsCancel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TDietPatReqDetail, DietPatientRequestDetailsAccept>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MDietCategoryMaster, DietCategoryMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MDietRestrictionMaster, DietRestrictionModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MFeedingRouteMaster, FeedingRouteModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MFoodPreferenceMaster, FoodPreferenceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

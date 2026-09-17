@@ -3,13 +3,18 @@ using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.DietKitchen;
+using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
+using HIMS.Data.DTO.DietKitchen;
+using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 using HIMS.Services.DietKitchen;
 using HIMS.Services.Transaction;
 using Microsoft.AspNetCore.Mvc;
+using static HIMS.API.Models.DietKitchen.DietPatientRequestDetailModelValidator;
 
 namespace HIMS.API.Controllers.DietKitchen
 {
@@ -26,8 +31,22 @@ namespace HIMS.API.Controllers.DietKitchen
             _IDietPatientRequestService = repository;
 
         }
+        [HttpPost("DietPatientRequestHeaderList")]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        public async Task<IActionResult> DietPatientRequestHeaderList(GridRequestModel objGrid)
+        {
+            IPagedList<DietPatientRequestHeaderListDto> ReservationAttendingDetailList = await _IDietPatientRequestService.GetListAsync(objGrid);
+            return Ok(ReservationAttendingDetailList.ToGridResponse(objGrid, "DietPatientRequestHeader List"));
+        }
+        [HttpPost("DietPatientRequestDetailsList")]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        public async Task<IActionResult> DietPatientRequestDetailsList(GridRequestModel objGrid)
+        {
+            IPagedList<DietPatientRequestDetailsListDto> ReservationAttendingDetailList = await _IDietPatientRequestService.GetListDetailsAsync(objGrid);
+            return Ok(ReservationAttendingDetailList.ToGridResponse(objGrid, "DietPatientRequestDetails List"));
+        }
         [HttpPost("Insert")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        //[Permission]
         public async Task<ApiResponse> Insert(DietPatientRequestModel obj)
         {
             TDietPatientRequestHeader model = obj.MapTo<TDietPatientRequestHeader>();
@@ -35,16 +54,13 @@ namespace HIMS.API.Controllers.DietKitchen
             {
                 foreach (var q in model.TDietPatReqDetails)
                 {
-                    //    q.CreatedBy = CurrentUserId;
-                    //    q.CreatedDate = AppTime.Now;
+                    q.OrderDate = AppTime.Now;
 
                 }
                 foreach (var q in model.TDietPatReqDetails)
                 {
 
                 }
-
-
                 model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
@@ -59,7 +75,7 @@ namespace HIMS.API.Controllers.DietKitchen
       
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
+        //[Permission]
         public async Task<ApiResponse> Edit(DietPatientRequestModel obj)
         {
             if (obj.DietReqId == 0)
@@ -80,6 +96,51 @@ namespace HIMS.API.Controllers.DietKitchen
 
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.DietReqId);
+        }
+
+        [HttpPost("DietPatientReqHeaderCancel")]
+        //[Permission]
+        public async Task<ApiResponse> Cancel(DietPatientRequestCancel obj)
+        {
+            TDietPatientRequestHeader model = obj.MapTo<TDietPatientRequestHeader>();
+            if (obj.DietReqId != 0)
+            {
+                model.DietReqId = obj.DietReqId;
+                await _IDietPatientRequestService.Cancel(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+        [HttpPost("DietPatReqDetailCanel")]
+        //[Permission]
+        public async Task<ApiResponse> Cancels(DietPatientRequestDetailsCancel obj)
+        {
+            TDietPatReqDetail model = obj.MapTo<TDietPatReqDetail>();
+            if (obj.DietReqDetId != 0)
+            {
+                model.DietReqDetId = obj.DietReqDetId;
+                await _IDietPatientRequestService.CancelD(model, CurrentUserId, CurrentUserName);
+            }
+            else
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+
+        [HttpPost("DietPatReqDetailAccept")]
+        //[Permission]
+        public async Task<ApiResponse> Accepts(DietPatientRequestDetailsAccept obj)
+        {
+            TDietPatReqDetail model = obj.MapTo<TDietPatReqDetail>();
+            if (obj.DietReqDetId != 0)
+            {
+                model.DietReqDetId = obj.DietReqDetId;
+                await _IDietPatientRequestService.AcceptD(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Accepted successfully.");
         }
     }
 
