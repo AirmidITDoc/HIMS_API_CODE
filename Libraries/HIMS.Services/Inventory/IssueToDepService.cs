@@ -374,7 +374,7 @@ namespace HIMS.Services.Inventory
 
         public virtual async Task UpdateIndentMaterialAccept(TIssueToDepartmentHeader objIssueToDepartment, List<TIssueToDepartmentDetail> ObjTIssueToDepDetail, List<TIssueToDepartmentDetail> ObjTIssueToDepartmentDetail, List<TCurrentStock> OBjTCurrentStock, TIssueToDepartmentHeader ObjIssueDepartment, TIndentHeader ObjTIndentHeader, List<TIndentDetail> ObjTIndentDetail, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+           // using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
             await using var transaction = await _context.Database.BeginTransactionAsync();
             try

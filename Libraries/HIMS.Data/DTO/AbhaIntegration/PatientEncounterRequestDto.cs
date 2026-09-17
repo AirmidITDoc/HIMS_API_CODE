@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HIMS.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,9 @@ namespace HIMS.Data.DTO.AbhaIntegration
     {
         public Patient Patient { get; set; }
         public List<Visit> Visits { get; set; }
+        public List<Diagnosis> Diagnoses { get; set; }
+        public List<ChiefComplaint> ChiefComplaints { get; set; }
+        public List<Prescription> Prescriptions { get; set; }
         public string HipId { get; set; }
     }
 
@@ -69,6 +73,91 @@ namespace HIMS.Data.DTO.AbhaIntegration
     }
 
     public class EncounterCodeDetails
+    {
+        public string HospitalId { get; set; }
+        public string Category { get; set; }
+        public string Url { get; set; }
+        public string Code { get; set; }
+        public string Display { get; set; }
+    }
+    public class Diagnosis
+    {
+        public string Summary { get; set; }
+        public ConditionCode ConditionCode { get; set; }
+        public string RecordedDate { get; set; }
+    }
+    public class ChiefComplaint
+    {
+        public string Summary { get; set; }
+        public ConditionCode ConditionCode { get; set; }
+        public string RecordedDate { get; set; }
+    }
+
+    public class ConditionCode
+    {
+        public string Text { get; set; }
+        public CodeDetails Code { get; set; }
+    }
+
+    public class Prescription
+    {
+        public string Status { get; set; }
+        public string Intent { get; set; }
+        public string AuthoredOn { get; set; }
+        public Drug Drug { get; set; }
+        public string Manufacturer { get; set; }
+        public bool Brand { get; set; }
+        public Reason Reason { get; set; }
+        public Dosage Dosage { get; set; }
+    }
+
+    public class Drug
+    {
+        public DrugCode DrugCode { get; set; }
+    }
+
+    public class DrugCode
+    {
+        public string Text { get; set; }
+        public CodeDetails Code { get; set; }
+    }
+
+    public class Reason
+    {
+        public string Text { get; set; }
+        public CodeDetails Code { get; set; }
+    }
+
+    public class Dosage
+    {
+        public string Text { get; set; }
+        public AdditionalInstruction AdditionalInstruction { get; set; }
+        public string Frequency { get; set; }
+        public string Period { get; set; }
+        public string PeriodUnit { get; set; }
+        public Route Route { get; set; }
+        public Method Method { get; set; }
+    }
+
+    public class AdditionalInstruction
+    {
+        public string Text { get; set; }
+        public CodeDetails Code { get; set; }
+    }
+
+    public class Route
+    {
+        public string Text { get; set; }
+        public CodeDetails Code { get; set; }
+    }
+
+    public class Method
+    {
+        public string Text { get; set; }
+        public CodeDetails Code { get; set; }
+    }
+
+    public class CodeDetails
     {
         public string HospitalId { get; set; }
         public string Category { get; set; }

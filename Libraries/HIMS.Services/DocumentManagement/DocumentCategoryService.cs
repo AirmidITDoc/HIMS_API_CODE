@@ -70,7 +70,7 @@ namespace HIMS.Services.DocumentManagement
         }
         public async Task<List<DocumentCategoryDto>> GetTreeAsync(int Id)
         {
-            var list = await _context.DocumentCategories.Where(x => x.IsActive && !x.IsDeleted).OrderBy(x => x.SortOrder).Select(x => new DocumentCategoryDto
+            var list = await _context.DocumentCategories.Where(x => x.IsActive && !x.IsDeleted).OrderBy(x => x.SortOrder == null).ThenBy(x => x.SortOrder).ThenBy(x => x.DocCategory).Select(x => new DocumentCategoryDto
             {
                 Id = x.Id,
                 ParentId = x.ParentId,

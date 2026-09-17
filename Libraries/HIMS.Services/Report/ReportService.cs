@@ -11032,6 +11032,7 @@ StringBuilder diagnosisInformation = new StringBuilder();
 
                         html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
                         string drugName = dt.GetColValue("DrugName").ConvertToString();
+                        html = html.Replace("{{chkMedicine}}",!string.IsNullOrWhiteSpace(drugName) ? "table-row" : "none");
 
                         if (!string.IsNullOrWhiteSpace(drugName))
                         {
@@ -11177,7 +11178,7 @@ StringBuilder diagnosisInformation = new StringBuilder();
 
                         html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
                         string drugName = dt.GetColValue("DrugName").ConvertToString();
-
+                        html = html.Replace("{{chkMedicine}}", !string.IsNullOrWhiteSpace(drugName) ? "table-row" : "none");
                         if (!string.IsNullOrWhiteSpace(drugName))
                         {
                             // Drug is available -> Show Prescription Doctor
@@ -11329,7 +11330,7 @@ StringBuilder diagnosisInformation = new StringBuilder();
 
                         html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
                         string drugName = dt.GetColValue("DrugName").ConvertToString();
-
+                        html = html.Replace("{{chkMedicine}}", !string.IsNullOrWhiteSpace(drugName) ? "table-row" : "none");
 
                         if (!string.IsNullOrWhiteSpace(drugName))
                         {
@@ -11525,7 +11526,7 @@ StringBuilder diagnosisInformation = new StringBuilder();
                         html = html.Replace("{{chkSignature}}", dt.GetColValue("Signature").ConvertToString() != "" ? "table-row" : "none");
 
                         string drugName = dt.GetColValue("DrugName").ConvertToString();
-
+                        html = html.Replace("{{chkMedicine}}", !string.IsNullOrWhiteSpace(drugName) ? "table-row" : "none");
                         if (!string.IsNullOrWhiteSpace(drugName))
                         {
                             // Drug is available -> Show Prescription Doctor
