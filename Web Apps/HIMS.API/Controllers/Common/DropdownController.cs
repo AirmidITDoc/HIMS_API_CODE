@@ -128,6 +128,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MFoodPreferenceMaster> _MFoodPreferenceMaster;
         private readonly IGenericService<MAllergyMaster> _MAllergyMaster;
 
+        private readonly IGenericService<MDietTypeMaster> _MDietTypeMaster;
 
 
 
@@ -199,7 +200,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MOtSubSpecialtyMaster> MOtSubSpecialtyMaster,
                               IGenericService<MFoodCategoryMaster> MFoodCategoryMaster,
                               IGenericService<MMealTypeMaster> MMealTypeMaster,
-                              IGenericService<MDietMenuMaster> MDietMenuMaster
+                              IGenericService<MDietMenuMaster> MDietMenuMaster,
+                              IGenericService<MDietTypeMaster> MDietTypeMaster,
+
 
 
 
@@ -320,9 +323,11 @@ namespace HIMS.API.Controllers.Common
             _MFoodCategoryMaster = MFoodCategoryMaster;
             _MMealTypeMaster = MMealTypeMaster;
             _MDietMenuMaster = MDietMenuMaster;
+            _MDietTypeMaster = MDietTypeMaster;
 
 
 
+            
 
 
 
@@ -564,6 +569,7 @@ namespace HIMS.API.Controllers.Common
                 "FeedingRoute" => (await _MFeedingRouteMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MFeedingRouteMaster.FeedingRouteId), nameof(MFeedingRouteMaster.FeedingRouteName)),
                 "FoodPreference" => (await _MFoodPreferenceMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MFoodPreferenceMaster.FoodPreferenceId), nameof(MFoodPreferenceMaster.FoodPreferenceName)),
                 "Allergy" => (await _MAllergyMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MAllergyMaster.AllergyId), nameof(MAllergyMaster.AllergyName)),
+                "MDietTypeMaster" => (await _MDietTypeMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MDietTypeMaster.DietTypeId), nameof(MDietTypeMaster.DietName)),
 
                              _ => new List<SelectListItem>()
             };
