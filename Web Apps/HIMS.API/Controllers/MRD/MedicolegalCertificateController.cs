@@ -54,6 +54,24 @@ namespace HIMS.API.Controllers.MRD
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", model);
         }
+        ////Add API
+        //[HttpPost]
+        ////[Permission]
+        //public async Task<ApiResponse> Post(MedicolegalCertificateModel obj)
+        //{
+        //    TMedicolegalCertificate model = obj.MapTo<TMedicolegalCertificate>();
+        //    //model.IsActive = true;
+        //    if (obj.DocId == 0)
+        //    {
+        //        model.AddedBy = CurrentUserId;
+        //        model.Mlcdate = AppTime.Now;
+        //        model.Mlctime = AppTime.Now;
+        //        await _IMedicolegalCertificateService.InsertAsync(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.", model);
+        //}
         //Edit API
         [HttpPut("{id:int}")]
         //[Permission]

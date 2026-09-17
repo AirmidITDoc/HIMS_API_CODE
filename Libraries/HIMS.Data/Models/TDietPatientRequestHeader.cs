@@ -23,6 +23,7 @@ namespace HIMS.Data.Models
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
+        public string? CancelledReason { get; set; }
 
         public virtual ICollection<TDietPatReqDetail> TDietPatReqDetails { get; set; }
     }
