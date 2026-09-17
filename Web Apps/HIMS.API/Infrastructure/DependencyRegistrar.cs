@@ -246,6 +246,9 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDocumentCategoryService, DocumentCategoryService>();
             services.AddScoped<IDocumentUploadService, DocumentUploadService>();
             services.AddScoped<I_ICDUpdateService, ICDUpdateService>();
+            services.AddScoped<IDietMenuMasterService, DietMenuMasterService>();
+
+
 
 
 
