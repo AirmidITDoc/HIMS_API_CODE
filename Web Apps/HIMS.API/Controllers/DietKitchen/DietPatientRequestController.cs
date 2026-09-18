@@ -142,6 +142,22 @@ namespace HIMS.API.Controllers.DietKitchen
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Accepted successfully.");
         }
+
+        [HttpPost("DietPatReqDetailDelivered")]
+        [Permission]
+        public async Task<ApiResponse> deliver(DietPatientRequestDetailsdeliver obj)
+        {
+            TDietPatReqDetail model = obj.MapTo<TDietPatReqDetail>();
+            if (obj.DietReqDetId != 0)
+            {
+                model.DietReqDetId = obj.DietReqDetId;
+                await _IDietPatientRequestService.deliver(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Delivered successfully.");
+        }
     }
 
 }
