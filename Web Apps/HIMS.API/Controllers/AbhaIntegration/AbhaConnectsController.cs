@@ -10,6 +10,7 @@ using HIMS.Data.DTO.AbhaIntegration;
 using HIMS.Data.Models;
 using HIMS.Services.AbhaIntegration;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 using System.Text.Json;
 
 namespace HIMS.API.Controllers.AbhaIntegration
@@ -105,20 +106,48 @@ namespace HIMS.API.Controllers.AbhaIntegration
         {
             try
             {
+                var authResult = await _abhaConnectService.AuthenticateUserAsync();
+                var authJson = JsonSerializer.Serialize(authResult);
+                var authObj = JsonSerializer.Deserialize<JsonElement>(authJson);
+
+                var responseData = authObj.GetProperty("ResponseData");
+                string jwtToken = responseData.GetProperty("jwttoken").ToString();
+
                 var result = await _abhaConnectService.GetPatientVisitsAsync(model);
 
-                return ApiResponseHelper.GenerateResponse(
-                    ApiStatusCode.Status200OK,
-                    "Patient visit details fetched successfully.",
-                    result);
+                string jsonPayload = JsonSerializer.Serialize(
+                    result,
+                    new JsonSerializerOptions
+                    {
+                        WriteIndented = true,
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    });
+
+
+                using HttpClient client = new HttpClient();
+
+                client.DefaultRequestHeaders.Add("Authorization",jwtToken);
+                client.DefaultRequestHeaders.Add("X-HIP-ID",model.HipId);
+
+                using StringContent content = new StringContent(jsonPayload,Encoding.UTF8,"application/json");
+
+                HttpResponseMessage externalResponse = await client.PostAsync("https://kanaad.co.in/wrapper/hospital/patientEncounterDetails",content);
+
+                string responseContent =await externalResponse.Content.ReadAsStringAsync();
+
+                if (externalResponse.IsSuccessStatusCode) 
+                { 
+                    var externalData = JsonSerializer.Deserialize<JsonElement>(responseContent); 
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient encounter details fetched successfully.", externalData); 
+                } 
+                return ApiResponseHelper.GenerateResponse( (ApiStatusCode)(int)externalResponse.StatusCode, responseContent);
             }
             catch (Exception ex)
             {
-                return ApiResponseHelper.GenerateResponse(
-                    ApiStatusCode.Status500InternalServerError,
-                    ex.Message);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, ex.Message);
             }
         }
+
         [HttpGet("{id?}")]
         public async Task<ApiResponse> Get(string id)
         {
