@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace HIMS.Services.AbhaIntegration
@@ -13,7 +14,7 @@ namespace HIMS.Services.AbhaIntegration
         Task<object> InitiateClient(object model);
         Task InsertAsync(TAbhaCallbackformation obj);
         Task<object> AuthenticateUserAsync();
-        Task<string> CareContextAsync(object model, string jwtToken);
+        Task<JsonElement> CareContextAsync(CareContextModel model, string jwtToken);
 
         Task<List<PatientVisitResponse>> GetPatientVisitsAsync(PatientVisitRequest model);
     }

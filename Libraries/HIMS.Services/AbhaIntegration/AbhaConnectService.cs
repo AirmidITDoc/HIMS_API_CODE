@@ -121,43 +121,28 @@ namespace HIMS.Services.AbhaIntegration
             };
         }
 
-        public async Task<string> CareContextAsync(Object model, string jwtToken)
+        public async Task<JsonElement> CareContextAsync(CareContextModel model, string jwtToken)
         {
             var url = _configuration["ABDMIntegration:LinkCareContextUrl"];
 
             using var client = new HttpClient();
 
-            using var request = new HttpRequestMessage(HttpMethod.Post, url);
+            using var request = new HttpRequestMessage(HttpMethod.Post,url);
 
-            //Authorization header
-
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-
-            //HIP ID header
+            request.Headers.TryAddWithoutValidation("Authorization",jwtToken);
             request.Headers.Add("X-HIP-ID", "AIRMIDABHA");
-
-            //            Serialize request model
             var jsonContent = JsonSerializer.Serialize(model);
 
-            request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            request.Content = new StringContent(jsonContent,Encoding.UTF8,"application/json");
 
-            //          Send request
             var response = await client.SendAsync(request);
-
             var result = await response.Content.ReadAsStringAsync();
 
-            response.EnsureSuccessStatusCode();
-
-            //        Capture Kanaad response
-            var responseObject =
-                JsonSerializer.Deserialize<string>(
-                    result,
-                    new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
-
-            return responseObject;
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(result);
+            }
+            return JsonSerializer.Deserialize<JsonElement>(result);
         }
 
 
