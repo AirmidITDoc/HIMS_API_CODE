@@ -17,6 +17,8 @@ namespace HIMS.Services.DietKitchen
         Task Cancel(TDietPatientRequestHeader ObjTDietPatientRequestHeader, int UserId, string Username);
         Task CancelD(TDietPatReqDetail ObjTDietPatReqDetail, int UserId, string Username);
         Task AcceptD(TDietPatReqDetail ObjTDietPatReqDetail, int UserId, string Username);
+        Task deliver(TDietPatReqDetail ObjTDietPatReqDetail, int UserId, string Username);
+
         Task<IPagedList<DietPatientRequestHeaderListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<DietPatientRequestDetailsListDto>> GetListDetailsAsync(GridRequestModel objGrid);
 

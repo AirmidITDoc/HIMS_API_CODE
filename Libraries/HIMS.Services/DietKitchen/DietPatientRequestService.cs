@@ -202,5 +202,39 @@ namespace HIMS.Services.DietKitchen
                 throw;
             }
         }
+        public virtual async Task deliver(TDietPatReqDetail ObjTDietPatReqDetail, int CurrentUserId, string CurrentUserName)
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
+                string[] Entity = { "DietReqDetId", "IsDelived", "IsDelivedBy" };
+                var entity = ObjTDietPatReqDetail.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!Entity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+
+                odal.ExecuteNonQueryNew("PS_DietPatReqDetailsDeliverd", CommandType.StoredProcedure, "", entity);
+                await _context.LogProcedureExecution(entity, nameof(TDietPatReqDetail), (int)ObjTDietPatReqDetail.DietReqDetId, Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
+
+                // Save audit log changes
+                await _context.SaveChangesAsync();
+
+                // Commit transaction
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                // Rollback transaction on error
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
     }
 }

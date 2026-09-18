@@ -89,6 +89,13 @@ namespace HIMS.API.Models.DietKitchen
             public long? IsAcceptedBy { get; set; }
             public DateTime? IsAcceptedDateTime { get; set; }
         }
+        public class DietPatientRequestDetailsdeliver
+        {
+            public long DietReqDetId { get; set; }
+            public bool? IsDelived { get; set; }
+            public long? IsDelivedBy { get; set; }
+            public DateTime? IsDelivedDateTime { get; set; }
+        }
     }
 }
 
