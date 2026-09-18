@@ -25,10 +25,12 @@ namespace HIMS.API.Controllers.AbhaIntegration
     {
         private readonly IAbhaConnectService _abhaConnectService;
         private readonly IGenericService<TAbhaCallbackformation> _repository;
-        public AbhaConnectsController(IAbhaConnectService abhaConnectService, IGenericService<TAbhaCallbackformation> repository)
+        private readonly IConfiguration _configuration;
+        public AbhaConnectsController(IAbhaConnectService abhaConnectService, IGenericService<TAbhaCallbackformation> repository, IConfiguration configuration)
         {
             _abhaConnectService = abhaConnectService; 
             _repository = repository;
+            _configuration = configuration;
         }
 
         [HttpPost("InitiateClient")]
@@ -124,8 +126,9 @@ namespace HIMS.API.Controllers.AbhaIntegration
                 client.DefaultRequestHeaders.Add("X-HIP-ID",model.HipId);
 
                 using StringContent content = new StringContent(jsonPayload,Encoding.UTF8,"application/json");
+                var EncounterUrl = _configuration["ABDMIntegration:PatientEncounterUrl"];
 
-                HttpResponseMessage externalResponse = await client.PostAsync("https://kanaad.co.in/wrapper/hospital/patientEncounterDetails",content);
+                HttpResponseMessage externalResponse = await client.PostAsync(EncounterUrl,content);
 
                 string responseContent =await externalResponse.Content.ReadAsStringAsync();
 
