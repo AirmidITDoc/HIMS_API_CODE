@@ -118,6 +118,8 @@ namespace HIMS.ABHA.Models.M2
         public Subject[]? ReasonReference { get; set; }
         [JsonPropertyName("dosageInstruction")]
         public Dosageinstruction[]? DosageInstruction { get; set; }
+        [JsonPropertyName("dispenseRequest")]
+        public DoseQuantity? DispenseRequest { get; set; }
         [JsonPropertyName("code")]
         public Code? Code { get; set; }
         [JsonPropertyName("recordedDate")]
@@ -126,6 +128,10 @@ namespace HIMS.ABHA.Models.M2
         public string? ContentType { get; set; }
         [JsonPropertyName("data")]
         public string? Data { get; set; }
+        [JsonPropertyName("participant")]
+        public Participant[]? Participant { get; set; }
+        [JsonPropertyName("serviceProvider")]
+        public Custodian ServiceProvider { get; set; }
     }
 
     public class Meta1
@@ -142,6 +148,8 @@ namespace HIMS.ABHA.Models.M2
     {
         [JsonPropertyName("coding")]
         public Security[]? Coding { get; set; }
+        [JsonPropertyName("text")]
+        public string Text { get; set; }
     }
 
     public class Subject
@@ -175,6 +183,11 @@ namespace HIMS.ABHA.Models.M2
         public string? Display { get; set; }
     }
 
+    public class Participant
+    {
+        [JsonPropertyName("individual")]
+        public Custodian Individual { get; set; }
+    }
     public class Period
     {
         [JsonPropertyName("start")]
@@ -227,6 +240,10 @@ namespace HIMS.ABHA.Models.M2
         public Timing? Timing { get; set; }
         [JsonPropertyName("route")]
         public Route? Route { get; set; }
+        [JsonPropertyName("doseQuantity")]
+        public DoseQuantity[]? DoseQuantity { get; set; }
+        [JsonPropertyName("patientInstruction")]
+        public string PatientInstruction { get; set; }
         [JsonPropertyName("method")]
         public Route? Method { get; set; }
     }
@@ -257,5 +274,12 @@ namespace HIMS.ABHA.Models.M2
         public Class1[]? Coding { get; set; }
         [JsonPropertyName("text")]
         public string? Text { get; set; }
+    }
+    public class DoseQuantity
+    {
+        [JsonPropertyName("value")]
+        public long Value { get; set; }
+        [JsonPropertyName("unit")]
+        public string Unit { get; set; }
     }
 }

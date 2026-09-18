@@ -19,6 +19,13 @@ namespace HIMS.API.Controllers.ABHA.M2
 
             return Ok(result);
         }
+        [HttpGet("prescription-new/{registrationId}")]
+        public async Task<IActionResult> GetPrescriptionNew(string registrationId)
+        {
+            var result = await _fhirService.CreatePrescriptionBundleNew(registrationId);
+
+            return Ok(result);
+        }
 
     }
 }

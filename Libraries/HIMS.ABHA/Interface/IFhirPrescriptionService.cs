@@ -10,5 +10,6 @@ namespace HIMS.ABHA.Interface
     public interface IFhirPrescriptionService
     {
         Task<Binary> CreatePrescriptionBundle(string registrationId);
+        Task<Binary> CreatePrescriptionBundleNew(string registrationId);
     }
 }
