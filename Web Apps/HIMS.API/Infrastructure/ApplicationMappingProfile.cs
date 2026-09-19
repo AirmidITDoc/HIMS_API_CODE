@@ -78,6 +78,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<TCurrentStock, UpdateCurrentStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TMedicolegalCertificate, MedicolegalCertificateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TDeathCertificate, DeathCertificateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TMlcinformation, MedicolegalCertificateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TMedicolegalCertificate, MedicolegalCertificateUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TMlcinformation, MedicolegalCertificateUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             CreateMap<TGrnreturnHeader, GRNUpdatedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

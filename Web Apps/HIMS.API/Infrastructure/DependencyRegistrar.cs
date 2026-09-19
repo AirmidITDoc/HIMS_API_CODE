@@ -222,13 +222,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDoseMasterService, DoseMasterService>();
             services.AddScoped<ILabPatientAddresService, LabPatientAddresService>();
             services.AddScoped<IDietPatientRequestService, DietPatientRequestService>();
-
-
-
-
-
-
-
+            services.AddScoped<IMedicolegalCertificateService, MedicolegalCertificateService>();
 
             services.AddScoped<I_MRDCertificate, MRDService>();
             services.AddScoped<IOPBillingService, OPBillingService>();

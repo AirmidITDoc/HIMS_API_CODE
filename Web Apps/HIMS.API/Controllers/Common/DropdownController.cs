@@ -129,8 +129,10 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MAllergyMaster> _MAllergyMaster;
 
         private readonly IGenericService<MDietTypeMaster> _MDietTypeMaster;
+        private readonly IGenericService<MDietCategoryMaster> _MDietCategoryMaster;
 
 
+        
 
 
 
@@ -207,7 +209,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MDietRestrictionMaster> MDietRestrictionMaster,
                               IGenericService<MFeedingRouteMaster> MFeedingRouteMaster,
                               IGenericService<MFoodPreferenceMaster> MFoodPreferenceMaster,
-                              IGenericService<MAllergyMaster> MAllergyMaster
+                              IGenericService<MAllergyMaster> MAllergyMaster,
+                              IGenericService<MDietCategoryMaster> MDietCategoryMaster
+
 
 
 
@@ -320,18 +324,13 @@ namespace HIMS.API.Controllers.Common
             _MMealTypeMaster = MMealTypeMaster;
             _MDietMenuMaster = MDietMenuMaster;
             _MDietTypeMaster = MDietTypeMaster;
-
-
-
-            
-
-
-
             _MFoodItemMaster = MFoodItemMaster;
             _MDietRestrictionMaster = MDietRestrictionMaster;
             _MFeedingRouteMaster = MFeedingRouteMaster;
             _MFoodPreferenceMaster = MFoodPreferenceMaster;
             _MAllergyMaster = MAllergyMaster;
+            _MDietCategoryMaster = MDietCategoryMaster;
+
 
 
 
@@ -566,8 +565,9 @@ namespace HIMS.API.Controllers.Common
                 "FoodPreference" => (await _MFoodPreferenceMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MFoodPreferenceMaster.FoodPreferenceId), nameof(MFoodPreferenceMaster.FoodPreferenceName)),
                 "Allergy" => (await _MAllergyMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MAllergyMaster.AllergyId), nameof(MAllergyMaster.AllergyName)),
                 "MDietTypeMaster" => (await _MDietTypeMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MDietTypeMaster.DietTypeId), nameof(MDietTypeMaster.DietName)),
+                "DietCategoryMaster" => (await _MDietCategoryMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDietCategoryMaster.DietCategoryId), nameof(MDietCategoryMaster.CategoryName)),
 
-                             _ => new List<SelectListItem>()
+                _ => new List<SelectListItem>()
             };
             return Result.Select(x => new { x.Value, x.Text }).ToResponse("Get Data Successfully.");
         }
