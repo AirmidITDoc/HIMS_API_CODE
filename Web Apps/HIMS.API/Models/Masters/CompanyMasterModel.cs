@@ -41,10 +41,10 @@ namespace HIMS.API.Models.Masters
         public CompanyMasterModelValidator()
         {
             RuleFor(x => x.CompanyName).NotNull().NotEmpty().WithMessage("Company is required");
-            //RuleFor(x => x.Address).NotNull().NotEmpty().WithMessage("Address is required");
-            //RuleFor(x => x.PinNo).NotNull().NotEmpty().WithMessage("PinNo is required");
-            //RuleFor(x => x.PhoneNo).NotNull().NotEmpty().WithMessage("PhoneNo is required");
-            //RuleFor(x => x.FaxNo).NotNull().NotEmpty().WithMessage("FaxNo is required");
+            RuleFor(x => x.Address).NotNull().NotEmpty().WithMessage("Address is required");
+            RuleFor(x => x.PinNo).NotNull().NotEmpty().WithMessage("PinNo is required");
+            RuleFor(x => x.PhoneNo).NotNull().NotEmpty().WithMessage("PhoneNo is required");
+            RuleFor(x => x.FaxNo).NotNull().NotEmpty().WithMessage("FaxNo is required");
             RuleFor(x => x.TraiffId).NotNull().NotEmpty().WithMessage("TraiffId is required");
         }
     }

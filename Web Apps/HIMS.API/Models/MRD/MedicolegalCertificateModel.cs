@@ -23,6 +23,7 @@ namespace HIMS.API.Models.MRD
         public long? AddedBy { get; set; }
 
 
+<<<<<<< HEAD
         //Changes Below for TMlcinformation table
 
         public long Mlcid { get; set; }
@@ -41,6 +42,8 @@ namespace HIMS.API.Models.MRD
 
 
 
+=======
+>>>>>>> a435b02efed54778d3933431e16e11cd479f8f1a
     }
     public class MedicolegalCertificateModelValidator : AbstractValidator<MedicolegalCertificateModel>
     {

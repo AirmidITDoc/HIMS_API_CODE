@@ -7,8 +7,7 @@ namespace HIMS.API.Models.TrustMembershipRegistration
     public class TrustMembershipRegModel
     {
         public long MembershipId { get; set; }
-        public string? MembershipNo { get; set; }
-        public string? FemaleMembershipNo { get; set; }
+        public string MembershipNo { get; set; } = null!;
         public DateTime MembershipDate { get; set; }
         public string? MembershipTime { get; set; }
         public long HprefixId { get; set; }
@@ -96,14 +95,7 @@ namespace HIMS.API.Models.TrustMembershipRegistration
         public string? WfamilyDoctorContact { get; set; }
         public string? WresidenceAddress { get; set; }
         public bool? Wresidencetype { get; set; }
-        public long? HconsultDoctorId { get; set; }
-        public long? FamilyDoctorId { get; set; }
-        public long? WconsultDoctorId { get; set; }
-        public long? WfamilyDoctorId { get; set; }
-        public string? HusbandMobileNo { get; set; }
-        public string? WifeMobileNo { get; set; }
-        public string? HConsultDoctorContact { get; set; }
-        public string? WConsultDoctorContact { get; set; }
+
         public List<MembershipChildModel>? TMembershipChildren { get; set; }
         public List<MembershipEmrgencyModel>? TMembershipEmrgencies { get; set; }
         public List<MembershipRelativeModel>? TMembershipRelatives { get; set; }
@@ -112,17 +104,17 @@ namespace HIMS.API.Models.TrustMembershipRegistration
     {
         public TrustMembershipRegModelValidator()
         {
-            //RuleFor(x => x.MembershipNo).NotNull().NotEmpty().WithMessage("MembershipNo is required");
+            RuleFor(x => x.MembershipNo).NotNull().NotEmpty().WithMessage("MembershipNo is required");
             RuleFor(x => x.MembershipDate).NotNull().NotEmpty().WithMessage("MembershipDate is required");
             RuleFor(x => x.MembershipTime).NotNull().NotEmpty().WithMessage("MembershipTime  is required");
             //RuleFor(x => x.HusbandDob).NotNull().NotEmpty().WithMessage(" HusbandDob required");
             //RuleFor(x => x.HusbandFullBodyCheckupDate).NotNull().NotEmpty().WithMessage("HusbandFullBodyCheckupDate is required");
             //RuleFor(x => x.WifeFullBodyCheckupDate).NotNull().NotEmpty().WithMessage("WifeFullBodyCheckupDate is required");
-            //RuleFor(x => x.CityId).NotNull().NotEmpty().WithMessage("CityId is required");
-            //RuleFor(x => x.CityName).NotNull().NotEmpty().WithMessage("CityName is required");
+            RuleFor(x => x.CityId).NotNull().NotEmpty().WithMessage("CityId is required");
+            RuleFor(x => x.CityName).NotNull().NotEmpty().WithMessage("CityName is required");
             //RuleFor(x => x.NativePlace).NotNull().NotEmpty().WithMessage("NativePlace is required");
-            //RuleFor(x => x.DeclarationDate).NotNull().NotEmpty().WithMessage("DeclarationDate is required");
-            //RuleFor(x => x.ReceiptDate).NotNull().NotEmpty().WithMessage("ReceiptDate is required");
+            RuleFor(x => x.DeclarationDate).NotNull().NotEmpty().WithMessage("DeclarationDate is required");
+            RuleFor(x => x.ReceiptDate).NotNull().NotEmpty().WithMessage("ReceiptDate is required");
 
         }
     }

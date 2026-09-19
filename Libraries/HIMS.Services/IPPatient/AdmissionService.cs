@@ -1,7 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -462,11 +461,6 @@ namespace HIMS.Services.IPPatient
                 throw;
             }
 
-        }
-        public virtual async Task<IPagedList<PreviousAdmissionDetails>> GeIPPreviousDrVisitListAsync(GridRequestModel model)
-        {
-
-            return await DatabaseHelper.GetGridDataBySp<PreviousAdmissionDetails>(model, "ps_Rtrv_AdmissionPreviousDoctorVisitList");
         }
     }
 }
