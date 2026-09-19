@@ -5,6 +5,7 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 
 namespace HIMS.Services.Inventory
@@ -70,10 +71,16 @@ namespace HIMS.Services.Inventory
             await _context.LogProcedureExecution(Bentity, "StockAdjutment-GSTAdjustment", ObjTGstadjustment.GstadgId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
         }
-        public virtual void MrpAdjustmentUpdate(TMrpAdjustment ObjTMrpAdjustment, TCurrentStock ObjTCurrentStock, int UserId, string Username)
+        public virtual async Task  MrpAdjustmentUpdate(TMrpAdjustment ObjTMrpAdjustment, TCurrentStock ObjTCurrentStock, int CurrentUserId, string CurrentUserName)
         {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            DatabaseHelper odal = new();
+            try
+            {
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+              
             string[] rEntity = { "MrpAdjId" };
             var Mentity = ObjTMrpAdjustment.ToDictionary();
             foreach (var rProperty in rEntity)
@@ -81,6 +88,9 @@ namespace HIMS.Services.Inventory
                 Mentity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("PS_insert_T_MrpAdjustment_1", CommandType.StoredProcedure, Mentity);
+
+                await _context.LogProcedureExecution(Mentity, nameof(TMrpAdjustment), ObjTMrpAdjustment.MrpAdjId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
 
             string[] Entity = { "OpeningBalance", "ReceivedQty", "IssueQty", "BalanceQty", "VatPercentage", "BatchExpDate", "PurUnitRateWf", "Cgstper", "Sgstper", "Igstper", "BarCodeSeqNo", "IstkId", "GrnRetQty", "IssDeptQty", "PurUnitRate" };
             var Uentity = ObjTCurrentStock.ToDictionary();
@@ -93,6 +103,20 @@ namespace HIMS.Services.Inventory
             Uentity["OldUnitPur"] = 0; // Ensure objpayment
             Uentity["OldUnitLanded"] = 0; // Ensure objpayment
             odal.ExecuteNonQuery("m_Update_Item_MRPAdjustment_New", CommandType.StoredProcedure, Uentity);
+                await _context.LogProcedureExecution(Uentity, nameof(TCurrentStock), ObjTCurrentStock.StockId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+             
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                // Commit Transaction
+                await transaction.CommitAsync();
+
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
     }
 }

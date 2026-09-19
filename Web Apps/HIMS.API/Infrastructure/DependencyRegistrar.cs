@@ -222,6 +222,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IDoseMasterService, DoseMasterService>();
             services.AddScoped<ILabPatientAddresService, LabPatientAddresService>();
             services.AddScoped<IDietPatientRequestService, DietPatientRequestService>();
+            services.AddScoped<IMealtypemasterService, MealtypemasterService>();
+
 
 
 
