@@ -160,18 +160,4 @@
         public string? UserName { get; set; }
         public DateTime? IsCancelledDateTime { get; set; }
     }
-
-    public class PreviousAdmissionDetails
-    {
-        public long AdmissionID { get; set; }
-        public long RegID { get; set; }
-        public DateTime AdmissionTime { get; set; }
-        public string IPDNo { get; set; }
-        public string DepartmentName { get; set; }
-        public string DoctorName { get; set; }
-        public string PatientType { get; set; }
-        public string RoomName { get; set; }
-        public long DepartmentId { get; set; }
-        public long DoctorId { get; set; }
-    }
 }

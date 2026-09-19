@@ -21,24 +21,6 @@ namespace HIMS.API.Models.MRD
         public long? TreatingDoctorId2 { get; set; }
         public long? DepartmentId { get; set; }
 
-        //Changes Below for TMlcinformation table
-
-        //public long Mlcid { get; set; }
-        //public long? AdmissionId { get; set; }
-        //public bool? IsEmgOrAdm { get; set; }
-        //public string? Mlcno { get; set; }
-        //public DateTime? ReportingDate { get; set; }
-        //public string? ReportingTime { get; set; }
-        //public string? AuthorityName { get; set; }
-        //public string? BuckleNo { get; set; }
-        //public string? PoliceStation { get; set; }
-        //public string? DetailGiven { get; set; }
-        //public string? Remark { get; set; }
-
-
-
-
-
     }
     public class MedicolegalCertificateModelValidator : AbstractValidator<MedicolegalCertificateModel>
     {

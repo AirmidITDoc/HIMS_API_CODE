@@ -19,22 +19,18 @@ namespace HIMS.API.Controllers.Masters.OtTableMaster
     public class OtTableMasterController : BaseController
     {
         private readonly IGenericService<MOttableMaster> _repository;
-        private readonly IGenericService<LvwOttableMasterList> _listRepository;
-        public OtTableMasterController(IGenericService<MOttableMaster> repository,
-            IGenericService<LvwOttableMasterList> listRepository)
+        public OtTableMasterController(IGenericService<MOttableMaster> repository)
         {
             _repository = repository;
-            _listRepository = listRepository;
         }
 
-        // List API
         [HttpPost]
         [Route("[action]")]
         [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<LvwOttableMasterList> list = await _listRepository.GetAllPagedAsync(objGrid);
-            return Ok(list.ToGridResponse(objGrid, "ottable List"));
+            IPagedList<MOttableMaster> MOttableMasterList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(MOttableMasterList.ToGridResponse(objGrid, "ottable List"));
         }
 
         [HttpGet("{id?}")]

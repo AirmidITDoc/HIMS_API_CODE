@@ -35,7 +35,6 @@ namespace HIMS.ABHA
             services.AddScoped<IDataTransferService, DataTransferService>();
             services.AddScoped<IAbdmAuthService, AbdmAuthService>();
             services.AddScoped<IHipLinkingService, HipLinkingService>();
-            services.AddScoped<IFhirPrescriptionService, FhirPrescriptionService>();
 
             return services;
         }

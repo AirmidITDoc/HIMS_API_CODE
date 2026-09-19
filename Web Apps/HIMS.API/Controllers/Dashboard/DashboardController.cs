@@ -70,10 +70,10 @@ namespace HIMS.API.Controllers.Dashboard
         }
         [HttpGet("DailyDashBoardIPSubModule-dashboard")]
         //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
-        public async Task<ApiResponse> DailyDashBoardIPSubModuleDashBoard(int storId)
+        public async Task<ApiResponse> DailyDashBoardIPSubModuleDashBoard(int UnitId)
         {
             //int UnitId = Context.UnitId;
-            var data = await _IDashboardService.GetDailyDashBoardIPSubModuleDashBoard(storId);
+            var data = await _IDashboardService.GetDailyDashBoardIPSubModuleDashBoard(UnitId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DailyDashBoardIPSubModule DashBoard", data);
         }
 
@@ -133,12 +133,17 @@ namespace HIMS.API.Controllers.Dashboard
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Procurement DashBoard", data);
         }
 
-        [HttpGet("DailyDashBoardOPSubModule-dashboard")]
-        //[Permission(PageCode = "Dashboard", Permission = Permission.View)]
-        public async Task<ApiResponse> DailyDashBoardOPSubModuleDashBoard(int UnitId)
+        [HttpGet("Daily-Dashboard-WeeklySummary")]
+        public async Task<ApiResponse> DailyDashboardWeeklySummary(long StoreId)
         {
-            var data = await _IDashboardService.GetDailyDashBoardOPSubModuleDashBoard(UnitId);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DailyDashBoard OP SubModule DashBoard", data); 
+            var data = await _IDashboardService.GetDailyDashboardWeeklySummary(StoreId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Daily Dashboard Weekly Summary", data);
+        }
+        [HttpGet("Daily-Dashboard-Pharmacy-Dashboard")]
+        public async Task<ApiResponse> PharmacyDashboard(long StoreId)
+        {
+            var data = await _IDashboardService.GetPharmacyDashboard(StoreId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pharmacy Dashboard", data);
         }
     }
 }

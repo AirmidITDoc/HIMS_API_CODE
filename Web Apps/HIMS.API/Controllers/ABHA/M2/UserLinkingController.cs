@@ -20,9 +20,9 @@ namespace HIMS.API.Controllers.ABHA.M2
             _abhaService = abhaService;
         }
         [HttpPost("on-discover")]
-        public async Task<ApiResponse> OnDiscover([FromBody] OnDiscoverRequestDto req)
+        public async Task<ApiResponse> OnDiscover([FromBody] OnDiscoverRequest req)
         {
-            var result = await _abhaService.OnDiscoverAsync(req.transactionId,"","");
+            var result = await _abhaService.OnDiscoverAsync(req);
             if (result.Success)
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service found.", result.Data);
             else
