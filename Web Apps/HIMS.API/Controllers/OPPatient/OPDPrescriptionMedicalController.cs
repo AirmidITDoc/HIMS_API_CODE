@@ -26,6 +26,7 @@ namespace HIMS.API.Controllers.OPPatient
     {
         private readonly IOPDPrescriptionMedicalService _OPDPrescriptionService;
         private readonly IPrescriptionOPTemplateService _PrescriptionOPTemplateService;
+
         private readonly IGenericService<ServiceMaster> _serviceMasterrepository;
         private readonly IGenericService<MOpcasepaperDignosisMaster> _Dignos;
         private readonly IGenericService<MExaminationMaster> _Examination;

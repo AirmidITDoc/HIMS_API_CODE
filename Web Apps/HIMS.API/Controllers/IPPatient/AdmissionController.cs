@@ -8,7 +8,6 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
-using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -186,13 +185,6 @@ namespace HIMS.API.Controllers.IPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
-        [HttpPost("IPprevDoctorVisitList")]
-        public async Task<IActionResult> IPPrevDrVisistList(GridRequestModel objGrid)
-        {
-            IPagedList<PreviousAdmissionDetails> Oplist = await _IAdmissionService.GeIPPreviousDrVisitListAsync(objGrid);
-            return Ok(Oplist.ToGridResponse(objGrid, "IP Previous Dr Visit List"));
-        }
-
 
     }
 }

@@ -27,9 +27,9 @@ namespace HIMS.API.Controllers.DocumentManagement
         [HttpGet]
         [Route("[action]")]
         [Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
-        public async Task<ApiResponse> List(int Id)
+        public async Task<ApiResponse> List()
         {
-            List<DocumentCategoryDto> DocumentCategoryList = await _repository.GetTreeAsync(Id);
+            List<DocumentCategoryDto> DocumentCategoryList = await _repository.GetTreeAsync();
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Category tree retrieved successfully.", DocumentCategoryList);
         }
         //List API Get By Id
@@ -74,7 +74,6 @@ namespace HIMS.API.Controllers.DocumentManagement
 
                 data.Icon = obj.Icon;
                 data.DocCategory = obj.DocCategory;
-                data.SortOrder = obj.SortOrder;
                 await _repository.Update(data, CurrentUserId, CurrentUserName,null);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");

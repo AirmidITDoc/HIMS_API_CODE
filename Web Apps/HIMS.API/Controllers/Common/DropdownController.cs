@@ -117,20 +117,13 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MEmployeeDesignationMaster> _MEmployeeDesignationMaster;
         private readonly IGenericService<MExternalDoctorMaster> _MExternalDoctorMaster;
         private readonly IGenericService<MLoginAccessConfig> _MLoginAccessConfig;
-        private readonly IGenericService<MOtSpecialtyMaster> _MOtSpecialtyMaster;
-        private readonly IGenericService<MOtSubSpecialtyMaster> _MOtSubSpecialtyMaster;
-        private readonly IGenericService<MFoodCategoryMaster> _MFoodCategoryMaster;
-        private readonly IGenericService<MMealTypeMaster> _MMealTypeMaster;
-        private readonly IGenericService<MDietMenuMaster> _MDietMenuMaster;
-        private readonly IGenericService<MFoodItemMaster> _MFoodItemMaster;
-        private readonly IGenericService<MDietRestrictionMaster> _MDietRestrictionMaster;
-        private readonly IGenericService<MFeedingRouteMaster> _MFeedingRouteMaster;
-        private readonly IGenericService<MFoodPreferenceMaster> _MFoodPreferenceMaster;
-        private readonly IGenericService<MAllergyMaster> _MAllergyMaster;
 
+        
         private readonly IGenericService<MDietTypeMaster> _MDietTypeMaster;
+        private readonly IGenericService<MDietCategoryMaster> _MDietCategoryMaster;
 
 
+        
 
 
 
@@ -195,6 +188,7 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MEmployeeDepartmentMaster> MEmployeeDepartmentMaster,
                               IGenericService<MEmployeeDesignationMaster> MEmployeeDesignationMaster,
                               IGenericService<MExternalDoctorMaster> MExternalDoctorMaster,
+                              IGenericService<MLoginAccessConfig> MLoginAccessConfig
                               IGenericService<MLoginAccessConfig> MLoginAccessConfig,
                               IGenericService<MOtSpecialtyMaster> MOtSpecialtyMaster,
                               IGenericService<MOtSubSpecialtyMaster> MOtSubSpecialtyMaster,
@@ -207,7 +201,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MDietRestrictionMaster> MDietRestrictionMaster,
                               IGenericService<MFeedingRouteMaster> MFeedingRouteMaster,
                               IGenericService<MFoodPreferenceMaster> MFoodPreferenceMaster,
-                              IGenericService<MAllergyMaster> MAllergyMaster
+                              IGenericService<MAllergyMaster> MAllergyMaster,
+                              IGenericService<MDietCategoryMaster> MDietCategoryMaster
+
 
 
 
@@ -320,22 +316,17 @@ namespace HIMS.API.Controllers.Common
             _MMealTypeMaster = MMealTypeMaster;
             _MDietMenuMaster = MDietMenuMaster;
             _MDietTypeMaster = MDietTypeMaster;
-
-
-
-            
-
-
-
             _MFoodItemMaster = MFoodItemMaster;
             _MDietRestrictionMaster = MDietRestrictionMaster;
             _MFeedingRouteMaster = MFeedingRouteMaster;
             _MFoodPreferenceMaster = MFoodPreferenceMaster;
             _MAllergyMaster = MAllergyMaster;
+            _MDietCategoryMaster = MDietCategoryMaster;
 
 
 
 
+            
 
 
         }
@@ -370,9 +361,9 @@ namespace HIMS.API.Controllers.Common
                 "RefDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsRefDoc.Value)).Select(x => new
                 {
                     DoctorId = x.DoctorId,
-                    FirstName = x.FirstName + " " + x.MiddleName + " " + x.LastName, Phone = x.Phone// Concatenate FirstName and LastName
+                    FirstName = x.FirstName + " " + x.MiddleName + " " + x.LastName // Concatenate FirstName and LastName
                 })
-                .ToList().ToDropDown("DoctorId", "FirstName", "Phone"),
+                .ToList().ToDropDown("DoctorId", "FirstName"),
 
                 "RMODoctor" => (await _IMDoctorMaster.GetAll(x => x.IsInHouseDoctor.Value)).Select(x => new
                 {
@@ -387,10 +378,10 @@ namespace HIMS.API.Controllers.Common
                 .Select(x => new
                 {
                     DoctorId = x.DoctorId,
-                    FirstName = x.FirstName + " " + x.MiddleName+ " "+ x.LastName, Phone = x.Phone // Concatenate FirstName and LastName
+                    FirstName = x.FirstName + " " + x.MiddleName+ " "+ x.LastName // Concatenate FirstName and LastName
                 })
                 .ToList()
-                .ToDropDown("DoctorId", "FirstName","Phone"), // Use the concatenated FullName for the dropdown
+                .ToDropDown("DoctorId", "FirstName"), // Use the concatenated FullName for the dropdown
 
 
                 //"ConDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsConsultant.Value)).ToList().ToDropDown(nameof(DoctorMaster.DoctorId), nameof(DoctorMaster.FirstName)),
@@ -555,6 +546,7 @@ namespace HIMS.API.Controllers.Common
                 "TrustOccupation" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TrustOccupation")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 //"LoginAccessConfig" => (await _MLoginAccessConfig.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MLoginAccessConfig.LoginConfigId), nameof(MLoginAccessConfig.AccessValueId)),
                 "LoginAccessConfig" => (await _MLoginAccessConfig.GetAll()).ToList() .ToDropDown(nameof(MLoginAccessConfig.LoginConfigId), nameof(MLoginAccessConfig.AccessValueId)),
+
                 "MOtSpecialtyMaster" => (await _MOtSpecialtyMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSpecialtyMaster.SpecialtyId), nameof(MOtSpecialtyMaster.SpecialtyName)),
                 "MOtSubSpecialtyMaster" => (await _MOtSubSpecialtyMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MOtSpecialtyMaster.SpecialtyId), nameof(MOtSubSpecialtyMaster.SubSpecialtyName)),
                 "MFoodCategoryMaster" => (await _MFoodCategoryMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MFoodCategoryMaster.FoodCategoryId), nameof(MFoodCategoryMaster.FoodCategoryName)),
@@ -566,8 +558,9 @@ namespace HIMS.API.Controllers.Common
                 "FoodPreference" => (await _MFoodPreferenceMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MFoodPreferenceMaster.FoodPreferenceId), nameof(MFoodPreferenceMaster.FoodPreferenceName)),
                 "Allergy" => (await _MAllergyMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MAllergyMaster.AllergyId), nameof(MAllergyMaster.AllergyName)),
                 "MDietTypeMaster" => (await _MDietTypeMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MDietTypeMaster.DietTypeId), nameof(MDietTypeMaster.DietName)),
+                "DietCategoryMaster" => (await _MDietCategoryMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDietCategoryMaster.DietCategoryId), nameof(MDietCategoryMaster.CategoryName)),
 
-                             _ => new List<SelectListItem>()
+                _ => new List<SelectListItem>()
             };
             return Result.Select(x => new { x.Value, x.Text }).ToResponse("Get Data Successfully.");
         }

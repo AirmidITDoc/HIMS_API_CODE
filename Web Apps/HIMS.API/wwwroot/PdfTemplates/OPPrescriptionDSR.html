@@ -21,13 +21,12 @@
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr style="font-size: 18px">
-                                <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; "><b>OP PRESCRIPTION</b></td>
                                 <td style="border-bottom: 1px solid #d4c3c3; padding: 2px; padding-bottom: 16px; text-align: right;"><b>Print Date : {{CurrentDate}}</b></td>
                             </tr>
                         </table>
                     </td>
                 </tr>
-                <tr class="bill-info-row;">
+                <tr class="bill-info-row">
                     <td style="padding: 6px;">
                         <table style="width: 100%; border-collapse: collapse;font-size:18px;">
                             <tr>
@@ -79,51 +78,31 @@
                                         </td>
                                     </tr>
                                 </thead>
-                                <tr style="display:{{chkMedicine}};">
-                                    <td style="padding: 6px; font-size: 18px;">
-                                        <span style="font-size: 42px; font-style: italic; vertical-align: middle; padding-right: 10px;">
-                                            ℞
-                                        </span>
-                                    </td>
-                                </tr>
+                                <td style="padding: 6px; font-size: 18px;">
+                                    <span style="font-size: 42px; font-style: italic; vertical-align: middle; padding-right: 10px;">
+                                        ℞
+                                    </span>
+                                </td>
+                                <tr>
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tr style="font-weight:bold;border-top: 1px solid #000;">
+                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">
+                                            </td>
+                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">
+                                                Medicine
+                                            </td>
+                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">
+                                                Dosage
+                                            </td>
+                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">Instruction</td>
+                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">Qty</td>
+                                            <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">Duration</td>
 
-                                <tr style="display:{{chkMedicine}};">
-                                    <td style="padding: 0;">
+                                        </tr>
+                                        {{Items}}
 
-                                        <table style="width: 100%; border-collapse: collapse;">
 
-                                            <tr style="font-weight: bold; border-top: 1px solid #000;">
-
-                                                <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">
-                                                </td>
-
-                                                <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">
-                                                    Medicine
-                                                </td>
-
-                                                <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">
-                                                    Dosage
-                                                </td>
-
-                                                <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">
-                                                    Instruction
-                                                </td>
-
-                                                <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">
-                                                    Qty
-                                                </td>
-
-                                                <td style="border-bottom: 1px solid #000; text-align: left; padding: 10px; font-size: 18px;">
-                                                    Duration
-                                                </td>
-
-                                            </tr>
-
-                                            {{Items}}
-
-                                        </table>
-
-                                    </td>
+                                    </table>
                                 </tr>
                                 <br />
                                 <tr>
@@ -134,14 +113,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td style="padding: 6px; font-size: 18px;">
-                                        <div style="display:{{chkOtherServiceList}};">
-                                            <span style="font-weight: bold;">Other Services: </span>
-                                            <span>{{OtherServiceList}}</span>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <br />
                                 <tr>
                                     <td style="padding: 6px; font-size: 18px;">
                                         <div style="display:{{chkReferDrName}};">
@@ -150,6 +122,7 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <br />
                                 <tr>
                                     <td style="padding: 6px; font-size: 18px;">
                                         <div style="display:{{chkChiefAdvice}};">
@@ -158,12 +131,14 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <br />
                                 <tr style="margin-bottom: 20px;">
                                     <td style="padding: 6px; font-size: 18px; margin-bottom: 40px;">
                                         <span style="font-weight: bold;">Follow-up Date:</span>
                                         <span>{{FollowupDate}}</span>
                                     </td>
                                 </tr>
+
                                 <tr>
                                     <table style="width: 100%;text-align: left;">
                                         <td>
@@ -172,11 +147,8 @@
                                                     <img src="{{Signature}}" width="200" height="100" style="display:{{chkSignature}}">
                                                 </span>
                                                 <div style="font-weight:bold;">{{PathResultDr1}}</div>
-                                                <div style="font-weight:bold;" style="display:{{chkEdu}};">{{Education}}</div>
-                                                <div style="font-weight:bold;" style="display:{{chkRegNo}};">{{MahRegNo}}</div>
-                                                <div style="font-weight:bold;">{{PrescDoctorName}}</div>
-                                                <div style="font-weight:bold;" style="display:{{chkPrescEducation}};">{{PrescEducation}}</div>
-                                                <div style="font-weight:bold;" style="display:{{chkPrescMahRegNo}};">{{PrescMahRegNo}}</div>
+                                                <div style="font-weight:bold;" style="display:{{chkEdu}}">{{Education}}</div>
+                                                <div style="font-weight:bold;" style="display:{{chkRegNo}}">{{MahRegNo}}</div>
                                             </footer>
                                         </td>
                                     </table>
@@ -190,3 +162,4 @@
     </div>
 </body>
 </html>
+

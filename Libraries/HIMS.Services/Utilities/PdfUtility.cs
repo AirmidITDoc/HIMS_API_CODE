@@ -610,7 +610,7 @@ namespace HIMS.Services.Utilities
                     string.IsNullOrWhiteSpace(fileName) ? Guid.NewGuid().ToString() : fileName
                 ) + ".pdf";
 
-                int[] delays = { 2000, 5000, 8000, 12000 };
+                int[] delays = { 2000, 5000, 8000, 12000, 18000 };
                 byte[] bytes = null;
 
                 foreach (var delay in delays)

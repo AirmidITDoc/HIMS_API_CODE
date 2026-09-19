@@ -184,7 +184,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<LvwVisitRefDocForSmsquery> LvwVisitRefDocForSmsqueries { get; set; } = null!;
         public virtual DbSet<LvwWardDetail> LvwWardDetails { get; set; } = null!;
         public virtual DbSet<MAdmissionType> MAdmissionTypes { get; set; } = null!;
-        public virtual DbSet<MAllergyMaster> MAllergyMasters { get; set; } = null!;
         public virtual DbSet<MAnaesthesiaTypeMaster> MAnaesthesiaTypeMasters { get; set; } = null!;
         public virtual DbSet<MAppWhatsAppDly> MAppWhatsAppDlies { get; set; } = null!;
         public virtual DbSet<MAreaMaster> MAreaMasters { get; set; } = null!;
@@ -212,13 +211,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<MCurrencyMaster> MCurrencyMasters { get; set; } = null!;
         public virtual DbSet<MDepartmentMaster> MDepartmentMasters { get; set; } = null!;
         public virtual DbSet<MDiagnosisMaster> MDiagnosisMasters { get; set; } = null!;
-        public virtual DbSet<MDietCategoryMaster> MDietCategoryMasters { get; set; } = null!;
         public virtual DbSet<MDietChartDetail> MDietChartDetails { get; set; } = null!;
         public virtual DbSet<MDietChartMaster> MDietChartMasters { get; set; } = null!;
-        public virtual DbSet<MDietMenuDetailMaster> MDietMenuDetailMasters { get; set; } = null!;
-        public virtual DbSet<MDietMenuMaster> MDietMenuMasters { get; set; } = null!;
-        public virtual DbSet<MDietRestrictionMaster> MDietRestrictionMasters { get; set; } = null!;
-        public virtual DbSet<MDietTypeMaster> MDietTypeMasters { get; set; } = null!;
         public virtual DbSet<MDoctorChargesDetail> MDoctorChargesDetails { get; set; } = null!;
         public virtual DbSet<MDoctorDepartmentDet> MDoctorDepartmentDets { get; set; } = null!;
         public virtual DbSet<MDoctorExecutiveLinkInfo> MDoctorExecutiveLinkInfos { get; set; } = null!;
@@ -241,10 +235,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<MExpensesHeadMaster> MExpensesHeadMasters { get; set; } = null!;
         public virtual DbSet<MExternalDoctorMaster> MExternalDoctorMasters { get; set; } = null!;
         public virtual DbSet<MFeedbackQuestion> MFeedbackQuestions { get; set; } = null!;
-        public virtual DbSet<MFeedingRouteMaster> MFeedingRouteMasters { get; set; } = null!;
-        public virtual DbSet<MFoodCategoryMaster> MFoodCategoryMasters { get; set; } = null!;
-        public virtual DbSet<MFoodItemMaster> MFoodItemMasters { get; set; } = null!;
-        public virtual DbSet<MFoodPreferenceMaster> MFoodPreferenceMasters { get; set; } = null!;
         public virtual DbSet<MGenericMaster> MGenericMasters { get; set; } = null!;
         public virtual DbSet<MHsncodeMaster> MHsncodeMasters { get; set; } = null!;
         public virtual DbSet<MIcdDiagnosisMaster> MIcdDiagnosisMasters { get; set; } = null!;
@@ -271,7 +261,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<MManufactureMaster> MManufactureMasters { get; set; } = null!;
         public virtual DbSet<MMaritalStatusMaster> MMaritalStatusMasters { get; set; } = null!;
         public virtual DbSet<MMarketingHospitalMaster> MMarketingHospitalMasters { get; set; } = null!;
-        public virtual DbSet<MMealTypeMaster> MMealTypeMasters { get; set; } = null!;
         public virtual DbSet<MMemberCategoryMaster> MMemberCategoryMasters { get; set; } = null!;
         public virtual DbSet<MMessageTemplate> MMessageTemplates { get; set; } = null!;
         public virtual DbSet<MModeOfDeliveryMaster> MModeOfDeliveryMasters { get; set; } = null!;
@@ -281,8 +270,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<MOctroiMaster> MOctroiMasters { get; set; } = null!;
         public virtual DbSet<MOpcasepaperDignosisMaster> MOpcasepaperDignosisMasters { get; set; } = null!;
         public virtual DbSet<MOtSiteDescriptionMaster> MOtSiteDescriptionMasters { get; set; } = null!;
-        public virtual DbSet<MOtSpecialtyMaster> MOtSpecialtyMasters { get; set; } = null!;
-        public virtual DbSet<MOtSubSpecialtyMaster> MOtSubSpecialtyMasters { get; set; } = null!;
         public virtual DbSet<MOtSurgeryCategoryMaster> MOtSurgeryCategoryMasters { get; set; } = null!;
         public virtual DbSet<MOtSurgeryMaster> MOtSurgeryMasters { get; set; } = null!;
         public virtual DbSet<MOtcomplicationsMaster> MOtcomplicationsMasters { get; set; } = null!;
@@ -419,9 +406,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<SsRoleTemplateMaster> SsRoleTemplateMasters { get; set; } = null!;
         public virtual DbSet<SsSmsConfig> SsSmsConfigs { get; set; } = null!;
         public virtual DbSet<StockLog> StockLogs { get; set; } = null!;
-        public virtual DbSet<TAbhaCallbackformation> TAbhaCallbackformations { get; set; } = null!;
         public virtual DbSet<TAbhaLinkTokenCallback> TAbhaLinkTokenCallbacks { get; set; } = null!;
-        public virtual DbSet<TAbhaOnDiscover> TAbhaOnDiscovers { get; set; } = null!;
         public virtual DbSet<TAbill> TAbills { get; set; } = null!;
         public virtual DbSet<TAbillDetail> TAbillDetails { get; set; } = null!;
         public virtual DbSet<TAddCharge> TAddCharges { get; set; } = null!;
@@ -462,8 +447,6 @@ namespace HIMS.Data.Models
         public virtual DbSet<TCustomerPayment> TCustomerPayments { get; set; } = null!;
         public virtual DbSet<TDeathCertificate> TDeathCertificates { get; set; } = null!;
         public virtual DbSet<TDialysi> TDialyses { get; set; } = null!;
-        public virtual DbSet<TDietPatReqDetail> TDietPatReqDetails { get; set; } = null!;
-        public virtual DbSet<TDietPatientRequestHeader> TDietPatientRequestHeaders { get; set; } = null!;
         public virtual DbSet<TDiscApprovalDetail> TDiscApprovalDetails { get; set; } = null!;
         public virtual DbSet<TDiscCaseSheet> TDiscCaseSheets { get; set; } = null!;
         public virtual DbSet<TDiscountTransactionHistory> TDiscountTransactionHistories { get; set; } = null!;
@@ -648,6 +631,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TWhatsAppSmsOutgoing> TWhatsAppSmsOutgoings { get; set; } = null!;
         public virtual DbSet<TWorkOrderDetail> TWorkOrderDetails { get; set; } = null!;
         public virtual DbSet<TWorkOrderHeader> TWorkOrderHeaders { get; set; } = null!;
+        public virtual DbSet<TabhaPatientEncounterCareContextDetail> TabhaPatientEncounterCareContextDetails { get; set; } = null!;
         public virtual DbSet<TableSubhash> TableSubhashes { get; set; } = null!;
         public virtual DbSet<TariffMaster> TariffMasters { get; set; } = null!;
         public virtual DbSet<TempPathReportId> TempPathReportIds { get; set; } = null!;
@@ -6586,32 +6570,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<MAllergyMaster>(entity =>
-            {
-                entity.HasKey(e => e.AllergyId);
-
-                entity.ToTable("M_AllergyMaster");
-
-                entity.HasIndex(e => e.AllergyCode, "UQ_M_AllergyMaster_AllergyCode")
-                    .IsUnique();
-
-                entity.Property(e => e.Active)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.AllergyCode).HasMaxLength(50);
-
-                entity.Property(e => e.AllergyName).HasMaxLength(255);
-
-                entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Reaction).HasMaxLength(255);
-            });
-
             modelBuilder.Entity<MAnaesthesiaTypeMaster>(entity =>
             {
                 entity.HasKey(e => e.AnestTypeId);
@@ -7041,26 +6999,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DiagnosisDescr).HasMaxLength(50);
             });
 
-            modelBuilder.Entity<MDietCategoryMaster>(entity =>
-            {
-                entity.HasKey(e => e.DietCategoryId);
-
-                entity.ToTable("M_DietCategoryMaster");
-
-                entity.HasIndex(e => e.CategoryCode, "UQ_M_DietCategoryMaster_CategoryCode")
-                    .IsUnique();
-
-                entity.Property(e => e.CategoryCode).HasMaxLength(100);
-
-                entity.Property(e => e.CategoryName).HasMaxLength(255);
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Description).HasMaxLength(500);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-            });
-
             modelBuilder.Entity<MDietChartDetail>(entity =>
             {
                 entity.HasKey(e => e.DietChartDetId);
@@ -7085,111 +7023,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DietChartName).HasMaxLength(250);
 
                 entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<MDietMenuDetailMaster>(entity =>
-            {
-                entity.HasKey(e => e.MenuDetId);
-
-                entity.ToTable("M_DietMenuDetailMaster");
-
-                entity.Property(e => e.Active)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.HasOne(d => d.DietMenu)
-                    .WithMany(p => p.MDietMenuDetailMasters)
-                    .HasForeignKey(d => d.DietMenuId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_M_DietMenuDetailMaster_DietMenu");
-            });
-
-            modelBuilder.Entity<MDietMenuMaster>(entity =>
-            {
-                entity.HasKey(e => e.DietMenuId);
-
-                entity.ToTable("M_DietMenuMaster");
-
-                entity.HasIndex(e => e.DietMenuCode, "UQ_M_DietMenuMaster_DietMenuCode")
-                    .IsUnique();
-
-                entity.Property(e => e.Active)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.Calories).HasMaxLength(50);
-
-                entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.DietMenuCode).HasMaxLength(50);
-
-                entity.Property(e => e.DietMenuName).HasMaxLength(255);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Protein).HasMaxLength(50);
-
-                entity.Property(e => e.Texture).HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<MDietRestrictionMaster>(entity =>
-            {
-                entity.HasKey(e => e.RestrictionId);
-
-                entity.ToTable("M_DietRestrictionMaster");
-
-                entity.Property(e => e.Active)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.Description).HasMaxLength(500);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.RestrictionCode).HasMaxLength(50);
-
-                entity.Property(e => e.RestrictionName).HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<MDietTypeMaster>(entity =>
-            {
-                entity.HasKey(e => e.DietTypeId);
-
-                entity.ToTable("M_DietTypeMaster");
-
-                entity.Property(e => e.DietTypeId).HasColumnName("DietTypeID");
-
-                entity.Property(e => e.Active)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.Description).HasMaxLength(500);
-
-                entity.Property(e => e.DietCode).HasMaxLength(50);
-
-                entity.Property(e => e.DietName).HasMaxLength(255);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Remarks).HasMaxLength(500);
-
-                entity.Property(e => e.ShortName).HasMaxLength(100);
             });
 
             modelBuilder.Entity<MDoctorChargesDetail>(entity =>
@@ -7570,99 +7403,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.FeedbackQuestion).HasMaxLength(500);
 
                 entity.Property(e => e.FeedbackQuestionMarathi).HasMaxLength(500);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<MFeedingRouteMaster>(entity =>
-            {
-                entity.HasKey(e => e.FeedingRouteId);
-
-                entity.ToTable("M_FeedingRouteMaster");
-
-                entity.HasIndex(e => e.FeedingRouteCode, "UQ_M_FeedingRouteMaster_FeedingRouteCode")
-                    .IsUnique();
-
-                entity.Property(e => e.Active)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.Description).HasMaxLength(500);
-
-                entity.Property(e => e.FeedingRouteCode).HasMaxLength(50);
-
-                entity.Property(e => e.FeedingRouteName).HasMaxLength(255);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<MFoodCategoryMaster>(entity =>
-            {
-                entity.HasKey(e => e.FoodCategoryId);
-
-                entity.ToTable("M_FoodCategoryMaster");
-
-                entity.HasIndex(e => e.FoodCategoryCode, "UQ_M_FoodCategoryMaster_Code")
-                    .IsUnique();
-
-                entity.Property(e => e.Active)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.FoodCategoryCode).HasMaxLength(50);
-
-                entity.Property(e => e.FoodCategoryName).HasMaxLength(255);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<MFoodItemMaster>(entity =>
-            {
-                entity.HasKey(e => e.FoodItemId);
-
-                entity.ToTable("M_FoodItemMaster");
-
-                entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.FoodCode).HasMaxLength(50);
-
-                entity.Property(e => e.FoodName).HasMaxLength(225);
-
-                entity.Property(e => e.LocalName).HasMaxLength(225);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<MFoodPreferenceMaster>(entity =>
-            {
-                entity.HasKey(e => e.FoodPreferenceId);
-
-                entity.ToTable("M_FoodPreferenceMaster");
-
-                entity.HasIndex(e => e.FoodPreferenceCode, "UQ_M_FoodPreferenceMaster_Code")
-                    .IsUnique();
-
-                entity.Property(e => e.Active)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.FoodPreferenceCode).HasMaxLength(50);
-
-                entity.Property(e => e.FoodPreferenceName).HasMaxLength(255);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
@@ -8416,38 +8156,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<MMealTypeMaster>(entity =>
-            {
-                entity.HasKey(e => e.MealId);
-
-                entity.ToTable("M_MealTypeMaster");
-
-                entity.HasIndex(e => e.MealTypeCode, "UQ_M_MealTypeMaster_MealTypeCode")
-                    .IsUnique();
-
-                entity.Property(e => e.Active)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.DefaultTime).HasColumnType("datetime");
-
-                entity.Property(e => e.DispatchTime).HasColumnType("datetime");
-
-                entity.Property(e => e.MealName).HasMaxLength(255);
-
-                entity.Property(e => e.MealTypeCode).HasMaxLength(50);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.OrderCutoffTime).HasColumnType("datetime");
-
-                entity.Property(e => e.PreparationStartTime).HasColumnType("datetime");
-            });
-
             modelBuilder.Entity<MMemberCategoryMaster>(entity =>
             {
                 entity.HasKey(e => e.MemberCategoryId);
@@ -8570,34 +8278,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.SurgeryCategoryId).HasColumnName("SurgeryCategoryID");
             });
 
-            modelBuilder.Entity<MOtSpecialtyMaster>(entity =>
-            {
-                entity.HasKey(e => e.SpecialtyId);
-
-                entity.ToTable("M_OT_SpecialtyMaster");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.SpecialtyName).HasMaxLength(255);
-            });
-
-            modelBuilder.Entity<MOtSubSpecialtyMaster>(entity =>
-            {
-                entity.HasKey(e => e.SubSpecialtyId);
-
-                entity.ToTable("M_OT_SubSpecialtyMaster");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.SpecialtyId).HasColumnName("SpecialtyID");
-
-                entity.Property(e => e.SubSpecialtyName).HasMaxLength(50);
-            });
-
             modelBuilder.Entity<MOtSurgeryCategoryMaster>(entity =>
             {
                 entity.HasKey(e => e.SurgeryCategoryId)
@@ -8621,21 +8301,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.GradeLevel).HasColumnName("Grade_Level");
+                entity.Property(e => e.IsCancelledDateTime).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OttemplateId).HasColumnName("OTTemplateID");
 
-                entity.Property(e => e.PreferredOtroom).HasColumnName("PreferredOTRoom");
-
-                entity.Property(e => e.ShortName).HasMaxLength(255);
-
                 entity.Property(e => e.SurgeryAmount).HasColumnType("money");
 
-                entity.Property(e => e.SurgeryCode).HasMaxLength(10);
-
-                entity.Property(e => e.SurgeryName).HasMaxLength(255);
+                entity.Property(e => e.SurgeryName).HasMaxLength(100);
             });
 
             modelBuilder.Entity<MOtcomplicationsMaster>(entity =>
@@ -11867,36 +11541,6 @@ namespace HIMS.Data.Models
                     .HasConstraintName("FK_StockLogs_T_CurrentStock");
             });
 
-            modelBuilder.Entity<TAbhaCallbackformation>(entity =>
-            {
-                entity.HasKey(e => e.AbhaPatientInformationId)
-                    .HasName("PK_T_AbhaPatientInformation");
-
-                entity.ToTable("T_Abha_Callbackformation");
-
-                entity.Property(e => e.AbhaNumber).HasMaxLength(100);
-
-                entity.Property(e => e.CreatedDate).HasMaxLength(50);
-
-                entity.Property(e => e.Dob).HasMaxLength(50);
-
-                entity.Property(e => e.Gender).HasMaxLength(20);
-
-                entity.Property(e => e.MobileNumber).HasMaxLength(20);
-
-                entity.Property(e => e.Name).HasMaxLength(255);
-
-                entity.Property(e => e.PatientId).HasMaxLength(100);
-
-                entity.Property(e => e.PatientName).HasMaxLength(255);
-
-                entity.Property(e => e.SbxId).HasMaxLength(100);
-
-                entity.Property(e => e.Status).HasMaxLength(50);
-
-                entity.Property(e => e.TransactionId).HasMaxLength(100);
-            });
-
             modelBuilder.Entity<TAbhaLinkTokenCallback>(entity =>
             {
                 entity.HasKey(e => e.CallbackId)
@@ -11927,27 +11571,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Status).HasMaxLength(50);
 
                 entity.Property(e => e.YearOfBirth).HasMaxLength(10);
-            });
-
-            modelBuilder.Entity<TAbhaOnDiscover>(entity =>
-            {
-                entity.ToTable("T_ABHA_OnDiscover");
-
-                entity.Property(e => e.AbhaAddress).HasMaxLength(150);
-
-                entity.Property(e => e.AbhaNumber).HasMaxLength(50);
-
-                entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.Gender).HasMaxLength(10);
-
-                entity.Property(e => e.Mobile).HasMaxLength(20);
-
-                entity.Property(e => e.PatientId).HasMaxLength(100);
-
-                entity.Property(e => e.PatientName).HasMaxLength(200);
-
-                entity.Property(e => e.TransactionId).HasMaxLength(255);
             });
 
             modelBuilder.Entity<TAbill>(entity =>
@@ -13096,62 +12719,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
 
                 entity.Property(e => e.TechinicianName).HasMaxLength(100);
-            });
-
-            modelBuilder.Entity<TDietPatReqDetail>(entity =>
-            {
-                entity.HasKey(e => e.DietReqDetId);
-
-                entity.ToTable("T_DietPatReqDetails");
-
-                entity.Property(e => e.CancelledReason).HasMaxLength(255);
-
-                entity.Property(e => e.Comments).HasMaxLength(255);
-
-                entity.Property(e => e.IsAcceptedDateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
-
-                entity.Property(e => e.IsDelivedDateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
-
-                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
-
-                entity.Property(e => e.OrderDate).HasColumnType("datetime");
-
-                entity.Property(e => e.OrderTime).HasColumnType("datetime");
-
-                entity.HasOne(d => d.DietReq)
-                    .WithMany(p => p.TDietPatReqDetails)
-                    .HasForeignKey(d => d.DietReqId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_T_DietPatReqDetails_T_DietPatientRequestHeader");
-            });
-
-            modelBuilder.Entity<TDietPatientRequestHeader>(entity =>
-            {
-                entity.HasKey(e => e.DietReqId);
-
-                entity.ToTable("T_DietPatientRequestHeader");
-
-                entity.Property(e => e.CancelledReason)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Date).HasColumnType("datetime");
-
-                entity.Property(e => e.DietReqNo).HasMaxLength(50);
-
-                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Time).HasColumnType("datetime");
-
-                entity.Property(e => e.UnitId).HasColumnName("UnitID");
             });
 
             modelBuilder.Entity<TDiscApprovalDetail>(entity =>
@@ -15236,11 +14803,7 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ConsumptionTime).HasColumnType("datetime");
 
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
                 entity.Property(e => e.LandedTotalAmount).HasColumnType("money");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.MrptotalAmount)
                     .HasColumnType("money")
@@ -15357,21 +14920,11 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.FamilyDoctorContact).HasMaxLength(15);
 
-                entity.Property(e => e.FamilyDoctorId).HasColumnName("familyDoctorId");
-
                 entity.Property(e => e.FamilyDoctorName).HasMaxLength(150);
 
                 entity.Property(e => e.FeeAmount).HasColumnType("decimal(10, 2)");
 
-                entity.Property(e => e.FemaleMembershipNo).HasMaxLength(100);
-
-                entity.Property(e => e.HConsultDoctorContact)
-                    .HasMaxLength(15)
-                    .HasColumnName("hConsultDoctorContact");
-
                 entity.Property(e => e.HaayushmanId).HasMaxLength(20);
-
-                entity.Property(e => e.HconsultDoctorId).HasColumnName("hconsultDoctorId");
 
                 entity.Property(e => e.HdeathDate).HasColumnType("datetime");
 
@@ -15404,10 +14957,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.HusbandMiddleName).HasMaxLength(50);
 
                 entity.Property(e => e.HusbandMobile).HasMaxLength(15);
-
-                entity.Property(e => e.HusbandMobileNo)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.HusbandPan)
                     .HasMaxLength(20)
@@ -15445,21 +14994,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ResidenceAddress).HasMaxLength(255);
 
-                entity.Property(e => e.WConsultDoctorContact)
-                    .HasMaxLength(15)
-                    .HasColumnName("wConsultDoctorContact");
-
                 entity.Property(e => e.WaayushmanId).HasMaxLength(20);
-
-                entity.Property(e => e.WconsultDoctorId).HasColumnName("wconsultDoctorId");
 
                 entity.Property(e => e.WdeathDate).HasColumnType("datetime");
 
                 entity.Property(e => e.WfamilyDoctorContact)
                     .HasMaxLength(50)
                     .HasColumnName("wfamilyDoctorContact");
-
-                entity.Property(e => e.WfamilyDoctorId).HasColumnName("wfamilyDoctorId");
 
                 entity.Property(e => e.WfamilyDoctorName)
                     .HasMaxLength(200)
@@ -15498,10 +15039,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.WifeMiddleName).HasMaxLength(50);
 
                 entity.Property(e => e.WifeMobile).HasMaxLength(15);
-
-                entity.Property(e => e.WifeMobileNo)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.WifePan)
                     .HasMaxLength(20)
@@ -17178,39 +16715,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Hid).HasColumnName("HId");
 
-                entity.Property(e => e.CauseofDeath1).HasMaxLength(200);
-
-                entity.Property(e => e.CauseofDeath2).HasMaxLength(200);
-
-                entity.Property(e => e.CauseofDeath3).HasMaxLength(200);
-
-                entity.Property(e => e.FinalDiagnosis1).HasMaxLength(200);
-
-                entity.Property(e => e.FinalDiagnosis2).HasMaxLength(200);
-
-                entity.Property(e => e.FinalDiagnosis3).HasMaxLength(200);
-
-                entity.Property(e => e.Icdcode1)
-                    .HasMaxLength(200)
-                    .HasColumnName("ICDCode1");
-
-                entity.Property(e => e.Icdcode2)
-                    .HasMaxLength(200)
-                    .HasColumnName("ICDCode2");
-
-                entity.Property(e => e.Icdcode3)
-                    .HasMaxLength(200)
-                    .HasColumnName("ICDCode3");
-
                 entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
 
                 entity.Property(e => e.OpIpType).HasColumnName("OP_IP_Type");
-
-                entity.Property(e => e.ProvisionalDiagnosis1).HasMaxLength(200);
-
-                entity.Property(e => e.ProvisionalDiagnosis2).HasMaxLength(200);
-
-                entity.Property(e => e.ProvisionalDiagnosis3).HasMaxLength(200);
 
                 entity.Property(e => e.ReqDate).HasColumnType("datetime");
 
@@ -19419,6 +18926,69 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Wono)
                     .HasMaxLength(50)
                     .HasColumnName("WONo");
+            });
+
+            modelBuilder.Entity<TabhaPatientEncounterCareContextDetail>(entity =>
+            {
+                entity.HasKey(e => e.Peccid)
+                    .HasName("PK__TAbhaPat__4CAAEB63636173E5");
+
+                entity.ToTable("TAbhaPatientEncounterCareContextDetails");
+
+                entity.Property(e => e.Peccid).HasColumnName("PECCID");
+
+                entity.Property(e => e.AbhaAddress)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AbhaNumber)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CcErrMessage)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("CC_ErrMessage");
+
+                entity.Property(e => e.CcHipId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CC_HipId");
+
+                entity.Property(e => e.CcMessage)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("CC_Message");
+
+                entity.Property(e => e.CcWorkflowId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CC_WorkflowId");
+
+                entity.Property(e => e.PeCareContext)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_CareContext");
+
+                entity.Property(e => e.PeErrMessage)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_ErrMessage");
+
+                entity.Property(e => e.PeHipId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_HipId");
+
+                entity.Property(e => e.PeMessage)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_Message");
+
+                entity.Property(e => e.PePatientReferenceNumber)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_PatientReferenceNumber");
             });
 
             modelBuilder.Entity<TableSubhash>(entity =>

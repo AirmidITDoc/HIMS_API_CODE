@@ -9,7 +9,8 @@ namespace HIMS.Services.MRD
 {
     public partial interface IMedicolegalCertificateService
     {
-        Task InsertAsync(TMedicolegalCertificate ObjTMedicolegalCertificate, int UserId, string Username);
+        Task InsertAsync(TMedicolegalCertificate ObjTMedicolegalCertificate, TMlcinformation ObjTMlcinformation , int UserId, string Username);
+        Task UpdateAsync(TMedicolegalCertificate ObjTMedicolegalCertificate, TMlcinformation ObjTMlcinformation, int UserId, string Username);
 
     }
 }
