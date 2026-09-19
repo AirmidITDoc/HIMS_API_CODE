@@ -648,6 +648,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TWhatsAppSmsOutgoing> TWhatsAppSmsOutgoings { get; set; } = null!;
         public virtual DbSet<TWorkOrderDetail> TWorkOrderDetails { get; set; } = null!;
         public virtual DbSet<TWorkOrderHeader> TWorkOrderHeaders { get; set; } = null!;
+        public virtual DbSet<TabhaPatientEncounterCareContextDetail> TabhaPatientEncounterCareContextDetails { get; set; } = null!;
         public virtual DbSet<TableSubhash> TableSubhashes { get; set; } = null!;
         public virtual DbSet<TariffMaster> TariffMasters { get; set; } = null!;
         public virtual DbSet<TempPathReportId> TempPathReportIds { get; set; } = null!;
@@ -19419,6 +19420,69 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Wono)
                     .HasMaxLength(50)
                     .HasColumnName("WONo");
+            });
+
+            modelBuilder.Entity<TabhaPatientEncounterCareContextDetail>(entity =>
+            {
+                entity.HasKey(e => e.Peccid)
+                    .HasName("PK__TAbhaPat__4CAAEB63636173E5");
+
+                entity.ToTable("TAbhaPatientEncounterCareContextDetails");
+
+                entity.Property(e => e.Peccid).HasColumnName("PECCID");
+
+                entity.Property(e => e.AbhaAddress)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AbhaNumber)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CcErrMessage)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("CC_ErrMessage");
+
+                entity.Property(e => e.CcHipId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CC_HipId");
+
+                entity.Property(e => e.CcMessage)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("CC_Message");
+
+                entity.Property(e => e.CcWorkflowId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CC_WorkflowId");
+
+                entity.Property(e => e.PeCareContext)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_CareContext");
+
+                entity.Property(e => e.PeErrMessage)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_ErrMessage");
+
+                entity.Property(e => e.PeHipId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_HipId");
+
+                entity.Property(e => e.PeMessage)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_Message");
+
+                entity.Property(e => e.PePatientReferenceNumber)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_PatientReferenceNumber");
             });
 
             modelBuilder.Entity<TableSubhash>(entity =>
