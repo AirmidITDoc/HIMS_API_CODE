@@ -63,6 +63,7 @@ namespace HIMS.Services.TrustMembershipRegistration
                     HusbandMiddleName = x.HusbandMiddleName,
                     HusbandMobile = x.HusbandMobile,
                     MembershipNo = x.MembershipNo,
+                    FemaleMembershipNo = x.FemaleMembershipNo,
                     HusbandAgeY = x.HusbandAgeY,
                     HusbandAgeM = x.HusbandAgeM,
                     HusbandAgeD = x.HusbandAgeD,
@@ -83,23 +84,23 @@ namespace HIMS.Services.TrustMembershipRegistration
         {
             using var scope = new TransactionScope( TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted}, TransactionScopeAsyncFlowOption.Enabled);
 
-            var membershipNos = await _context.TMembershipRegistrations
-                .Select(x => x.MembershipNo)
-                .ToListAsync();
+            //var membershipNos = await _context.TMembershipRegistrations
+            //    .Select(x => x.MembershipNo)
+            //    .ToListAsync();
 
-            int lastSeqNo = membershipNos
-                .Where(x => !string.IsNullOrWhiteSpace(x) && int.TryParse(x, out _))
-                .Select(x => int.Parse(x))
-                .DefaultIfEmpty(0)
-                .Max();
+            //int lastSeqNo = membershipNos
+            //    .Where(x => !string.IsNullOrWhiteSpace(x) && int.TryParse(x, out _))
+            //    .Select(x => int.Parse(x))
+            //    .DefaultIfEmpty(0)
+            //    .Max();
 
             // Generate next Membership Number
-            ObjTMembershipRegistration.MembershipNo = (lastSeqNo + 1).ToString();
+            //ObjTMembershipRegistration.MembershipNo = (lastSeqNo + 1).ToString();
 
             ObjTMembershipRegistration.CreatedBy = UserId;
             ObjTMembershipRegistration.CreatedDate = AppTime.Now;
 
-            Console.WriteLine("Generated MembershipNo : " + ObjTMembershipRegistration.MembershipNo);
+            //Console.WriteLine("Generated MembershipNo : " + ObjTMembershipRegistration.MembershipNo);
 
             _context.TMembershipRegistrations.Add(ObjTMembershipRegistration);
 
@@ -143,14 +144,14 @@ namespace HIMS.Services.TrustMembershipRegistration
 
                 _context.Entry(ObjTMembershipRegistration).Property(x => x.CreatedBy).IsModified = false;
                 _context.Entry(ObjTMembershipRegistration).Property(x => x.CreatedDate).IsModified = false;
-                _context.Entry(ObjTMembershipRegistration).Property(x => x.MembershipNo).IsModified = false;
+                //_context.Entry(ObjTMembershipRegistration).Property(x => x.MembershipNo).IsModified = false;
 
                 ObjTMembershipRegistration.ModifiedBy = UserId;
                 ObjTMembershipRegistration.ModifiedDate = AppTime.Now;
 
                 if (ignoreColumns?.Length > 0)
                 {
-                    foreach (var column in ignoreColumns)
+                    foreach (var column in ignoreColumns) 
                         _context.Entry(ObjTMembershipRegistration).Property(column).IsModified = false;
                 }
 

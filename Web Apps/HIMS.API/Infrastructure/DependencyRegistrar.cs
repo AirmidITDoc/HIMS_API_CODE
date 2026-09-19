@@ -6,11 +6,13 @@ using HIMS.API.Utility;
 using HIMS.Data;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
+using HIMS.Services.AbhaIntegration;
 using HIMS.Services.Administration;
 using HIMS.Services.Audit;
 using HIMS.Services.Canteen;
 using HIMS.Services.Common;
 using HIMS.Services.Dashboard;
+using HIMS.Services.DietKitchen;
 using HIMS.Services.DoctorPayout;
 using HIMS.Services.DocumentManagement;
 using HIMS.Services.FeedBack;
@@ -101,6 +103,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IAreaMasterService, AreaMasterService>();
             services.AddScoped<IClassMasterService, ClassMasterService>();
             services.AddScoped<ISurgeryMasterService, SurgeryMasterService>();
+            services.AddScoped<IConstantService, ConstantService>();
+            services.AddScoped<IAbhaConnectService, AbhaConnectService>();
 
 
 
@@ -217,6 +221,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IPharmacyAdvanceService, PharmacyAdvanceService>();
             services.AddScoped<IDoseMasterService, DoseMasterService>();
             services.AddScoped<ILabPatientAddresService, LabPatientAddresService>();
+            services.AddScoped<IDietPatientRequestService, DietPatientRequestService>();
+
 
 
 
@@ -239,6 +245,11 @@ namespace HIMS.API.Infrastructure
 
             services.AddScoped<IDocumentCategoryService, DocumentCategoryService>();
             services.AddScoped<IDocumentUploadService, DocumentUploadService>();
+            services.AddScoped<I_ICDUpdateService, ICDUpdateService>();
+            services.AddScoped<IDietMenuMasterService, DietMenuMasterService>();
+
+
+
 
 
 
@@ -252,6 +263,10 @@ namespace HIMS.API.Infrastructure
             services.AddHttpContextAccessor();
             services.AddMemoryCache(opts => opts.SizeLimit = 1024);
             services.AddScoped<IDeathCertificateService, DeathCertificateService>();
+
+
+            //ABHA testing 
+            services.AddScoped<IAbhaConnectService, AbhaConnectService>();
         }
     }
 }

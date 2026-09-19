@@ -11,7 +11,7 @@ namespace HIMS.Data
         Task<TModel> Add(TModel dto, int UserId, string Username, params Expression<Func<TModel, object>>[] references);
         Task<List<TModel>> Add(List<TModel> entities, int UserId, string Username);
         Task<TModel> Update(TModel dto, int UserId, string Username, string[]? references);
-
+        //Task<TModel> UpdateOnDiscovery(TModel dto, int UserId, string Username, string[]? references);
         Task<bool> HardDelete(int id, int UserId, string Username, Expression<Func<TModel, bool>>? where = null);
         Task<bool> SoftDelete(TModel dto, int UserId, string Username);
         Task<bool> HardDeleteBulk(Expression<Func<TModel, bool>>? where, int UserId, string Username);
