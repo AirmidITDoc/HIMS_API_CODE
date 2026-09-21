@@ -69,6 +69,9 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public List<ChiefComplaint> ChiefComplaints { get; set; }
         public List<Prescription> Prescriptions { get; set; }
 
+        public List<DiagnosticReport> DiagnosticReports { get; set; }
+        public List<DischargeSummaryItem> DischargeSummaries { get; set; }
+
         // keep reports at end
         public List<Reports> Reports { get; set; }
     }
@@ -189,5 +192,79 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public string Code { get; set; }
         public string Display { get; set; }
     }
+
+
+    public class DiagnosticReport
+    {
+        public string Status { get; set; }
+        public DiagnosticCodeableConcept DiagnosticCode { get; set; }
+        public string Conclusion { get; set; }
+        public List<ObservationResult> Results { get; set; } = new();
+        public string EffectiveDate { get; set; }
+        public string IssuedAt { get; set; }
+    }
+
+    public class DiagnosticCodeableConcept
+    {
+        public string Text { get; set; }
+        public CodeDetails Code { get; set; }
+    }
+
+    public class ObservationResult
+    {
+        public string Status { get; set; }
+        public ResultCodeableConcept ResultCode { get; set; }
+        public ValueQuantity Value { get; set; }
+        public CategoryCodeableConcept Category { get; set; }
+        public ReferenceRange ReferenceRange { get; set; }
+        public string EffectiveOn { get; set; }
+        public InterpretationCodeableConcept Interpretation { get; set; }
+    }
+
+    public class ResultCodeableConcept
+    {
+        public string Text { get; set; }
+        public CodeDetails Code { get; set; }
+    }
+
+    public class CategoryCodeableConcept
+    {
+        public string Text { get; set; }
+        public CodeDetails Code { get; set; }
+    }
+
+    public class InterpretationCodeableConcept
+    {
+        public string Text { get; set; }
+        public CodeDetails Code { get; set; }
+    }
+
+    public class ValueQuantity
+    {
+        public object Value { get; set; }
+        public QuantityCode Code { get; set; }
+    }
+
+    public class QuantityCode
+    {
+        public string Id { get; set; }
+        public string Unit { get; set; }
+        public string Url { get; set; }
+        public string Code { get; set; }
+    }
+
+    public class ReferenceRange
+    {
+        public ValueQuantity High { get; set; }
+        public ValueQuantity Low { get; set; }
+    }
+
+
+    public class DischargeSummaryItem
+    {
+        public string DischargeSummary { get; set; }
+        public string DischargeStatus { get; set; }
+    }
+
 
 }

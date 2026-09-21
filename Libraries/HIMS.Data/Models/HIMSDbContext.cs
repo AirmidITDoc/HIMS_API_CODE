@@ -648,6 +648,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TWhatsAppSmsOutgoing> TWhatsAppSmsOutgoings { get; set; } = null!;
         public virtual DbSet<TWorkOrderDetail> TWorkOrderDetails { get; set; } = null!;
         public virtual DbSet<TWorkOrderHeader> TWorkOrderHeaders { get; set; } = null!;
+        public virtual DbSet<TabhaPatientEncounterCareContextDetail> TabhaPatientEncounterCareContextDetails { get; set; } = null!;
         public virtual DbSet<TableSubhash> TableSubhashes { get; set; } = null!;
         public virtual DbSet<TariffMaster> TariffMasters { get; set; } = null!;
         public virtual DbSet<TempPathReportId> TempPathReportIds { get; set; } = null!;
@@ -685,7 +686,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -19419,6 +19420,69 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Wono)
                     .HasMaxLength(50)
                     .HasColumnName("WONo");
+            });
+
+            modelBuilder.Entity<TabhaPatientEncounterCareContextDetail>(entity =>
+            {
+                entity.HasKey(e => e.Peccid)
+                    .HasName("PK__TAbhaPat__4CAAEB63636173E5");
+
+                entity.ToTable("TAbhaPatientEncounterCareContextDetails");
+
+                entity.Property(e => e.Peccid).HasColumnName("PECCID");
+
+                entity.Property(e => e.AbhaAddress)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AbhaNumber)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CcErrMessage)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("CC_ErrMessage");
+
+                entity.Property(e => e.CcHipId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CC_HipId");
+
+                entity.Property(e => e.CcMessage)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("CC_Message");
+
+                entity.Property(e => e.CcWorkflowId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CC_WorkflowId");
+
+                entity.Property(e => e.PeCareContext)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_CareContext");
+
+                entity.Property(e => e.PeErrMessage)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_ErrMessage");
+
+                entity.Property(e => e.PeHipId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_HipId");
+
+                entity.Property(e => e.PeMessage)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_Message");
+
+                entity.Property(e => e.PePatientReferenceNumber)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PE_PatientReferenceNumber");
             });
 
             modelBuilder.Entity<TableSubhash>(entity =>

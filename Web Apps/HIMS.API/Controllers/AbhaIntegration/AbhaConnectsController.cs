@@ -89,13 +89,58 @@ namespace HIMS.API.Controllers.AbhaIntegration
 
                 var result = await _abhaConnectService.CareContextAsync(model,jwtToken);
 
+                string ccWorkflowId = null;
+                string ccMessage = null;
+                string ccHipId = null;
+                string ccErrMessage = null;
+                try
+                {
+                    var careContextData = JsonSerializer.Deserialize<JsonElement>( JsonSerializer.Serialize(result));
+
+                    if (careContextData.TryGetProperty("workflowId", out var workflowId)) ccWorkflowId = workflowId.ToString();
+                    if (careContextData.TryGetProperty("message", out var message)) ccMessage = message.ToString();
+                    if (careContextData.TryGetProperty("hipId", out var hipId)) ccHipId = hipId.ToString();
+                    if (careContextData.TryGetProperty("errMessage", out var errMessage)) ccErrMessage = errMessage.ValueKind == JsonValueKind.Null ? null: errMessage.ToString();
+                }
+                catch
+                {
+                    ccWorkflowId = null;
+                    ccMessage = null;
+                    ccHipId = null;
+                    ccErrMessage = JsonSerializer.Serialize(result);
+                }
+
+                await _abhaConnectService.SaveCareContextResponseAsync(model,ccWorkflowId,ccMessage, ccHipId, ccErrMessage);
+
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Link care context request sent successfully.",result);
             }
             catch (Exception ex)
             {
+                await _abhaConnectService.SaveCareContextResponseAsync(model, null, null, null, ex.Message);
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, ex.Message);
             }
         }
+
+[HttpPost("GetPatientEncounterDetailsTest")]
+        public async Task<ApiResponse> GetPatientVisitss(PatientVisitRequest model)
+        {
+            try
+            {
+                var result = await _abhaConnectService.GetPatientVisitsAsync(model);
+
+                return ApiResponseHelper.GenerateResponse(
+                    ApiStatusCode.Status200OK,
+                    "Patient visit details fetched successfully.",
+                    result);
+            }
+            catch (Exception ex)
+            {
+                return ApiResponseHelper.GenerateResponse(
+                    ApiStatusCode.Status500InternalServerError,
+                    ex.Message);
+            }
+        }
+
 
         [HttpPost("GetPatientEncounterDetails")]
         public async Task<ApiResponse> GetPatientVisits(PatientVisitRequest model)
@@ -131,6 +176,63 @@ namespace HIMS.API.Controllers.AbhaIntegration
                 HttpResponseMessage externalResponse = await client.PostAsync(EncounterUrl,content);
 
                 string responseContent =await externalResponse.Content.ReadAsStringAsync();
+                string peMessage = null;
+                string peErrMessage = null;
+                string peHipId = null;
+                string pePatientReferenceNumber = null;
+                string peCareContext = null;
+
+                if (externalResponse.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        var externalData = JsonSerializer.Deserialize<JsonElement>(responseContent);
+
+                        if (externalData.ValueKind == JsonValueKind.Array &&
+                            externalData.GetArrayLength() > 0)
+                        {
+                            var item = externalData[0];
+
+                            if (item.TryGetProperty("message", out var message))
+                                peMessage = message.ToString();
+
+                            if (item.TryGetProperty("hipId", out var hipId))
+                                peHipId = hipId.ToString();
+
+                            if (item.TryGetProperty("patientReferenceNumber", out var patientReferenceNumber))
+                                pePatientReferenceNumber = patientReferenceNumber.ToString();
+                            if (item.TryGetProperty("careContexts", out var careContexts) && careContexts.ValueKind == JsonValueKind.Array && careContexts.GetArrayLength() > 0)
+                                peCareContext = careContexts[0].ToString();
+                        }
+                    }
+                    catch
+                    {
+                        peErrMessage = responseContent;
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        var externalData = JsonSerializer.Deserialize<JsonElement>(responseContent);
+
+                        if (externalData.ValueKind == JsonValueKind.Array &&
+                            externalData.GetArrayLength() > 0 &&
+                            externalData[0].TryGetProperty("errMessage", out var errMessage))
+                        {
+                            peErrMessage = errMessage.ToString();
+                        }
+                        else
+                        {
+                            peErrMessage = responseContent;
+                        }
+                    }
+                    catch
+                    {
+                        peErrMessage = responseContent;
+                    }
+                }
+                await _abhaConnectService.SavePatientEncounterAsync(model,peMessage, peErrMessage,peHipId, pePatientReferenceNumber, peCareContext);
 
                 if (externalResponse.IsSuccessStatusCode) 
                 { 

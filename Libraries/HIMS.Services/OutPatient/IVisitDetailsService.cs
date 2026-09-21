@@ -17,7 +17,7 @@ namespace HIMS.Services.OutPatient
         Task<IPagedList<OPPaymentListDto>> GetPatientWisePaymentList(GridRequestModel objGrid);
         Task<IPagedList<OPRefundListDto>> GeOpRefundListAsync(GridRequestModel objGrid,long UnitId);
         Task<IPagedList<OPRegistrationList>> GeOPRgistrationListAsync(GridRequestModel objGrid);
-        Task<IPagedList<PrevDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel objGrid);
+        Task<IPagedList<PrevOPDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel objGrid);
         Task InsertAsyncSP(Registration objRegistration, VisitDetail objVisitDetail, TPatientPolicyInformation ObjTPatientPolicyInformation, int currentUserId, string currentUserName);
         Task InsertAsync(Registration objRegistration, VisitDetail objVisitDetail,  int currentUserId, string currentUserName);
         Task UpdateAsyncSP(Registration objRegistration ,VisitDetail objVisitDetail, TPatientPolicyInformation ObjTPatientPolicyInformation, int currentUserId, string currentUserName);

@@ -1,4 +1,5 @@
-﻿using HIMS.Data.DataProviders;
+﻿using HIMS.Data;
+using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.AbhaIntegration;
 using HIMS.Data.Models;
 using HIMS.Services.AbhaIntegration;
@@ -258,6 +259,8 @@ namespace HIMS.Services.AbhaIntegration
                     Diagnosis = new List<Diagnosis>(),
                     ChiefComplaints = new List<ChiefComplaint>(),
                     Prescriptions = new List<Prescription>(),
+                    DiagnosticReports = new List<DiagnosticReport>(),
+                    DischargeSummaries = new List<DischargeSummaryItem>(),
                     Reports = new List<Reports>()
                 };
 
@@ -466,6 +469,171 @@ namespace HIMS.Services.AbhaIntegration
                     });
                 }
             }
+            // =====================================================
+            // DIAGNOSTIC REPORTS + DISCHARGE SUMMARY
+
+            DatabaseHelper sql2 = new();
+
+            DataSet diagnosticDs = sql2.FetchDataSetBySP(
+                "ps_GetDiagnosticReports", // rename to match your actual SP name
+                new SqlParameter[]
+                {
+        new SqlParameter { ParameterName = "@OpIpId", Value = model.OpIpId },
+        new SqlParameter { ParameterName = "@OpIpType", Value = model.OpIpType }
+                }
+            );
+
+            response.Visits[0].DiagnosticReports = new List<DiagnosticReport>();
+            response.Visits[0].DischargeSummaries = new List<DischargeSummaryItem>();
+
+            if (diagnosticDs != null && diagnosticDs.Tables.Count > 0 && diagnosticDs.Tables[0].Rows.Count > 0)
+            {
+                var groupedByTest = diagnosticDs.Tables[0].AsEnumerable()
+                    .GroupBy(row => row["DiagnosticCode"].ToString());
+
+                foreach (var testGroup in groupedByTest)
+                {
+                    DataRow firstRow = testGroup.First();
+
+                    DiagnosticReport report = new()
+                    {
+                        Status = firstRow["DiagnosticStatus"].ToString(),
+
+                        DiagnosticCode = new DiagnosticCodeableConcept
+                        {
+                            Text = firstRow["DiagnosticText"].ToString(),
+                            Code = new CodeDetails
+                            {
+                                HospitalId = firstRow["DiagnosticHospitalId"].ToString(),
+                                Category = firstRow["DiagnosticCategory"].ToString(),
+                                Url = firstRow["DiagnosticUrl"].ToString(),
+                                Code = firstRow["DiagnosticCode"].ToString(),
+                                Display = firstRow["DiagnosticDisplay"].ToString()
+                            }
+                        },
+
+                        Conclusion = firstRow["Conclusion"].ToString(),
+                        EffectiveDate = firstRow["EffectiveDate"].ToString(),
+                        IssuedAt = firstRow["IssuedAt"].ToString(),
+
+                        Results = new List<ObservationResult>()
+                    };
+
+                    foreach (DataRow row in testGroup)
+                    {
+                        object resultValue = decimal.TryParse(row["ResultValue"].ToString(), out decimal rv)
+                            ? rv
+                            : row["ResultValue"].ToString();
+
+                        object refHighValue = decimal.TryParse(row["ReferenceHighValue"].ToString(), out decimal rh)
+                            ? rh
+                            : row["ReferenceHighValue"].ToString();
+
+                        object refLowValue = decimal.TryParse(row["ReferenceLowValue"].ToString(), out decimal rl)
+                            ? rl
+                            : row["ReferenceLowValue"].ToString();
+
+                        report.Results.Add(new ObservationResult
+                        {
+                            Status = row["ResultStatus"].ToString(),
+
+                            ResultCode = new ResultCodeableConcept
+                            {
+                                Text = row["ResultText"].ToString(),
+                                Code = new CodeDetails
+                                {
+                                    HospitalId = row["ResultHospitalId"].ToString(),
+                                    Category = row["ResultCategory"].ToString(),
+                                    Url = row["ResultUrl"].ToString(),
+                                    Code = row["ResultCode"].ToString(),
+                                    Display = row["ResultDisplay"].ToString()
+                                }
+                            },
+
+                            Value = new ValueQuantity
+                            {
+                                Value = resultValue,
+                                Code = new QuantityCode
+                                {
+                                    Id = row["ResultValueId"].ToString(),
+                                    Unit = row["ResultUnit"].ToString(),
+                                    Url = row["ResultValueUrl"].ToString(),
+                                    Code = row["ResultValueCode"].ToString()
+                                }
+                            },
+
+                            Category = new CategoryCodeableConcept
+                            {
+                                Text = row["ResultCategoryText"].ToString(),
+                                Code = new CodeDetails
+                                {
+                                    HospitalId = row["ResultCategoryHospitalId"].ToString(),
+                                    Category = row["ResultCategory"].ToString(),
+                                    Url = row["ResultCategoryUrl"].ToString(),
+                                    Code = row["ResultCategoryCode"].ToString(),
+                                    Display = row["ResultCategoryDisplay"].ToString()
+                                }
+                            },
+
+                            ReferenceRange = new ReferenceRange
+                            {
+                                High = new ValueQuantity
+                                {
+                                    Value = refHighValue,
+                                    Code = new QuantityCode
+                                    {
+                                        Id = row["ReferenceHighId"].ToString(),
+                                        Unit = row["ReferenceHighUnit"].ToString(),
+                                        Url = row["ReferenceHighUrl"].ToString(),
+                                        Code = row["ReferenceHighCode"].ToString()
+                                    }
+                                },
+                                Low = new ValueQuantity
+                                {
+                                    Value = refLowValue,
+                                    Code = new QuantityCode
+                                    {
+                                        Id = row["ReferenceLowId"].ToString(),
+                                        Unit = row["ReferenceLowUnit"].ToString(),
+                                        Url = row["ReferenceLowUrl"].ToString(),
+                                        Code = row["ReferenceLowCode"].ToString()
+                                    }
+                                }
+                            },
+
+                            EffectiveOn = row["EffectiveOn"].ToString(),
+
+                            Interpretation = new InterpretationCodeableConcept
+                            {
+                                Text = row["InterpretationText"].ToString(),
+                                Code = new CodeDetails
+                                {
+                                    HospitalId = row["InterpretationHospitalId"].ToString(),
+                                    Category = row["InterpretationCategory"].ToString(),
+                                    Url = row["InterpretationUrl"].ToString(),
+                                    Code = row["InterpretationCode"].ToString(),
+                                    Display = row["InterpretationDisplay"].ToString()
+                                }
+                            }
+                        });
+                    }
+
+                    response.Visits[0].DiagnosticReports.Add(report);
+                }
+            }
+
+            if (diagnosticDs != null && diagnosticDs.Tables.Count > 1 && diagnosticDs.Tables[1].Rows.Count > 0)
+            {
+                foreach (DataRow row in diagnosticDs.Tables[1].Rows)
+                {
+                    response.Visits[0].DischargeSummaries.Add(new DischargeSummaryItem
+                    {
+                        DischargeSummary = row["DischargeSummary"].ToString(),
+                        DischargeStatus = row["DischargeStatus"].ToString()
+                    });
+                }
+            }
+
 
 
             // =====================================================
@@ -476,6 +644,107 @@ namespace HIMS.Services.AbhaIntegration
 
             return result;
         }
+        //public virtual async Task SavePatientEncounterAsync(PatientVisitRequest model, string PE_Message, string PE_ErrMessage, string PE_HipId, string PE_PatientReferenceNumber)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+        //    var encounter = new TabhaPatientEncounterCareContextDetail
+        //    {
+        //        AbhaNumber = model.AbhaNumber,
+        //        AbhaAddress = model.AbhaAddress,
+        //        RegId = (long)long.Parse(PE_PatientReferenceNumber),
+        //        OpIpId = (long)long.Parse(model.OpIpId),
+        //        OpIpType = (int?)(long)long.Parse(model.OpIpType),
+
+        //        PeMessage = PE_Message,
+        //        PeErrMessage = PE_ErrMessage,
+        //        PeHipId = PE_HipId,
+        //        PePatientReferenceNumber = PE_PatientReferenceNumber
+
+        //    };
+
+        //    await _context.TabhaPatientEncounterCareContextDetails.AddAsync(encounter);
+        //    await _context.SaveChangesAsync();
+        //    scope.Complete();
+        //}
+ 
+        public virtual async Task SavePatientEncounterAsync(PatientVisitRequest model,string PE_Message,string PE_ErrMessage, string PE_HipId,string PE_PatientReferenceNumber, string PE_CareContext)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required,new TransactionOptions{IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted},TransactionScopeAsyncFlowOption.Enabled);
+
+            long opIpId = long.Parse(model.OpIpId);
+            int opIpType = int.Parse(model.OpIpType);
+
+            var encounter = await _context.TabhaPatientEncounterCareContextDetails.FirstOrDefaultAsync(x => x.OpIpId == opIpId &&x.OpIpType == opIpType);
+            if (encounter == null)
+            {
+                encounter = new TabhaPatientEncounterCareContextDetail
+                {
+                    AbhaNumber = model.AbhaNumber,
+                    AbhaAddress = model.AbhaAddress,
+                    OpIpId = opIpId,
+                    OpIpType = opIpType,
+                    PeMessage = PE_Message,
+                    PeErrMessage = PE_ErrMessage,
+                    PeHipId = PE_HipId,
+                    PePatientReferenceNumber = PE_PatientReferenceNumber,
+                    PeCareContext = PE_CareContext
+                };
+
+                if (!string.IsNullOrEmpty(PE_PatientReferenceNumber) && long.TryParse(PE_PatientReferenceNumber, out long regId))
+                {
+                    encounter.RegId = regId;
+                }
+
+                await _context.TabhaPatientEncounterCareContextDetails.AddAsync(encounter);
+            }
+            else
+            {
+                encounter.AbhaNumber = model.AbhaNumber;
+                encounter.AbhaAddress = model.AbhaAddress;
+                encounter.PeMessage = PE_Message;
+                encounter.PeErrMessage = PE_ErrMessage;
+                encounter.PeHipId = PE_HipId;
+                encounter.PePatientReferenceNumber = PE_PatientReferenceNumber;
+                encounter.PeCareContext = PE_CareContext;
+
+                if (!string.IsNullOrEmpty(PE_PatientReferenceNumber) &&
+                    long.TryParse(PE_PatientReferenceNumber, out long regId))
+                {
+                    encounter.RegId = regId;
+                }
+
+                _context.TabhaPatientEncounterCareContextDetails.Update(encounter);
+            }
+
+            await _context.SaveChangesAsync();
+
+            scope.Complete();
+        }
+
+     public virtual async Task SaveCareContextResponseAsync(CareContextModel model,string CC_WorkflowId,string CC_Message,string CC_HipId,string CC_ErrMessage)
+        {
+            using var scope = new TransactionScope( TransactionScopeOption.Required,new TransactionOptions{IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted},TransactionScopeAsyncFlowOption.Enabled);
+
+            string referenceNumber = model.careContexts?.FirstOrDefault()?.referenceNumber;
+
+            var encounter = await _context.TabhaPatientEncounterCareContextDetails.FirstOrDefaultAsync(x => x.PeCareContext == referenceNumber);
+
+            if (encounter != null)
+            {
+                encounter.CcWorkflowId = CC_WorkflowId;
+                encounter.CcMessage = CC_Message;
+                encounter.CcHipId = CC_HipId;
+                encounter.CcErrMessage = CC_ErrMessage;
+
+                _context.TabhaPatientEncounterCareContextDetails.Update(encounter);
+
+                await _context.SaveChangesAsync();
+            }
+
+            scope.Complete();
+        }
+
 
     }
 }

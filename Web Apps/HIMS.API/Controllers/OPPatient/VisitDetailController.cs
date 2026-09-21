@@ -104,7 +104,7 @@ namespace HIMS.API.Controllers.OPPatient
         [HttpPost("OPprevDoctorVisitList")]
         public async Task<IActionResult> OPPrevDrVisistList(GridRequestModel objGrid)
         {
-            IPagedList<PrevDrVisistListDto> Oplist = await _visitDetailsService.GeOPPreviousDrVisitListAsync(objGrid);
+            IPagedList<PrevOPDrVisistListDto> Oplist = await _visitDetailsService.GeOPPreviousDrVisitListAsync(objGrid);
             return Ok(Oplist.ToGridResponse(objGrid, "OP Previoud Dr Visit List"));
         }
 

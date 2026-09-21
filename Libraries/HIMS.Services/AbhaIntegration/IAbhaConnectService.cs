@@ -17,5 +17,7 @@ namespace HIMS.Services.AbhaIntegration
         Task<JsonElement> CareContextAsync(CareContextModel model, string jwtToken);
 
         Task<List<PatientVisitResponse>> GetPatientVisitsAsync(PatientVisitRequest model);
+        Task SavePatientEncounterAsync(PatientVisitRequest model, string PE_Message, string PE_ErrMessage, string PE_HipId, string PE_PatientReferenceNumber, string PE_CareContext);
+        Task SaveCareContextResponseAsync(CareContextModel model, string CC_WorkflowId, string CC_Message, string CC_HipId, string CC_ErrMessage);
     }
 }

@@ -173,5 +173,11 @@
         public string RoomName { get; set; }
         public long DepartmentId { get; set; }
         public long DoctorId { get; set; }
+        public long AbhaTranId { get; set; }
+        public string AbhaNumber { get; set; } = null!;
+        public string AbhaFullName { get; set; } = null!;
+        public string AbhaAddress { get; set; } = null!;
+        public string Gender { get; set; } = null!;
+        public DateTime YearOfBirth { get; set; }
     }
 }

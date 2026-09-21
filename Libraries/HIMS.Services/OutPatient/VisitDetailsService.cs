@@ -294,10 +294,10 @@ namespace HIMS.Services.OutPatient
             return await DatabaseHelper.GetGridDataBySp<OPRegistrationList>(model, "ps_Retrieve_RegistrationList");
         }
 
-        public virtual async Task<IPagedList<PrevDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel model)
+        public virtual async Task<IPagedList<PrevOPDrVisistListDto>> GeOPPreviousDrVisitListAsync(GridRequestModel model)
         {
 
-            return await DatabaseHelper.GetGridDataBySp<PrevDrVisistListDto>(model, "ps_Rtrv_PreviousDoctorVisitList");
+            return await DatabaseHelper.GetGridDataBySp<PrevOPDrVisistListDto>(model, "ps_Rtrv_PreviousDoctorVisitList");
         }
 
 
