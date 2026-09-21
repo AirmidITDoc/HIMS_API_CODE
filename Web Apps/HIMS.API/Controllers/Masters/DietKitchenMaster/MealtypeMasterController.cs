@@ -27,9 +27,11 @@ namespace HIMS.API.Controllers.Masters.DietMaster
         private readonly IGenericService<MMealTypeMaster> _repository;
         private readonly IMealtypemasterService _MealtypemasterService;
 
-        public MealTypeMasterController(IGenericService<MMealTypeMaster> repository)
+        public MealTypeMasterController(IGenericService<MMealTypeMaster> repository, IMealtypemasterService repository1)
         {
             _repository = repository;
+            _MealtypemasterService = repository1;
+
         }
         // List API
         [HttpPost]
@@ -55,7 +57,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
             return data.ToSingleResponse<MMealTypeMaster, MealTypeMasterModel>("FoodItemMaster");
         }
 
-        [HttpPost]
+        [HttpPost("Insert")]
         [Permission]
         public async Task<ApiResponse> InsertAsync(MealTypeMasterModel obj)
         {

@@ -76,18 +76,17 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
             MDietMenuMaster model = obj.MapTo<MDietMenuMaster>();
 
-            if (model.MDietMenuDetailMasters != null)
+
+            foreach (var q in model.MDietMenuDetailMasters)
             {
-                foreach (var q in model.MDietMenuDetailMasters)  
-                {
-                    q.MenuDetId = 0;
-                }
+                q.MenuDetId = 0;
+             //   q.OrderDate = AppTime.Now;
             }
 
             model.ModifiedDate = AppTime.Now;
             model.ModifiedBy = CurrentUserId;
 
-            await _DietMenuMasterService.UpdateAsync(model,CurrentUserId,CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+            await _DietMenuMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.DietMenuId);
         }
