@@ -12,6 +12,7 @@ namespace HIMS.Services.DietKitchen
     public partial interface IDietMenuMasterService
     {
         Task InsertAsync(MDietMenuMaster ObjMDietMenuMaster, int UserId, string Username);
+        Task UpdateAsync(MDietMenuMaster ObjMDietMenuMaster, int UserId, string Username, string[]? ignoreColumns = null);
 
     }
 }

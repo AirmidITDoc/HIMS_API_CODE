@@ -66,6 +66,31 @@ namespace HIMS.API.Controllers.Masters.DietMaster
                 ApiStatusCode.Status500InternalServerError,
                 "Invalid params");
         }
+
+
+        [HttpPut("Edit/{id:int}")]
+        public async Task<ApiResponse> Edit(DietmenumasterModel obj)
+        {
+            if (obj.DietMenuId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+            MDietMenuMaster model = obj.MapTo<MDietMenuMaster>();
+
+            if (model.MDietMenuDetailMasters != null)
+            {
+                foreach (var q in model.MDietMenuDetailMasters)  
+                {
+                    q.MenuDetId = 0;
+                }
+            }
+
+            model.ModifiedDate = AppTime.Now;
+            model.ModifiedBy = CurrentUserId;
+
+            await _DietMenuMasterService.UpdateAsync(model,CurrentUserId,CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.DietMenuId);
+        }
     }
 
 }

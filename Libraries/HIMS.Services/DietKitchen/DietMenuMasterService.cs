@@ -45,7 +45,60 @@ namespace HIMS.Services.DietKitchen
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
+
             }
         }
+
+
+
+        public virtual async Task UpdateAsync(MDietMenuMaster ObjMDietMenuMaster, int UserId, string Username, string[]? ignoreColumns = null)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+            long dietMenuId = ObjMDietMenuMaster.DietMenuId;
+
+            var newDetails = ObjMDietMenuMaster.MDietMenuDetailMasters?.ToList() ?? new List<MDietMenuDetailMaster>();
+            ObjMDietMenuMaster.MDietMenuDetailMasters = null;
+
+            // Delete existing related details first
+            var lstDetails = await _context.MDietMenuDetailMasters
+                .Where(x => x.DietMenuId == dietMenuId)
+                .ToListAsync();
+
+            if (lstDetails.Any())
+                _context.MDietMenuDetailMasters.RemoveRange(lstDetails);
+
+            // Save deletion first
+            await _context.SaveChangesAsync();
+
+            // Then attach and update header
+            _context.Attach(ObjMDietMenuMaster);
+            _context.Entry(ObjMDietMenuMaster).State = EntityState.Modified;
+
+            // Prevent DietMenuCode from being modified during update
+            _context.Entry(ObjMDietMenuMaster).Property(x => x.DietMenuCode).IsModified = false;
+
+            ObjMDietMenuMaster.ModifiedBy = UserId;
+            ObjMDietMenuMaster.ModifiedDate = AppTime.Now;
+
+            if (ignoreColumns?.Length > 0)
+            {
+                foreach (var column in ignoreColumns)
+                    _context.Entry(ObjMDietMenuMaster).Property(column).IsModified = false;
+            }
+
+            // Re-insert the (new) detail rows against this header
+            foreach (var detail in newDetails)
+            {
+                detail.DietMenuId = dietMenuId;
+                detail.CreatedBy = UserId;
+                detail.CreatedDate = AppTime.Now;
+            }
+            await _context.MDietMenuDetailMasters.AddRangeAsync(newDetails);
+
+            await _context.SaveChangesAsync();
+            scope.Complete();
+        }
     }
-}
+ }
+
