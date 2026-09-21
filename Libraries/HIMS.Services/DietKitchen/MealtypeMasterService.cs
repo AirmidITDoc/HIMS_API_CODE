@@ -18,12 +18,11 @@ namespace HIMS.Services.DietKitchen
             _context = HIMSDbContext;
         }
 
-        public virtual async Task InsertAsync( MMealTypeMaster ObjMMealTypeMaster, int UserId, string Username)
+        public virtual async Task InsertAsync(MMealTypeMaster ObjMMealTypeMaster, int UserId, string Username)
         {
-            using var scope = new TransactionScope(   TransactionScopeOption.Required,  new TransactionOptions {     IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted  }, TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
-            var lastSeqNo = await _context.MMealTypeMasters
-                .OrderByDescending(x => x.MealSequence)
+            var lastSeqNo = await _context.MMealTypeMasters.OrderByDescending(x => x.MealSequence)
                 .Select(x => x.MealSequence)
                 .FirstOrDefaultAsync();
 

@@ -11,7 +11,7 @@ namespace HIMS.API.Models.DietKitchen
         public string? OrderCutoffTime { get; set; }
         public string? PreparationStartTime { get; set; }
         public string? DispatchTime { get; set; }
-        public int? MealSequence { get; set; }
+  //      public int? MealSequence { get; set; }
 
 
     }
