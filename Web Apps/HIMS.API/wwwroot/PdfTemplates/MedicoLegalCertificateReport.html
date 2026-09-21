@@ -29,7 +29,7 @@
             padding: 2mm 3mm;
         }
 
-       
+
 
         .title {
             text-align: center;
@@ -39,7 +39,7 @@
             margin: 2px 0 9px;
         }
 
-      
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -51,7 +51,7 @@
             font-size: 12px;
         }
 
-      
+
 
         .top-info {
             margin-bottom: 10px;
@@ -96,7 +96,7 @@
             font-weight: bold;
         }
 
-       
+
 
         .main-info {
             width: 100%;
@@ -140,7 +140,38 @@
             text-align: center;
         }
 
-      
+
+        /* MLC / Police information */
+
+        .mlc-info {
+            margin-top: 8px;
+            margin-bottom: 6px;
+        }
+
+        .mlc-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+            .mlc-table td {
+                border: 1px solid #555;
+                height: 28px;
+                font-size: 12px;
+                padding: 5px 6px;
+                word-wrap: break-word;
+            }
+
+                .mlc-table td.lbl {
+                    width: 20%;
+                    font-weight: bold;
+                }
+
+                .mlc-table td.val {
+                    width: 30%;
+                }
+
+
 
         .section-title {
             font-weight: bold;
@@ -161,7 +192,7 @@
             font-size: 12px;
         }
 
-     
+
 
         .line-section {
             margin-top: 6px;
@@ -205,7 +236,7 @@
 
     <div class="page">
 
-        <!-- 
+        <!--
              TITLE
         ->
 
@@ -214,7 +245,7 @@
         </div>
 
 
-        <!-- 
+        <!--
              MLC / CERTIFICATE INFORMATION
         -->
 
@@ -259,7 +290,7 @@
         </table>
 
 
-        <!-- 
+        <!--
              PATIENT INFORMATION
          -->
 
@@ -302,7 +333,7 @@
         </div>
 
 
-        <!-- 
+        <!--
              REGISTRATION / ACCIDENT DETAILS
         === -->
 
@@ -427,7 +458,58 @@
         </div>
 
 
-        <!-- 
+        <!--
+             MLC / POLICE INFORMATION
+        -->
+
+        <div class="mlc-info">
+
+            <div class="section-title">
+                Police Intimation / M.L.C. Details
+            </div>
+
+            <table class="mlc-table">
+
+                <tr>
+                    <td class="lbl">M.L.C. No</td>
+                    <td colspan="3">: {{Mlcno}}</td>
+                </tr>
+
+                <tr>
+                    <td class="lbl">Reporting Date</td>
+                    <td class="val">: {{ReportingDate}}</td>
+                    <td class="lbl">Reporting Time</td>
+                    <td class="val">: {{ReportingTime}}</td>
+                </tr>
+
+                <tr>
+                    <td class="lbl">Authority Name</td>
+                    <td class="val">: {{AuthorityName}}</td>
+                    <td class="lbl">Buckle No</td>
+                    <td class="val">: {{BuckleNo}}</td>
+                </tr>
+
+                <tr>
+                    <td class="lbl">Police Station</td>
+                    <td colspan="3">: {{PoliceStation}}</td>
+                </tr>
+
+                <tr>
+                    <td class="lbl">Detail Given</td>
+                    <td colspan="3">: {{DetailGiven}}</td>
+                </tr>
+
+                <tr>
+                    <td class="lbl">Remark</td>
+                    <td colspan="3">: {{Remark}}</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+
+        <!--
              DETAILS OF INJURIES
          -->
 
@@ -441,7 +523,7 @@
         </div>
 
 
-        <!-- 
+        <!--
              AGE OF INJURY
         -->
 
@@ -458,7 +540,7 @@
         </div>
 
 
-        <!-- 
+        <!--
              CAUSE OF INJURY
          -->
 
@@ -475,7 +557,7 @@
         </div>
 
 
-        <!-- 
+        <!--
              DETAILS OF INJURIES / CLINICAL FEATURES
          -->
 
