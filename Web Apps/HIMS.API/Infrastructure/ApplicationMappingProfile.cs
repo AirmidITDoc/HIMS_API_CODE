@@ -38,6 +38,7 @@ using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 using static HIMS.API.Models.Masters.CompanyMasterModelValidator;
 using static HIMS.API.Models.Masters.ConfigurationModelValidator;
 using static HIMS.API.Models.Masters.ReportConfigModelModelValidator;
+using static HIMS.API.Models.MRD.MedicolegalCertificateModel;
 using static HIMS.API.Models.OTManagement.OTBookingRequestModel;
 using static HIMS.API.Models.OutPatient.AppointmentBillModel;
 using static HIMS.API.Models.OutPatient.RefundAdvanceModelValidator;
@@ -76,7 +77,12 @@ namespace HIMS.API.Infrastructure
             CreateMap<TGrnheader, UpdateGRNSupplierModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TCurrentStock, UpdateCurrentStockModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<TMedicolegalCertificate, MedicolegalCertificateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TMedicolegalCertificate, MedicolegalCertificateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();  
+            CreateMap<TMlcinformation, MedicolegalCertificateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TMedicolegalCertificate, MedicolegalCertificateUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TMlcinformation, MedicolegalCertificateUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
             CreateMap<TDeathCertificate, DeathCertificateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
