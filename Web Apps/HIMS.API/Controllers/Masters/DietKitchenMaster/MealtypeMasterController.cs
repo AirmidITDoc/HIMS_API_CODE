@@ -11,6 +11,7 @@ using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
 using HIMS.Services.DietKitchen;
+using HIMS.Services.OutPatient;
 using HIMS.Services.Transaction;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,15 +25,18 @@ namespace HIMS.API.Controllers.Masters.DietMaster
     public class MealTypeMasterController : BaseController
     {
         private readonly IGenericService<MMealTypeMaster> _repository;
+        private readonly IMealtypemasterService _MealtypemasterService;
 
-        public MealTypeMasterController(IGenericService<MMealTypeMaster> repository)
+        public MealTypeMasterController(IGenericService<MMealTypeMaster> repository, IMealtypemasterService repository1)
         {
             _repository = repository;
+            _MealtypemasterService = repository1;
+
         }
         // List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MMealTypeMaster> list = await _repository.GetAllPagedAsync(objGrid);
@@ -41,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
         // Get By Id API
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -53,9 +57,9 @@ namespace HIMS.API.Controllers.Masters.DietMaster
             return data.ToSingleResponse<MMealTypeMaster, MealTypeMasterModel>("FoodItemMaster");
         }
 
-        [HttpPost]
-        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> Post(MealTypeMasterModel obj)
+        [HttpPost("Insert")]
+        [Permission]
+        public async Task<ApiResponse> InsertAsync(MealTypeMasterModel obj)
         {
             MMealTypeMaster model = obj.MapTo<MMealTypeMaster>();
             model.Active = true;
@@ -63,7 +67,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
+                await _MealtypemasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
             {
@@ -75,7 +79,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
 
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(MealTypeMasterModel obj)
         {
             MMealTypeMaster model = obj.MapTo<MMealTypeMaster>();
@@ -95,7 +99,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
 
         [HttpDelete]
-        //[Permission(PageCode = "MMealTypeMaster", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(long Id)
         {
             MMealTypeMaster? model = await _repository.GetById(x => x.MealId == Id);

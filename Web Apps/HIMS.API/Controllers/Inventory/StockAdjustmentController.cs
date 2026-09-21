@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("MrpAdjustmentUpdate")]
         [Permission(PageCode = "StockAdjustment", Permission = PagePermission.Edit)]
-        public ApiResponse GSTUpdate(MRPAdjModel obj)
+        public async Task<ApiResponse> GSTUpdate(MRPAdjModel obj)
         {
             TMrpAdjustment model = obj.MRPAdjustmentMod.MapTo<TMrpAdjustment>();
             TCurrentStock CurruntStock = obj.CurruntStockModel.MapTo<TCurrentStock>();
@@ -96,7 +96,7 @@ namespace HIMS.API.Controllers.Inventory
                 BatchNo = CurruntStock.BatchNo,
 
             };
-            _IStockAdjustmentService.MrpAdjustmentUpdate(model, CurruntStock, CurrentUserId, CurrentUserName);
+            await _IStockAdjustmentService.MrpAdjustmentUpdate(model, CurruntStock, CurrentUserId, CurrentUserName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update  successfully.");
         }
 

@@ -105,6 +105,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<ISurgeryMasterService, SurgeryMasterService>();
             services.AddScoped<IConstantService, ConstantService>();
             services.AddScoped<IAbhaConnectService, AbhaConnectService>();
+            services.AddScoped<IMedicolegalCertificateService, MedicolegalCertificateService>();
+
 
 
 
@@ -174,6 +176,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IBillingService, BillingService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IExternalDoctorService, ExternalDoctorService>();
+            services.AddScoped<IMealtypemasterService, MealtypemasterService>();
+
 
 
             services.AddScoped<IOPRefundOfBillService, OPRefundOfBillService>();

@@ -18,12 +18,11 @@ namespace HIMS.Services.DietKitchen
             _context = HIMSDbContext;
         }
 
-        public virtual async Task InsertAsync( MMealTypeMaster ObjMMealTypeMaster, int UserId, string Username)
+        public virtual async Task InsertAsync(MMealTypeMaster ObjMMealTypeMaster, int CurrentUserId, string CurrentUserName)
         {
-            using var scope = new TransactionScope(   TransactionScopeOption.Required,  new TransactionOptions {     IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted  }, TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
-            var lastSeqNo = await _context.MMealTypeMasters
-                .OrderByDescending(x => x.MealSequence)
+            var lastSeqNo = await _context.MMealTypeMasters.OrderByDescending(x => x.MealSequence)
                 .Select(x => x.MealSequence)
                 .FirstOrDefaultAsync();
 
@@ -31,7 +30,7 @@ namespace HIMS.Services.DietKitchen
 
             ObjMMealTypeMaster.MealSequence = newSeqNo;
 
-            ObjMMealTypeMaster.CreatedBy = UserId;
+            ObjMMealTypeMaster.CreatedBy = CurrentUserId;
             ObjMMealTypeMaster.CreatedDate = AppTime.Now;
 
             _context.MMealTypeMasters.Add(ObjMMealTypeMaster);

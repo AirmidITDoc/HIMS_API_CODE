@@ -70,6 +70,9 @@ namespace HIMS.Data.DTO.DietKitchen
         public string? UserName { get; set; }
         public string? CancelledUser { get; set; }
         public string? IsAcceptedUser { get; set; }
+        public long? MealTypeId { get; set; }
+        public long? DietTypeId { get; set; }
+
 
     }
 }
