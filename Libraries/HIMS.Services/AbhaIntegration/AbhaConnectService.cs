@@ -469,8 +469,8 @@ namespace HIMS.Services.AbhaIntegration
                     });
                 }
             }
-            // =====================================================
-            // DIAGNOSTIC REPORTS + DISCHARGE SUMMARY
+             //=====================================================
+             //DIAGNOSTIC REPORTS + DISCHARGE SUMMARY
 
             DatabaseHelper sql2 = new();
 
@@ -504,7 +504,7 @@ namespace HIMS.Services.AbhaIntegration
                             Text = firstRow["DiagnosticText"].ToString(),
                             Code = new CodeDetails
                             {
-                                HospitalId = firstRow["DiagnosticHospitalId"].ToString(),
+                                HospitalId = model.HipId,
                                 Category = firstRow["DiagnosticCategory"].ToString(),
                                 Url = firstRow["DiagnosticUrl"].ToString(),
                                 Code = firstRow["DiagnosticCode"].ToString(),
@@ -542,7 +542,7 @@ namespace HIMS.Services.AbhaIntegration
                                 Text = row["ResultText"].ToString(),
                                 Code = new CodeDetails
                                 {
-                                    HospitalId = row["ResultHospitalId"].ToString(),
+                                    HospitalId = model.HipId,
                                     Category = row["ResultCategory"].ToString(),
                                     Url = row["ResultUrl"].ToString(),
                                     Code = row["ResultCode"].ToString(),
@@ -567,7 +567,7 @@ namespace HIMS.Services.AbhaIntegration
                                 Text = row["ResultCategoryText"].ToString(),
                                 Code = new CodeDetails
                                 {
-                                    HospitalId = row["ResultCategoryHospitalId"].ToString(),
+                                    HospitalId = model.HipId,
                                     Category = row["ResultCategory"].ToString(),
                                     Url = row["ResultCategoryUrl"].ToString(),
                                     Code = row["ResultCategoryCode"].ToString(),
@@ -608,7 +608,7 @@ namespace HIMS.Services.AbhaIntegration
                                 Text = row["InterpretationText"].ToString(),
                                 Code = new CodeDetails
                                 {
-                                    HospitalId = row["InterpretationHospitalId"].ToString(),
+                                    HospitalId = model.HipId,
                                     Category = row["InterpretationCategory"].ToString(),
                                     Url = row["InterpretationUrl"].ToString(),
                                     Code = row["InterpretationCode"].ToString(),
@@ -626,9 +626,17 @@ namespace HIMS.Services.AbhaIntegration
             {
                 foreach (DataRow row in diagnosticDs.Tables[1].Rows)
                 {
+                    string dischargeSummary = System.Text.RegularExpressions.Regex.Replace(
+                        row["DischargeSummary"].ToString(),
+                        "<.*?>",
+                        string.Empty
+                    );
+
+                    dischargeSummary = System.Net.WebUtility.HtmlDecode(dischargeSummary).Trim();
+
                     response.Visits[0].DischargeSummaries.Add(new DischargeSummaryItem
                     {
-                        DischargeSummary = row["DischargeSummary"].ToString(),
+                        DischargeSummary = dischargeSummary,
                         DischargeStatus = row["DischargeStatus"].ToString()
                     });
                 }

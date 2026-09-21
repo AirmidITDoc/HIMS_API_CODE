@@ -67,6 +67,9 @@
         public long? AbhaTranId { get; set; }
         public string? AbhaAddress { get; set; }
         public string? AbhaNumber { get; set; }
+        public string? AbhaFullName { get; set; } 
+        public string? Gender { get; set; } 
+        public DateTime? YearOfBirth { get; set; }
     }
 
     public class RegistrationAutoCompleteDto

@@ -95,12 +95,12 @@ namespace HIMS.API.Controllers.AbhaIntegration
                 string ccErrMessage = null;
                 try
                 {
-                    var careContextData = JsonSerializer.Deserialize<JsonElement>( JsonSerializer.Serialize(result));
+                    var careContextData = JsonSerializer.Deserialize<JsonElement>(JsonSerializer.Serialize(result));
 
                     if (careContextData.TryGetProperty("workflowId", out var workflowId)) ccWorkflowId = workflowId.ToString();
                     if (careContextData.TryGetProperty("message", out var message)) ccMessage = message.ToString();
                     if (careContextData.TryGetProperty("hipId", out var hipId)) ccHipId = hipId.ToString();
-                    if (careContextData.TryGetProperty("errMessage", out var errMessage)) ccErrMessage = errMessage.ValueKind == JsonValueKind.Null ? null: errMessage.ToString();
+                    if (careContextData.TryGetProperty("errMessage", out var errMessage)) ccErrMessage = errMessage.ValueKind == JsonValueKind.Null ? null : errMessage.ToString();
                 }
                 catch
                 {
@@ -110,7 +110,7 @@ namespace HIMS.API.Controllers.AbhaIntegration
                     ccErrMessage = JsonSerializer.Serialize(result);
                 }
 
-                await _abhaConnectService.SaveCareContextResponseAsync(model,ccWorkflowId,ccMessage, ccHipId, ccErrMessage);
+                await _abhaConnectService.SaveCareContextResponseAsync(model, ccWorkflowId, ccMessage, ccHipId, ccErrMessage);
 
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Link care context request sent successfully.",result);
             }
@@ -232,10 +232,10 @@ namespace HIMS.API.Controllers.AbhaIntegration
                         peErrMessage = responseContent;
                     }
                 }
-                await _abhaConnectService.SavePatientEncounterAsync(model,peMessage, peErrMessage,peHipId, pePatientReferenceNumber, peCareContext);
+                await _abhaConnectService.SavePatientEncounterAsync(model, peMessage, peErrMessage, peHipId, pePatientReferenceNumber, peCareContext);
 
-                if (externalResponse.IsSuccessStatusCode) 
-                { 
+                if (externalResponse.IsSuccessStatusCode)
+                {
                     var externalData = JsonSerializer.Deserialize<JsonElement>(responseContent); 
                     return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Patient encounter details fetched successfully.", externalData); 
                 } 
