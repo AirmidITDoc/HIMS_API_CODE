@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.DietKitchen
             return Ok(ReservationAttendingDetailList.ToGridResponse(objGrid, "DietPatientRequestHeader List"));
         }
         [HttpPost("DietPatientRequestDetailsList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> DietPatientRequestDetailsList(GridRequestModel objGrid)
         {
             IPagedList<DietPatientRequestDetailsListDto> ReservationAttendingDetailList = await _IDietPatientRequestService.GetListDetailsAsync(objGrid);
