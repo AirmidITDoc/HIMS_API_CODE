@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         // List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MDietRestrictionMaster> list = await _repository.GetAllPagedAsync(objGrid);
@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Get By Id API
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Post / Insert API
         [HttpPost]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(DietRestrictionModel obj)
         {
             MDietRestrictionMaster model = obj.MapTo<MDietRestrictionMaster>();
@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Edit / Update API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(DietRestrictionModel obj)
         {
             MDietRestrictionMaster model = obj.MapTo<MDietRestrictionMaster>();
@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Delete API (Soft Delete / Toggle Status)
         [HttpDelete]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(long Id)
         {
             MDietRestrictionMaster? model = await _repository.GetById(x => x.RestrictionId == Id);

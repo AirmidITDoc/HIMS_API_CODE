@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         // List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MAllergyMaster> list = await _repository.GetAllPagedAsync(objGrid);
@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Get By Id API
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Post / Insert API
         [HttpPost]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(AllergyModel obj)
         {
             MAllergyMaster model = obj.MapTo<MAllergyMaster>();
@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Edit / Update API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(AllergyModel obj)
         {
             MAllergyMaster model = obj.MapTo<MAllergyMaster>();
@@ -91,7 +91,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Delete API (Soft Delete / Toggle Status)
         [HttpDelete]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(long Id)
         {
             MAllergyMaster? model = await _repository.GetById(x => x.AllergyId == Id);

@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
         // List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "DietMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MFoodCategoryMaster> list = await _repository.GetAllPagedAsync(objGrid);
@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
         // Get By Id API
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "MFoodCategoryMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
         }
 
         [HttpPost]
-        //[Permission(PageCode = "MFoodCategoryMaster", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(FoodCategorymasterModel obj)
         {
             MFoodCategoryMaster model = obj.MapTo<MFoodCategoryMaster>();
@@ -75,7 +75,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
 
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "MFoodCategoryMaster", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(FoodCategorymasterModel obj)
         {
             MFoodCategoryMaster model = obj.MapTo<MFoodCategoryMaster>();
@@ -95,7 +95,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
 
         [HttpDelete]
-        //[Permission(PageCode = "MFoodCategoryMaster", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(long Id)
         {
             MFoodCategoryMaster? model = await _repository.GetById(x => x.FoodCategoryId == Id);

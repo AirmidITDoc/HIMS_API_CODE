@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         // 1. List API (Paged Grid)
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "SpecialtyMaster", Permission = Permission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MOtSpecialtyMaster> list = await _repository.GetAllPagedAsync(objGrid);
@@ -37,7 +37,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
         // 2. Get By Id API
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "SpecialtyMaster", Permission = Permission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(long id)
         {
             if (id == 0)
@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
         // 3. Add API (Post)
         [HttpPost]
-        //[Permission(PageCode = "SpecialtyMaster", Permission = Permission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(SpecialtyMasterModel obj)
         {
             MOtSpecialtyMaster model = obj.MapTo<MOtSpecialtyMaster>();
@@ -74,7 +74,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
         // 4. Edit API (Put)
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "SpecialtyMaster", Permission = Permission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(SpecialtyMasterModel obj)
         {
             MOtSpecialtyMaster model = obj.MapTo<MOtSpecialtyMaster>();
@@ -96,7 +96,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
         // 5. Delete API (Soft Delete / Toggle Status)
         [HttpDelete]
-        //[Permission(PageCode = "SpecialtyMaster", Permission = Permission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(long Id)
         {
             MOtSpecialtyMaster model = await _repository.GetById(x => x.SpecialtyId == Id);
