@@ -156,7 +156,7 @@ namespace HIMS.Services.Pharmacy
                 odal.ExecuteNonQueryNew("m_Update_GRNReturn_Verify_Status_1", CommandType.StoredProcedure, "", entity);
                 await _context.LogProcedureExecution(entity, nameof(TGrnreturnHeader), objGRN.GrnreturnId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
                 // save in one shot
-                //await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
                 // Commit Transaction
                 await transaction.CommitAsync();
             }
