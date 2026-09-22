@@ -261,6 +261,7 @@ namespace HIMS.Services.AbhaIntegration
                     Prescriptions = new List<Prescription>(),
                     DiagnosticReports = new List<DiagnosticReport>(),
                     DischargeSummaries = new List<DischargeSummaryItem>(),
+                    ObservationResult = new List<ObservationResult>(),
                     Reports = new List<Reports>()
                 };
 
@@ -641,6 +642,7 @@ namespace HIMS.Services.AbhaIntegration
                     });
                 }
             }
+            response.Visits[0].ObservationResult = GetObservations(diagnosticDs != null && diagnosticDs.Tables.Count > 2 ? diagnosticDs.Tables[2] : null, model.HipId);
 
 
 
@@ -651,6 +653,115 @@ namespace HIMS.Services.AbhaIntegration
             result.Add(response);
 
             return result;
+        }
+        private List<ObservationResult> GetObservations(DataTable table, string hipId)
+        {
+            List<ObservationResult> observations = new();
+
+            if (table == null || table.Rows.Count == 0)
+                return observations;
+
+            foreach (DataRow row in table.Rows)
+            {
+                object resultValue = decimal.TryParse(row["ResultValue"].ToString(), out decimal rv)
+                    ? rv
+                    : row["ResultValue"].ToString();
+
+                object refHighValue = decimal.TryParse(row["ReferenceHighValue"].ToString(), out decimal rh)
+                    ? rh
+                    : row["ReferenceHighValue"].ToString();
+
+                object refLowValue = decimal.TryParse(row["ReferenceLowValue"].ToString(), out decimal rl)
+                    ? rl
+                    : row["ReferenceLowValue"].ToString();
+
+                observations.Add(new ObservationResult
+                {
+                    Status = row["ObservationStatus"].ToString(),
+
+                    ResultCode = new ResultCodeableConcept
+                    {
+                        Text = row["ResultText"].ToString(),
+                        Code = new CodeDetails
+                        {
+                            HospitalId = row["ResultHospitalId"].ToString(),
+                            Category = row["ResultCategory"].ToString(),
+                            Url = row["ResultUrl"].ToString(),
+                            Code = row["ResultCode"].ToString(),
+                            Display = row["ResultDisplay"].ToString()
+                        }
+                    },
+
+                    Value = new ValueQuantity
+                    {
+                        Value = resultValue,
+                        Code = new QuantityCode
+                        {
+                            Id = row["ResultValueId"].ToString(),
+                            Unit = row["ResultUnit"].ToString(),
+                            Url = row["ResultValueUrl"].ToString(),
+                            Code = row["ResultValueCode"].ToString()
+                        }
+                    },
+
+                    Category = new CategoryCodeableConcept
+                    {
+                        Text = row["ResultCategoryText"].ToString(),
+                        Code = new CodeDetails
+                        {
+                            HospitalId = row["ResultCategoryHospitalId"].ToString(),
+                            Category = row["ResultCategoryName"].ToString(),
+                            Url = row["ResultCategoryUrl"].ToString(),
+                            Code = row["ResultCategoryCode"].ToString(),
+                            Display = row["ResultCategoryDisplay"].ToString()
+                        }
+                    },
+
+                    ReferenceRange = new ReferenceRange
+                    {
+                        High = new ValueQuantity
+                        {
+                            Value = refHighValue,
+                            Code = new QuantityCode
+                            {
+                                Id = row["ReferenceHighId"].ToString(),
+                                Unit = row["ReferenceHighUnit"].ToString(),
+                                Url = row["ReferenceHighUrl"].ToString(),
+                                Code = row["ReferenceHighCode"].ToString()
+                            }
+                        },
+
+                        Low = new ValueQuantity
+                        {
+                            Value = refLowValue,
+                            Code = new QuantityCode
+                            {
+                                Id = row["ReferenceLowId"].ToString(),
+                                Unit = row["ReferenceLowUnit"].ToString(),
+                                Url = row["ReferenceLowUrl"].ToString(),
+                                Code = row["ReferenceLowCode"].ToString()
+                            }
+                        }
+                    },
+
+                    EffectiveOn = row["EffectiveOn"].ToString(),
+
+                    Interpretation = new InterpretationCodeableConcept
+                    {
+                        Text = row["InterpretationText"].ToString(),
+                        Code = new CodeDetails
+                        {
+                            HospitalId = row["InterpretationHospitalId"].ToString(),
+                            Category = row["InterpretationCategory"].ToString(),
+                            Url = row["InterpretationUrl"].ToString(),
+                            Code = row["InterpretationCode"].ToString(),
+                            Display = row["InterpretationDisplay"].ToString()
+                        }
+                    }
+                });
+            }
+
+            return observations;
         }
         //public virtual async Task SavePatientEncounterAsync(PatientVisitRequest model, string PE_Message, string PE_ErrMessage, string PE_HipId, string PE_PatientReferenceNumber)
         //{
@@ -675,7 +786,7 @@ namespace HIMS.Services.AbhaIntegration
         //    await _context.SaveChangesAsync();
         //    scope.Complete();
         //}
- 
+
         public virtual async Task SavePatientEncounterAsync(PatientVisitRequest model,string PE_Message,string PE_ErrMessage, string PE_HipId,string PE_PatientReferenceNumber, string PE_CareContext)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required,new TransactionOptions{IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted},TransactionScopeAsyncFlowOption.Enabled);

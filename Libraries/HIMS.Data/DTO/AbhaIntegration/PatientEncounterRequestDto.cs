@@ -71,6 +71,7 @@ namespace HIMS.Data.DTO.AbhaIntegration
 
         public List<DiagnosticReport> DiagnosticReports { get; set; }
         public List<DischargeSummaryItem> DischargeSummaries { get; set; }
+        public List<ObservationResult> ObservationResult { get; set; }
 
         // keep reports at end
         public List<Reports> Reports { get; set; }
