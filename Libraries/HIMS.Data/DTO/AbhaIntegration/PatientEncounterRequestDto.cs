@@ -71,6 +71,10 @@ namespace HIMS.Data.DTO.AbhaIntegration
 
         public List<DiagnosticReport> DiagnosticReports { get; set; }
         public List<DischargeSummaryItem> DischargeSummaries { get; set; }
+        public List<ObservationResult> ObservationResult { get; set; }
+        public List<AllergyData> AllergiesData { get; set; }
+        public List<PhysicalExam> PhysicalExams { get; set; }
+        public List<InvoiceRecord> InvoiceRecord { get; set; }
 
         // keep reports at end
         public List<Reports> Reports { get; set; }
@@ -265,6 +269,65 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public string DischargeSummary { get; set; }
         public string DischargeStatus { get; set; }
     }
+    public class AllergyData
+    {
+        public CodeableConcept clinicalStatus { get; set; }
+        public CodeableConcept verificationStatus { get; set; }
+        public CodeableConcept allergy { get; set; }
+        public string recordedDate { get; set; }
+        public string note { get; set; }
+    }
+
+    public class CodeableConcept
+    {
+        public string text { get; set; }
+        public CodeDetails code { get; set; }
+    }
+
+    public class PhysicalExam
+    {
+        public string physicalExamSummary { get; set; }
+    }
+
+    public class InvoiceRecord
+    {
+        public string recepient { get; set; }
+        public string issuer { get; set; }
+        public string issuedDate { get; set; }
+        public BillIdentifier billIdentifier { get; set; }
+        public List<InvoiceLineItem> lineItems { get; set; }
+        public string invoiceRecordType { get; set; }
+    }
+
+    public class BillIdentifier
+    {
+        public string type { get; set; }
+        public string value { get; set; }
+    }
+
+    public class InvoiceLineItem
+    {
+        public ChargeItem chargeItem { get; set; }
+        public List<PriceComponent> priceComponents { get; set; }
+    }
+
+    public class ChargeItem
+    {
+        public CodeableConcept chargeItemCodeableConcept { get; set; }
+    }
+
+    public class PriceComponent
+    {
+        public string type { get; set; }
+        public PriceAmount amount { get; set; }
+    }
+
+    public class PriceAmount
+    {
+        public decimal amount { get; set; }
+        public string currency { get; set; }
+    }
+
 
 
 }

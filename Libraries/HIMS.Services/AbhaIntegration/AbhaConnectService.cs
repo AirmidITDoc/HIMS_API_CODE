@@ -261,6 +261,10 @@ namespace HIMS.Services.AbhaIntegration
                     Prescriptions = new List<Prescription>(),
                     DiagnosticReports = new List<DiagnosticReport>(),
                     DischargeSummaries = new List<DischargeSummaryItem>(),
+                    ObservationResult = new List<ObservationResult>(),
+                    AllergiesData = new List<AllergyData>(),
+                    PhysicalExams = new List<PhysicalExam>(),
+                    InvoiceRecord = new List<InvoiceRecord>(),
                     Reports = new List<Reports>()
                 };
 
@@ -641,8 +645,25 @@ namespace HIMS.Services.AbhaIntegration
                     });
                 }
             }
+            response.Visits[0].ObservationResult = GetObservations(diagnosticDs != null && diagnosticDs.Tables.Count > 2 ? diagnosticDs.Tables[2] : null, model.HipId);
 
 
+
+            DatabaseHelper sql3 = new();
+
+            DataSet allergyDs = sql3.FetchDataSetBySP("ps_GetAllergyPhysicalExam",new SqlParameter[]
+                {
+                new SqlParameter { ParameterName = "@OpIpId", Value = model.OpIpId },
+                new SqlParameter { ParameterName = "@OpIpType", Value = model.OpIpType }
+                }
+            );
+
+
+            response.Visits[0].AllergiesData = GetAllergiesData(allergyDs != null && allergyDs.Tables.Count > 0 ? allergyDs.Tables[0] : null,model.HipId);
+
+            response.Visits[0].PhysicalExams = GetPhysicalExams(allergyDs != null && allergyDs.Tables.Count > 1 ? allergyDs.Tables[1] : null);
+
+            response.Visits[0].InvoiceRecord = GetInvoiceRecords( allergyDs != null && allergyDs.Tables.Count > 2 ? allergyDs.Tables[2] : null,model.HipId);
 
             // =====================================================
             // FINAL RESULT
@@ -651,6 +672,265 @@ namespace HIMS.Services.AbhaIntegration
             result.Add(response);
 
             return result;
+        }
+        private List<AllergyData> GetAllergiesData(DataTable table, string hipId)
+        {
+            List<AllergyData> allergies = new();
+
+            if (table == null || table.Rows.Count == 0)
+                return allergies;
+
+            foreach (DataRow row in table.Rows)
+            {
+                allergies.Add(new AllergyData
+                {
+                    clinicalStatus = new CodeableConcept
+                    {
+                        text = row["ClinicalStatusText"].ToString(),
+                        code = new CodeDetails
+                        {
+                            HospitalId = hipId,
+                            Category = row["ClinicalStatusCategory"].ToString(),
+                            Url = row["ClinicalStatusUrl"].ToString(),
+                            Code = row["ClinicalStatusCode"].ToString(),
+                            Display = row["ClinicalStatusDisplay"].ToString()
+                        }
+                    },
+
+                    verificationStatus = new CodeableConcept
+                    {
+                        text = row["VerificationStatusText"].ToString(),
+                        code = new CodeDetails
+                        {
+                            HospitalId = hipId,
+                            Category = row["VerificationStatusCategory"].ToString(),
+                            Url = row["VerificationStatusUrl"].ToString(),
+                            Code = row["VerificationStatusCode"].ToString(),
+                            Display = row["VerificationStatusDisplay"].ToString()
+                        }
+                    },
+
+                    allergy = new CodeableConcept
+                    {
+                        text = row["AllergyText"].ToString(),
+                        code = new CodeDetails
+                        {
+                            HospitalId = hipId,
+                            Category = row["AllergyCategory"].ToString(),
+                            Url = row["AllergyUrl"].ToString(),
+                            Code = row["AllergyCode"].ToString(),
+                            Display = row["AllergyDisplay"].ToString()
+                        }
+                    },
+
+                    recordedDate = row["RecordedDate"].ToString(),
+                    note = row["Note"].ToString()
+                });
+            }
+
+            return allergies;
+        }
+        private List<PhysicalExam> GetPhysicalExams(DataTable table)
+        {
+            List<PhysicalExam> physicalExams = new();
+
+            if (table == null || table.Rows.Count == 0)
+                return physicalExams;
+
+            foreach (DataRow row in table.Rows)
+            {
+                physicalExams.Add(new PhysicalExam
+                {
+                    physicalExamSummary = row["PhysicalExamSummary"].ToString()
+                });
+            }
+
+            return physicalExams;
+        }
+        private List<InvoiceRecord> GetInvoiceRecords(DataTable table, string hipId)
+        {
+            List<InvoiceRecord> invoices = new();
+
+            if (table == null || table.Rows.Count == 0)
+                return invoices;
+
+            var invoiceGroups = table.AsEnumerable()
+                .GroupBy(row => row["BillNo"].ToString());
+
+            foreach (var billGroup in invoiceGroups)
+            {
+                DataRow firstRow = billGroup.First();
+
+                InvoiceRecord invoice = new InvoiceRecord
+                {
+                    recepient = firstRow["Recepient"].ToString(),
+                    issuer = firstRow["Issuer"].ToString(),
+                    issuedDate = firstRow["IssuedDate"].ToString(),
+
+                    billIdentifier = new BillIdentifier
+                    {
+                        type = firstRow["BillIdentifierType"].ToString(),
+                        value = firstRow["BillIdentifierValue"].ToString()
+                    },
+
+                    lineItems = new List<InvoiceLineItem>(),
+
+                    invoiceRecordType = firstRow["InvoiceRecordType"].ToString()
+                };
+
+                foreach (DataRow row in billGroup)
+                {
+                    invoice.lineItems.Add(new InvoiceLineItem
+                    {
+                        chargeItem = new ChargeItem
+                        {
+                            chargeItemCodeableConcept = new CodeableConcept
+                            {
+                                text = row["ChargeItemText"].ToString(),
+
+                                code = new CodeDetails
+                                {
+                                    HospitalId = hipId,
+                                    Category = row["ChargeItemCategory"].ToString(),
+                                    Url = row["ChargeItemUrl"].ToString(),
+                                    Code = row["ChargeItemCode"].ToString(),
+                                    Display = row["ChargeItemDisplay"].ToString()
+                                }
+                            }
+                        },
+
+                        priceComponents = new List<PriceComponent>
+                {
+                    new PriceComponent
+                    {
+                        type = row["PriceComponentType"].ToString(),
+
+                        amount = new PriceAmount
+                        {
+                            amount = row["Amount"] == DBNull.Value
+                                ? 0
+                                : Convert.ToDecimal(row["Amount"]),
+
+                            currency = row["Currency"].ToString()
+                        }
+                    }
+                }
+                    });
+                }
+
+                invoices.Add(invoice);
+            }
+
+            return invoices;
+        }
+        private List<ObservationResult> GetObservations(DataTable table, string hipId)
+        {
+            List<ObservationResult> observations = new();
+
+            if (table == null || table.Rows.Count == 0)
+                return observations;
+
+            foreach (DataRow row in table.Rows)
+            {
+                object resultValue = decimal.TryParse(row["ResultValue"].ToString(), out decimal rv)
+                    ? rv
+                    : row["ResultValue"].ToString();
+
+                object refHighValue = decimal.TryParse(row["ReferenceHighValue"].ToString(), out decimal rh)
+                    ? rh
+                    : row["ReferenceHighValue"].ToString();
+
+                object refLowValue = decimal.TryParse(row["ReferenceLowValue"].ToString(), out decimal rl)
+                    ? rl
+                    : row["ReferenceLowValue"].ToString();
+
+                observations.Add(new ObservationResult
+                {
+                    Status = row["ObservationStatus"].ToString(),
+
+                    ResultCode = new ResultCodeableConcept
+                    {
+                        Text = row["ResultText"].ToString(),
+                        Code = new CodeDetails
+                        {
+                            HospitalId = row["ResultHospitalId"].ToString(),
+                            Category = row["ResultCategory"].ToString(),
+                            Url = row["ResultUrl"].ToString(),
+                            Code = row["ResultCode"].ToString(),
+                            Display = row["ResultDisplay"].ToString()
+                        }
+                    },
+
+                    Value = new ValueQuantity
+                    {
+                        Value = resultValue,
+                        Code = new QuantityCode
+                        {
+                            Id = row["ResultValueId"].ToString(),
+                            Unit = row["ResultUnit"].ToString(),
+                            Url = row["ResultValueUrl"].ToString(),
+                            Code = row["ResultValueCode"].ToString()
+                        }
+                    },
+
+                    Category = new CategoryCodeableConcept
+                    {
+                        Text = row["ResultCategoryText"].ToString(),
+                        Code = new CodeDetails
+                        {
+                            HospitalId = row["ResultCategoryHospitalId"].ToString(),
+                            Category = row["ResultCategoryName"].ToString(),
+                            Url = row["ResultCategoryUrl"].ToString(),
+                            Code = row["ResultCategoryCode"].ToString(),
+                            Display = row["ResultCategoryDisplay"].ToString()
+                        }
+                    },
+
+                    ReferenceRange = new ReferenceRange
+                    {
+                        High = new ValueQuantity
+                        {
+                            Value = refHighValue,
+                            Code = new QuantityCode
+                            {
+                                Id = row["ReferenceHighId"].ToString(),
+                                Unit = row["ReferenceHighUnit"].ToString(),
+                                Url = row["ReferenceHighUrl"].ToString(),
+                                Code = row["ReferenceHighCode"].ToString()
+                            }
+                        },
+
+                        Low = new ValueQuantity
+                        {
+                            Value = refLowValue,
+                            Code = new QuantityCode
+                            {
+                                Id = row["ReferenceLowId"].ToString(),
+                                Unit = row["ReferenceLowUnit"].ToString(),
+                                Url = row["ReferenceLowUrl"].ToString(),
+                                Code = row["ReferenceLowCode"].ToString()
+                            }
+                        }
+                    },
+
+                    EffectiveOn = row["EffectiveOn"].ToString(),
+
+                    Interpretation = new InterpretationCodeableConcept
+                    {
+                        Text = row["InterpretationText"].ToString(),
+                        Code = new CodeDetails
+                        {
+                            HospitalId = row["InterpretationHospitalId"].ToString(),
+                            Category = row["InterpretationCategory"].ToString(),
+                            Url = row["InterpretationUrl"].ToString(),
+                            Code = row["InterpretationCode"].ToString(),
+                            Display = row["InterpretationDisplay"].ToString()
+                        }
+                    }
+                });
+            }
+
+            return observations;
         }
         //public virtual async Task SavePatientEncounterAsync(PatientVisitRequest model, string PE_Message, string PE_ErrMessage, string PE_HipId, string PE_PatientReferenceNumber)
         //{
@@ -675,7 +955,7 @@ namespace HIMS.Services.AbhaIntegration
         //    await _context.SaveChangesAsync();
         //    scope.Complete();
         //}
- 
+
         public virtual async Task SavePatientEncounterAsync(PatientVisitRequest model,string PE_Message,string PE_ErrMessage, string PE_HipId,string PE_PatientReferenceNumber, string PE_CareContext)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required,new TransactionOptions{IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted},TransactionScopeAsyncFlowOption.Enabled);
