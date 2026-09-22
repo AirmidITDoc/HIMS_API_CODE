@@ -23,14 +23,16 @@ namespace HIMS.API.Controllers.AbhaIntegration
     [ApiVersion("1")]
     public class AbhaConnectsController : ControllerBase
     {
-        private readonly IAbhaConnectService _abhaConnectService;
+        private readonly IAbhaConnectService _abhaConnectService; 
         private readonly IGenericService<TAbhaCallbackformation> _repository;
         private readonly IConfiguration _configuration;
-        public AbhaConnectsController(IAbhaConnectService abhaConnectService, IGenericService<TAbhaCallbackformation> repository, IConfiguration configuration)
+        private readonly IGenericService<TabhaPatientEncounterCareContextDetail> _repository1;
+        public AbhaConnectsController(IAbhaConnectService abhaConnectService, IGenericService<TAbhaCallbackformation> repository, IConfiguration configuration, IGenericService<TabhaPatientEncounterCareContextDetail> repository1)
         {
             _abhaConnectService = abhaConnectService; 
             _repository = repository;
             _configuration = configuration;
+            _repository1 = repository1;
         }
 
         [HttpPost("InitiateClient")]
@@ -252,6 +254,12 @@ namespace HIMS.API.Controllers.AbhaIntegration
         {
             var data = await _repository.GetById(x => x.TransactionId == id);
             return data.ToSingleResponse<TAbhaCallbackformation, AbhaCallbackModel>("Callbackformation");
+        }
+        [HttpGet("Encounter/{id?}")]
+        public async Task<ApiResponse> GetEncounter(int id)
+        {
+            var data = await _repository1.GetById(x => x.Peccid == id);
+            return data.ToSingleResponse<TabhaPatientEncounterCareContextDetail, abhaPatientEncounterCareContextDetailModel>("Patient Encounter Care Context Details");
         }
     }
 }

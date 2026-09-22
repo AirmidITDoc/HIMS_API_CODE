@@ -220,9 +220,10 @@ app.UseAuthentication();
 app.UseCors("CorsPolicy");
 //app.UseWebSockets();
 app.MapHub<NotificationHub>("/himshub");
-app.MapControllers();
+// register exception, request-context and audit middleware before routing/endpoints
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseMiddleware<RequestContextMiddleware>();
+app.UseMiddleware<RequestAuditMiddleware>();
 app.UseRouting();
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
