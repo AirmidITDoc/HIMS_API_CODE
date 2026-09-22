@@ -1,4 +1,7 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.GRN;
 using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,7 +21,10 @@ namespace HIMS.Services.DietKitchen
         {
             _context = HIMSDbContext;
         }
-
+        public virtual async Task<IPagedList<DietmenumasterListDto>> GetDietmenumasterList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DietmenumasterListDto>(model, "getMDietMenuMasterList");
+        }
         public virtual async Task InsertAsync(MDietMenuMaster ObjMDietMenuMaster, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

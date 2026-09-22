@@ -5,8 +5,10 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.DietKitchen;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.GRN;
 using HIMS.Data.Models;
 using HIMS.Services.DietKitchen;
 using HIMS.Services.Transaction;
@@ -31,7 +33,19 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
 
         }
+
+
+
+        [HttpPost("DietmenumasterList")]
+        [Permission]
+        public async Task<IActionResult> ListAsync(GridRequestModel objGrid)
+        {
+            IPagedList<DietmenumasterListDto> List1 = await _DietMenuMasterService.GetDietmenumasterList(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "Diet Menu master  List"));
+        }
+         
         [HttpPost("Insert")]
+        [Permission]
         public async Task<ApiResponse> Insert(DietmenumasterModel obj)
         {
             MDietMenuMaster model = obj.MapTo<MDietMenuMaster>();
