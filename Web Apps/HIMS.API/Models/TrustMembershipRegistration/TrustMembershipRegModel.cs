@@ -104,6 +104,9 @@ namespace HIMS.API.Models.TrustMembershipRegistration
         public string? WifeMobileNo { get; set; }
         public string? HConsultDoctorContact { get; set; }
         public string? WConsultDoctorContact { get; set; }
+        public string? EmrgencyMobile { get; set; }
+        public string? EmrgencyName { get; set; }
+        public string? EmrgencyAddress { get; set; }
         public List<MembershipChildModel>? TMembershipChildren { get; set; }
         public List<MembershipEmrgencyModel>? TMembershipEmrgencies { get; set; }
         public List<MembershipRelativeModel>? TMembershipRelatives { get; set; }

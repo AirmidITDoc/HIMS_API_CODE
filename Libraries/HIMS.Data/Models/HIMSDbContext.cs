@@ -27,6 +27,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<AllOutStandingPatientWiseLedger> AllOutStandingPatientWiseLedgers { get; set; } = null!;
         public virtual DbSet<AppSetting> AppSettings { get; set; } = null!;
         public virtual DbSet<AuditLog> AuditLogs { get; set; } = null!;
+        public virtual DbSet<AuditLog1> AuditLogs1 { get; set; } = null!;
         public virtual DbSet<BarcodeConfigMaster> BarcodeConfigMasters { get; set; } = null!;
         public virtual DbSet<BarcodeConfigMasterHtmlCode> BarcodeConfigMasterHtmlCodes { get; set; } = null!;
         public virtual DbSet<Bedmaster> Bedmasters { get; set; } = null!;
@@ -1129,6 +1130,17 @@ namespace HIMS.Data.Models
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.EntityName).HasMaxLength(250);
+            });
+
+            modelBuilder.Entity<AuditLog1>(entity =>
+            {
+                entity.ToTable("AuditLogs");
+
+                entity.Property(e => e.ActionByName).HasMaxLength(200);
+
+                entity.Property(e => e.AdditionalInfo).HasMaxLength(500);
+
+                entity.Property(e => e.EntityName).HasMaxLength(200);
             });
 
             modelBuilder.Entity<BarcodeConfigMaster>(entity =>
@@ -15356,6 +15368,12 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.DeclarationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EmrgencyAddress).HasMaxLength(500);
+
+                entity.Property(e => e.EmrgencyMobile).HasMaxLength(20);
+
+                entity.Property(e => e.EmrgencyName).HasMaxLength(100);
 
                 entity.Property(e => e.FamilyDoctorContact).HasMaxLength(15);
 

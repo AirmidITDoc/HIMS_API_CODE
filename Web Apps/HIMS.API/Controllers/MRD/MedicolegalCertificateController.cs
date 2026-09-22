@@ -98,7 +98,7 @@ namespace HIMS.API.Controllers.MRD
 
                 await _IMedicolegalCertificateService.UpdateAsync(model, mlcInfo, CurrentUserId, CurrentUserName);
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model);
         }
 
     }
