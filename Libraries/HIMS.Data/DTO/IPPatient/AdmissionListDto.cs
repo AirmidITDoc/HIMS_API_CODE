@@ -179,5 +179,6 @@
         public string AbhaAddress { get; set; } = null!;
         public string Gender { get; set; } = null!;
         public DateTime YearOfBirth { get; set; }
+        public long Peccid { get; set; }
     }
 }
