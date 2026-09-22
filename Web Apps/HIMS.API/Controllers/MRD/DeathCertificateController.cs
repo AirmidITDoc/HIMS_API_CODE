@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Masters;
 using HIMS.API.Models.MRD;
 using HIMS.API.Models.OPPatient;
 using HIMS.Core;
@@ -33,7 +34,7 @@ namespace HIMS.API.Controllers.MRD
 
 
         [HttpPost("CertificateList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> CertificateList(GridRequestModel objGrid)
         {
             IPagedList<CertifiCateListDto> CertificateList = await _IDeathCertificateService.CertificateListAsync(objGrid);
@@ -43,7 +44,7 @@ namespace HIMS.API.Controllers.MRD
         // 2. GET BY ID API 
         [HttpGet]
         [Route("[action]/{id}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> GetById(int id)
         {
             if (id <= 0)
@@ -64,7 +65,7 @@ namespace HIMS.API.Controllers.MRD
         // 3. INSERT (CREATE) API
         [HttpPost]
         [Route("[action]")]
-        //[Permission]
+        [Permission]
 
         public async Task<ApiResponse> Insert(DeathCertificateModel obj)
         {
@@ -83,11 +84,11 @@ namespace HIMS.API.Controllers.MRD
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.CertificateId);
         }
-
+       
         // 4. UPDATE API 
         [HttpPut]
         [Route("[action]/{id}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Update(int id, DeathCertificateModel obj)
         {
             if (id <= 0 || obj == null)
