@@ -571,6 +571,8 @@ namespace HIMS.API.Controllers.Common
                 "Allergy" => (await _MAllergyMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MAllergyMaster.AllergyId), nameof(MAllergyMaster.AllergyName)),
                 "MDietTypeMaster" => (await _MDietTypeMaster.GetAll(x => x.Active.Value)).ToList().ToDropDown(nameof(MDietTypeMaster.DietTypeId), nameof(MDietTypeMaster.DietName)),
                 "MDietCategoryMaster" => (await _MDietCategoryMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDietCategoryMaster.DietCategoryId), nameof(MDietCategoryMaster.CategoryName)),
+                "PatientPosition" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "PatientPosition")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "TypesOfOTLevel" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TypesOfOTLevel")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
                 _ => new List<SelectListItem>()
             };
