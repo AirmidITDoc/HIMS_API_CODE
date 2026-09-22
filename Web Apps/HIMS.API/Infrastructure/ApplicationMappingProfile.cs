@@ -84,6 +84,7 @@ namespace HIMS.API.Infrastructure
 
 
             CreateMap<TDeathCertificate, DeathCertificateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TMrdtemplate, MRDTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
             CreateMap<TGrnreturnHeader, GRNUpdatedModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
