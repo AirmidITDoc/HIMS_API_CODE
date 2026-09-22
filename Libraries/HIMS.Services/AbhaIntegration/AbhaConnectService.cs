@@ -271,7 +271,7 @@ namespace HIMS.Services.AbhaIntegration
                 response.Visits.Add(visit);
             }
 
-
+           
             // =====================================================
             // SECOND PROCEDURE
             // =====================================================
@@ -665,6 +665,27 @@ namespace HIMS.Services.AbhaIntegration
 
             response.Visits[0].InvoiceRecord = GetInvoiceRecords( allergyDs != null && allergyDs.Tables.Count > 2 ? allergyDs.Tables[2] : null,model.HipId);
 
+
+            DatabaseHelper medicalHistorySql = new();
+
+            DataSet medicalHistoryDs = medicalHistorySql.FetchDataSetBySP("ps_GetMedicalHistory", new SqlParameter[]
+                {
+        new SqlParameter { ParameterName = "@OpIpId", Value = model.OpIpId },
+        new SqlParameter { ParameterName = "@OpIpType", Value = model.OpIpType }
+                }
+            );
+
+            response.Visits[0].MedicalHistory = GetMedicalHistory(
+                medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 0 ? medicalHistoryDs.Tables[0] : null,
+                model.HipId);
+
+            response.Visits[0].Referrals = GetReferrals(
+                medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 1 ? medicalHistoryDs.Tables[1] : null,
+                model.HipId);
+
+            response.Visits[0].InvestigationAdvice = GetInvestigationAdvice(
+                medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 2 ? medicalHistoryDs.Tables[2] : null,
+                model.HipId);
             // =====================================================
             // FINAL RESULT
             // =====================================================
@@ -672,6 +693,103 @@ namespace HIMS.Services.AbhaIntegration
             result.Add(response);
 
             return result;
+        }
+        private List<InvestigationAdvice> GetInvestigationAdvice(DataTable table, string hipId)
+        {
+            List<InvestigationAdvice> investigationAdvice = new();
+
+            if (table == null || table.Rows.Count == 0)
+                return investigationAdvice;
+
+            foreach (DataRow row in table.Rows)
+            {
+                investigationAdvice.Add(new InvestigationAdvice
+                {
+                    investigation = new CodeableConcept
+                    {
+                        text = row["InvestigationText"].ToString(),
+
+                        code = new CodeDetails
+                        {
+                            HospitalId = hipId,
+                            Category = row["InvestigationCategory"].ToString(),
+                            Url = row["InvestigationUrl"].ToString(),
+                            Code = row["InvestigationCode"].ToString(),
+                            Display = row["InvestigationDisplay"].ToString()
+                        }
+                    },
+
+                    status = row["Status"].ToString(),
+                    intent = row["Intent"].ToString()
+                });
+            }
+
+            return investigationAdvice;
+        }
+        private List<Referral> GetReferrals(DataTable table, string hipId)
+        {
+            List<Referral> referrals = new();
+
+            if (table == null || table.Rows.Count == 0)
+                return referrals;
+
+            foreach (DataRow row in table.Rows)
+            {
+                referrals.Add(new Referral
+                {
+                    referral = new CodeableConcept
+                    {
+                        text = row["ReferralText"].ToString(),
+
+                        code = new CodeDetails
+                        {
+                            HospitalId = hipId,
+                            Category = row["ReferralCategory"].ToString(),
+                            Url = row["ReferralUrl"].ToString(),
+                            Code = row["ReferralCode"].ToString(),
+                            Display = row["ReferralDisplay"].ToString()
+                        }
+                    },
+
+                    status = row["Status"].ToString(),
+                    intent = row["Intent"].ToString()
+                });
+            }
+
+            return referrals;
+        }
+        private List<MedicalHistory> GetMedicalHistory(DataTable table, string hipId)
+        {
+            List<MedicalHistory> medicalHistory = new();
+
+            if (table == null || table.Rows.Count == 0)
+                return medicalHistory;
+
+            foreach (DataRow row in table.Rows)
+            {
+                medicalHistory.Add(new MedicalHistory
+                {
+                    summary = row["MedicalHistorySummary"].ToString(),
+
+                    conditionCode = new ConditionCode
+                    {
+                        Text = row["MedicalHistorySummary"].ToString(),
+
+                        Code = new CodeDetails
+                        {
+                            HospitalId = hipId,
+                            Category = row["ConditionCategory"].ToString(),
+                            Url = row["ConditionUrl"].ToString(),
+                            Code = row["ConditionCode"].ToString(),
+                            Display = row["ConditionDisplay"].ToString()
+                        }
+                    },
+
+                    recordedDate = row["RecordedDate"].ToString()
+                });
+            }
+
+            return medicalHistory;
         }
         private List<AllergyData> GetAllergiesData(DataTable table, string hipId)
         {

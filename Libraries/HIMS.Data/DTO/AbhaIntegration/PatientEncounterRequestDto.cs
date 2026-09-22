@@ -75,6 +75,9 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public List<AllergyData> AllergiesData { get; set; }
         public List<PhysicalExam> PhysicalExams { get; set; }
         public List<InvoiceRecord> InvoiceRecord { get; set; }
+        public List<MedicalHistory> MedicalHistory { get; set; }
+        public List<Referral> Referrals { get; set; }
+        public List<InvestigationAdvice> InvestigationAdvice { get; set; }
 
         // keep reports at end
         public List<Reports> Reports { get; set; }
@@ -328,6 +331,25 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public string currency { get; set; }
     }
 
+    public class MedicalHistory
+    {
+        public string summary { get; set; }
+        public ConditionCode conditionCode { get; set; }
+        public string recordedDate { get; set; }
+    }
 
+    public class Referral
+    {
+        public CodeableConcept referral { get; set; }
+        public string status { get; set; }
+        public string intent { get; set; }
+    }
+
+    public class InvestigationAdvice
+    {
+        public CodeableConcept investigation { get; set; }
+        public string status { get; set; }
+        public string intent { get; set; }
+    }
 
 }
