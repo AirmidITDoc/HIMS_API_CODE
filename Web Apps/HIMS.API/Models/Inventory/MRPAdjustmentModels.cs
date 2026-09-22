@@ -44,6 +44,7 @@ namespace HIMS.API.Models.Inventory
         public decimal? OldUnitMrp { get; set; }
         public decimal? OldUnitPur { get; set; }
         public decimal? OldUnitLanded { get; set; }
+        public long? AddedBy { get; set; }
 
     }
     public class MRPAdjModel
