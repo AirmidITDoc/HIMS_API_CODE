@@ -14,6 +14,7 @@ namespace HIMS.Core.Domain.Common
     public class AppSettingsDto
     {
         public string CONNECTION_STRING { get; set; }
+        public bool AuditLoggingEnabled { get; set; } = true;
         public string CorsAllowUrls { get; set; }
         public string SwaggerUrl { get; set; }
         public string BaseUrl { get; set; }
