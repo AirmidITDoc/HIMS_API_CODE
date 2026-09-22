@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.Core.Domain.Common;
+using HIMS.Core.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 
@@ -15,7 +16,7 @@ namespace HIMS.API.Controllers.Administration
         [HttpGet("DBInformation")]
         public async Task<ApiResponse> DBInformation()
         {
-            var builder = new SqlConnectionStringBuilder(AppSettings.Settings.CONNECTION_STRING);
+            var builder = new SqlConnectionStringBuilder(EncryptionUtility.DecryptText(AppSettings.Settings.CONNECTION_STRING, SecurityKeys.EnDeKey));
 
             var dbInfo = new
             {
@@ -25,7 +26,7 @@ namespace HIMS.API.Controllers.Administration
                 Provider = "SQL Server"
             };
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Database info fetched successfully.",dbInfo);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Database info fetched successfully.", dbInfo);
         }
     }
 }
