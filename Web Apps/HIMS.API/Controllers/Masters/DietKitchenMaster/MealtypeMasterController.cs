@@ -80,21 +80,23 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
         [HttpPut("{id:int}")]
         [Permission]
-        public async Task<ApiResponse> Edit(MealTypeMasterModel obj)
+        public async Task<ApiResponse> UpdateAsync(MealTypeMasterModel obj)
         {
-            MMealTypeMaster model = obj.MapTo<MMealTypeMaster>();
-            model.Active = true;
             if (obj.MealId == 0)
-            {
+
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            }
-            else
-            {
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = AppTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+
+            MMealTypeMaster model = obj.MapTo<MMealTypeMaster>();
+
+
+            model.Active = true;
+            model.ModifiedDate = AppTime.Now;
+            model.ModifiedBy = CurrentUserId;
+
+            await _MealtypemasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.MealId);
         }
 
 
