@@ -78,13 +78,21 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public List<MedicalHistory> MedicalHistory { get; set; }
         public List<Referral> Referrals { get; set; }
         public List<InvestigationAdvice> InvestigationAdvice { get; set; }
+        public List<Procedure> Procedures { get; set; }
+        public List<FamilyMedicalHistory> FamilyMedicalHistory { get; set; }
+        public List<CarePlan> CarePlan { get; set; }
 
         // keep reports at end
         public List<Reports> Reports { get; set; }
+        public FollowUp FollowUp { get; set; }
     }
 
     public class Reports
     {
+        public string visitNumber { get; set; }
+        public string patientRegistrationNumber { get; set; }
+        public string fileName { get; set; }
+        public string documentType { get; set; }
     }
 
     public class Doctor
@@ -351,5 +359,45 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public string status { get; set; }
         public string intent { get; set; }
     }
+    public class Procedure
+    {
+        public string status { get; set; }
+        public CodeableConcept procedureCode { get; set; }
+        public string performedAt { get; set; }
+        public List<CodeableConcept> complications { get; set; }
+    }
 
+    public class FamilyMedicalHistory
+    {
+        public string status { get; set; }
+        public string subjectId { get; set; }
+        public CodeableConcept relationship { get; set; }
+        public string name { get; set; }
+        public bool contributedToDeath { get; set; }
+        public int age { get; set; }
+        public List<CodeableConcept> reasonCode { get; set; }
+        public string date { get; set; }
+        public string gender { get; set; }
+        public List<MedicalHistory> condition { get; set; }
+    }
+
+    public class CarePlan
+    {
+        public string status { get; set; }
+        public string intent { get; set; }
+        public List<CodeableConcept> category { get; set; }
+        public string codeDescription { get; set; }
+        public string title { get; set; }
+    }
+    public class FollowUp
+    {
+        public string status { get; set; }
+        public CodeableConcept serviceCategory { get; set; }
+        public List<CodeableConcept> serviceType { get; set; }
+        public List<CodeableConcept> specialty { get; set; }
+        public List<CodeableConcept> reasonCode { get; set; }
+        public string start { get; set; }
+        public string end { get; set; }
+        public string description { get; set; }
+    }
 }

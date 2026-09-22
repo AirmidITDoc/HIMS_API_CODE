@@ -265,7 +265,11 @@ namespace HIMS.Services.AbhaIntegration
                     AllergiesData = new List<AllergyData>(),
                     PhysicalExams = new List<PhysicalExam>(),
                     InvoiceRecord = new List<InvoiceRecord>(),
-                    Reports = new List<Reports>()
+                    Procedures = new List<Procedure>(),
+                    FamilyMedicalHistory = new List<FamilyMedicalHistory>(),
+                    CarePlan = new List<CarePlan>(),
+                    Reports = new List<Reports>(),
+                    FollowUp = null
                 };
 
                 response.Visits.Add(visit);
@@ -670,22 +674,35 @@ namespace HIMS.Services.AbhaIntegration
 
             DataSet medicalHistoryDs = medicalHistorySql.FetchDataSetBySP("ps_GetMedicalHistory", new SqlParameter[]
                 {
-        new SqlParameter { ParameterName = "@OpIpId", Value = model.OpIpId },
-        new SqlParameter { ParameterName = "@OpIpType", Value = model.OpIpType }
+                new SqlParameter { ParameterName = "@OpIpId", Value = model.OpIpId },
+                new SqlParameter { ParameterName = "@OpIpType", Value = model.OpIpType }
                 }
             );
 
-            response.Visits[0].MedicalHistory = GetMedicalHistory(
-                medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 0 ? medicalHistoryDs.Tables[0] : null,
-                model.HipId);
+            response.Visits[0].MedicalHistory = GetMedicalHistory(medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 0 ? medicalHistoryDs.Tables[0] : null,model.HipId);
 
-            response.Visits[0].Referrals = GetReferrals(
-                medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 1 ? medicalHistoryDs.Tables[1] : null,
-                model.HipId);
+            response.Visits[0].Referrals = GetReferrals(medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 1 ? medicalHistoryDs.Tables[1] : null,model.HipId);
 
-            response.Visits[0].InvestigationAdvice = GetInvestigationAdvice(
-                medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 2 ? medicalHistoryDs.Tables[2] : null,
-                model.HipId);
+            response.Visits[0].InvestigationAdvice = GetInvestigationAdvice(medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 2 ? medicalHistoryDs.Tables[2] : null,model.HipId);
+
+            DatabaseHelper proceduresSql = new();
+
+            DataSet proceduresDs = proceduresSql.FetchDataSetBySP("ps_GetProcedures", new SqlParameter[]
+                {
+                new SqlParameter { ParameterName = "@OpIpId", Value = model.OpIpId },
+                new SqlParameter { ParameterName = "@OpIpType", Value = model.OpIpType }
+                }
+            );
+
+            response.Visits[0].Procedures = GetProcedures(proceduresDs != null && proceduresDs.Tables.Count > 0 ? proceduresDs.Tables[0] : null,model.HipId);
+
+            response.Visits[0].FamilyMedicalHistory = GetFamilyMedicalHistory(proceduresDs != null && proceduresDs.Tables.Count > 1 ? proceduresDs.Tables[1] : null,model.HipId);
+
+            response.Visits[0].CarePlan = GetCarePlan(proceduresDs != null && proceduresDs.Tables.Count > 2 ? proceduresDs.Tables[2] : null,model.HipId);
+
+            response.Visits[0].Reports = GetReports(proceduresDs != null && proceduresDs.Tables.Count > 3 ? proceduresDs.Tables[3] : null);
+
+            response.Visits[0].FollowUp = GetFollowUp(proceduresDs != null && proceduresDs.Tables.Count > 4 ? proceduresDs.Tables[4] : null,model.HipId);
             // =====================================================
             // FINAL RESULT
             // =====================================================
@@ -693,6 +710,270 @@ namespace HIMS.Services.AbhaIntegration
             result.Add(response);
 
             return result;
+        }
+        private FollowUp GetFollowUp(DataTable table, string hipId)
+        {
+            if (table == null || table.Rows.Count == 0)
+                return null;
+
+            DataRow row = table.Rows[0];
+
+            return new FollowUp
+            {
+                status = row["Status"].ToString(),
+
+                serviceCategory = new CodeableConcept
+                {
+                    text = row["ServiceCategoryText"].ToString(),
+                    code = new CodeDetails
+                    {
+                        HospitalId = hipId,
+                        Category = row["ServiceCategoryCategory"].ToString(),
+                        Url = row["ServiceCategoryUrl"].ToString(),
+                        Code = row["ServiceCategoryCode"].ToString(),
+                        Display = row["ServiceCategoryDisplay"].ToString()
+                    }
+                },
+
+                serviceType = new List<CodeableConcept>
+        {
+            new CodeableConcept
+            {
+                text = row["ServiceTypeText"].ToString(),
+                code = new CodeDetails
+                {
+                    HospitalId = hipId,
+                    Category = row["ServiceTypeCategory"].ToString(),
+                    Url = row["ServiceTypeUrl"].ToString(),
+                    Code = row["ServiceTypeCode"].ToString(),
+                    Display = row["ServiceTypeDisplay"].ToString()
+                }
+            }
+        },
+
+                specialty = new List<CodeableConcept>
+        {
+            new CodeableConcept
+            {
+                text = row["SpecialtyText"].ToString(),
+                code = new CodeDetails
+                {
+                    HospitalId = hipId,
+                    Category = row["SpecialtyCategory"].ToString(),
+                    Url = row["SpecialtyUrl"].ToString(),
+                    Code = row["SpecialtyCode"].ToString(),
+                    Display = row["SpecialtyDisplay"].ToString()
+                }
+            }
+        },
+
+                reasonCode = new List<CodeableConcept>
+        {
+            new CodeableConcept
+            {
+                text = row["ReasonCodeText"].ToString(),
+                code = new CodeDetails
+                {
+                    HospitalId = hipId,
+                    Category = row["ReasonCodeCategory"].ToString(),
+                    Url = row["ReasonCodeUrl"].ToString(),
+                    Code = row["ReasonCodeCode"].ToString(),
+                    Display = row["ReasonCodeDisplay"].ToString()
+                }
+            }
+        },
+
+                start = row["Start"].ToString(),
+                end = row["End"].ToString(),
+                description = row["Description"].ToString()
+            };
+        }
+        private List<Reports> GetReports(DataTable table)
+        {
+            List<Reports> reports = new();
+
+            if (table == null || table.Rows.Count == 0)
+                return reports;
+
+            foreach (DataRow row in table.Rows)
+            {
+                reports.Add(new Reports
+                {
+                    visitNumber = row["VisitNumber"].ToString(),
+                    patientRegistrationNumber = row["PatientRegistrationNumber"].ToString(),
+                    fileName = row["FileName"].ToString(),
+                    documentType = row["DocumentType"].ToString()
+                });
+            }
+
+            return reports;
+        }
+        private List<CarePlan> GetCarePlan(DataTable table, string hipId)
+        {
+            List<CarePlan> carePlans = new();
+
+            if (table == null || table.Rows.Count == 0)
+                return carePlans;
+
+            foreach (DataRow row in table.Rows)
+            {
+                carePlans.Add(new CarePlan
+                {
+                    status = row["Status"].ToString(),
+                    intent = row["Intent"].ToString(),
+
+                    category = new List<CodeableConcept>
+            {
+                new CodeableConcept
+                {
+                    text = row["CategoryText"].ToString(),
+
+                    code = new CodeDetails
+                    {
+                        HospitalId = hipId,
+                        Category = row["CategoryType"].ToString(),
+                        Url = row["CategoryUrl"].ToString(),
+                        Code = row["CategoryCode"].ToString(),
+                        Display = row["CategoryDisplay"].ToString()
+                    }
+                }
+            },
+
+                    codeDescription = row["CodeDescription"].ToString(),
+                    title = row["Title"].ToString()
+                });
+            }
+
+            return carePlans;
+        }
+        private List<FamilyMedicalHistory> GetFamilyMedicalHistory(DataTable table, string hipId)
+        {
+            List<FamilyMedicalHistory> history = new();
+
+            if (table == null || table.Rows.Count == 0)
+                return history;
+
+            foreach (DataRow row in table.Rows)
+            {
+                history.Add(new FamilyMedicalHistory
+                {
+                    status = row["Status"].ToString(),
+                    subjectId = row["SubjectId"].ToString(),
+
+                    relationship = new CodeableConcept
+                    {
+                        text = row["RelationshipText"].ToString(),
+
+                        code = new CodeDetails
+                        {
+                            HospitalId = hipId,
+                            Category = row["RelationshipCategory"].ToString(),
+                            Url = row["RelationshipUrl"].ToString(),
+                            Code = row["RelationshipCode"].ToString(),
+                            Display = row["RelationshipDisplay"].ToString()
+                        }
+                    },
+
+                    name = row["Name"].ToString(),
+                    contributedToDeath = Convert.ToBoolean(row["ContributedToDeath"]),
+                    age = Convert.ToInt32(row["Age"]),
+                    reasonCode = new List<CodeableConcept>
+            {
+                new CodeableConcept
+                {
+                    text = row["ReasonCodeText"].ToString(),
+
+                    code = new CodeDetails
+                    {
+                        HospitalId = hipId,
+                        Category = row["ReasonCodeCategory"].ToString(),
+                        Url = row["ReasonCodeUrl"].ToString(),
+                        Code = row["ReasonCode"].ToString(),
+                        Display = row["ReasonCodeDisplay"].ToString()
+                    }
+                }
+            },
+
+                    date = row["Date"].ToString(),
+                    gender = row["Gender"].ToString(),
+
+                    condition = new List<MedicalHistory>
+            {
+                new MedicalHistory
+                {
+                    summary = row["ConditionSummary"].ToString(),
+
+                    conditionCode = new ConditionCode
+                    {
+                        Text = row["ConditionText"].ToString(),
+
+                        Code = new CodeDetails
+                        {
+                            HospitalId = hipId,
+                            Category = row["ConditionCategory"].ToString(),
+                            Url = row["ConditionUrl"].ToString(),
+                            Code = row["ConditionCode"].ToString(),
+                            Display = row["ConditionDisplay"].ToString()
+                        }
+                    },
+
+                    recordedDate = row["ConditionRecordedDate"].ToString()
+                }
+            }
+                });
+            }
+
+            return history;
+        }
+        private List<Procedure> GetProcedures(DataTable table, string hipId)
+        {
+            List<Procedure> procedures = new();
+
+            if (table == null || table.Rows.Count == 0)
+                return procedures;
+
+            foreach (DataRow row in table.Rows)
+            {
+                procedures.Add(new Procedure
+                {
+                    status = row["Status"].ToString(),
+
+                    procedureCode = new CodeableConcept
+                    {
+                        text = row["ProcedureText"].ToString(),
+
+                        code = new CodeDetails
+                        {
+                            HospitalId = hipId,
+                            Category = row["ProcedureCategory"].ToString(),
+                            Url = row["ProcedureUrl"].ToString(),
+                            Code = row["ProcedureCode"].ToString(),
+                            Display = row["ProcedureDisplay"].ToString()
+                        }
+                    },
+
+                    performedAt = row["PerformedAt"].ToString(),
+
+                    complications = new List<CodeableConcept>
+            {
+                new CodeableConcept
+                {
+                    text = row["ComplicationText"].ToString(),
+
+                    code = new CodeDetails
+                    {
+                        HospitalId = hipId,
+                        Category = "Complication",
+                        Url = "https://complications.example.com",
+                        Code = row["ComplicationCode"].ToString(),
+                        Display = row["ComplicationDisplay"].ToString()
+                    }
+                }
+            }
+                });
+            }
+
+            return procedures;
         }
         private List<InvestigationAdvice> GetInvestigationAdvice(DataTable table, string hipId)
         {
