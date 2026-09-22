@@ -47,6 +47,14 @@ namespace HIMS.API.Controllers.Masters.MRD
             var data = await _repository.GetById(x => x.TemplateId == id);
             return data.ToSingleResponse<TMrdtemplate, MRDTemplateModel>("MRDTemplate");
         }
+        [HttpGet]
+        [Route("get-Mrdtemplate")]
+        //[Permission(PageCode = "MedicalRecords", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetDropdown2()
+        {
+            var MMasterList = await _repository.GetAll();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Mrdtemplate Master  dropdown", MMasterList.Select(x => new { x.TemplateId, x.TemplateName, x.TemplateDesc }));
+        }
 
         // Post / Insert API
         [HttpPost]
