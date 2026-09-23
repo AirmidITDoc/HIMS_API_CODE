@@ -3,8 +3,8 @@
     public class DietmenumasterListDto
     {
         public long DietMenuId { get; set; }
-        public string DietMenuCode { get; set; } = null!;
-        public string DietMenuName { get; set; } = null!;
+        public string? DietMenuCode { get; set; }
+        public string? DietMenuName { get; set; }
         public long MealTypeId { get; set; }
         public long DietTypeId { get; set; }
         public string? Texture { get; set; }
