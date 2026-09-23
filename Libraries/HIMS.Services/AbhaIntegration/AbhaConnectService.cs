@@ -529,9 +529,11 @@ namespace HIMS.Services.AbhaIntegration
 
                     foreach (DataRow row in testGroup)
                     {
-                        object resultValue = decimal.TryParse(row["ResultValue"].ToString(), out decimal rv)
-                            ? rv
-                            : row["ResultValue"].ToString();
+                        //object resultValue = decimal.TryParse(row["ResultValue"].ToString(), out decimal rv)
+                        //    ? rv
+                        //    : row["ResultValue"].ToString();
+                        string resultText = row["ResultValue"].ToString();
+                        bool isNumeric = decimal.TryParse(resultText, out decimal numericValue);
 
                         object refHighValue = decimal.TryParse(row["ReferenceHighValue"].ToString(), out decimal rh)
                             ? rh
@@ -541,6 +543,89 @@ namespace HIMS.Services.AbhaIntegration
                             ? rl
                             : row["ReferenceLowValue"].ToString();
 
+                        //report.Results.Add(new ObservationResult
+                        //{
+                        //    Status = row["ResultStatus"].ToString(),
+
+                        //    ResultCode = new ResultCodeableConcept
+                        //    {
+                        //        Text = row["ResultText"].ToString(),
+                        //        Code = new CodeDetails
+                        //        {
+                        //            HospitalId = model.HipId,
+                        //            Category = row["ResultCategory"].ToString(),
+                        //            Url = row["ResultUrl"].ToString(),
+                        //            Code = row["ResultCode"].ToString(),
+                        //            Display = row["ResultDisplay"].ToString()
+                        //        }
+                        //    },
+
+                        //    Value = new ValueQuantity
+                        //    {
+                        //        Value = resultValue,
+                        //        Code = new QuantityCode
+                        //        {
+                        //            Id = row["ResultValueId"].ToString(),
+                        //            Unit = row["ResultUnit"].ToString(),
+                        //            Url = row["ResultValueUrl"].ToString(),
+                        //            Code = row["ResultValueCode"].ToString()
+                        //        }
+                        //    },
+
+                        //    Category = new CategoryCodeableConcept
+                        //    {
+                        //        Text = row["ResultCategoryText"].ToString(),
+                        //        Code = new CodeDetails
+                        //        {
+                        //            HospitalId = model.HipId,
+                        //            Category = row["ResultCategory"].ToString(),
+                        //            Url = row["ResultCategoryUrl"].ToString(),
+                        //            Code = row["ResultCategoryCode"].ToString(),
+                        //            Display = row["ResultCategoryDisplay"].ToString()
+                        //        }
+                        //    },
+
+                        //    ReferenceRange = new ReferenceRange
+                        //    {
+                        //        High = new ValueQuantity
+                        //        {
+                        //            Value = refHighValue,
+                        //            Code = new QuantityCode
+                        //            {
+                        //                Id = row["ReferenceHighId"].ToString(),
+                        //                Unit = row["ReferenceHighUnit"].ToString(),
+                        //                Url = row["ReferenceHighUrl"].ToString(),
+                        //                Code = row["ReferenceHighCode"].ToString()
+                        //            }
+                        //        },
+                        //        Low = new ValueQuantity
+                        //        {
+                        //            Value = refLowValue,
+                        //            Code = new QuantityCode
+                        //            {
+                        //                Id = row["ReferenceLowId"].ToString(),
+                        //                Unit = row["ReferenceLowUnit"].ToString(),
+                        //                Url = row["ReferenceLowUrl"].ToString(),
+                        //                Code = row["ReferenceLowCode"].ToString()
+                        //            }
+                        //        }
+                        //    },
+
+                        //    EffectiveOn = row["EffectiveOn"].ToString(),
+
+                        //    Interpretation = new InterpretationCodeableConcept
+                        //    {
+                        //        Text = row["InterpretationText"].ToString(),
+                        //        Code = new CodeDetails
+                        //        {
+                        //            HospitalId = model.HipId,
+                        //            Category = row["InterpretationCategory"].ToString(),
+                        //            Url = row["InterpretationUrl"].ToString(),
+                        //            Code = row["InterpretationCode"].ToString(),
+                        //            Display = row["InterpretationDisplay"].ToString()
+                        //        }
+                        //    }
+                        //});
                         report.Results.Add(new ObservationResult
                         {
                             Status = row["ResultStatus"].ToString(),
@@ -558,9 +643,10 @@ namespace HIMS.Services.AbhaIntegration
                                 }
                             },
 
-                            Value = new ValueQuantity
+                            Value = isNumeric
+                            ? new ValueQuantity
                             {
-                                Value = resultValue,
+                                Value = numericValue,
                                 Code = new QuantityCode
                                 {
                                     Id = row["ResultValueId"].ToString(),
@@ -568,7 +654,10 @@ namespace HIMS.Services.AbhaIntegration
                                     Url = row["ResultValueUrl"].ToString(),
                                     Code = row["ResultValueCode"].ToString()
                                 }
-                            },
+                            }
+                            : null,
+
+                            ValueString = isNumeric ? null : resultText,
 
                             Category = new CategoryCodeableConcept
                             {
@@ -583,35 +672,38 @@ namespace HIMS.Services.AbhaIntegration
                                 }
                             },
 
-                            ReferenceRange = new ReferenceRange
-                            {
-                                High = new ValueQuantity
+                            ReferenceRange = isNumeric
+                                ? new ReferenceRange
                                 {
-                                    Value = refHighValue,
-                                    Code = new QuantityCode
+                                    High = new ValueQuantity
                                     {
-                                        Id = row["ReferenceHighId"].ToString(),
-                                        Unit = row["ReferenceHighUnit"].ToString(),
-                                        Url = row["ReferenceHighUrl"].ToString(),
-                                        Code = row["ReferenceHighCode"].ToString()
-                                    }
-                                },
-                                Low = new ValueQuantity
-                                {
-                                    Value = refLowValue,
-                                    Code = new QuantityCode
+                                        Value = refHighValue,
+                                        Code = new QuantityCode
+                                        {
+                                            Id = row["ReferenceHighId"].ToString(),
+                                            Unit = row["ReferenceHighUnit"].ToString(),
+                                            Url = row["ReferenceHighUrl"].ToString(),
+                                            Code = row["ReferenceHighCode"].ToString()
+                                        }
+                                    },
+                                    Low = new ValueQuantity
                                     {
-                                        Id = row["ReferenceLowId"].ToString(),
-                                        Unit = row["ReferenceLowUnit"].ToString(),
-                                        Url = row["ReferenceLowUrl"].ToString(),
-                                        Code = row["ReferenceLowCode"].ToString()
+                                        Value = refLowValue,
+                                        Code = new QuantityCode
+                                        {
+                                            Id = row["ReferenceLowId"].ToString(),
+                                            Unit = row["ReferenceLowUnit"].ToString(),
+                                            Url = row["ReferenceLowUrl"].ToString(),
+                                            Code = row["ReferenceLowCode"].ToString()
+                                        }
                                     }
                                 }
-                            },
+                                : null,
 
                             EffectiveOn = row["EffectiveOn"].ToString(),
 
-                            Interpretation = new InterpretationCodeableConcept
+                            Interpretation = isNumeric
+                            ? new InterpretationCodeableConcept
                             {
                                 Text = row["InterpretationText"].ToString(),
                                 Code = new CodeDetails
@@ -623,7 +715,8 @@ namespace HIMS.Services.AbhaIntegration
                                     Display = row["InterpretationDisplay"].ToString()
                                 }
                             }
-                        });
+                            : null
+                                            });
                     }
 
                     response.Visits[0].DiagnosticReports.Add(report);
