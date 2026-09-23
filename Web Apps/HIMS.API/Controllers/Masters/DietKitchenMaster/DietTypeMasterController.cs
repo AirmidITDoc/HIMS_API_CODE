@@ -7,6 +7,8 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.DietkitchenMaster;
+using HIMS.Services.TrustMembershipRegistration;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.DietKitchenMaster
@@ -17,9 +19,12 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
     public class DietTypeMasterController : BaseController
     {
         private readonly IGenericService<MDietTypeMaster> _repository;
-        public DietTypeMasterController(IGenericService<MDietTypeMaster> repository)
+        private readonly IDietTypeMasterService _IDietTypeMasterService;
+
+        public DietTypeMasterController(IGenericService<MDietTypeMaster> repository, IDietTypeMasterService IDietTypeMasterService)
         {
             _repository = repository;
+            _IDietTypeMasterService = IDietTypeMasterService;
         }
         //List API
         [HttpPost]
@@ -55,7 +60,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
                 model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
+                await _IDietTypeMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -75,7 +80,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             {
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+                await _IDietTypeMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }

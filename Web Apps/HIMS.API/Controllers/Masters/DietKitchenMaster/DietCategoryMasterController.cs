@@ -7,6 +7,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.DietkitchenMaster;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.DietKitchenMaster
@@ -17,9 +18,12 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
     public class DietCategoryMasterController : BaseController
     {
         private readonly IGenericService<MDietCategoryMaster> _repository;
-        public DietCategoryMasterController(IGenericService<MDietCategoryMaster> repository)
+        private readonly IDietCategoryMasterService _IDietCategoryMasterService;
+
+        public DietCategoryMasterController(IGenericService<MDietCategoryMaster> repository, IDietCategoryMasterService IDietCategoryMasterService)
         {
             _repository = repository;
+            _IDietCategoryMasterService = IDietCategoryMasterService;
         }
         //List API
         [HttpPost]
@@ -32,7 +36,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -55,7 +59,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
                 model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
+                await _IDietCategoryMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -74,7 +78,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             {
                 model.ModifiedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+                await _IDietCategoryMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
