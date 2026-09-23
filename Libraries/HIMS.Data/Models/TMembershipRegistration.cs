@@ -115,9 +115,6 @@ namespace HIMS.Data.Models
         public string? WifeMobileNo { get; set; }
         public string? HConsultDoctorContact { get; set; }
         public string? WConsultDoctorContact { get; set; }
-        public string? EmrgencyMobile { get; set; }
-        public string? EmrgencyName { get; set; }
-        public string? EmrgencyAddress { get; set; }
 
         public virtual ICollection<TMembershipChild> TMembershipChildren { get; set; }
         public virtual ICollection<TMembershipEmrgency> TMembershipEmrgencies { get; set; }

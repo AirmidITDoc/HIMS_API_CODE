@@ -72,7 +72,10 @@ namespace HIMS.Data.DTO.OPPatient
         public long SortOrder { get; set; }
         public DateTime? RegDate { get; set; }
         public DateTime? RegTime { get; set; }
-      
+        public string? EmrgencyMobile { get; set; }
+
+
+
 
 
 

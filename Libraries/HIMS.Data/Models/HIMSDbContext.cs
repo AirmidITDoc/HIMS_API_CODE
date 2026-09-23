@@ -676,6 +676,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<VTPaymentBillwisesumAmount> VTPaymentBillwisesumAmounts { get; set; } = null!;
         public virtual DbSet<VTPaymentDoctorAmount> VTPaymentDoctorAmounts { get; set; } = null!;
         public virtual DbSet<VVisitMsg> VVisitMsgs { get; set; } = null!;
+        public virtual DbSet<View1> View1s { get; set; } = null!;
         public virtual DbSet<ViewDoctorshare> ViewDoctorshares { get; set; } = null!;
         public virtual DbSet<ViewTallyPharSalesReceiptNewOld> ViewTallyPharSalesReceiptNewOlds { get; set; } = null!;
         public virtual DbSet<VisitDetail> VisitDetails { get; set; } = null!;
@@ -688,7 +689,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -15369,12 +15370,6 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.DeclarationDate).HasColumnType("datetime");
 
-                entity.Property(e => e.EmrgencyAddress).HasMaxLength(500);
-
-                entity.Property(e => e.EmrgencyMobile).HasMaxLength(20);
-
-                entity.Property(e => e.EmrgencyName).HasMaxLength(100);
-
                 entity.Property(e => e.FamilyDoctorContact).HasMaxLength(15);
 
                 entity.Property(e => e.FamilyDoctorId).HasColumnName("familyDoctorId");
@@ -20034,6 +20029,47 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RefDoctorName).HasMaxLength(202);
 
                 entity.Property(e => e.RegNo).HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<View1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_1");
+
+                entity.Property(e => e.Address).HasMaxLength(200);
+
+                entity.Property(e => e.Age).HasMaxLength(10);
+
+                entity.Property(e => e.City).HasMaxLength(100);
+
+                entity.Property(e => e.DateofBirth).HasColumnType("datetime");
+
+                entity.Property(e => e.Expr1).HasMaxLength(100);
+
+                entity.Property(e => e.Expr2).HasMaxLength(50);
+
+                entity.Property(e => e.Expr3).HasMaxLength(50);
+
+                entity.Property(e => e.FirstName).HasMaxLength(100);
+
+                entity.Property(e => e.GenderName).HasMaxLength(100);
+
+                entity.Property(e => e.LastName).HasMaxLength(100);
+
+                entity.Property(e => e.MiddleName).HasMaxLength(100);
+
+                entity.Property(e => e.MobileNo).HasMaxLength(20);
+
+                entity.Property(e => e.PhoneNo).HasMaxLength(20);
+
+                entity.Property(e => e.PinNo).HasMaxLength(10);
+
+                entity.Property(e => e.PrefixName).HasMaxLength(100);
+
+                entity.Property(e => e.VisitDate).HasColumnType("datetime");
+
+                entity.Property(e => e.VisitTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<ViewDoctorshare>(entity =>
