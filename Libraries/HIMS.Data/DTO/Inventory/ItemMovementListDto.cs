@@ -19,6 +19,11 @@
         public long MovementId { get; set; }
         public string SupplierName { get; set; }
         public double ReturnQty { get; set; }
+        public double PerUnitMRP { get; set; }
+        public double VatPer { get; set; }
+        public double PerUnitPurRate { get; set; }
+        public double PerUnitLandedPrice { get; set; }
+
 
     }
 }

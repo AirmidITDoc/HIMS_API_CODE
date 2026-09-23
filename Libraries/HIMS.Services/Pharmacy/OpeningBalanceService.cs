@@ -26,7 +26,7 @@ namespace HIMS.Services.Pharmacy
         }
 
 
-        public virtual void OpeningBalSp(TOpeningTransactionHeader ObjTOpeningTransactionHeader, List<TOpeningTransactionDetail> ObjTOpeningTransaction, int UserId, string UserName)
+        public virtual async Task OpeningBalSp(TOpeningTransactionHeader ObjTOpeningTransactionHeader, List<TOpeningTransactionDetail> ObjTOpeningTransaction, int CurrentUserId, string CurrentUserName)
         {
 
             DatabaseHelper odal = new();
@@ -40,7 +40,7 @@ namespace HIMS.Services.Pharmacy
             }
             string BOpeningHId = odal.ExecuteNonQuery("ps_Insert_OpeningTransaction_header_1", CommandType.StoredProcedure, "OpeningHid", yentity);
             ObjTOpeningTransactionHeader.OpeningHid = Convert.ToInt32(BOpeningHId);
-
+            await _context.LogProcedureExecution(yentity, nameof(TOpeningTransactionHeader), ObjTOpeningTransactionHeader.OpeningHid.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
             foreach (var item in ObjTOpeningTransaction)
             {
@@ -54,6 +54,8 @@ namespace HIMS.Services.Pharmacy
                     entity.Remove(rProperty);
                 }
                 odal.ExecuteNonQuery("ps_Insert_OpeningTransaction_1", CommandType.StoredProcedure, entity);
+                await _context.LogProcedureExecution(yentity, nameof(TOpeningTransactionDetail), item.OpeningId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
             }
             var OpeningIdObj = new
             {

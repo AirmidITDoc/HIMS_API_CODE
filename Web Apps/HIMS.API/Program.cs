@@ -54,10 +54,10 @@ builder.Services.Configure<FormOptions>(o =>
 builder.Services.AddEntityFrameworkSqlServer();
 builder.Services.AddDbContextPool<HIMSDbContext>((provider, options) =>
 {
-    options.UseSqlServer(AppSettings.Settings.CONNECTION_STRING);
+    options.UseSqlServer(EncryptionUtility.DecryptText(AppSettings.Settings.CONNECTION_STRING, SecurityKeys.EnDeKey));
     options.UseInternalServiceProvider(provider);
 });
-ConnectionStrings.SetConnectionString(AppSettings.Settings.CONNECTION_STRING);
+ConnectionStrings.SetConnectionString(EncryptionUtility.DecryptText(AppSettings.Settings.CONNECTION_STRING, SecurityKeys.EnDeKey));
 CommonExtensions.PreloadDinkToPdfDll();
 
 // Bind ABDM settings
