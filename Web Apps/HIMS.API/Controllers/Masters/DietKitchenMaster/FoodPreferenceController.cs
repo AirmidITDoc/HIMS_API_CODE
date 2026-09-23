@@ -8,6 +8,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.DietkitchenMaster;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.DietKitchenMaster
@@ -18,10 +19,12 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
     public class FoodPreferenceController : BaseController
     {
         private readonly IGenericService<MFoodPreferenceMaster> _repository;
+        private readonly IFoodPreferenceMasterService _FoodPreferenceMasterService;
 
-        public FoodPreferenceController(IGenericService<MFoodPreferenceMaster> repository)
+        public FoodPreferenceController(IGenericService<MFoodPreferenceMaster> repository, IFoodPreferenceMasterService foodPreferenceMasterService)
         {
             _repository = repository;
+            _FoodPreferenceMasterService = foodPreferenceMasterService;
         }
 
         // List API
@@ -39,17 +42,13 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         [Permission]
         public async Task<ApiResponse> Get(int id)
         {
-            if (id == 0)
-            {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
-            }
-
+            if (id == 0) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             var data = await _repository.GetById(x => x.FoodPreferenceId == id);
             return data.ToSingleResponse<MFoodPreferenceMaster, FoodPreferenceModel>("FoodPreferenceMaster");
         }
 
         // Post / Insert API
-        [HttpPost]
+        [HttpPost("Insert")]
         [Permission]
         public async Task<ApiResponse> Post(FoodPreferenceModel obj)
         {
@@ -59,7 +58,9 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+                await _FoodPreferenceMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
             {
@@ -70,23 +71,24 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         // Edit / Update API
-        [HttpPut("{id:int}")]
+        [HttpPut("Edit/{id:int}")]
         [Permission]
-        public async Task<ApiResponse> Edit(FoodPreferenceModel obj)
+        public async Task<ApiResponse> UpdateAsync(FoodPreferenceModel obj)
         {
-            MFoodPreferenceMaster model = obj.MapTo<MFoodPreferenceMaster>();
-            model.Active = true;
             if (obj.FoodPreferenceId == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
-            else
-            {
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = AppTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+
+            MFoodPreferenceMaster model = obj.MapTo<MFoodPreferenceMaster>();
+
+            model.Active = true;
+            model.ModifiedBy = CurrentUserId;
+            model.ModifiedDate = AppTime.Now;
+
+            await _FoodPreferenceMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.FoodPreferenceId);
         }
 
         // Delete API (Soft Delete / Toggle Status)

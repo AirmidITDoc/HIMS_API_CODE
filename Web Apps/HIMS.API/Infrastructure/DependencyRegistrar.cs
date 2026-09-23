@@ -109,6 +109,10 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IMedicolegalCertificateService, MedicolegalCertificateService>();
             services.AddScoped<IDietTypeMasterService, DietTypeMasterService>();
             services.AddScoped<IDietCategoryMasterService, DietCategoryMasterService>();
+            services.AddScoped<IFoodPreferenceMasterService, FoodPreferenceMasterService>();
+            services.AddScoped<IAllergyMasterService, AllergyMasterService>();
+            services.AddScoped<IFeedingRouteMasterService, FeedingRouteMasterService>();
+            services.AddScoped<IDietRestrictionMasterService, DietRestrictionMasterService>();
 
 
 

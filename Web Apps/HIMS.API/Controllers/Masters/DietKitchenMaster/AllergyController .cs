@@ -8,6 +8,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.DietkitchenMaster;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.DietKitchenMaster
@@ -18,10 +19,12 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
     public class AllergyController : BaseController
     {
         private readonly IGenericService<MAllergyMaster> _repository;
+        private readonly IAllergyMasterService _AllergyMasterService;
 
-        public AllergyController(IGenericService<MAllergyMaster> repository)
+        public AllergyController(IGenericService<MAllergyMaster> repository, IAllergyMasterService allergyMasterService)
         {
             _repository = repository;
+            _AllergyMasterService = allergyMasterService;
         }
 
         // List API
@@ -39,17 +42,13 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         [Permission]
         public async Task<ApiResponse> Get(int id)
         {
-            if (id == 0)
-            {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
-            }
-
+            if (id == 0) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             var data = await _repository.GetById(x => x.AllergyId == id);
             return data.ToSingleResponse<MAllergyMaster, AllergyModel>("AllergyMaster");
         }
 
         // Post / Insert API
-        [HttpPost]
+        [HttpPost("Insert")]
         [Permission]
         public async Task<ApiResponse> Post(AllergyModel obj)
         {
@@ -59,7 +58,9 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+                await _AllergyMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
             {
@@ -70,23 +71,24 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         // Edit / Update API
-        [HttpPut("{id:int}")]
+        [HttpPut("Edit/{id:int}")]
         [Permission]
         public async Task<ApiResponse> Edit(AllergyModel obj)
         {
-            MAllergyMaster model = obj.MapTo<MAllergyMaster>();
-            model.Active = true;
             if (obj.AllergyId == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
-            else
-            {
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = AppTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+
+            MAllergyMaster model = obj.MapTo<MAllergyMaster>();
+
+            model.Active = true;
+            model.ModifiedBy = CurrentUserId;
+            model.ModifiedDate = AppTime.Now;
+
+            await _AllergyMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.AllergyId);
         }
 
         // Delete API (Soft Delete / Toggle Status)

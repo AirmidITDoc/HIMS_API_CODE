@@ -5,7 +5,7 @@ namespace HIMS.API.Models.Diet
     public class DietRestrictionModel
     {
         public long RestrictionId { get; set; }
-        public string? RestrictionCode { get; set; }
+        //public string? RestrictionCode { get; set; }
         public string? RestrictionName { get; set; }
         public long? RestrictionTypeId { get; set; }
         public string? Description { get; set; }

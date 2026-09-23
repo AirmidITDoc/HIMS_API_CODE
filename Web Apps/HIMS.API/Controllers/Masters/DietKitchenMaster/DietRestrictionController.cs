@@ -8,6 +8,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Services.DietkitchenMaster;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.DietKitchenMaster
@@ -18,10 +19,12 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
     public class DietRestrictionController : BaseController
     {
         private readonly IGenericService<MDietRestrictionMaster> _repository;
+        private readonly IDietRestrictionMasterService _DietRestrictionMasterService;
 
-        public DietRestrictionController(IGenericService<MDietRestrictionMaster> repository)
+        public DietRestrictionController(IGenericService<MDietRestrictionMaster> repository, IDietRestrictionMasterService dietRestrictionMasterService)
         {
             _repository = repository;
+            _DietRestrictionMasterService = dietRestrictionMasterService;
         }
 
         // List API
@@ -45,7 +48,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         // Post / Insert API
-        [HttpPost]
+        [HttpPost("Insert")]
         [Permission]
         public async Task<ApiResponse> Post(DietRestrictionModel obj)
         {
@@ -55,33 +58,37 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+                await _DietRestrictionMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
+
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
         // Edit / Update API
-        [HttpPut("{id:int}")]
+        [HttpPut("Edit/{id:int}")]
         [Permission]
-        public async Task<ApiResponse> Edit(DietRestrictionModel obj)
+        public async Task<ApiResponse> UpdateAsync(DietRestrictionModel obj)
         {
-            MDietRestrictionMaster model = obj.MapTo<MDietRestrictionMaster>();
-            model.Active = true;
             if (obj.RestrictionId == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
-            else
-            {
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = AppTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+
+            MDietRestrictionMaster model = obj.MapTo<MDietRestrictionMaster>();
+
+            model.Active = true;
+            model.ModifiedBy = CurrentUserId;
+            model.ModifiedDate = AppTime.Now;
+
+            await _DietRestrictionMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.RestrictionId);
         }
 
         // Delete API (Soft Delete / Toggle Status)
@@ -105,4 +112,3 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
     }
 }
-
