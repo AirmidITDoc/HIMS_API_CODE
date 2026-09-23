@@ -5,7 +5,7 @@ namespace HIMS.API.Models.Diet
     public class AllergyModel
     {
         public long AllergyId { get; set; }
-        public string? AllergyCode { get; set; }
+        //public string? AllergyCode { get; set; }
         public string? AllergyName { get; set; }
         public long? CategoryId { get; set; }
         public long? SeverityId { get; set; }

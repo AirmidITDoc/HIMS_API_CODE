@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using HIMS.Core.Infrastructure;
 using System.Transactions;
 using HIMS.Data.Models;
-using HIMS.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace HIMS.Services.DietkitchenMaster
@@ -20,7 +19,8 @@ namespace HIMS.Services.DietkitchenMaster
         }
 
 
-        public virtual async Task InsertAsync( MFoodCategoryMaster ObjMFoodCategoryMaster, int CurrentUserId,string CurrentUserName)
+
+        public virtual async Task InsertAsync(MFoodCategoryMaster ObjMFoodCategoryMaster, int UserId, string Username)
         {
             using var scope = new TransactionScope(
                 TransactionScopeOption.Required,
@@ -30,32 +30,30 @@ namespace HIMS.Services.DietkitchenMaster
                 },
                 TransactionScopeAsyncFlowOption.Enabled);
 
-            var foodCodes = await _context.MFoodCategoryMasters
-                .Where(x => x.FoodCategoryCode != null && x.FoodCategoryCode != "")
-                .Select(x => x.FoodCategoryCode)
-                .ToListAsync();
+            var lastCode = await _context.MFoodCategoryMasters.OrderByDescending(x => x.FoodCategoryId).Select(x => x.FoodCategoryCode).FirstOrDefaultAsync();
 
-            int lastSeqNo = foodCodes
-                .Where(x => int.TryParse(x, out _))
-                .Select(x => int.Parse(x))
-                .DefaultIfEmpty(0)
-                .Max();
+            int newCode = 1;
 
-            int newSeqNo = lastSeqNo + 1;
+            if (!string.IsNullOrEmpty(lastCode))
+            {
+                var code = lastCode.Replace("FC", "");
 
-            ObjMFoodCategoryMaster.FoodCategoryCode = newSeqNo.ToString();
+                if (int.TryParse(code, out int lastNumber))
+                {
+                    newCode = lastNumber + 1;
+                }
+            }
+            ObjMFoodCategoryMaster.FoodCategoryCode = $"FC{newCode:D3}";
 
-            ObjMFoodCategoryMaster.CreatedBy = CurrentUserId;
+            ObjMFoodCategoryMaster.CreatedBy = UserId;
             ObjMFoodCategoryMaster.CreatedDate = AppTime.Now;
-            ObjMFoodCategoryMaster.ModifiedBy = CurrentUserId;
-            ObjMFoodCategoryMaster.ModifiedDate = AppTime.Now;
+
             _context.MFoodCategoryMasters.Add(ObjMFoodCategoryMaster);
 
             await _context.SaveChangesAsync();
 
             scope.Complete();
         }
-
 
 
         public virtual async Task UpdateAsync(MFoodCategoryMaster ObjMFoodCategoryMaster, int UserId, string Username, string[]? ignoreColumns = null)
