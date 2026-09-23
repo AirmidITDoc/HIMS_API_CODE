@@ -21,10 +21,11 @@ namespace HIMS.Data.DTO.DietKitchen
         public bool? IsCancelled { get; set; }
         public long? IsCancelledBy { get; set; }
         public DateTime? IsCancelledDate { get; set; }
-        public string UserName { get; set; }
-        public string ModifiedUser { get; set; }
-        public string CancelUser { get; set; }
+        public string? UserName { get; set; }
+        public string? ModifiedUser { get; set; }
+        public string CancelledUser { get; set; }
 
+        
     }
     public class DietPatientRequestDetailsListDto
     {
