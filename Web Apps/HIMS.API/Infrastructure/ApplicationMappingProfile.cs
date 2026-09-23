@@ -1012,7 +1012,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TPatIcdcdeD, TPatIcdcdeDModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TAbhaCallbackformation, AbhaCallbackModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-
+            CreateMap<TabhaPatientEncounterCareContextDetail, abhaPatientEncounterCareContextDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
         }
     }
 }

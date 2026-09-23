@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Logging;
 using HIMS.Core.Infrastructure;
+using HIMS.Core.Domain.Common;
 using HIMS.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -34,23 +35,51 @@ namespace HIMS.Data.Models
         }
         public virtual async Task<int> SaveChangesAsync(int UserId, string Username, bool IsDelete = false, CancellationToken cancellationToken = default)
         {
-            if (UserId > 0)
-                await AuditChanges(UserId, Username, IsDelete);
+            if (global::HIMS.Core.Domain.Common.AppSettings.Settings?.AuditLoggingEnabled == true)
+            {
+                if (UserId > 0)
+                    await AuditChanges(UserId, Username, IsDelete);
+            }
             return await base.SaveChangesAsync(cancellationToken);
         }
         private async Task AuditChanges(int UserId, string Username, bool IsDelete)
         {
+            if (global::HIMS.Core.Domain.Common.AppSettings.Settings?.AuditLoggingEnabled != true)
+                return;
+
             DateTime now = AppTime.Now;
 
             var entityEntries = ChangeTracker.Entries()
                 .Where(x => x.State == EntityState.Added ||
                             x.State == EntityState.Modified ||
-                            x.State == EntityState.Deleted).ToList();
+                            x.State == EntityState.Deleted)
+                // do not audit AuditLog entries to avoid recursion
+                .Where(x => x.Entity.GetType() != typeof(AuditLog)).ToList();
 
             foreach (EntityEntry entityEntry in entityEntries)
             {
                 IncrementVersionNumber(entityEntry);
                 await CreateAuditAsync(entityEntry, UserId, Username, IsDelete);
+            }
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            // If audit disabled, fallback to base SaveChanges
+            if (global::HIMS.Core.Domain.Common.AppSettings.Settings?.AuditLoggingEnabled != true)
+            {
+                return base.SaveChangesAsync(cancellationToken);
+            }
+
+            try
+            {
+                var userId = CurrentUserAccessor.UserId ?? 0;
+                var username = CurrentUserAccessor.Username ?? string.Empty;
+                return SaveChangesAsync(userId, username, false, cancellationToken);
+            }
+            catch
+            {
+                return base.SaveChangesAsync(cancellationToken);
             }
         }
         private static void IncrementVersionNumber(EntityEntry entityEntry)

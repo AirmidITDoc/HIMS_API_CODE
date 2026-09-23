@@ -80,27 +80,59 @@ namespace HIMS.Services.TrustMembershipRegistration
 
 
 
-        public virtual async Task InsertAsync(TMembershipRegistration ObjTMembershipRegistration, int UserId, string Username)
+        //public virtual async Task InsertAsync(TMembershipRegistration ObjTMembershipRegistration, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope( TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted}, TransactionScopeAsyncFlowOption.Enabled);
+
+        //    //var membershipNos = await _context.TMembershipRegistrations
+        //    //    .Select(x => x.MembershipNo)
+        //    //    .ToListAsync();
+
+        //    //int lastSeqNo = membershipNos
+        //    //    .Where(x => !string.IsNullOrWhiteSpace(x) && int.TryParse(x, out _))
+        //    //    .Select(x => int.Parse(x))
+        //    //    .DefaultIfEmpty(0)
+        //    //    .Max();
+
+        //    // Generate next Membership Number
+        //    //ObjTMembershipRegistration.MembershipNo = (lastSeqNo + 1).ToString();
+
+        //    ObjTMembershipRegistration.CreatedBy = UserId;
+        //    ObjTMembershipRegistration.CreatedDate = AppTime.Now;
+
+        //    //Console.WriteLine("Generated MembershipNo : " + ObjTMembershipRegistration.MembershipNo);
+
+        //    _context.TMembershipRegistrations.Add(ObjTMembershipRegistration);
+
+        //    await _context.SaveChangesAsync();
+
+        //    scope.Complete();
+        //}
+        public virtual async Task InsertAsync( TMembershipRegistration ObjTMembershipRegistration,int UserId,string Username)
         {
-            using var scope = new TransactionScope( TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted}, TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope( TransactionScopeOption.Required,
+            new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.Serializable}, TransactionScopeAsyncFlowOption.Enabled);
 
-            //var membershipNos = await _context.TMembershipRegistrations
-            //    .Select(x => x.MembershipNo)
-            //    .ToListAsync();
+            // Get all MembershipNo values because MembershipNo is stored as string
+            var membershipNumbers = await _context.TMembershipRegistrations
+                .Where(x => !string.IsNullOrEmpty(x.MembershipNo))
+                .Select(x => x.MembershipNo)
+                .ToListAsync();
 
-            //int lastSeqNo = membershipNos
-            //    .Where(x => !string.IsNullOrWhiteSpace(x) && int.TryParse(x, out _))
-            //    .Select(x => int.Parse(x))
-            //    .DefaultIfEmpty(0)
-            //    .Max();
+            // Convert string values to integer and get the maximum number
+            int lastSeqNo = membershipNumbers
+                .Select(x => int.TryParse(x, out int number) ? number : 0)
+                .DefaultIfEmpty(0)
+                .Max();
 
-            // Generate next Membership Number
-            //ObjTMembershipRegistration.MembershipNo = (lastSeqNo + 1).ToString();
+            // Auto Increment:
+            int newSeqNo = lastSeqNo + 1;
+
+            // MembershipNo is string, so convert number back to string
+            ObjTMembershipRegistration.MembershipNo = newSeqNo.ToString();
 
             ObjTMembershipRegistration.CreatedBy = UserId;
             ObjTMembershipRegistration.CreatedDate = AppTime.Now;
-
-            //Console.WriteLine("Generated MembershipNo : " + ObjTMembershipRegistration.MembershipNo);
 
             _context.TMembershipRegistrations.Add(ObjTMembershipRegistration);
 

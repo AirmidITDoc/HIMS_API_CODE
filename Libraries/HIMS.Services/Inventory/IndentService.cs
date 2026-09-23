@@ -64,23 +64,24 @@ namespace HIMS.Services.Inventory
             }
         }
 
+       
         public virtual async Task InsertAsync(TIndentHeader objIndent, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required,
+                new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },
+                TransactionScopeAsyncFlowOption.Enabled);
             {
-                // Update store table records
                 MStoreMaster StoreInfo = await _context.MStoreMasters.FirstOrDefaultAsync(x => x.StoreId == objIndent.FromStoreId);
                 if (StoreInfo != null)
                 {
                     StoreInfo.IndentNo = Convert.ToString(Convert.ToInt32(StoreInfo?.IndentNo ?? "0") + 1);
                     _context.MStoreMasters.Update(StoreInfo);
-                    await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync(UserId, Username);   // fixed
                 }
 
-                // Add header & detail table records
                 objIndent.IndentNo = (StoreInfo != null) ? StoreInfo.IndentNo : "0";
                 _context.TIndentHeaders.Add(objIndent);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
 
                 scope.Complete();
             }
@@ -112,7 +113,7 @@ namespace HIMS.Services.Inventory
                 _context.Entry(objIndent).Property(x => x.Isverify).IsModified = false;
                 _context.Entry(objIndent).Property(x => x.IsInchargeVerify).IsModified = false;
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);   // fixed
 
                 scope.Complete();
             }

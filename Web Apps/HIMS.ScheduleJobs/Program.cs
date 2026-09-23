@@ -51,9 +51,9 @@ namespace HIMS.ScheduleJobs
                 AppSettings.Initialize(configuration);
                 services.AddDbContextPool<HIMSDbContext>((provider, options) =>
                 {
-                    options.UseSqlServer(AppSettings.Settings.CONNECTION_STRING);
+                    options.UseSqlServer(EncryptionUtility.DecryptText(AppSettings.Settings.CONNECTION_STRING, SecurityKeys.EnDeKey));
                 });
-                ConnectionStrings.SetConnectionString(AppSettings.Settings.CONNECTION_STRING);
+                ConnectionStrings.SetConnectionString(EncryptionUtility.DecryptText(AppSettings.Settings.CONNECTION_STRING, SecurityKeys.EnDeKey));
                 // Bind settings
                 var quartzSettings = new QuartzSettings();
                 configuration.GetSection("QuartzSettings").Bind(quartzSettings);

@@ -11,6 +11,7 @@ using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
 using HIMS.Services.DietKitchen;
+using HIMS.Services.DietkitchenMaster;
 using HIMS.Services.Transaction;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,10 +25,13 @@ namespace HIMS.API.Controllers.Masters.DietMaster
     public class FoodCategoryMasterController : BaseController
     {
         private readonly IGenericService<MFoodCategoryMaster> _repository;
+        private readonly IMFoodCategoryMasterService _MFoodCategoryMasterService;
 
-        public FoodCategoryMasterController(IGenericService<MFoodCategoryMaster> repository)
+        public FoodCategoryMasterController(IGenericService<MFoodCategoryMaster> repository, IMFoodCategoryMasterService repository1)
         {
             _repository = repository;
+            _MFoodCategoryMasterService = repository1;
+
         }
         // List API
         [HttpPost]
@@ -53,9 +57,29 @@ namespace HIMS.API.Controllers.Masters.DietMaster
             return data.ToSingleResponse<MFoodCategoryMaster, FoodCategorymasterModel>("FoodItemMaster");
         }
 
-        [HttpPost]
+        //[HttpPost]
+        //[Permission]
+        //public async Task<ApiResponse> Post(FoodCategorymasterModel obj)
+        //{
+        //    MFoodCategoryMaster model = obj.MapTo<MFoodCategoryMaster>();
+        //    model.Active = true;
+        //    if (obj.FoodCategoryId == 0)
+        //    {
+        //        model.CreatedBy = CurrentUserId;
+        //        model.CreatedDate = AppTime.Now;
+        //        await _repository.Add(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    else
+        //    {
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    }
+
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        //}
+        // Post / Insert API
+        [HttpPost("Insert")]
         [Permission]
-        public async Task<ApiResponse> Post(FoodCategorymasterModel obj)
+        public async Task<ApiResponse> InsertAsync(FoodCategorymasterModel obj)
         {
             MFoodCategoryMaster model = obj.MapTo<MFoodCategoryMaster>();
             model.Active = true;
@@ -63,7 +87,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
             {
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
+                await _MFoodCategoryMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
             {
@@ -74,24 +98,45 @@ namespace HIMS.API.Controllers.Masters.DietMaster
         }
 
 
-        [HttpPut("{id:int}")]
+        [HttpPut("Edit/{id:int}")]
         [Permission]
-        public async Task<ApiResponse> Edit(FoodCategorymasterModel obj)
+        public async Task<ApiResponse> UpdateAsync(FoodCategorymasterModel obj)
         {
-            MFoodCategoryMaster model = obj.MapTo<MFoodCategoryMaster>();
-            model.Active = true;
             if (obj.FoodCategoryId == 0)
-            {
+
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            }
-            else
-            {
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = AppTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+
+            MFoodCategoryMaster model = obj.MapTo<MFoodCategoryMaster>();
+
+
+            model.Active = true;
+            model.ModifiedDate = AppTime.Now;
+            model.ModifiedBy = CurrentUserId;
+
+            await _MFoodCategoryMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.FoodCategoryId);
         }
+
+        //[HttpPut("{id:int}")]
+        //[Permission]
+        //public async Task<ApiResponse> Edit(FoodCategorymasterModel obj)
+        //{
+        //    MFoodCategoryMaster model = obj.MapTo<MFoodCategoryMaster>();
+        //    model.Active = true;
+        //    if (obj.FoodCategoryId == 0)
+        //    {
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    }
+        //    else
+        //    {
+        //        model.ModifiedBy = CurrentUserId;
+        //        model.ModifiedDate = AppTime.Now;
+        //        await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+        //    }
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+        //}
 
 
         [HttpDelete]

@@ -54,10 +54,10 @@ builder.Services.Configure<FormOptions>(o =>
 builder.Services.AddEntityFrameworkSqlServer();
 builder.Services.AddDbContextPool<HIMSDbContext>((provider, options) =>
 {
-    options.UseSqlServer(AppSettings.Settings.CONNECTION_STRING);
+    options.UseSqlServer(EncryptionUtility.DecryptText(AppSettings.Settings.CONNECTION_STRING, SecurityKeys.EnDeKey));
     options.UseInternalServiceProvider(provider);
 });
-ConnectionStrings.SetConnectionString(AppSettings.Settings.CONNECTION_STRING);
+ConnectionStrings.SetConnectionString(EncryptionUtility.DecryptText(AppSettings.Settings.CONNECTION_STRING, SecurityKeys.EnDeKey));
 CommonExtensions.PreloadDinkToPdfDll();
 
 // Bind ABDM settings
@@ -220,9 +220,10 @@ app.UseAuthentication();
 app.UseCors("CorsPolicy");
 //app.UseWebSockets();
 app.MapHub<NotificationHub>("/himshub");
-app.MapControllers();
+// register exception, request-context and audit middleware before routing/endpoints
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseMiddleware<RequestContextMiddleware>();
+app.UseMiddleware<RequestAuditMiddleware>();
 app.UseRouting();
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>

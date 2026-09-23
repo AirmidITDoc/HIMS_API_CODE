@@ -8,7 +8,6 @@ namespace HIMS.API.Models.MRD
         public long TemplateId { get; set; }
         public string? TemplateName { get; set; }
         public string? TemplateDesc { get; set; }
-        public bool? IsActive { get; set; }
     }
 
     public class MRDTemplateModelValidator : AbstractValidator<MRDTemplateModel>
@@ -16,6 +15,8 @@ namespace HIMS.API.Models.MRD
         public MRDTemplateModelValidator()
         {
             RuleFor(x => x.TemplateName).NotNull().NotEmpty().WithMessage("TemplateName is required");
+            RuleFor(x => x.TemplateDesc).NotNull().NotEmpty().WithMessage("TemplateDesc is required");
+
         }
     }
 }
