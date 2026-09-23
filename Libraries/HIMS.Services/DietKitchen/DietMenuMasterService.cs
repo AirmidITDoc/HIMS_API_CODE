@@ -25,34 +25,43 @@ namespace HIMS.Services.DietKitchen
         {
             return await DatabaseHelper.GetGridDataBySp<DietmenumasterListDto>(model, "getMDietMenuMasterList");
         }
-        public virtual async Task InsertAsync(MDietMenuMaster ObjMDietMenuMaster, int UserId, string Username)
+        public virtual async Task<IPagedList<DietmenuDetailmasterListDto>> GetDietmenumasterDetailsList(GridRequestModel model)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            return await DatabaseHelper.GetGridDataBySp<DietmenuDetailmasterListDto>(model, "getMDietMenuDetailsMasterList");
+        }
+        public virtual async Task InsertAsync( MDietMenuMaster ObjMDietMenuMaster, int UserId,string Username)
+        {
+            using var scope = new TransactionScope(
+                TransactionScopeOption.Required,
+                new TransactionOptions
+                {
+                    IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted
+                },
+                TransactionScopeAsyncFlowOption.Enabled);
 
+            var lastCode = await _context.MDietMenuMasters.OrderByDescending(x => x.DietMenuId) .Select(x => x.DietMenuCode) .FirstOrDefaultAsync();
+
+            int newCode = 1;
+
+            if (!string.IsNullOrEmpty(lastCode))
             {
-                //var lastSeqNoStr = await _context.TDietPatientRequestHeaders
-                //    .OrderByDescending(x => x.DietReqNo)
-                //    .Select(x => x.DietReqNo)
-                //    .FirstOrDefaultAsync();
+                var code = lastCode.Replace("DM", "");
 
-                //int lastSeqNo = 0;
-                //if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
-                //    lastSeqNo = parsed;
-
-                //// Increment the sequence number
-                //int newSeqNo = lastSeqNo + 1;
-                //ObjTDietPatientRequestHeader.DietReqNo = newSeqNo.ToString();
-
-
-                ObjMDietMenuMaster.CreatedBy = UserId;
-                ObjMDietMenuMaster.CreatedDate = AppTime.Now;
-
-                _context.MDietMenuMasters.Add(ObjMDietMenuMaster);
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-
+                if (int.TryParse(code, out int lastNumber))
+                {
+                    newCode = lastNumber + 1;
+                }
             }
+            ObjMDietMenuMaster.DietMenuCode = $"DM{newCode:D3}";
+
+            ObjMDietMenuMaster.CreatedBy = UserId;
+            ObjMDietMenuMaster.CreatedDate = AppTime.Now;
+
+            _context.MDietMenuMasters.Add(ObjMDietMenuMaster);
+
+            await _context.SaveChangesAsync();
+
+            scope.Complete();
         }
 
 

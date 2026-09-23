@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.Models;
 using System.Transactions;
-using HIMS.Data;
+//using HIMS.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace HIMS.Services.DietkitchenMaster
@@ -44,7 +44,8 @@ namespace HIMS.Services.DietkitchenMaster
 
         //    scope.Complete();
         //}
-        public virtual async Task InsertAsync( MFoodItemMaster ObjMFoodItemMaster, int CurrentUserId, string CurrentUserName)
+    
+        public virtual async Task InsertAsync(MFoodItemMaster ObjMFoodItemMaster, int UserId, string Username)
         {
             using var scope = new TransactionScope(
                 TransactionScopeOption.Required,
@@ -54,22 +55,22 @@ namespace HIMS.Services.DietkitchenMaster
                 },
                 TransactionScopeAsyncFlowOption.Enabled);
 
-            var foodCodes = await _context.MFoodItemMasters
-                .Where(x => x.FoodCode != null && x.FoodCode != "")
-                .Select(x => x.FoodCode)
-                .ToListAsync();
+            var lastCode = await _context.MFoodItemMasters.OrderByDescending(x => x.FoodItemId).Select(x => x.FoodCode).FirstOrDefaultAsync();
 
-            int lastSeqNo = foodCodes
-                .Where(x => int.TryParse(x, out _))
-                .Select(x => int.Parse(x))
-                .DefaultIfEmpty(0)
-                .Max();
+            int newCode = 1;
 
-            int newSeqNo = lastSeqNo + 1;
+            if (!string.IsNullOrEmpty(lastCode))
+            {
+                var code = lastCode.Replace("FC", "");
 
-            ObjMFoodItemMaster.FoodCode = newSeqNo.ToString();
+                if (int.TryParse(code, out int lastNumber))
+                {
+                    newCode = lastNumber + 1;
+                }
+            }
+            ObjMFoodItemMaster.FoodCode = $"FC{newCode:D3}";
 
-            ObjMFoodItemMaster.CreatedBy = CurrentUserId;
+            ObjMFoodItemMaster.CreatedBy = UserId;
             ObjMFoodItemMaster.CreatedDate = AppTime.Now;
 
             _context.MFoodItemMasters.Add(ObjMFoodItemMaster);
@@ -78,7 +79,6 @@ namespace HIMS.Services.DietkitchenMaster
 
             scope.Complete();
         }
-
 
         public virtual async Task UpdateAsync(  MFoodItemMaster ObjMFoodItemMaster, int UserId,  string Username, string[]? ignoreColumns = null)
         {

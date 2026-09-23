@@ -10,7 +10,7 @@ namespace HIMS.Services.DietkitchenMaster
 
     public partial interface IMFoodCategoryMasterService
     { 
-        Task InsertAsync(MFoodCategoryMaster ObjMFoodItemMaster, int currentUserId, string currentUserName);
+        Task InsertAsync(MFoodCategoryMaster ObjMFoodItemMaster, int UserId, string Username);
         Task UpdateAsync(MFoodCategoryMaster ObjMFoodItemMaster, int currentUserId, string currentUserName, string[] strings);
     }
 }

@@ -13,6 +13,8 @@ namespace HIMS.Services.DietKitchen
 {
     public partial interface IDietMenuMasterService
     {
+        Task<IPagedList<DietmenuDetailmasterListDto>> GetDietmenumasterDetailsList(GridRequestModel objGrid);
+
         Task<IPagedList<DietmenumasterListDto>> GetDietmenumasterList(GridRequestModel objGrid);
 
         Task InsertAsync(MDietMenuMaster ObjMDietMenuMaster, int UserId, string Username);

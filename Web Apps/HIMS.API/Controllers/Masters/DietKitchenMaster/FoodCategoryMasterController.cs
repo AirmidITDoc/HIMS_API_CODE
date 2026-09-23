@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
         //}
         // Post / Insert API
         [HttpPost("Insert")]
-        [Permission]
+    //    [Permission]
         public async Task<ApiResponse> InsertAsync(FoodCategorymasterModel obj)
         {
             MFoodCategoryMaster model = obj.MapTo<MFoodCategoryMaster>();

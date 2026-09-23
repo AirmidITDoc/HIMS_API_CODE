@@ -5,7 +5,7 @@ namespace HIMS.API.Models.DietKitchen
     public class DietmenumasterModel
     {
         public long DietMenuId { get; set; }
-        public string DietMenuCode { get; set; } = null!;
+        //public string DietMenuCode { get; set; } = null!;
         public string DietMenuName { get; set; } = null!;
         public long MealTypeId { get; set; }
         public long DietTypeId { get; set; }

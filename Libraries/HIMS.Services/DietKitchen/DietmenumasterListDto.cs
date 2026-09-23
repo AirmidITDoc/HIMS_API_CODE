@@ -10,10 +10,11 @@
         public string? Texture { get; set; }
         public string? Calories { get; set; }
         public string? Protein { get; set; }
-        public long MenuDetId { get; set; }
-        public long FoodItemId { get; set; }
-        public int? Quantity { get; set; }
-        public long? UnitId { get; set; }
-        public int? SequenceNo { get; set; }
+        public string? MealTypeCode { get; set; }
+        public string? MealName { get; set; }
+        public string? DietCode { get; set; }
+        public string? DietName { get; set; }
+        public string? CreatedDate { get; set; }
+
     }
 }
