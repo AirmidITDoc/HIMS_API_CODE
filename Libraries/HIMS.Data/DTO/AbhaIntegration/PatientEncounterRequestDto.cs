@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace HIMS.Data.DTO.AbhaIntegration
@@ -225,14 +226,37 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public CodeDetails Code { get; set; }
     }
 
-    public class ObservationResult
+    //public class ObservationResult
+    //{
+    //    public string Status { get; set; }
+    //    public ResultCodeableConcept ResultCode { get; set; }
+    //    public ValueQuantity Value { get; set; }
+    //    public CategoryCodeableConcept Category { get; set; }
+    //    public ReferenceRange ReferenceRange { get; set; }
+    //    public string EffectiveOn { get; set; }
+    //    public InterpretationCodeableConcept Interpretation { get; set; }
+    //}
+ 
+
+public class ObservationResult
     {
         public string Status { get; set; }
         public ResultCodeableConcept ResultCode { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ValueQuantity Value { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string ValueString { get; set; }
+
         public CategoryCodeableConcept Category { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ReferenceRange ReferenceRange { get; set; }
+
         public string EffectiveOn { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public InterpretationCodeableConcept Interpretation { get; set; }
     }
 

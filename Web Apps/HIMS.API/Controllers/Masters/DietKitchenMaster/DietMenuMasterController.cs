@@ -43,9 +43,17 @@ namespace HIMS.API.Controllers.Masters.DietMaster
             IPagedList<DietmenumasterListDto> List1 = await _DietMenuMasterService.GetDietmenumasterList(objGrid);
             return Ok(List1.ToGridResponse(objGrid, "Diet Menu master  List"));
         }
-         
-        [HttpPost("Insert")]
+
+        [HttpPost("DietmenumasterDetailsList")]
         [Permission]
+        public async Task<IActionResult> ListAsync1(GridRequestModel objGrid)
+        {
+            IPagedList<DietmenuDetailmasterListDto> List1 = await _DietMenuMasterService.GetDietmenumasterDetailsList(objGrid);
+            return Ok(List1.ToGridResponse(objGrid, "Diet Menu master details  List"));
+        }
+
+        [HttpPost("Insert")]
+      //  [Permission]
         public async Task<ApiResponse> Insert(DietmenumasterModel obj)
         {
             MDietMenuMaster model = obj.MapTo<MDietMenuMaster>();
@@ -66,14 +74,9 @@ namespace HIMS.API.Controllers.Masters.DietMaster
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
 
-                await _DietMenuMasterService.InsertAsync(
-                    model,
-                    CurrentUserId,
-                    CurrentUserName);
+                await _DietMenuMasterService.InsertAsync( model,CurrentUserId,CurrentUserName);
 
-                return ApiResponseHelper.GenerateResponse(
-                    ApiStatusCode.Status200OK,
-                    "Record added successfully.");
+                return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "Record added successfully.");
             }
 
             return ApiResponseHelper.GenerateResponse(
