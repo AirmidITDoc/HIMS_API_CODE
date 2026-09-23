@@ -34,22 +34,24 @@ namespace HIMS.Services.DietKitchen
         }
         public virtual async Task InsertAsync(TDietPatientRequestHeader ObjTDietPatientRequestHeader, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required,
+                new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },
+                TransactionScopeAsyncFlowOption.Enabled);
 
             {
-                var lastSeqNoStr = await _context.TDietPatientRequestHeaders
-                    .OrderByDescending(x => x.DietReqNo)
+                var dietReqNos = await _context.TDietPatientRequestHeaders
+                    .Where(x => !string.IsNullOrEmpty(x.DietReqNo))
                     .Select(x => x.DietReqNo)
-                    .FirstOrDefaultAsync();
+                    .ToListAsync();
 
-                int lastSeqNo = 0;
-                if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
-                    lastSeqNo = parsed;
+                int lastSeqNo = dietReqNos
+                    .Select(x => int.TryParse(x, out int number) ? number : 0)
+                    .DefaultIfEmpty(0)
+                    .Max();
 
                 // Increment the sequence number
                 int newSeqNo = lastSeqNo + 1;
                 ObjTDietPatientRequestHeader.DietReqNo = newSeqNo.ToString();
-
 
                 ObjTDietPatientRequestHeader.CreatedBy = UserId;
                 ObjTDietPatientRequestHeader.CreatedDate = AppTime.Now;
