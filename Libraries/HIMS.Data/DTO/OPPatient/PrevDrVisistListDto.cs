@@ -35,5 +35,8 @@
         public string Gender { get; set; } = null!;
         public DateTime YearOfBirth { get; set; }
         public long Peccid { get; set; }
+        public string PeErrMessage { get; set; }
+        public string CcWorkflowId { get; set; }
+        public string CcErrMessage { get; set; }
     }
 }
