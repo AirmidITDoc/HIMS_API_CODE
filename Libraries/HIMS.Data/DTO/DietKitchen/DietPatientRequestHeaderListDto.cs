@@ -24,8 +24,14 @@ namespace HIMS.Data.DTO.DietKitchen
         public string? UserName { get; set; }
         public string? ModifiedUser { get; set; }
         public string CancelledUser { get; set; }
+        public int TotalDetailCount { get; set; }
+        public int AcceptedCount { get; set; }
+        public int NotAcceptedCount { get; set; }
+        public int DeliveredCount { get; set; }
+        public int NotDeliveredCount { get; set; }
+        public int AllAccepted { get; set; }
+        public int AllDelivered { get; set; }
 
-        
     }
     public class DietPatientRequestDetailsListDto
     {
@@ -37,6 +43,9 @@ namespace HIMS.Data.DTO.DietKitchen
         public DateTime? OrderDate { get; set; }
         public string? OrderTime { get; set; }
         public long? OPIPID { get; set; }
+        public long? MealTypeId { get; set; }
+        public long? DietTypeId { get; set; }
+
         public string? DietMenuCode { get; set; }
         public string? DietMenuName { get; set; }
         public string? MealTypeCode { get; set; }
@@ -49,31 +58,37 @@ namespace HIMS.Data.DTO.DietKitchen
         public string? AllergyCode { get; set; }
         public string? AllergyName { get; set; }
         public string? Reaction { get; set; }
+
         public bool IsPriority { get; set; }
         public string? Comments { get; set; }
-        public string? Status { get; set; }
+        public long? Status { get; set; }
         public bool? IsAccept { get; set; }
+
         public long? IsAcceptedBy { get; set; }
         public DateTime? IsAcceptedDateTime { get; set; }
+
         public bool? IsDelived { get; set; }
         public long? IsDelivedBy { get; set; }
         public DateTime? IsDelivedDateTime { get; set; }
+
         public bool? DetIsCancelled { get; set; }
-        public long? DetIsCancelledBy { get; set; }
-        public DateTime? DetIsCancelledDate { get; set; }
+
+        // SQL returns VARCHAR here
+        public string? DetIsCancelledBy { get; set; }
+
         public string? CancelledReason { get; set; }
+
         public long? RestrictionId { get; set; }
         public long? MealId { get; set; }
         public long? RegID { get; set; }
         public long? GenderId { get; set; }
+
         public string? PatientName { get; set; }
         public string? RoomName { get; set; }
-        public string? UserName { get; set; }
+
+      //  Match SQL aliases exactly
+        public string? AcceptedUser { get; set; }
+        public string? DeliverUser { get; set; }
         public string? CancelledUser { get; set; }
-        public string? IsAcceptedUser { get; set; }
-        public long? MealTypeId { get; set; }
-        public long? DietTypeId { get; set; }
-
-
     }
 }
