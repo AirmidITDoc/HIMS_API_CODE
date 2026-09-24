@@ -16,8 +16,8 @@ namespace HIMS.API.Controllers.Administration
         [HttpGet("DBInformation")]
         public async Task<ApiResponse> DBInformation()
         {
-            var builder = new SqlConnectionStringBuilder(EncryptionUtility.DecryptText(AppSettings.Settings.CONNECTION_STRING, SecurityKeys.EnDeKey));
-
+            //var builder = new SqlConnectionStringBuilder(EncryptionUtility.DecryptText(AppSettings.Settings.CONNECTION_STRING, SecurityKeys.EnDeKey));
+            var builder = new SqlConnectionStringBuilder(AppSettings.Settings.CONNECTION_STRING);
             var dbInfo = new
             {
                 Server = builder.DataSource,
