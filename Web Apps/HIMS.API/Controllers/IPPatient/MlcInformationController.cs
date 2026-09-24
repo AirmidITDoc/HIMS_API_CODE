@@ -25,15 +25,15 @@ namespace HIMS.API.Controllers.IPPatient
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "MlcInfo", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TMlcinformation> MlcinformationList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MlcinformationList.ToGridResponse(objGrid, "Mlcinformation List "));
         }
-        //List API Get By Id
+        //Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "MlcInfo", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "MlcInfo", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(MlcInformationModel obj)
         {
             TMlcinformation model = obj.MapTo<TMlcinformation>();
@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "MlcInfo", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(MlcInformationModel obj)
         {
             TMlcinformation model = obj.MapTo<TMlcinformation>();
@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "MlcInfo", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             TMlcinformation model = await _repository.GetById(x => x.Mlcid == Id);

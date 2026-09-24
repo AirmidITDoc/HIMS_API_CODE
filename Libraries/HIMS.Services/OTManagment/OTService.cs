@@ -96,7 +96,8 @@ namespace HIMS.Services.IPPatient
                 ObjTOtReservationHeader.CreatedDate = AppTime.Now;
 
                 _context.TOtReservationHeaders.Add(ObjTOtReservationHeader);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
+
 
                 scope.Complete();
             }
@@ -130,7 +131,7 @@ namespace HIMS.Services.IPPatient
                     _context.TOtReservationDiagnoses.RemoveRange(lstDiagnosis);
 
                 //Save deletion first
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
 
                 // Then attach and update header
                 _context.Attach(ObjTOtReservationHeader);
@@ -149,7 +150,8 @@ namespace HIMS.Services.IPPatient
                         _context.Entry(ObjTOtReservationHeader).Property(column).IsModified = false;
                 }
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
+
                 scope.Complete();
             }
         }

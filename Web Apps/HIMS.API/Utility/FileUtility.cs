@@ -58,6 +58,7 @@ namespace HIMS.API.Utility
             File.WriteAllBytes(Path.Combine(FilePath, FileName), Convert.FromBase64String(Base64.Replace("data:image/png;base64,", "")));
             return FileName;
         }
+        //Shilpa Code
         //public string SaveImageFromBase64(string Base64, string Folder)
         //{
         //    var DestinationPath = "";

@@ -80,34 +80,7 @@ namespace HIMS.Services.TrustMembershipRegistration
 
 
 
-        //public virtual async Task InsertAsync(TMembershipRegistration ObjTMembershipRegistration, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope( TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted}, TransactionScopeAsyncFlowOption.Enabled);
-
-        //    //var membershipNos = await _context.TMembershipRegistrations
-        //    //    .Select(x => x.MembershipNo)
-        //    //    .ToListAsync();
-
-        //    //int lastSeqNo = membershipNos
-        //    //    .Where(x => !string.IsNullOrWhiteSpace(x) && int.TryParse(x, out _))
-        //    //    .Select(x => int.Parse(x))
-        //    //    .DefaultIfEmpty(0)
-        //    //    .Max();
-
-        //    // Generate next Membership Number
-        //    //ObjTMembershipRegistration.MembershipNo = (lastSeqNo + 1).ToString();
-
-        //    ObjTMembershipRegistration.CreatedBy = UserId;
-        //    ObjTMembershipRegistration.CreatedDate = AppTime.Now;
-
-        //    //Console.WriteLine("Generated MembershipNo : " + ObjTMembershipRegistration.MembershipNo);
-
-        //    _context.TMembershipRegistrations.Add(ObjTMembershipRegistration);
-
-        //    await _context.SaveChangesAsync();
-
-        //    scope.Complete();
-        //}
+       
         public virtual async Task InsertAsync( TMembershipRegistration ObjTMembershipRegistration,int UserId,string Username)
         {
             using var scope = new TransactionScope( TransactionScopeOption.Required,
@@ -136,7 +109,7 @@ namespace HIMS.Services.TrustMembershipRegistration
 
             _context.TMembershipRegistrations.Add(ObjTMembershipRegistration);
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(UserId, Username);       // fixed
 
             scope.Complete();
         }
@@ -168,7 +141,7 @@ namespace HIMS.Services.TrustMembershipRegistration
                     _context.TMembershipRelatives.RemoveRange(lstDiagnosis);
 
                 //Save deletion first
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
 
                 // Then attach and update header
                 _context.Attach(ObjTMembershipRegistration);
@@ -187,7 +160,7 @@ namespace HIMS.Services.TrustMembershipRegistration
                         _context.Entry(ObjTMembershipRegistration).Property(column).IsModified = false;
                 }
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
                 scope.Complete();
             }
         }

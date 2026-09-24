@@ -93,12 +93,12 @@ namespace HIMS.Services.Pharmacy
 
                 // Update Store Record
                 _context.MStoreMasters.Update(StoreInfo);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
 
                 // Add Purchase Header
                 objPurchase.PurchaseNo = StoreInfo.PurchaseNo;
                 _context.TPurchaseHeaders.Add(objPurchase);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
 
                 // Complete Transaction
                 scope.Complete();
@@ -175,7 +175,7 @@ namespace HIMS.Services.Pharmacy
                 _context.TPurchaseHeaders.Update(objPurchase);
                 _context.Entry(objPurchase).State = EntityState.Modified;
                 _context.Entry(objPurchase).Property(x => x.AddedBy).IsModified = false;
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
 
                 scope.Complete();
             }
@@ -192,7 +192,7 @@ namespace HIMS.Services.Pharmacy
                 objPur.VerifiedDateTime = objPurchase.VerifiedDateTime;
                 _context.TPurchaseHeaders.Update(objPur);
                 _context.Entry(objPur).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
 
                 scope.Complete();
             }

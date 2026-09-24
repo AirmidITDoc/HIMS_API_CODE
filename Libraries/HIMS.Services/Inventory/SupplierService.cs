@@ -76,7 +76,7 @@ namespace HIMS.Services.Inventory
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 _context.MSupplierMasters.Add(objSupplier);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
 
                 scope.Complete();
             }
@@ -105,7 +105,7 @@ namespace HIMS.Services.Inventory
                     _context.MAssignSupplierToStores.RemoveRange(lst);
                 }
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
 
                 scope.Complete();
             }
@@ -121,7 +121,7 @@ namespace HIMS.Services.Inventory
                 objsup.CreatedBy = objSupplier.CreatedBy;
                 _context.MSupplierMasters.Update(objsup);
                 _context.Entry(objsup).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);       // fixed
 
                 scope.Complete();
             }

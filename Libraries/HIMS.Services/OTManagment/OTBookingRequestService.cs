@@ -80,7 +80,9 @@ namespace HIMS.Services.OTManagment
                 ObjTOtRequestHeader.CreatedDate = AppTime.Now;
 
                 _context.TOtRequestHeaders.Add(ObjTOtRequestHeader);
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
+
 
                 scope.Complete();
             }

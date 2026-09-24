@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(AdmissionListList.ToGridResponse(objGrid, "Admission List"));
         }
         [HttpPost("AdmissionCancelList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> AdmissionList(GridRequestModel objGrid)
         {
             IPagedList<AdmissionCancelListDto> AdmissionListList = await _IAdmissionService.CancelAdmissionListAsync(objGrid);
