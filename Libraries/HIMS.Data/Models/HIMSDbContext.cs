@@ -506,6 +506,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<TIndentDetail> TIndentDetails { get; set; } = null!;
         public virtual DbSet<TIndentHeader> TIndentHeaders { get; set; } = null!;
         public virtual DbSet<TIpAdmissionDiagnosisInformation> TIpAdmissionDiagnosisInformations { get; set; } = null!;
+        public virtual DbSet<TIpMrdDiagnosisInfoDetail> TIpMrdDiagnosisInfoDetails { get; set; } = null!;
+        public virtual DbSet<TIpMrdDiagnosisInfoHeader> TIpMrdDiagnosisInfoHeaders { get; set; } = null!;
         public virtual DbSet<TIpPrescription> TIpPrescriptions { get; set; } = null!;
         public virtual DbSet<TIpPrescriptionDischarge> TIpPrescriptionDischarges { get; set; } = null!;
         public virtual DbSet<TIpmedicalRecord> TIpmedicalRecords { get; set; } = null!;
@@ -7122,7 +7124,7 @@ namespace HIMS.Data.Models
                     .WithMany(p => p.MDietMenuDetailMasters)
                     .HasForeignKey(d => d.DietMenuId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_M_DietMenuDetailMaster_DietMenu");
+                    .HasConstraintName("FK_M_DietMenuDetailMaster_M_DietMenuMaster");
             });
 
             modelBuilder.Entity<MDietMenuMaster>(entity =>
@@ -14586,6 +14588,44 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.FlagCode).HasMaxLength(20);
 
                 entity.Property(e => e.Icdcode).HasColumnName("ICDCode");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TIpMrdDiagnosisInfoDetail>(entity =>
+            {
+                entity.HasKey(e => e.IpdiagDetId);
+
+                entity.ToTable("T_IP_MRD_DiagnosisInfo_Details");
+
+                entity.Property(e => e.IpdiagDetId).HasColumnName("IPDiagDetId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.FlagCode).HasMaxLength(20);
+
+                entity.Property(e => e.Icdcode).HasColumnName("ICDCode");
+
+                entity.Property(e => e.IpdiagId).HasColumnName("IPDiagId");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Ipdiag)
+                    .WithMany(p => p.TIpMrdDiagnosisInfoDetails)
+                    .HasForeignKey(d => d.IpdiagId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_IP_MRD_DiagnosisInfo_Details_T_IP_MRD_DiagnosisInfo_Header");
+            });
+
+            modelBuilder.Entity<TIpMrdDiagnosisInfoHeader>(entity =>
+            {
+                entity.HasKey(e => e.IpdiagId);
+
+                entity.ToTable("T_IP_MRD_DiagnosisInfo_Header");
+
+                entity.Property(e => e.IpdiagId).HasColumnName("IPDiagId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });

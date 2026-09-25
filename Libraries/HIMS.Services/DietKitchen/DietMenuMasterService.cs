@@ -116,19 +116,9 @@ namespace HIMS.Services.DietKitchen
         //    scope.Complete();
         //}
 
-        public virtual async Task UpdateAsync(
-    MDietMenuMaster ObjMDietMenuMaster,
-    int UserId,
-    string Username,
-    string[]? ignoreColumns = null)
+        public virtual async Task UpdateAsync( MDietMenuMaster ObjMDietMenuMaster, int UserId, string Username,string[]? ignoreColumns = null)
         {
-            using var scope = new TransactionScope(
-                TransactionScopeOption.Required,
-                new TransactionOptions
-                {
-                    IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted
-                },
-                TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
             long dietMenuId = ObjMDietMenuMaster.DietMenuId;
 
