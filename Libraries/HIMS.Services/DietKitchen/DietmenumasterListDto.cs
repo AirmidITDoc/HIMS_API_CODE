@@ -15,6 +15,8 @@
         public string? DietCode { get; set; }
         public string? DietName { get; set; }
         public string? CreatedDate { get; set; }
+        public string? DietMenuDetails { get; set; }
+
 
     }
 }

@@ -10,13 +10,12 @@ namespace HIMS.Services.DietKitchen
     {
         public long DietMenuId { get; set; }
         public string? DietMenuCode { get; set; } 
-        public string? DietMenuName { get; set; } 
-        public string? FoodName { get; set; } 
-        public string? Name { get; set; } 
+        public string? DietMenuName { get; set; }
+        public string? FoodName { get; set; }
+        public string? Name { get; set; }
         public string? ConstantType { get; set; }
-        public string? DietMeValuenuName { get; set; } 
-        public long? Quantity { get; set; } 
-
+        public string? DietMeValuenuName { get; set; }
+        public int? Quantity { get; set; }
 
     }
 }

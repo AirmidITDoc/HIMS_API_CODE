@@ -574,6 +574,7 @@ namespace HIMS.API.Controllers.Common
                 "PatientPosition" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "PatientPosition")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "TypesOfOTLevel" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TypesOfOTLevel")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "TypesOfFoodItemUnits" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TypesOfFoodItemUnits")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "TypesOfSeverity" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TypesOfSeverity")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
 
                 _ => new List<SelectListItem>()
