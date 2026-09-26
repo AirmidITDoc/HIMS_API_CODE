@@ -264,12 +264,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IFoodItemmasterService, FoodItemmasterService>();
             services.AddScoped<IMFoodCategoryMasterService, MFoodCategoryMasterService>();
 
-
-
-
-
-
-
+            services.AddScoped<IMrdDiagnosisInfoService, MRDDiagnosisInfoService>();
 
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
             services.AddHttpClient<MpesaAuthService>();
