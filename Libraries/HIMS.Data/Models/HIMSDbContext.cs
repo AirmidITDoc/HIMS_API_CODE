@@ -506,6 +506,10 @@ namespace HIMS.Data.Models
         public virtual DbSet<TIndentDetail> TIndentDetails { get; set; } = null!;
         public virtual DbSet<TIndentHeader> TIndentHeaders { get; set; } = null!;
         public virtual DbSet<TIpAdmissionDiagnosisInformation> TIpAdmissionDiagnosisInformations { get; set; } = null!;
+        public virtual DbSet<TIpEmrdiagnosisInfo> TIpEmrdiagnosisInfos { get; set; } = null!;
+        public virtual DbSet<TIpEmrdignosisHistory> TIpEmrdignosisHistories { get; set; } = null!;
+        public virtual DbSet<TIpEmrfamilyMedicalHistory> TIpEmrfamilyMedicalHistories { get; set; } = null!;
+        public virtual DbSet<TIpEmrhistory> TIpEmrhistories { get; set; } = null!;
         public virtual DbSet<TIpMrdDiagnosisInfoDetail> TIpMrdDiagnosisInfoDetails { get; set; } = null!;
         public virtual DbSet<TIpMrdDiagnosisInfoHeader> TIpMrdDiagnosisInfoHeaders { get; set; } = null!;
         public virtual DbSet<TIpPrescription> TIpPrescriptions { get; set; } = null!;
@@ -14590,6 +14594,104 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Icdcode).HasColumnName("ICDCode");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TIpEmrdiagnosisInfo>(entity =>
+            {
+                entity.HasKey(e => e.IpemrdiagnId);
+
+                entity.ToTable("T_IP_EMRDiagnosisInfo");
+
+                entity.Property(e => e.IpemrdiagnId).HasColumnName("IPEMRDiagnId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.FlagCode).HasMaxLength(20);
+
+                entity.Property(e => e.Icdcode).HasColumnName("ICDCode");
+
+                entity.Property(e => e.Ipemrid).HasColumnName("IPEMRId");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Ipemr)
+                    .WithMany(p => p.TIpEmrdiagnosisInfos)
+                    .HasForeignKey(d => d.Ipemrid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_IP_EMRDiagnosisInfo_T_IP_EMRHistory");
+            });
+
+            modelBuilder.Entity<TIpEmrdignosisHistory>(entity =>
+            {
+                entity.HasKey(e => e.EmrdignId);
+
+                entity.ToTable("T_IP_EMRDignosisHistory");
+
+                entity.Property(e => e.EmrdignId).HasColumnName("EMRDignId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DescriptionName).HasMaxLength(500);
+
+                entity.Property(e => e.DescriptionType).HasMaxLength(50);
+
+                entity.Property(e => e.DiagnosisName).HasMaxLength(500);
+
+                entity.Property(e => e.Icdcode)
+                    .HasMaxLength(50)
+                    .HasColumnName("ICDCode");
+
+                entity.Property(e => e.Ipemrid).HasColumnName("IPEMRId");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Ipemr)
+                    .WithMany(p => p.TIpEmrdignosisHistories)
+                    .HasForeignKey(d => d.Ipemrid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_IP_EMRDignosisHistory_T_IP_EMRHistory");
+            });
+
+            modelBuilder.Entity<TIpEmrfamilyMedicalHistory>(entity =>
+            {
+                entity.HasKey(e => e.FhistId);
+
+                entity.ToTable("T_IP_EMRFamilyMedicalHistory");
+
+                entity.Property(e => e.FhistId).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ClinicalHistory).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.MemberName).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Summary).HasMaxLength(255);
+
+                entity.HasOne(d => d.Fhist)
+                    .WithOne(p => p.TIpEmrfamilyMedicalHistory)
+                    .HasForeignKey<TIpEmrfamilyMedicalHistory>(d => d.FhistId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_IP_EMRFamilyMedicalHistory_T_IP_EMRHistory");
+            });
+
+            modelBuilder.Entity<TIpEmrhistory>(entity =>
+            {
+                entity.HasKey(e => e.IpdEmrId);
+
+                entity.ToTable("T_IP_EMRHistory");
+
+                entity.Property(e => e.AllergyRemark).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPTYPE");
             });
 
             modelBuilder.Entity<TIpMrdDiagnosisInfoDetail>(entity =>
