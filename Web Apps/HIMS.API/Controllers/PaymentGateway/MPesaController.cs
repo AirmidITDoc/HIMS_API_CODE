@@ -44,6 +44,7 @@ namespace HIMS.API.Controllers.Login
         [HttpPost]
         [Route("[action]")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TMpesaResponse> pesaResponseList = await _mPesaService.GetAllPagedAsync(objGrid);
@@ -51,6 +52,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("confirmation")]
+        [Permission]
         public async Task<IActionResult> ConfirmAsync([FromBody] JsonElement payload)
         {
             string path = "C:\\PaymentDataLogs\\";
@@ -77,6 +79,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("pay")]
+        [Permission]
         public async Task<ApiResponse> Pay([FromBody] PaymentRequestDto objRequest)
         {
             //var result = await _stkService.RegisterUrls();
@@ -95,6 +98,7 @@ namespace HIMS.API.Controllers.Login
             return new ApiResponse() { StatusCode = 200, StatusText = "Ok", Message = "Payment Done" };
         }
         [HttpGet("check-payment")]
+        [Permission]
         public async Task<ApiResponse> CheckPayment(string MerchantRequestID, string CheckoutRequestID)
         {
             var result = (await _mPesaService.GetAll(x => x.CheckoutRequestId == CheckoutRequestID && x.MerchantRequestId == MerchantRequestID))?.FirstOrDefault() ?? new TMpesaResponse();

@@ -30,7 +30,8 @@ namespace HIMS.API.Controllers.Pharmacy
 
         }
         [HttpPost("PurchaseOrderList")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> GetPurchaseorderListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseListDto> List = await _IPurchaseService.GetPurchaseListAsync(objGrid);
@@ -38,6 +39,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpPost("PurchaseOrderListGetBYId")]
         //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> GetPurchaseorderAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseListDto> List = await _IPurchaseService.GetPurchaseAsync(objGrid);
@@ -46,7 +48,8 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("PurchaseItemList")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> GetPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetPurchaseDetailListAsync(objGrid);
@@ -54,7 +57,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("OldPurchaseOrderList")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> GetOldPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetOldPurchaseorderAsync(objGrid);
@@ -72,7 +76,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("SupplierrateList")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> GeSupplierrateListAsync(GridRequestModel objGrid)
         {
             IPagedList<SupplierRatelistDto> List1 = await _IPurchaseService.GetSupplierRatetAsync(objGrid);
@@ -81,7 +86,8 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
@@ -104,7 +110,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
@@ -123,7 +130,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
-        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Verify(PurchaseVerifyModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();

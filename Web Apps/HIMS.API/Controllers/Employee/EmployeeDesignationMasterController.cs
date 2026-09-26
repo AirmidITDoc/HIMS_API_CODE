@@ -24,7 +24,7 @@ namespace HIMS.API.Controllers.Employee
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MEmployeeDesignationMaster> MEmployeeDesignationMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.Employee
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.Employee
 
         //Add API
         [HttpPost]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Post(EmployeeDesignationModel obj)
         {
             MEmployeeDesignationMaster model = obj.MapTo<MEmployeeDesignationMaster>();
@@ -68,7 +68,7 @@ namespace HIMS.API.Controllers.Employee
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(EmployeeDesignationModel obj)
         {
             MEmployeeDesignationMaster model = obj.MapTo<MEmployeeDesignationMaster>();
@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Employee
 
         //Delete API
         [HttpDelete]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             MEmployeeDesignationMaster model = await _repository.GetById(x => x.EmpDesignationId == Id);

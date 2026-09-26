@@ -35,7 +35,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<Bedmaster> BedmasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -43,7 +44,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //List API
         [HttpPost("BedList")]
-        [Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> GetListAsync(GridRequestModel objGrid)
         {
             IPagedList<BedmasterListDto> Servicelist = await _IBedMasterService.GetBedListListAsync(objGrid);
@@ -52,7 +54,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        [Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -65,7 +68,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Add API
         [HttpPost]
-        [Permission(PageCode = "BedMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "BedMaster", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(BedMasterModel obj)
         {
             Bedmaster model = obj.MapTo<Bedmaster>();
@@ -82,7 +86,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "BedMaster", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "BedMaster", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(BedMasterModel obj)
         {
             Bedmaster model = obj.MapTo<Bedmaster>();
@@ -100,7 +105,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "BedMaster", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "BedMaster", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             Bedmaster? model = await _repository.GetById(x => x.BedId == Id);
@@ -117,6 +123,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         [HttpPut("Edit")]
         //[Permission(PageCode = "BedMaster", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(ResetBedModel obj)
         {
             Bedmaster model = obj.MapTo<Bedmaster>();

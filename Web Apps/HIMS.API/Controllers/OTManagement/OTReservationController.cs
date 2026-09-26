@@ -42,6 +42,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         [HttpGet("{id?}")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
 
@@ -50,7 +51,8 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpGet("GetReservationDiagnosisList")]
-        //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]/
+        [Permission]
         public async Task<ApiResponse> GetReservationDiagnosisList(string DescriptionType)
         {
             var result = await _OTService.GetDiagnosisListAsync(DescriptionType);
@@ -59,6 +61,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPost("OTReservationlist")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> Reservationlist(GridRequestModel objGrid)
         {
             IPagedList<OTReservationListDto> ReservationAttendingDetailList = await _OTService.GetListOtReservationAsync(objGrid);
@@ -68,6 +71,7 @@ namespace HIMS.API.Controllers.IPPatient
         [HttpPost("OtReservationDiagnosisList")]
 
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List4(GridRequestModel objGrid)
         {
             IPagedList<TOtReservationDiagnosis> OtReservationDiagnosisList = await _repository1.GetAllPagedAsync(objGrid);
@@ -77,6 +81,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         [HttpPost("OtReservationAttendingDetailList")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<requestAttendentListDto> ReservationAttendingDetailList = await _OTService.OTGetListAsync(objGrid);
@@ -84,6 +89,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         [HttpPost("OtReservationSurgeryDetailList")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> Listot(GridRequestModel objGrid)
         {
             IPagedList<ReservationSurgeryDetailListDto> OtReservationSurgeryDetailList = await _OTService.OTreservationGetListAsync(objGrid);
@@ -91,13 +97,15 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpGet("search-patient-OTRequest")]
+        [Permission]
         public ApiResponse SearchPatientNew(string Keyword)
         {
             var data = _OTService.SearchPatient(Keyword);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OT Request List data", data);
         }
         [HttpPost("Insert")]
-        [Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(ReservationModel obj)
         {
             TOtReservationHeader model = obj.MapTo<TOtReservationHeader>();
@@ -134,7 +142,8 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(ReservationModel obj)
         {
             TOtReservationHeader model = obj.MapTo<TOtReservationHeader>();
@@ -185,7 +194,8 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //List API Get By Id
         [HttpGet("Getcheckinout/{id?}")]
-        [Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Getcheckinout(int id)
         {
             if (id == 0)
@@ -198,7 +208,8 @@ namespace HIMS.API.Controllers.IPPatient
 
         //Add API
         [HttpPost("OtReservationCheckInOut")]
-        [Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(ReservationCheckInOutModel obj)
         {
             TOtReservationCheckInOut model = obj.MapTo<TOtReservationCheckInOut>();
@@ -218,7 +229,8 @@ namespace HIMS.API.Controllers.IPPatient
 
         //Edit API
         [HttpPut("OtReservationCheckInOut")]
-        [Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(ReservationCheckInOutModel obj)
         {
             TOtReservationCheckInOut model = obj.MapTo<TOtReservationCheckInOut>();
@@ -235,7 +247,8 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("Cancel")]
-        [Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Delete)]
+        [Permission]
         public ApiResponse Cancel(OTReservationCancel obj)
         {
             TOtReservationHeader model = obj.MapTo<TOtReservationHeader>();
@@ -250,7 +263,8 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("OTBookingPostPone")]
-        [Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        [Permission]
         public ApiResponse Insert(OTBookingPostPoneModel obj)
         {
             TOtReservationHeader model = obj.MapTo<TOtReservationHeader>();
@@ -267,7 +281,8 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("UpdateOTReservationHeader")]
-        [Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "OTReservation", Permission = PagePermission.Add)]
+        [Permission]
         public ApiResponse UpdateSP(UpdateOTReservationHeaderModel obj)
         {
             TOtReservationHeader model = obj.MapTo<TOtReservationHeader>();

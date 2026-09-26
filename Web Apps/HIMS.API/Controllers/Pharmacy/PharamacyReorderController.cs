@@ -23,6 +23,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("ItemReorderList")]
         //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> ListM(GridRequestModel objGrid)
         {
             IPagedList<ItemReorderListDto> ItemReorderList = await _IPharmacyReorderService.GetListAsync(objGrid);

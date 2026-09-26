@@ -46,7 +46,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("LabRequestDetailsList")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> LabRequestDetailsList(GridRequestModel objGrid)
         {
             IPagedList<LabRequestDetailsListDto> LabRequestDetailsListDto = await _ILabRequestService.SPGetListAsync(objGrid);
@@ -54,7 +55,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("NursingNoteList")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> NursingNoteList(GridRequestModel objGrid)
         {
             IPagedList<NursingNoteListDto> List = await _INursingNoteService.GetListAsync(objGrid);
@@ -62,28 +64,32 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("DoctorPatientHandoverList")]
-        [Permission(PageCode = "DoctorNote", Permission = PagePermission.View)]
+        //[Permission(PageCode = "DoctorNote", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> DoctorPatientHandoverList(GridRequestModel objGrid)
         {
             IPagedList<TDoctorPatientHandoverListDto> DoctorPatientHandoverList = await _INursingNoteService.SGetListAsync(objGrid);
             return Ok(DoctorPatientHandoverList.ToGridResponse(objGrid, "DoctorPatientHandoverList"));
         }
         [HttpPost("DoctorsNotesList")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> DoctorsNotesList(GridRequestModel objGrid)
         {
             IPagedList<DoctorsNoteListDto> DoctorsNotesList = await _INursingNoteService.DoctorsNoteAsync(objGrid);
             return Ok(DoctorsNotesList.ToGridResponse(objGrid, "DoctorsNotesList"));
         }
         [HttpPost("MedicationChartlist")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> MedicationChartlist(GridRequestModel objGrid)
         {
             IPagedList<MedicationChartListDto> MedicationChartlist = await _INursingNoteService.MedicationChartlist(objGrid);
             return Ok(MedicationChartlist.ToGridResponse(objGrid, "MedicationChartlist"));
         }
         [HttpPost("NursingPatientHandoverList")]
-        [Permission(PageCode = "DoctorNote", Permission = PagePermission.View)]
+        //[Permission(PageCode = "DoctorNote", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> NursingPatientHandoverList(GridRequestModel objGrid)
         {
             IPagedList<NursingPatientHandoverListDto> NursingPatientHandoverListDto = await _INursingNoteService.NursingPatientHandoverList(objGrid);
@@ -91,6 +97,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         [HttpPost("NursingMedicationList")]
         //[Permission(PageCode = "DoctorNote", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> NursingMedicationList(GridRequestModel objGrid)
         {
             IPagedList<NursingMedicationListDto> NursingMedicationList = await _INursingNoteService.NursingMedicationlist(objGrid);
@@ -138,7 +145,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Edit API
         [HttpPut("NursingNoteUpdate/{id:int}")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(NursingNoteModel obj)
         {
             TNurNote model = obj.MapTo<TNurNote>();
@@ -154,7 +162,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             TNurNote model = await _repository.GetById(x => x.DocNoteId == Id);
@@ -170,7 +179,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("DoctorNoteInsert")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(DoctorNoteModel obj)
         {
             TDoctorsNote model = obj.MapTo<TDoctorsNote>();
@@ -187,7 +197,8 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPut("DoctorNoteUpdate/{id:int}")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Edit(DoctorNoteModel obj)
         {
             TDoctorsNote model = obj.MapTo<TDoctorsNote>();
@@ -204,7 +215,8 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("DoctorPatientHandoverInsert")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(TDoctorPatientHandoverModel obj)
         {
             TDoctorPatientHandover model = obj.MapTo<TDoctorPatientHandover>();
@@ -220,7 +232,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPut("DoctorPatientHandover/{id:int}")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Update(TDoctorPatientHandoverModel obj)
         {
             TDoctorPatientHandover model = obj.MapTo<TDoctorPatientHandover>();
@@ -236,7 +249,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("NursingPatientHandoverInsert")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(NursingPatientHandoverModel obj)
         {
             TNursingPatientHandover model = obj.MapTo<TNursingPatientHandover>();
@@ -252,7 +266,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPut("NursingPatientHandover/{id:int}")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Update(NursingPatientHandoverModel obj)
         {
             TNursingPatientHandover model = obj.MapTo<TNursingPatientHandover>();
@@ -327,7 +342,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("DoctorNotesTemplateInsert")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(DoctorNotesTemplateModel obj)
         {
             MDoctorNotesTemplateMaster model = obj.MapTo<MDoctorNotesTemplateMaster>();
@@ -343,7 +359,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPut("DoctorNotesTemplate/{id:int}")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Update(DoctorNotesTemplateModel obj)
         {
             MDoctorNotesTemplateMaster model = obj.MapTo<MDoctorNotesTemplateMaster>();
@@ -360,7 +377,8 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("NursingMedicationChartInsert")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> InsertEDMX(NursingMedicationChartModel obj)
         {
             List<TNursingMedicationChart1> model = obj.NursingMedicationChart.MapTo<List<TNursingMedicationChart1>>();
@@ -374,7 +392,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpGet("nursing-schedules")]
-        [Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        //[Permission(PageCode = "NursingNote", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> GetNursingSchedules(DateTime date)
         {
             var data = await _INursingNoteService.GetSchedules(date);

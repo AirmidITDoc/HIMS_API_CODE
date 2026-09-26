@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.Customer
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ACustomerPaymentSummary> CustomerPaymentSummaryList = await _repository.GetAllPagedAsync(objGrid);
@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Customer
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Customer
 
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(CustomerPaymentSummaryModel obj)
         {
             ACustomerPaymentSummary model = obj.MapTo<ACustomerPaymentSummary>();
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Customer
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(CustomerPaymentSummaryModel obj)
         {
             ACustomerPaymentSummary model = obj.MapTo<ACustomerPaymentSummary>();

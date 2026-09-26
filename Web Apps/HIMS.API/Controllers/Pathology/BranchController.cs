@@ -26,6 +26,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("UnitBranchWiseRevenueSummary")]
         //[Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> UnitBranchWiseRevenueSummaryList(GridRequestModel objGrid)
         {
             IPagedList<UnitBranchWiseRevenueSummaryDto> UnitBranchWiseRevenueSummaryList = await _IBranchService.UnitBranchWiseRevenueSummaryListAsync(objGrid);
@@ -35,6 +36,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("UnitBranchWiseTestSummary")]
         //[Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> UnitBranchWiseTestSummaryList(GridRequestModel objGrid)
         {
             IPagedList<UnitBranchWiseTestSummaryDto> UnitBranchWiseTestSummaryList = await _IBranchService.UnitBranchWiseTestSummaryListAsync(objGrid);
@@ -42,6 +44,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("UnitBranchWiseCategorySummary")]
         // [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> UnitBranchWiseCategorySummaryList(GridRequestModel objGrid)
         {
             IPagedList<UnitCategoryTestSummaryDto> UnitBranchWiseCategorySummaryList = await _IBranchService.UnitBranchWiseCateGorySummaryListAsync(objGrid);
@@ -49,6 +52,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("UnitBranchWiseDoctorSummary")]
         // [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> UnitBranchWiseDoctorSummaryList(GridRequestModel objGrid)
         {
             IPagedList<UnitDoctorTestSummaryDto> UnitBranchWiseCategorySummaryList = await _IBranchService.UnitBranchWiseDoctorSummaryListAsync(objGrid);
@@ -56,6 +60,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("UnitBranchWiseCompanySummary")]
         // [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> UnitBranchWiseCompanySummaryList(GridRequestModel objGrid)
         {
             IPagedList<UnitCompanyTestSummaryDto> UnitBranchWiseCompanySummaryList = await _IBranchService.UnitBranchWiseCompanySummaryListAsync(objGrid);
@@ -64,6 +69,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("BranchWiseTestSummaryList")]
+        [Permission]
         public async Task<IActionResult> BranchWiseTestSummaryList(GridRequestModel objGrid)
         {
             IPagedList<BranchWiseTestSummaryDto> BranchWiseTestSummaryList = await _IBranchService.BranchWiseTestSummaryList(objGrid);
@@ -71,6 +77,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("BranchWiseDoctorSummaryList")]
+        [Permission]
         public async Task<IActionResult> BranchWiseDoctorSummaryList(GridRequestModel objGrid)
         {
             IPagedList<BranchWiseDoctorSummaryDto> BranchWiseDoctorSummaryList = await _IBranchService.BranchWiseDoctorSummaryList(objGrid);
@@ -79,6 +86,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("BranchWiseCompanySummaryList")]
+        [Permission]
         public async Task<IActionResult> BranchWiseCompanySummaryList(GridRequestModel objGrid)
         {
             IPagedList<BranchWiseCompanySummaryDto> BranchWiseCompanySummaryList = await _IBranchService.BranchWiseCompanySummaryList(objGrid);
@@ -86,6 +94,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("BranchWiseCategorySummaryList")]
+        [Permission]
         public async Task<IActionResult> BranchWiseCategorySummaryList(GridRequestModel objGrid)
         {
             IPagedList<BranchWiseCategorySummaryDto> BranchWiseCategorySummaryList = await _IBranchService.BranchWiseCategorySummaryList(objGrid);

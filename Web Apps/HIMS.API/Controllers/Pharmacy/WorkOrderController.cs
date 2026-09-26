@@ -23,7 +23,8 @@ namespace HIMS.API.Controllers.Pharmacy
             _IWorkOrderService = repository;
         }
         [HttpPost("WorkOrderHeaderList")]
-        [Permission(PageCode = "WorkOrder", Permission = PagePermission.View)]
+        //[Permission(PageCode = "WorkOrder", Permission = PagePermission.View)]
+        [Permission]  
         public async Task<IActionResult> GetWorkorderlist(GridRequestModel objGrid)
         {
             IPagedList<WorkOrderListDto> List1 = await _IWorkOrderService.GetWorkorderList(objGrid);
@@ -31,7 +32,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("WorkOrderDetailsList")]
-        [Permission(PageCode = "WorkOrder", Permission = PagePermission.View)]
+        //[Permission(PageCode = "WorkOrder", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> GetOldPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<WorkorderIteListDto> List1 = await _IWorkOrderService.GetOldworkeorderAsync(objGrid);
@@ -40,7 +42,8 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("WorkOrderSave")]
-        [Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
+        [Permission]
         public ApiResponse WorkOrderAsyncSp(WorksOrderModel obj)
         {
 
@@ -59,7 +62,8 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPut("WorkOrderUpdate")]
-        [Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "WorkOrder", Permission = PagePermission.Add)]
+        [Permission]
         public ApiResponse WorkOrderUpdate(UpdateWorkOrderModel obj)
         {
             TWorkOrderHeader Model = obj.WorkOrders.MapTo<TWorkOrderHeader>();

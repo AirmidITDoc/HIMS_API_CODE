@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
         [HttpPut("{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Update(ApprovalHeaderUpdateModel obj)
         {
             TApprovalHeader model = obj.MapTo<TApprovalHeader>();

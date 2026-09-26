@@ -55,18 +55,21 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpGet("GetLabPatientRegisteredMaster")]
         //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> GetLab(int id)
         {
             var data = await _repository1.GetById(x => x.LabPatRegId == id);
             return data.ToSingleResponse<TLabPatientRegisteredMaster, LabPatientRegistrationMasterModels>("TLabPatientRegisteredMaster");
         }
         [HttpGet("GetMConstant")]
+        [Permission]
         public async Task<ApiResponse> GetMConstant(string ConstantType)
         {
             var data = await _ILabPatientRegistrationService.GetMConstant(ConstantType);
             return new ApiResponse { Data = data, StatusCode = 200, Message = "MConstant" };
         }
         [HttpPost("PrevLabDoctorVisitList")]
+        [Permission]
         public async Task<IActionResult> OPPrevDrVisistList(GridRequestModel objGrid)
         {
             IPagedList<PrevDrVisistListDto> Oplist = await _ILabPatientRegistrationService.GeOPPreviousDrVisitListAsync(objGrid);
@@ -74,6 +77,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("List")]
+        //[Permission]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         [Permission]
 
@@ -85,6 +89,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("LabSampleCollectionList")]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> LabSamColList(GridRequestModel objGrid)
         {
             IPagedList<LabSampleCollectionListDto> LabSampleCollectionList = await _ILabPatientRegistrationService.GetSamColListAsync(objGrid);
@@ -93,6 +98,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("LabSampleCollectionDetailList")]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> LabSamColDetailList(GridRequestModel objGrid)
         {
             IPagedList<LabSampleCollectionDetailListDto> LabSampleCollectionDetailList = await _ILabPatientRegistrationService.GetSamColListDetailAsync(objGrid);
@@ -109,6 +115,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("LabResultList")]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> LabResultList(GridRequestModel objGrid)
         {
             IPagedList<LabResultListDto> LabResultList = await _ILabPatientRegistrationService.LabResultListAsync(objGrid);

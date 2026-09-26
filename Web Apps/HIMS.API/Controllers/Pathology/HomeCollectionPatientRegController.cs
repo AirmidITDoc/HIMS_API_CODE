@@ -33,6 +33,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("HomeCollectionPatientRegistartionList")]
         //[Permission(PageCode = "InPatient", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> salesbrowselist(GridRequestModel objGrid)
         {
             IPagedList<HomeCollectionPatientRegistartionListDto> salesbrowselist = await _IHomeCollectionPatientRegService.GetListAsync(objGrid);
@@ -41,6 +42,7 @@ namespace HIMS.API.Controllers.Pathology
         //List API Get By Id
         [HttpGet("{id?}")]
         //[Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -54,6 +56,7 @@ namespace HIMS.API.Controllers.Pathology
       
         [HttpPost("Insert")]
         //[Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Add)]
+        [Permission]
 
         public async Task<ApiResponse> Insert(HomeCollectionPatientRegModel obj)
         {
@@ -73,6 +76,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("HomeCollectionPatientInsert")]
         //[Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> HomeInsert(HomeCollectionPatientRegistrationModel obj)
         {
             THomeCollectionPatientRegistartion model = obj.MapTo<THomeCollectionPatientRegistartion>();

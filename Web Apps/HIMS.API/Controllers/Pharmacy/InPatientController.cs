@@ -26,6 +26,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpPost("SalesInPatientBillList")]
         //[Permission(PageCode = "InPatient", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> salesbrowselist(GridRequestModel objGrid)
         {
             IPagedList<SalesBillListDto> salesbrowselist = await _IInPatientService.salesbrowselist(objGrid);
@@ -33,6 +34,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpPost("SalesInPatientDetailsList")]
         //[Permission(PageCode = "InPatient", Permission = PagePermission.View)]
+        [Permission]    
         public async Task<IActionResult> salesdetaillist(GridRequestModel objGrid)
         {
             IPagedList<InPatientSalesDetailsListDto> SalesBrowseDetailList = await _IInPatientService.Getsalesdetaillist(objGrid);
@@ -40,6 +42,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpPost("SalesInPatientReturnBillList")]
         //[Permission(PageCode = "InPatient", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> salesreturnlist(GridRequestModel objGrid)
         {
             IPagedList<SalesReturnBillListDto> salesreturnlist = await _IInPatientService.salesreturnlist(objGrid);
@@ -47,6 +50,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpPost("salesInPatientReturnBrowseDetaillist")]
         //[Permission(PageCode = "InPatient", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> salesInPatientReturnBrowseDetaillist(GridRequestModel objGrid)
         {
             IPagedList<SalesInPatientReturnDetailsListDto> salesInPatientReturnBrowseDetaillist = await _IInPatientService.salesreturndetaillist(objGrid);
@@ -55,6 +59,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("SaveSalesInpatient")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> SaveSalesInpatient(SaleReqModelInpatient obj)
         {
             TSalesInpatientHeader model = obj.Sales.MapTo<TSalesInpatientHeader>();
@@ -87,6 +92,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpPost("SalesReturnInPatient")]
         //[Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
+        [Permission]
         public ApiResponse Insert(SalesReturnsModels obj)
         {
             TSalesInPatientReturnHeader model = obj.SalesReturn.MapTo<TSalesInPatientReturnHeader>();

@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.GastrologyMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "MQuestionMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "MQuestionMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MQuestionMaster> MQuestionMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.GastrologyMaster
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "MQuestionMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "MQuestionMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.GastrologyMaster
 
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "MQuestionMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "MQuestionMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(QuestionMasterModel obj)
         {
             MQuestionMaster model = obj.MapTo<MQuestionMaster>();
@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.GastrologyMaster
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "MQuestionMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "MQuestionMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(QuestionMasterModel obj)
         {
             MQuestionMaster model = obj.MapTo<MQuestionMaster>();
@@ -89,7 +89,7 @@ namespace HIMS.API.Controllers.GastrologyMaster
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "MQuestionMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "MQuestionMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MQuestionMaster model = await _repository.GetById(x => x.QuestionId == Id);

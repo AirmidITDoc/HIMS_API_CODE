@@ -68,6 +68,8 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         //Add API
         [HttpPost]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        [Permission]
+
         public async Task<ApiResponse> Post(ConstantModel obj)
         {
             MConstant model = obj.MapTo<MConstant>();
@@ -86,7 +88,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(ConstantModel obj)
         {
             MConstant model = obj.MapTo<MConstant>();
@@ -103,7 +105,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         }
         //Delete API
         [HttpDelete]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             MConstant model = await _repository.GetById(x => x.ConstantId == Id);

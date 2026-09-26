@@ -49,6 +49,7 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("AdmisionListNursingList")]
         //[Permission(PageCode = "Dialysis", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> PrescriptionReturnList(GridRequestModel objGrid)
         {
             IPagedList<AdmisionListNursingListDto> AdmisionListNursingList = await _ClinicalCareService.GetListAsync(objGrid);
@@ -57,6 +58,7 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("IPPathologyList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> IPPathologyList(GridRequestModel objGrid)
         {
             IPagedList<IPPathologyListDto> IPPathologyList = await _ClinicalCareService.GetListAsync1(objGrid);
@@ -66,6 +68,7 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("NursingWeightList")]
         //[Permission(PageCode = "Dialysis", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> NursingWeightList(GridRequestModel objGrid)
         {
             IPagedList<NursingWeightListDto> NursingWeightList = await _ClinicalCareService.NursingWeightList(objGrid);
@@ -74,6 +77,7 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("NursingPainAssessmentList")]
         //[Permission(PageCode = "Dialysis", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> NursingPainAssessmentList(GridRequestModel objGrid)
         {
             IPagedList<NursingPainAssessmentListDto> NursingPainAssessmentList = await _ClinicalCareService.NursingPainAssessmentList(objGrid);
@@ -82,6 +86,7 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("NursingSugarlevelList")]
         //[Permission(PageCode = "Dialysis", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> NursingSugarlevelList(GridRequestModel objGrid)
         {
             IPagedList<NursingSugarlevelListDto> NursingSugarlevelList = await _ClinicalCareService.NursingSugarlevelList(objGrid);
@@ -90,6 +95,7 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("NursingVitalsList")]
         //[Permission(PageCode = "Dialysis", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> NursingVitalsList(GridRequestModel objGrid)
         {
             IPagedList<NursingVitalsListDto> NursingVitalsList = await _ClinicalCareService.NursingVitalsList(objGrid);
@@ -98,6 +104,7 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("NursingOxygenVentilatorList")]
         //[Permission(PageCode = "Dialysis", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> NursingOxygenVentilatorList(GridRequestModel objGrid)
         {
             IPagedList<NursingOxygenVentilatorListDto> NursingOxygenVentilatorList = await _ClinicalCareService.NursingOxygenVentilatorList(objGrid);
@@ -106,7 +113,8 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("NursingVitalInsert")]
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Posts(NursingVitalsModel obj)
         {
             TNursingVital model = obj.MapTo<TNursingVital>();
@@ -139,7 +147,8 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("TNursingVitalCancel")]
 
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        [Permission]
         public ApiResponse Delete(NursingVitalsDeleteModel obj)
         {
             TNursingVital model = obj.MapTo<TNursingVital>();
@@ -154,7 +163,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("TNursingSugarLevelInsert")]
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(NursingSugarLevelModel obj)
         {
             TNursingSugarLevel model = obj.MapTo<TNursingSugarLevel>();
@@ -170,7 +180,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Edit API
         [HttpPut("NursingSugarLevelUpdate/{id:int}")]
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Dialysis", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(NursingSugarLevelModel obj)
         {
             TNursingSugarLevel model = obj.MapTo<TNursingSugarLevel>();
@@ -189,7 +200,8 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("TNursingSugarLevelCancel")]
 
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        [Permission]
         public ApiResponse Deletes(NursingSugarDeleteModel obj)
         {
             TNursingSugarLevel model = obj.MapTo<TNursingSugarLevel>();
@@ -204,7 +216,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("NursingOrygenVentilatorInsert")]
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Posts(NursingOrygenVentilatorModel obj)
         {
             TNursingOrygenVentilator model = obj.MapTo<TNursingOrygenVentilator>();
@@ -220,7 +233,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Edit API
         [HttpPut("NursingOrygenVentilatorUpdate/{id:int}")]
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Dialysis", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edits(NursingOrygenVentilatorModel obj)
         {
             TNursingOrygenVentilator model = obj.MapTo<TNursingOrygenVentilator>();
@@ -238,7 +252,8 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("TNursingOrygenVentilatorCancel")]
 
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        [Permission]
         public ApiResponse Cancel(TNursingOrygenVentilatorDeleteModel obj)
         {
             TNursingOrygenVentilator model = obj.MapTo<TNursingOrygenVentilator>();
@@ -254,7 +269,8 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("NursingPainAssessmentInsert")]
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(NursingPainAssessmentModel obj)
         {
             TNursingPainAssessment model = obj.MapTo<TNursingPainAssessment>();
@@ -270,7 +286,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Edit API
         [HttpPut("NursingPainAssessmentUpdate/{id:int}")]
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Dialysis", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(NursingPainAssessmentModel obj)
         {
             TNursingPainAssessment model = obj.MapTo<TNursingPainAssessment>();
@@ -287,7 +304,8 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("TNursingPainAssessmentCancel")]
 
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        [Permission]
         public ApiResponse Cancel(TNursingPainAssessmentDeleteModel obj)
         {
             TNursingPainAssessment model = obj.MapTo<TNursingPainAssessment>();
@@ -303,7 +321,8 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("NursingWeightInsert")]
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Posts(TNursingWeightModel obj)
         {
             TNursingWeight model = obj.MapTo<TNursingWeight>();
@@ -319,7 +338,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Edit API
         [HttpPut("NursingWeightUpdate/{id:int}")]
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Dialysis", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edits(TNursingWeightModel obj)
         {
             TNursingWeight model = obj.MapTo<TNursingWeight>();
@@ -338,7 +358,8 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("TNursingWeightCancel")]
 
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Dialysis", Permission = PagePermission.Add)]
+        [Permission]
 
         public ApiResponse Cancel(TNursingWeightDeleteModel obj)
         {

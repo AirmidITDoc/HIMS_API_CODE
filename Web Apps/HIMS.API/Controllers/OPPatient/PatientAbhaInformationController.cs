@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpGet("ByAbhaNumber/{AbhaNumber?}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> GetListByAbhaNumber(string AbhaNumber)
         {
             if (string.IsNullOrWhiteSpace(AbhaNumber))
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Data found.",result);
         }
         [HttpPost("Insert")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Insert(PatientAbhaInformationModel obj)
         {
             TPatientAbhaInformation model = obj.MapTo<TPatientAbhaInformation>();
@@ -97,7 +97,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
        
         [HttpPut("Edit/{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(PatientAbhaInformationUpdateModel obj)
         {
             TPatientAbhaInformation model = obj.MapTo<TPatientAbhaInformation>();

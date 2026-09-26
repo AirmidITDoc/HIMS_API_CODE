@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.FeedBack
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TPatientFeedback> PatientFeedbackList = await _repository.GetAllPagedAsync(objGrid);
@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.FeedBack
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers.FeedBack
         }
        
         [HttpPost]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Post(List<PatientFeedbackModel> objList)
         {
             if (objList == null || objList.Count == 0)return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status400BadRequest,  "No data received");
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.FeedBack
             return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "Records added successfully.");
         }
         [HttpPut]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(List<PatientFeedbackModel> objList)
         {
             if (objList == null || objList.Count == 0) return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status400BadRequest,  "No data received");
@@ -101,7 +101,7 @@ namespace HIMS.API.Controllers.FeedBack
         }
         //Delete API
         [HttpDelete]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             TPatientFeedback model = await _repository.GetById(x => x.PatientFeedbackId == Id);

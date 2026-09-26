@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
         }
 
         [HttpPost("Insert")]
-      //  [Permission]
+        [Permission]
         public async Task<ApiResponse> Insert(DietmenumasterModel obj)
         {
             MDietMenuMaster model = obj.MapTo<MDietMenuMaster>();
@@ -86,6 +86,8 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
 
         [HttpPut("Edit/{id:int}")]
+        [Permission]
+
         public async Task<ApiResponse> Edit(DietmenumasterModel obj)
         {
             if (obj.DietMenuId == 0)

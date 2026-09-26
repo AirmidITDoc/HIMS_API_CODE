@@ -41,6 +41,7 @@ namespace HIMS.API.Controllers.OTManagement
         //List API Get By Id
         [HttpGet("{id?}")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -52,6 +53,7 @@ namespace HIMS.API.Controllers.OTManagement
         }
         [HttpPost("InOperationAttendingDetailsList")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> InOperationAttendingDetailsList(GridRequestModel objGrid)
         {
             IPagedList<InOperationAttendingDetailsListDto> InOperationAttendingDetailsList = await _IOTInOperationService.InOperationAttengingDetailsAsync(objGrid);
@@ -62,6 +64,7 @@ namespace HIMS.API.Controllers.OTManagement
 
         [HttpGet("GetOtInOperationPostOperDiagnosisList")]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> GetOtInOperationPostOperDiagnosisList(string DescriptionType)
         {
             var result = await _IOTInOperationService.InOperationPostOperDiagnosisListAsync(DescriptionType);
@@ -69,6 +72,7 @@ namespace HIMS.API.Controllers.OTManagement
         }
         [HttpGet("GetOtInOperationDiagnosisList")]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> GetOtInOperationDiagnosisList(string DescriptionType)
         {
             var result = await _IOTInOperationService.InOperationDiagnosisListAsync(DescriptionType);
@@ -77,6 +81,7 @@ namespace HIMS.API.Controllers.OTManagement
        
         [HttpPost("InOperationSurgeryDetailsList")]
         //[Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> InOperationSurgeryDetailsList(GridRequestModel objGrid)
         {
             IPagedList<InOperationSurgeryDetailsDto> InOperationSurgeryDetailsList = await _IOTInOperationService.InOperationSurgeryDetailsAsync(objGrid);
@@ -86,6 +91,7 @@ namespace HIMS.API.Controllers.OTManagement
         //List API
         [HttpPost("OTInOperationHeaderList")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TOtInOperationHeader> OTInOperationHeaderList = await _repository.GetAllPagedAsync(objGrid);
@@ -94,6 +100,7 @@ namespace HIMS.API.Controllers.OTManagement
         //List API
         [HttpPost("OTInOperationDiagnosisList")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> DiagnosisList(GridRequestModel objGrid)
         {
             IPagedList<TOtInOperationDiagnosis> OTInOperationDiagnosisList = await _repository1.GetAllPagedAsync(objGrid);
@@ -102,6 +109,7 @@ namespace HIMS.API.Controllers.OTManagement
         //List API
         [HttpPost("OTInOperationPostOperDiagnosisList")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> OTList(GridRequestModel objGrid)
         {
             IPagedList<TOtInOperationPostOperDiagnosis> OTInOperationPostOperDiagnosisList = await _repository2.GetAllPagedAsync(objGrid);
@@ -110,6 +118,7 @@ namespace HIMS.API.Controllers.OTManagement
 
         [HttpPost("Insert")]
         //[Permission(PageCode = "OTRequest", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(OTInOperationModel obj)
         {
             TOtInOperationHeader model = obj.MapTo<TOtInOperationHeader>();
@@ -153,6 +162,7 @@ namespace HIMS.API.Controllers.OTManagement
 
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "OTRequest", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(OTInOperationModel obj)
         {
             TOtInOperationHeader model = obj.MapTo<TOtInOperationHeader>();

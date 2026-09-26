@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Insert")]
-       // [Permission]
+        [Permission]
         public async Task<ApiResponse> Insert(PurchaseRequisitionFinalModel obj)
         {
             TPrheader model = obj.MapTo<TPrheader>();
@@ -59,7 +59,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("PurchaseRequisitionFinalDetailList")]
-       // [Permission]
+        [Permission]
         public async Task<IActionResult> PurchaseRequisitionFinalDetailList(GridRequestModel objGrid)
         {
             IPagedList<PurchaseRequisitionFinalDetailListDto> PurchaseRequisitionFinalDetailList = await _IPurchaseRequisitionFinalService.PurchaseRequisitionFinalDetailListAsync(objGrid);
@@ -68,6 +68,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("PRToPOInsert")]
         // [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> PRToPOInsert(List<PurchaseModel> objList)
         {
             foreach (var obj in objList)

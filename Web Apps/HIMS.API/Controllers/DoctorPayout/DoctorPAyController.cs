@@ -136,6 +136,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         [HttpPost("DoctorShrCalcAsPerReferDocVisitBillWise")]
         [Permission]
         //[Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Add)]
+
         public async Task<ApiResponse> InsertSP(CalcAsPerReferDocVisitBillWiseModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
@@ -151,6 +152,7 @@ namespace HIMS.API.Controllers.DoctorPayout
 
         [HttpPost("DoctorProcessedList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> getDoctorprocessedlist(GridRequestModel objGrid)
         {
             IPagedList<DoctorShareprocessListDto> DoctorProcessList = await _IDoctorPayService.GetDoctorProcessList(objGrid);
@@ -158,6 +160,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPost("TDoctorpaymentInsert")]
+        [Permission]
         public async Task<ApiResponse> Insert(DoctorPaymwntModel obj)
         {
             List<TPaymentDoctor> model = obj.DoctorPayyModel.MapTo<List<TPaymentDoctor>>();
@@ -173,6 +176,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPut("TDoctorPaymentUpdate")]
+        [Permission]
         public async Task<ApiResponse> Update(DoctorPaymwntModel obj)
         {
             List<TPaymentDoctor> model = obj.DoctorPayyModel.MapTo<List<TPaymentDoctor>>();
