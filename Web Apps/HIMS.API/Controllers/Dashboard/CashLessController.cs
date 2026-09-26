@@ -24,42 +24,42 @@ namespace HIMS.API.Controllers.Dashboard
         }
       
         [HttpPost("CashlessPatientWiseSummaryList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<CashlessPatientWiseSummaryDto> CashlessPatientWiseSummaryList = await _ICashLessService.GetListAsync(objGrid);
             return Ok(CashlessPatientWiseSummaryList.ToGridResponse(objGrid, "Cashless PatientWiseSummary List"));
         }
         [HttpPost("CashlessCountSummaryList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> CassLessCountList(GridRequestModel objGrid)
         {
             IPagedList<CashlessCountSummaryDto> CashlessPatientWiseSummaryList = await _ICashLessService.CashLessGetListAsync(objGrid);
             return Ok(CashlessPatientWiseSummaryList.ToGridResponse(objGrid, "Cashless CountSummary List"));
         }
         [HttpPost("CashlessCompanyWiseSummaryList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> CassLessCompanyWiseCountList(GridRequestModel objGrid)
         {
             IPagedList<CashlessCompanyWiseSummaryDto> CashlessPatientWiseSummaryList = await _ICashLessService.CashLessCompanyWiseGetListAsync(objGrid);
             return Ok(CashlessPatientWiseSummaryList.ToGridResponse(objGrid, "Cashless CompanyWiseSummary List"));
         }
         [HttpPost("CashlessPatientBillInfoList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> CashlessPatientBillInfoList(GridRequestModel objGrid)
         {
             IPagedList<CashlessPatientBillDto> CashlessPatientBillInfoList = await _ICashLessService.CashlessPatientBillInfoListAsync(objGrid);
             return Ok(CashlessPatientBillInfoList.ToGridResponse(objGrid, "Cashless PatientBillInfo List"));
         }
         [HttpPost("CashlessPatientApprovalPendingList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> CashlessPatientApprovalPendingList(GridRequestModel objGrid)
         {
             IPagedList<CashlessPatientApprovalPendingListDto> CashlessPatientApprovalPendingList = await _ICashLessService.CashlessPatientApprovalPendingListsync(objGrid);
             return Ok(CashlessPatientApprovalPendingList.ToGridResponse(objGrid, "Cashless Patient Approval Pending List"));
         }
         [HttpPost("CashlessMonthlyCompanyWiseSummary")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> CashlessMonthlyCompanyWiseSummary(GridRequestModel objGrid)
         {
             IPagedList<CashlessMonthlyCompanyWiseSummaryDto> CashlessMonthlyCompanyWiseSummary = await _ICashLessService.CashlessMonthlyCompanyWiseSummarySync(objGrid);

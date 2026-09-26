@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HIMS.API.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -21,6 +22,7 @@ namespace HIMS.API.Controllers.QzTray
         }
 
         [HttpPost("sign-message")]
+        [Permission]
         public IActionResult SignMessage([FromBody] SignRequestModel model)
         {
             if (string.IsNullOrWhiteSpace(model?.Request))

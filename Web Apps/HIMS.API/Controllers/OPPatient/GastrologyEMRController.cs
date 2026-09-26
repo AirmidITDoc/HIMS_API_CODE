@@ -32,6 +32,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("ClinicalQuesList")]
         //[Permission(PageCode = "Payment", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ClinicalQuesListDto> ClinicalQuesList = await _IGastrologyEMRService.GetListAsync(objGrid);
@@ -39,6 +40,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         [HttpPost("Insert")]
         //[Permission(PageCode = "ClinicalQuesHeader", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(GastrologyEMRModel obj)
         {
             ClinicalQuesHeader model = obj.MapTo<ClinicalQuesHeader>();
@@ -63,6 +65,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         [HttpPut("Edit/{id:int}")]
         //[Permission(PageCode = "ClinicalQuesHeader", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(GastrologyEMRModel obj)
         {
             ClinicalQuesHeader model = obj.MapTo<ClinicalQuesHeader>();
@@ -92,6 +95,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         [HttpPost("Cancel")]
         //[Permission(PageCode = "ClinicalQuesHeader", Permission = PagePermission.Delete)]
+        [Permission]
         public ApiResponse Cancel(ClinicalQuesHeaderCancel obj)
         {
             ClinicalQuesHeader model = obj.MapTo<ClinicalQuesHeader>();

@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RegistrationList")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<RegistrationListDto> RegistrationList = await _IRegistrationService.GetListAsync(objGrid);
@@ -154,6 +154,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         // Create  by Ashutosh 12 Jun 2025
         [HttpGet("get-file")]
+        [Permission]
         public ApiResponse DownloadFiles(string FileName)
         {
             var data = _FileUtility.GetBase64FromFolder("Persons\\Photo", FileName);

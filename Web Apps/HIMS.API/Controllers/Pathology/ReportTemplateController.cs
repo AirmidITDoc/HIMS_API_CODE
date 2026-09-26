@@ -27,6 +27,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("ReportTemplateList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ReportTemplateListDto> ReportTemplateList = await _IReportTemplateService.ReportTemplateList(objGrid);
@@ -35,6 +36,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpGet("{id?}")]
         // [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
 
@@ -45,6 +47,7 @@ namespace HIMS.API.Controllers.Pathology
         [HttpGet]
         [Route("get-Templates")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> GetDropdown()
         {
             var MMasterList = await _repository.GetAll();

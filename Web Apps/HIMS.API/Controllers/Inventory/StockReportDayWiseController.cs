@@ -20,6 +20,7 @@ namespace HIMS.API.Controllers.Inventory
         }
         [HttpPost("StockReportDayWiseList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<StockReportDayWiseListDto> StockReportDayWiseList = await _IStockReportDayWiseService.StockReportDayWiseList(objGrid);

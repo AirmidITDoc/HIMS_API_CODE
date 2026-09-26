@@ -27,6 +27,7 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("GRNUpdateList")]
         //[Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> GRNUpdateList(GridRequestModel objGrid)
         {
             IPagedList<ItemDetailsForGRNUpdateListDto> GRNUpdateList = await _IGRNService.GRNUpdateList(objGrid);
@@ -34,7 +35,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("GRNHeaderList")]
-        //      [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> GRNHeaderList(GridRequestModel objGrid)
         {
             IPagedList<GRNListDto> GRNUpdateList = await _IGRNService.GRNHeaderList(objGrid);
@@ -43,13 +45,15 @@ namespace HIMS.API.Controllers.Pharmacy
 
         [HttpPost("GRNDetailsList")]
         //[Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> GRNDetailsList(GridRequestModel objGrid)
         {
             IPagedList<GRNDetailsListDto> GRNUpdateList = await _IGRNService.GRNDetailsList(objGrid);
             return Ok(GRNUpdateList.ToGridResponse(objGrid, "GRNList"));
         }
         [HttpPost("GrnInvoiceNocheck")]
-        //  [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List1(GridRequestModel objGrid)
         {
             IPagedList<InvoiceNoChecListDto> InvoiceNoChecList = await _IGRNService.InvoiceNoChecList(objGrid);
@@ -57,7 +61,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Poheaderlist")]
-        //  [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List4(GridRequestModel objGrid)
         {
             IPagedList<DirectPOListDto> DirectPOList = await _IGRNService.GetListAsync(objGrid);
@@ -65,6 +70,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpPost("Podetaillist")]
         //  [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<PoDetailListDto> PoDetailList = await _IGRNService.GetListAsync1(objGrid);
@@ -72,7 +78,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpGet("{id?}")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -84,7 +91,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(GRNReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
@@ -103,7 +111,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(GRNReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
@@ -121,7 +130,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("InsertPO")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> InsertPO(GRNPOReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
@@ -142,7 +152,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("EditPO/{id:int}")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> EditPO(GRNPOReqDto obj)
         {
             TGrnheader model = obj.Grn.MapTo<TGrnheader>();
@@ -162,7 +173,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Verify(GRNVerifyModel obj)
         {
             TGrnheader model = obj.MapTo<TGrnheader>();
@@ -176,6 +188,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpGet("GetExisitingBatchList")]
+        [Permission]
         public async Task<ApiResponse> GetExisitingBatchList(int StoreId, int ItemId, string BatchNo)
         {
             var resultList = await _IGRNService.GetExisitingBatchList(StoreId, ItemId, BatchNo);
@@ -196,7 +209,8 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPut("UpdateGrnSupplierDetails{id:int}")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        [Permission]
         public ApiResponse Edit(UpdateGRNSupplierModel obj)
         {
             TGrnheader model = obj.MapTo<TGrnheader>();
@@ -211,7 +225,8 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPut("UpdateCurrentStockBarcode")]
-        [Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "GRN", Permission = PagePermission.Edit)]
+        [Permission]
         public ApiResponse Edits(UpdateCurrentStockModel obj)
         {
             TCurrentStock model = obj.MapTo<TCurrentStock>();

@@ -27,6 +27,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("supplierPaymentList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<SupplierNamelistDto> SupplierNamelist = await _SupplierPaymentStatusService.SupplierNamelist(objGrid);
@@ -35,6 +36,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("ItemListBYSupplierName")]
         //[Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> GeSupplierrateListAsync(GridRequestModel objGrid)
         {
             IPagedList<ItemListBysupplierNameDto> List1 = await _SupplierPaymentStatusService.GetItemListbysuppliernameAsync(objGrid);
@@ -43,6 +45,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("GetSupplierPaymentStatusList")]
         //[Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> GetSupplierPaymentStatusList(GridRequestModel objGrid)
         {
             IPagedList<SupplierPaymentStatusListDto> List1 = await _SupplierPaymentStatusService.GetSupplierPaymentStatusList(objGrid);
@@ -51,6 +54,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("GetSupplierPaymentList")]
         //[Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> GetSupplierPaymentList(GridRequestModel objGrid)
         {
             IPagedList<GetSupplierPaymentListDto> List1 = await _SupplierPaymentStatusService.GetSupplierPaymentList(objGrid);
@@ -58,7 +62,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("Insert")]
-         //[Permission]
+         [Permission]
         public ApiResponse Insert(TGRNSupPayment obj)
         {
             TGrnsupPayment model = obj.GrnsupPayment.MapTo<TGrnsupPayment>();

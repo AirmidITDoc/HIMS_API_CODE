@@ -21,6 +21,7 @@ namespace HIMS.API.Controllers.Inventory
         }
         [HttpPost("ItemWiseList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ItemWiseListDto> ItemWiseList = await _IItemWiseService.ItemWiseList(objGrid);

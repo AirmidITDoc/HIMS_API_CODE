@@ -28,6 +28,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("SampleCollectionPatientList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> SampleCollectionList(GridRequestModel objGrid)
         {
             IPagedList<SampleCollectionPatientListDto> SampleCollectionList = await _IPathlogySampleCollectionService.GetListAsync(objGrid);
@@ -35,6 +36,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("SampleCollectionTestList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> SampleCollectionTestList(GridRequestModel objGrid)
         {
             IPagedList<SampleCollectionTestListDto> SampleCollectionTestList = await _IPathlogySampleCollectionService.GetListAsyn(objGrid);
@@ -42,6 +44,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("LabOrRadRequestPatientList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> LabOrRadRequestList(GridRequestModel objGrid)
         {
             IPagedList<LabOrRadRequestListDto> LabOrRadRequestList = await _IPathlogySampleCollectionService.LGetListAsync(objGrid);
@@ -49,6 +52,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("LabOrRadRequestDetailList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> LabOrRadRequestDetailList(GridRequestModel objGrid)
         {
             IPagedList<LabOrRadRequestDetailListDto> LabOrRadRequestList = await _IPathlogySampleCollectionService.LGetListAsync1(objGrid);
@@ -56,6 +60,8 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("PathRadServiceList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
+
         public async Task<IActionResult> PathRadServiceList(GridRequestModel objGrid)
         {
             IPagedList<PathRadServiceListDto> PathRadServiceList = await _IPathlogySampleCollectionService.GetListAsync1(objGrid);
@@ -95,7 +101,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("PathSampleCollectionCancel")]
         //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
-        //[Permission]
+        [Permission]
 
         public async Task<ApiResponse> Delete(PathlogySampleCollectionCancelModel obj)
         {

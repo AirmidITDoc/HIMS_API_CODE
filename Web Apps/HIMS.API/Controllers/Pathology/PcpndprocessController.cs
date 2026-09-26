@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Pathology
         }
        
         [HttpPost("RadioPcpndtList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<RadioPcpndtListDto> RadioPcpndtList = await _IPcpndprocesService.GetListAsync(objGrid);
@@ -40,14 +40,14 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpGet("search-RadiologistDoctor")]
-        //[Permission]
+        [Permission]
         public ApiResponse SearchPatientNew()
         {
             var data = _IPcpndprocesService.SearchPatientNew();
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Radiologist Doctor List", data);
         }
         [HttpGet("search_GynecologistDoctor")]
-        //[Permission]
+        [Permission]
         public ApiResponse SearchPatient()
         {
             var data = _IPcpndprocesService.SearchPatient();
@@ -58,7 +58,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("IndicationtList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> IndicationList(GridRequestModel objGrid)
         {
             IPagedList<IndicationListDto> IndicationtList = await _IPcpndprocesService.GetList(objGrid);
@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("Insert")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Insert(PcpndprocessModel obj)
         {
             TPcpndprocess model = obj.MapTo<TPcpndprocess>();
@@ -91,7 +91,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.PcpndtprocessId);
         }
         [HttpPut("Edit/{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(PcpndprocessModel obj)
         {
             TPcpndprocess model = obj.MapTo<TPcpndprocess>();

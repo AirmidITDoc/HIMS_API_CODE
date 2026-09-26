@@ -26,7 +26,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MStateMaster> StateMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -55,7 +56,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        [Permission(PageCode = "StateMaster", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(StateMasterModel obj)
         {
             MStateMaster model = obj.MapTo<MStateMaster>();
@@ -72,7 +74,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "StateMaster", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(StateMasterModel obj)
         {
             MStateMaster model = obj.MapTo<MStateMaster>();
@@ -89,7 +92,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "StateMaster", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "StateMaster", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             MStateMaster model = await _repository.GetById(x => x.StateId == Id);
@@ -108,6 +112,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         [HttpGet]
         [Route("get-state")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> GetDropdown()
         {
             var MstateMasterList = await _repository.GetAll(x => x.IsActive.Value);

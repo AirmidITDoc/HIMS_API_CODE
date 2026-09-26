@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.Pathology
 
         }
         [HttpPost("PathDispatchReportHistoryList")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<IActionResult> PathDispatchReportHistoryList(GridRequestModel objGrid)
         {
             IPagedList<PathDispatchReportHistoryListDto> PathDispatchReportHistoryList = await _IPathDispatchReportHistoryService.GetListAsync(objGrid);
@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.Pathology
 
         }
         [HttpPost("dispatchTestList")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<IActionResult> dispatchTestList(GridRequestModel objGrid)
         {
             IPagedList<TestDispatchModelDto> dispatchTestList = await _IPathDispatchReportHistoryService.TestGetListAsync(objGrid);

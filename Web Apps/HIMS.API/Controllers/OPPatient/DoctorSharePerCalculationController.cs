@@ -20,7 +20,8 @@ namespace HIMS.API.Controllers.OPPatient
             _IDoctorSharePerCalculationService = repository;
         }
         [HttpPut("OPDoctorSharePerCalculation")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]/
+        [Permission]
         public ApiResponse UpdateAsyncOP(DoctorSharePerCalculationModel obj)
         {
             Bill model = obj.MapTo<Bill>();
@@ -34,6 +35,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         [HttpPut("IPDoctorSharePerCalculation")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        [Permission]
         public ApiResponse UpdateAsyncIP(DoctorSharePerCalculationModel obj)
         {
             Bill model = obj.MapTo<Bill>();

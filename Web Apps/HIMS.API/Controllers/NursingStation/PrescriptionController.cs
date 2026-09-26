@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.NursingStation
 
         }
         [HttpPost("ItemNameBatchPOP_IPPresReturn")]
-        //[Permission(PageCode = "NursingPrescription", Permission = PagePermission.View)]
+        [Permission(PageCode = "NursingPrescription", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ItemNameBatchPOPIPPresReturnDto> ItemNameBatchPOPIPPresReturnList = await _IPrescriptionService.ItemNameBatchPOP(objGrid);

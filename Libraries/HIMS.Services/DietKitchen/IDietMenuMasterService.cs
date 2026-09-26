@@ -19,7 +19,7 @@ namespace HIMS.Services.DietKitchen
 
         Task InsertAsync(MDietMenuMaster ObjMDietMenuMaster, int UserId, string Username);
 
-        Task UpdateAsync(MDietMenuMaster model, int currentUserId, string currentUserName, string[]? ignoreColumns = null);
-
+        //Task UpdateAsync(MDietMenuMaster model, int currentUserId, string currentUserName, string[]? ignoreColumns = null);
+        Task UpdateSP(MDietMenuMaster model, List<MDietMenuDetailMaster> prescription, int currentUserId, string currentUserName);
     }
 }

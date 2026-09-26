@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
+using HIMS.API.Extensions;
 using HIMS.Data.DTO;
 using HIMS.Services.Dashboard;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,7 @@ namespace HIMS.API.Controllers.Dashboard
 
         [HttpGet("DailyDashboardSummaryList")]
         //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> DailyDashboardSummaryList()
         {
             List<DailyDashboardSummaryModel> DashboardList = await _IDashboardService.GetDailyDashboardSummary();
@@ -29,6 +31,7 @@ namespace HIMS.API.Controllers.Dashboard
 
         [HttpPost("OPDepartmentRangeChartList")]
         //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> OPDepartmentRangeChartList(OPDepartmentRangeChartRequestModel model)
         {
             List<OPDepartmentRangeChartModel> DashboardList = await _IDashboardService.GetOPDepartmentRangeChart(model);
@@ -37,6 +40,7 @@ namespace HIMS.API.Controllers.Dashboard
 
         [HttpGet("IPAdemissionDischargeCountList")]
         //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [Permission]
         public IActionResult IPAdemissionDischargeCountList()
         {
             IPAdemissionDischargeCountModel DashboardDetails = _IDashboardService.GetIPAdemissionDischargeCount();
@@ -45,6 +49,7 @@ namespace HIMS.API.Controllers.Dashboard
 
         [HttpGet("OPVisitCountList")]
         //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [Permission]
         public IActionResult OPVisitCountList(OPVisitCountRequestModel model)
         {
             OPVisitCountList DashboardDetails = _IDashboardService.GetOPVisitCount(model);
@@ -53,6 +58,7 @@ namespace HIMS.API.Controllers.Dashboard
 
         [HttpGet("pathology-dashboard")]
         //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Pathology(int UnitId, DateTime FromDate, DateTime ToDate)
         {
           //  int UnitId = Context.UnitId;
@@ -62,6 +68,7 @@ namespace HIMS.API.Controllers.Dashboard
 
         [HttpGet("Financial-dashboard")]
         //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> FinancialDashBoard(int UnitId, DateTime FromDate, DateTime ToDate)
         {
             //int UnitId = Context.UnitId;
@@ -70,6 +77,7 @@ namespace HIMS.API.Controllers.Dashboard
         }
         [HttpGet("DailyDashBoardIPSubModule-dashboard")]
         //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> DailyDashBoardIPSubModuleDashBoard(int storId)
         {
             //int UnitId = Context.UnitId;
@@ -79,6 +87,7 @@ namespace HIMS.API.Controllers.Dashboard
 
         [HttpGet("radiology-dashboard")]
         //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Radiology(int UnitId, DateTime FromDate, DateTime ToDate)
         {
            // int UnitId = Context.UnitId;
@@ -88,6 +97,7 @@ namespace HIMS.API.Controllers.Dashboard
 
         [HttpGet("pharmacy-dashboard")]
         //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Pharmacy(int UnitId, DateTime FromDate, DateTime ToDate)
         {
             // int UnitId = Context.UnitId;
@@ -96,6 +106,7 @@ namespace HIMS.API.Controllers.Dashboard
         }
         [HttpGet("Daily-Dashboard")]
         //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> DailyDashboard(int UnitId, DateTime FromDate, DateTime ToDate)
         {
             // int UnitId = Context.UnitId;
@@ -104,6 +115,7 @@ namespace HIMS.API.Controllers.Dashboard
         }
 
         [HttpGet("Cashless-Dashboard")]
+        [Permission]
         public async Task<ApiResponse> CashlessDashboard(int UnitId, DateTime FromDate, DateTime ToDate)
         {
             var data = await _IDashboardService.GetCashlessDashboard(UnitId, FromDate, ToDate);
@@ -111,6 +123,7 @@ namespace HIMS.API.Controllers.Dashboard
         }
 
         [HttpGet("Lab-Financial-Dashboard")]
+        [Permission]
         public async Task<ApiResponse> LabFinancialDashboard(int UnitId, DateTime FromDate, DateTime ToDate)
         {
             var data = await _IDashboardService.GetLabFinancialDashboard(UnitId, FromDate, ToDate);
@@ -118,6 +131,7 @@ namespace HIMS.API.Controllers.Dashboard
         }
 
         [HttpGet("Lab-Financial-Department-Summary")]
+        [Permission]
         public async Task<ApiResponse> LabFinancialDepartmentSummary(int UnitId, int GroupId, DateTime FromDate, DateTime ToDate)
         {
             var data = await _IDashboardService.GetLabFinancialDepartmentSummary(UnitId, GroupId, FromDate, ToDate);
@@ -126,6 +140,7 @@ namespace HIMS.API.Controllers.Dashboard
         }
 
         [HttpGet("Procurement-DashBoard")]
+        [Permission]
         public async Task<ApiResponse> ProcurementDashboard(int UnitId)
         {
            
@@ -135,6 +150,7 @@ namespace HIMS.API.Controllers.Dashboard
 
         [HttpGet("DailyDashBoardOPSubModule-dashboard")]
         //[Permission(PageCode = "Dashboard", Permission = Permission.View)]
+        [Permission]
         public async Task<ApiResponse> DailyDashBoardOPSubModuleDashBoard(int UnitId)
         {
             var data = await _IDashboardService.GetDailyDashBoardOPSubModuleDashBoard(UnitId);

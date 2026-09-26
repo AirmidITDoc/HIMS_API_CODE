@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.NursingStation
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MedicalRecordConfig> MedicalRecordConfigList = await _repository.GetAllPagedAsync(objGrid);
@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Add API
         [HttpPost]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Post(MedicalRecordModel obj)
         {
             MedicalRecordConfig model = obj.MapTo<MedicalRecordConfig>();
@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(MedicalRecordModel obj)
         {
             MedicalRecordConfig model = obj.MapTo<MedicalRecordConfig>();
@@ -84,7 +84,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         //Delete API
         [HttpDelete]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             MedicalRecordConfig model = await _repository.GetById(x => x.Id == Id);

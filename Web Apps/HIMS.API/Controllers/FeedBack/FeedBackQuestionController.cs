@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.FeedBack
         }
        
         [HttpPost("FeedbackQuestionList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<FeedbackQuestionListDto> FeedbackQuestionList = await _IFeedBackQuestionService.GetListAsync(objGrid);
@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.FeedBack
         }
 
         [HttpPost("FeedbackDepartmentList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> DepartmentList(GridRequestModel objGrid)
         {
             IPagedList<DepartmentWithFeedbackListDto> DepartmentList = await _IFeedBackQuestionService.DepartmentListAsync(objGrid);
@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.FeedBack
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -61,7 +61,7 @@ namespace HIMS.API.Controllers.FeedBack
         }
         //Add API
         [HttpPost]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Post(FeedBackQuestionModel obj)
         {
             MFeedbackQuestion model = obj.MapTo<MFeedbackQuestion>();
@@ -80,7 +80,7 @@ namespace HIMS.API.Controllers.FeedBack
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(FeedBackQuestionModel obj)
         {
             MFeedbackQuestion model = obj.MapTo<MFeedbackQuestion>();
@@ -97,7 +97,7 @@ namespace HIMS.API.Controllers.FeedBack
         }
         //Delete API
         [HttpDelete]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             MFeedbackQuestion model = await _repository.GetById(x => x.FeedbackId == Id);

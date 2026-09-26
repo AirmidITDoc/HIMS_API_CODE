@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
+using HIMS.API.Extensions;
 using HIMS.API.Models;
 using HIMS.API.Utility;
 using Microsoft.AspNetCore.Http;
@@ -30,6 +31,7 @@ namespace HIMS.API.Controllers.RIS
         // ──────────────────────────────────────────────────
 
         [HttpPost("report")]
+        [Permission]
         public IActionResult ReceiveReport([FromBody] ReportDetailsRequest request)
         {
             if (request == null)
@@ -56,6 +58,7 @@ namespace HIMS.API.Controllers.RIS
         // ──────────────────────────────────────────────────
 
         [HttpPost("report/share-status")]
+        [Permission]
         public IActionResult ReceiveReportShareStatus([FromBody] ReportShareStatusRequest request)
         {
             if (request == null)

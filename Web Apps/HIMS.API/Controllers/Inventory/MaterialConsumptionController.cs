@@ -34,6 +34,7 @@ namespace HIMS.API.Controllers.Inventory
         }
         [HttpPost("MaterialConsumptionDetailsList")]
         //[Permission(PageCode = "MaterialConsumption", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> MaterialConsumptionDetailList(GridRequestModel objGrid)
         {
             IPagedList<MaterialConsumDetailListDto> MaterialConsumptionList = await _IMaterialConsumption.MaterialConsumptiondetailList(objGrid);
@@ -42,7 +43,8 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("InsertEDMX")]
-        [Permission(PageCode = "MaterialConsumption", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "MaterialConsumption", Permission = PagePermission.Add)]
+        [Permission]
 
         public async Task<ApiResponse> InsertEDMX(MaterialConsumptionHeader obj)
         {
