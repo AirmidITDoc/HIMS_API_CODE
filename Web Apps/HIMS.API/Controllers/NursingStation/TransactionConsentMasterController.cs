@@ -34,6 +34,7 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("TransactionConsentMasterList")]
         //[Permission(PageCode = "ConsentMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<TransactionConsentMasterListDto> TransactionConsentMasterList = await _NursingConsentService.GetListTranAsync(objGrid);
@@ -44,6 +45,7 @@ namespace HIMS.API.Controllers.NursingStation
         [HttpPost]
         [Route("[action]")]
         //[Permission(PageCode = "ConsentMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TConsentMaster> TConsentMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -51,6 +53,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         [HttpGet("{id?}")]
         //[Permission(PageCode = "ConsentMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -62,6 +65,7 @@ namespace HIMS.API.Controllers.NursingStation
         }
         [HttpPost]
         //[Permission(PageCode = "ConsentMaster", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(TransactionConsentMasterModel obj)
         {
             TConsentMaster model = obj.MapTo<TConsentMaster>();
@@ -81,6 +85,7 @@ namespace HIMS.API.Controllers.NursingStation
         //Edit API
         [HttpPut("{id:int}")]
         //[Permission(PageCode = "ConsentMaster", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(TransactionConsentMasterModel obj)
         {
             TConsentMaster model = obj.MapTo<TConsentMaster>();
@@ -98,6 +103,7 @@ namespace HIMS.API.Controllers.NursingStation
         //Delete API
         [HttpDelete]
         //[Permission(PageCode = "ConsentMaster", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             TConsentMaster model = await _repository.GetById(x => x.ConsentId == Id);

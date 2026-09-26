@@ -36,6 +36,7 @@ namespace HIMS.API.Controllers.Pathology
         //List API Get By Id
         [HttpGet("{id?}")]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -47,6 +48,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("homeCollectionDetList")]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<homeCollectionDetListDto> homeCollectionDetList = await _IHomeCollectionService.GetListAsync(objGrid);
@@ -55,6 +57,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("homeCollectionPatientCountList")]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> PatientList(GridRequestModel objGrid)
         {
             IPagedList<HomeCollectionPatientListDto> homeCollectionPatientList = await _IHomeCollectionService.HomeGetListAsync(objGrid);
@@ -63,6 +66,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("HomeCollectionRegistrationInfoList")]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> ListHomeCollection(GridRequestModel objGrid)
         {
             IPagedList<HomeCollectionRegistrationInfoListDto> HomeCollectionRegistrationInfoList = await _IHomeCollectionService.HomeCollectionListAsync(objGrid);
@@ -71,6 +75,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("Insert")]
         //[Permission]
+        [Permission]
         public async Task<ApiResponse> Insert(HomeCollectionModel obj)
         {
             THomeCollectionRegistrationInfo model = obj.MapTo<THomeCollectionRegistrationInfo>();
@@ -94,7 +99,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(HomeCollectionModel obj)
         {
             THomeCollectionRegistrationInfo model = obj.MapTo<THomeCollectionRegistrationInfo>();
@@ -123,7 +128,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.HomeCollectionId);
         }
         [HttpPost("Cancel")]
-        //[Permission]
+        [Permission]
         public ApiResponse Cancel(HomeCollectionCancel obj)
         {
             THomeCollectionRegistrationInfo model = obj.MapTo<THomeCollectionRegistrationInfo>();
@@ -137,7 +142,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
         [HttpPut("updatePhlebotomist{id:int}")]
-        //[Permission]
+        [Permission]
         public ApiResponse Update(HomeCollectionupdatePhlebotomistModel obj)
         {
             THomeCollectionRegistrationInfo model = obj.MapTo<THomeCollectionRegistrationInfo>();

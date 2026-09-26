@@ -45,6 +45,7 @@ namespace HIMS.API.Controllers.OTManagement
         //List API Get By Id
         [HttpGet("{id?}")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -68,6 +69,7 @@ namespace HIMS.API.Controllers.OTManagement
         [HttpPost("OtPreOperationCathlabDiagnosisList")]
         //[Route("[action]")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> CathlabDiagnosisList(GridRequestModel objGrid)
         {
             IPagedList<TOtPreOperationCathlabDiagnosis> OtPreOperationCathlabDiagnosisList = await _repository1.GetAllPagedAsync(objGrid);
@@ -76,6 +78,7 @@ namespace HIMS.API.Controllers.OTManagement
         [HttpPost("OtPreOperationSurgeryDetailList")]
         //[Route("[action]")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> OtPreOperationSurgeryDetailList(GridRequestModel objGrid)
         {
             IPagedList<TOtPreOperationSurgeryDetail> OtPreOperationSurgeryDetailList = await _repository2.GetAllPagedAsync(objGrid);
@@ -85,6 +88,7 @@ namespace HIMS.API.Controllers.OTManagement
         [HttpPost("OtPreOperationDiagnosisList")]
         //[Route("[action]")]
         //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> PreOperationDiagnosisList(GridRequestModel objGrid)
         {
             IPagedList<TOtPreOperationDiagnosis> PreOperationDiagnosisList = await _repository3.GetAllPagedAsync(objGrid);
@@ -93,6 +97,7 @@ namespace HIMS.API.Controllers.OTManagement
 
         [HttpPost("perOperationsurgeryList")]
         //[Permission(PageCode = "OTPreOperation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<perOperationsurgeryListDto> perOperationsurgeryList = await _IOTPreOperationService.GetListAsync(objGrid);
@@ -100,6 +105,7 @@ namespace HIMS.API.Controllers.OTManagement
         }
         [HttpPost("preOperationAttendentList")]
         //[Permission(PageCode = "OTPreOperation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<PreOperationAttendentListDto> preOperationAttendentList = await _IOTPreOperationService.preOperationAttendentListAsync(objGrid);
@@ -107,6 +113,7 @@ namespace HIMS.API.Controllers.OTManagement
         }
         [HttpGet("GetPreOperationDiagnosisList")]
         //[Permission(PageCode = "OTPreOperation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> PreOperationDiagnosisList(string DescriptionType)
         {
             var result = await _IOTPreOperationService.PreOperationDiagnosisListAsync(DescriptionType);
@@ -114,6 +121,7 @@ namespace HIMS.API.Controllers.OTManagement
         }
         [HttpGet("GetPreOperationCathlabDiagnosisList")]
         //[Permission(PageCode = "OTPreOperation", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> PreOperationCathlabDiagnosisList(string DescriptionType)
         {
             var result = await _IOTPreOperationService.PreOperationCathlabDiagnosisListAsync(DescriptionType);
@@ -122,6 +130,7 @@ namespace HIMS.API.Controllers.OTManagement
 
         [HttpPost("Insert")]
         //[Permission(PageCode = "OTPreOperation", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(OTPreOperationModel obj)
         {
             TOtPreOperationHeader model = obj.MapTo<TOtPreOperationHeader>();
@@ -163,7 +172,8 @@ namespace HIMS.API.Controllers.OTManagement
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "OTPreOperation", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "OTPreOperation", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(OTPreOperationModel obj)
         {
             TOtPreOperationHeader model = obj.MapTo<TOtPreOperationHeader>();

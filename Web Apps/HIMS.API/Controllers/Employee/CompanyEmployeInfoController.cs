@@ -26,6 +26,7 @@ namespace HIMS.API.Controllers.Employee
         [HttpPost]
         [Route("[action]")]
         //[Permission(PageCode = "CompanyEmployeInfo", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MCompanyEmployeInfo> CompanyEmployeInfo = await _repository.GetAllPagedAsync(objGrid);
@@ -35,7 +36,8 @@ namespace HIMS.API.Controllers.Employee
         //List API
         [HttpGet]
         [Route("get-employe")]
-        // [Permission(PageCode = "CompanyEmployeInfo", Permission = PagePermission.View)]
+        //[Permission(PageCode = "CompanyEmployeInfo", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> GetDropdown()
         {
             //var CompanyEmployeInfoList = await _repository.GetAll(x => x.IsActive.Value);
@@ -45,7 +47,8 @@ namespace HIMS.API.Controllers.Employee
         //List API
         [HttpGet]
         [Route("get-Representative")]
-        // [Permission(PageCode = "CompanyEmployeInfo", Permission = PagePermission.View)]
+        //[Permission(PageCode = "CompanyEmployeInfo", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> GetIsRepresentativeDropdown()
         {
             var CompanyEmployeInfoList = await _repository.GetAll(x => x.IsActive == true && x.IsRepresentative == true);
@@ -56,6 +59,7 @@ namespace HIMS.API.Controllers.Employee
         //List API Get By Id
         [HttpGet("{id?}")]
         //[Permission(PageCode = "CompanyEmployeInfo", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -69,6 +73,7 @@ namespace HIMS.API.Controllers.Employee
         //Add API
         [HttpPost]
         //[Permission(PageCode = "CompanyEmployeInfo", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(CompanyEmployeInfoModel obj)
         {
             MCompanyEmployeInfo model = obj.MapTo<MCompanyEmployeInfo>();
@@ -89,6 +94,7 @@ namespace HIMS.API.Controllers.Employee
         //Edit API
         [HttpPut("{id:int}")]
         //[Permission(PageCode = "CompanyEmployeInfo", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(CompanyEmployeInfoModel obj)
         {
             MCompanyEmployeInfo model = obj.MapTo<MCompanyEmployeInfo>();
@@ -107,6 +113,7 @@ namespace HIMS.API.Controllers.Employee
         //Delete API
         [HttpDelete]
         //[Permission(PageCode = "CompanyEmployeInfo", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             MCompanyEmployeInfo model = await _repository.GetById(x => x.ExecutiveId == Id);

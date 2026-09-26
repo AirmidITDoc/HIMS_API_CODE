@@ -25,6 +25,16 @@ namespace HIMS.API.Extensions
                 await _next(context);
                 return;
             }
+
+            // only capture request/response bodies for write operations
+            if (!HttpMethods.IsPost(context.Request.Method)
+                && !HttpMethods.IsPut(context.Request.Method)
+                && !HttpMethods.IsDelete(context.Request.Method)
+                && !HttpMethods.IsPatch(context.Request.Method))
+            {
+                await _next(context);
+                return;
+            }
             try
             {
                 // set ambient user from claims (if present)

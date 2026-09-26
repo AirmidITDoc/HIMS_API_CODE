@@ -192,6 +192,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpGet("ExpiryItemScrollingData")]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission]
         public ApiResponse GetExpiry(string Keyword)
         {
             var data = _ISalesService.GetExpiryList(Keyword);

@@ -56,6 +56,7 @@ namespace HIMS.API.Controllers.Transaction
 
         //}
         [HttpGet("TMailOutgoing/{id:int}")]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id <= 0)
@@ -77,6 +78,7 @@ namespace HIMS.API.Controllers.Transaction
 
         [HttpGet("TWhatsAppSmsOutgoing/{id:int}")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Gets(int id)
         {
             if (id <= 0)
@@ -114,6 +116,7 @@ namespace HIMS.API.Controllers.Transaction
 
         [HttpPost("SMSendoutList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> SMSList(GridRequestModel objGrid)
         {
             IPagedList<SMSConfigListDto> List = await _IsmsConfigService.GetSMSconfig(objGrid);
@@ -123,6 +126,7 @@ namespace HIMS.API.Controllers.Transaction
 
         [HttpPost("InsertSP")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(smsConfigModel obj)
         {
             SsSmsConfig model = obj.MapTo<SsSmsConfig>();
@@ -138,6 +142,7 @@ namespace HIMS.API.Controllers.Transaction
         }
         [HttpPost("UPDATE")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Edit(smsConfigModel obj)
         {
             SsSmsConfig model = obj.MapTo<SsSmsConfig>();
@@ -153,6 +158,7 @@ namespace HIMS.API.Controllers.Transaction
         }
         [HttpPut("EmailConfiguration/{id:int}")]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(EmailConfigurationModel obj)
         {
             EmailConfiguration model = obj.MapTo<EmailConfiguration>();
@@ -170,6 +176,7 @@ namespace HIMS.API.Controllers.Transaction
         //Add API
         [HttpPost("SmspdfConfig")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(SmspdfConfigModel obj)
         {
             SmspdfConfig model = obj.MapTo<SmspdfConfig>();
@@ -186,6 +193,7 @@ namespace HIMS.API.Controllers.Transaction
         //Edit API
         [HttpPut("SmspdfConfig")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(SmspdfConfigModel obj)
         {
             SmspdfConfig model = obj.MapTo<SmspdfConfig>();
@@ -203,7 +211,8 @@ namespace HIMS.API.Controllers.Transaction
         }
 
         [HttpPost("EmailOutgoingList")]
-        [Permission(PageCode = "smsconfigrationtool", Permission = PagePermission.View)]
+        //[Permission(PageCode = "smsconfigrationtool", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> emailList(GridRequestModel objGrid)
         {
             IPagedList<EmailSendoutListDto> List = await _IsmsConfigService.GetEmailSconfig(objGrid);
@@ -212,7 +221,8 @@ namespace HIMS.API.Controllers.Transaction
 
 
         [HttpPost("WhatsappSendoutList")]
-        [Permission(PageCode = "smsconfigrationtool", Permission = PagePermission.View)]
+        //[Permission(PageCode = "smsconfigrationtool", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> WhatsappList(GridRequestModel objGrid)
         {
             IPagedList<WhatsAppsendOutListDto> List = await _IsmsConfigService.GetWhatsAppconfig(objGrid);

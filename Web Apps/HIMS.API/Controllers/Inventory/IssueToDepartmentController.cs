@@ -25,7 +25,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("IssueToDeptList")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<IssuetodeptListDto> AppVisitList = await _IIssueToDepService.GetListAsync(objGrid);
@@ -34,7 +35,8 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("IssueToDeptdetailList")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> issueitemList(GridRequestModel objGrid)
         {
             IPagedList<IssueToDepartmentDetailListDto> AppVisitList = await _IIssueToDepService.GetIssueItemListAsync(objGrid);
@@ -42,7 +44,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("IssueToDeptIndentByIDList")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> IndentByIDList(GridRequestModel objGrid)
         {
             IPagedList<IndentByIDListDto> AppVisitList = await _IIssueToDepService.GetIndentById(objGrid);
@@ -51,7 +54,8 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("IssueToDeptIndentItemListList")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> issueIndentitemList(GridRequestModel objGrid)
         {
             IPagedList<IndentItemListDto> AppVisitList = await _IIssueToDepService.GetIndentItemList(objGrid);
@@ -60,6 +64,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("MaterialRecvedByDeptList")]
         //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> MaterialreceivedList(GridRequestModel objGrid)
         {
             IPagedList<MateralreceivedbyDeptLstDto> AppVisitList = await _IIssueToDepService.GetMaterialrecivedbydeptList(objGrid);
@@ -69,6 +74,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("MaterialreceiveddetailList")]
         //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> materialreciveditemList(GridRequestModel objGrid)
         {
             IPagedList<MaterialrecvedbydepttemdetailslistDto> AppVisitList = await _IIssueToDepService.GetRecceivedItemListAsync(objGrid);
@@ -76,7 +82,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("AcceptIssueItemDetList")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> AcceptIssueItemDetList(GridRequestModel objGrid)
         {
             IPagedList<AcceptIssueItemDetListDto> AppVisitList = await _IIssueToDepService.AcceptIssueItemDetList(objGrid);
@@ -84,7 +91,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("InsertSP")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        [Permission]
 
         public async Task<ApiResponse> InsertSP(IssueTODepModel obj)
         {
@@ -107,6 +115,7 @@ namespace HIMS.API.Controllers.Inventory
         }
         [HttpPost("Insert")]
         //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Insert(IssueToDIndentModel obj)
         {
             TIssueToDepartmentHeader model = obj.MapTo<TIssueToDepartmentHeader>();
@@ -124,7 +133,8 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("UpdateIndentStatusAganist")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Update(UpdateIndentStatusModel obj)
         {
             TIssueToDepartmentHeader model = obj.UpdateIndent.MapTo<TIssueToDepartmentHeader>();
@@ -146,7 +156,8 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("UpdateMaterialAcceptance")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        [Permission]
         public ApiResponse Update(UpdateMaterialAcceptanceModel obj)
         {
             TIssueToDepartmentHeader model = obj.materialAcceptIssueHeader.MapTo<TIssueToDepartmentHeader>();
@@ -165,7 +176,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("Verify")]
-        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Verify(IssueToDepVerifyModel obj)
         {
             TIssueToDepartmentHeader model = obj.MapTo<TIssueToDepartmentHeader>();
@@ -184,7 +196,7 @@ namespace HIMS.API.Controllers.Inventory
        
 
         [HttpPost("IssuetoDeptWithMaterialAccept")]
-        //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
 
         public async Task<ApiResponse> InsertM(IssuetoDeptWihMaterialAcceptModel obj)
         {
@@ -212,6 +224,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("UpdateIndentStatusAganistMaterialAccept")]
         //[Permission(PageCode = "IssueToDepartment", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> UpdateIndentMaterialAccept(IssuetoDeptWihMaterialAcceptagainstIndentModel obj)
         {
             TIssueToDepartmentHeader model = obj.IssuetoDeptWihMaterialAccept.MapTo<TIssueToDepartmentHeader>();

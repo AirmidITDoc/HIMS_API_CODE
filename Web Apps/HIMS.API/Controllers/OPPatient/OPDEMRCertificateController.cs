@@ -39,7 +39,8 @@ namespace HIMS.API.Controllers.OPPatient
             _radiorepository1 = pathrepository1;
         }
         [HttpPost("CertificateInformationList")]
-        [Permission(PageCode = "MedicalRecords", Permission = PagePermission.View)]
+        //[Permission(PageCode = "MedicalRecords", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<CertificateInformationListDto> CertificateInformationList = await _oPBillingService.GetListAsync(objGrid);
@@ -47,7 +48,8 @@ namespace HIMS.API.Controllers.OPPatient
         }
         //Add API
         [HttpPost("TCertificateInformationSave")]
-        [Permission(PageCode = "MedicalRecords", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "MedicalRecords", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> InsertEDMX(TCertificateInformationParamModel obj)
         {
             TCertificateInformation model = obj.MapTo<TCertificateInformation>();
@@ -65,7 +67,8 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPut("TCertificateInformationUpdate")]
-        [Permission(PageCode = "MedicalRecords", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "MedicalRecords", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Update(TCertificateInformationParamModel obj)
         {
             TCertificateInformation model = obj.MapTo<TCertificateInformation>();
@@ -85,6 +88,7 @@ namespace HIMS.API.Controllers.OPPatient
         [HttpGet]
         [Route("get-CertificateMaster")]
         //[Permission(PageCode = "MedicalRecords", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> GetDropdown2()
         {
             var MMasterList = await _radiorepository1.GetAll();

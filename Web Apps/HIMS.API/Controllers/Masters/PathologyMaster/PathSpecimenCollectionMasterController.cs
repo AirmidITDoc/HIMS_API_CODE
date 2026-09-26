@@ -26,6 +26,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         [HttpPost]
         [Route("[action]")]
         //[Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MPathSpecimenCollectionMaster> PathSpecimenCollectionMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -36,6 +37,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //List API Get By Id
         [HttpGet("{id?}")]
         //[Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -51,6 +53,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //Add API
         [HttpPost]
         //[Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(PathSpecimenCollectionMasterModel obj)
         {
             MPathSpecimenCollectionMaster model = obj.MapTo<MPathSpecimenCollectionMaster>();
@@ -71,6 +74,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //Edit API
         [HttpPut("{id:int}")]
         //[Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(PathSpecimenCollectionMasterModel obj)
         {
             MPathSpecimenCollectionMaster model = obj.MapTo<MPathSpecimenCollectionMaster>();
@@ -89,6 +93,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //Delete API
         [HttpDelete]
         //[Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             MPathSpecimenCollectionMaster model = await _repository.GetById(x => x.SpecimenCollectionId == Id);

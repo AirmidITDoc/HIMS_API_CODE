@@ -33,7 +33,8 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
 
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
+        //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MOtSurgeryMaster> MSurgeryMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -42,6 +43,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
         [HttpGet]
         [Route("GetSurgeryTypeByOTSurgery")]
         //[Permission(PageCode = "Prefix", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> GetDropdown()
         {
             var MOttableMasterList = await _repository.GetAll(x => x.IsActive.Value);
@@ -51,6 +53,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
 
         [HttpGet("{id?}")]
         //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -62,6 +65,9 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
         }
        
         [HttpGet("GetSurgeryNameBySurgeryType/{id?}")]
+        //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
+        [Permission]
+
         public async Task<ApiResponse> GetSurgeryName(int id)
         {
             if (id == 0)
@@ -75,7 +81,9 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
         }
         //Insert API
         [HttpPost]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "OTManagement", Permission = PagePermission.Add)]
+
+        [Permission]
         public async Task<ApiResponse> Post(SurgeryMasterModel obj)
         {
             MOtSurgeryMaster model = obj.MapTo<MOtSurgeryMaster>();
@@ -93,7 +101,8 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
 
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "OTManagement", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(SurgeryMasterModel obj)
         {
             MOtSurgeryMaster model = obj.MapTo<MOtSurgeryMaster>();
@@ -114,7 +123,8 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
 
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "OTManagement", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             MOtSurgeryMaster? model = await _repository.GetById(x => x.SurgeryId == Id);

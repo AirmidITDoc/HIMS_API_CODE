@@ -33,14 +33,14 @@ namespace HIMS.API.Controllers.MRD
             _IMRDFileService = repository;
         }
         [HttpPost("MRDFileReceivedList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MRDFileReceivedListDto> MRDFileReceivedList = await _IMRDFileService.GetListAsync(objGrid);
             return Ok(MRDFileReceivedList.ToGridResponse(objGrid, "MRDFileReceived List"));
         }
         [HttpPost("Insert")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Insert(MrdFileReceivedModel obj)
         {
             TMrdfileReceived model = obj.MapTo<TMrdfileReceived>();
@@ -57,7 +57,7 @@ namespace HIMS.API.Controllers.MRD
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.RmdrecordId);
         }
         [HttpPut("Edit/{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(MrdFileReceivedModel obj)
         {
             TMrdfileReceived model = obj.MapTo<TMrdfileReceived>();
@@ -74,7 +74,7 @@ namespace HIMS.API.Controllers.MRD
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.RmdrecordId);
         }
         [HttpPost("InsertOutFile")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> InsertOutFile(MRDOutInFileModel obj)
         {
             TMrdoutInFile Outfilemodel = obj.MapTo<TMrdoutInFile>();
@@ -93,7 +93,7 @@ namespace HIMS.API.Controllers.MRD
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", Outfilemodel.OutFileId);
         }
         [HttpPost("InsertInFile")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> InsertInFile(MRDOutInFileModel obj)
         {
             TMrdoutInFile Outfilemodel = obj.MapTo<TMrdoutInFile>();

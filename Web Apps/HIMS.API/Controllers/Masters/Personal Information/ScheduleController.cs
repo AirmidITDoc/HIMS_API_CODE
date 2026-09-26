@@ -23,6 +23,7 @@ namespace HIMS.API.Controllers.Masters
         [HttpPost]
         [Route("[action]")]
         //[Permission(PageCode = "Schedule", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ScheduleMaster> ScheduleList = await _repository.GetAllPagedAsync(objGrid);
@@ -30,6 +31,7 @@ namespace HIMS.API.Controllers.Masters
         }
         [HttpGet("{ScheduleName}")]
         //[Permission(PageCode = "Schedule", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> Get(string ScheduleName)
         {
             ScheduleName = (string.IsNullOrWhiteSpace(ScheduleName) ? "" : ScheduleName);
@@ -38,6 +40,7 @@ namespace HIMS.API.Controllers.Masters
         }
         [HttpPost]
         //[Permission(PageCode = "Schedule", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(ScheduleModel obj)
         {
             ScheduleMaster model = obj.MapTo<ScheduleMaster>();
@@ -54,6 +57,7 @@ namespace HIMS.API.Controllers.Masters
         }
         [HttpPut("{id:int}")]
         //[Permission(PageCode = "Schedule", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(ScheduleModel obj)
         {
             ScheduleMaster model = obj.MapTo<ScheduleMaster>();
@@ -68,6 +72,7 @@ namespace HIMS.API.Controllers.Masters
         }
         [HttpDelete]
         //[Permission(PageCode = "Schedule", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             ScheduleMaster model = await _repository.GetById(x => x.Id == Id);

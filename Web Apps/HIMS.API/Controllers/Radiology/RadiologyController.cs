@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.Radiology
 
 
         [HttpPost("RadiologyList")]
-        //[Permission(PageCode = "Radiology", Permission = PagePermission.View)]
+        [Permission(PageCode = "Radiology", Permission = PagePermission.View)]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<RadiologyListDto> RadiologyList = await _RadilogyService.GetListAsync(objGrid);
@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.Radiology
 
 
         [HttpPost("LabRadiologyList")]
-        //[Permission(PageCode = "Radiology", Permission = PagePermission.View)]
+        [Permission(PageCode = "Radiology", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LabRadiologyListDto> LabRadiologyList = await _RadilogyService.GetListAsync1(objGrid);
@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.Radiology
 
 
         [HttpPost("LabRadiologyApproveList")]
-        //[Permission(PageCode = "Radiology", Permission = PagePermission.View)]
+        [Permission(PageCode = "Radiology", Permission = PagePermission.View)]
         public async Task<IActionResult> List1(GridRequestModel objGrid)
         {
             IPagedList<RadiologyApproveListDto> RadiologyApproveList = await _RadilogyService.ListAsync(objGrid);
@@ -52,8 +52,8 @@ namespace HIMS.API.Controllers.Radiology
         }
 
         [HttpPut("RadiologyUpdate/{id:int}")]
-        //[Permission(PageCode = "Radiology", Permission = PagePermission.Edit)]
-        [Permission]
+        [Permission(PageCode = "Radiology", Permission = PagePermission.Edit)]
+        //[Permission]
         public async Task <ApiResponse> Update(TRadiologyReportModel obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();
@@ -105,7 +105,8 @@ namespace HIMS.API.Controllers.Radiology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record verify successfully.");
         }
         [HttpPost("RadiologyUnverify")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> UnVerify(RadiologyUnVerifyModel obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();

@@ -27,7 +27,8 @@ namespace HIMS.API.Controllers.Masters
         }
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "Prefix", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Prefix", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             //var sessionId = Context.StoreId;
@@ -48,7 +49,8 @@ namespace HIMS.API.Controllers.Masters
         }
 
         [HttpPost]
-        [Permission(PageCode = "Prefix", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Prefix", Permission = PagePermission.Add)]
+        [Permission]
         public async Task<ApiResponse> Post(PrefixModel obj)
         {
             DbPrefixMaster model = obj.MapTo<DbPrefixMaster>();
@@ -65,7 +67,8 @@ namespace HIMS.API.Controllers.Masters
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "Prefix", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "Prefix", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Edit(PrefixModel obj)
         {
             DbPrefixMaster model = obj.MapTo<DbPrefixMaster>();
@@ -82,7 +85,8 @@ namespace HIMS.API.Controllers.Masters
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         [HttpDelete]
-        [Permission(PageCode = "Prefix", Permission = PagePermission.Delete)]
+        //[Permission(PageCode = "Prefix", Permission = PagePermission.Delete)]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             DbPrefixMaster model = await _repository.GetById(x => x.PrefixId == Id);
@@ -100,6 +104,7 @@ namespace HIMS.API.Controllers.Masters
         [HttpGet]
         [Route("get-prefixs")]
         //[Permission(PageCode = "Prefix", Permission = PagePermission.View)]
+        [Permission]
         public async Task<ApiResponse> GetDropdown()
         {
             var MDepartmentMasterList = await _repository.GetAll(x => x.IsActive.Value);
@@ -107,6 +112,7 @@ namespace HIMS.API.Controllers.Masters
         }
 
         [HttpGet("test-multiple-data")]
+        [Permission]
         public async Task<ApiResponse> GetTest()
         {
 

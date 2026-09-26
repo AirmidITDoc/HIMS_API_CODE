@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Services.Inventory;
@@ -22,6 +23,9 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("StorewiseCurrentStockList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
+
+
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<CurrentStockListDto> CurrentStockList = await _ICurrentStockService.CurrentStockList(objGrid);
@@ -29,6 +33,7 @@ namespace HIMS.API.Controllers.Inventory
         }
         [HttpPost("DayWiseCurrentStockList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> DList(GridRequestModel objGrid)
         {
             IPagedList<DayWiseCurrentStockDto> DayWiseCurrentStock = await _ICurrentStockService.DayWiseCurrentStockList(objGrid);
@@ -36,6 +41,7 @@ namespace HIMS.API.Controllers.Inventory
         }
         [HttpPost("ItemWiseSalesSummaryList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> IList(GridRequestModel objGrid)
         {
             IPagedList<ItemWiseSalesSummaryDto> ItemWiseSalesSummaryList = await _ICurrentStockService.ItemWiseSalesList(objGrid);
@@ -43,6 +49,7 @@ namespace HIMS.API.Controllers.Inventory
         }
         [HttpPost("IssueWiseItemSummaryList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> ItemSummaryList(GridRequestModel objGrid)
         {
             IPagedList<IssueWiseItemSummaryListDto> IssueWiseItemSummaryList = await _ICurrentStockService.IssueWiseItemSummaryList(objGrid);
@@ -54,6 +61,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("ItemMovementSummeryList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> ItemMovementSummeryList(GridRequestModel objGrid)
         {
             IPagedList<ItemMovementSummeryListDto> summaryList = await _ICurrentStockService.List(objGrid);
@@ -62,6 +70,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("BatchWiseList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> BatchWiseList(GridRequestModel objGrid)
         {
             IPagedList<BatchWiseListDto> BatchWiseList = await _ICurrentStockService.BList(objGrid);
@@ -70,6 +79,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("SalesList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> SalesList(GridRequestModel objGrid)
         {
             IPagedList<SalesListDto> BatchWiseList = await _ICurrentStockService.SList(objGrid);
@@ -81,6 +91,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("IssueSummaryList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> IssueSummaryList(GridRequestModel objGrid)
         {
             IPagedList<PharIssueCurrentSumryListDto> IssueSummaryList = await _ICurrentStockService.GetIssueSummaryList(objGrid);
@@ -90,6 +101,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("IssueDetailsList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> IssueDetailsList(GridRequestModel objGrid)
         {
             IPagedList<PharIssueCurrentDetListDto> IssueDetailsList = await _ICurrentStockService.GetIssueDetailsList(objGrid);
@@ -100,6 +112,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("SalesReturnSummaryList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> SalesReturnSummaryListDto(GridRequestModel objGrid)
         {
             IPagedList<SalesReturnSummaryListDto> SalesReturnSummaryList = await _ICurrentStockService.SalesReturnSummaryList(objGrid);
@@ -107,6 +120,7 @@ namespace HIMS.API.Controllers.Inventory
         }
         [HttpPost("SalesReturnDetailsList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> SalesReturnDetailsList(GridRequestModel objGrid)
         {
             IPagedList<SalesReturnDetailsListDto> IssueDetailsList = await _ICurrentStockService.SalesReturnDetailsList(objGrid);
@@ -117,6 +131,8 @@ namespace HIMS.API.Controllers.Inventory
         // Currebt stock Page --> Click On Issue Qty Button
         [HttpPost("SalesSummaryList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        
+        [Permission]
         public async Task<IActionResult> SalesSummaryList(GridRequestModel objGrid)
         {
             IPagedList<SalesSummaryListDto> SalesSummaryList = await _ICurrentStockService.SalesSummaryList(objGrid);
@@ -125,6 +141,7 @@ namespace HIMS.API.Controllers.Inventory
 
         [HttpPost("SalesDetailsList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> SalesDetailsList(GridRequestModel objGrid)
         {
             IPagedList<SalesDetailsListDto> SalesDetailsList = await _ICurrentStockService.SalesDetailsList(objGrid);

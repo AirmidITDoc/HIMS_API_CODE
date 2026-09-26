@@ -28,6 +28,7 @@ namespace HIMS.API.Controllers.Pathology
       
         [HttpPost("LabBillList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LabBrowsListDto> LabBillList = await _ILabBrowseList.GetLabListListAsync(objGrid);
@@ -35,6 +36,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("LabPaymentList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> PaymentList(GridRequestModel objGrid)
         {
             IPagedList<LabBrowsePaymentListDto> LabBillList = await _ILabBrowseList.GetLabPaymentListListAsync(objGrid);
@@ -43,6 +45,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("LabRefundList")]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> RefundList(GridRequestModel objGrid)
         {
             IPagedList<LabBrowseRefundListDto> LabBillList = await _ILabBrowseList.GetLabRefundListListAsync(objGrid);
