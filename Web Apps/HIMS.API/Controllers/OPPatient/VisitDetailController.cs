@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(AppVisitList.ToGridResponse(objGrid, "App Visit List"));
         }
         [HttpPost("Follow_up_List")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]/
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<IActionResult> FollowupList(GridRequestModel objGrid)
         {
             IPagedList<FollowupListDto> AppVisitList = await _visitDetailsService.FollowListAsync(objGrid);
@@ -184,7 +184,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("Update")]
         [Permission]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Update(AppointmentUpdate obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
