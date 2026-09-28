@@ -8,6 +8,7 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.DietKitchen;
 using HIMS.Data.Models;
 using HIMS.Services.DietKitchen;
 using HIMS.Services.DietkitchenMaster;
@@ -36,7 +37,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
         [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MFoodItemMaster> list = await _repository.GetAllPagedAsync(objGrid);
+            IPagedList<FoodItemListDto> list = await _FoodItemmasterService.GetFoodItemListAsync(objGrid);
             return Ok(list.ToGridResponse(objGrid, "Food Item List"));
         }
 

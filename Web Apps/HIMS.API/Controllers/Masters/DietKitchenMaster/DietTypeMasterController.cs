@@ -6,6 +6,7 @@ using HIMS.API.Models.Diet;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.DietKitchen;
 using HIMS.Data.Models;
 using HIMS.Services.DietkitchenMaster;
 using HIMS.Services.TrustMembershipRegistration;
@@ -32,7 +33,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MDietTypeMaster> DietTypeMasterList = await _repository.GetAllPagedAsync(objGrid);
+            IPagedList<DietTypeListDto> DietTypeMasterList = await _IDietTypeMasterService.GetDietTypeListAsync(objGrid);
             return Ok(DietTypeMasterList.ToGridResponse(objGrid, "DietTypeMaster List"));
         }
         //List API Get By Id

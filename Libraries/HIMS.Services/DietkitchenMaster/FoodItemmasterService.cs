@@ -1,13 +1,16 @@
-﻿using System;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.DietKitchen;
+using HIMS.Data.Models;
+//using HIMS.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HIMS.Core.Infrastructure;
-using HIMS.Data.Models;
 using System.Transactions;
-//using HIMS.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace HIMS.Services.DietkitchenMaster
 {
@@ -44,7 +47,7 @@ namespace HIMS.Services.DietkitchenMaster
 
         //    scope.Complete();
         //}
-    
+
         public virtual async Task InsertAsync(MFoodItemMaster ObjMFoodItemMaster, int UserId, string Username)
         {
             using var scope = new TransactionScope(
@@ -80,7 +83,7 @@ namespace HIMS.Services.DietkitchenMaster
             scope.Complete();
         }
 
-        public virtual async Task UpdateAsync(  MFoodItemMaster ObjMFoodItemMaster, int UserId,  string Username, string[]? ignoreColumns = null)
+        public virtual async Task UpdateAsync(MFoodItemMaster ObjMFoodItemMaster, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(
                 TransactionScopeOption.Required,
@@ -117,6 +120,11 @@ namespace HIMS.Services.DietkitchenMaster
             await _context.SaveChangesAsync();
 
             scope.Complete();
+        }
+
+        public virtual async Task<IPagedList<FoodItemListDto>> GetFoodItemListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<FoodItemListDto>(model, "ps_rtrv_foodItemList");
         }
     }
 
