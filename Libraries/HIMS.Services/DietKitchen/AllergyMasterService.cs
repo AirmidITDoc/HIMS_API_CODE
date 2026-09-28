@@ -1,5 +1,8 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.DietKitchen;
 using HIMS.Data.Models;
 using HIMS.Services.DietKitchen;
 using Microsoft.EntityFrameworkCore;
@@ -91,6 +94,11 @@ namespace HIMS.Services.DietkitchenMaster
             await _context.SaveChangesAsync();
 
             scope.Complete();
+        }
+
+        public virtual async Task<IPagedList<AllergyListDto>> GetAllergyListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<AllergyListDto>(model, "ps_Retrive_allergylist");
         }
     }
 }

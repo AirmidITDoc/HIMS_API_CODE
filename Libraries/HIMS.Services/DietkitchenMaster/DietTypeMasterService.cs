@@ -1,4 +1,7 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.DietKitchen;
 using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +13,7 @@ using System.Transactions;
 
 namespace HIMS.Services.DietkitchenMaster
 {
-    public  class DietTypeMasterService: IDietTypeMasterService
+    public class DietTypeMasterService : IDietTypeMasterService
     {
         private readonly Data.Models.HIMSDbContext _context;
         public DietTypeMasterService(HIMSDbContext HIMSDbContext)
@@ -31,7 +34,6 @@ namespace HIMS.Services.DietkitchenMaster
                 .Select(x => x.DietCode)
                 .ToListAsync();
 
-            // Strip prefix, parse numeric part, get max
             int lastSeqNo = dietCodes
                 .Select(x => int.TryParse(x.Substring(prefix.Length), out int number) ? number : 0)
                 .DefaultIfEmpty(0)
@@ -41,7 +43,6 @@ namespace HIMS.Services.DietkitchenMaster
 
             OBJMDietTypeMaster.DietCode = prefix + newSeqNo.ToString("D2");
 
-            // Get max DisplayOrder and increment
             int lastDisplayOrder = await _context.MDietTypeMasters
                 .Select(x => (int?)x.DisplayOrder)
                 .MaxAsync() ?? 0;
@@ -57,6 +58,7 @@ namespace HIMS.Services.DietkitchenMaster
 
             scope.Complete();
         }
+
         public virtual async Task UpdateAsync(MDietTypeMaster OBJMDietTypeMaster, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required,
@@ -83,6 +85,12 @@ namespace HIMS.Services.DietkitchenMaster
             await _context.SaveChangesAsync();
 
             scope.Complete();
+        }
+
+        
+        public virtual async Task<IPagedList<DietTypeListDto>> GetDietTypeListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DietTypeListDto>(model, "ps_rtrv_dietTypeList");
         }
     }
 }
