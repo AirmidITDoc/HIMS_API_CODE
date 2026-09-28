@@ -8,6 +8,6 @@
         public string? Description { get; set; }
         public long? DietTypesId { get; set; }
         public bool? Active { get; set; }
-        public string? DietName { get; set; } // Stored procedure madhla join kelela column
+        public string? DietName { get; set; } 
     }
 }
