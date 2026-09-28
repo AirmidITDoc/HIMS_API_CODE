@@ -38,4 +38,8 @@
     <None Include="D:\AIRID\Libraries\HIMS.Services\Inventory\.editorconfig" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Nursing\IPEMR\" />
+  </ItemGroup>
+
 </Project>

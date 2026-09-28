@@ -1748,6 +1748,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AddedByDate).HasColumnType("datetime");
 
+                entity.Property(e => e.CarePlanTitle).HasMaxLength(100);
+
                 entity.Property(e => e.ClaimNumber)
                     .HasMaxLength(50)
                     .IsFixedLength();
@@ -1767,6 +1769,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DischargeSummaryTime).HasColumnType("datetime");
 
                 entity.Property(e => e.DoctorAssistantName).HasMaxLength(100);
+
+                entity.Property(e => e.FollowUpDescription).HasMaxLength(255);
+
+                entity.Property(e => e.FollowUpReason).HasMaxLength(255);
 
                 entity.Property(e => e.Followupdate).HasColumnType("datetime");
 
@@ -7917,6 +7923,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.DoseName).HasMaxLength(10);
+
+                entity.Property(e => e.DrugDescription).HasMaxLength(255);
 
                 entity.Property(e => e.DrugTypeName).HasMaxLength(100);
 
