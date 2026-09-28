@@ -21,7 +21,7 @@ namespace HIMS.API.Models.Nursing.IPEMR
         public string? DrugAllergy { get; set; }
         public string? AllergyRemark { get; set; }
 
-        
+
         public List<EMRDiagnosisInfoModel> TIpEmrdiagnosisInfos { get; set; }
         public List<EMRDignosisHistoryModel> TIpEmrdignosisHistories { get; set; }
         public List<EMRFamilyMedicalHistoryModel> TIpEmrfamilyMedicalHistories { get; set; }
@@ -56,6 +56,8 @@ namespace HIMS.API.Models.Nursing.IPEMR
     {
         public long FhistId { get; set; }
         public long IpEmrId { get; set; }
+        public long? RegId { get; set; }
+        public byte? OpIpType { get; set; }
         public long AdmissionId { get; set; }
         public long RelationshipId { get; set; }
         public string MemberName { get; set; } = null!;

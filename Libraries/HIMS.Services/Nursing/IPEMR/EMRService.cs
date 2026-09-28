@@ -16,111 +16,71 @@ namespace HIMS.Services.Nursing.IPEMR
 
         public async Task<TIpEmrhistory?> GetByIdAsync(long id)
         {
-            return await _context.TIpEmrhistories
-                .Include(x => x.TIpEmrdiagnosisInfos)
-                .Include(x => x.TIpEmrdignosisHistories)
-                .Include(x => x.TIpEmrfamilyMedicalHistory)
-                .FirstOrDefaultAsync(x => x.IpdEmrId == id);
+            return await _context.TIpEmrhistories.Include(x => x.TIpEmrdiagnosisInfos).Include(x => x.TIpEmrdignosisHistories).Include(x => x.TIpEmrfamilyMedicalHistories).FirstOrDefaultAsync(x => x.IpdEmrId == id);
         }
 
-        public virtual async Task InsertAsync(TIpEmrhistory objEMR, int userId, string username)
+
+        public virtual async Task InsertAsync(TIpEmrhistory objEMR, int UserId, string Username)
         {
-            using var scope = new TransactionScope(
-                TransactionScopeOption.Required,
-                new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },
-                TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
-            objEMR.CreatedBy = userId;
-            objEMR.CreatedDate = AppTime.Now;
-
-            foreach (var item in objEMR.TIpEmrdiagnosisInfos)
             {
-                item.CreatedBy = userId;
-                item.CreatedDate = AppTime.Now;
+                objEMR.CreatedBy = UserId;
+                objEMR.CreatedDate = AppTime.Now;
+
+                _context.TIpEmrhistories.Add(objEMR);
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
+
+
+                scope.Complete();
             }
-
-            foreach (var item in objEMR.TIpEmrdignosisHistories)
-            {
-                item.CreatedBy = userId;
-                item.CreatedDate = AppTime.Now;
-            }
-
-            if (objEMR.TIpEmrfamilyMedicalHistory != null)
-            {
-                objEMR.TIpEmrfamilyMedicalHistory.Fhist = objEMR;
-                
-                objEMR.TIpEmrfamilyMedicalHistory.CreatedBy = userId;
-                objEMR.TIpEmrfamilyMedicalHistory.CreatedDate = AppTime.Now;
-            }
-
-            _context.TIpEmrhistories.Add(objEMR);
-            await _context.SaveChangesAsync(); 
-
-            scope.Complete();
         }
 
-        public virtual async Task UpdateAsync(TIpEmrhistory objEMR, int userId, string username, string[]? ignoreColumns = null)
+        public virtual async Task UpdateAsync(TIpEmrhistory objEMR, int UserId, string Username, string[]? ignoreColumns = null)
         {
-            using var scope = new TransactionScope(
-                TransactionScopeOption.Required,
-                new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },
-                TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
-            long emrId = objEMR.IpdEmrId;
 
-            var lstDiagnosisInfo = await _context.TIpEmrdiagnosisInfos.Where(x => x.Ipemrid == emrId).ToListAsync();
-            if (lstDiagnosisInfo.Any()) _context.TIpEmrdiagnosisInfos.RemoveRange(lstDiagnosisInfo);
-
-            var lstDiagnosisHistory = await _context.TIpEmrdignosisHistories.Where(x => x.Ipemrid == emrId).ToListAsync();
-            if (lstDiagnosisHistory.Any()) _context.TIpEmrdignosisHistories.RemoveRange(lstDiagnosisHistory);
-
-            var famHistory = await _context.TIpEmrfamilyMedicalHistories.Where(x => x.IpEmrId == emrId).ToListAsync();
-            if (famHistory.Any()) _context.TIpEmrfamilyMedicalHistories.RemoveRange(famHistory);
-
-            await _context.SaveChangesAsync();
-
-            _context.Attach(objEMR);
-            _context.Entry(objEMR).State = EntityState.Modified;
-
-            _context.Entry(objEMR).Property(x => x.CreatedBy).IsModified = false;
-            _context.Entry(objEMR).Property(x => x.CreatedDate).IsModified = false;
-
-            objEMR.ModifiedBy = userId;
-            objEMR.ModifiedDate = AppTime.Now;
-
-            foreach (var item in objEMR.TIpEmrdiagnosisInfos)
             {
-                item.CreatedBy = userId;
-                item.CreatedDate = AppTime.Now;
-                item.ModifiedBy = userId;
-                item.ModifiedDate = AppTime.Now;
-            }
+                long IpdEmrId = objEMR.IpdEmrId;
 
-            foreach (var item in objEMR.TIpEmrdignosisHistories)
-            {
-                item.CreatedBy = userId;
-                item.CreatedDate = AppTime.Now;
-                item.ModifiedBy = userId;
-                item.ModifiedDate = AppTime.Now;
-            }
+                // Delete related details first
+                var lstAttend = await _context.TIpEmrdiagnosisInfos.Where(x => x.IpemrdiagnId == IpdEmrId).ToListAsync();
+                if (lstAttend.Any())
+                    _context.TIpEmrdiagnosisInfos.RemoveRange(lstAttend);
 
-            if (objEMR.TIpEmrfamilyMedicalHistory != null)
-            {
-                objEMR.TIpEmrfamilyMedicalHistory.Fhist = objEMR;
-                objEMR.TIpEmrfamilyMedicalHistory.CreatedBy = userId;
-                objEMR.TIpEmrfamilyMedicalHistory.CreatedDate = AppTime.Now;
-                objEMR.TIpEmrfamilyMedicalHistory.ModifiedBy = userId;
-                objEMR.TIpEmrfamilyMedicalHistory.ModifiedDate = AppTime.Now;
-            }
 
-            if (ignoreColumns?.Length > 0)
-            {
-                foreach (var column in ignoreColumns)
-                    _context.Entry(objEMR).Property(column).IsModified = false;
-            }
+                var lstSurgery = await _context.TIpEmrdignosisHistories.Where(x => x.EmrdignId == IpdEmrId).ToListAsync();
+                if (lstSurgery.Any())
+                    _context.TIpEmrdignosisHistories.RemoveRange(lstSurgery);
 
-            await _context.SaveChangesAsync(); 
-            scope.Complete();
+                var lstDiagnosis = await _context.TIpEmrfamilyMedicalHistories.Where(x => x.FhistId == IpdEmrId).ToListAsync();
+                if (lstDiagnosis.Any())
+                    _context.TIpEmrfamilyMedicalHistories.RemoveRange(lstDiagnosis);
+
+                //Save deletion first
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
+
+                // Then attach and update header
+                _context.Attach(objEMR);
+                _context.Entry(objEMR).State = EntityState.Modified;
+
+                _context.Entry(objEMR).Property(x => x.CreatedBy).IsModified = false;
+                _context.Entry(objEMR).Property(x => x.CreatedDate).IsModified = false;
+
+                objEMR.ModifiedBy = UserId;
+                objEMR.ModifiedDate = AppTime.Now;
+
+                if (ignoreColumns?.Length > 0)
+                {
+                    foreach (var column in ignoreColumns)
+                        _context.Entry(objEMR).Property(column).IsModified = false;
+                }
+
+                await _context.SaveChangesAsync(UserId, Username);       // fixed
+
+                scope.Complete();
+            }
         }
     }
 }

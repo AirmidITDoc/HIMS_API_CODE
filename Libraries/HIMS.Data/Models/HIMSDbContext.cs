@@ -14666,8 +14666,6 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_IP_EMRFamilyMedicalHistory");
 
-                entity.Property(e => e.FhistId).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.ClinicalHistory).HasMaxLength(255);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -14678,9 +14676,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Summary).HasMaxLength(255);
 
-                entity.HasOne(d => d.Fhist)
-                    .WithOne(p => p.TIpEmrfamilyMedicalHistory)
-                    .HasForeignKey<TIpEmrfamilyMedicalHistory>(d => d.FhistId)
+                entity.HasOne(d => d.IpEmr)
+                    .WithMany(p => p.TIpEmrfamilyMedicalHistories)
+                    .HasForeignKey(d => d.IpEmrId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_T_IP_EMRFamilyMedicalHistory_T_IP_EMRHistory");
             });
