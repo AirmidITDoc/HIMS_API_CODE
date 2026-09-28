@@ -14,12 +14,8 @@ namespace HIMS.Services.DietKitchen
     public partial interface IDietMenuMasterService
     {
         Task<IPagedList<DietmenuDetailmasterListDto>> GetDietmenumasterDetailsList(GridRequestModel objGrid);
-
         Task<IPagedList<DietmenumasterListDto>> GetDietmenumasterList(GridRequestModel objGrid);
-
-        Task InsertAsync(MDietMenuMaster ObjMDietMenuMaster, int UserId, string Username);
-
-        //Task UpdateAsync(MDietMenuMaster model, int currentUserId, string currentUserName, string[]? ignoreColumns = null);
-        Task UpdateSP(MDietMenuMaster model, List<MDietMenuDetailMaster> prescription, int currentUserId, string currentUserName);
+        Task InsertAsync(MDietMenuMaster ObjHeader, List<MDietMenuDetailMaster> ObjDetailList, int CurrentUserId, string CurrentUserName);
+        Task UpdateAsync(MDietMenuMaster ObjHeader, List<MDietMenuDetailMaster> ObjDetailList, int CurrentUserId, string CurrentUserName);
     }
 }

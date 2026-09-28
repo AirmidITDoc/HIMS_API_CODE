@@ -974,6 +974,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<MDietMenuMaster, DietmenumasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MDietMenuDetailMaster, DietmenumasterDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<MDietMenuMaster, DietmenumasterUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
