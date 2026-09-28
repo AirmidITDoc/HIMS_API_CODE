@@ -21,6 +21,7 @@ using HIMS.API.Models.Marketing;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.MRD;
 using HIMS.API.Models.Nursing;
+using HIMS.API.Models.Nursing.IPEMR;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OTManagement;
 using HIMS.API.Models.OutPatient;
@@ -231,6 +232,11 @@ namespace HIMS.API.Infrastructure
             CreateMap<DoctorMaster, DoctorModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MFoodCategoryMaster, FoodCategorymasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MMealTypeMaster, MealTypeMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            CreateMap<EMRModel, TIpEmrhistory>().ReverseMap();
+            CreateMap<EMRDiagnosisInfoModel, TIpEmrdiagnosisInfo>().ReverseMap();
+            CreateMap<EMRDignosisHistoryModel, TIpEmrdignosisHistory>().ReverseMap();
+            CreateMap<EMRFamilyMedicalHistoryModel, TIpEmrfamilyMedicalHistory>().ReverseMap();
 
 
 
