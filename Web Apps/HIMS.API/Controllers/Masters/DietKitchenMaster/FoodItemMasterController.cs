@@ -75,26 +75,6 @@ namespace HIMS.API.Controllers.Masters.DietMaster
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
-        //// Edit / Update API
-        //[HttpPut("{id:int}")]
-        ////[Permission(PageCode = "DietMaster", Permission = PagePermission.Edit)]
-        //public async Task<ApiResponse> Edit(FoodItemMasterModel obj)
-        //{
-        //    MFoodItemMaster model = obj.MapTo<MFoodItemMaster>();
-        //    model.Active = true; 
-        //    if (obj.FoodItemId == 0)
-        //    {
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    }
-        //    else
-        //    {
-        //        model.ModifiedBy = CurrentUserId;
-        //        model.ModifiedDate = AppTime.Now;
-        //        await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-        //    }
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
-        //}
-
 
         [HttpPut("Edit/{id:int}")]
         [Permission]
