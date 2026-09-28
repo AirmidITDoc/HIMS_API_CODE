@@ -72,10 +72,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\NursingStation\IPEMR\" />
     <Folder Include="DbData\" />
     <Folder Include="Models\Masters\NewFolder\" />
-    <Folder Include="Models\Nursing\IPEMR\" />
   </ItemGroup>
 
   <ItemGroup>
