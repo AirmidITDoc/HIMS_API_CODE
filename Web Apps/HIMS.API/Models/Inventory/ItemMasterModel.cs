@@ -45,6 +45,9 @@ namespace HIMS.API.Models.Inventory
         public string? Content { get; set; }
         public bool IsValidContent { get; set; }
         public string? LocalLanguageName { get; set; }
+        public string? DrugDescription { get; set; }
+        public long? RouteId { get; set; }
+        public bool? IsBrand { get; set; }
 
 
 
