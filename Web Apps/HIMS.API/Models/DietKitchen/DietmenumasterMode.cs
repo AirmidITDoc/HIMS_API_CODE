@@ -24,11 +24,11 @@ namespace HIMS.API.Models.DietKitchen
         public DietmenumasterModelValidator()
         {
             RuleFor(x => x.DietMenuName).NotNull().NotEmpty().WithMessage("DietMenuName is required");
-            RuleFor(x => x.MealTypeId).NotNull().NotEmpty().WithMessage("MealTypeId is required");
-            RuleFor(x => x.DietTypeId).NotNull().NotEmpty().WithMessage("DietTypeId is required");
-            RuleFor(x => x.Texture).NotNull().NotEmpty().WithMessage("Texture is required");
-            RuleFor(x => x.Calories).NotNull().NotEmpty().WithMessage("Calories is required");
-            RuleFor(x => x.Protein).NotNull().NotEmpty().WithMessage("Protein is required");
+            //RuleFor(x => x.MealTypeId).NotNull().NotEmpty().WithMessage("MealTypeId is required");
+            //RuleFor(x => x.DietTypeId).NotNull().NotEmpty().WithMessage("DietTypeId is required");
+            //RuleFor(x => x.Texture).NotNull().NotEmpty().WithMessage("Texture is required");
+            //RuleFor(x => x.Calories).NotNull().NotEmpty().WithMessage("Calories is required");
+            //RuleFor(x => x.Protein).NotNull().NotEmpty().WithMessage("Protein is required");
 
 
         }
@@ -49,8 +49,8 @@ namespace HIMS.API.Models.DietKitchen
     {
         public DietmenumasterDetailsModelValidator()
         {
-            RuleFor(x => x.Quantity).NotNull().NotEmpty().WithMessage("Quantity is required");
-            RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId is required");
+            //RuleFor(x => x.Quantity).NotNull().NotEmpty().WithMessage("Quantity is required");
+            //RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId is required");
 
 
         }

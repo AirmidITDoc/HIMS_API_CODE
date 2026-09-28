@@ -73,6 +73,15 @@ namespace HIMS.Data.DTO.OPPatient
         public DateTime? RegDate { get; set; }
         public DateTime? RegTime { get; set; }
         public string? EmrgencyMobile { get; set; }
+        public string? WConsultDoctorName { get; set; }
+        public string? HConsultDoctorName { get; set; }
+        public string? wConsultDoctorContact { get; set; }
+        public string? hConsultDoctorContact { get; set; }
+        public DateTime? HdeathDate { get; set; }
+        public DateTime? WdeathDate { get; set; }
+
+
+
 
 
 
