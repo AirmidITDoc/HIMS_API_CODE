@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.IPPatient
             _repository4 = repository5;
 
         }
-        [HttpGet("{id?}")]
+        //[HttpGet("{id?}")]
         //[Permission(PageCode = "OTRequest", Permission = PagePermission.View)]
         [HttpGet("{id?}")]
         public async Task<ApiResponse> Get(int id)
