@@ -1748,6 +1748,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.AddedByDate).HasColumnType("datetime");
 
+                entity.Property(e => e.CarePlanTitle).HasMaxLength(100);
+
                 entity.Property(e => e.ClaimNumber)
                     .HasMaxLength(50)
                     .IsFixedLength();
@@ -1767,6 +1769,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DischargeSummaryTime).HasColumnType("datetime");
 
                 entity.Property(e => e.DoctorAssistantName).HasMaxLength(100);
+
+                entity.Property(e => e.FollowUpDescription).HasMaxLength(255);
+
+                entity.Property(e => e.FollowUpReason).HasMaxLength(255);
 
                 entity.Property(e => e.Followupdate).HasColumnType("datetime");
 
@@ -7917,6 +7923,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.DoseName).HasMaxLength(10);
+
+                entity.Property(e => e.DrugDescription).HasMaxLength(255);
 
                 entity.Property(e => e.DrugTypeName).HasMaxLength(100);
 
@@ -14658,8 +14666,6 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_IP_EMRFamilyMedicalHistory");
 
-                entity.Property(e => e.FhistId).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.ClinicalHistory).HasMaxLength(255);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -14670,9 +14676,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Summary).HasMaxLength(255);
 
-                entity.HasOne(d => d.Fhist)
-                    .WithOne(p => p.TIpEmrfamilyMedicalHistory)
-                    .HasForeignKey<TIpEmrfamilyMedicalHistory>(d => d.FhistId)
+                entity.HasOne(d => d.IpEmr)
+                    .WithMany(p => p.TIpEmrfamilyMedicalHistories)
+                    .HasForeignKey(d => d.IpEmrId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_T_IP_EMRFamilyMedicalHistory_T_IP_EMRHistory");
             });

@@ -9,6 +9,7 @@ namespace HIMS.Data.Models
         {
             TIpEmrdiagnosisInfos = new HashSet<TIpEmrdiagnosisInfo>();
             TIpEmrdignosisHistories = new HashSet<TIpEmrdignosisHistory>();
+            TIpEmrfamilyMedicalHistories = new HashSet<TIpEmrfamilyMedicalHistory>();
         }
 
         public long IpdEmrId { get; set; }
@@ -31,8 +32,8 @@ namespace HIMS.Data.Models
         public long? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
 
-        public virtual TIpEmrfamilyMedicalHistory TIpEmrfamilyMedicalHistory { get; set; } = null!;
         public virtual ICollection<TIpEmrdiagnosisInfo> TIpEmrdiagnosisInfos { get; set; }
         public virtual ICollection<TIpEmrdignosisHistory> TIpEmrdignosisHistories { get; set; }
+        public virtual ICollection<TIpEmrfamilyMedicalHistory> TIpEmrfamilyMedicalHistories { get; set; }
     }
 }

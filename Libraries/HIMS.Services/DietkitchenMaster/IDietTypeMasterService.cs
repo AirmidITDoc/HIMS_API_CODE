@@ -1,4 +1,6 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.DietKitchen;
+using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,7 @@ namespace HIMS.Services.DietkitchenMaster
     {
         Task InsertAsync(MDietTypeMaster ObjMDietTypeMaster, int UserId, string Username);
         Task UpdateAsync(MDietTypeMaster ObjMDietTypeMaster, int UserId, string Username, string[]? ignoreColumns = null);
+        Task<IPagedList<DietTypeListDto>> GetDietTypeListAsync(GridRequestModel model);
 
 
     }

@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.DietKitchen;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
+using HIMS.API.Models.MRD;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
@@ -53,81 +54,48 @@ namespace HIMS.API.Controllers.Masters.DietMaster
             return Ok(List1.ToGridResponse(objGrid, "Diet Menu master details  List"));
         }
 
+       
         [HttpPost("Insert")]
         [Permission]
-        public async Task<ApiResponse> Insert(DietmenumasterModel obj)
-        {
-            MDietMenuMaster model = obj.MapTo<MDietMenuMaster>();
-
-            if (obj.DietMenuId == 0)
-            {
-                if (model.MDietMenuDetailMasters != null)
-                {
-                    foreach (var q in model.MDietMenuDetailMasters)
-                    {
-                        q.CreatedBy = CurrentUserId;
-                        q.CreatedDate = AppTime.Now;
-                    }
-                }
-
-                model.CreatedDate = AppTime.Now;
-                model.CreatedBy = CurrentUserId;
-                model.ModifiedDate = AppTime.Now;
-                model.ModifiedBy = CurrentUserId;
-
-                await _DietMenuMasterService.InsertAsync( model,CurrentUserId,CurrentUserName);
-
-                return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "Record added successfully.");
-            }
-
-            return ApiResponseHelper.GenerateResponse(
-                ApiStatusCode.Status500InternalServerError,
-                "Invalid params");
-        }
-
-
-        //[HttpPut("Edit/{id:int}")]
-        //public async Task<ApiResponse> Edit(DietmenumasterModel obj)
-        //{
-        //    if (obj.DietMenuId == 0)
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-
-        //    MDietMenuMaster model = obj.MapTo<MDietMenuMaster>();
-
-
-        //    foreach (var q in model.MDietMenuDetailMasters)
-        //    {
-        //        q.MenuDetId = 0;
-        //     //   q.OrderDate = AppTime.Now;
-        //    }
-
-        //    model.ModifiedDate = AppTime.Now;
-        //    model.ModifiedBy = CurrentUserId;
-
-        //    await _DietMenuMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.DietMenuId);
-        //}
-
-        [HttpPut("Edit/{id:int}")]
-        // [Permission(PageCode = "DischargeSum", Permission = PagePermission.Edit)]
-        public async Task<ApiResponse> UPDATESP(DietmenumasterModels obj)
+        public async Task<ApiResponse> Insert(DietmenumasterModels obj)
 
         {
             MDietMenuMaster model = obj.Dietmenumaster.MapTo<MDietMenuMaster>();
-            List<MDietMenuDetailMaster> Prescription = obj.MDietMenuDetailMasters.MapTo<List<MDietMenuDetailMaster>>();
+            List<MDietMenuDetailMaster> ObjDietMenuDetailMasters = obj.DietMenuDetailMasters.MapTo<List<MDietMenuDetailMaster>>();
 
-            if (obj.Dietmenumaster.DietMenuId != 0)
+
+            if (model.DietMenuId == 0)
             {
-                //model.OpDate = Convert.ToDateTime(obj.DischargModel.OpDate);
-                //model.Optime = Convert.ToDateTime(obj.DischargModel.Optime);
-                //model.AddedBy = CurrentUserId;
-
-                await _DietMenuMasterService.UpdateSP(model, Prescription, CurrentUserId, CurrentUserName);
+                model.CreatedBy = CurrentUserId;
+                await _DietMenuMasterService.InsertAsync(model, ObjDietMenuDetailMasters, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Update successfully.", Prescription);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.DietMenuId);
+        }
+
+
+
+       
+        [HttpPut("Edit/{id:int}")]
+        [Permission]
+        public async Task<ApiResponse> Edit(int id, DietmenumasterUpdateModels obj)
+        {
+            MDietMenuMaster model = obj.Dietmenumaster.MapTo<MDietMenuMaster>();
+            List<MDietMenuDetailMaster> ObjDietMenuDetailMasters = obj.DietMenuDetailMasters.MapTo<List<MDietMenuDetailMaster>>();
+
+            model.DietMenuId = id;
+
+            if (model.DietMenuId != 0)
+            {
+                model.ModifiedBy = CurrentUserId;
+
+                await _DietMenuMasterService.UpdateAsync(model, ObjDietMenuDetailMasters, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.DietMenuId);
         }
     }
 
