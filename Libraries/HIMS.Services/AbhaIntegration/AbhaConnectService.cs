@@ -184,6 +184,7 @@ namespace HIMS.Services.AbhaIntegration
                 {
                     PatientRegistrationNumber = patientRow["PatientRegistrationNumber"].ToString(),
                     FirstName = patientRow["FirstName"].ToString(),
+                    MiddleName = patientRow["MiddleName"].ToString(),
                     LastName = patientRow["LastName"].ToString(),
                     Gender = patientRow["Gender"].ToString(),
                     Mobile = patientRow["Mobile"].ToString(),
@@ -256,20 +257,33 @@ namespace HIMS.Services.AbhaIntegration
                         }
                     },
 
-                    Diagnosis = new List<Diagnosis>(),
-                    ChiefComplaints = new List<ChiefComplaint>(),
-                    Prescriptions = new List<Prescription>(),
-                    DiagnosticReports = new List<DiagnosticReport>(),
-                    DischargeSummaries = new List<DischargeSummaryItem>(),
-                    ObservationResult = new List<ObservationResult>(),
-                    AllergiesData = new List<AllergyData>(),
-                    PhysicalExams = new List<PhysicalExam>(),
-                    InvoiceRecord = new List<InvoiceRecord>(),
-                    Procedures = new List<Procedure>(),
-                    FamilyMedicalHistory = new List<FamilyMedicalHistory>(),
-                    CarePlan = new List<CarePlan>(),
-                    Reports = new List<Reports>(),
-                    FollowUp = null
+                    //Diagnosis = new List<Diagnosis>(),
+                    //ChiefComplaints = new List<ChiefComplaint>(),
+                    //Prescriptions = new List<Prescription>(),
+                    //DiagnosticReports = new List<DiagnosticReport>(),
+                    //DischargeSummaries = new List<DischargeSummaryItem>(),
+                    //ObservationResult = new List<ObservationResult>(),
+                    //AllergiesData = new List<AllergyData>(),
+                    //PhysicalExams = new List<PhysicalExam>(),
+                    //InvoiceRecord = new List<InvoiceRecord>(),
+                    //Procedures = new List<Procedure>(),
+                    //FamilyMedicalHistory = new List<FamilyMedicalHistory>(),
+                    //CarePlan = new List<CarePlan>(),
+                    //Reports = new List<Reports>(),
+                    //FollowUp = null
+                    Diagnosis = null,
+                    ChiefComplaints = null,
+                    Prescriptions = null,
+                    DiagnosticReports = null,
+                    DischargeSummaries = null,
+                    ObservationResult = null,
+                    AllergiesData = null,
+                    PhysicalExams = null,
+                    InvoiceRecord = null,
+                    Procedures = null,
+                    FamilyMedicalHistory = null,
+                    CarePlan = null,
+                    Reports = null,
                 };
 
                 response.Visits.Add(visit);
@@ -309,6 +323,7 @@ namespace HIMS.Services.AbhaIntegration
                 prescriptionDs.Tables.Count > 0 &&
                 prescriptionDs.Tables[0].Rows.Count > 0)
             {
+                response.Visits[0].Diagnosis = new List<Diagnosis>();
                 foreach (DataRow row in prescriptionDs.Tables[0].Rows)
                 {
                     response.Visits[0].Diagnosis.Add(new Diagnosis
@@ -344,6 +359,7 @@ namespace HIMS.Services.AbhaIntegration
                 prescriptionDs.Tables.Count > 1 &&
                 prescriptionDs.Tables[1].Rows.Count > 0)
             {
+                response.Visits[0].ChiefComplaints = new List<ChiefComplaint>();
                 foreach (DataRow row in prescriptionDs.Tables[1].Rows)
                 {
                     response.Visits[0].ChiefComplaints.Add(new ChiefComplaint
@@ -379,6 +395,7 @@ namespace HIMS.Services.AbhaIntegration
                 prescriptionDs.Tables.Count > 2 &&
                 prescriptionDs.Tables[2].Rows.Count > 0)
             {
+                response.Visits[0].Prescriptions = new List<Prescription>();
                 foreach (DataRow row in prescriptionDs.Tables[2].Rows)
                 {
                     response.Visits[0].Prescriptions.Add(new Prescription
@@ -491,11 +508,12 @@ namespace HIMS.Services.AbhaIntegration
                 }
             );
 
-            response.Visits[0].DiagnosticReports = new List<DiagnosticReport>();
-            response.Visits[0].DischargeSummaries = new List<DischargeSummaryItem>();
+           
+            
 
             if (diagnosticDs != null && diagnosticDs.Tables.Count > 0 && diagnosticDs.Tables[0].Rows.Count > 0)
             {
+                response.Visits[0].DiagnosticReports = new List<DiagnosticReport>();
                 var groupedByTest = diagnosticDs.Tables[0].AsEnumerable()
                     .GroupBy(row => row["DiagnosticCode"].ToString());
 
@@ -725,6 +743,7 @@ namespace HIMS.Services.AbhaIntegration
 
             if (diagnosticDs != null && diagnosticDs.Tables.Count > 1 && diagnosticDs.Tables[1].Rows.Count > 0)
             {
+                response.Visits[0].DischargeSummaries = new List<DischargeSummaryItem>();
                 foreach (DataRow row in diagnosticDs.Tables[1].Rows)
                 {
                     string dischargeSummary = System.Text.RegularExpressions.Regex.Replace(
@@ -883,10 +902,13 @@ namespace HIMS.Services.AbhaIntegration
         }
         private List<Reports> GetReports(DataTable table)
         {
-            List<Reports> reports = new();
+
 
             if (table == null || table.Rows.Count == 0)
-                return reports;
+                //return reports;
+                return null;
+
+            List<Reports> reports = new();
 
             foreach (DataRow row in table.Rows)
             {
@@ -903,11 +925,13 @@ namespace HIMS.Services.AbhaIntegration
         }
         private List<CarePlan> GetCarePlan(DataTable table, string hipId)
         {
-            List<CarePlan> carePlans = new();
+           
 
             if (table == null || table.Rows.Count == 0)
-                return carePlans;
+                //return carePlans;
+                return null;
 
+            List<CarePlan> carePlans = new();
             foreach (DataRow row in table.Rows)
             {
                 carePlans.Add(new CarePlan
@@ -941,11 +965,14 @@ namespace HIMS.Services.AbhaIntegration
         }
         private List<FamilyMedicalHistory> GetFamilyMedicalHistory(DataTable table, string hipId)
         {
-            List<FamilyMedicalHistory> history = new();
+          
 
             if (table == null || table.Rows.Count == 0)
-                return history;
+                //return history;
+                return null;
 
+
+            List<FamilyMedicalHistory> history = new();
             foreach (DataRow row in table.Rows)
             {
                 history.Add(new FamilyMedicalHistory
@@ -1020,11 +1047,12 @@ namespace HIMS.Services.AbhaIntegration
         }
         private List<Procedure> GetProcedures(DataTable table, string hipId)
         {
-            List<Procedure> procedures = new();
+         
 
             if (table == null || table.Rows.Count == 0)
-                return procedures;
-
+                //return procedures;
+                return null;
+            List<Procedure> procedures = new();
             foreach (DataRow row in table.Rows)
             {
                 procedures.Add(new Procedure
@@ -1070,16 +1098,18 @@ namespace HIMS.Services.AbhaIntegration
         }
         private List<InvestigationAdvice> GetInvestigationAdvice(DataTable table, string hipId)
         {
-            List<InvestigationAdvice> investigationAdvice = new();
+
 
             if (table == null || table.Rows.Count == 0)
-                return investigationAdvice;
+                //return investigationAdvice;
+                return null;
 
+            List<InvestigationAdvice> investigationAdvice = new();
             foreach (DataRow row in table.Rows)
             {
                 investigationAdvice.Add(new InvestigationAdvice
                 {
-                    investigation = new CodeableConcept
+                    referralCode = new CodeableConcept
                     {
                         text = row["InvestigationText"].ToString(),
 
@@ -1102,16 +1132,18 @@ namespace HIMS.Services.AbhaIntegration
         }
         private List<Referral> GetReferrals(DataTable table, string hipId)
         {
-            List<Referral> referrals = new();
+
 
             if (table == null || table.Rows.Count == 0)
-                return referrals;
+                //return referrals;
+                return null;
 
+            List<Referral> referrals = new();
             foreach (DataRow row in table.Rows)
             {
                 referrals.Add(new Referral
                 {
-                    referral = new CodeableConcept
+                    referralCode = new CodeableConcept
                     {
                         text = row["ReferralText"].ToString(),
 
@@ -1134,11 +1166,13 @@ namespace HIMS.Services.AbhaIntegration
         }
         private List<MedicalHistory> GetMedicalHistory(DataTable table, string hipId)
         {
-            List<MedicalHistory> medicalHistory = new();
+
 
             if (table == null || table.Rows.Count == 0)
-                return medicalHistory;
+                //return medicalHistory;
+                return null;
 
+            List<MedicalHistory> medicalHistory = new();
             foreach (DataRow row in table.Rows)
             {
                 medicalHistory.Add(new MedicalHistory
@@ -1167,11 +1201,13 @@ namespace HIMS.Services.AbhaIntegration
         }
         private List<AllergyData> GetAllergiesData(DataTable table, string hipId)
         {
-            List<AllergyData> allergies = new();
+
 
             if (table == null || table.Rows.Count == 0)
-                return allergies;
+                //return allergies;
+                return null;
 
+            List<AllergyData> allergies = new();
             foreach (DataRow row in table.Rows)
             {
                 allergies.Add(new AllergyData
@@ -1224,11 +1260,12 @@ namespace HIMS.Services.AbhaIntegration
         }
         private List<PhysicalExam> GetPhysicalExams(DataTable table)
         {
-            List<PhysicalExam> physicalExams = new();
+          
 
             if (table == null || table.Rows.Count == 0)
-                return physicalExams;
-
+                //return physicalExams;
+                return null;
+            List<PhysicalExam> physicalExams = new();
             foreach (DataRow row in table.Rows)
             {
                 physicalExams.Add(new PhysicalExam
@@ -1241,11 +1278,12 @@ namespace HIMS.Services.AbhaIntegration
         }
         private List<InvoiceRecord> GetInvoiceRecords(DataTable table, string hipId)
         {
-            List<InvoiceRecord> invoices = new();
+         
 
             if (table == null || table.Rows.Count == 0)
-                return invoices;
-
+                // return invoices;
+                return null;
+            List<InvoiceRecord> invoices = new();
             var invoiceGroups = table.AsEnumerable()
                 .GroupBy(row => row["BillNo"].ToString());
 
@@ -1317,11 +1355,12 @@ namespace HIMS.Services.AbhaIntegration
         }
         private List<ObservationResult> GetObservations(DataTable table, string hipId)
         {
-            List<ObservationResult> observations = new();
+            //List<ObservationResult> observations = new();
 
             if (table == null || table.Rows.Count == 0)
-                return observations;
-
+                //return observations;
+                return null;
+            List<ObservationResult> observations = new();
             foreach (DataRow row in table.Rows)
             {
                 object resultValue = decimal.TryParse(row["ResultValue"].ToString(), out decimal rv)

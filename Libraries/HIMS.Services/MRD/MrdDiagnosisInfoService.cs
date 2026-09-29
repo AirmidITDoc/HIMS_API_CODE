@@ -30,7 +30,13 @@ namespace HIMS.Services.MRD
             return await DatabaseHelper.GetGridDataBySp<MrdDiagnosisInfoListDto>(model, "ps_Rtrv_IP_MRD_DiagnosisInfo");
         }
 
-        
+
+        public virtual async Task<IPagedList<MRDDiagnosisinformationDto>> GetdiagnosislistAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<MRDDiagnosisinformationDto>(model, "ps_RrvMRDDiagnosisInformation");
+        }
+
+
         public virtual async Task InsertAsync(TIpMrdDiagnosisInfoHeader ObjHeader,List<TIpMrdDiagnosisInfoDetail> ObjDetailList,int CurrentUserId, string CurrentUserName)
 
         {

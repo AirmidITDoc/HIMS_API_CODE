@@ -25,6 +25,8 @@ namespace HIMS.API.Models.Nursing.IPEMR
         public List<EMRDiagnosisInfoModel> TIpEmrdiagnosisInfos { get; set; }
         public List<EMRDignosisHistoryModel> TIpEmrdignosisHistories { get; set; }
         public List<EMRFamilyMedicalHistoryModel> TIpEmrfamilyMedicalHistories { get; set; }
+        public List<EmrVitalsModel> TIpEmrVitals { get; set; }
+
 
 
     }
@@ -68,4 +70,21 @@ namespace HIMS.API.Models.Nursing.IPEMR
         public string? Summary { get; set; }
         public bool Status { get; set; }
     }
+
+    public class EmrVitalsModel
+    {
+        public long IpemrVitalId { get; set; }
+        public long IpemrId { get; set; }
+        public long Opipid { get; set; }
+        public long Opiptype { get; set; }
+        public string? Height { get; set; }
+        public string? Weight { get; set; }
+        public string? Bmi { get; set; }
+        public string? Bsl { get; set; }
+        public string? Spo2 { get; set; }
+        public string? Temp { get; set; }
+        public string? Pulse { get; set; }
+        public string? Bp { get; set; }
+    }
 }
+

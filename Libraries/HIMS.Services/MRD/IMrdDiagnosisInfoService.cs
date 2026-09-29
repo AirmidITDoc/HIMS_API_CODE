@@ -13,6 +13,7 @@ namespace HIMS.Services.MRD
     public partial interface IMrdDiagnosisInfoService
     {
         Task<IPagedList<MrdDiagnosisInfoListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<MRDDiagnosisinformationDto>> GetdiagnosislistAsync(GridRequestModel objGrid);
         Task InsertAsync(TIpMrdDiagnosisInfoHeader ObjHeader, List<TIpMrdDiagnosisInfoDetail> ObjDetailList, int CurrentUserId, string CurrentUserName);
         Task UpdateAsync(TIpMrdDiagnosisInfoHeader ObjHeader, List<TIpMrdDiagnosisInfoDetail> ObjDetailList, int CurrentUserId, string CurrentUserName);
     }

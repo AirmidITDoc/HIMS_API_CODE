@@ -87,6 +87,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIpMrdDiagnosisInfoDetail, MrdDiagnosisInfoDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIpMrdDiagnosisInfoHeader, MrdDiagnosisInfoUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<TIpMrdDiagnosisInfoDetail, MrdDiagnosisInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
             CreateMap<TDeathCertificate, DeathCertificateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -237,7 +240,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<EMRDiagnosisInfoModel, TIpEmrdiagnosisInfo>().ReverseMap();
             CreateMap<EMRDignosisHistoryModel, TIpEmrdignosisHistory>().ReverseMap();
             CreateMap<EMRFamilyMedicalHistoryModel, TIpEmrfamilyMedicalHistory>().ReverseMap();
-
+            CreateMap<EmrVitalsModel, TIpEmrVital>().ReverseMap();
 
 
             CreateMap<MTermsOfPaymentMaster, TermsOfPaymentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();

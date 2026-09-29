@@ -1,5 +1,10 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Nursing.IPEMR;
+using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Transactions;
 
@@ -13,6 +18,23 @@ namespace HIMS.Services.Nursing.IPEMR
         {
             _context = context;
         }
+
+        public virtual async Task<IPagedList<IPEMRFamilyMedicalHistoryListDto>> GetIPEMRFamilyMedicalHistoryAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPEMRFamilyMedicalHistoryListDto>(model, "ps_GetIP_EMRFamilyMedicalHistory");
+        }
+
+        public virtual async Task<IPagedList<IPEMRDignosisHistoryListDto>> GetIPEMRDignosisHistoryAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPEMRDignosisHistoryListDto>(model, "ps_GetIP_EMRDignosisHistory");
+        }
+
+
+        public virtual async Task<IPagedList<IPEMRDiagnosisInfoListDto>> GetIPEMRDiagnosisInfoAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<IPEMRDiagnosisInfoListDto>(model, "ps_GetIP_EMRDiagnosisInfo");
+        }
+
 
         public async Task<TIpEmrhistory?> GetByIdAsync(long id)
         {
