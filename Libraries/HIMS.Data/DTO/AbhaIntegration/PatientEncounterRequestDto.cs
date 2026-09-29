@@ -373,14 +373,14 @@ public class ObservationResult
 
     public class Referral
     {
-        public CodeableConcept referral { get; set; }
+        public CodeableConcept referralCode { get; set; }
         public string status { get; set; }
         public string intent { get; set; }
     }
 
     public class InvestigationAdvice
     {
-        public CodeableConcept investigation { get; set; }
+        public CodeableConcept referralCode { get; set; }
         public string status { get; set; }
         public string intent { get; set; }
     }
