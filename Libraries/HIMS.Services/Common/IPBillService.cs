@@ -218,6 +218,10 @@ namespace HIMS.Services.Common
         {
             return await DatabaseHelper.GetGridDataBySp<PharmacyDetailsListDto>(model, "ps_rtrv_BillEditDetailsList");
         }
+        public virtual async Task<IPagedList<DiscountTransactionHistoryListDto>> DiscountTransactionHistoryList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DiscountTransactionHistoryListDto>(model, "ps_rtrv_DiscountTransactionHistoryList");
+        }
 
         public virtual async Task InsertAsync(AddCharge objAddCharge, List<AddCharge> objAddCharges, int CurrentUserId, string CurrentUserName)
         {
