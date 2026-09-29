@@ -1109,7 +1109,7 @@ namespace HIMS.Services.AbhaIntegration
             {
                 investigationAdvice.Add(new InvestigationAdvice
                 {
-                    investigation = new CodeableConcept
+                    referralCode = new CodeableConcept
                     {
                         text = row["InvestigationText"].ToString(),
 
@@ -1143,7 +1143,7 @@ namespace HIMS.Services.AbhaIntegration
             {
                 referrals.Add(new Referral
                 {
-                    referral = new CodeableConcept
+                    referralCode = new CodeableConcept
                     {
                         text = row["ReferralText"].ToString(),
 
