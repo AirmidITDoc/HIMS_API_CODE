@@ -126,6 +126,15 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(PharmacyDetailsListDto.ToGridResponse(objGrid, "Pharmacy Bill List"));
         }
 
+        [HttpPost("DiscountTransactionHistoryList")]
+        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        public async Task<IActionResult> DiscountTransactionHistoryList(GridRequestModel objGrid)
+        {
+            IPagedList<DiscountTransactionHistoryListDto> DiscountTransactionHistoryListDto = await _IPBillService.DiscountTransactionHistoryList(objGrid);
+            return Ok(DiscountTransactionHistoryListDto.ToGridResponse(objGrid, "Discount Transaction History  List"));
+        }
+
+
 
         [HttpPost("AddChargeInsert")]
         [Permission]

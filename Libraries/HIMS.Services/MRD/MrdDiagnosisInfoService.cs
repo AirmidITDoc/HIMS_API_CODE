@@ -30,22 +30,13 @@ namespace HIMS.Services.MRD
             return await DatabaseHelper.GetGridDataBySp<MrdDiagnosisInfoListDto>(model, "ps_Rtrv_IP_MRD_DiagnosisInfo");
         }
 
-        //public virtual async Task InsertAsync(TIpMrdDiagnosisInfoHeader ObjTIpMrdDiagnosisInfoHeader,int UserId,string Username)
-        //{
-        //    using var scope = new TransactionScope(
-        //        TransactionScopeOption.Required,
-        //        new TransactionOptions
-        //        {
-        //            IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted
-        //        },
-        //        TransactionScopeAsyncFlowOption.Enabled);
 
-        //    _context.TIpMrdDiagnosisInfoHeaders.Add(ObjTIpMrdDiagnosisInfoHeader);
+        public virtual async Task<IPagedList<MRDDiagnosisinformationDto>> GetdiagnosislistAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<MRDDiagnosisinformationDto>(model, "ps_RrvMRDDiagnosisInformation");
+        }
 
-        //    await _context.SaveChangesAsync();
 
-        //    scope.Complete();
-        //}
         public virtual async Task InsertAsync(TIpMrdDiagnosisInfoHeader ObjHeader,List<TIpMrdDiagnosisInfoDetail> ObjDetailList,int CurrentUserId, string CurrentUserName)
 
         {
@@ -98,37 +89,7 @@ namespace HIMS.Services.MRD
         }
 
 
-        //public virtual async Task UpdateAsync( TIpMrdDiagnosisInfoHeader ObjTIpMrdDiagnosisInfoHeader, int UserId, string Username, string[]? ignoreColumns = null)
-        //{
-        //    using var scope = new TransactionScope( TransactionScopeOption.Required, new TransactionOptions  { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-
-        //    // Attach existing Header
-        //    _context.Attach(ObjTIpMrdDiagnosisInfoHeader);
-
-        //    _context.Entry(ObjTIpMrdDiagnosisInfoHeader).State = EntityState.Modified;
-
-        //    // Don't update Created fields
-        //    _context.Entry(ObjTIpMrdDiagnosisInfoHeader).Property(x => x.CreatedBy).IsModified = false;
-
-        //    _context.Entry(ObjTIpMrdDiagnosisInfoHeader).Property(x => x.CreatedDate).IsModified = false;
-
-
-        //    ObjTIpMrdDiagnosisInfoHeader.ModifiedBy = UserId;
-        //    ObjTIpMrdDiagnosisInfoHeader.ModifiedDate = AppTime.Now;
-
-        //    // Ignore columns
-        //    if (ignoreColumns?.Length > 0)
-        //    {
-        //        foreach (var column in ignoreColumns)
-        //        {
-        //            _context.Entry(ObjTIpMrdDiagnosisInfoHeader).Property(column).IsModified = false;
-        //        }
-        //    }
-
-        //    await _context.SaveChangesAsync();
-
-        //    scope.Complete();
-        //}
+      
         public virtual async Task UpdateAsync(TIpMrdDiagnosisInfoHeader ObjHeader, List<TIpMrdDiagnosisInfoDetail> ObjDetailList, int CurrentUserId, string CurrentUserName)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();

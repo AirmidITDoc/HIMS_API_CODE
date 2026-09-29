@@ -7,6 +7,7 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.DietKitchen;
 using HIMS.Data.Models;
 using HIMS.Services.DietkitchenMaster;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MAllergyMaster> list = await _repository.GetAllPagedAsync(objGrid);
+            IPagedList<AllergyListDto> list = await _AllergyMasterService.GetAllergyListAsync(objGrid);
             return Ok(list.ToGridResponse(objGrid, "Allergy List"));
         }
 

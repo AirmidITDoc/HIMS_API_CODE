@@ -99,12 +99,11 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("InsertResultEntry")]
         [Permission]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
-        
+
         public async Task<ApiResponse> Insert(PathologyResultModel obj)
         {
             List<TPathologyReportDetail> model = obj.PathologyResult.MapTo<List<TPathologyReportDetail>>();
-            TPathologyReportHeader objTPathology = obj.PathologyReport.MapTo<TPathologyReportHeader>();
+            List<TPathologyReportHeader> objTPathology = obj.PathologyReport.MapTo<List<TPathologyReportHeader>>();
             if (model.Count > 0)
             {
                 await _IPathlogyService.InsertAsyncResultEntry(model, objTPathology, CurrentUserId, CurrentUserName);

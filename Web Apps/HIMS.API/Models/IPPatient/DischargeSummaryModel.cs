@@ -36,7 +36,19 @@ namespace HIMS.API.Models.IPPatient
         public string? WarningSymptoms { get; set; }
         public string? Radiology { get; set; }
         public byte? IsNormalOrDeath { get; set; }
+
+        public bool? IsRefferal { get; set; }
+        public long? IsRefDepartmentId { get; set; }
+        public long? IsRefDoctorId { get; set; }
+        public string? CarePlanTitle { get; set; }
+        public string? CarePlanDescription { get; set; }
+        public string? FollowUpReason { get; set; }
+        public long? FollowUpDepartmentId { get; set; }
+        public long? FollowUpDoctorId { get; set; }
+        public string? FollowUpDescription { get; set; }
+        public string? TemplateDescriptionHtml { get; set; }
         public long DischargeSummaryId { get; set; }
+
 
 
     }
@@ -121,6 +133,16 @@ namespace HIMS.API.Models.IPPatient
         public string? WarningSymptoms { get; set; }
         public string? Radiology { get; set; }
         public byte? IsNormalOrDeath { get; set; }
+        public bool? IsRefferal { get; set; }
+        public long? IsRefDepartmentId { get; set; }
+        public long? IsRefDoctorId { get; set; }
+        public string? CarePlanTitle { get; set; }
+        public string? CarePlanDescription { get; set; }
+        public string? FollowUpReason { get; set; }
+        public long? FollowUpDepartmentId { get; set; }
+        public long? FollowUpDoctorId { get; set; }
+        public string? FollowUpDescription { get; set; }
+        public string? TemplateDescriptionHtml { get; set; }
 
     }
     public class DischargeSummaryUpdateModelValidator : AbstractValidator<DischargeSummaryUpdate>

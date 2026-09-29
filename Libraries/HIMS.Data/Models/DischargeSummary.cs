@@ -15,7 +15,6 @@ namespace HIMS.Data.Models
         public string? OpertiveNotes { get; set; }
         public string? TreatmentGiven { get; set; }
         public string? TreatmentAdvisedAfterDischarge { get; set; }
-        public DateTime? Followupdate { get; set; }
         public string? Remark { get; set; }
         public DateTime? DischargeSummaryDate { get; set; }
         public DateTime? OpDate { get; set; }
@@ -41,6 +40,16 @@ namespace HIMS.Data.Models
         public string? WarningSymptoms { get; set; }
         public string? Radiology { get; set; }
         public byte? IsNormalOrDeath { get; set; }
+        public bool? IsRefferal { get; set; }
+        public long? IsRefDepartmentId { get; set; }
+        public long? IsRefDoctorId { get; set; }
+        public string? CarePlanTitle { get; set; }
+        public string? CarePlanDescription { get; set; }
+        public DateTime? Followupdate { get; set; }
+        public string? FollowUpReason { get; set; }
+        public long? FollowUpDepartmentId { get; set; }
+        public long? FollowUpDoctorId { get; set; }
+        public string? FollowUpDescription { get; set; }
         public string? TemplateDescriptionHtml { get; set; }
     }
 }

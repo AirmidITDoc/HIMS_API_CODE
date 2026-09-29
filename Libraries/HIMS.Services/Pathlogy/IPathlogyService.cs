@@ -12,7 +12,7 @@ namespace HIMS.Services.Pathlogy
         Task<IPagedList<PathSubtestFillListDto>> PathSubtestFillList(GridRequestModel objGrid);
         Task<IPagedList<PathResultEntryListDto>> PathResultEntry(GridRequestModel objGrid);
         Task<IPagedList<PathPatientTestListDto>> GetListAsync(GridRequestModel objGrid);
-        Task InsertAsyncResultEntry(List<TPathologyReportDetail> ObjPathologyReportDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string Username);
+        Task InsertAsyncResultEntry(List<TPathologyReportDetail> ObjPathologyReportDetail, List<TPathologyReportHeader> ObjTPathologyReportHeader, int UserId, string Username);
         Task InsertAsyncResultEntry1(TPathologyReportTemplateDetail ObjTPathologyReportTemplateDetail, TPathologyReportHeader ObjTPathologyReportHeader, int UserId, string Username);
         Task DeleteAsync(TPathologyReportDetail ObjTPathologyReportDetail, int UserId, string Username);
         Task InsertPathPrintResultentry(List<TempPathReportId> model, int currentUserId, string currentUserName);

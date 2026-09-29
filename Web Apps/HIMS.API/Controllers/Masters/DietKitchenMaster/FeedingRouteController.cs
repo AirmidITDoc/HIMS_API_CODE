@@ -7,6 +7,7 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.DietKitchen;
 using HIMS.Data.Models;
 using HIMS.Services.DietkitchenMaster;
 using Microsoft.AspNetCore.Mvc;
@@ -28,12 +29,13 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         // List API
+       
         [HttpPost]
         [Route("[action]")]
         [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MFeedingRouteMaster> list = await _repository.GetAllPagedAsync(objGrid);
+            IPagedList<FeedingRouteListDto> list = await _FeedingRouteMasterService.GetFeedingRouteListAsync(objGrid);
             return Ok(list.ToGridResponse(objGrid, "Feeding Route List"));
         }
 

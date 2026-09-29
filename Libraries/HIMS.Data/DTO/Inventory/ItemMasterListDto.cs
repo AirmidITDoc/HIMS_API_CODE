@@ -52,6 +52,9 @@ namespace HIMS.Data.DTO.Inventory
         public bool IsValidContent { get; set; }
         public string? DoseName { get; set; }
         public string? LocalLanguageName { get; set; }
+        public string? DrugDescription { get; set; }
+        public long? RouteId { get; set; }
+        public bool? IsBrand { get; set; }
 
 
 

@@ -25,6 +25,7 @@ using HIMS.Services.Masters;
 using HIMS.Services.MRD;
 using HIMS.Services.Notification;
 using HIMS.Services.Nursing;
+using HIMS.Services.Nursing.IPEMR;
 using HIMS.Services.OPPatient;
 using HIMS.Services.OTManagment;
 using HIMS.Services.OutPatient;
@@ -276,6 +277,7 @@ namespace HIMS.API.Infrastructure
             services.AddHttpContextAccessor();
             services.AddMemoryCache(opts => opts.SizeLimit = 1024);
             services.AddScoped<IDeathCertificateService, DeathCertificateService>();
+            services.AddScoped<IEMRService, EMRService>();
 
 
             //ABHA testing 

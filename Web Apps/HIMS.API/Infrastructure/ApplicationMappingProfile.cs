@@ -21,6 +21,7 @@ using HIMS.API.Models.Marketing;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.MRD;
 using HIMS.API.Models.Nursing;
+using HIMS.API.Models.Nursing.IPEMR;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OTManagement;
 using HIMS.API.Models.OutPatient;
@@ -85,6 +86,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIpMrdDiagnosisInfoHeader, MrdDiagnosisInfoModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIpMrdDiagnosisInfoDetail, MrdDiagnosisInfoDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TIpMrdDiagnosisInfoHeader, MrdDiagnosisInfoUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            CreateMap<TIpMrdDiagnosisInfoDetail, MrdDiagnosisInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
@@ -231,6 +235,11 @@ namespace HIMS.API.Infrastructure
             CreateMap<DoctorMaster, DoctorModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MFoodCategoryMaster, FoodCategorymasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MMealTypeMaster, MealTypeMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            CreateMap<EMRModel, TIpEmrhistory>().ReverseMap();
+            CreateMap<EMRDiagnosisInfoModel, TIpEmrdiagnosisInfo>().ReverseMap();
+            CreateMap<EMRDignosisHistoryModel, TIpEmrdignosisHistory>().ReverseMap();
+            CreateMap<EMRFamilyMedicalHistoryModel, TIpEmrfamilyMedicalHistory>().ReverseMap();
 
 
 
@@ -967,6 +976,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<MIcdDiagnosisMaster, MIcdDiagnosisMasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MDietMenuMaster, DietmenumasterModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MDietMenuDetailMaster, DietmenumasterDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+            CreateMap<MDietMenuMaster, DietmenumasterUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
 
 
