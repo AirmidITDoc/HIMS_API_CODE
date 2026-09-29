@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.MRD
         }
 
         [HttpPost("MRDDiagnosisInfoList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MrdDiagnosisInfoListDto> MRDDiagnosisInfoList = await _IMrdDiagnosisInfoService.GetListAsync(objGrid);
@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.MRD
 
 
         [HttpPost("MRDDiagnosisInformationList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> DiagnosisList(GridRequestModel objGrid)
         {
             IPagedList<MRDDiagnosisinformationDto> MRDDiagnosisInformationList = await _IMrdDiagnosisInfoService.GetdiagnosislistAsync(objGrid);
@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.MRD
 
 
         [HttpPost("Insert")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Insert(MrdDiagnosisInfo obj)
 
         {
@@ -68,7 +68,7 @@ namespace HIMS.API.Controllers.MRD
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(MrdDiagnosisInfoUpdate obj)
         {
             TIpMrdDiagnosisInfoHeader model = obj.MrdDiagnosisInfoHeader.MapTo<TIpMrdDiagnosisInfoHeader>();
@@ -85,31 +85,6 @@ namespace HIMS.API.Controllers.MRD
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.IpdiagId);
         }
-        //[HttpPost("Insert")]
-        ////[Permission]
-        //public async Task<ApiResponse> Insert(MrdDiagnosisInfoModel obj)
-        //{
-        //    TIpMrdDiagnosisInfoHeader model = obj.MapTo<TIpMrdDiagnosisInfoHeader>();
-        //    if (obj.IpdiagId == 0)
-        //    {
-        //        foreach (var q in model.TIpMrdDiagnosisInfoDetails)
-        //        {
-        //            q.CreatedBy = CurrentUserId;
-        //            q.CreatedDate = AppTime.Now;
-
-        //        }
-        //        model.CreatedDate = AppTime.Now;
-        //        model.CreatedBy = CurrentUserId;
-        //        model.ModifiedDate = AppTime.Now;
-        //        model.ModifiedBy = CurrentUserId;
-        //        await _IMrdDiagnosisInfoService.InsertAsync(model, CurrentUserId, CurrentUserName);
-        //    }
-        //    else
-        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
-        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.IpdiagId);
-        //}
-
-
-
+        
     }
 }
