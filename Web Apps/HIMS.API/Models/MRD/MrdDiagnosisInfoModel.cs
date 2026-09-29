@@ -18,8 +18,8 @@ namespace HIMS.API.Models.MRD
     {
         public MrdDiagnosisInfoModelValidator()
         {
-             RuleFor(x => x.AdmId).NotNull().NotEmpty().WithMessage("AdmId is required");
-      
+            RuleFor(x => x.AdmId).NotNull().NotEmpty().WithMessage("AdmId is required");
+
 
         }
     }
@@ -69,4 +69,18 @@ namespace HIMS.API.Models.MRD
 
 
     }
+
+    public class MrdDiagnosisInformationModel
+    {
+        public long IpdiagDetId { get; set; }
+        public long IpdiagId { get; set; }
+        public long AdmId { get; set; }
+        public string Diagnosis { get; set; }
+        public string? Icdcode { get; set; }
+        public string? Diagnosisinformation { get; set; }
+        public string? FlagCode { get; set; }
+
+
+    }
+
 }

@@ -27,6 +27,7 @@ namespace HIMS.API.Controllers.MRD
         {
             _IMrdDiagnosisInfoService = repository;
         }
+
         [HttpPost("MRDDiagnosisInfoList")]
         //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -34,7 +35,19 @@ namespace HIMS.API.Controllers.MRD
             IPagedList<MrdDiagnosisInfoListDto> MRDDiagnosisInfoList = await _IMrdDiagnosisInfoService.GetListAsync(objGrid);
             return Ok(MRDDiagnosisInfoList.ToGridResponse(objGrid, "MRDDiagnosisInfo List"));
         }
-       
+
+
+        [HttpPost("MRDDiagnosisInformationList")]
+        //[Permission]
+        public async Task<IActionResult> DiagnosisList(GridRequestModel objGrid)
+        {
+            IPagedList<MRDDiagnosisinformationDto> MRDDiagnosisInformationList = await _IMrdDiagnosisInfoService.GetdiagnosislistAsync(objGrid);
+            return Ok(MRDDiagnosisInformationList.ToGridResponse(objGrid, "MRDDiagnosisInformation List"));
+        }
+
+
+
+
         [HttpPost("Insert")]
         //[Permission]
         public async Task<ApiResponse> Insert(MrdDiagnosisInfo obj)
