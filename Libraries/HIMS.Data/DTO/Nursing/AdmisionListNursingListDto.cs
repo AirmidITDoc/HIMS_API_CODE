@@ -18,5 +18,7 @@
         public long? DocNameID { get; set; }
         public long? TariffId { get; set; }
         public string? IPDNo { get; set; }
+        public long RegId { get; set; }
+        public long IpdEmrId { get; set; }
     }
 }
