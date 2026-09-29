@@ -4,7 +4,10 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing.IPEMR;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
+using HIMS.Data.DTO.MRD;
+using HIMS.Data.DTO.Nursing.IPEMR;
 using HIMS.Data.Models;
 using HIMS.Services.Nursing.IPEMR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,8 +26,32 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
             _EmrService = emrService;
         }
 
-        [HttpGet("{id?}")]
+        [HttpPost("DiagnosisInfoList")]
         //[Permission]
+        public async Task<IActionResult> DiagnosisinfoList(GridRequestModel objGrid)
+        {
+            IPagedList<IPEMRDiagnosisInfoListDto> IPEMRDiagnosisInfoListDto = await _EmrService.GetIPEMRDiagnosisInfoAsync(objGrid);
+            return Ok(IPEMRDiagnosisInfoListDto.ToGridResponse(objGrid, "IPEMRDiagnosisInfo List"));
+        }
+
+        [HttpPost("DignosisHistoryList")]
+        //[Permission]
+        public async Task<IActionResult> DiagnosisHistoryList(GridRequestModel objGrid)
+        {
+            IPagedList<IPEMRDignosisHistoryListDto> IPEMRDignosisHistoryListDto = await _EmrService.GetIPEMRDignosisHistoryAsync(objGrid);
+            return Ok(IPEMRDignosisHistoryListDto.ToGridResponse(objGrid, "IPEMRDignosisHistory List"));
+        }
+
+        [HttpPost("FamilyMedicalHistoryList")]
+        //[Permission]
+        public async Task<IActionResult> FamilyMedicalHistoryList(GridRequestModel objGrid)
+        {
+            IPagedList<IPEMRFamilyMedicalHistoryListDto> IPEMRFamilyMedicalHistoryListDto = await _EmrService.GetIPEMRFamilyMedicalHistoryAsync(objGrid);
+            return Ok(IPEMRFamilyMedicalHistoryListDto.ToGridResponse(objGrid, "IPEMRFamilyMedicalHistory List"));
+        }
+
+        [HttpGet("{id?}")]
+        [Permission]
         public async Task<ApiResponse> Get(long id)
         {
             if (id == 0) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
@@ -35,7 +62,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
        
 
         [HttpPost("Insert")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Insert(EMRModel obj)
         {
             TIpEmrhistory model = obj.MapTo<TIpEmrhistory>();
@@ -56,6 +83,13 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
                 foreach (var q in model.TIpEmrfamilyMedicalHistories)
                 {
                     q.CreatedBy = CurrentUserId;
+                    q.CreatedDate = AppTime.Now;
+
+                }
+
+                foreach (var q in model.TIpEmrVitals)
+                {
+                    q.Createdby = CurrentUserId;
                     q.CreatedDate = AppTime.Now;
 
                 }
