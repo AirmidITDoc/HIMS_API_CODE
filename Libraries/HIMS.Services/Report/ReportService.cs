@@ -3086,6 +3086,25 @@ namespace HIMS.Services.Report
                     }
                     break;
 
+                case "DayWisePivotReportFormat.html":
+                    {
+                        string reportTable = CreateDayWisePivotReport(
+                            dt,
+                            colList,
+                            headerList
+                        );
+
+                        html = html.Replace("{{ReportTable}}", reportTable);
+
+                        DateTime reportDate = FromDate;
+
+                        html = html.Replace(
+                            "{{ReportMonth}}",
+                            reportDate.ToString("MMM-yy")
+                        );
+                    }
+                    break;
+
                 case "CPWiseDetailReport.html":
                     {
                         string prevCP = "";
@@ -5813,6 +5832,413 @@ namespace HIMS.Services.Report
             table.Append("</tr>");
             return table.ToString();
         }
+
+        private static string CreateDayWisePivotReport(
+        DataTable dt,
+        string[] colList,
+        string[] headerList)
+        {
+            StringBuilder html = new StringBuilder();
+
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                html.Append("<table class='report-table'>");
+                html.Append("<tr>");
+                html.Append("<td>No data found.</td>");
+                html.Append("</tr>");
+                html.Append("</table>");
+
+                return html.ToString();
+            }
+
+            // ---------------------------------------------------------
+            // FIND KARMA / DEPARTMENT COLUMN
+            // ---------------------------------------------------------
+
+            string karmaColumn = "";
+
+            if (dt.Columns.Contains("Karma"))
+            {
+                karmaColumn = "Karma";
+            }
+            else if (dt.Columns.Contains("DepartmentName"))
+            {
+                karmaColumn = "DepartmentName";
+            }
+            else if (colList != null && colList.Length > 0)
+            {
+                karmaColumn = colList[0];
+            }
+
+            // ---------------------------------------------------------
+            // FIND SERVICE COLUMN
+            // ---------------------------------------------------------
+
+            string serviceColumn = "";
+
+            if (dt.Columns.Contains("ServiceName"))
+            {
+                serviceColumn = "ServiceName";
+            }
+            else if (dt.Columns.Contains("Service"))
+            {
+                serviceColumn = "Service";
+            }
+
+            // ---------------------------------------------------------
+            // FIND DAY COLUMNS
+            // ---------------------------------------------------------
+
+            List<(int Day, string IPD, string OPD)> dayColumns =
+                new List<(int Day, string IPD, string OPD)>();
+
+            for (int day = 1; day <= 31; day++)
+            {
+                string ipdColumn = $"D{day:00}_IPD";
+                string opdColumn = $"D{day:00}_OPD";
+
+                if (dt.Columns.Contains(ipdColumn) ||
+                    dt.Columns.Contains(opdColumn))
+                {
+                    dayColumns.Add(
+                        (
+                            day,
+                            ipdColumn,
+                            opdColumn
+                        )
+                    );
+                }
+            }
+
+            // ---------------------------------------------------------
+            // TOTAL COLUMNS
+            // ---------------------------------------------------------
+
+            string totalIPDColumn =
+                dt.Columns.Contains("Total_IPD")
+                    ? "Total_IPD"
+                    : "";
+
+            string totalOPDColumn =
+                dt.Columns.Contains("Total_OPD")
+                    ? "Total_OPD"
+                    : "";
+
+            // ---------------------------------------------------------
+            // START TABLE
+            // ---------------------------------------------------------
+
+            html.Append("<table class='report-table'>");
+
+            // ---------------------------------------------------------
+            // HEADER ROW 1
+            // ---------------------------------------------------------
+
+            html.Append("<thead>");
+
+            html.Append("<tr>");
+
+            html.Append(
+                "<th rowspan='2' class='sr-column'>Sr.</th>"
+            );
+
+            html.Append(
+                "<th rowspan='2' class='karma-column'>Karma</th>"
+            );
+
+            html.Append(
+                "<th rowspan='2' class='service-column'>Service</th>"
+            );
+
+            foreach (var day in dayColumns)
+            {
+                html.Append(
+                    $"<th colspan='2' class='day-column'>{day.Day}</th>"
+                );
+            }
+
+            if (!string.IsNullOrWhiteSpace(totalIPDColumn) ||
+                !string.IsNullOrWhiteSpace(totalOPDColumn))
+            {
+                html.Append(
+                    "<th colspan='2' class='total-column total-header'>TOTAL</th>"
+                );
+            }
+
+            html.Append("</tr>");
+
+            // ---------------------------------------------------------
+            // HEADER ROW 2
+            // ---------------------------------------------------------
+
+            html.Append("<tr>");
+
+            foreach (var day in dayColumns)
+            {
+                html.Append("<th class='day-column'>I</th>");
+                html.Append("<th class='day-column'>O</th>");
+            }
+
+            if (!string.IsNullOrWhiteSpace(totalIPDColumn) ||
+                !string.IsNullOrWhiteSpace(totalOPDColumn))
+            {
+                html.Append("<th class='total-column'>IPD</th>");
+                html.Append("<th class='total-column'>OPD</th>");
+            }
+
+            html.Append("</tr>");
+
+            html.Append("</thead>");
+
+            // ---------------------------------------------------------
+            // BODY
+            // ---------------------------------------------------------
+
+            html.Append("<tbody>");
+
+            int srNo = 1;
+
+            foreach (DataRow row in dt.Rows)
+            {
+                html.Append("<tr>");
+
+                // -----------------------------------------------------
+                // SR NO
+                // -----------------------------------------------------
+
+                html.Append(
+                    $"<td>{srNo}</td>"
+                );
+
+                // -----------------------------------------------------
+                // KARMA / DEPARTMENT
+                // -----------------------------------------------------
+
+                string karma = "";
+
+                if (!string.IsNullOrWhiteSpace(karmaColumn) &&
+                    dt.Columns.Contains(karmaColumn) &&
+                    row[karmaColumn] != DBNull.Value)
+                {
+                    karma = row[karmaColumn]?.ToString() ?? "";
+                }
+
+                html.Append(
+                    $"<td class='karma-name'>" +
+                    $"{System.Net.WebUtility.HtmlEncode(karma)}</td>"
+                );
+
+                // -----------------------------------------------------
+                // SERVICE
+                // -----------------------------------------------------
+
+                string service = "";
+
+                if (!string.IsNullOrWhiteSpace(serviceColumn) &&
+                    dt.Columns.Contains(serviceColumn) &&
+                    row[serviceColumn] != DBNull.Value)
+                {
+                    service = row[serviceColumn]?.ToString() ?? "";
+                }
+
+                html.Append(
+                    $"<td class='service-name'>" +
+                    $"{System.Net.WebUtility.HtmlEncode(service)}</td>"
+                );
+
+                // -----------------------------------------------------
+                // DAY VALUES
+                // -----------------------------------------------------
+
+                foreach (var day in dayColumns)
+                {
+                    decimal ipd = 0;
+                    decimal opd = 0;
+
+                    if (dt.Columns.Contains(day.IPD) &&
+                        row[day.IPD] != DBNull.Value)
+                    {
+                        decimal.TryParse(
+                            row[day.IPD].ToString(),
+                            out ipd
+                        );
+                    }
+
+                    if (dt.Columns.Contains(day.OPD) &&
+                        row[day.OPD] != DBNull.Value)
+                    {
+                        decimal.TryParse(
+                            row[day.OPD].ToString(),
+                            out opd
+                        );
+                    }
+
+                    html.Append(
+                        $"<td>{ipd:0}</td>"
+                    );
+
+                    html.Append(
+                        $"<td>{opd:0}</td>"
+                    );
+                }
+
+                // -----------------------------------------------------
+                // ROW TOTAL
+                // -----------------------------------------------------
+
+                decimal totalIPD = 0;
+                decimal totalOPD = 0;
+
+                if (!string.IsNullOrWhiteSpace(totalIPDColumn) &&
+                    dt.Columns.Contains(totalIPDColumn) &&
+                    row[totalIPDColumn] != DBNull.Value)
+                {
+                    decimal.TryParse(
+                        row[totalIPDColumn].ToString(),
+                        out totalIPD
+                    );
+                }
+
+                if (!string.IsNullOrWhiteSpace(totalOPDColumn) &&
+                    dt.Columns.Contains(totalOPDColumn) &&
+                    row[totalOPDColumn] != DBNull.Value)
+                {
+                    decimal.TryParse(
+                        row[totalOPDColumn].ToString(),
+                        out totalOPD
+                    );
+                }
+
+                html.Append(
+                    $"<td>{totalIPD:0}</td>"
+                );
+
+                html.Append(
+                    $"<td>{totalOPD:0}</td>"
+                );
+
+                html.Append("</tr>");
+
+                srNo++;
+            }
+
+            html.Append("</tbody>");
+
+            // ---------------------------------------------------------
+            // GRAND TOTAL
+            // ---------------------------------------------------------
+
+            html.Append("<tfoot>");
+
+            html.Append("<tr class='grand-total'>");
+
+            html.Append(
+                "<td colspan='3'>Total</td>"
+            );
+
+            // ---------------------------------------------------------
+            // DAY-WISE TOTAL
+            // ---------------------------------------------------------
+
+            foreach (var day in dayColumns)
+            {
+                decimal dayIPD = 0;
+                decimal dayOPD = 0;
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    if (dt.Columns.Contains(day.IPD) &&
+                        row[day.IPD] != DBNull.Value)
+                    {
+                        decimal value = 0;
+
+                        decimal.TryParse(
+                            row[day.IPD].ToString(),
+                            out value
+                        );
+
+                        dayIPD += value;
+                    }
+
+                    if (dt.Columns.Contains(day.OPD) &&
+                        row[day.OPD] != DBNull.Value)
+                    {
+                        decimal value = 0;
+
+                        decimal.TryParse(
+                            row[day.OPD].ToString(),
+                            out value
+                        );
+
+                        dayOPD += value;
+                    }
+                }
+
+                html.Append(
+                    $"<td>{dayIPD:0}</td>"
+                );
+
+                html.Append(
+                    $"<td>{dayOPD:0}</td>"
+                );
+            }
+
+            // ---------------------------------------------------------
+            // GRAND TOTAL IPD / OPD
+            // ---------------------------------------------------------
+
+            decimal grandIPD = 0;
+            decimal grandOPD = 0;
+
+            foreach (DataRow row in dt.Rows)
+            {
+                if (!string.IsNullOrWhiteSpace(totalIPDColumn) &&
+                    dt.Columns.Contains(totalIPDColumn) &&
+                    row[totalIPDColumn] != DBNull.Value)
+                {
+                    decimal value = 0;
+
+                    decimal.TryParse(
+                        row[totalIPDColumn].ToString(),
+                        out value
+                    );
+
+                    grandIPD += value;
+                }
+
+                if (!string.IsNullOrWhiteSpace(totalOPDColumn) &&
+                    dt.Columns.Contains(totalOPDColumn) &&
+                    row[totalOPDColumn] != DBNull.Value)
+                {
+                    decimal value = 0;
+
+                    decimal.TryParse(
+                        row[totalOPDColumn].ToString(),
+                        out value
+                    );
+
+                    grandOPD += value;
+                }
+            }
+
+            html.Append(
+                $"<td>{grandIPD:0}</td>"
+            );
+
+            html.Append(
+                $"<td>{grandOPD:0}</td>"
+            );
+
+            html.Append("</tr>");
+
+            html.Append("</tfoot>");
+
+            html.Append("</table>");
+
+            return html.ToString();
+        }
+
+
         public static string GetCommonHtmlTableReports(DataTable dt, string[] headers, string[] columnDataNames, string[] footer, string[] groupBy)
         {
             StringBuilder table = new();

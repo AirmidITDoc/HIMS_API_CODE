@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <style>
+
+        @page {
+            size: A4 landscape;
+            margin: 8mm;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 7px;
+            color: #000;
+        }
+
+        .report-header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .report-sub-header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 9px;
+            margin-bottom: 2px;
+        }
+
+        .report-month {
+            text-align: center;
+            font-weight: bold;
+            font-size: 9px;
+            margin-bottom: 5px;
+        }
+
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+            .report-table th,
+            .report-table td {
+                border: 1px solid #000;
+                padding: 1px 2px;
+                text-align: center;
+                vertical-align: middle;
+                line-height: 1.1;
+            }
+
+            .report-table th {
+                font-weight: bold;
+            }
+
+        .sr-column {
+            width: 25px;
+        }
+
+        .karma-column {
+            width: 90px;
+            text-align: left !important;
+        }
+
+        .service-column {
+            width: 100px;
+            text-align: left !important;
+        }
+
+        .day-column {
+            width: 24px;
+        }
+
+        .total-column {
+            width: 28px;
+        }
+
+        .karma-name {
+            text-align: left !important;
+            white-space: nowrap;
+        }
+
+        .service-name {
+            text-align: left !important;
+            white-space: nowrap;
+        }
+
+        .grand-total {
+            font-weight: bold;
+        }
+
+            .grand-total td {
+                font-weight: bold;
+            }
+
+        .total-header {
+            font-weight: bold;
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+        thead {
+            display: table-header-group;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    {{HospitalHeader}}
+
+    <!--<div class="report-header">
+        MAM'S SUMATIBHAI SHAH AYURVED MAHAVIDYALAYA
+    </div>
+
+    <div class="report-sub-header">
+        AYURVED RUGNALAYA - SANE GURUJI AROGYA KENDRA
+    </div>-->
+
+    <div class="report-month">
+        {{ReportMonth}}
+    </div>
+
+    {{ReportTable}}
+
+</body>
+
+</html>
