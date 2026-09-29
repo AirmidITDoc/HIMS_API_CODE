@@ -53,7 +53,7 @@ namespace HIMS.Services.Pathlogy
             return data;
         }
 
-        public virtual async Task InsertAsyncResultEntry(List<TPathologyReportDetail> ObjPathologyReportDetail, TPathologyReportHeader ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsyncResultEntry(List<TPathologyReportDetail> ObjPathologyReportDetail, List<TPathologyReportHeader> ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)
         {
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
@@ -71,12 +71,11 @@ namespace HIMS.Services.Pathlogy
                     };
 
                     odal.ExecuteNonQuery("ps_Delete_T_PathologyReportDetails", CommandType.StoredProcedure, tokensObj.ToDictionary());
-                    await _context.LogProcedureExecution( tokensObj.ToDictionary(),  "ps_Delete_T_PathologyReportDetails",  item.PathReportId.ToInt(),  Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
+                    await _context.LogProcedureExecution(tokensObj.ToDictionary(), "ps_Delete_T_PathologyReportDetails", item.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
                 }
 
                 foreach (var item in ObjPathologyReportDetail)
                 {
-
                     string[] rEntity = { "PathReportId", "CategoryId", "TestId", "SubTestId", "ParameterId", "ResultValue", "UnitId", "NormalRange", "PrintOrder", "PisNumeric", "Opdipdid", "Opdipdtype", "CategoryName", "TestName", "SubTestName", "ParameterName", "UnitName", "PatientName", "RegNo", "SampleId", "ParaBoldFlag", "MinValue", "MaxValue", "Opipnumber", "AgeY", "AgeM", "AgeD", "GenderId", "SampleNo", "SuggestionNotes" };
                     var entity = item.ToDictionary();
 
@@ -89,15 +88,20 @@ namespace HIMS.Services.Pathlogy
                     await _context.LogProcedureExecution(entity, nameof(TPathologyReportDetail), item.PathReportDetId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                 }
 
+                // Header loop
                 string[] Entity = { "PathReportId", "ReportDate", "ReportTime", "IsCompleted", "IsPrinted", "PathResultDr1", "PathResultDr2", "PathResultDr3", "IsTemplateTest", "SuggestionNotes", "AdmVisitDoctorId", "RefDoctorId", "AddedBy" };
-                var Hentity = ObjTPathologyReportHeader.ToDictionary();
-                foreach (var rProperty in Hentity.Keys.ToList())
+
+                foreach (var hItem in ObjTPathologyReportHeader)
                 {
-                    if (!Entity.Contains(rProperty))
-                        Hentity.Remove(rProperty);
+                    var Hentity = hItem.ToDictionary();
+                    foreach (var rProperty in Hentity.Keys.ToList())
+                    {
+                        if (!Entity.Contains(rProperty))
+                            Hentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("ps_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, Hentity);
+                    await _context.LogProcedureExecution(Hentity, nameof(TPathologyReportHeader), hItem.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
                 }
-                odal.ExecuteNonQuery("ps_update_T_PathologyReportHeader_1", CommandType.StoredProcedure, Hentity);
-                await _context.LogProcedureExecution(Hentity, nameof(TPathologyReportHeader), ObjTPathologyReportHeader.PathReportId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
                 await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
 
@@ -110,9 +114,8 @@ namespace HIMS.Services.Pathlogy
                 await transaction.RollbackAsync();
                 throw;
             }
-
         }
-            
+
         public virtual async Task InsertPathPrintResultentry(List<TempPathReportId> ObjTempPathReportId, int CurrentUserId, string CurrentUserName)
         {
              await using var transaction = await _context.Database.BeginTransactionAsync();
