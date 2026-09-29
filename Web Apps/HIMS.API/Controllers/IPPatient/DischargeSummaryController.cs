@@ -100,7 +100,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("DischargeSummaryInsert")]
-        [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(DischargeSumModel obj)
 
         {
