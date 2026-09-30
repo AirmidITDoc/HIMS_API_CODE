@@ -38,7 +38,7 @@ namespace HIMS.Services.Nursing.IPEMR
 
         public async Task<TIpEmrhistory?> GetByIdAsync(long id)
         {
-            return await _context.TIpEmrhistories.Include(x => x.TIpEmrdiagnosisInfos).Include(x => x.TIpEmrdignosisHistories).Include(x => x.TIpEmrfamilyMedicalHistories).FirstOrDefaultAsync(x => x.IpdEmrId == id);
+            return await _context.TIpEmrhistories.Include(x => x.TIpEmrdiagnosisInfos).Include(x => x.TIpEmrdignosisHistories).Include(x => x.TIpEmrfamilyMedicalHistories).Include(x => x.TIpEmrVitals).FirstOrDefaultAsync(x => x.IpdEmrId == id);
         }
 
 
@@ -79,6 +79,10 @@ namespace HIMS.Services.Nursing.IPEMR
                 var lstDiagnosis = await _context.TIpEmrfamilyMedicalHistories.Where(x => x.FhistId == IpdEmrId).ToListAsync();
                 if (lstDiagnosis.Any())
                     _context.TIpEmrfamilyMedicalHistories.RemoveRange(lstDiagnosis);
+
+                var lstVitals = await _context.TIpEmrVitals.Where(x => x.IpemrVitalId == IpdEmrId).ToListAsync();
+                if (lstVitals.Any())
+                    _context.TIpEmrVitals.RemoveRange(lstVitals);
 
                 //Save deletion first
                 await _context.SaveChangesAsync(UserId, Username);       // fixed
