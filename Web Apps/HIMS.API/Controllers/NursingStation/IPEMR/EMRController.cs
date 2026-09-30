@@ -106,12 +106,15 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Edit(EMRModel obj)
         {
             TIpEmrhistory model = obj.MapTo<TIpEmrhistory>();
             if (obj.IpdEmrId == 0)
+            {
+
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
             else
             {
                 foreach (var q in model.TIpEmrdiagnosisInfos)
@@ -147,6 +150,17 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
                     v.ModifiedBy = CurrentUserId;
                     v.ModifiedDate = AppTime.Now;
                     v.FhistId = 0;
+                }
+                foreach (var v in model.TIpEmrVitals)
+                {
+                    if (v.IpemrVitalId == 0)
+                    {
+                        v.Createdby = CurrentUserId;
+                        v.CreatedDate = AppTime.Now;
+                    }
+                    v.ModifiedBy = CurrentUserId;
+                    v.ModifiedDate = AppTime.Now;
+                    v.IpemrVitalId = 0;
                 }
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
