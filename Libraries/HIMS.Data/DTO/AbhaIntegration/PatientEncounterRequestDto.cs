@@ -87,6 +87,7 @@ namespace HIMS.Data.DTO.AbhaIntegration
         // keep reports at end
         public List<Reports> Reports { get; set; }
         public FollowUp FollowUp { get; set; }
+        public WellnessRecord WellnessRecord { get; set; }
     }
 
     public class Reports
@@ -424,5 +425,25 @@ public class ObservationResult
         public string start { get; set; }
         public string end { get; set; }
         public string description { get; set; }
+    }
+    public class WellnessRecord
+    {
+        public List<WellnessRecordItem> vitalSigns { get; set; }
+        public List<WellnessRecordItem> bodyMeasurement { get; set; }
+        public List<WellnessRecordItem> physicalActivity { get; set; }
+        public List<WellnessRecordItem> generalAssessment { get; set; }
+        public List<WellnessRecordItem> womenHealth { get; set; }
+        public List<WellnessRecordItem> lifestyle { get; set; }
+        public List<WellnessRecordItem> eyeHealth { get; set; }
+    }
+
+    public class WellnessRecordItem
+    {
+        public string vitalCode { get; set; }
+        public string vitalValue { get; set; }
+        public string unit { get; set; }
+        public string status { get; set; }
+        public string effectiveDate { get; set; }
+        public string performerId { get; set; }
     }
 }
