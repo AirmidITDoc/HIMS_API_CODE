@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         [HttpPost("DiagnosisInfoList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> DiagnosisinfoList(GridRequestModel objGrid)
         {
             IPagedList<IPEMRDiagnosisInfoListDto> IPEMRDiagnosisInfoListDto = await _EmrService.GetIPEMRDiagnosisInfoAsync(objGrid);
@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         [HttpPost("DignosisHistoryList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> DiagnosisHistoryList(GridRequestModel objGrid)
         {
             IPagedList<IPEMRDignosisHistoryListDto> IPEMRDignosisHistoryListDto = await _EmrService.GetIPEMRDignosisHistoryAsync(objGrid);
@@ -43,12 +43,14 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         [HttpPost("FamilyMedicalHistoryList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> FamilyMedicalHistoryList(GridRequestModel objGrid)
         {
             IPagedList<IPEMRFamilyMedicalHistoryListDto> IPEMRFamilyMedicalHistoryListDto = await _EmrService.GetIPEMRFamilyMedicalHistoryAsync(objGrid);
             return Ok(IPEMRFamilyMedicalHistoryListDto.ToGridResponse(objGrid, "IPEMRFamilyMedicalHistory List"));
         }
+
+
 
         [HttpGet("{id?}")]
         [Permission]
@@ -62,7 +64,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
        
 
         [HttpPost("Insert")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Insert(EMRModel obj)
         {
             TIpEmrhistory model = obj.MapTo<TIpEmrhistory>();
@@ -106,7 +108,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(EMRModel obj)
         {
             TIpEmrhistory model = obj.MapTo<TIpEmrhistory>();
