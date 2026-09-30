@@ -38,10 +38,10 @@ namespace HIMS.API.Models.Common
         [Description("Patient\\Files")]
         Patient_Files = 5,
         [Description("Patient\\PathFiles")]
-        Patient_PathFiles = 6,
-        [Description("Hospital\\Logo")]
         //Patient_PathFiles = 6,
-        //[Description("Hospital_Logo")]
+        //[Description("Hospital\\Logo")]
+        Patient_PathFiles = 6,
+        [Description("Hospital_Logo")]
 
         Logo = 7,
         [Description("User\\Signature")]

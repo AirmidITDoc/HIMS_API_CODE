@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         [HttpPost("DiagnosisInfoList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> DiagnosisinfoList(GridRequestModel objGrid)
         {
             IPagedList<IPEMRDiagnosisInfoListDto> IPEMRDiagnosisInfoListDto = await _EmrService.GetIPEMRDiagnosisInfoAsync(objGrid);
@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         [HttpPost("DignosisHistoryList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> DiagnosisHistoryList(GridRequestModel objGrid)
         {
             IPagedList<IPEMRDignosisHistoryListDto> IPEMRDignosisHistoryListDto = await _EmrService.GetIPEMRDignosisHistoryAsync(objGrid);
@@ -43,12 +43,14 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         [HttpPost("FamilyMedicalHistoryList")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> FamilyMedicalHistoryList(GridRequestModel objGrid)
         {
             IPagedList<IPEMRFamilyMedicalHistoryListDto> IPEMRFamilyMedicalHistoryListDto = await _EmrService.GetIPEMRFamilyMedicalHistoryAsync(objGrid);
             return Ok(IPEMRFamilyMedicalHistoryListDto.ToGridResponse(objGrid, "IPEMRFamilyMedicalHistory List"));
         }
+
+
 
         [HttpGet("{id?}")]
         [Permission]
@@ -62,7 +64,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
        
 
         [HttpPost("Insert")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Insert(EMRModel obj)
         {
             TIpEmrhistory model = obj.MapTo<TIpEmrhistory>();
@@ -111,7 +113,10 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         {
             TIpEmrhistory model = obj.MapTo<TIpEmrhistory>();
             if (obj.IpdEmrId == 0)
+            {
+
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
             else
             {
                 foreach (var q in model.TIpEmrdiagnosisInfos)
@@ -147,6 +152,17 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
                     v.ModifiedBy = CurrentUserId;
                     v.ModifiedDate = AppTime.Now;
                     v.FhistId = 0;
+                }
+                foreach (var v in model.TIpEmrVitals)
+                {
+                    if (v.IpemrVitalId == 0)
+                    {
+                        v.Createdby = CurrentUserId;
+                        v.CreatedDate = AppTime.Now;
+                    }
+                    v.ModifiedBy = CurrentUserId;
+                    v.ModifiedDate = AppTime.Now;
+                    v.IpemrVitalId = 0;
                 }
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;

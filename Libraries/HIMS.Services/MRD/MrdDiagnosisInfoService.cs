@@ -115,7 +115,6 @@ namespace HIMS.Services.MRD
                 var tokensDelete = new
                 {
                     IpdiagId = ObjHeader.IpdiagId,
-                    AdmId = ObjHeader.AdmId
                 };
 
                 odal.ExecuteNonQuery("ps_TIpMrdDiagnosisInfoDetail_Delete", CommandType.StoredProcedure, tokensDelete.ToDictionary());
