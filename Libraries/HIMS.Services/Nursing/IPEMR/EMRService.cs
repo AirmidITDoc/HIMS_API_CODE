@@ -61,31 +61,28 @@ namespace HIMS.Services.Nursing.IPEMR
         public virtual async Task UpdateAsync(TIpEmrhistory objEMR, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-
-
             {
-                long IpdEmrId = objEMR.IpdEmrId;
+                long ipEmrId = objEMR.IpdEmrId;
 
-                // Delete related details first
-                var lstAttend = await _context.TIpEmrdiagnosisInfos.Where(x => x.IpemrdiagnId == IpdEmrId).ToListAsync();
+                // Delete related details using parent foreign key (Ipemrid) instead of primary key
+                var lstAttend = await _context.TIpEmrdiagnosisInfos.Where(x => x.Ipemrid == ipEmrId).ToListAsync();
                 if (lstAttend.Any())
                     _context.TIpEmrdiagnosisInfos.RemoveRange(lstAttend);
 
-
-                var lstSurgery = await _context.TIpEmrdignosisHistories.Where(x => x.EmrdignId == IpdEmrId).ToListAsync();
+                var lstSurgery = await _context.TIpEmrdignosisHistories.Where(x => x.Ipemrid == ipEmrId).ToListAsync();
                 if (lstSurgery.Any())
                     _context.TIpEmrdignosisHistories.RemoveRange(lstSurgery);
 
-                var lstDiagnosis = await _context.TIpEmrfamilyMedicalHistories.Where(x => x.FhistId == IpdEmrId).ToListAsync();
+                var lstDiagnosis = await _context.TIpEmrfamilyMedicalHistories.Where(x => x.IpEmrId == ipEmrId).ToListAsync();
                 if (lstDiagnosis.Any())
                     _context.TIpEmrfamilyMedicalHistories.RemoveRange(lstDiagnosis);
 
-                var lstVitals = await _context.TIpEmrVitals.Where(x => x.IpemrVitalId == IpdEmrId).ToListAsync();
+                var lstVitals = await _context.TIpEmrVitals.Where(x => x.IpemrId == ipEmrId).ToListAsync();
                 if (lstVitals.Any())
                     _context.TIpEmrVitals.RemoveRange(lstVitals);
 
-                //Save deletion first
-                await _context.SaveChangesAsync(UserId, Username);       // fixed
+                // Save deletion first
+                await _context.SaveChangesAsync(UserId, Username);
 
                 // Then attach and update header
                 _context.Attach(objEMR);
@@ -103,8 +100,7 @@ namespace HIMS.Services.Nursing.IPEMR
                         _context.Entry(objEMR).Property(column).IsModified = false;
                 }
 
-                await _context.SaveChangesAsync(UserId, Username);       // fixed
-
+                await _context.SaveChangesAsync(UserId, Username);
                 scope.Complete();
             }
         }
