@@ -506,6 +506,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TIndentDetail> TIndentDetails { get; set; } = null!;
         public virtual DbSet<TIndentHeader> TIndentHeaders { get; set; } = null!;
         public virtual DbSet<TIpAdmissionDiagnosisInformation> TIpAdmissionDiagnosisInformations { get; set; } = null!;
+        public virtual DbSet<TIpEmrVital> TIpEmrVitals { get; set; } = null!;
         public virtual DbSet<TIpEmrdiagnosisInfo> TIpEmrdiagnosisInfos { get; set; } = null!;
         public virtual DbSet<TIpEmrdignosisHistory> TIpEmrdignosisHistories { get; set; } = null!;
         public virtual DbSet<TIpEmrfamilyMedicalHistory> TIpEmrfamilyMedicalHistories { get; set; } = null!;
@@ -695,7 +696,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -14604,6 +14605,51 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<TIpEmrVital>(entity =>
+            {
+                entity.HasKey(e => e.IpemrVitalId);
+
+                entity.ToTable("T_IP_EMR_Vitals");
+
+                entity.Property(e => e.IpemrVitalId).HasColumnName("IPEmrVitalId");
+
+                entity.Property(e => e.Bmi)
+                    .HasMaxLength(50)
+                    .HasColumnName("BMI");
+
+                entity.Property(e => e.Bp).HasMaxLength(50);
+
+                entity.Property(e => e.Bsl)
+                    .HasMaxLength(50)
+                    .HasColumnName("BSL");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Height).HasMaxLength(50);
+
+                entity.Property(e => e.IpemrId).HasColumnName("IPEmrId");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.Pulse).HasMaxLength(50);
+
+                entity.Property(e => e.Spo2).HasMaxLength(50);
+
+                entity.Property(e => e.Temp).HasMaxLength(50);
+
+                entity.Property(e => e.Weight).HasMaxLength(50);
+
+                entity.HasOne(d => d.Ipemr)
+                    .WithMany(p => p.TIpEmrVitals)
+                    .HasForeignKey(d => d.IpemrId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_IP_EMR_Vitals_T_IP_EMRHistory");
+            });
+
             modelBuilder.Entity<TIpEmrdiagnosisInfo>(entity =>
             {
                 entity.HasKey(e => e.IpemrdiagnId);
@@ -18307,6 +18353,10 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Allergy).HasMaxLength(50);
 
+                entity.Property(e => e.AllergyRemark)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.BloodGroup).HasMaxLength(50);
 
                 entity.Property(e => e.Bmi)
@@ -18330,6 +18380,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
                 entity.Property(e => e.Diagnosis).HasMaxLength(500);
+
+                entity.Property(e => e.DrugAllergy)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Examination).HasMaxLength(500);
 
@@ -20285,6 +20339,16 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.FirstFollowupVisit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.FollowUpDepartmentId).HasColumnName("FollowUpDepartmentID");
+
+                entity.Property(e => e.FollowUpDescription)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FollowUpReason)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.FollowupDate)
                     .HasColumnType("datetime")
