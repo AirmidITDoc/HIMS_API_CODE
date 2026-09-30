@@ -18353,10 +18353,6 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Allergy).HasMaxLength(50);
 
-                entity.Property(e => e.AllergyRemark)
-                    .HasMaxLength(1000)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.BloodGroup).HasMaxLength(50);
 
                 entity.Property(e => e.Bmi)
@@ -18380,10 +18376,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
                 entity.Property(e => e.Diagnosis).HasMaxLength(500);
-
-                entity.Property(e => e.DrugAllergy)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.Examination).HasMaxLength(500);
 
@@ -20339,16 +20331,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.FirstFollowupVisit).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.FollowUpDepartmentId).HasColumnName("FollowUpDepartmentID");
-
-                entity.Property(e => e.FollowUpDescription)
-                    .HasMaxLength(1000)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FollowUpReason)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.FollowupDate)
                     .HasColumnType("datetime")

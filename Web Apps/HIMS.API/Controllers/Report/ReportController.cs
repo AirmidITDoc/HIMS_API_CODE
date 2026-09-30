@@ -696,7 +696,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpPost("ViewReportFromDB")]
-        [Permission]
+        //[Permission]
         public async Task<IActionResult> ViewReportFromDB(ReportRequestModel model)
         {
             try

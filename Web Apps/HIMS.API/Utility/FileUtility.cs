@@ -1,7 +1,6 @@
 ﻿using HIMS.Core.Domain.Common;
 using HIMS.Services.Users;
 using Microsoft.AspNetCore.StaticFiles;
-
 namespace HIMS.API.Utility
 {
     public class FileUtility : IFileUtility
@@ -11,12 +10,11 @@ namespace HIMS.API.Utility
         {
             _Sales = sales;
         }
-
         public async Task<Tuple<MemoryStream, string, string>> DownloadFile(string filePath)
         {
             var DestinationPath = "";
             if (string.IsNullOrWhiteSpace(DestinationPath))
-                DestinationPath =AppSettings.Settings.StorageBaseUrl;
+                DestinationPath = AppSettings.Settings.StorageBaseUrl;
             string FilePath = Path.Combine(DestinationPath.Trim('\\'), filePath.Trim('\\'));
             var memoryStream = new MemoryStream();
             using (var stream = new FileStream(FilePath, FileMode.Open))
@@ -33,7 +31,6 @@ namespace HIMS.API.Utility
             byte[] imageArray = await System.IO.File.ReadAllBytesAsync(filePath);
             return Convert.ToBase64String(imageArray);
         }
-
         public string GetMimeType(string fileName)
         {
             var provider = new FileExtensionContentTypeProvider();
@@ -43,22 +40,7 @@ namespace HIMS.API.Utility
             }
             return contentType;
         }
-        public string SaveImageFromBase64(string Base64, string Folder)
-        {
-            var DestinationPath = "";
-            //_Sales.GetFilePath();
-            if (string.IsNullOrWhiteSpace(DestinationPath))
-                DestinationPath = AppSettings.Settings.StorageBaseUrl;
-            if (!Directory.Exists(DestinationPath))
-                Directory.CreateDirectory(DestinationPath);
-            if (!Directory.Exists($"{DestinationPath.Trim('\\')}\\{Folder}"))
-                Directory.CreateDirectory($"{DestinationPath.Trim('\\')}\\{Folder}");
-            string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
-            string FileName = Guid.NewGuid().ToString() + ".png";
-            File.WriteAllBytes(Path.Combine(FilePath, FileName), Convert.FromBase64String(Base64.Replace("data:image/png;base64,", "")));
-            return FileName;
-        }
-        //Shilpa Code
+        // Original Code
         //public string SaveImageFromBase64(string Base64, string Folder)
         //{
         //    var DestinationPath = "";
@@ -67,15 +49,31 @@ namespace HIMS.API.Utility
         //        DestinationPath = AppSettings.Settings.StorageBaseUrl;
         //    if (!Directory.Exists(DestinationPath))
         //        Directory.CreateDirectory(DestinationPath);
-
-        //    string FilePath = Path.Combine(DestinationPath.TrimEnd('\\', '/'), Folder.Trim('\\', '/'));
-        //    if (!Directory.Exists(FilePath))
-        //        Directory.CreateDirectory(FilePath);
-
+        //    if (!Directory.Exists($"{DestinationPath.Trim('\\')}\\{Folder}"))
+        //        Directory.CreateDirectory($"{DestinationPath.Trim('\\')}\\{Folder}");
+        //    string FilePath = Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
         //    string FileName = Guid.NewGuid().ToString() + ".png";
         //    File.WriteAllBytes(Path.Combine(FilePath, FileName), Convert.FromBase64String(Base64.Replace("data:image/png;base64,", "")));
         //    return FileName;
         //}
+
+        //Shilpa Code
+        public string SaveImageFromBase64(string Base64, string Folder)
+        {
+            var DestinationPath = "";
+            if (string.IsNullOrWhiteSpace(DestinationPath))
+                DestinationPath = AppSettings.Settings.StorageBaseUrl;
+            if (!Directory.Exists(DestinationPath))
+                Directory.CreateDirectory(DestinationPath);
+            // Split Folder on BOTH separators (handles internal backslashes/slashes safely)
+            string[] folderParts = Folder.Split(new[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
+            string FilePath = Path.Combine(new[] { DestinationPath.TrimEnd('\\', '/') }.Concat(folderParts).ToArray());
+            if (!Directory.Exists(FilePath))
+                Directory.CreateDirectory(FilePath);
+            string FileName = Guid.NewGuid().ToString() + ".png";
+            File.WriteAllBytes(Path.Combine(FilePath, FileName), Convert.FromBase64String(Base64.Replace("data:image/png;base64,", "")));
+            return FileName;
+        }
         public async Task<string> UploadFileAsync(IFormFile file, string Folder)
         {
             var DestinationPath = "";
@@ -122,6 +120,5 @@ namespace HIMS.API.Utility
             byte[] imageArray = await System.IO.File.ReadAllBytesAsync($"{FilePath}\\{filename}");
             return "data:image/png;base64," + Convert.ToBase64String(imageArray);
         }
-
     }
 }

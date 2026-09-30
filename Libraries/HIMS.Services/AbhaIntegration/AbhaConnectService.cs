@@ -284,6 +284,7 @@ namespace HIMS.Services.AbhaIntegration
                     FamilyMedicalHistory = null,
                     CarePlan = null,
                     Reports = null,
+                    WellnessRecord = null,
                 };
 
                 response.Visits.Add(visit);
@@ -815,6 +816,19 @@ namespace HIMS.Services.AbhaIntegration
             response.Visits[0].Reports = GetReports(proceduresDs != null && proceduresDs.Tables.Count > 3 ? proceduresDs.Tables[3] : null);
 
             response.Visits[0].FollowUp = GetFollowUp(proceduresDs != null && proceduresDs.Tables.Count > 4 ? proceduresDs.Tables[4] : null,model.HipId);
+
+            DatabaseHelper wellnessSql = new();
+
+            DataSet wellnessDs = wellnessSql.FetchDataSetBySP(
+                "ps_GetWellnessRecord",
+                new SqlParameter[]
+                {
+        new SqlParameter { ParameterName = "@OpIpId", Value = model.OpIpId },
+        new SqlParameter { ParameterName = "@OpIpType", Value = model.OpIpType }
+                }
+            );
+
+            response.Visits[0].WellnessRecord = GetWellnessRecord(wellnessDs);
             // =====================================================
             // FINAL RESULT
             // =====================================================
@@ -822,6 +836,51 @@ namespace HIMS.Services.AbhaIntegration
             result.Add(response);
 
             return result;
+        }
+        private WellnessRecord GetWellnessRecord(DataSet ds)
+        {
+            if (ds == null)
+                return null;
+
+            WellnessRecord wellness = new WellnessRecord();
+
+            if (ds.Tables.Count > 0)
+            {
+                wellness.vitalSigns = new List<WellnessRecordItem>();
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    wellness.vitalSigns.Add(new WellnessRecordItem
+                    {
+                        vitalCode = row["VitalCode"].ToString(),
+                        vitalValue = row["VitalValue"].ToString(),
+                        unit = row["Unit"].ToString(),
+                        status = row["Status"].ToString(),
+                        effectiveDate = row["EffectiveDate"].ToString(),
+                        performerId = row["PerformerId"].ToString()
+                    });
+                }
+            }
+
+            if (ds.Tables.Count > 1)
+            {
+                wellness.bodyMeasurement = new List<WellnessRecordItem>();
+
+                foreach (DataRow row in ds.Tables[1].Rows)
+                {
+                    wellness.bodyMeasurement.Add(new WellnessRecordItem
+                    {
+                        vitalCode = row["VitalCode"].ToString(),
+                        vitalValue = row["VitalValue"].ToString(),
+                        unit = row["Unit"].ToString(),
+                        status = row["Status"].ToString(),
+                        effectiveDate = row["EffectiveDate"].ToString(),
+                        performerId = row["PerformerId"].ToString()
+                    });
+                }
+            }
+
+            return wellness;
         }
         private FollowUp GetFollowUp(DataTable table, string hipId)
         {
