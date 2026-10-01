@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
             }
 
             var data = await _repository.GetById(x => x.MealId == id);
-            return data.ToSingleResponse<MMealTypeMaster, MealTypeMasterModel>("FoodItemMaster");
+            return data.ToSingleResponse<MMealTypeMaster, MealTypeMasterModel>("Meal Type Master");
         }
 
         [HttpPost("Insert")]
