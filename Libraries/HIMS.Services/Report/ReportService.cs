@@ -7214,8 +7214,8 @@ namespace HIMS.Services.Report
         private static List<DataTable> FetchAllResultSets(string spName, SqlParameter[] para)
         {
             var tables = new List<DataTable>();
-
-            string connStr = EncryptionUtility.DecryptText(AppSettings.Settings.CONNECTION_STRING, SecurityKeys.EnDeKey);
+            string connStr = AppSettings.Settings.CONNECTION_STRING;
+       //     string connStr = EncryptionUtility.DecryptText(AppSettings.Settings.CONNECTION_STRING, SecurityKeys.EnDeKey);
 
             using var conn = new SqlConnection(connStr);
             using var cmd = new SqlCommand(spName, conn)
