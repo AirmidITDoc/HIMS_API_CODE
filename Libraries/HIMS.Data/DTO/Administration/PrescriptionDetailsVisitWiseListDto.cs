@@ -51,6 +51,8 @@
         public string? FollowUpDescription { get; set; }
         public string? FollowUpDepartmentName { get; set; }
         public string? FollowUpDoctorName { get; set; }
+        public long? FollowUpDepartmentId { get; set; }
+        public long? FollowUpDoctorId { get; set; }
 
     }
 }
