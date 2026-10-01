@@ -7,6 +7,7 @@ using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using System.Transactions;
 
@@ -62,73 +63,165 @@ namespace HIMS.Services.OutPatient
         }
 
 
-        //Ashu///  Modifierd by shilpa 2025/14/06 m_Update_VisitFollowupDate//
-        public virtual void InsertPrescriptionSP(List<TPrescription> objTPrescription, VisitDetail ObjVisitDetail, List<TOprequestList> objTOprequestList, List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int UserId, string UserName)
+        ////Ashu///  Modifierd by shilpa 2025/14/06 m_Update_VisitFollowupDate//
+        //public virtual void InsertPrescriptionSP(List<TPrescription> objTPrescription, VisitDetail ObjVisitDetail, List<TOprequestList> objTOprequestList, List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int UserId, string UserName)
+        //{
+        //    DatabaseHelper odal = new();
+        //    foreach (var modelItem in objTPrescription)
+        //    {
+
+        //        var tokensObj = new
+        //        {
+        //            OPIPID = Convert.ToInt32(modelItem.OpdIpdIp)
+
+        //        };
+        //        odal.ExecuteNonQuery("sp_delete_OPPrescription_1", CommandType.StoredProcedure, tokensObj.ToDictionary());
+        //    }
+
+        //    foreach (var modelItem in objTPrescription)
+        //    {
+        //        modelItem.Date = Convert.ToDateTime(modelItem.Date);
+        //        modelItem.Ptime = Convert.ToDateTime(modelItem.Ptime);
+        //        modelItem.CreatedBy = UserId;
+        //        objTOprequestList.ForEach(x => { x.OpIpId = modelItem.OpdIpdIp; x.CreatedBy = UserId; x.ModifiedBy = UserId; });
+        //        objmOpcasepaperDignosisMaster.ForEach(x => { x.VisitId = modelItem.OpdIpdIp; });
+
+        //        string[] rEntity = { "PrecriptionId", "CreatedBy", "CreatedOn", "ModifiedBy", "ModifiedOn" };
+        //        var entity = modelItem.ToDictionary();
+        //        foreach (var rProperty in rEntity)
+        //        {
+        //            entity.Remove(rProperty);
+        //        }
+        //        entity["IsAddBy"] = 0; // Ensure objpayment has OPDIPDType
+        //        odal.ExecuteNonQuery("ps_insert_OPPrescription_1", CommandType.StoredProcedure, entity);
+
+        //        string[] VDetailEntity = { "RegId","VisitDate","VisitTime","UnitId","PatientTypeId","ConsultantDocId","RefDocId","Opdno","TariffId","CompanyId","AddedBy","UpdatedBy","IsCancelledBy","IsCancelled","IsCancelledDate", "ClassId", "DepartmentId","PatientOldNew","FirstFollowupVisit","AppPurposeId", "IsMark", "Comments", "IsXray", "CrossConsulFlag", "PhoneAppId", "Height","Pweight","Bmi","Bsl","SpO2", "Temp", "Pulse", "Bp",
+        //        "CheckInTime","CheckOutTime","ConStartTime","ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","CheckingStatus","DoctorEMRStatus","CampId","CrossConsultantDrId","IsConvertRequestForIp","GovtCompanyId","GovtApprovedAmt","GovtRefNo","CompanyApprovedId","CompanyApprovedAmt","CompRefNo"};
+        //        var VEntity = ObjVisitDetail.ToDictionary();
+        //        foreach (var rProperty in VDetailEntity)
+        //        {
+        //            VEntity.Remove(rProperty);
+        //        }
+        //        odal.ExecuteNonQuery("m_Update_VisitFollowupDate", CommandType.StoredProcedure, VEntity);
+
+        //    }
+        //    foreach (var item in objTOprequestList)
+        //    {
+
+        //        string[] rDetailEntity = { "RequestTranId", "CreatedBy", "CreatedOn", "ModifiedBy", "ModifiedOn" };
+
+        //        var PrescriptionEntity = item.ToDictionary();
+        //        foreach (var rProperty in rDetailEntity)
+        //        {
+        //            PrescriptionEntity.Remove(rProperty);
+        //        }
+        //        PrescriptionEntity["CreatedBy"] = UserId;
+        //        odal.ExecuteNonQuery("ps_Insert_T_OPRequestList", CommandType.StoredProcedure, PrescriptionEntity);
+
+        //    }
+        //    foreach (var item in objmOpcasepaperDignosisMaster)
+        //    {
+        //        string[] PayEntity = { "Id", };
+        //        var CasepaperEntity = item.ToDictionary();
+        //        foreach (var rProperty in PayEntity)
+        //        {
+        //            CasepaperEntity.Remove(rProperty);
+        //        }
+        //        odal.ExecuteNonQuery("sp_Insert_OPCasepaperDignosisMaster", CommandType.StoredProcedure, CasepaperEntity);
+        //    }
+        //}
+        public virtual async Task InsertPrescriptionSP(List<TPrescription> objTPrescription, VisitDetail ObjVisitDetail, List<TOprequestList> objTOprequestList, List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int CurrentUserId, string CurrentUserName)
         {
-            DatabaseHelper odal = new();
-            foreach (var modelItem in objTPrescription)
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
+                DatabaseHelper odal = new();
 
-                var tokensObj = new
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
+                foreach (var modelItem in objTPrescription)
                 {
-                    OPIPID = Convert.ToInt32(modelItem.OpdIpdIp)
 
-                };
-                odal.ExecuteNonQuery("sp_delete_OPPrescription_1", CommandType.StoredProcedure, tokensObj.ToDictionary());
+                    var tokensObj = new
+                    {
+                        OPIPID = Convert.ToInt32(modelItem.OpdIpdIp)
+
+                    };
+                    odal.ExecuteNonQuery("sp_delete_OPPrescription_1", CommandType.StoredProcedure, tokensObj.ToDictionary());
+                    await _context.LogProcedureExecution(tokensObj.ToDictionary(), nameof(TPrescription), Convert.ToInt32(modelItem.OpdIpdIp), Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
+                }
+
+                foreach (var modelItem in objTPrescription)
+                {
+                    modelItem.Date = Convert.ToDateTime(modelItem.Date);
+                    modelItem.Ptime = Convert.ToDateTime(modelItem.Ptime);
+                    modelItem.CreatedBy = CurrentUserId;
+                    objTOprequestList.ForEach(x => { x.OpIpId = modelItem.OpdIpdIp; x.CreatedBy = CurrentUserId; x.ModifiedBy = CurrentUserId; });
+                    objmOpcasepaperDignosisMaster.ForEach(x => { x.VisitId = modelItem.OpdIpdIp; });
+
+                    string[] rEntity = { "OpdIpdIp", "OpdIpdType", "Date", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "Instruction", "Remark", "DoseOption2", "DaysOption2", "DoseOption3", "DaysOption3", "InstructionId", "QtyPerDay", "TotalQty", "IsClosed", "IsEnglishOrIsMarathi", "ChiefComplaint", "Diagnosis", "Examination", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "StoreId", "PatientReferDocId", "Advice", "IsAddBy", "Allergy", "BloodGroup", "DepartmentId", "HistoryOfIllness", "PrescDoctorId", "DrugAllergy", "AllergyRemark" };
+                    var entity = modelItem.ToDictionary();
+                    foreach (var rProperty in entity.Keys.ToList())
+                    {
+                        if (!rEntity.Contains(rProperty))
+                            entity.Remove(rProperty);
+                    }
+                    entity["IsAddBy"] = 0; // Ensure objpayment has OPDIPDType
+                    odal.ExecuteNonQuery("ps_insert_OPPrescription_1", CommandType.StoredProcedure, entity);
+                    await _context.LogProcedureExecution(entity, nameof(TPrescription), Convert.ToInt32(modelItem.PrecriptionId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+                    string[] VDetailEntity = { "VisitId", "FollowupDate", "FollowUpReason", "FollowUpDescription", "FollowUpDepartmentId", "FollowUpDoctorId" };
+                    var VEntity = ObjVisitDetail.ToDictionary();
+                    foreach (var rProperty in VEntity.Keys.ToList())
+                    {
+                        if (!VDetailEntity.Contains(rProperty))
+                            VEntity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("m_Update_VisitFollowupDate", CommandType.StoredProcedure, VEntity);
+                    await _context.LogProcedureExecution(VEntity, nameof(VisitDetail), Convert.ToInt32(ObjVisitDetail.VisitId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+
+                }
+                foreach (var item in objTOprequestList)
+                {
+
+                    string[] rDetailEntity = { "OpIpId", "ServiceId" };
+
+                    var PrescriptionEntity = item.ToDictionary();
+                    foreach (var rProperty in PrescriptionEntity.Keys.ToList())
+                    {
+                        if (!rDetailEntity.Contains(rProperty))
+                            PrescriptionEntity.Remove(rProperty);
+                    }
+                    PrescriptionEntity["CreatedBy"] = CurrentUserId;
+                    odal.ExecuteNonQuery("ps_Insert_T_OPRequestList", CommandType.StoredProcedure, PrescriptionEntity);
+                    await _context.LogProcedureExecution(PrescriptionEntity, nameof(TOprequestList), Convert.ToInt32(item.OpIpId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+                }
+                foreach (var item in objmOpcasepaperDignosisMaster)
+                {
+                    string[] PayEntity = { "VisitId", "DescriptionName", "DescriptionType", "Icdcode", "DiagnosisName" };
+                    var CasepaperEntity = item.ToDictionary();
+                    foreach (var rProperty in CasepaperEntity.Keys.ToList())
+                    {
+                        if (!PayEntity.Contains(rProperty))
+                            CasepaperEntity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("sp_Insert_OPCasepaperDignosisMaster", CommandType.StoredProcedure, CasepaperEntity);
+                    await _context.LogProcedureExecution(CasepaperEntity, nameof(MOpcasepaperDignosisMaster), Convert.ToInt32(item.VisitId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                }
+                //  Save & Commit 
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+
+                await transaction.CommitAsync();
             }
-
-            foreach (var modelItem in objTPrescription)
+            catch (Exception)
             {
-                modelItem.Date = Convert.ToDateTime(modelItem.Date);
-                modelItem.Ptime = Convert.ToDateTime(modelItem.Ptime);
-                modelItem.CreatedBy = UserId;
-                objTOprequestList.ForEach(x => { x.OpIpId = modelItem.OpdIpdIp; x.CreatedBy = UserId; x.ModifiedBy = UserId; });
-                objmOpcasepaperDignosisMaster.ForEach(x => { x.VisitId = modelItem.OpdIpdIp; });
-
-                string[] rEntity = { "PrecriptionId", "CreatedBy", "CreatedOn", "ModifiedBy", "ModifiedOn" };
-                var entity = modelItem.ToDictionary();
-                foreach (var rProperty in rEntity)
-                {
-                    entity.Remove(rProperty);
-                }
-                entity["IsAddBy"] = 0; // Ensure objpayment has OPDIPDType
-                odal.ExecuteNonQuery("ps_insert_OPPrescription_1", CommandType.StoredProcedure, entity);
-
-                string[] VDetailEntity = { "RegId","VisitDate","VisitTime","UnitId","PatientTypeId","ConsultantDocId","RefDocId","Opdno","TariffId","CompanyId","AddedBy","UpdatedBy","IsCancelledBy","IsCancelled","IsCancelledDate", "ClassId", "DepartmentId","PatientOldNew","FirstFollowupVisit","AppPurposeId", "IsMark", "Comments", "IsXray", "CrossConsulFlag", "PhoneAppId", "Height","Pweight","Bmi","Bsl","SpO2", "Temp", "Pulse", "Bp",
-                "CheckInTime","CheckOutTime","ConStartTime","ConEndTime","CreatedBy","CreatedDate","ModifiedBy","ModifiedDate","CheckingStatus","DoctorEMRStatus","CampId","CrossConsultantDrId","IsConvertRequestForIp","GovtCompanyId","GovtApprovedAmt","GovtRefNo","CompanyApprovedId","CompanyApprovedAmt","CompRefNo"};
-                var VEntity = ObjVisitDetail.ToDictionary();
-                foreach (var rProperty in VDetailEntity)
-                {
-                    VEntity.Remove(rProperty);
-                }
-                odal.ExecuteNonQuery("m_Update_VisitFollowupDate", CommandType.StoredProcedure, VEntity);
-
-            }
-            foreach (var item in objTOprequestList)
-            {
-
-                string[] rDetailEntity = { "RequestTranId", "CreatedBy", "CreatedOn", "ModifiedBy", "ModifiedOn" };
-
-                var PrescriptionEntity = item.ToDictionary();
-                foreach (var rProperty in rDetailEntity)
-                {
-                    PrescriptionEntity.Remove(rProperty);
-                }
-                PrescriptionEntity["CreatedBy"] = UserId;
-                odal.ExecuteNonQuery("ps_Insert_T_OPRequestList", CommandType.StoredProcedure, PrescriptionEntity);
-
-            }
-            foreach (var item in objmOpcasepaperDignosisMaster)
-            {
-                string[] PayEntity = { "Id", };
-                var CasepaperEntity = item.ToDictionary();
-                foreach (var rProperty in PayEntity)
-                {
-                    CasepaperEntity.Remove(rProperty);
-                }
-                odal.ExecuteNonQuery("sp_Insert_OPCasepaperDignosisMaster", CommandType.StoredProcedure, CasepaperEntity);
+                await transaction.RollbackAsync();
+                throw;
             }
         }
+
 
         public virtual async Task UpdateAsync(TPrescription OBJTPrescription, int UserId, string Username)
         {

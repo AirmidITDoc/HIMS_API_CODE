@@ -44,6 +44,8 @@ namespace HIMS.API.Models.OutPatient
         public long? DepartmentId { get; set; }
         public string? HistoryOfIllness { get; set; }
         public long? PrescDoctorId { get; set; }
+        public string? DrugAllergy { get; set; }
+        public string? AllergyRemark { get; set; }
 
 
 
@@ -63,6 +65,10 @@ namespace HIMS.API.Models.OutPatient
     {
         public long VisitId { get; set; }
         public DateTime FollowupDate { get; set; }
+        public string? FollowUpReason { get; set; }
+        public string? FollowUpDescription { get; set; }
+        public long? FollowUpDepartmentId { get; set; }
+        public long? FollowUpDoctorId { get; set; }
 
     }
     public class TOPRequestListModel

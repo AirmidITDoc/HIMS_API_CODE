@@ -31,6 +31,8 @@ namespace HIMS.Data.DTO.DietKitchen
         public int NotDeliveredCount { get; set; }
         public int AllAccepted { get; set; }
         public int AllDelivered { get; set; }
+        public long? RegNo { get; set; }
+
 
     }
     public class DietPatientRequestDetailsListDto

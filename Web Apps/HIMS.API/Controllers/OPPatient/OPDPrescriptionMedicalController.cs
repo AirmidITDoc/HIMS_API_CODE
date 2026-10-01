@@ -86,7 +86,6 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("PrescriptionDetailsVisitList")]
-        //[Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         [Permission]
 
         public async Task<IActionResult> ListP(GridRequestModel objGrid)
@@ -96,7 +95,6 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("getlabifnormationList")]
-        //[Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         [Permission]
         public async Task<IActionResult> ListL(GridRequestModel objGrid)
         {
@@ -106,7 +104,6 @@ namespace HIMS.API.Controllers.OPPatient
         //List API
         [HttpGet]
         [Route("get-Service")]
-        //[Permission(PageCode = "DepartmentMaster", Permission = PagePermission.View)]
         [Permission]
         public async Task<ApiResponse> GetDropdown()
         {
@@ -117,7 +114,6 @@ namespace HIMS.API.Controllers.OPPatient
         //List API
         [HttpGet]
         [Route("get-Dignosis")]
-        //[Permission(PageCode = "DepartmentMaster", Permission = PagePermission.View)]
         [Permission]
         public async Task<ApiResponse> GetDignosDropdown()
         {
@@ -126,7 +122,6 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("GetDignosisList")]
-        //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         [Permission]
         public async Task<IActionResult> DignsisList(GridRequestModel objGrid)
         {
