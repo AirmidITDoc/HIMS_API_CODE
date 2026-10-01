@@ -57,5 +57,9 @@ namespace HIMS.Data.Models
         public long? CompanyApprovedId { get; set; }
         public decimal? CompanyApprovedAmt { get; set; }
         public string? CompRefNo { get; set; }
+        public string? FollowUpReason { get; set; }
+        public string? FollowUpDescription { get; set; }
+        public long? FollowUpDepartmentId { get; set; }
+        public long? FollowUpDoctorId { get; set; }
     }
 }

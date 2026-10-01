@@ -7,7 +7,7 @@ namespace HIMS.Services.OutPatient
 {
     public partial interface IOPDPrescriptionMedicalService
     {
-        void InsertPrescriptionSP(List<TPrescription> objTPrescription, VisitDetail ObjVisitDetail, List<TOprequestList> objTOprequestList, List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int UserId, string UserName);
+        Task InsertPrescriptionSP(List<TPrescription> objTPrescription, VisitDetail ObjVisitDetail, List<TOprequestList> objTOprequestList, List<MOpcasepaperDignosisMaster> objmOpcasepaperDignosisMaster, int UserId, string UserName);
         Task<IPagedList<GetVisitInfoListDto>> GetListAsync(GridRequestModel objGrid);
         Task<IPagedList<OPRequestListFromEMRDto>> GetListAsyncE(GridRequestModel objGrid);
 

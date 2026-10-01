@@ -45,6 +45,12 @@
         public long? DepartmentId { get; set; }
         public string? HistoryOfIllness { get; set; }
         public long? PrescDoctorId { get; set; }
+        public string? DrugAllergy { get; set; }
+        public string? AllergyRemark { get; set; }
+        public string? FollowUpReason { get; set; }
+        public string? FollowUpDescription { get; set; }
+        public string? FollowUpDepartmentName { get; set; }
+        public string? FollowUpDoctorName { get; set; }
 
     }
 }

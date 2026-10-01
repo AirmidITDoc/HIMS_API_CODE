@@ -49,5 +49,7 @@ namespace HIMS.Data.Models
         public long? ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public long? PrescDoctorId { get; set; }
+        public string? DrugAllergy { get; set; }
+        public string? AllergyRemark { get; set; }
     }
 }

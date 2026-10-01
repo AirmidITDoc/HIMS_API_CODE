@@ -45,6 +45,12 @@
         public string? Allergy { get; set; }
         public string? Bmi { get; set; }
         public string? BloodGroup { get; set; }
+        public string? DrugAllergy { get; set; }
+        public string? AllergyRemark { get; set; }
+        public string? FollowUpReason { get; set; }
+        public string? FollowUpDescription { get; set; }
+        public string? FollowUpDepartmentName { get; set; }
+        public string? FollowUpDoctorName { get; set; }
 
 
 
