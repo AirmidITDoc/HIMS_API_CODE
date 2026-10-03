@@ -67,6 +67,21 @@ namespace HIMS.API.Controllers.Pathology
 
         }
 
+
+      
+
+        [HttpPost("PathologyDetailTestList")]
+      //  [Permission]
+        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        public async Task<IActionResult> BrowseOPDBillPagList(GridRequestModel objGrid)
+        {
+          //  long UnitId = 1;
+            long UnitId = Context.UnitId;
+
+            IPagedList<PathResultEntryDetListDto> PathResultEntryList = await _IPathlogyService.PathResultEntryDetList(objGrid, UnitId);
+            return Ok(PathResultEntryList.ToGridResponse(objGrid, "PathResultEntryDetList"));
+        }
+
         [HttpGet]
         [Route("get-PathologyTemplates")]
         [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
