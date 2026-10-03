@@ -15,5 +15,8 @@ namespace HIMS.Services.Nursing.IPEMR
         Task<TIpEmrhistory?> GetByIdAsync(long id);
         Task InsertAsync(TIpEmrhistory objEMR, int userId, string username);
         Task UpdateAsync(TIpEmrhistory objEMR, int userId, string username, string[]? ignoreColumns = null);
+        Task InsertFamilyHistoryAsync(TIpEmrfamilyMedicalHistory objFamilyHistory, int UserId, string Username);
+        Task UpdateFamilyHistoryAsync(TIpEmrfamilyMedicalHistory objFamilyHistory, int UserId, string Username, string[]? ignoreColumns = null);
+        Task<TIpEmrfamilyMedicalHistory> GetFamilyHistoryByIdAsync(int id);
     }
 }

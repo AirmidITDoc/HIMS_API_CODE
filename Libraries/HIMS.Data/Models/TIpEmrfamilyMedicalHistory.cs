@@ -22,7 +22,5 @@ namespace HIMS.Data.Models
         public DateTime CreatedDate { get; set; }
         public long? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-
-        public virtual TIpEmrhistory IpEmr { get; set; } = null!;
     }
 }

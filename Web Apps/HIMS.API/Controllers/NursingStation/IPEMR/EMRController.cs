@@ -2,10 +2,14 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Diet;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Nursing.IPEMR;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
+using HIMS.Data;
 using HIMS.Data.DTO.MRD;
 using HIMS.Data.DTO.Nursing.IPEMR;
 using HIMS.Data.Models;
@@ -20,10 +24,12 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
     public class EMRController : BaseController
     {
         private readonly IEMRService _EmrService;
+        private readonly IGenericService<TIpEmrfamilyMedicalHistory> _repository;
 
-        public EMRController(IEMRService emrService)
+        public EMRController(IEMRService emrService, IGenericService<TIpEmrfamilyMedicalHistory> repository)
         {
             _EmrService = emrService;
+            _repository = repository;
         }
 
         [HttpPost("DiagnosisInfoList")]
@@ -64,7 +70,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
        
 
         [HttpPost("Insert")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Insert(EMRModel obj)
         {
             TIpEmrhistory model = obj.MapTo<TIpEmrhistory>();
@@ -82,12 +88,12 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
                     q.CreatedDate = AppTime.Now;
 
                 }
-                foreach (var q in model.TIpEmrfamilyMedicalHistories)
-                {
-                    q.CreatedBy = CurrentUserId;
-                    q.CreatedDate = AppTime.Now;
+                //foreach (var q in model.TIpEmrfamilyMedicalHistories)
+                //{
+                //    q.CreatedBy = CurrentUserId;
+                //    q.CreatedDate = AppTime.Now;
 
-                }
+                //}
 
                 foreach (var q in model.TIpEmrVitals)
                 {
@@ -108,7 +114,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission]
+       // [Permission]
         public async Task<ApiResponse> Edit(EMRModel obj)
         {
             TIpEmrhistory model = obj.MapTo<TIpEmrhistory>();
@@ -142,17 +148,17 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
                     v.ModifiedDate = AppTime.Now;
                     v.EmrdignId = 0;
                 }
-                foreach (var v in model.TIpEmrfamilyMedicalHistories)
-                {
-                    if (v.FhistId == 0)
-                    {
-                        v.CreatedBy = CurrentUserId;
-                        v.CreatedDate = AppTime.Now;
-                    }
-                    v.ModifiedBy = CurrentUserId;
-                    v.ModifiedDate = AppTime.Now;
-                    v.FhistId = 0;
-                }
+                //foreach (var v in model.TIpEmrfamilyMedicalHistories)
+                //{
+                //    if (v.FhistId == 0)
+                //    {
+                //        v.CreatedBy = CurrentUserId;
+                //        v.CreatedDate = AppTime.Now;
+                //    }
+                //    v.ModifiedBy = CurrentUserId;
+                //    v.ModifiedDate = AppTime.Now;
+                //    v.FhistId = 0;
+                //}
                 foreach (var v in model.TIpEmrVitals)
                 {
                     if (v.IpemrVitalId == 0)
@@ -171,5 +177,65 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.IpdEmrId);
         }
+
+
+        [HttpPost("InsertFamilyHistory")]
+        // [Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> InsertFamilyHistory(List<EMRFamilyMedicalHistoryModel> obj)
+        {
+            foreach (var item in obj)
+            {
+                TIpEmrfamilyMedicalHistory model = item.MapTo<TIpEmrfamilyMedicalHistory>();
+
+                if (item.FhistId == 0)
+                {
+                    model.CreatedDate = AppTime.Now;
+                    model.CreatedBy = CurrentUserId;
+                    model.ModifiedDate = AppTime.Now;
+                    model.ModifiedBy = CurrentUserId;
+
+                    await _EmrService.InsertFamilyHistoryAsync(model, CurrentUserId, CurrentUserName);
+                }
+                else
+                {
+                    return ApiResponseHelper.GenerateResponse(
+                        ApiStatusCode.Status500InternalServerError,
+                        "Invalid params");
+                }
+            }
+
+            return ApiResponseHelper.GenerateResponse(
+                ApiStatusCode.Status200OK,
+                "Records added successfully.");
+        }
+
+        // Edit / Update API
+        [HttpPut("Edit/FamilyHistory/{id:int}")]
+        //[Permission]
+        public async Task<ApiResponse> Edit(EMRFamilyMedicalHistoryModel obj)
+        {
+            if (obj.FhistId == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
+
+            TIpEmrfamilyMedicalHistory model = obj.MapTo<TIpEmrfamilyMedicalHistory>();
+            model.ModifiedBy = CurrentUserId;
+            model.ModifiedDate = AppTime.Now;
+
+            await _EmrService.UpdateFamilyHistoryAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.FhistId);
+        }
+
+
+        [HttpPost("FamilyHistory")]
+        //[Permission]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<TIpEmrfamilyMedicalHistory> TIpEmrfamilyMedicalHistoryList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(TIpEmrfamilyMedicalHistoryList.ToGridResponse(objGrid, "Family History List "));
+        }
+
     }
 }
