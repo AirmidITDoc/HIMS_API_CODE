@@ -19,5 +19,10 @@ namespace HIMS.Services.Nursing.IPEMR
         Task UpdateFamilyHistoryAsync(TIpEmrfamilyMedicalHistory objFamilyHistory, int UserId, string Username, string[]? ignoreColumns = null);
         Task<IPagedList<FamilyMedicalHistoryListDto>> FamilyMedicalHistoryListAsync(GridRequestModel model);
         Task<TIpEmrfamilyMedicalHistory> GetFamilyHistoryByIdAsync(int id);
+        Task SaveFamilyHistoryAsync(
+       List<TIpEmrfamilyMedicalHistory> models,
+       long regId,
+       int UserId,
+       string Username);
     }
 }

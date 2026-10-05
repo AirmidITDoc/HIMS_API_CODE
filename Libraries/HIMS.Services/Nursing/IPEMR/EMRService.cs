@@ -152,5 +152,20 @@ namespace HIMS.Services.Nursing.IPEMR
             return await DatabaseHelper.GetGridDataBySp<FamilyMedicalHistoryListDto>(model, "ps_rtrv_FamilyMedicalHistory");
         }
 
+        public virtual async Task SaveFamilyHistoryAsync(List<TIpEmrfamilyMedicalHistory> models,long regId,int UserId,string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required,new TransactionOptions{IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted},TransactionScopeAsyncFlowOption.Enabled);
+
+            var oldRecords = await _context.TIpEmrfamilyMedicalHistories.Where(x => x.RegId == regId).ToListAsync();
+
+            _context.TIpEmrfamilyMedicalHistories.RemoveRange(oldRecords);
+
+            _context.TIpEmrfamilyMedicalHistories.AddRange(models);
+
+            await _context.SaveChangesAsync(UserId, Username);
+
+            scope.Complete();
+        }
+
     }
 }
