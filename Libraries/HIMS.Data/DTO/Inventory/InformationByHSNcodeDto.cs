@@ -51,5 +51,8 @@ namespace HIMS.Data.DTO.Inventory
         public bool IsValidContent { get; set; }
         public long? InstructionId { get; set; }
         public string? LocalLanguageName { get; set; }
+        public long? HsncodeId { get; set; }
+
+        
     }
 }

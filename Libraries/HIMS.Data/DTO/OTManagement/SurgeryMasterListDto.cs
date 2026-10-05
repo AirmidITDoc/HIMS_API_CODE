@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HIMS.Data.DTO.OTManagement
+{
+    public  class SurgeryMasterListDto
+    {
+        //public long SurgeryId { get; set; }
+        public string? SurgeryCode { get; set; }
+        public string? ShortName { get; set; }
+        public string? SurgeryName { get; set; }
+
+        //public long DepartmentId { get; set; }
+        //public long? SubSpecialty { get; set; }
+        //public long SurgeryCategoryId { get; set; }
+        //public long SurgeryTypeId { get; set; }
+
+        //public decimal? SurgeryAmount { get; set; }
+
+        //public long? SiteDescId { get; set; }
+        //public long? OTTemplateID { get; set; }
+        //public long? ServiceId { get; set; }
+
+        //public int? ExpectedSurgeryTime { get; set; }
+        //public int? PreparationTime { get; set; }
+        //public int? CleaningTurnaroundTime { get; set; }
+        //public int? TotalDuration { get; set; }
+
+        //public bool PreAnaesthesiaClearance { get; set; }
+        //public bool SurgicalConsentRequired { get; set; }
+        //public bool BloodArrangementRequired { get; set; }
+
+        //public long? GradeLevel { get; set; }
+        //public long? PreferredOTRoom { get; set; }
+
+        //public bool IsActive { get; set; }
+
+        //public long CreatedBy { get; set; }
+        //public DateTime? CreatedDate { get; set; }
+        //public long? ModifiedBy { get; set; }
+        //public DateTime? ModifiedDate { get; set; }
+
+        //public string? DepartmentName { get; set; }
+        //public string? SurgeryCategoryName { get; set; }
+        //public string? SiteDescriptionName { get; set; }
+        //public string? SubSpecialtyName { get; set; }
+        //public string? OTTableName { get; set; }
+        //public string? Name { get; set; }
+
+    }
+}

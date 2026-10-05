@@ -2,12 +2,15 @@ using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Diet;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Masters;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
@@ -31,14 +34,12 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
         }
 
 
-        [HttpPost]
-        [Route("[action]")]
-        //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
-        [Permission]
+        [HttpPost("SurgeryMasterList")]
+        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MOtSurgeryMaster> MSurgeryMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MSurgeryMasterList.ToGridResponse(objGrid, "SurgeryMaster List"));
+            IPagedList<SurgeryMasterListDto> SurgeryMasterList = await _ISurgeryMasterService.GetListAsync(objGrid);
+            return Ok(SurgeryMasterList.ToGridResponse(objGrid, "SurgeryMaster List "));
         }
         [HttpGet]
         [Route("GetSurgeryTypeByOTSurgery")]
@@ -53,7 +54,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
 
         [HttpGet("{id?}")]
         //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -79,10 +80,9 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Data loaded", data);
         }
-        //Insert API
+       
+        //Add API
         [HttpPost]
-        //[Permission(PageCode = "OTManagement", Permission = PagePermission.Add)]
-
         [Permission]
         public async Task<ApiResponse> Post(SurgeryMasterModel obj)
         {
@@ -90,9 +90,11 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
             model.IsActive = true;
             if (obj.SurgeryId == 0)
             {
-                model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
+                model.CreatedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+                await _ISurgeryMasterService.InsertAsync(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -101,7 +103,6 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "OTManagement", Permission = PagePermission.Edit)]
         [Permission]
         public async Task<ApiResponse> Edit(SurgeryMasterModel obj)
         {
@@ -115,7 +116,7 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
 
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+                await _ISurgeryMasterService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
