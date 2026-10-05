@@ -88,6 +88,8 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public List<Reports> Reports { get; set; }
         public FollowUp FollowUp { get; set; }
         public WellnessRecord WellnessRecord { get; set; }
+        public List<Immunization> Immunizations { get; set; }
+        public List<ImmunizationRecommendation> ImmunizationRecommendations { get; set; }
     }
 
     public class Reports
@@ -446,4 +448,32 @@ public class ObservationResult
         public string effectiveDate { get; set; }
         public string performerId { get; set; }
     }
+
+    public class Immunization
+        {
+            public string Status { get; set; }
+            public CodeableConcept VaccineCode { get; set; }
+            public string Occurence { get; set; }
+            public string LotNumber { get; set; }
+            public decimal DoseQuantity { get; set; }
+            public string Manufacturer { get; set; }
+            public bool PrimarySource { get; set; }
+        }
+
+        public class ImmunizationRecommendation
+        {
+            public string Authority { get; set; }
+            public string Date { get; set; }
+            public CodeableConcept VaccineCode { get; set; }
+            public CodeableConcept ForecastStatus { get; set; }
+            public string Description { get; set; }
+            public string Series { get; set; }
+            public int DoseNumber { get; set; }
+            public int SeriesDoses { get; set; }
+            public List<string> SupportingImmunization { get; set; }
+            public string RecommendedDate { get; set; }
+            public CodeableConcept RecommendedDateCode { get; set; }
+        }
+
+
 }

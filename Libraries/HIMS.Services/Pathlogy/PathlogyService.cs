@@ -44,7 +44,13 @@ namespace HIMS.Services.Pathlogy
             return await DatabaseHelper.GetGridDataBySp<PathPatientTestListDto>(model, "ps_Rtrv_PathPatientList_Ptnt_Dtls");
 
         }
-       
+
+        public virtual async Task<IPagedList<PathResultEntryDetListDto>> PathResultEntryDetList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PathResultEntryDetListDto>(model, "ps_Rtrv_new_PathResultEntryDet_List");
+
+        }
+
         public List<pathologistdoctorDto> SearchPatient()
         {
             DatabaseHelper sql = new();

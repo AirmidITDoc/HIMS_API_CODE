@@ -24,7 +24,7 @@ namespace HIMS.API.Models.Nursing.IPEMR
 
         public List<EMRDiagnosisInfoModel> TIpEmrdiagnosisInfos { get; set; }
         public List<EMRDignosisHistoryModel> TIpEmrdignosisHistories { get; set; }
-        public List<EMRFamilyMedicalHistoryModel> TIpEmrfamilyMedicalHistories { get; set; }
+        //public List<EMRFamilyMedicalHistoryModel> TIpEmrfamilyMedicalHistories { get; set; }
         public List<EmrVitalsModel> TIpEmrVitals { get; set; }
 
 

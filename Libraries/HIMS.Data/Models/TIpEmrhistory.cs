@@ -10,7 +10,6 @@ namespace HIMS.Data.Models
             TIpEmrVitals = new HashSet<TIpEmrVital>();
             TIpEmrdiagnosisInfos = new HashSet<TIpEmrdiagnosisInfo>();
             TIpEmrdignosisHistories = new HashSet<TIpEmrdignosisHistory>();
-            TIpEmrfamilyMedicalHistories = new HashSet<TIpEmrfamilyMedicalHistory>();
         }
 
         public long IpdEmrId { get; set; }
@@ -36,6 +35,5 @@ namespace HIMS.Data.Models
         public virtual ICollection<TIpEmrVital> TIpEmrVitals { get; set; }
         public virtual ICollection<TIpEmrdiagnosisInfo> TIpEmrdiagnosisInfos { get; set; }
         public virtual ICollection<TIpEmrdignosisHistory> TIpEmrdignosisHistories { get; set; }
-        public virtual ICollection<TIpEmrfamilyMedicalHistory> TIpEmrfamilyMedicalHistories { get; set; }
     }
 }

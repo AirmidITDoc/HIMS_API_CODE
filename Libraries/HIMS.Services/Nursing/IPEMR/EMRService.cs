@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Nursing.IPEMR;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
@@ -38,7 +39,7 @@ namespace HIMS.Services.Nursing.IPEMR
 
         public async Task<TIpEmrhistory?> GetByIdAsync(long id)
         {
-            return await _context.TIpEmrhistories.Include(x => x.TIpEmrdiagnosisInfos).Include(x => x.TIpEmrdignosisHistories).Include(x => x.TIpEmrfamilyMedicalHistories).Include(x => x.TIpEmrVitals).FirstOrDefaultAsync(x => x.IpdEmrId == id);
+            return await _context.TIpEmrhistories.Include(x => x.TIpEmrdiagnosisInfos).Include(x => x.TIpEmrdignosisHistories).Include(x => x.TIpEmrVitals).FirstOrDefaultAsync(x => x.IpdEmrId == id);
         }
 
 
@@ -73,9 +74,9 @@ namespace HIMS.Services.Nursing.IPEMR
                 if (lstSurgery.Any())
                     _context.TIpEmrdignosisHistories.RemoveRange(lstSurgery);
 
-                var lstDiagnosis = await _context.TIpEmrfamilyMedicalHistories.Where(x => x.IpEmrId == ipEmrId).ToListAsync();
-                if (lstDiagnosis.Any())
-                    _context.TIpEmrfamilyMedicalHistories.RemoveRange(lstDiagnosis);
+                //var lstDiagnosis = await _context.TIpEmrfamilyMedicalHistories.Where(x => x.IpEmrId == ipEmrId).ToListAsync();
+                //if (lstDiagnosis.Any())
+                //    _context.TIpEmrfamilyMedicalHistories.RemoveRange(lstDiagnosis);
 
                 var lstVitals = await _context.TIpEmrVitals.Where(x => x.IpemrId == ipEmrId).ToListAsync();
                 if (lstVitals.Any())
@@ -104,5 +105,67 @@ namespace HIMS.Services.Nursing.IPEMR
                 scope.Complete();
             }
         }
+
+        public virtual async Task InsertFamilyHistoryAsync(TIpEmrfamilyMedicalHistory objFamilyHistory, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.TIpEmrfamilyMedicalHistories.Add(objFamilyHistory);
+                await _context.SaveChangesAsync(UserId, Username);
+
+                scope.Complete();
+            }
+        }
+
+        public virtual async Task UpdateFamilyHistoryAsync(TIpEmrfamilyMedicalHistory objFamilyHistory, int UserId, string Username, string[]? ignoreColumns = null)
+        {
+            using var scope = new TransactionScope(
+                TransactionScopeOption.Required,
+                new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },
+                TransactionScopeAsyncFlowOption.Enabled);
+
+            _context.Attach(objFamilyHistory);
+            _context.Entry(objFamilyHistory).State = EntityState.Modified;
+
+            _context.Entry(objFamilyHistory).Property(x => x.CreatedBy).IsModified = false;
+            _context.Entry(objFamilyHistory).Property(x => x.CreatedDate).IsModified = false;
+
+            objFamilyHistory.ModifiedBy = UserId;
+            objFamilyHistory.ModifiedDate = AppTime.Now;
+
+            if (ignoreColumns?.Length > 0)
+            {
+                foreach (var column in ignoreColumns)
+                    _context.Entry(objFamilyHistory).Property(column).IsModified = false;
+            }
+
+            await _context.SaveChangesAsync();
+            scope.Complete();
+        }
+
+        public virtual async Task<TIpEmrfamilyMedicalHistory> GetFamilyHistoryByIdAsync(int id)
+        {
+            return await this._context.TIpEmrfamilyMedicalHistories.FirstOrDefaultAsync(x => x.RegId == id);
+        }
+        public virtual async Task<IPagedList<FamilyMedicalHistoryListDto>> FamilyMedicalHistoryListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<FamilyMedicalHistoryListDto>(model, "ps_rtrv_FamilyMedicalHistory");
+        }
+
+        public virtual async Task SaveFamilyHistoryAsync(List<TIpEmrfamilyMedicalHistory> models,long regId,int UserId,string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required,new TransactionOptions{IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted},TransactionScopeAsyncFlowOption.Enabled);
+
+            var oldRecords = await _context.TIpEmrfamilyMedicalHistories.Where(x => x.RegId == regId).ToListAsync();
+
+            _context.TIpEmrfamilyMedicalHistories.RemoveRange(oldRecords);
+
+            _context.TIpEmrfamilyMedicalHistories.AddRange(models);
+
+            await _context.SaveChangesAsync(UserId, Username);
+
+            scope.Complete();
+        }
+
     }
 }
