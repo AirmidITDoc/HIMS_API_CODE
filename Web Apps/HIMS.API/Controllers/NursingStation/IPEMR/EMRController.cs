@@ -180,72 +180,105 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
 
-        [HttpPost("InsertFamilyHistory")]
-        // [Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
-        public async Task<ApiResponse> InsertFamilyHistory(List<EMRFamilyMedicalHistoryModel> obj)
+        //[HttpPost("InsertFamilyHistory")]
+        //// [Permission(PageCode = "ItemMaster", Permission = PagePermission.Add)]
+        //public async Task<ApiResponse> InsertFamilyHistory(List<EMRFamilyMedicalHistoryModel> obj)
+        //{
+        //    foreach (var item in obj)
+        //    {
+        //        TIpEmrfamilyMedicalHistory model = item.MapTo<TIpEmrfamilyMedicalHistory>();
+
+        //        if (item.FhistId == 0)
+        //        {
+        //            model.CreatedDate = AppTime.Now;
+        //            model.CreatedBy = CurrentUserId;
+
+        //            await _EmrService.InsertFamilyHistoryAsync(model, CurrentUserId, CurrentUserName);
+        //        }
+        //        else
+        //        {
+        //            return ApiResponseHelper.GenerateResponse(
+        //                ApiStatusCode.Status500InternalServerError,
+        //                "Invalid params");
+        //        }
+        //    }
+
+        //    return ApiResponseHelper.GenerateResponse(
+        //        ApiStatusCode.Status200OK,
+        //        "Records added successfully.");
+        //}
+
+        //// Edit / Update API
+        //[HttpPut("Edit/FamilyHistory")]
+        ////[Permission]
+        //public async Task<ApiResponse> Edit(List<EMRFamilyMedicalHistoryModel> obj)
+        //{
+        //    foreach (var item in obj)
+        //    {
+        //        if (item.FhistId == 0)
+        //        {
+        //            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status500InternalServerError,"Invalid params");
+        //        }
+
+        //        TIpEmrfamilyMedicalHistory model = item.MapTo<TIpEmrfamilyMedicalHistory>();
+
+        //        model.ModifiedBy = CurrentUserId;
+        //        model.ModifiedDate = AppTime.Now;
+
+        //        await _EmrService.UpdateFamilyHistoryAsync(model, CurrentUserId, CurrentUserName,  new string[2] { "CreatedBy", "CreatedDate" });
+        //    }
+        //    return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK,"Records updated successfully.");
+        //}
+
+
+       // [HttpPost("FamilyHistory")]
+       // //[Permission]
+       // public async Task<IActionResult> List(GridRequestModel objGrid)
+       // {
+       //     IPagedList<TIpEmrfamilyMedicalHistory> TIpEmrfamilyMedicalHistoryList = await _repository.GetAllPagedAsync(objGrid);
+       //     return Ok(TIpEmrfamilyMedicalHistoryList.ToGridResponse(objGrid, "Family History List "));
+       // }
+
+       // [HttpPost("FamilyHistoryList")]
+       ////[Permission]
+       // public async Task<IActionResult> FamilyHistoryList(GridRequestModel objGrid)
+       // {
+       //     IPagedList<FamilyMedicalHistoryListDto> FamilyMedicalHistoryList = await _EmrService.FamilyMedicalHistoryListAsync(objGrid);
+       //     return Ok(FamilyMedicalHistoryList.ToGridResponse(objGrid, "Family Medical History List "));
+       // }
+        [HttpPost("SaveFamilyHistory")]
+        public async Task<ApiResponse> SaveFamilyHistory(List<EMRFamilyMedicalHistoryModel> obj)
         {
+            if (obj == null || obj.Count == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError,"Invalid params");
+            }
+
+            long? regId = obj.FirstOrDefault()?.RegId;
+
+            if (regId == null || regId == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError,"RegId is required");
+            }
+
+            List<TIpEmrfamilyMedicalHistory> models = new();
+
             foreach (var item in obj)
             {
                 TIpEmrfamilyMedicalHistory model = item.MapTo<TIpEmrfamilyMedicalHistory>();
 
-                if (item.FhistId == 0)
-                {
-                    model.CreatedDate = AppTime.Now;
-                    model.CreatedBy = CurrentUserId;
-
-                    await _EmrService.InsertFamilyHistoryAsync(model, CurrentUserId, CurrentUserName);
-                }
-                else
-                {
-                    return ApiResponseHelper.GenerateResponse(
-                        ApiStatusCode.Status500InternalServerError,
-                        "Invalid params");
-                }
+                model.FhistId = 0;
+                model.RegId = regId;
+                model.CreatedDate = AppTime.Now;
+                model.CreatedBy = CurrentUserId;
+                models.Add(model);
             }
 
-            return ApiResponseHelper.GenerateResponse(
-                ApiStatusCode.Status200OK,
-                "Records added successfully.");
+            await _EmrService.SaveFamilyHistoryAsync(models, regId.Value, CurrentUserId, CurrentUserName);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Family history saved successfully.");
         }
 
-        // Edit / Update API
-        [HttpPut("Edit/FamilyHistory")]
-        //[Permission]
-        public async Task<ApiResponse> Edit(List<EMRFamilyMedicalHistoryModel> obj)
-        {
-            foreach (var item in obj)
-            {
-                if (item.FhistId == 0)
-                {
-                    return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status500InternalServerError,"Invalid params");
-                }
-
-                TIpEmrfamilyMedicalHistory model = item.MapTo<TIpEmrfamilyMedicalHistory>();
-
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = AppTime.Now;
-
-                await _EmrService.UpdateFamilyHistoryAsync(model, CurrentUserId, CurrentUserName,  new string[2] { "CreatedBy", "CreatedDate" });
-            }
-            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK,"Records updated successfully.");
-        }
-
-
-        [HttpPost("FamilyHistory")]
-        //[Permission]
-        public async Task<IActionResult> List(GridRequestModel objGrid)
-        {
-            IPagedList<TIpEmrfamilyMedicalHistory> TIpEmrfamilyMedicalHistoryList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(TIpEmrfamilyMedicalHistoryList.ToGridResponse(objGrid, "Family History List "));
-        }
-
-        [HttpPost("FamilyHistoryList")]
-       //[Permission]
-        public async Task<IActionResult> FamilyHistoryList(GridRequestModel objGrid)
-        {
-            IPagedList<FamilyMedicalHistoryListDto> FamilyMedicalHistoryList = await _EmrService.FamilyMedicalHistoryListAsync(objGrid);
-            return Ok(FamilyMedicalHistoryList.ToGridResponse(objGrid, "Family Medical History List "));
-        }
 
     }
 }

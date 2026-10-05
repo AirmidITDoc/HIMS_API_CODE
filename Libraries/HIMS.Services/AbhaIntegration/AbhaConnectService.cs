@@ -285,6 +285,8 @@ namespace HIMS.Services.AbhaIntegration
                     CarePlan = null,
                     Reports = null,
                     WellnessRecord = null,
+                    Immunizations = null,
+                    ImmunizationRecommendations = null,
                 };
 
                 response.Visits.Add(visit);
@@ -829,6 +831,33 @@ namespace HIMS.Services.AbhaIntegration
             );
 
             response.Visits[0].WellnessRecord = GetWellnessRecord(wellnessDs);
+
+            DatabaseHelper immunizationSql = new();
+
+            DataSet immunizationDs = immunizationSql.FetchDataSetBySP("ps_GetImmunizationPayload",new SqlParameter[]
+                {
+                new SqlParameter
+                {
+                    ParameterName = "@OpIpId",
+                    Value = model.OpIpId
+                },
+                new SqlParameter
+                {
+                    ParameterName = "@OpIpType",
+                    Value = model.OpIpType
+                }
+                });
+
+            if (immunizationDs != null && immunizationDs.Tables.Count > 0)
+            {
+                response.Visits[0].Immunizations =GetImmunizations(immunizationDs.Tables[0], model.HipId);
+            }
+
+            if (immunizationDs != null && immunizationDs.Tables.Count > 1)
+            {
+                response.Visits[0].ImmunizationRecommendations =GetImmunizationRecommendations(immunizationDs.Tables[1], model.HipId);
+            }
+
             // =====================================================
             // FINAL RESULT
             // =====================================================
@@ -837,6 +866,138 @@ namespace HIMS.Services.AbhaIntegration
 
             return result;
         }
+
+    private List<Immunization> GetImmunizations(DataTable table, string hipId)
+        {
+            if (table == null || table.Rows.Count == 0)
+                return null;
+
+            List<Immunization> list = new();
+
+            foreach (DataRow row in table.Rows)
+            {
+                list.Add(new Immunization
+                {
+                    Status = row["Status"]?.ToString(),
+
+                    VaccineCode = new CodeableConcept
+                    {
+                        text = row["VaccineText"]?.ToString(),
+
+                        code = new CodeDetails
+                        {
+                            HospitalId = hipId,
+                            Category = row["Category"]?.ToString(),
+                            Url = row["Url"]?.ToString(),
+                            Code = row["Code"]?.ToString(),
+                            Display = row["Display"]?.ToString()
+                        }
+                    },
+
+                    Occurence = row["Occurrence"]?.ToString(),
+                    LotNumber = row["LotNumber"]?.ToString(),
+
+                    DoseQuantity = row["DoseQuantity"] == DBNull.Value
+                        ? 0
+                        : Convert.ToDecimal(row["DoseQuantity"]),
+
+                    Manufacturer = row["Manufacturer"]?.ToString(),
+
+                    PrimarySource = row["PrimarySource"] != DBNull.Value &&
+                                    Convert.ToBoolean(row["PrimarySource"])
+                });
+            }
+
+            return list;
+        }
+
+        private List<ImmunizationRecommendation> GetImmunizationRecommendations(DataTable table, string hipId)
+        {
+            if (table == null || table.Rows.Count == 0)
+                return null;
+
+            List<ImmunizationRecommendation> list = new();
+
+            foreach (DataRow row in table.Rows)
+            {
+                list.Add(new ImmunizationRecommendation
+                {
+                    Authority = row["Authority"]?.ToString(),
+
+                    Date = row["RecommendationDate"]?.ToString(),
+
+                    VaccineCode = new CodeableConcept
+                    {
+                        text = row["VaccineText"]?.ToString(),
+
+                        code = new CodeDetails
+                        {
+                            HospitalId = hipId,
+                            Category = row["Category"]?.ToString(),
+                            Url = row["Url"]?.ToString(),
+                            Code = row["Code"]?.ToString(),
+                            Display = row["Display"]?.ToString()
+                        }
+                    },
+
+                    ForecastStatus = new CodeableConcept
+                    {
+                        text = row["ForecastStatusText"]?.ToString(),
+
+                        code = new CodeDetails
+                        {
+                            HospitalId = hipId,
+                            Category = row["ForecastStatusCategory"]?.ToString(),
+                            Url = row["ForecastStatusUrl"]?.ToString(),
+                            Code = row["ForecastStatusCode"]?.ToString(),
+                            Display = row["ForecastStatusDisplay"]?.ToString()
+                        }
+                    },
+
+                    Description = row["Description"]?.ToString(),
+
+                    Series = row["Series"]?.ToString(),
+
+                    DoseNumber = row["DoseNumber"] == DBNull.Value
+                        ? 0
+                        : Convert.ToInt32(row["DoseNumber"]),
+
+                    SeriesDoses = row["SeriesDoses"] == DBNull.Value
+                        ? 0
+                        : Convert.ToInt32(row["SeriesDoses"]),
+
+                    SupportingImmunization =
+                        row["SupportingImmunization"] == DBNull.Value ||
+                        string.IsNullOrEmpty(row["SupportingImmunization"]?.ToString())
+                            ? null
+                            : new List<string>
+                            {
+                        row["SupportingImmunization"].ToString()
+                            },
+
+                    RecommendedDate = row["RecommendedDate"]?.ToString(),
+
+                    RecommendedDateCode = new CodeableConcept
+                    {
+                        text = row["RecommendedDateText"]?.ToString(),
+
+                        code = new CodeDetails
+                        {
+                            HospitalId = hipId,
+                            Category = row["RecommendedDateCategory"]?.ToString(),
+                            Url = row["RecommendedDateUrl"]?.ToString(),
+                            Code = row["RecommendedDateCode"]?.ToString(),
+                            Display = row["RecommendedDateDisplay"]?.ToString()
+                        }
+                    }
+                });
+            }
+
+            return list;
+        }
+
+
+
         private WellnessRecord GetWellnessRecord(DataSet ds)
         {
             if (ds == null)

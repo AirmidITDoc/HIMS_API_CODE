@@ -59,6 +59,7 @@ namespace HIMS.Data.DTO.Nursing.IPEMR
         public string? ClinicalHistory { get; set; }
         public long? Duration { get; set; }
         public long GenderId { get; set; }
+        public string? GenderName { get; set; }
         public string? Summary { get; set; }
         public bool Status { get; set; }
         public long CreatedBy { get; set; }
@@ -84,6 +85,8 @@ namespace HIMS.Data.DTO.Nursing.IPEMR
         public string GenderName { get; set; }
         public string? Summary { get; set; }
         public bool Status { get; set; }
+        public long RelationshipId { get; set; }
+        public long GenderId { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
 
