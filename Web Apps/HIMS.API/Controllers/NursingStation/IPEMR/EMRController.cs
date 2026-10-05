@@ -10,6 +10,7 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.MRD;
 using HIMS.Data.DTO.Nursing.IPEMR;
 using HIMS.Data.Models;
@@ -191,8 +192,6 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
                 {
                     model.CreatedDate = AppTime.Now;
                     model.CreatedBy = CurrentUserId;
-                    model.ModifiedDate = AppTime.Now;
-                    model.ModifiedBy = CurrentUserId;
 
                     await _EmrService.InsertFamilyHistoryAsync(model, CurrentUserId, CurrentUserName);
                 }
@@ -210,22 +209,25 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         // Edit / Update API
-        [HttpPut("Edit/FamilyHistory/{id:int}")]
+        [HttpPut("Edit/FamilyHistory")]
         //[Permission]
-        public async Task<ApiResponse> Edit(EMRFamilyMedicalHistoryModel obj)
+        public async Task<ApiResponse> Edit(List<EMRFamilyMedicalHistoryModel> obj)
         {
-            if (obj.FhistId == 0)
+            foreach (var item in obj)
             {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+                if (item.FhistId == 0)
+                {
+                    return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status500InternalServerError,"Invalid params");
+                }
+
+                TIpEmrfamilyMedicalHistory model = item.MapTo<TIpEmrfamilyMedicalHistory>();
+
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+
+                await _EmrService.UpdateFamilyHistoryAsync(model, CurrentUserId, CurrentUserName,  new string[2] { "CreatedBy", "CreatedDate" });
             }
-
-            TIpEmrfamilyMedicalHistory model = obj.MapTo<TIpEmrfamilyMedicalHistory>();
-            model.ModifiedBy = CurrentUserId;
-            model.ModifiedDate = AppTime.Now;
-
-            await _EmrService.UpdateFamilyHistoryAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
-
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.FhistId);
+            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK,"Records updated successfully.");
         }
 
 
@@ -235,6 +237,14 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         {
             IPagedList<TIpEmrfamilyMedicalHistory> TIpEmrfamilyMedicalHistoryList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(TIpEmrfamilyMedicalHistoryList.ToGridResponse(objGrid, "Family History List "));
+        }
+
+        [HttpPost("FamilyHistoryList")]
+       //[Permission]
+        public async Task<IActionResult> FamilyHistoryList(GridRequestModel objGrid)
+        {
+            IPagedList<FamilyMedicalHistoryListDto> FamilyMedicalHistoryList = await _EmrService.FamilyMedicalHistoryListAsync(objGrid);
+            return Ok(FamilyMedicalHistoryList.ToGridResponse(objGrid, "Family Medical History List "));
         }
 
     }

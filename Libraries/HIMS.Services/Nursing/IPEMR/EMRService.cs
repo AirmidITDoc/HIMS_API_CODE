@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Nursing.IPEMR;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
@@ -145,6 +146,10 @@ namespace HIMS.Services.Nursing.IPEMR
         public virtual async Task<TIpEmrfamilyMedicalHistory> GetFamilyHistoryByIdAsync(int id)
         {
             return await this._context.TIpEmrfamilyMedicalHistories.FirstOrDefaultAsync(x => x.RegId == id);
+        }
+        public virtual async Task<IPagedList<FamilyMedicalHistoryListDto>> FamilyMedicalHistoryListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<FamilyMedicalHistoryListDto>(model, "ps_rtrv_FamilyMedicalHistory");
         }
 
     }
