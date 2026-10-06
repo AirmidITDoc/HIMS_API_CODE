@@ -8,11 +8,11 @@ namespace HIMS.Data.DTO.Administration
         public string? DOA { get; set; }
         public string? DOT { get; set; }
         public DateTime? PathTime { get; set; }
-        public long? opdipdtype { get; set; }
+          public long? opdipdtype { get; set; }
         public long? opdipdid { get; set; }
         public long? VisitAdmID { get; set; }
         public string? PatientType { get; set; }
-        public long? RegNo { get; set; }
+        public string? RegNo { get; set; }
         public string? PatientName { get; set; }
         public string? OPIPNumber { get; set; }
         public string? DoctorName { get; set; }
@@ -59,7 +59,10 @@ namespace HIMS.Data.DTO.Administration
         public long? UnitId { get; set; }
         public string? VerifiedUser { get; set; }
 
-        //public long? Total_Row { get; set; }
+        public string? Total_Row { get; set; }
+        public string? ServiceName { get; set; }
+        public string? CategoryName { get; set; }
+
 
     }
 }
