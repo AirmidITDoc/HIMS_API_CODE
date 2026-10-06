@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         // 1. List API (Paged Grid)
         [HttpPost]
         [Route("[action]")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<SubspecialityListDto> list = await _subspecialityService.GetSubspecialityListAsync(objGrid); 
