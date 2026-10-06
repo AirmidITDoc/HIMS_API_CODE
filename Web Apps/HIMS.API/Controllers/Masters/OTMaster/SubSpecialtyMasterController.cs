@@ -8,7 +8,9 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.OTManagment;
 using HIMS.Data.Models;
+using HIMS.Services.OTManagment;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.OTMaster
@@ -19,19 +21,21 @@ namespace HIMS.API.Controllers.Masters.OTMaster
     public class SubSpecialtyMasterController : BaseController
     {
         private readonly IGenericService<MOtSubSpecialtyMaster> _repository;
+        private readonly ISubspecialityService _subspecialityService;
 
-        public SubSpecialtyMasterController(IGenericService<MOtSubSpecialtyMaster> repository)
+        public SubSpecialtyMasterController(IGenericService<MOtSubSpecialtyMaster> repository, ISubspecialityService subspecialityService)
         {
             _repository = repository;
+            _subspecialityService = subspecialityService;
         }
 
         // 1. List API (Paged Grid)
         [HttpPost]
         [Route("[action]")]
-        [Permission]
+        //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MOtSubSpecialtyMaster> list = await _repository.GetAllPagedAsync(objGrid);
+            IPagedList<SubspecialityListDto> list = await _subspecialityService.GetSubspecialityListAsync(objGrid); 
             return Ok(list.ToGridResponse(objGrid, "SubSpecialty List"));
         }
 
