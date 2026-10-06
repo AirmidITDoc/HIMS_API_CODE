@@ -8,6 +8,7 @@ namespace HIMS.Data.DTO.Inventory
 {
     public  class HSNCodeMasterListDTO
     {
+       
         public long HsncodeId { get; set; }
         public string HsncodeName { get; set; } = null!;
         public double GstRate { get; set; }

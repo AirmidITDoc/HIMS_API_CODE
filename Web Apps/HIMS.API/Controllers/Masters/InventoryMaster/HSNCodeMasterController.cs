@@ -38,13 +38,17 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             IPagedList<MHsncodeMaster> MHsncodeMasterList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(MHsncodeMasterList.ToGridResponse(objGrid, "MHsncodeMaster List"));
         }
+       
         [HttpGet("search-HSNCode")]
-        //[Permission]
-        public ApiResponse SearchPatientNew()
+        // [Permission]
+        public ApiResponse SearchHSNCode(string HSNcode)
         {
-            var data = _IHSNCodeMasterService.SearchPatient();
+            var data = _IHSNCodeMasterService.SearchHSNCode(HSNcode);
+
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "search-HSNCode", data);
+
         }
+
         //List API Get By Id
         [HttpGet("{id?}")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
