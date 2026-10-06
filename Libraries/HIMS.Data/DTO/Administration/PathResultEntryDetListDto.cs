@@ -60,6 +60,9 @@ namespace HIMS.Data.DTO.Administration
         public string? VerifiedUser { get; set; }
 
         public string? Total_Row { get; set; }
+        public string? ServiceName { get; set; }
+        public string? CategoryName { get; set; }
+
 
     }
 }
