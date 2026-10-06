@@ -214,6 +214,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IIPInterimBillSerive, IPInterimBillSerive>();
             services.AddScoped<ITrustMembershipRegService, TrustMemberRegService>();
             services.AddScoped<IPatientAbhaInformationService, PatientAbhaInformationService>();
+            services.AddScoped<ISiteDescriptionService, SiteDescriptionService>();
 
 
 
