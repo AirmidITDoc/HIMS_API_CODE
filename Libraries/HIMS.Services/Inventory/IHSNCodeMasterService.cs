@@ -9,7 +9,8 @@ namespace HIMS.Services.Inventory
 {
     public partial  interface IHSNCodeMasterService
     {
-        List<HSNCodeMasterListDTO> SearchPatient();
+        List<HSNCodeMasterListDTO> SearchHSNCode(string HSNcode);
+
 
     }
 }
