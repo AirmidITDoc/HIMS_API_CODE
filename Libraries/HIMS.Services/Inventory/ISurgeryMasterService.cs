@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 using System;
@@ -16,6 +17,8 @@ namespace HIMS.Services.Inventory
         Task InsertAsync(MOtSurgeryMaster ObjMOtSurgeryMaster, int UserId, string Username);
         Task UpdateAsync(MOtSurgeryMaster ObjMOtSurgeryMaster, int UserId, string Username, string[]? ignoreColumns = null);
         Task<IPagedList<SurgeryMasterListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<List<SurgeryListDto>> GetServiceListwithSurgeryWise(int TariffId, int ClassId, bool IsProcedure , string ServiceName);
+
 
 
 

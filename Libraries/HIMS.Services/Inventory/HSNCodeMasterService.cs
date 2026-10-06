@@ -18,15 +18,11 @@ namespace HIMS.Services.Inventory
         {
             _context = HIMSDbContext;
         }
-       
-        public List<HSNCodeMasterListDTO> SearchHSNCode(string HSNcode)
+        public List<HSNCodeMasterListDTO> SearchPatient()
         {
             DatabaseHelper sql = new();
-
-            SqlParameter[] para ={ new SqlParameter("@Keyword", HSNcode)};
-
-            var data = sql.FetchListBySP<HSNCodeMasterListDTO>( "ps_HSNCodeSearch", para );
-
+            SqlParameter[] para = Array.Empty<SqlParameter>();
+            var data = sql.FetchListBySP<HSNCodeMasterListDTO>("ps_HSNCodeSearch", para);
             return data;
         }
 

@@ -43,4 +43,15 @@ namespace HIMS.Data.DTO.OTManagement
         public string? Name { get; set; }
 
     }
+    public class SurgeryListDto
+    {
+        public long ServiceId { get; set; }
+        public string? ServiceName { get; set; }
+        public decimal? Price { get; set; }
+        public long? IsPathology { get; set; }
+        public long? IsRadiology { get; set; }
+        public long? TariffId { get; set; }
+        public bool? IsProcedure { get; set; }
+
+    }
 }
