@@ -114,6 +114,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IAllergyMasterService, AllergyMasterService>();
             services.AddScoped<IFeedingRouteMasterService, FeedingRouteMasterService>();
             services.AddScoped<IDietRestrictionMasterService, DietRestrictionMasterService>();
+            services.AddScoped<ISubspecialityService, SubspecialityService>();
+
 
 
 

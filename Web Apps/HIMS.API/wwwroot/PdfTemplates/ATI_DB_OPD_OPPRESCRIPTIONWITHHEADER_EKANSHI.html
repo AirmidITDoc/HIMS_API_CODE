@@ -210,7 +210,10 @@
       return '<b>' + v.label + ' :</b> ' + v.value;
     });
 
-  document.getElementById('vitals-row').innerHTML = parts.join(' &nbsp;|&nbsp; ');
+  var vitalsRow = document.getElementById('vitals-row');
+  if (vitalsRow) {
+    vitalsRow.innerHTML = parts.join(' &nbsp;|&nbsp; ');
+  }
 })();
     </script>
 </body>
