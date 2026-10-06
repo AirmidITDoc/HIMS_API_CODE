@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
         [HttpPost]
         [Route("[action]")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<SiteDescriptionListDto> list = await _siteDescriptionService.GetSiteDescriptionListAsync(objGrid);
