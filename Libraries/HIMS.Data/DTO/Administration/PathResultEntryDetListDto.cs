@@ -62,6 +62,13 @@ namespace HIMS.Data.DTO.Administration
         public string? Total_Row { get; set; }
         public string? ServiceName { get; set; }
         public string? CategoryName { get; set; }
+        public string? AgeYear { get; set; }
+        public string? AgeMonth { get; set; }
+        public string? AgeDay { get; set; }
+        public long? GenderId { get; set; }
+        public string? GenderName { get; set; }
+
+    
 
 
     }
