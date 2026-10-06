@@ -867,7 +867,7 @@ namespace HIMS.Services.AbhaIntegration
             return result;
         }
 
-    private List<Immunization> GetImmunizations(DataTable table, string hipId)
+        private List<Immunization> GetImmunizations(DataTable table, string hipId)
         {
             if (table == null || table.Rows.Count == 0)
                 return null;
@@ -879,6 +879,19 @@ namespace HIMS.Services.AbhaIntegration
                 list.Add(new Immunization
                 {
                     Status = row["Status"]?.ToString(),
+
+                    Occurence = row["Occurrence"]?.ToString(),
+
+                    LotNumber = row["LotNumber"]?.ToString(),
+
+                    IsPrimarySource = row["PrimarySource"] != DBNull.Value &&
+                                    Convert.ToBoolean(row["PrimarySource"]),
+
+                    DoseQuantity = row["DoseQuantity"] == DBNull.Value
+                        ? 0
+                        : Convert.ToDecimal(row["DoseQuantity"]),
+
+                    Manufacturer = row["Manufacturer"]?.ToString(),
 
                     VaccineCode = new CodeableConcept
                     {
@@ -892,19 +905,7 @@ namespace HIMS.Services.AbhaIntegration
                             Code = row["Code"]?.ToString(),
                             Display = row["Display"]?.ToString()
                         }
-                    },
-
-                    Occurence = row["Occurrence"]?.ToString(),
-                    LotNumber = row["LotNumber"]?.ToString(),
-
-                    DoseQuantity = row["DoseQuantity"] == DBNull.Value
-                        ? 0
-                        : Convert.ToDecimal(row["DoseQuantity"]),
-
-                    Manufacturer = row["Manufacturer"]?.ToString(),
-
-                    PrimarySource = row["PrimarySource"] != DBNull.Value &&
-                                    Convert.ToBoolean(row["PrimarySource"])
+                    }
                 });
             }
 
@@ -925,6 +926,29 @@ namespace HIMS.Services.AbhaIntegration
                     Authority = row["Authority"]?.ToString(),
 
                     Date = row["RecommendationDate"]?.ToString(),
+
+                    Description = row["Description"]?.ToString(),
+
+                    Series = row["Series"]?.ToString(),
+
+                    DoseNumber = row["DoseNumber"] == DBNull.Value
+                        ? 0
+                        : Convert.ToInt32(row["DoseNumber"]),
+
+                    SeriesDoses = row["SeriesDoses"] == DBNull.Value
+                        ? 0
+                        : Convert.ToInt32(row["SeriesDoses"]),
+
+                    SupportingImmunization =
+                        row["SupportingImmunization"] == DBNull.Value ||
+                        string.IsNullOrEmpty(row["SupportingImmunization"]?.ToString())
+                            ? null
+                            : new List<string>
+                            {
+                        row["SupportingImmunization"].ToString()
+                            },
+
+                    RecommendedDate = row["RecommendedDate"]?.ToString(),
 
                     VaccineCode = new CodeableConcept
                     {
@@ -953,29 +977,6 @@ namespace HIMS.Services.AbhaIntegration
                             Display = row["ForecastStatusDisplay"]?.ToString()
                         }
                     },
-
-                    Description = row["Description"]?.ToString(),
-
-                    Series = row["Series"]?.ToString(),
-
-                    DoseNumber = row["DoseNumber"] == DBNull.Value
-                        ? 0
-                        : Convert.ToInt32(row["DoseNumber"]),
-
-                    SeriesDoses = row["SeriesDoses"] == DBNull.Value
-                        ? 0
-                        : Convert.ToInt32(row["SeriesDoses"]),
-
-                    SupportingImmunization =
-                        row["SupportingImmunization"] == DBNull.Value ||
-                        string.IsNullOrEmpty(row["SupportingImmunization"]?.ToString())
-                            ? null
-                            : new List<string>
-                            {
-                        row["SupportingImmunization"].ToString()
-                            },
-
-                    RecommendedDate = row["RecommendedDate"]?.ToString(),
 
                     RecommendedDateCode = new CodeableConcept
                     {

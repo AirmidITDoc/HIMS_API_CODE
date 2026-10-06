@@ -450,30 +450,30 @@ public class ObservationResult
     }
 
     public class Immunization
-        {
-            public string Status { get; set; }
-            public CodeableConcept VaccineCode { get; set; }
-            public string Occurence { get; set; }
-            public string LotNumber { get; set; }
-            public decimal DoseQuantity { get; set; }
-            public string Manufacturer { get; set; }
-            public bool PrimarySource { get; set; }
-        }
+    {
+        public string Status { get; set; }
+        public string Occurence { get; set; }
+        public string LotNumber { get; set; }
+        public bool IsPrimarySource { get; set; }
+        public decimal DoseQuantity { get; set; }
+        public string Manufacturer { get; set; }
+        public CodeableConcept VaccineCode { get; set; }
+    }
 
-        public class ImmunizationRecommendation
-        {
-            public string Authority { get; set; }
-            public string Date { get; set; }
-            public CodeableConcept VaccineCode { get; set; }
-            public CodeableConcept ForecastStatus { get; set; }
-            public string Description { get; set; }
-            public string Series { get; set; }
-            public int DoseNumber { get; set; }
-            public int SeriesDoses { get; set; }
-            public List<string> SupportingImmunization { get; set; }
-            public string RecommendedDate { get; set; }
-            public CodeableConcept RecommendedDateCode { get; set; }
-        }
+    public class ImmunizationRecommendation
+    {
+        public string Authority { get; set; }
+        public string Date { get; set; }
+        public string Description { get; set; }
+        public string Series { get; set; }
+        public int DoseNumber { get; set; }
+        public int SeriesDoses { get; set; }
+        public List<string> SupportingImmunization { get; set; }
+        public string RecommendedDate { get; set; }
+        public CodeableConcept VaccineCode { get; set; }
+        public CodeableConcept ForecastStatus { get; set; }
+        public CodeableConcept RecommendedDateCode { get; set; }
+    }
 
 
 }
