@@ -2,6 +2,7 @@
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 using LinqToDB.Common;
@@ -23,7 +24,38 @@ namespace HIMS.Services.Inventory
         {
             return await DatabaseHelper.GetGridDataBySp<SurgeryMasterListDto>(model, "ps_SurgeryMasterList");
         }
+        public virtual async Task<List<SurgeryListDto>> GetServiceListwithSurgeryWise( int TariffId, int ClassId, bool IsProcedure, string ServiceName)
+        {
+            // If ServiceName is "%" (wildcard), set it to null
+            if (ServiceName == "%")
+            {
+                ServiceName = null;
+            }
 
+            var query = _context.ServiceMasters
+                .Join( _context.GroupMasters,service => service.GroupId,group => group.GroupId,(service, group) => new { service, group } )
+                .Join(_context.ServiceDetails, sg => sg.service.ServiceId, detail => detail.ServiceId, (sg, detail) => new { sg.service,  sg.group, detail} )
+                .Where(x =>
+                    (string.IsNullOrEmpty(ServiceName) ||
+                     x.service.ServiceName.Contains(ServiceName))
+                    && x.detail.TariffId == TariffId
+                    && x.detail.ClassId == ClassId
+                    && x.service.IsActive == true
+                    && x.service.IsProcedure == IsProcedure
+                )
+                .Select(x => new SurgeryListDto
+                {
+                    ServiceId = x.service.ServiceId,
+                    ServiceName = x.service.ServiceName,
+                    Price = x.detail.ClassRate,
+                    IsPathology = x.service.IsPathology,
+                    IsRadiology = x.service.IsRadiology,
+                    IsProcedure = x.service.IsProcedure,
+                    TariffId = x.detail.TariffId
+                });
+
+            return await query.ToListAsync();
+        }
         public List<MOtSurgeryMaster> GetSurgeryNameBySurgeryType(int SiteDescId)
         {
             DatabaseHelper sql = new();

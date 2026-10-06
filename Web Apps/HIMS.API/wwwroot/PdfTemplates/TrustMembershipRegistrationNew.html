@@ -1,0 +1,815 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fused Bulb Membership Registration Form</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #000;
+            margin: 0;
+            padding: 20px;
+            font-size: 15px;
+        }
+
+        .field-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+
+        .page {
+            max-width: 850px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px 30px;
+            page-break-after: always;
+            overflow: hidden;
+        }
+
+            .page:last-child {
+                page-break-after: auto;
+            }
+
+        .page-2, .page-3, .page-4 {
+            border-top: none;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            text-align: center;
+            border-bottom: 1px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+        }
+
+        .logo-left, .logo-right {
+            width: 68px;
+            height: 68px;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            text-align: center;
+            border: 1px solid #999;
+            border-radius: 50%;
+            color: #b00;
+        }
+
+        .logo-left {
+            left: 0;
+        }
+
+
+        .logo-right {
+            width: 68px;
+            height: 68px;
+            position: absolute;
+            right: 0;
+            top: -8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            text-align: center;
+            border: 1px solid #333;
+            border-radius: 6px;
+            color: #000;
+            background: #fff;
+        }
+
+        .title-block h1 {
+            font-size: 20px;
+            margin: 2px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .title-block h2 {
+            font-size: 18px;
+            margin: 2px 0;
+        }
+
+        .managed {
+            color: #c00;
+            font-weight: bold;
+            font-size: 13px;
+            margin: 2px 0;
+        }
+
+        .sub-managed {
+            font-size: 12.5px;
+            font-weight: bold;
+            margin: 2px 0;
+        }
+
+        .form-title {
+            display: inline-block;
+            margin: 10px auto;
+            padding: 5px 16px;
+            border: 1px solid #c00;
+            color: #c00;
+            font-weight: bold;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .form-title-wrap {
+            text-align: center;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin: 18px 0 9px 0;
+            font-size: 15px;
+        }
+
+        .field-row {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 11px;
+            flex-wrap: wrap;
+        }
+
+        .field-label {
+            white-space: nowrap;
+            margin-right: 6px;
+        }
+
+        .field-line {
+            flex: 1;
+            border-bottom: 1px solid #000;
+            min-height: 16px;
+            min-width: 60px;
+        }
+
+        .dob-row {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 11px;
+            flex-wrap: wrap;
+        }
+
+        .dob-seg {
+            border-bottom: 1px solid #000;
+            display: inline-block;
+            min-width: 32px;
+            text-align: center;
+        }
+
+        .age-line {
+            border-bottom: 1px solid #000;
+            display: inline-block;
+            min-width: 74px;
+            margin: 0 4px;
+        }
+
+        .content-wrap {
+            overflow: hidden;
+        }
+
+            .content-wrap:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+        .left-col {
+            float: left;
+            width: 620px;
+        }
+
+        .right-col {
+            float: right;
+            width: 120px;
+        }
+
+        .photo-box {
+            width: 120px;
+            height: 120px;
+            border: 1px solid #000;
+            text-align: center;
+            color: #555;
+            font-size: 13px;
+            overflow: hidden;
+            margin-bottom: 26px;
+        }
+
+            .photo-box img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 11px;
+        }
+
+            .checkbox-row label {
+                margin-right: 4px;
+            }
+
+        .chk-box {
+            display: inline-block;
+            font-size: 15px;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+            .chk-box:before {
+                content: "☐";
+            }
+
+            .chk-box.chk-1:before,
+            .chk-box.chk-true:before,
+            .chk-box.chk-True:before {
+                content: "☑";
+            }
+
+        .two-field-row {
+            display: flex;
+            margin-bottom: 11px;
+            flex-wrap: wrap;
+        }
+
+            .two-field-row .field-row {
+                flex: 1;
+                margin-bottom: 0;
+                margin-right: 30px;
+                min-width: 260px;
+            }
+
+                .two-field-row .field-row:last-child {
+                    margin-right: 0;
+                }
+
+        .multiline .field-line {
+            margin-bottom: 7px;
+        }
+
+        .position-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 13px;
+        }
+
+            .position-row .field-label {
+                margin-right: 10px;
+                min-width: 165px;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 11px;
+        }
+
+        th, td {
+            border: 1px solid #4a3f2a;
+            padding: 7px 9px;
+            font-size: 13.5px;
+            text-align: left;
+            height: 24px;
+        }
+
+        th {
+            background-color: #cbbfa8;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        td {
+            height: 26px;
+        }
+
+        .sub-heading {
+            font-weight: bold;
+            margin: 11px 0 7px 0;
+            font-size: 14px;
+        }
+
+        .note-line {
+            margin-bottom: 11px;
+        }
+
+        .blank-line {
+            border-bottom: 1px solid #000;
+            height: 16px;
+            margin-bottom: 7px;
+        }
+
+        .gender-header {
+            display: flex;
+            justify-content: space-between;
+            max-width: 520px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .yn-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 9px;
+            flex-wrap: wrap;
+        }
+
+        .income-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 11px;
+        }
+
+            .income-row label {
+                margin-right: 14px;
+            }
+
+        .spacer {
+            height: 44px;
+        }
+
+        .note-block {
+            margin-top: 32px;
+        }
+
+        .note-heading {
+            font-weight: bold;
+            margin-bottom: 9px;
+        }
+
+        .note-list {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+            .note-list li {
+                margin-bottom: 7px;
+            }
+
+        .footer-page {
+            text-align: right;
+            font-size: 12px;
+            margin-top: 11px;
+            color: #555;
+        }
+
+        .content-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .left-col {
+            width: calc(100% - 150px);
+        }
+
+        .right-col {
+            width: 130px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .photo-box {
+            width: 120px;
+            height: 120px;
+            border: 1px solid #000;
+            margin-bottom: 27px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+            .photo-box img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .two-field-row,
+        .two-field-row td {
+            border: none !important;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin: 18px 0 9px 0;
+            font-size: 15px;
+            text-transform: uppercase;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+            }
+
+            .page {
+                padding: 10px 18px;
+            }
+        }
+
+        .person-title {
+            font-weight: bold;
+            text-align: center;
+            margin: 12px 0 16px;
+            font-size: 16px;
+            text-decoration: underline;
+        }
+
+        .field-row {
+            break-inside: avoid;
+        }
+
+        .field-line {
+            display: inline-block;
+        }
+
+        .family-info-table {
+            break-inside: avoid;
+        }
+
+        /* Consistent spacing for the requested three-page form */
+        .page {
+            padding: 20px 26px;
+        }
+
+        .field-row {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: nowrap;
+            gap: 6px;
+            width: 100%;
+            margin: 0 0 14px;
+            min-height: 20px;
+        }
+
+        .field-label {
+            flex: 0 0 auto;
+            margin-right: 2px;
+        }
+
+        .field-line {
+            display: inline-block;
+            flex: 1 1 0;
+            min-width: 24px;
+            min-height: 18px;
+        }
+
+        .two-field-row {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            margin: 0 0 14px;
+            border-collapse: collapse;
+        }
+
+            .two-field-row td {
+                display: table-cell;
+                width: 50%;
+                padding: 3px 5px 5px 0;
+                vertical-align: bottom;
+                height: auto;
+            }
+
+            .two-field-row .field-label {
+                white-space: nowrap;
+            }
+
+        .person-title {
+            margin: 12px 0 20px;
+        }
+
+        .section-title {
+            margin: 0 0 16px;
+        }
+
+        .sub-heading {
+            margin: 18px 0 8px;
+        }
+
+        .family-info-table {
+            margin-bottom: 18px;
+        }
+
+            .family-info-table th, .family-info-table td {
+                padding: 8px 10px;
+            }
+
+        @media print {
+            body {
+                padding: 0;
+            }
+
+            .page {
+                padding: 10px 18px;
+            }
+
+            .field-row {
+                margin-bottom: 13px;
+            }
+        }
+
+        /* ===== Force 3 pages (wkhtmltopdf): Husband | Wife | Family ===== */
+        html, body {
+            overflow: visible !important;
+        }
+
+        .page {
+            overflow: visible !important;
+            page-break-after: auto !important;
+            page-break-inside: avoid;
+        }
+
+        .page-break {
+            display: block;
+            height: 0;
+            page-break-after: always;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== PAGE 1 ==================== -->
+    <div class="page">
+
+        <div class="header">
+            <div class="logo-left">JAIN<br>SANGH<br>LOGO</div>
+            <div class="title-block">
+                <h1>SHREE THANA VARDHAMAN STHANAKVASI</h1>
+                <h2>JAIN SHRAVAK SANGH</h2>
+                <div class="managed">MANAGED</div>
+                <div class="sub-managed">MATUSHRI DHANUBEN VELJI KARMAN SHAH (NU.TRAMBO) FUSED BLUB (SENIOR CITIZEN CLUB)</div>
+            </div>
+            <div class="logo-right">FUSED<br>BULB</div>
+        </div><div class="form-title-wrap">
+            <div class="form-title">MEMBERSHIP REGISTRATION FORM</div>
+        </div>
+        <div class="person-title">HUSBAND INFORMATION</div>
+
+        <div class="field-row">
+            <span class="field-label">DATE :</span><span class="field-line">{{MembershipDate}}</span><span class="field-label" style="margin-left:18px;">FUSED BULB MEM NO. :</span><span class="field-line">{{MembershipNo}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">HUSBAND NAME :</span><span class="field-line">{{PatientName}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">NATIVE PLACE :</span><span class="field-line">{{NativePlace}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">BIRTH DATE :</span><span class="field-line">{{HusbandDOB}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">MOBILE NO. :</span><span class="field-line">{{HusbandMobile}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">EMERGENCY NO. :</span><span class="field-line">{{EmrgencyMobile}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">EMAIL ID :</span><span class="field-line">{{HusbandEmail}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">BLOOD GROUP :</span><span class="field-line">{{HusbandBloodGroupId}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">LAST BODY CHECK UP DATE :</span><span class="field-line">{{HusbandFullBodyCheckupDate}}</span>
+        </div>
+        <table class="two-field-row" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="field-cell" style="width:50%;">
+                    <span class="field-label">FAMILY DR. NAME :</span><span class="field-line">{{FamilyDoctorName}}</span>
+                </td>
+                <td class="field-cell" style="width:50%;">
+                    <span class="field-label">F. MOB. NO. :</span><span class="field-line">{{FamilyDoctorContact}}</span>
+                </td>
+            </tr>
+        </table>
+        <table class="two-field-row" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="field-cell" style="width:50%;">
+                    <span class="field-label">CONSULTING DR. :</span><span class="field-line">{{hConsultDoctorName}}</span>
+                </td>
+                <td class="field-cell" style="width:50%;">
+                    <span class="field-label">C. MOB NO. :</span><span class="field-line">{{hConsultDoctorContact}}</span>
+                </td>
+            </tr>
+        </table>
+        <div class="field-row">
+            <span class="field-label">AYUSHMAN ENROLLMENT :</span><span class="chk-box chk-{{AyushmanEnrolledNo}}"></span><span>No</span><span class="chk-box chk-{{AyushmanEnrolledYes}}"></span><span>Yes</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">MEDICLAIM POLICY :</span><span class="chk-box chk-{{HasMediclaimNo}}"></span><span>No</span><span class="chk-box chk-{{HasMediclaimYes}}"></span><span>Yes</span>
+        </div>
+        <table class="two-field-row" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="field-cell" style="width:50%;">
+                    <span class="field-label">MEDICLAIM CO. NAME :</span><span class="field-line">{{MediclaimCompany}}</span>
+                </td>
+                <td class="field-cell" style="width:50%;">
+                    <span class="field-label">SUM ASSURED :</span><span class="field-line">{{MediclaimIssuanceAmt}}</span>
+                </td>
+            </tr>
+        </table>
+        <div class="field-row"><span class="field-label">RESIDENTIAL ADDRESS :</span><span class="field-line">{{ResidenceAddress}}</span></div>
+        <table class="two-field-row" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="field-cell" style="width:50%;"><span class="field-label">AADHAR NO. :</span><span class="field-line">{{HusbandAadhaar}}</span></td>
+                <td class="field-cell" style="width:50%;"><span class="field-label">PAN NO. :</span><span class="field-line">{{HusbandPAN}}</span></td>
+            </tr>
+        </table>
+        <div class="field-row"><span class="field-label">MEDICATION :</span><span class="field-line">{{HusbandMedications}}</span></div>
+    </div>
+    <div class="page-break"></div>
+
+    <!-- ==================== PAGE 2 ==================== -->
+    <div class="page page-2">
+
+
+        <div class="person-title">WIFE INFORMATION</div>
+
+        <div class="field-row">
+            <span class="field-label">DATE :</span><span class="field-line">{{MembershipDate}}</span><span class="field-label" style="margin-left:18px;">FUSED BULB MEM NO. :</span><span class="field-line">{{FemaleMembershipNo}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">WIFE NAME :</span><span class="field-line">{{WifeName}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">NATIVE PLACE :</span><span class="field-line">{{WifeParentsNativePlace}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">BIRTH DATE :</span><span class="field-line">{{WifeDOB}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">MOBILE NO. :</span><span class="field-line">{{WifeMobile}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">EMERGENCY NO. :</span><span class="field-line">{{EmrgencyMobile}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">EMAIL ID :</span><span class="field-line">{{WifeEmail}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">BLOOD GROUP :</span><span class="field-line">{{WifeBloodGroupId}}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">LAST BODY CHECK UP DATE :</span><span class="field-line">{{WifeFullBodyCheckupDate}}</span>
+        </div>
+        <table class="two-field-row" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="field-cell" style="width:50%;"><span class="field-label">FAMILY DR. NAME :</span><span class="field-line">{{wfamilyDoctorName}}</span></td>
+                <td class="field-cell" style="width:50%;"><span class="field-label">F. MOB. NO. :</span><span class="field-line">{{wfamilyDoctorContact}}</span></td>
+            </tr>
+        </table>
+        <table class="two-field-row" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="field-cell" style="width:50%;"><span class="field-label">CONSULTING DR. :</span><span class="field-line">{{wConsultDoctorName}}</span></td>
+                <td class="field-cell" style="width:50%;"><span class="field-label">C. MOB NO. :</span><span class="field-line">{{wConsultDoctorContact}}</span></td>
+            </tr>
+        </table>
+        <div class="field-row"><span class="field-label">AYUSHMAN ENROLLMENT :</span><span class="chk-box chk-{{WAyushmanEnrolledNo}}"></span><span>No</span><span class="chk-box chk-{{WAyushmanEnrolledYes}}"></span><span>Yes</span></div>
+        <div class="field-row"><span class="field-label">MEDICLAIM POLICY :</span><span class="chk-box chk-{{whasmediclaimNo}}"></span><span>No</span><span class="chk-box chk-{{whasmediclaimYes}}"></span><span>Yes</span></div>
+        <table class="two-field-row" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="field-cell" style="width:50%;"><span class="field-label">MEDICLAIM CO. NAME :</span><span class="field-line">{{wmediclaimcompany}}</span></td>
+                <td class="field-cell" style="width:50%;"><span class="field-label">SUM ASSURED :</span><span class="field-line">{{wmediclaimIssuanceAmt}}</span></td>
+            </tr>
+        </table>
+        <div class="field-row"><span class="field-label">RESIDENTIAL ADDRESS :</span><span class="field-line">{{wresidenceAddress}}</span></div>
+        <table class="two-field-row" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="field-cell" style="width:50%;"><span class="field-label">AADHAR NO. :</span><span class="field-line">{{WifeAadhaar}}</span></td>
+                <td class="field-cell" style="width:50%;"><span class="field-label">PAN NO. :</span><span class="field-line">{{WifePAN}}</span></td>
+            </tr>
+        </table>
+        <div class="field-row"><span class="field-label">MEDICATION :</span><span class="field-line">{{WifeMedications}}</span></div>
+    </div>
+    <div class="page-break"></div>
+    <div class="page page-3">
+        <div class="person-title">FAMILY-RELATED INFORMATION</div>
+
+        <div class="sub-heading">- &nbsp;Information about Children</div>
+        <table class="family-info-table" id="childrenTable">
+            <thead>
+                <tr><th>Name</th><th>Mobile Number</th><th>Address</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <div class="sub-heading">-&nbsp; Close Relative / Guardian</div>
+        <table class="family-info-table" id="relativeTable">
+            <thead>
+                <tr><th>Name</th><th>Relation</th><th>Mobile number</th><th>mail address</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <div class="sub-heading">- &nbsp;Emergency Contact Of Neighbours</div>
+        <table class="family-info-table" id="emergencyTable">
+            <thead>
+                <tr><th>Name</th><th>Mobile number</th><th>Email address</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- Hidden raw data carrier: ONLY ITEMS_SP1 block in the whole document -->
+        <table id="rawFamilyData" style="display:none;">
+            <tbody>
+                <!--ITEMS_SP1-->
+                <tr>
+                    <td>{{ChildName}}</td>
+                    <td>{{ChildMobile}}</td>
+                    <td>{{ChildAddress}}</td>
+                    <td>{{RelativeName}}</td>
+                    <td>{{RelationshipName}}</td>
+                    <td>{{RelativeMobile}}</td>
+                    <td>{{RelativeAddress}}</td>
+                    <td>{{EmrgencyName}}</td>
+                    <td>{{EmrgencyMobile}}</td>
+                    <td>{{EmrgencyAddress}}</td>
+                </tr>
+                <!--/ITEMS_SP1-->
+            </tbody>
+        </table>
+
+        <script type="text/javascript">
+window.onload = function () {
+
+                            function cellText(tr, idx) {
+                                var tds = tr.getElementsByTagName("td");
+                                if (!tds[idx]) return "";
+                                var v = tds[idx].textContent.replace(/\s+/g, " ").trim();
+                                return (v === "NULL") ? "" : v;
+                            }
+
+                            var raw = document.getElementById("rawFamilyData");
+                            if (!raw) return;
+                            var rows = raw.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+                            var children = [], childKeys = {};
+                            var relatives = [], relKeys = {};
+                            var emergencies = [], emgKeys = {};
+
+                            for (var i = 0; i < rows.length; i++) {
+                                var r = rows[i];
+
+                                var cName = cellText(r, 0), cMobile = cellText(r, 1), cAddress = cellText(r, 2);
+                                var rName = cellText(r, 3), rRel = cellText(r, 4), rMobile = cellText(r, 5), rAddress = cellText(r, 6);
+                                var eName = cellText(r, 7), eMobile = cellText(r, 8), eAddress = cellText(r, 9);
+
+                                var cKey = cName + "|" + cMobile + "|" + cAddress;
+                                if (cName && !childKeys[cKey]) { childKeys[cKey] = true; children.push([cName, cMobile, cAddress]); }
+
+                                var rKey = rName + "|" + rRel + "|" + rMobile + "|" + rAddress;
+                                if (rName && !relKeys[rKey]) { relKeys[rKey] = true; relatives.push([rName, rRel, rMobile, rAddress]); }
+
+                                var eKey = eName + "|" + eMobile + "|" + eAddress;
+                                if (eName && !emgKeys[eKey]) { emgKeys[eKey] = true; emergencies.push([eName, eMobile, eAddress]); }
+                            }
+
+                            function fill(tableId, dataArr) {
+                                var table = document.getElementById(tableId);
+                                if (!table) return;
+                                var tbody = table.getElementsByTagName("tbody")[0];
+                                for (var i = 0; i < dataArr.length; i++) {
+                                    var tr = document.createElement("tr");
+                                    for (var j = 0; j < dataArr[i].length; j++) {
+                                        var td = document.createElement("td");
+                                        td.textContent = dataArr[i][j];
+                                        tr.appendChild(td);
+                                    }
+                                    tbody.appendChild(tr);
+                                }
+                            }
+
+                            fill("childrenTable", children);
+                            fill("relativeTable", relatives);
+                            fill("emergencyTable", emergencies);
+
+                            raw.parentNode.removeChild(raw);
+                        };</script>
+
+    </div>
+</body>
+</html>

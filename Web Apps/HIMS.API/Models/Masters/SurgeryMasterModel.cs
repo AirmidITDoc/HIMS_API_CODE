@@ -6,7 +6,7 @@ namespace HIMS.API.Models.Masters
     {
         
         public long SurgeryId { get; set; }
-        public string? SurgeryCode { get; set; }
+        //public string? SurgeryCode { get; set; }
         public string? ShortName { get; set; }
         public string? SurgeryName { get; set; }
         public long? DepartmentId { get; set; }
@@ -32,7 +32,7 @@ namespace HIMS.API.Models.Masters
     {
         public SurgeryMasterModelValidator()
         {
-            RuleFor(x => x.SurgeryCode).NotNull().NotEmpty().WithMessage("SurgeryCode is required");
+            //RuleFor(x => x.SurgeryCode).NotNull().NotEmpty().WithMessage("SurgeryCode is required");
             RuleFor(x => x.ShortName).NotNull().NotEmpty().WithMessage("ShortName  is required");
             RuleFor(x => x.SurgeryName).NotNull().NotEmpty().WithMessage(" SurgeryName required");
             RuleFor(x => x.DepartmentId).NotNull().NotEmpty().WithMessage(" DepartmentId required");

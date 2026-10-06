@@ -32,6 +32,12 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
             _repository = repository1;
 
         }
+        [HttpGet("GetServiceListwithSurgeryWise")]
+        public async Task<ApiResponse> GetServiceListwithSurgeryWise(int TariffId, int ClassId, bool IsProcedure, string ServiceName)
+        {
+            var resultList = await _ISurgeryMasterService.GetServiceListwithSurgeryWise(TariffId, ClassId, IsProcedure, ServiceName);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList with Surgery Wise List.", resultList);
+        }
 
 
         [HttpPost("SurgeryMasterList")]
@@ -43,7 +49,6 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
         }
         [HttpGet]
         [Route("GetSurgeryTypeByOTSurgery")]
-        //[Permission(PageCode = "Prefix", Permission = PagePermission.View)]
         [Permission]
         public async Task<ApiResponse> GetDropdown()
         {
@@ -53,7 +58,6 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
        
 
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> Get(int id)
         {
@@ -66,7 +70,6 @@ namespace HIMS.API.Controllers.Masters.SurgeryMasterController
         }
        
         [HttpGet("GetSurgeryNameBySurgeryType/{id?}")]
-        //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         [Permission]
 
         public async Task<ApiResponse> GetSurgeryName(int id)
