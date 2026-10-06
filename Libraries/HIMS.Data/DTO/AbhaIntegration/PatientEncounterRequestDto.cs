@@ -474,6 +474,22 @@ public class ObservationResult
         public CodeableConcept ForecastStatus { get; set; }
         public CodeableConcept RecommendedDateCode { get; set; }
     }
+    public class HiTypeValidationResult
+    {
+        public List<string> CompleteHiTypes { get; set; } = new();
+        public List<IncompleteHiType> IncompleteHiTypes { get; set; } = new();
+    }
 
+    public class IncompleteHiType
+    {
+        public string HiType { get; set; }
+        public List<IncompleteBlock> Blocks { get; set; } = new();
+    }
+
+    public class IncompleteBlock
+    {
+        public string Block { get; set; }
+        public List<string> EmptyFields { get; set; } = new();
+    }
 
 }

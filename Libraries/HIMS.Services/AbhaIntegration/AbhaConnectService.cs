@@ -6,11 +6,14 @@ using HIMS.Services.AbhaIntegration;
 using HIMS.Services.Common;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System.Collections;
 using System.Data;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using System.Transactions;
 
 namespace HIMS.Services.AbhaIntegration
@@ -1785,6 +1788,93 @@ namespace HIMS.Services.AbhaIntegration
             scope.Complete();
         }
 
+
+        static readonly Dictionary<string, string[]> HiTypes = new()
+        {
+            ["DiagnosticReportRecord"] = new[] { "DiagnosticReports", "Reports" },
+            ["DischargeSummaryRecord"] = new[] { "DischargeSummaries", "ChiefComplaints", "PhysicalExams", "AllergiesData",
+                                                 "MedicalHistory", "FamilyMedicalHistory", "InvestigationAdvice",
+                                                 "Prescriptions", "Procedures", "CarePlan" },
+            ["OPConsultRecord"] = new[] { "ChiefComplaints", "PhysicalExams", "AllergiesData", "MedicalHistory",
+                                                 "FamilyMedicalHistory", "InvestigationAdvice", "Prescriptions",
+                                                 "Procedures", "FollowUp", "Reports" },
+            ["PrescriptionRecord"] = new[] { "Prescriptions", "Reports" },
+            ["ImmunizationRecord"] = new[] { "Immunizations", "ImmunizationRecommendations" },
+            ["WellnessRecord"] = new[] { "WellnessRecord", "ObservationResult" },
+            ["HealthDocumentRecord"] = new[] { "Reports" },
+            ["InvoiceRecord"] = new[] { "InvoiceRecord" },
+        };
+
+        public  HiTypeValidationResult Validate(PatientVisitResponse payload)
+        {
+            var result = new HiTypeValidationResult();
+            var visit = payload?.Visits?.FirstOrDefault();
+            if (visit == null) return result;
+
+            foreach (var (hiType, blocks) in HiTypes)
+            {
+                var visitType = visit.VisitType?.Trim().ToUpper();
+
+                if (hiType == "OPConsultRecord" && visitType != "OP") continue;   // IP visit -> no OP Consult
+                if (hiType == "DischargeSummaryRecord" && visitType != "IP") continue;  // OP visit -> no Discharge Summary
+                var incompleteBlocks = new List<IncompleteBlock>();
+                bool generated = false;
+
+                foreach (var block in blocks)
+                {
+                    var value = visit.GetType().GetProperty(block)?.GetValue(visit);
+                    if (value == null) continue;          // block not passed -> ignore
+                    generated = true;
+
+                    var empty = new List<string>();
+                    Scan("", value, empty);
+                    if (empty.Count > 0)
+                        incompleteBlocks.Add(new IncompleteBlock { Block = block, EmptyFields = empty });
+                }
+
+                if (!generated) continue;                 // HI type not created at all
+
+                if (incompleteBlocks.Count == 0)
+                    result.CompleteHiTypes.Add(hiType);
+                else
+                    result.IncompleteHiTypes.Add(new IncompleteHiType { HiType = hiType, Blocks = incompleteBlocks });
+            }
+
+            return result;
+        }
+
+        // Collects paths of null / empty-string / empty-list values
+        static void Scan(string path, object value, List<string> empty)
+        {
+            if (value == null || (value is string s && string.IsNullOrWhiteSpace(s)))
+            {
+                empty.Add(path == "" ? "(empty)" : path);
+                return;
+            }
+
+            var type = value.GetType();
+            if (value is string || type.IsPrimitive || type.IsEnum || value is decimal || value is DateTime)
+                return;
+
+            if (value is IEnumerable list)
+            {
+                int i = 0;
+                foreach (var item in list) Scan($"{path}[{i++}]", item, empty);
+                if (i == 0) empty.Add(path == "" ? "(empty list)" : path);
+                return;
+            }
+
+            foreach (var p in type.GetProperties())
+            {
+                var v = p.GetValue(value);
+
+                // not an error when null: optional-by-design fields, and WellnessRecord sub-lists
+                bool optional = p.GetCustomAttribute<JsonIgnoreAttribute>()?.Condition == JsonIgnoreCondition.WhenWritingNull;
+                if (v == null && (optional || type == typeof(WellnessRecord))) continue;
+
+                Scan(path == "" ? p.Name : $"{path}.{p.Name}", v, empty);
+            }
+        }
 
     }
 }
