@@ -34,13 +34,14 @@ namespace HIMS.Data.DTO.OTManagement
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-
         public string? DepartmentName { get; set; }
         public string? SurgeryCategoryName { get; set; }
         public string? SiteDescriptionName { get; set; }
         public string? SubSpecialtyName { get; set; }
         public string? OTTableName { get; set; }
         public string? Name { get; set; }
+        public long? ConstantId { get; set; }
+        public string? ServiceName { get; set; }
 
     }
     public class SurgeryListDto
