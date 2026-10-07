@@ -223,191 +223,52 @@ namespace HIMS.Services.Common
             return await DatabaseHelper.GetGridDataBySp<DiscountTransactionHistoryListDto>(model, "ps_rtrv_DiscountTransactionHistoryList");
         }
 
-        //public virtual async Task InsertAsync(AddCharge objAddCharge, List<AddCharge> objAddCharges, int CurrentUserId, string CurrentUserName)
-        //{
-        //    // Begin Transaction
-        //    await using var transaction = await _context.Database.BeginTransactionAsync();
-
-        //    try
-        //    {
-        //        DatabaseHelper odal = new();
-        //        odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
-        //        odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
-
-        //        _context.AddCharges.Add(objAddCharge);
-        //        await _context.SaveChangesAsync();
-        //        if (objAddCharge.IsPathology == 1)
-        //        {
-        //            TPathologyReportHeader objPatho = new()
-        //            {
-        //                PathDate = objAddCharge.ChargesDate,
-        //                PathTime = objAddCharge?.ChargesTime,
-        //                OpdIpdType = objAddCharge?.OpdIpdType,
-        //                OpdIpdId = objAddCharge?.OpdIpdId,
-        //                PathTestId = objAddCharge?.ServiceId,
-        //                AddedBy = objAddCharge?.AddedBy,
-        //                ChargeId = objAddCharge?.ChargesId,
-        //                IsCompleted = false,
-        //                IsPrinted = false,
-        //                IsSampleCollection = false,
-        //                TestType = false,
-
-        //            };
-
-        //            _context.TPathologyReportHeaders.Add(objPatho);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        // Radiology Code
-        //        if (objAddCharge?.IsRadiology == 1)
-        //        {
-        //            TRadiologyReportHeader objRadio = new()
-        //            {
-        //                RadDate = objAddCharge.ChargesDate,
-        //                RadTime = objAddCharge?.ChargesTime,
-        //                OpdIpdType = objAddCharge?.OpdIpdType,
-        //                OpdIpdId = objAddCharge?.OpdIpdId,
-        //                RadTestId = objAddCharge?.ServiceId,
-        //                AddedBy = objAddCharge?.AddedBy,
-        //                ChargeId = objAddCharge?.ChargesId,
-        //                IsCompleted = false,
-        //                IsCancelled = 0,
-        //                IsPrinted = false,
-        //                TestType = false
-        //            };
-
-        //            _context.TRadiologyReportHeaders.Add(objRadio);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        //"ClassId","TariffId","UnitId",?
-        //        if (objAddCharge.IsPackage == 1)
-        //        {
-        //            foreach (var item in objAddCharges)
-        //            {
-
-        //                string[] AEntity = {  "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price","Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DocPercentage", "DocAmt", "HospitalAmt","IsGenerated",
-        //                                      "AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","ServiceCode","IsInclusionExclusion","IsSelfOrCompanyService","PackageId","WardId","BedId","PackageMainChargeId","CreatedBy","ChargesTime","UnitId","ClassId","TariffId","ServiceName","ChargesId"};
-        //                var Packagescharge = item.ToDictionary();
-        //                Packagescharge["PackageMainChargeId"] = objAddCharge.ChargesId;
-        //                foreach (var rProperty in Packagescharge.Keys.ToList())
-        //                {
-        //                    if (!AEntity.Contains(rProperty))
-        //                        Packagescharge.Remove(rProperty);
-        //                }
-
-        //                string VPackagescharge = odal.ExecuteNonQuery("m_insert_IPChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
-        //                item.ChargesId = Convert.ToInt32(VPackagescharge);
-        //                await _context.LogProcedureExecution(Packagescharge, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
-
-        //            }
-
-        //        }
-        //        // Save Log
-        //        await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
-        //        // Commit Transaction
-        //        await transaction.CommitAsync();
-
-        //    }
-        //    catch (Exception)
-        //    {
-        //        // Rollback Transaction
-        //        await transaction.RollbackAsync();
-        //        throw;
-        //    }
-        //}
-        public virtual async Task InsertAsync( AddCharge objAddCharge, List<AddCharge> objAddCharges, int CurrentUserId, string CurrentUserName)
+        public virtual async Task InsertAsync(AddCharge objAddCharge, List<AddCharge> objAddCharges, int CurrentUserId, string CurrentUserName)
         {
             // Begin Transaction
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
             {
-                DatabaseHelper odal = new();odal.SetConnection(_context.Database.GetDbConnection());odal.SetTransaction(transaction.GetDbTransaction());
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
-                // Add Charge
                 _context.AddCharges.Add(objAddCharge);
                 await _context.SaveChangesAsync();
-
-                // Pathology Code (IPD only)
                 if (objAddCharge.IsPathology == 1)
                 {
-                    long? regId = null;
-                    long? doctorId = null;
-                    string? ipNumber = null;
-
-                    // IPD
-                    if (objAddCharge.OpdIpdType == 1)
-                    {
-                        var admission = await _context.Admissions
-                            .AsNoTracking()
-                            .FirstOrDefaultAsync(x => x.AdmissionId == objAddCharge.OpdIpdId);
-
-                        if (admission != null)
-                        {
-                            regId = admission.RegId;
-                            doctorId = admission.DocNameId;
-                            ipNumber = admission.Ipdno;
-                        }
-                    }
-
-                    // Registration Details
-                    var registration = regId == null ? null : await _context.Registrations
-                        .AsNoTracking()
-                        .FirstOrDefaultAsync(x => x.RegId == regId);
-
-                    // Doctor Details
-                    var doctor = doctorId == null ? null : await _context.DoctorMasters
-                        .AsNoTracking()
-                        .FirstOrDefaultAsync(x => x.DoctorId == doctorId);
-
-                    // Patient Name
-                    string patientName = string.Join(" ",
-                        new[] { registration?.FirstName, registration?.MiddleName, registration?.LastName }
-                        .Where(x => !string.IsNullOrWhiteSpace(x)));
-
-                    // Doctor Name
-                    string doctorName = string.Join(" ",
-                        new[] { doctor?.FirstName, doctor?.MiddleName, doctor?.LastName }
-                        .Where(x => !string.IsNullOrWhiteSpace(x)));
-
-                    // Pathology Report Header
                     TPathologyReportHeader objPatho = new()
                     {
                         PathDate = objAddCharge.ChargesDate,
-                        PathTime = objAddCharge.ChargesTime,
-                        OpdIpdType = objAddCharge.OpdIpdType,
-                        OpdIpdId = objAddCharge.OpdIpdId,
-                        PathTestId = objAddCharge.ServiceId,
-                        AddedBy = objAddCharge.AddedBy,
-                        ChargeId = objAddCharge.ChargesId,
-
-                        // Populated from database (IPD only)
-                        RegNo = registration?.RegNo,
-                        PatientName = patientName,
-                        DoctorName = doctorName,
-                        Opipnumber = ipNumber,
-
+                        PathTime = objAddCharge?.ChargesTime,
+                        OpdIpdType = objAddCharge?.OpdIpdType,
+                        OpdIpdId = objAddCharge?.OpdIpdId,
+                        PathTestId = objAddCharge?.ServiceId,
+                        AddedBy = objAddCharge?.AddedBy,
+                        ChargeId = objAddCharge?.ChargesId,
                         IsCompleted = false,
                         IsPrinted = false,
                         IsSampleCollection = false,
-                        TestType = false
+                        TestType = false,
+
                     };
 
                     _context.TPathologyReportHeaders.Add(objPatho);
                     await _context.SaveChangesAsync();
                 }
-
                 // Radiology Code
-                if (objAddCharge.IsRadiology == 1)
+                if (objAddCharge?.IsRadiology == 1)
                 {
                     TRadiologyReportHeader objRadio = new()
                     {
                         RadDate = objAddCharge.ChargesDate,
-                        RadTime = objAddCharge.ChargesTime,
-                        OpdIpdType = objAddCharge.OpdIpdType,
-                        OpdIpdId = objAddCharge.OpdIpdId,
-                        RadTestId = objAddCharge.ServiceId,
-                        AddedBy = objAddCharge.AddedBy,
-                        ChargeId = objAddCharge.ChargesId,
+                        RadTime = objAddCharge?.ChargesTime,
+                        OpdIpdType = objAddCharge?.OpdIpdType,
+                        OpdIpdId = objAddCharge?.OpdIpdId,
+                        RadTestId = objAddCharge?.ServiceId,
+                        AddedBy = objAddCharge?.AddedBy,
+                        ChargeId = objAddCharge?.ChargesId,
                         IsCompleted = false,
                         IsCancelled = 0,
                         IsPrinted = false,
@@ -417,40 +278,34 @@ namespace HIMS.Services.Common
                     _context.TRadiologyReportHeaders.Add(objRadio);
                     await _context.SaveChangesAsync();
                 }
-
-                // Package Code
+                //"ClassId","TariffId","UnitId",?
                 if (objAddCharge.IsPackage == 1)
                 {
                     foreach (var item in objAddCharges)
                     {
+
                         string[] AEntity = {  "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price","Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DocPercentage", "DocAmt", "HospitalAmt","IsGenerated",
-                                             "AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","ServiceCode","IsInclusionExclusion","IsSelfOrCompanyService","PackageId","WardId","BedId","PackageMainChargeId","CreatedBy","ChargesTime","UnitId","ClassId","TariffId","ServiceName","ChargesId"}; 
-
+                                              "AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","ServiceCode","IsInclusionExclusion","IsSelfOrCompanyService","PackageId","WardId","BedId","PackageMainChargeId","CreatedBy","ChargesTime","UnitId","ClassId","TariffId","ServiceName","ChargesId"};
                         var Packagescharge = item.ToDictionary();
-
                         Packagescharge["PackageMainChargeId"] = objAddCharge.ChargesId;
-
                         foreach (var rProperty in Packagescharge.Keys.ToList())
                         {
                             if (!AEntity.Contains(rProperty))
-                            {
                                 Packagescharge.Remove(rProperty);
-                            }
                         }
 
-                        string VPackagescharge = odal.ExecuteNonQuery( "m_insert_IPChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
-
+                        string VPackagescharge = odal.ExecuteNonQuery("m_insert_IPChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
                         item.ChargesId = Convert.ToInt32(VPackagescharge);
+                        await _context.LogProcedureExecution(Packagescharge, nameof(AddCharge), item.ChargesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
-                        await _context.LogProcedureExecution(Packagescharge,nameof(AddCharge),item.ChargesId.ToInt(),Core.Domain.Logging.LogAction.Add, CurrentUserId,  CurrentUserName);
                     }
+
                 }
-
                 // Save Log
-                await _context.SaveChangesAsync( CurrentUserId,   CurrentUserName);
-
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
                 // Commit Transaction
                 await transaction.CommitAsync();
+
             }
             catch (Exception)
             {
@@ -459,6 +314,153 @@ namespace HIMS.Services.Common
                 throw;
             }
         }
+
+        // Updated Code BY Shilpa 07Act
+        //public virtual async Task InsertAsync( AddCharge objAddCharge, List<AddCharge> objAddCharges, int CurrentUserId, string CurrentUserName)
+        //{
+        //    // Begin Transaction
+        //    await using var transaction = await _context.Database.BeginTransactionAsync();
+
+        //    try
+        //    {
+        //        DatabaseHelper odal = new();odal.SetConnection(_context.Database.GetDbConnection());odal.SetTransaction(transaction.GetDbTransaction());
+
+        //        // Add Charge
+        //        _context.AddCharges.Add(objAddCharge);
+        //        await _context.SaveChangesAsync();
+
+        //        // Pathology Code (IPD only)
+        //        if (objAddCharge.IsPathology == 1)
+        //        {
+        //            long? regId = null;
+        //            long? doctorId = null;
+        //            string? ipNumber = null;
+
+        //            // IPD
+        //            if (objAddCharge.OpdIpdType == 1)
+        //            {
+        //                var admission = await _context.Admissions
+        //                    .AsNoTracking()
+        //                    .FirstOrDefaultAsync(x => x.AdmissionId == objAddCharge.OpdIpdId);
+
+        //                if (admission != null)
+        //                {
+        //                    regId = admission.RegId;
+        //                    doctorId = admission.DocNameId;
+        //                    ipNumber = admission.Ipdno;
+        //                }
+        //            }
+
+        //            // Registration Details
+        //            var registration = regId == null ? null : await _context.Registrations
+        //                .AsNoTracking()
+        //                .FirstOrDefaultAsync(x => x.RegId == regId);
+
+        //            // Doctor Details
+        //            var doctor = doctorId == null ? null : await _context.DoctorMasters
+        //                .AsNoTracking()
+        //                .FirstOrDefaultAsync(x => x.DoctorId == doctorId);
+
+        //            // Patient Name
+        //            string patientName = string.Join(" ",
+        //                new[] { registration?.FirstName, registration?.MiddleName, registration?.LastName }
+        //                .Where(x => !string.IsNullOrWhiteSpace(x)));
+
+        //            // Doctor Name
+        //            string doctorName = string.Join(" ",
+        //                new[] { doctor?.FirstName, doctor?.MiddleName, doctor?.LastName }
+        //                .Where(x => !string.IsNullOrWhiteSpace(x)));
+
+        //            // Pathology Report Header
+        //            TPathologyReportHeader objPatho = new()
+        //            {
+        //                PathDate = objAddCharge.ChargesDate,
+        //                PathTime = objAddCharge.ChargesTime,
+        //                OpdIpdType = objAddCharge.OpdIpdType,
+        //                OpdIpdId = objAddCharge.OpdIpdId,
+        //                PathTestId = objAddCharge.ServiceId,
+        //                AddedBy = objAddCharge.AddedBy,
+        //                ChargeId = objAddCharge.ChargesId,
+
+        //                // Populated from database (IPD only)
+        //                RegNo = registration?.RegNo,
+        //                PatientName = patientName,
+        //                DoctorName = doctorName,
+        //                Opipnumber = ipNumber,
+
+        //                IsCompleted = false,
+        //                IsPrinted = false,
+        //                IsSampleCollection = false,
+        //                TestType = false
+        //            };
+
+        //            _context.TPathologyReportHeaders.Add(objPatho);
+        //            await _context.SaveChangesAsync();
+        //        }
+
+        //        // Radiology Code
+        //        if (objAddCharge.IsRadiology == 1)
+        //        {
+        //            TRadiologyReportHeader objRadio = new()
+        //            {
+        //                RadDate = objAddCharge.ChargesDate,
+        //                RadTime = objAddCharge.ChargesTime,
+        //                OpdIpdType = objAddCharge.OpdIpdType,
+        //                OpdIpdId = objAddCharge.OpdIpdId,
+        //                RadTestId = objAddCharge.ServiceId,
+        //                AddedBy = objAddCharge.AddedBy,
+        //                ChargeId = objAddCharge.ChargesId,
+        //                IsCompleted = false,
+        //                IsCancelled = 0,
+        //                IsPrinted = false,
+        //                TestType = false
+        //            };
+
+        //            _context.TRadiologyReportHeaders.Add(objRadio);
+        //            await _context.SaveChangesAsync();
+        //        }
+
+        //        // Package Code
+        //        if (objAddCharge.IsPackage == 1)
+        //        {
+        //            foreach (var item in objAddCharges)
+        //            {
+        //                string[] AEntity = {  "ChargesDate", "OpdIpdType", "OpdIpdId", "ServiceId", "Price","Qty", "TotalAmt", "ConcessionPercentage", "ConcessionAmount", "NetAmount", "DoctorId", "DocPercentage", "DocAmt", "HospitalAmt","IsGenerated",
+        //                                     "AddedBy","IsCancelled","IsCancelledBy","IsCancelledDate","IsPathology","IsRadiology","IsPackage","ServiceCode","IsInclusionExclusion","IsSelfOrCompanyService","PackageId","WardId","BedId","PackageMainChargeId","CreatedBy","ChargesTime","UnitId","ClassId","TariffId","ServiceName","ChargesId"}; 
+
+        //                var Packagescharge = item.ToDictionary();
+
+        //                Packagescharge["PackageMainChargeId"] = objAddCharge.ChargesId;
+
+        //                foreach (var rProperty in Packagescharge.Keys.ToList())
+        //                {
+        //                    if (!AEntity.Contains(rProperty))
+        //                    {
+        //                        Packagescharge.Remove(rProperty);
+        //                    }
+        //                }
+
+        //                string VPackagescharge = odal.ExecuteNonQuery( "m_insert_IPChargesPackages_1", CommandType.StoredProcedure, "ChargesId", Packagescharge);
+
+        //                item.ChargesId = Convert.ToInt32(VPackagescharge);
+
+        //                await _context.LogProcedureExecution(Packagescharge,nameof(AddCharge),item.ChargesId.ToInt(),Core.Domain.Logging.LogAction.Add, CurrentUserId,  CurrentUserName);
+        //            }
+        //        }
+
+        //        // Save Log
+        //        await _context.SaveChangesAsync( CurrentUserId,   CurrentUserName);
+
+        //        // Commit Transaction
+        //        await transaction.CommitAsync();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        // Rollback Transaction
+        //        await transaction.RollbackAsync();
+        //        throw;
+        //    }
+        //}
 
         public virtual async Task IPAddchargesdelete(AddCharge ObjaddCharge, int CurrentUserId, string CurrentUserName)
         { 
