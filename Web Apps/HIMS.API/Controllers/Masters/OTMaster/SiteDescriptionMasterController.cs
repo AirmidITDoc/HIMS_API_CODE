@@ -7,7 +7,9 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.OTManagment;
 using HIMS.Data.Models;
+using HIMS.Services.OTManagment;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.OTMaster
@@ -18,18 +20,22 @@ namespace HIMS.API.Controllers.Masters.OTMaster
     public class SiteDescriptionMasterController : BaseController
     {
         private readonly IGenericService<MOtSiteDescriptionMaster> _repository;
+        private readonly ISiteDescriptionService _siteDescriptionService;
 
-        public SiteDescriptionMasterController(IGenericService<MOtSiteDescriptionMaster> repository)
+        public SiteDescriptionMasterController(IGenericService<MOtSiteDescriptionMaster> repository, ISiteDescriptionService siteDescriptionService)
         {
             _repository = repository;
+            _siteDescriptionService = siteDescriptionService;
         }
+
+
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<MOtSiteDescriptionMaster> MOttableMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MOttableMasterList.ToGridResponse(objGrid, "SiteDescriptionMaster List"));
+            IPagedList<SiteDescriptionListDto> list = await _siteDescriptionService.GetSiteDescriptionListAsync(objGrid);
+            return Ok(list.ToGridResponse(objGrid, "Site Description List"));
         }
 
         [HttpGet("{id?}")]
@@ -81,7 +87,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
 
         //Delete API
-        [HttpDelete]
+        [HttpDelete("{id:int}")]
         [Permission(PageCode = "OTManagement", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
