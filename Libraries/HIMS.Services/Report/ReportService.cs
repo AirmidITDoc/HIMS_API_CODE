@@ -3104,7 +3104,24 @@ namespace HIMS.Services.Report
                         );
                     }
                     break;
+                    case "IPDMonthlyDepartmentGender.html":
+{
+    string reportTable = CreateIPDMonthlyDepartmentGenderReport(
+        dt,
+        colList,
+        headerList
+    );
 
+    html = html.Replace("{{ReportTable}}", reportTable);
+
+    DateTime reportDate = FromDate;
+
+    html = html.Replace(
+        "{{ReportMonth}}",
+        reportDate.ToString("MMM-yy")
+    );
+}
+break;
                 case "CPWiseDetailReport.html":
                     {
                         string prevCP = "";
@@ -5832,7 +5849,447 @@ namespace HIMS.Services.Report
             table.Append("</tr>");
             return table.ToString();
         }
+        private static string CreateIPDMonthlyDepartmentGenderReport(
+            DataTable dt,
+            string[] colList,
+            string[] headerList)
+        {
+            StringBuilder html = new StringBuilder();
 
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                html.Append("<table class='report-table' style='font-size:12px;'>");
+                html.Append("<tr>");
+                html.Append("<td>No data found.</td>");
+                html.Append("</tr>");
+                html.Append("</table>");
+
+                return html.ToString();
+            }
+
+            // ---------------------------------------------------------
+            // COLUMN NAME
+            // ---------------------------------------------------------
+
+            string admissionDateColumn =
+                dt.Columns.Contains("AdmissionDate")
+                    ? "AdmissionDate"
+                    : "";
+
+            // ---------------------------------------------------------
+            // START TABLE
+            // Font Size = 10px
+            // ---------------------------------------------------------
+
+            html.Append("<table class='report-table' style='font-size:10px;'>");
+
+            html.Append("<thead>");
+
+            // =========================================================
+            // HEADER ROW 1
+            // =========================================================
+
+            html.Append("<tr class='parent-header'>");
+
+            html.Append(
+                "<th rowspan='2' class='date-column'>Admission<br/>Date</th>"
+            );
+
+            html.Append(
+                "<th colspan='2' class='department-column'>Agadtantra<br/>Vishchikitsa</th>"
+            );
+
+            html.Append(
+                "<th colspan='2' class='department-column'>Swastha<br/>&amp; Yoga</th>"
+            );
+
+            html.Append(
+                "<th colspan='2' class='department-column'>Spl<br/>Opd</th>"
+            );
+
+            html.Append(
+                "<th colspan='2' class='department-column'>Shalakya<br/>(ENT)</th>"
+            );
+
+            html.Append(
+                "<th colspan='2' class='department-column'>Panchkarma</th>"
+            );
+
+            html.Append(
+                "<th colspan='2' class='department-column'>Opd</th>"
+            );
+
+            html.Append(
+                "<th colspan='2' class='department-column'>Night<br/>(Emergency)</th>"
+            );
+
+            html.Append(
+                "<th colspan='2' class='department-column'>Kayachikistha</th>"
+            );
+
+            html.Append(
+                "<th colspan='2' class='department-column'>Dental<br/>(Shalakya)</th>"
+            );
+
+            html.Append(
+                "<th colspan='2' class='department-column'>Balrog</th>"
+            );
+
+            html.Append(
+                "<th colspan='2' class='department-column'>E N T<br/>(Shalakya)</th>"
+            );
+
+            html.Append(
+                "<th colspan='2' class='department-column'>Streerog<br/>Prasuti Tantra</th>"
+            );
+
+            html.Append(
+                "<th colspan='2' class='department-column'>Ophthomology<br/>(Shalakya)</th>"
+            );
+
+            html.Append(
+                "<th colspan='2' class='department-column'>Shalya</th>"
+            );
+
+            html.Append(
+                "<th rowspan='2' class='total-column'>Total</th>"
+            );
+
+            html.Append("</tr>");
+
+            // =========================================================
+            // HEADER ROW 2
+            // =========================================================
+
+            html.Append("<tr class='child-header'>");
+
+            // Agadtantra
+            html.Append("<th>F</th>");
+            html.Append("<th>M</th>");
+
+            // Swastha & Yoga
+            html.Append("<th>F</th>");
+            html.Append("<th>M</th>");
+
+            // Spl Opd
+            html.Append("<th>F</th>");
+            html.Append("<th>M</th>");
+
+            // Shalakya ENT
+            html.Append("<th>F</th>");
+            html.Append("<th>M</th>");
+
+            // Panchkarma
+            html.Append("<th>F</th>");
+            html.Append("<th>M</th>");
+
+            // Opd
+            html.Append("<th>F</th>");
+            html.Append("<th>M</th>");
+
+            // Night Emergency
+            html.Append("<th>F</th>");
+            html.Append("<th>M</th>");
+
+            // Kayachikistha
+            html.Append("<th>F</th>");
+            html.Append("<th>M</th>");
+
+            // Dental
+            html.Append("<th>F</th>");
+            html.Append("<th>M</th>");
+
+            // Balrog
+            html.Append("<th>F</th>");
+            html.Append("<th>M</th>");
+
+            // ENT
+            html.Append("<th>F</th>");
+            html.Append("<th>M</th>");
+
+            // Streerog
+            html.Append("<th>F</th>");
+            html.Append("<th>M</th>");
+
+            // Ophthomology
+            html.Append("<th>F</th>");
+            html.Append("<th>M</th>");
+
+            // Shalya
+            html.Append("<th>F</th>");
+            html.Append("<th>M</th>");
+
+            html.Append("</tr>");
+
+            html.Append("</thead>");
+
+            // =========================================================
+            // BODY
+            // =========================================================
+
+            html.Append("<tbody>");
+
+            foreach (DataRow row in dt.Rows)
+            {
+                html.Append("<tr>");
+
+                // -----------------------------------------------------
+                // ADMISSION DATE
+                // -----------------------------------------------------
+
+                string admissionDate = "";
+
+                if (!string.IsNullOrWhiteSpace(admissionDateColumn) &&
+                    row[admissionDateColumn] != DBNull.Value)
+                {
+                    DateTime date;
+
+                    if (DateTime.TryParse(
+                        row[admissionDateColumn].ToString(),
+                        out date))
+                    {
+                        admissionDate = date.ToString("dd/MM/yy");
+                    }
+                    else
+                    {
+                        admissionDate =
+                            row[admissionDateColumn]?.ToString() ?? "";
+                    }
+                }
+
+                html.Append(
+                    $"<td class='date-value'>{System.Net.WebUtility.HtmlEncode(admissionDate)}</td>"
+                );
+
+                // -----------------------------------------------------
+                // AGADTANTRA
+                // -----------------------------------------------------
+
+                html.Append(GetNumericCell(row, dt, "Agadtantra_F"));
+                html.Append(GetNumericCell(row, dt, "Agadtantra_M"));
+
+                // -----------------------------------------------------
+                // SWASTHA & YOGA
+                // -----------------------------------------------------
+
+                html.Append(GetNumericCell(row, dt, "SwasthaYoga_F"));
+                html.Append(GetNumericCell(row, dt, "SwasthaYoga_M"));
+
+                // -----------------------------------------------------
+                // SPL OPD
+                // -----------------------------------------------------
+
+                html.Append(GetNumericCell(row, dt, "SplOpd_F"));
+                html.Append(GetNumericCell(row, dt, "SplOpd_M"));
+
+                // -----------------------------------------------------
+                // SHALAKYA ENT
+                // -----------------------------------------------------
+
+                html.Append(GetNumericCell(row, dt, "ShalakyaEnt_F"));
+                html.Append(GetNumericCell(row, dt, "ShalakyaEnt_M"));
+
+                // -----------------------------------------------------
+                // PANCHKARMA
+                // -----------------------------------------------------
+
+                html.Append(GetNumericCell(row, dt, "Panchkarma_F"));
+                html.Append(GetNumericCell(row, dt, "Panchkarma_M"));
+
+                // -----------------------------------------------------
+                // OPD
+                // -----------------------------------------------------
+
+                html.Append(GetNumericCell(row, dt, "Opd_F"));
+                html.Append(GetNumericCell(row, dt, "Opd_M"));
+
+                // -----------------------------------------------------
+                // NIGHT EMERGENCY
+                // -----------------------------------------------------
+
+                html.Append(GetNumericCell(row, dt, "NightEmergency_F"));
+                html.Append(GetNumericCell(row, dt, "NightEmergency_M"));
+
+                // -----------------------------------------------------
+                // KAYACHIKISTHA
+                // -----------------------------------------------------
+
+                html.Append(GetNumericCell(row, dt, "Kayachikistha_F"));
+                html.Append(GetNumericCell(row, dt, "Kayachikistha_M"));
+
+                // -----------------------------------------------------
+                // DENTAL
+                // -----------------------------------------------------
+
+                html.Append(GetNumericCell(row, dt, "DentalShalakya_F"));
+                html.Append(GetNumericCell(row, dt, "DentalShalakya_M"));
+
+                // -----------------------------------------------------
+                // BALROG
+                // -----------------------------------------------------
+
+                html.Append(GetNumericCell(row, dt, "Balrog_F"));
+                html.Append(GetNumericCell(row, dt, "Balrog_M"));
+
+                // -----------------------------------------------------
+                // ENT
+                // -----------------------------------------------------
+
+                html.Append(GetNumericCell(row, dt, "ENTShalakya_F"));
+                html.Append(GetNumericCell(row, dt, "ENTShalakya_M"));
+
+                // -----------------------------------------------------
+                // STREEROG PRASUTI
+                // -----------------------------------------------------
+
+                html.Append(GetNumericCell(row, dt, "StreerogPrasuti_F"));
+                html.Append(GetNumericCell(row, dt, "StreerogPrasuti_M"));
+
+                // -----------------------------------------------------
+                // OPHTHOMOLOGY
+                // -----------------------------------------------------
+
+                html.Append(GetNumericCell(row, dt, "Ophthomology_F"));
+                html.Append(GetNumericCell(row, dt, "Ophthomology_M"));
+
+                // -----------------------------------------------------
+                // SHALYA
+                // -----------------------------------------------------
+
+                html.Append(GetNumericCell(row, dt, "Shalya_F"));
+                html.Append(GetNumericCell(row, dt, "Shalya_M"));
+
+                // -----------------------------------------------------
+                // TOTAL
+                // -----------------------------------------------------
+
+                html.Append(
+                    GetNumericCell(row, dt, "Total", true)
+                );
+
+                html.Append("</tr>");
+            }
+
+            html.Append("</tbody>");
+
+            // =========================================================
+            // GRAND TOTAL
+            // =========================================================
+
+            html.Append("<tfoot>");
+
+            html.Append("<tr class='grand-total'>");
+
+            html.Append(
+                "<td class='total-label'><b>Total</b></td>"
+            );
+
+            string[] totalColumns =
+            {
+        "Agadtantra_F",
+        "Agadtantra_M",
+
+        "SwasthaYoga_F",
+        "SwasthaYoga_M",
+
+        "SplOpd_F",
+        "SplOpd_M",
+
+        "ShalakyaEnt_F",
+        "ShalakyaEnt_M",
+
+        "Panchkarma_F",
+        "Panchkarma_M",
+
+        "Opd_F",
+        "Opd_M",
+
+        "NightEmergency_F",
+        "NightEmergency_M",
+
+        "Kayachikistha_F",
+        "Kayachikistha_M",
+
+        "DentalShalakya_F",
+        "DentalShalakya_M",
+
+        "Balrog_F",
+        "Balrog_M",
+
+        "ENTShalakya_F",
+        "ENTShalakya_M",
+
+        "StreerogPrasuti_F",
+        "StreerogPrasuti_M",
+
+        "Ophthomology_F",
+        "Ophthomology_M",
+
+        "Shalya_F",
+        "Shalya_M",
+
+        "Total"
+    };
+
+            foreach (string column in totalColumns)
+            {
+                decimal total = 0;
+
+                if (dt.Columns.Contains(column))
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        if (row[column] != DBNull.Value)
+                        {
+                            decimal value = 0;
+
+                            decimal.TryParse(
+                                row[column].ToString(),
+                                out value
+                            );
+
+                            total += value;
+                        }
+                    }
+                }
+
+                html.Append(
+                    $"<td><b>{total:0}</b></td>"
+                );
+            }
+
+            html.Append("</tr>");
+
+            html.Append("</tfoot>");
+
+            html.Append("</table>");
+
+            return html.ToString();
+        }
+        private static string GetNumericCell(
+    DataRow row,
+    DataTable dt,
+    string columnName,
+    bool bold = false)
+        {
+            decimal value = 0;
+
+            if (dt.Columns.Contains(columnName) &&
+                row[columnName] != DBNull.Value)
+            {
+                decimal.TryParse(
+                    row[columnName].ToString(),
+                    out value
+                );
+            }
+
+            if (bold)
+            {
+                return $"<td><b>{value:0}</b></td>";
+            }
+
+            return $"<td>{value:0}</td>";
+        }
         private static string CreateDayWisePivotReport(
         DataTable dt,
         string[] colList,

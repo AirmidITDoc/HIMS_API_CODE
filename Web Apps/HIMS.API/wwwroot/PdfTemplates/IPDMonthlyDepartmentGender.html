@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            font-family: Arial, sans-serif;
+            font-size: 8px;
+        }
+
+            .report-table th,
+            .report-table td {
+                border: 1px solid #555;
+                padding: 3px 2px;
+                text-align: center;
+                vertical-align: middle;
+            }
+
+            .report-table th {
+                font-weight: bold;
+            }
+
+            .report-table .date-column {
+                width: 60px;
+            }
+
+            .report-table .department-column {
+                width: 55px;
+            }
+
+            .report-table .total-column {
+                width: 45px;
+            }
+
+            .report-table .date-value {
+                white-space: nowrap;
+            }
+
+            .report-table .grand-total td {
+                font-weight: bold;
+            }
+    </style>
+
+</head>
+
+<body>
+    {{HospitalHeader}}
+
+
+    {{ReportTable}}
+
+</body>
+</html>
