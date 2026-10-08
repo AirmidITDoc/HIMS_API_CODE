@@ -148,7 +148,7 @@ namespace HIMS.Services.OutPatient
                         OPIPID = Convert.ToInt32(modelItem.OpdIpdIp)
 
                     };
-                    odal.ExecuteNonQuery("sp_delete_OPPrescription_1", CommandType.StoredProcedure, tokensObj.ToDictionary());
+                    odal.ExecuteNonQueryNew("sp_delete_OPPrescription_1", CommandType.StoredProcedure,"", tokensObj.ToDictionary());
                     await _context.LogProcedureExecution(tokensObj.ToDictionary(), nameof(TPrescription), Convert.ToInt32(modelItem.OpdIpdIp), Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
                 }
 
@@ -168,7 +168,7 @@ namespace HIMS.Services.OutPatient
                             entity.Remove(rProperty);
                     }
                     entity["IsAddBy"] = 0; // Ensure objpayment has OPDIPDType
-                    odal.ExecuteNonQuery("ps_insert_OPPrescription_1", CommandType.StoredProcedure, entity);
+                    odal.ExecuteNonQueryNew("ps_insert_OPPrescription_1", CommandType.StoredProcedure,"", entity);
                     await _context.LogProcedureExecution(entity, nameof(TPrescription), Convert.ToInt32(modelItem.PrecriptionId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                     string[] VDetailEntity = { "VisitId", "FollowupDate", "FollowUpReason", "FollowUpDescription", "FollowUpDepartmentId", "FollowUpDoctorId" };
@@ -178,7 +178,7 @@ namespace HIMS.Services.OutPatient
                         if (!VDetailEntity.Contains(rProperty))
                             VEntity.Remove(rProperty);
                     }
-                    odal.ExecuteNonQuery("m_Update_VisitFollowupDate", CommandType.StoredProcedure, VEntity);
+                    odal.ExecuteNonQueryNew("m_Update_VisitFollowupDate", CommandType.StoredProcedure,"", VEntity);
                     await _context.LogProcedureExecution(VEntity, nameof(VisitDetail), Convert.ToInt32(ObjVisitDetail.VisitId), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
                 }
@@ -194,7 +194,7 @@ namespace HIMS.Services.OutPatient
                             PrescriptionEntity.Remove(rProperty);
                     }
                     PrescriptionEntity["CreatedBy"] = CurrentUserId;
-                    odal.ExecuteNonQuery("ps_Insert_T_OPRequestList", CommandType.StoredProcedure, PrescriptionEntity);
+                    odal.ExecuteNonQueryNew("ps_Insert_T_OPRequestList", CommandType.StoredProcedure,"", PrescriptionEntity);
                     await _context.LogProcedureExecution(PrescriptionEntity, nameof(TOprequestList), Convert.ToInt32(item.OpIpId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
 
                 }
@@ -207,7 +207,7 @@ namespace HIMS.Services.OutPatient
                         if (!PayEntity.Contains(rProperty))
                             CasepaperEntity.Remove(rProperty);
                     }
-                    odal.ExecuteNonQuery("sp_Insert_OPCasepaperDignosisMaster", CommandType.StoredProcedure, CasepaperEntity);
+                    odal.ExecuteNonQueryNew("sp_Insert_OPCasepaperDignosisMaster", CommandType.StoredProcedure,"", CasepaperEntity);
                     await _context.LogProcedureExecution(CasepaperEntity, nameof(MOpcasepaperDignosisMaster), Convert.ToInt32(item.VisitId), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                 }
                 //  Save & Commit 
@@ -221,7 +221,6 @@ namespace HIMS.Services.OutPatient
                 throw;
             }
         }
-
 
         public virtual async Task UpdateAsync(TPrescription OBJTPrescription, int UserId, string Username)
         {
