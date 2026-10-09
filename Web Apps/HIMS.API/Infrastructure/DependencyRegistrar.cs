@@ -69,6 +69,8 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IPurchaseService, PurchaseService>();
             services.AddScoped<ICommonService, CommonService>();
             services.AddScoped<IGRNService, GRNService>();
+            services.AddScoped<IBillTemplateService, BillTemplateService>();
+
 
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IOPBillingReport, OPBillingReport>();
