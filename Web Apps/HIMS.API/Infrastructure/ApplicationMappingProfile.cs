@@ -88,6 +88,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIpMrdDiagnosisInfoHeader, MrdDiagnosisInfoUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TIpMrdDiagnosisInfoDetail, MrdDiagnosisInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MOtBillTemplate, BillTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TVaccineInformation, VaccineInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
