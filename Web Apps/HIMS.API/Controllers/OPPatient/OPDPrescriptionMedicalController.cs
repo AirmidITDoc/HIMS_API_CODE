@@ -209,7 +209,7 @@ namespace HIMS.API.Controllers.OPPatient
 
             if (model.Count > 0)
             {
-                _OPDPrescriptionService.InsertPrescriptionSP(model, model1, objTOPRequest, objmOpcasepaperDignosis, CurrentUserId, CurrentUserName);
+                await _OPDPrescriptionService.InsertPrescriptionSP(model, model1, objTOPRequest, objmOpcasepaperDignosis, CurrentUserId, CurrentUserName);
 
 
                 //get patient details
