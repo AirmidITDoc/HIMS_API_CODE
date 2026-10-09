@@ -13,9 +13,9 @@ namespace HIMS.Data.DTO.OTManagement
         public double? Percentage { get; set; }
         public string? ServiceName { get; set; }
         public bool? IsActive { get; set; }
-        public long? CreatedBy { get; set; }
-        public DateTime? CreatedDateTime { get; set; }
-        public long? UpdatedBy { get; set; }
-        public DateTime? ModifiedDateTime { get; set; }
+        public string? CreatedBy { get; set; }
+        public string? CreatedDateTime { get; set; }
+        public string? UpdatedBy { get; set; }
+        public string? ModifiedDateTime { get; set; }
     }
 }
