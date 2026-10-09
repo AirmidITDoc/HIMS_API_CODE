@@ -1875,6 +1875,48 @@ namespace HIMS.Services.AbhaIntegration
                 Scan(path == "" ? p.Name : $"{path}.{p.Name}", v, empty);
             }
         }
+        public object ValidateHiTypesSummary(PatientVisitResponse payload)
+        {
+            var visit = payload?.Visits?.FirstOrDefault();
+
+            if (visit == null)
+                return new
+                {
+                    FullyCompleted = new List<string>(),
+                    Incomplete = new List<string>(),
+                    Optional = new List<string>()
+                };
+
+            var validation = Validate(payload);
+            var visitType = visit.VisitType?.Trim().ToUpper();
+
+            var allHiTypes = new List<string>
+            {
+                "OPConsultRecord",
+                "PrescriptionRecord",
+                "ImmunizationRecord",
+                "WellnessRecord",
+                "HealthDocumentRecord",
+                "InvoiceRecord",
+                "DiagnosticReportRecord",
+                "DischargeSummaryRecord"
+            };
+
+            allHiTypes = allHiTypes.Where(x => !(x == "OPConsultRecord" && visitType != "OP") && !(x == "DischargeSummaryRecord" && visitType != "IP")).ToList();
+
+            var completed = validation.CompleteHiTypes.Where(x => allHiTypes.Contains(x)).ToList();
+
+            var incomplete = validation.IncompleteHiTypes.Select(x => x.HiType).Where(x => allHiTypes.Contains(x)).ToList();
+
+            var optional = allHiTypes.Except(completed).Except(incomplete).ToList();
+
+            return new
+            {
+                FullyCompleted = completed,
+                Incomplete = incomplete,
+                Optional = optional
+            };
+        }
 
     }
 }

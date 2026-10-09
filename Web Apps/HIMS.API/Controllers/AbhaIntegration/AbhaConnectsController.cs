@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json;
+using static LinqToDB.Sql;
 
 namespace HIMS.API.Controllers.AbhaIntegration
 {
@@ -277,6 +278,27 @@ namespace HIMS.API.Controllers.AbhaIntegration
                 var validation = _abhaConnectService.Validate(payload);
 
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "HI type validation completed.", validation);
+            }
+            catch (Exception ex)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost("ValidateHiTypesSummary")]
+        public async Task<ApiResponse> ValidateHiTypesSummary(PatientVisitRequest model)
+        {
+            try
+            {
+                var result = await _abhaConnectService.GetPatientVisitsAsync(model);
+                var payload = result?.FirstOrDefault();
+
+                if (payload?.Visits == null || payload.Visits.Count == 0)
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "No visit data found.");
+
+                var summary = _abhaConnectService.ValidateHiTypesSummary(payload);
+
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"HI type validation summary completed.",summary);
             }
             catch (Exception ex)
             {
