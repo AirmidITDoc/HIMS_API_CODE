@@ -664,23 +664,66 @@ namespace HIMS.Services.Utilities
         //}
 
         //Shilpa Code 
-        public string GetStoreHeader(string filePath, long storeId = 0)
-        {
-            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
-                return string.Empty;
+        //public string GetStoreHeader(string filePath, long storeId = 0)
+        //{
+        //    if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+        //        return string.Empty;
+        //    var htmlHeader = File.ReadAllText(filePath);
+        //    if (string.IsNullOrWhiteSpace(htmlHeader))
+        //        return string.Empty;
+        //    var hospital = _context.HospitalMasters.AsNoTracking().FirstOrDefault(x => x.HospitalId == 1);
+        //    var store = _context.MStoreMasters.AsNoTracking().FirstOrDefault(x => x.StoreId == storeId);
+        //    string hospitalLogo = string.Empty;
+        //    if (hospital != null)
+        //    {
+        //        var logo = _context.FileMasters.AsNoTracking().FirstOrDefault(x => x.RefType == 7 && x.RefId == hospital.HospitalId && x.IsDelete == false);
+        //        if (!string.IsNullOrWhiteSpace(logo?.DocSavedName))
+        //        {
+        //            hospitalLogo = GetBase64FromFolder(@"Hospital_Logo", logo.DocSavedName);
+        //        }
+        //    }
+
+        //    store ??= new MStoreMaster();
+
+        //    return htmlHeader
+        //        .Replace("{{PrintStoreName}}", store.PrintStoreName ?? string.Empty)
+        //        .Replace("{{StoreAddress}}", store.StoreAddress ?? string.Empty)
+        //        .Replace("{{HospitalMobileNo}}", store.HospitalMobileNo ?? string.Empty)
+        //        .Replace("{{HospitalEmailId}}", store.HospitalEmailId ?? string.Empty)
+        //        .Replace("{{PrintStoreUnitName}}", store.PrintStoreUnitName ?? string.Empty)
+        //        .Replace("{{DL_NO}}", store.DlNo ?? string.Empty)
+        //        .Replace("{{GSTIN}}", store.Gstin ?? string.Empty)
+        //        .Replace("{{logo}}", hospitalLogo)
+        //        .Replace("{{Display}}", store.StoreId > 0 ? "visible" : "hidden");
+        //}
+
+      //Add Logo2 in Storeheader chnages 09/10/2026  
+            public string GetStoreHeader(string filePath, long storeId = 0)
+          {
+            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))  return string.Empty;
+
             var htmlHeader = File.ReadAllText(filePath);
-            if (string.IsNullOrWhiteSpace(htmlHeader))
-                return string.Empty;
-            var hospital = _context.HospitalMasters.AsNoTracking().FirstOrDefault(x => x.HospitalId == 1);
-            var store = _context.MStoreMasters.AsNoTracking().FirstOrDefault(x => x.StoreId == storeId);
+
+            if (string.IsNullOrWhiteSpace(htmlHeader)) return string.Empty;
+            var hospital = _context.HospitalMasters .AsNoTracking().FirstOrDefault(x => x.HospitalId == 1);
+            var store = _context.MStoreMasters.AsNoTracking() .FirstOrDefault(x => x.StoreId == storeId);
+            // Fetch hospital logos
+            var files = _context.FileMasters  .AsNoTracking()
+                .Where(x => x.RefId == 1 && x.IsDelete == false && (x.RefType == 7 || x.RefType == 10)).ToList();
+
+            var logo = files.FirstOrDefault(x => x.RefType == 7);
+            var logo2 = files.FirstOrDefault(x => x.RefType == 10);
+
             string hospitalLogo = string.Empty;
-            if (hospital != null)
+            string hospitalLogo2 = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(logo?.DocSavedName))
             {
-                var logo = _context.FileMasters.AsNoTracking().FirstOrDefault(x => x.RefType == 7 && x.RefId == hospital.HospitalId && x.IsDelete == false);
-                if (!string.IsNullOrWhiteSpace(logo?.DocSavedName))
-                {
-                    hospitalLogo = GetBase64FromFolder(@"Hospital_Logo", logo.DocSavedName);
-                }
+                hospitalLogo = GetBase64FromFolder( @"Hospital_Logo", logo.DocSavedName);
+            }
+            if (!string.IsNullOrWhiteSpace(logo2?.DocSavedName))
+            {
+                hospitalLogo2 = GetBase64FromFolder( @"NABHLogo\NABH", logo2.DocSavedName);
             }
 
             store ??= new MStoreMaster();
@@ -694,8 +737,11 @@ namespace HIMS.Services.Utilities
                 .Replace("{{DL_NO}}", store.DlNo ?? string.Empty)
                 .Replace("{{GSTIN}}", store.Gstin ?? string.Empty)
                 .Replace("{{logo}}", hospitalLogo)
+                .Replace("{{logo2}}", hospitalLogo2)
+                .Replace("{{chklogo2flag}}", !string.IsNullOrWhiteSpace(hospitalLogo2) ? "block" : "none")
                 .Replace("{{Display}}", store.StoreId > 0 ? "visible" : "hidden");
         }
+
 
         //public string GetStoreHeader(string filePath, long StoreId = 0)
         //{
