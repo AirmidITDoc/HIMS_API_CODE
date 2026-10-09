@@ -548,6 +548,11 @@
             height: 0;
             page-break-after: always;
         }
+        .pharmacy-header {
+            width: 100%;
+            margin-bottom: 14px;
+            page-break-inside: avoid;
+        }
     </style>
 </head>
 <body>
@@ -555,18 +560,15 @@
     <!-- ==================== PAGE 1 ==================== -->
     <div class="page">
 
-        <div class="header">
-            <div class="logo-left">JAIN<br>SANGH<br>LOGO</div>
-            <div class="title-block">
-                <h1>SHREE THANA VARDHAMAN STHANAKVASI</h1>
-                <h2>JAIN SHRAVAK SANGH</h2>
-                <div class="managed">MANAGED</div>
-                <div class="sub-managed">MATUSHRI DHANUBEN VELJI KARMAN SHAH (NU.TRAMBO) FUSED BLUB (SENIOR CITIZEN CLUB)</div>
-            </div>
-            <div class="logo-right">FUSED<br>BULB</div>
-        </div><div class="form-title-wrap">
+
+        <div class="pharmacy-header">
+            {{PharmacyHeader}}
+        </div>
+
+        <div class="form-title-wrap">
             <div class="form-title">MEMBERSHIP REGISTRATION FORM</div>
         </div>
+
         <div class="person-title">HUSBAND INFORMATION</div>
 
         <div class="field-row">
