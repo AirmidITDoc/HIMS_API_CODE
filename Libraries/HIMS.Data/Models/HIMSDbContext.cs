@@ -505,6 +505,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<THomeCollectionRegistrationInfo> THomeCollectionRegistrationInfos { get; set; } = null!;
         public virtual DbSet<THomeCollectionServiceDetail> THomeCollectionServiceDetails { get; set; } = null!;
         public virtual DbSet<THomeDeliveryOrder> THomeDeliveryOrders { get; set; } = null!;
+        public virtual DbSet<TImmunizatoinInfo> TImmunizatoinInfos { get; set; } = null!;
         public virtual DbSet<TIndentDetail> TIndentDetails { get; set; } = null!;
         public virtual DbSet<TIndentHeader> TIndentHeaders { get; set; } = null!;
         public virtual DbSet<TIpAdmissionDiagnosisInformation> TIpAdmissionDiagnosisInformations { get; set; } = null!;
@@ -656,6 +657,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TTokenNumberGroupWise> TTokenNumberGroupWises { get; set; } = null!;
         public virtual DbSet<TTokenNumberWithDepartmentWise> TTokenNumberWithDepartmentWises { get; set; } = null!;
         public virtual DbSet<TTokenNumberWithDoctorWise> TTokenNumberWithDoctorWises { get; set; } = null!;
+        public virtual DbSet<TVaccineInformation> TVaccineInformations { get; set; } = null!;
         public virtual DbSet<TWhatsAppSmsOutgoing> TWhatsAppSmsOutgoings { get; set; } = null!;
         public virtual DbSet<TWorkOrderDetail> TWorkOrderDetails { get; set; } = null!;
         public virtual DbSet<TWorkOrderHeader> TWorkOrderHeaders { get; set; } = null!;
@@ -698,7 +700,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -14586,6 +14588,41 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.UploadDocument).HasMaxLength(500);
             });
 
+            modelBuilder.Entity<TImmunizatoinInfo>(entity =>
+            {
+                entity.HasKey(e => e.ImmunizatoinId);
+
+                entity.ToTable("T_ImmunizatoinInfo");
+
+                entity.Property(e => e.ImmunizatoinId).ValueGeneratedNever();
+
+                entity.Property(e => e.Comment).HasMaxLength(255);
+
+                entity.Property(e => e.Description).HasMaxLength(255);
+
+                entity.Property(e => e.ForecastStatus).HasMaxLength(50);
+
+                entity.Property(e => e.LotExpDate).HasColumnType("datetime");
+
+                entity.Property(e => e.LotNumber).HasMaxLength(50);
+
+                entity.Property(e => e.OccuranceDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.PrimarySource).HasMaxLength(255);
+
+                entity.Property(e => e.RecommandationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RecommendedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Series).HasMaxLength(50);
+
+                entity.Property(e => e.SeriesDoses).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<TIndentDetail>(entity =>
             {
                 entity.HasKey(e => e.IndentDetailsId);
@@ -19585,6 +19622,45 @@ namespace HIMS.Data.Models
                 entity.ToTable("T_TokenNumberWithDoctorWise");
 
                 entity.Property(e => e.VisitDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TVaccineInformation>(entity =>
+            {
+                entity.HasKey(e => e.VaccineId);
+
+                entity.ToTable("T_VaccineInformation");
+
+                entity.Property(e => e.BatchNo).HasMaxLength(50);
+
+                entity.Property(e => e.BrandName).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DiluentVolume).HasMaxLength(20);
+
+                entity.Property(e => e.DiseaseIndication).HasMaxLength(255);
+
+                entity.Property(e => e.Dose).HasMaxLength(10);
+
+                entity.Property(e => e.ExpiryDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Remarks).HasMaxLength(255);
+
+                entity.Property(e => e.ShelfLife).HasMaxLength(50);
+
+                entity.Property(e => e.StorageTemperature).HasMaxLength(255);
+
+                entity.Property(e => e.VaccineCode).HasMaxLength(20);
+
+                entity.Property(e => e.VaccineName).HasMaxLength(255);
+
+                entity.Property(e => e.VaccineType).HasMaxLength(50);
+
+                entity.Property(e => e.VialSize).HasMaxLength(20);
+
+                entity.Property(e => e.VialType).HasMaxLength(20);
             });
 
             modelBuilder.Entity<TWhatsAppSmsOutgoing>(entity =>
