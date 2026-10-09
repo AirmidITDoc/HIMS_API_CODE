@@ -281,6 +281,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MNursingTemplateMaster> MNursingTemplateMasters { get; set; } = null!;
         public virtual DbSet<MOctroiMaster> MOctroiMasters { get; set; } = null!;
         public virtual DbSet<MOpcasepaperDignosisMaster> MOpcasepaperDignosisMasters { get; set; } = null!;
+        public virtual DbSet<MOtBillTemplate> MOtBillTemplates { get; set; } = null!;
         public virtual DbSet<MOtSiteDescriptionMaster> MOtSiteDescriptionMasters { get; set; } = null!;
         public virtual DbSet<MOtSpecialtyMaster> MOtSpecialtyMasters { get; set; } = null!;
         public virtual DbSet<MOtSubSpecialtyMaster> MOtSubSpecialtyMasters { get; set; } = null!;
@@ -329,6 +330,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MReportSetupOperational> MReportSetupOperationals { get; set; } = null!;
         public virtual DbSet<MReportTemplateConfig> MReportTemplateConfigs { get; set; } = null!;
         public virtual DbSet<MSalesTypeMaster> MSalesTypeMasters { get; set; } = null!;
+        public virtual DbSet<MSmsModuleWiseConfiguration> MSmsModuleWiseConfigurations { get; set; } = null!;
         public virtual DbSet<MSmsmappingTemplate> MSmsmappingTemplates { get; set; } = null!;
         public virtual DbSet<MStateMaster> MStateMasters { get; set; } = null!;
         public virtual DbSet<MStoreMaster> MStoreMasters { get; set; } = null!;
@@ -696,7 +698,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -8582,6 +8584,18 @@ namespace HIMS.Data.Models
                     .HasColumnName("ICDCode");
             });
 
+            modelBuilder.Entity<MOtBillTemplate>(entity =>
+            {
+                entity.HasKey(e => e.TemplateId)
+                    .HasName("PK_OT_BillTemplate");
+
+                entity.ToTable("M_OT_BillTemplate");
+
+                entity.Property(e => e.CreatedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDateTime).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<MOtSiteDescriptionMaster>(entity =>
             {
                 entity.HasKey(e => e.SiteDescId)
@@ -9417,6 +9431,37 @@ namespace HIMS.Data.Models
                 entity.ToTable("M_SalesTypeMaster");
 
                 entity.Property(e => e.SalesHeadName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<MSmsModuleWiseConfiguration>(entity =>
+            {
+                entity.HasKey(e => e.SmsConfigId)
+                    .HasName("PK__SmsModul__B9F52CE5A2C2EBE1");
+
+                entity.ToTable("M_SMS_ModuleWiseConfiguration");
+
+                entity.HasIndex(e => e.MenuId, "UQ_SmsModuleConfig_Menu")
+                    .IsUnique();
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModuleName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Menu)
+                    .WithOne(p => p.MSmsModuleWiseConfiguration)
+                    .HasForeignKey<MSmsModuleWiseConfiguration>(d => d.MenuId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__SmsModule__MenuI__1D553BA6");
             });
 
             modelBuilder.Entity<MSmsmappingTemplate>(entity =>

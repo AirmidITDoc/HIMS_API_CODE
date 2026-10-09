@@ -21,6 +21,7 @@ namespace HIMS.Data.Models
         public string? PermissionCode { get; set; }
         public string? TableNames { get; set; }
 
+        public virtual MSmsModuleWiseConfiguration MSmsModuleWiseConfiguration { get; set; } = null!;
         public virtual ICollection<PermissionMaster> PermissionMasters { get; set; }
     }
 }
