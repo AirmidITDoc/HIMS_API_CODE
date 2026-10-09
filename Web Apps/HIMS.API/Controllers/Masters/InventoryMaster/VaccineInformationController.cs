@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
         // Get By Id API
         [HttpGet("{id?}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Get(long id)
         {
             if (id == 0) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
         // Post / Insert API
         [HttpPost("Insert")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Post(VaccineInformationModel obj)
         {
             TVaccineInformation model = obj.MapTo<TVaccineInformation>();
@@ -58,7 +58,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
         // Edit / Update API
         [HttpPut("Edit/{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(VaccineInformationModel obj)
         {
             if (obj.VaccineId == 0)
