@@ -130,6 +130,8 @@ namespace HIMS.API.Controllers.Common
 
         private readonly IGenericService<MDietTypeMaster> _MDietTypeMaster;
         private readonly IGenericService<MDietCategoryMaster> _MDietCategoryMaster;
+        private readonly IGenericService<TVaccineInformation> _TVaccineInformation;
+
 
 
 
@@ -210,7 +212,9 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MFeedingRouteMaster> MFeedingRouteMaster,
                               IGenericService<MFoodPreferenceMaster> MFoodPreferenceMaster,
                               IGenericService<MAllergyMaster> MAllergyMaster,
-                              IGenericService<MDietCategoryMaster> MDietCategoryMaster
+                              IGenericService<MDietCategoryMaster> MDietCategoryMaster,
+                              IGenericService<TVaccineInformation> TVaccineInformation
+
 
 
 
@@ -336,6 +340,7 @@ namespace HIMS.API.Controllers.Common
             _MFeedingRouteMaster = MFeedingRouteMaster;
             _MFoodPreferenceMaster = MFoodPreferenceMaster;
             _MAllergyMaster = MAllergyMaster;
+            _TVaccineInformation = TVaccineInformation;
 
 
 
@@ -576,6 +581,7 @@ namespace HIMS.API.Controllers.Common
                 "TypesOfFoodItemUnits" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TypesOfFoodItemUnits")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "TypesOfSeverity" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TypesOfSeverity")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "Route" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "Route")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "Vaccineinformation" => (await _TVaccineInformation.GetAll(x => x.VaccineStatus.Value)).ToList().ToDropDown(nameof(TVaccineInformation.VaccineId), nameof(TVaccineInformation.VaccineName)),
 
                 _ => new List<SelectListItem>()
             };
