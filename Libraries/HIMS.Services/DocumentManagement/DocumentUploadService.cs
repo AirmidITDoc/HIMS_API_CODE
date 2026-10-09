@@ -54,7 +54,8 @@ namespace HIMS.Services.DocumentManagement
                           FileKind = d.FileKind,
                           FileSize = d.FileSize,
                           DocCatId = d.DocCatId,
-                          SavedFileName=d.SavedFileName
+                          SavedFileName = d.SavedFileName,
+                          Id = d.Id
                       };
             if (CategoryId > 0)
                 qry = qry.Where(x => x.DocCatId == CategoryId);
