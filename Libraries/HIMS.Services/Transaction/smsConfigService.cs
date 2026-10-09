@@ -34,6 +34,12 @@ namespace HIMS.Services.Transaction
             return await DatabaseHelper.GetGridDataBySp<WhatsAppsendOutListDto>(model, "ps_Rtrv_T_Whatsappoutlist");
         }
 
+
+        public virtual async Task<IPagedList<ModuleWiseConfigListDto>> ModuleWiseConfigList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ModuleWiseConfigListDto>(model, "ps_sms_ModuleWiseConfigList");
+        }
+
         public virtual async Task InsertAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username)
         {
             DatabaseHelper odal = new();
@@ -124,6 +130,29 @@ namespace HIMS.Services.Transaction
              // Attach entity
             _context.Attach(ObjSmspdfConfig);
             var entry = _context.Entry(ObjSmspdfConfig);
+
+            // Mark entity as modified
+            entry.State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            scope.Complete();
+        }
+
+        public virtual async Task InsertAsyncc(MSmsModuleWiseConfiguration ObjMSmsModuleWiseConfiguration, int UserId, string Username)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                _context.MSmsModuleWiseConfigurations.Add(ObjMSmsModuleWiseConfiguration);
+                await _context.SaveChangesAsync();
+
+                scope.Complete();
+            }
+        }
+        public virtual async Task UpdateAsyncc(MSmsModuleWiseConfiguration ObjMSmsModuleWiseConfiguration, int UserId, string Username, string[]? ignoreColumns = null)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            // Attach entity
+            _context.Attach(ObjMSmsModuleWiseConfiguration);
+            var entry = _context.Entry(ObjMSmsModuleWiseConfiguration);
 
             // Mark entity as modified
             entry.State = EntityState.Modified;

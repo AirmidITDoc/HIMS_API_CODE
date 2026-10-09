@@ -2,12 +2,14 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.DietKitchen;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Transaction;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
@@ -229,7 +231,74 @@ namespace HIMS.API.Controllers.Transaction
             return Ok(List.ToGridResponse(objGrid, "Whatsapp Send List"));
         }
 
+        [HttpPost("ModuleWiseConfigList")]
+        //[Permission(PageCode = "smsconfigrationtool", Permission = PagePermission.View)]
+        [Permission]
+        public async Task<IActionResult> ModuleWiseConfigList(GridRequestModel objGrid)
+        {
+            IPagedList<ModuleWiseConfigListDto> List = await _IsmsConfigService.ModuleWiseConfigList(objGrid);
+            return Ok(List.ToGridResponse(objGrid, "Whatsapp Send List"));
+        }
 
-       
+
+
+        [HttpPost("InsertMSmsConfiguration")]
+        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
+     //   [Permission]
+        public async Task<ApiResponse> Posts(MSmsModuleWiseConfigurationModel obj)
+        {
+            MSmsModuleWiseConfiguration model = obj.MapTo<MSmsModuleWiseConfiguration>();
+            model.IsActive = true;
+            if (obj.SmsConfigId == 0)
+            {
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+                await _IsmsConfigService.InsertAsyncc(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
+        }
+        //[HttpPut("MSmsConfiguration/{id:int}")]
+        ////[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
+        //// [Permission]
+        //public async Task<ApiResponse> Edits(MSmsModuleWiseConfigurationModel obj)
+        //{
+        //    MSmsModuleWiseConfiguration model = obj.MapTo<MSmsModuleWiseConfiguration>();
+        //    model.IsActive = true;
+        //    if (obj.SmsConfigId == 0)
+        //        return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+        //    else
+        //    {
+        //        model.ModifiedBy = CurrentUserId;
+        //        model.ModifiedDate = AppTime.Now;
+
+        //        await _IsmsConfigService.UpdateAsyncc(model, CurrentUserId, CurrentUserName);
+        //    }
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
+        //}
+
+
+        [HttpPut("Edit/{id:int}")]
+     //   [Permission]
+        public async Task<ApiResponse> Edits(MSmsModuleWiseConfigurationModel obj)
+        {
+            if (obj.SmsConfigId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+            MSmsModuleWiseConfiguration model = obj.MapTo<MSmsModuleWiseConfiguration>();
+
+            
+
+            model.ModifiedDate = AppTime.Now;
+            model.ModifiedBy = CurrentUserId;
+
+            await _IsmsConfigService.UpdateAsyncc(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model);
+        }
     }
 }

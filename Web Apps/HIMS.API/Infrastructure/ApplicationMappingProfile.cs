@@ -89,6 +89,8 @@ namespace HIMS.API.Infrastructure
 
             CreateMap<TIpMrdDiagnosisInfoDetail, MrdDiagnosisInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+            CreateMap<MSmsModuleWiseConfiguration, MSmsModuleWiseConfigurationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
