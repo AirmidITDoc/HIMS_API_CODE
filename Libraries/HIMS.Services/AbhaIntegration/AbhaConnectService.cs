@@ -1791,14 +1791,16 @@ namespace HIMS.Services.AbhaIntegration
 
         static readonly Dictionary<string, string[]> HiTypes = new()
         {
-            ["DiagnosticReportRecord"] = new[] { "DiagnosticReports", "Reports" },
+            ["DiagnosticReportRecord"] = new[] { "DiagnosticReports" },
             ["DischargeSummaryRecord"] = new[] { "DischargeSummaries", "ChiefComplaints", "PhysicalExams", "AllergiesData",
                                                  "MedicalHistory", "FamilyMedicalHistory", "InvestigationAdvice",
-                                                 "Prescriptions", "Procedures", "CarePlan" },
+                                                 //"Prescriptions", 
+                                        "Procedures", "CarePlan" },
             ["OPConsultRecord"] = new[] { "ChiefComplaints", "PhysicalExams", "AllergiesData", "MedicalHistory",
-                                                 "FamilyMedicalHistory", "InvestigationAdvice", "Prescriptions",
-                                                 "Procedures", "FollowUp", "Reports" },
-            ["PrescriptionRecord"] = new[] { "Prescriptions", "Reports" },
+                                                 "FamilyMedicalHistory", "InvestigationAdvice", 
+                                                //"Prescriptions",
+                                                 "Procedures", "FollowUp" },
+            ["PrescriptionRecord"] = new[] { "Prescriptions" },
             ["ImmunizationRecord"] = new[] { "Immunizations", "ImmunizationRecommendations" },
             ["WellnessRecord"] = new[] { "WellnessRecord", "ObservationResult" },
             ["HealthDocumentRecord"] = new[] { "Reports" },
