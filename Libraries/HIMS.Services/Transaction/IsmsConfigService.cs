@@ -13,7 +13,7 @@ namespace HIMS.Services.Transaction
 
         Task<IPagedList<WhatsAppsendOutListDto>> GetWhatsAppconfig(GridRequestModel objGrid);
 
-        Task<IPagedList<ModuleWiseConfigListDto>> ModuleWiseConfigList(GridRequestModel objGrid);
+        Task<IPagedList<ModuleWiseConfigListDto>> SmsModuleWiseConfigurationList(GridRequestModel objGrid);
 
         Task InsertAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username);
         Task UpdateAsyncSP(SsSmsConfig objSsSmsConfig, int UserId, string Username);
@@ -21,9 +21,7 @@ namespace HIMS.Services.Transaction
         Task InsertAsync(SmspdfConfig ObjSmspdfConfig, int UserId, string Username);
         Task UpdateAsync(SmspdfConfig ObjSmspdfConfig, int UserId, string Username);
 
-        Task InsertAsyncc(MSmsModuleWiseConfiguration ObjMSmsModuleWiseConfiguration, int UserId, string Username);
-        Task UpdateAsyncc(MSmsModuleWiseConfiguration ObjMSmsModuleWiseConfiguration, int UserId, string Username, string[] strings);
-
+      
 
 
 

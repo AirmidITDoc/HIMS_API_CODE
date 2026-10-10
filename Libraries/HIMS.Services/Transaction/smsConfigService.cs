@@ -35,7 +35,7 @@ namespace HIMS.Services.Transaction
         }
 
 
-        public virtual async Task<IPagedList<ModuleWiseConfigListDto>> ModuleWiseConfigList(GridRequestModel model)
+        public virtual async Task<IPagedList<ModuleWiseConfigListDto>> SmsModuleWiseConfigurationList(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<ModuleWiseConfigListDto>(model, "ps_sms_ModuleWiseConfigList");
         }
@@ -137,29 +137,7 @@ namespace HIMS.Services.Transaction
             scope.Complete();
         }
 
-        public virtual async Task InsertAsyncc(MSmsModuleWiseConfiguration ObjMSmsModuleWiseConfiguration, int UserId, string Username)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            {
-                _context.MSmsModuleWiseConfigurations.Add(ObjMSmsModuleWiseConfiguration);
-                await _context.SaveChangesAsync();
-
-                scope.Complete();
-            }
-        }
-        public virtual async Task UpdateAsyncc(MSmsModuleWiseConfiguration ObjMSmsModuleWiseConfiguration, int UserId, string Username, string[]? ignoreColumns = null)
-        {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-            // Attach entity
-            _context.Attach(ObjMSmsModuleWiseConfiguration);
-            var entry = _context.Entry(ObjMSmsModuleWiseConfiguration);
-
-            // Mark entity as modified
-            entry.State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            scope.Complete();
-        }
-
+      
     }
 
 }

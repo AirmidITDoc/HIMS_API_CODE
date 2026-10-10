@@ -391,15 +391,16 @@ namespace HIMS.API.Controllers.Common
                .ToList().ToDropDown("DoctorId", "FirstName"),
 
 
-
-                "ConDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsConsultant.Value))
-                .Select(x => new
-                {
-                    DoctorId = x.DoctorId,
-                    FirstName = x.FirstName + " " + x.MiddleName+ " "+ x.LastName, Phone = x.Phone // Concatenate FirstName and LastName
-                })
-                .ToList()
-                .ToDropDown("DoctorId", "FirstName","Phone"), // Use the concatenated FullName for the dropdown
+                "ConDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsConsultant == true && x.IsActive == true))
+                    .Select(x => new
+                    {
+                        DoctorId = x.DoctorId,
+                        FirstName = x.FirstName + " " + x.MiddleName + " " + x.LastName,
+                        Phone = x.Phone,
+                        IsActive = x.IsActive
+                    })
+                    .ToList()
+                    .ToDropDown("DoctorId", "FirstName", "Phone"),
 
 
                 //"ConDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsConsultant.Value)).ToList().ToDropDown(nameof(DoctorMaster.DoctorId), nameof(DoctorMaster.FirstName)),

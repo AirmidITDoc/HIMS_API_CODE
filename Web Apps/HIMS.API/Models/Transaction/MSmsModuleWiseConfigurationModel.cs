@@ -13,14 +13,18 @@ namespace HIMS.API.Models.Transaction
         public string? EmailFormat { get; set; }
         public bool IsSms { get; set; }
         public string? SmsFormat { get; set; }
-       
+
     }
     public class MSmsModuleWiseConfigurationModelValidator : AbstractValidator<MSmsModuleWiseConfigurationModel>
     {
         public MSmsModuleWiseConfigurationModelValidator()
         {
-            RuleFor(x => x.MenuId).NotNull().NotEmpty().WithMessage("PdfModeName  is required");
-        ///    RuleFor(x => x.ModuleName).NotNull().NotEmpty().WithMessage("FieldName  is required");
+            //RuleFor(x => x.MenuId).NotNull().NotEmpty().WithMessage("MenuId  is required");
+            //RuleFor(x => x.WhatsAppFormat).NotNull().NotEmpty().WithMessage("WhatsAppFormat  is required");
+            //RuleFor(x => x.IsEmail).NotNull().NotEmpty().WithMessage("IsEmail  is required");
+            //RuleFor(x => x.IsWhatsApp).NotNull().NotEmpty().WithMessage("IsWhatsApp  is required");
+
+
 
         }
     }
