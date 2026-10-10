@@ -1,12 +1,11 @@
-﻿using FluentValidation;
-using System;
+﻿using System;
 
-namespace HIMS.API.Models.Inventory
+namespace HIMS.Data.DTO.Inventory
 {
-    public class VaccineInformationModel
+    public class VaccineInformationListDto
     {
         public long VaccineId { get; set; }
-       
+        public string? VaccineCode { get; set; }
         public string? VaccineName { get; set; }
         public long? GenericId { get; set; }
         public string? VaccineType { get; set; }
@@ -21,9 +20,9 @@ namespace HIMS.API.Models.Inventory
         public long? MinimumAge { get; set; }
         public long? MaximumAge { get; set; }
         public bool? BoosterRequired { get; set; }
-        public string? StorageTemperature { get; set; }
         public string? VialType { get; set; }
         public string? VialSize { get; set; }
+        public string? StorageTemperature { get; set; }
         public bool? DiluentRequired { get; set; }
         public string? DiluentVolume { get; set; }
         public string? ShelfLife { get; set; }
@@ -31,14 +30,11 @@ namespace HIMS.API.Models.Inventory
         public DateTime? ExpiryDate { get; set; }
         public bool? VaccineStatus { get; set; }
         public string? Remarks { get; set; }
-       
-    }
-
-    public class VaccineInformationModelValidator : AbstractValidator<VaccineInformationModel>
-    {
-        public VaccineInformationModelValidator()
-        {
-            RuleFor(x => x.VaccineName).NotNull().NotEmpty().WithMessage("VaccineName is required");
-        }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public string? ItemGenericName { get; set; }
+        public string? ManufName { get; set; }
+        public string? RouteName { get; set; }
+      
     }
 }

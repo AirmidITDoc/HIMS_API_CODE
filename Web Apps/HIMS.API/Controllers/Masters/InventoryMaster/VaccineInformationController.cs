@@ -4,8 +4,10 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +29,16 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             _vaccineInformationService = vaccineInformationService;
         }
 
+        // List API
+        [HttpPost]
+        [Route("[action]")]
+        [Permission]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<VaccineInformationListDto> list = await _vaccineInformationService.GetVaccineInformationListAsync(objGrid);
+            return Ok(list.ToGridResponse(objGrid, "Vaccine Information List"));
+        }
+
         // Get By Id API
         [HttpGet("{id?}")]
         [Permission]
@@ -46,6 +58,10 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             model.VaccineStatus = true;
             if (obj.VaccineId == 0)
             {
+                model.CreatedBy = (int)CurrentUserId;
+                model.CreatedDate = AppTime.Now;
+                model.ModifiedBy = (int)CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
                 await _vaccineInformationService.InsertAsync(model, (int)CurrentUserId, CurrentUserName);
             }
             else
@@ -68,6 +84,8 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
             TVaccineInformation model = obj.MapTo<TVaccineInformation>();
             model.VaccineStatus = true;
+            model.ModifiedBy = (int)CurrentUserId;
+            model.ModifiedDate = AppTime.Now;
 
             await _vaccineInformationService.UpdateAsync(model, (int)CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
 

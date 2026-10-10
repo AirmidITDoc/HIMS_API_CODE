@@ -32,6 +32,7 @@ namespace HIMS.Data.DTO.DietKitchen
         public int AllAccepted { get; set; }
         public int AllDelivered { get; set; }
         public string? RegNo { get; set; }
+        public string? DietMenuDetails { get; set; }
 
 
     }
@@ -92,5 +93,6 @@ namespace HIMS.Data.DTO.DietKitchen
         public string? AcceptedUser { get; set; }
         public string? DeliverUser { get; set; }
         public string? CancelledUser { get; set; }
+        public string? TimeRequired { get; set; }
     }
 }
