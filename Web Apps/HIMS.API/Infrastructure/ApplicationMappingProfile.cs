@@ -192,6 +192,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<TPatientAbhaInformation, PatientAbhaInformationUpdateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ServiceMaster, TarrifModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<ServiceDetail, ApplytoAllServiceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TImmunizatoinInfo, ImmunizatoinInfoModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+
 
 
 
