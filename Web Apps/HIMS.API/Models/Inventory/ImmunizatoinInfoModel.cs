@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FluentValidation;
+using System;
 
-namespace HIMS.Data.Models
+namespace HIMS.API.Models.Inventory
 {
-    public partial class TImmunizatoinInfo
+    public class ImmunizatoinInfoModel
     {
         public long ImmunizatoinId { get; set; }
         public long? Opipid { get; set; }
@@ -24,9 +24,14 @@ namespace HIMS.Data.Models
         public string? Comment { get; set; }
         public string? SupportingImmunization { get; set; }
         public string? Status { get; set; }
-        public long? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public long? ModifiedBy { get; set; }
-        public DateTime? ModifiedDate { get; set; }
+    }
+
+    public class ImmunizatoinInfoModelValidator : AbstractValidator<ImmunizatoinInfoModel>
+    {
+        public ImmunizatoinInfoModelValidator()
+        {
+            RuleFor(x => x.RegId).NotNull().NotEmpty().WithMessage("RegId is required");
+            RuleFor(x => x.VaccineId).NotNull().NotEmpty().WithMessage("VaccineId is required");
+        }
     }
 }

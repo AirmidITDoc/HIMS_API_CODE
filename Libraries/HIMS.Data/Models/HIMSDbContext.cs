@@ -14598,6 +14598,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.Comment).HasMaxLength(255);
 
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Description).HasMaxLength(255);
 
                 entity.Property(e => e.ForecastStatus).HasMaxLength(50);
@@ -14605,6 +14607,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.LotExpDate).HasColumnType("datetime");
 
                 entity.Property(e => e.LotNumber).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OccuranceDate).HasColumnType("datetime");
 
@@ -14621,6 +14625,10 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Series).HasMaxLength(50);
 
                 entity.Property(e => e.SeriesDoses).HasMaxLength(50);
+
+                entity.Property(e => e.Status).HasMaxLength(50);
+
+                entity.Property(e => e.SupportingImmunization).HasMaxLength(250);
             });
 
             modelBuilder.Entity<TIndentDetail>(entity =>
