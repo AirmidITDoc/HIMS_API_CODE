@@ -87,5 +87,16 @@ namespace HIMS.API.Controllers.DocumentManagement
             var PatientList = await _repository.GetDocumentsByPatientId(PatientId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Category tree retrieved successfully.", PatientList);
         }
+        [HttpGet("get-file")]
+        [Permission]
+        public async Task<ActionResult> GetFile(string FileName)
+        {
+            var data = await _FileUtility.DownloadFile("DocumentManagement\\"+FileName);
+            if (data == null || data.Item1 == null || string.IsNullOrEmpty(data.Item2) || string.IsNullOrEmpty(data.Item3))
+            {
+                return NotFound("File could not be downloaded.");
+            }
+            return File(data.Item1, data.Item2, data.Item3);
+        }
     }
 }
