@@ -1,4 +1,7 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -43,7 +46,7 @@ namespace HIMS.Services.Inventory
 
             objVaccineInfo.VaccineCode = prefix + newSeqNo.ToString("D3");
 
-           
+
             objVaccineInfo.CreatedBy = currentUserId;
             objVaccineInfo.CreatedDate = AppTime.Now;
             objVaccineInfo.ModifiedBy = currentUserId;
@@ -87,6 +90,11 @@ namespace HIMS.Services.Inventory
 
             await _context.SaveChangesAsync();
             scope.Complete();
+        }
+
+        public virtual async Task<IPagedList<VaccineInformationListDto>> GetVaccineInformationListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<VaccineInformationListDto>(model, "ps_rtrv_VaccineInformation");
         }
     }
 }
