@@ -1044,6 +1044,18 @@ namespace HIMS.Services.AbhaIntegration
                     });
                 }
             }
+            if ((wellness.vitalSigns == null || wellness.vitalSigns.Count == 0) &&
+                (wellness.bodyMeasurement == null || wellness.bodyMeasurement.Count == 0) &&
+                (wellness.physicalActivity == null || wellness.physicalActivity.Count == 0) &&
+                (wellness.generalAssessment == null || wellness.generalAssessment.Count == 0) &&
+                (wellness.womenHealth == null || wellness.womenHealth.Count == 0) &&
+                (wellness.lifestyle == null || wellness.lifestyle.Count == 0) &&
+                (wellness.eyeHealth == null || wellness.eyeHealth.Count == 0))
+            {
+                return null;
+            }
+            wellness.vitalSigns ??= new List<WellnessRecordItem>();
+            wellness.bodyMeasurement ??= new List<WellnessRecordItem>();
 
             return wellness;
         }
@@ -1918,6 +1930,17 @@ namespace HIMS.Services.AbhaIntegration
                 Incomplete = incomplete,
                 Optional = optional
             };
+        }
+
+        public virtual async Task InsertErrorLogAsync(TAbhaErrorLog obj)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                obj.ReceivedDate = DateTime.Now;
+                _context.TAbhaErrorLogs.Add(obj);
+                await _context.SaveChangesAsync();
+                scope.Complete();
+            }
         }
 
     }

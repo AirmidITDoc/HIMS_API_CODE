@@ -89,4 +89,15 @@ namespace HIMS.API.Models.AbhaIntegration
         public string CcErrMessage { get; set; }
     }
 
+    public class AbhaErroLog
+    {
+        public string? ErrorId { get; set; }
+        public string? RequestId { get; set; }
+        public string? Message { get; set; }
+        public DateTime? TimeStamp { get; set; }
+        public string? Path { get; set; }
+        public string? FacilityId { get; set; }
+    }
+
+
 }

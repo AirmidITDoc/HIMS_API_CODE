@@ -21,5 +21,6 @@ namespace HIMS.Services.AbhaIntegration
         Task SaveCareContextResponseAsync(CareContextModel model, string CC_WorkflowId, string CC_Message, string CC_HipId, string CC_ErrMessage);
         HiTypeValidationResult Validate(PatientVisitResponse payload);
         object ValidateHiTypesSummary(PatientVisitResponse payload);
+        Task InsertErrorLogAsync(TAbhaErrorLog obj);
     }
 }

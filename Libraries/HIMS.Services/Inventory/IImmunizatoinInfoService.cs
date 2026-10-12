@@ -1,4 +1,6 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.Models;
 using System.Threading.Tasks;
 
 namespace HIMS.Services.Inventory
@@ -7,6 +9,7 @@ namespace HIMS.Services.Inventory
     {
         
         Task<TImmunizatoinInfo?> GetByIdAsync(long id);
+        Task<IPagedList<ImmunizatoinInfoDto>> GetVaccineInformationListAsync(GridRequestModel model);
         Task ImmunizationInfoAsync(
        List<TImmunizatoinInfo> models,
        long regId,
