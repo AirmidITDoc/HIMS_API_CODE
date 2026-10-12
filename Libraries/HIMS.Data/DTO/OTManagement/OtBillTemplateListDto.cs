@@ -8,14 +8,13 @@ namespace HIMS.Data.DTO.OTManagement
 {
     public  class OtBillTemplateListDto
     {
-        public long TemplateId { get; set; }
-        public long ServiceId { get; set; }
-        public double? Percentage { get; set; }
-        public string? ServiceName { get; set; }
-        public bool? IsActive { get; set; }
-        public string? CreatedBy { get; set; }
-        public string? CreatedDateTime { get; set; }
-        public string? UpdatedBy { get; set; }
-        public string? ModifiedDateTime { get; set; }
+        public long OTBTempId { get; set; }
+        public string? OtBillTemplateName { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedDateTime { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedDateTime { get; set; }
+        public string? CreatedByUserName { get; set; }
+        public string? UpdatedByUserName { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
+using HIMS.Services.IPPatient;
 using HIMS.Services.OTManagment;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +28,22 @@ namespace HIMS.API.Controllers.Masters.OTMaster
             _repository = repository;
             _IBillTemplateService = repository1;
         }
-        [HttpPost("OtBillTemplateList")]
+        // Get By Id API
+        [HttpGet("{id?}")]
+        //[Permission(PageCode = "OtBillTemplate", Permission = PagePermission.View)]
+        public async Task<ApiResponse> Get(int id)
+        {
+            if (id == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+
+            var data = await _IBillTemplateService.GetById(id);
+
+            return data.ToSingleResponse<MOtBillTemplateHeader, BillTemplateModel>("OT Bill Template");
+        }
+
+        [HttpPost("OtBillTemplateHeaderList")]
         //[Permission]
         public async Task<IActionResult> OtBillTemplateList(GridRequestModel objGrid)
         {
@@ -35,54 +51,61 @@ namespace HIMS.API.Controllers.Masters.OTMaster
             return Ok(OtBillTemplateList.ToGridResponse(objGrid, "OtBillTemplate List"));
         }
 
-        
 
-        // Add API
-        [HttpPost]
-        // [Permission]
-        public async Task<ApiResponse> Post(List<BillTemplateModel> obj)
-        {
-            foreach (var item in obj)
-            {
-                MOtBillTemplate model = item.MapTo<MOtBillTemplate>();
 
-                if (item.TemplateId == 0)
-                {
-                    model.CreatedBy = CurrentUserId;
-                    model.CreatedDateTime = AppTime.Now;
-                    model.ModifiedBy = CurrentUserId;
-                    model.ModifiedDateTime = AppTime.Now;
-
-                    await _repository.Add(model, CurrentUserId, CurrentUserName);
-                }
-                else
-                {
-                    return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status500InternalServerError,  "Invalid params");
-                }
-            }
-
-            return ApiResponseHelper.GenerateResponse(
-                ApiStatusCode.Status200OK,
-                "Records added successfully.");
-        }
-        // Edit API
-        [HttpPut("{id:int}")]
+        [HttpPost("Insert")]
         //[Permission]
-        public async Task<ApiResponse> Edit(List<BillTemplateModel> obj)
+        public async Task<ApiResponse> Insert(BillTemplateModel obj)
         {
-            foreach (var item in obj)
+            MOtBillTemplateHeader model = obj.MapTo<MOtBillTemplateHeader>();
+            if (obj.OtbtempId == 0)
             {
-                MOtBillTemplate model = item.MapTo<MOtBillTemplate>();
+                foreach (var q in model.MOtBillTemplateDetails)
+                {
+                    q.CreatedBy = CurrentUserId;
+                    q.CreatedDateTime = AppTime.Now;
 
-                if (item.TemplateId == 0)return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status500InternalServerError, "Invalid params");
-
+                }
+                model.CreatedDateTime = AppTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDateTime = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
-                model.ModifiedDateTime = AppTime.Now;
+                await _IBillTemplateService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.OtbtempId);
+        }
+       
+          [HttpPut("Edit/{id:int}")]
+          //[Permission]
+        public async Task<ApiResponse> Edit(BillTemplateModel obj)
+        {
+            MOtBillTemplateHeader model = obj.MapTo<MOtBillTemplateHeader>();
 
-                await _repository.Update( model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDateTime" });
+            if (obj.OtbtempId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+                foreach (var q in model.MOtBillTemplateDetails)
+                {
+                    if (q.OtbtempDetId == 0)
+                    {
+                        q.CreatedBy = CurrentUserId;
+                        q.CreatedDateTime = AppTime.Now;
+                    }
+
+                    q.ModifiedBy = CurrentUserId;
+                    q.ModifiedDateTime = AppTime.Now;
+                }
+
+                model.ModifiedDateTime = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+
+                await _IBillTemplateService.UpdateAsync( model,CurrentUserId,CurrentUserName,new string[2] { "CreatedBy", "CreatedDateTime" });
             }
 
-            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK, "Records updated successfully.");
+            return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status200OK,  "Record updated successfully.",  model.OtbtempId);
         }
 
         //Delete API

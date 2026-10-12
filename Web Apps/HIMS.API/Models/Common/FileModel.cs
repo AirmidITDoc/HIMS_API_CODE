@@ -25,38 +25,90 @@ namespace HIMS.API.Models.Common
             RuleFor(x => x.DocName).NotNull().NotEmpty().WithMessage("DocName is required");
         }
     }
+    //public enum PageNames
+    //{
+    //    [Description("Doctors\\Files")]
+    //    Doctor = 1,
+    //    [Description("Doctors\\Signature")]
+    //    Doctor_Signature = 2,
+    //    [Description("Patient\\Photo")]
+    //    Patient_Photo = 3,
+    //    [Description("Patient\\Signature")]
+    //    Patient_Signature = 4,
+    //    [Description("Patient\\Files")]
+    //    Patient_Files = 5,
+    //    [Description("Patient\\PathFiles")]
+
+    //    //Patient_PathFiles = 6,
+    //    //[Description("Hospital\\Logo")]
+    //    Patient_PathFiles = 6,
+    //    [Description("Hospital_Logo")]
+
+    //    Logo = 7,
+    //    [Description("User\\Signature")]
+    //    User_Signature = 8,
+    //    [Description("LabPatient\\Files")]
+    //    LabPatient_Files = 9,
+    //    [Description("NABHLogo\\NABH")]
+    //    NABH = 10,
+    //    [Description("Upload\\Img_Upload")]
+    //    Img_Upload = 11,
+    //    [Description("Emp\\Emp_Files")]
+    //    Emp_Files = 12,
+    //    [Description("Emp\\Employee_Photo")]
+    //    Employee_Photo = 13,
+    //    [Description("Upload\\Stamp_Upload")]
+    //    Stamp_Upload = 14
+    //}
     public enum PageNames
     {
         [Description("Doctors\\Files")]
         Doctor = 1,
+
         [Description("Doctors\\Signature")]
         Doctor_Signature = 2,
+
         [Description("Patient\\Photo")]
         Patient_Photo = 3,
+
         [Description("Patient\\Signature")]
         Patient_Signature = 4,
+
         [Description("Patient\\Files")]
         Patient_Files = 5,
-        [Description("Patient\\PathFiles")]
-        //Patient_PathFiles = 6,
-        //[Description("Hospital\\Logo")]
-        Patient_PathFiles = 6,
-        [Description("Hospital_Logo")]
 
+        [Description("Patient\\PathFiles")]
+        Patient_PathFiles = 6,
+
+        [Description("Hospital_Logo")]
         Logo = 7,
+
         [Description("User\\Signature")]
         User_Signature = 8,
+
         [Description("LabPatient\\Files")]
         LabPatient_Files = 9,
+
         [Description("NABHLogo\\NABH")]
         NABH = 10,
+
         [Description("Upload\\Img_Upload")]
         Img_Upload = 11,
+
         [Description("Emp\\Emp_Files")]
         Emp_Files = 12,
+
         [Description("Emp\\Employee_Photo")]
         Employee_Photo = 13,
+
         [Description("Upload\\Stamp_Upload")]
-        Stamp_Upload = 14
+        Stamp_Upload = 14,
+
+        [Description("Upload\\TrustWife_Photo")]
+        TrustWife_Photo = 15,
+
+        [Description("Upload\\TrustHusband_Photo")]
+        TrustHusband_Photo = 16
     }
+
 }

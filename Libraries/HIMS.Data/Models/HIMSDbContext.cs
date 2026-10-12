@@ -281,7 +281,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<MNursingTemplateMaster> MNursingTemplateMasters { get; set; } = null!;
         public virtual DbSet<MOctroiMaster> MOctroiMasters { get; set; } = null!;
         public virtual DbSet<MOpcasepaperDignosisMaster> MOpcasepaperDignosisMasters { get; set; } = null!;
-        public virtual DbSet<MOtBillTemplate> MOtBillTemplates { get; set; } = null!;
+        public virtual DbSet<MOtBillTemplateDetail> MOtBillTemplateDetails { get; set; } = null!;
+        public virtual DbSet<MOtBillTemplateHeader> MOtBillTemplateHeaders { get; set; } = null!;
         public virtual DbSet<MOtSiteDescriptionMaster> MOtSiteDescriptionMasters { get; set; } = null!;
         public virtual DbSet<MOtSpecialtyMaster> MOtSpecialtyMasters { get; set; } = null!;
         public virtual DbSet<MOtSubSpecialtyMaster> MOtSubSpecialtyMasters { get; set; } = null!;
@@ -423,6 +424,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<SsSmsConfig> SsSmsConfigs { get; set; } = null!;
         public virtual DbSet<StockLog> StockLogs { get; set; } = null!;
         public virtual DbSet<TAbhaCallbackformation> TAbhaCallbackformations { get; set; } = null!;
+        public virtual DbSet<TAbhaErrorLog> TAbhaErrorLogs { get; set; } = null!;
         public virtual DbSet<TAbhaLinkTokenCallback> TAbhaLinkTokenCallbacks { get; set; } = null!;
         public virtual DbSet<TAbhaOnDiscover> TAbhaOnDiscovers { get; set; } = null!;
         public virtual DbSet<TAbill> TAbills { get; set; } = null!;
@@ -700,7 +702,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -8586,16 +8588,41 @@ namespace HIMS.Data.Models
                     .HasColumnName("ICDCode");
             });
 
-            modelBuilder.Entity<MOtBillTemplate>(entity =>
+            modelBuilder.Entity<MOtBillTemplateDetail>(entity =>
             {
-                entity.HasKey(e => e.TemplateId)
-                    .HasName("PK_OT_BillTemplate");
+                entity.HasKey(e => e.OtbtempDetId)
+                    .HasName("PK_OT_BillTemplate_details");
 
-                entity.ToTable("M_OT_BillTemplate");
+                entity.ToTable("M_OT_BillTemplate_details");
+
+                entity.Property(e => e.OtbtempDetId).HasColumnName("OTBTempDetId");
 
                 entity.Property(e => e.CreatedDateTime).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.OtbtempId).HasColumnName("OTBTempId");
+
+                entity.HasOne(d => d.Otbtemp)
+                    .WithMany(p => p.MOtBillTemplateDetails)
+                    .HasForeignKey(d => d.OtbtempId)
+                    .HasConstraintName("FK_M_OT_BillTemplate_details_M_OT_BillTemplate_Header");
+            });
+
+            modelBuilder.Entity<MOtBillTemplateHeader>(entity =>
+            {
+                entity.HasKey(e => e.OtbtempId)
+                    .HasName("PK_OT_BillTemplate_Header");
+
+                entity.ToTable("M_OT_BillTemplate_Header");
+
+                entity.Property(e => e.OtbtempId).HasColumnName("OTBTempId");
+
+                entity.Property(e => e.CreatedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.OtBillTemplateName).HasMaxLength(200);
             });
 
             modelBuilder.Entity<MOtSiteDescriptionMaster>(entity =>
@@ -11974,6 +12001,21 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TransactionId).HasMaxLength(100);
             });
 
+            modelBuilder.Entity<TAbhaErrorLog>(entity =>
+            {
+                entity.ToTable("T_AbhaErrorLogs");
+
+                entity.Property(e => e.ErrorId).HasMaxLength(250);
+
+                entity.Property(e => e.FacilityId).HasMaxLength(50);
+
+                entity.Property(e => e.ReceivedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RequestId).HasMaxLength(250);
+
+                entity.Property(e => e.TimeStamp).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<TAbhaLinkTokenCallback>(entity =>
             {
                 entity.HasKey(e => e.CallbackId)
@@ -14593,8 +14635,6 @@ namespace HIMS.Data.Models
                 entity.HasKey(e => e.ImmunizatoinId);
 
                 entity.ToTable("T_ImmunizatoinInfo");
-
-                entity.Property(e => e.ImmunizatoinId).ValueGeneratedNever();
 
                 entity.Property(e => e.Comment).HasMaxLength(255);
 
