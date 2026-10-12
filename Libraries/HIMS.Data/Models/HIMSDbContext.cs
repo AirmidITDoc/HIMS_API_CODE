@@ -14594,8 +14594,6 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_ImmunizatoinInfo");
 
-                entity.Property(e => e.ImmunizatoinId).ValueGeneratedNever();
-
                 entity.Property(e => e.Comment).HasMaxLength(255);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");

@@ -5,8 +5,10 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
 using HIMS.API.Models.Nursing.IPEMR;
 using HIMS.Core;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
 using Microsoft.AspNetCore.Mvc;
@@ -35,13 +37,17 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             return data.ToSingleResponse<TImmunizatoinInfo, ImmunizatoinInfoModel>("ImmunizatoinInfo");
         }
 
-        
-
-
+        [HttpPost("ImmunizationList")]
+        //[Permission]
+        public async Task<IActionResult> List(GridRequestModel objGrid)
+        {
+            IPagedList<ImmunizatoinInfoDto> list = await _immunizationService.GetVaccineInformationListAsync(objGrid);
+            return Ok(list.ToGridResponse(objGrid, "Immunization  Information List"));
+        }
 
 
         [HttpPost("SaveImmunizationInfo")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> SaveImmunizationInfo(List<ImmunizatoinInfoModel> obj)
         {
             if (obj == null || obj.Count == 0)

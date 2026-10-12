@@ -1,4 +1,7 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
 using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -18,6 +21,10 @@ namespace HIMS.Services.Inventory
         public virtual async Task<TImmunizatoinInfo?> GetByIdAsync(long id)
         {
             return await _context.TImmunizatoinInfos.FirstOrDefaultAsync(x => x.RegId == id);
+        }
+        public virtual async Task<IPagedList<ImmunizatoinInfoDto>> GetVaccineInformationListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<ImmunizatoinInfoDto>(model, "ps_rtrv_ImmunizationInformation");
         }
 
 
