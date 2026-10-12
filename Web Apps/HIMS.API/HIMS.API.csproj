@@ -65,6 +65,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\HIMS.ABHA.Security\HIMS.ABHA.Security.csproj" />
     <ProjectReference Include="..\..\Libraries\HIMS.ABHA\HIMS.ABHA.csproj" />
     <ProjectReference Include="..\..\Libraries\HIMS.Core\HIMS.Core.csproj" />
     <ProjectReference Include="..\..\Libraries\HIMS.Data\HIMS.Data.csproj" />

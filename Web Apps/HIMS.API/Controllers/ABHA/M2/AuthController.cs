@@ -3,6 +3,9 @@ using DocumentFormat.OpenXml.Drawing;
 using HIMS.ABHA.Helper;
 using HIMS.ABHA.Interface;
 using HIMS.ABHA.Models.M2;
+using HIMS.ABHA.Security.Decryptions;
+using HIMS.ABHA.Security.Encryptions;
+using HIMS.ABHA.Security.KeyPairGen;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -36,6 +39,28 @@ namespace HIMS.API.Controllers.ABHA.M2
             _TAbhaOnDiscover = tAbhaOnDiscover;
             _userLinkingService = userLinkingService;
         }
+        [HttpGet("test/vimal")]
+        public async Task<ApiResponse> UpdateBridgeUrl(string msg)
+        {
+            var keyPairGen = new FideliusKeyPairGeneration();
+            var sender = keyPairGen.Generate();
+            var requester = keyPairGen.Generate();
+            var encryptionRequest = new FideliusEncryptionRequest(sender.PrivateKey, sender.Nonce, requester.PublicKey, requester.Nonce, msg);
+            var encryptionService = new FideliusEncryptionService();
+            var encryptedResponse = encryptionService.Encrypt(encryptionRequest);
+            Console.WriteLine("Encrypted message: " + encryptedResponse.EncryptedData);
+            var decryptionRequest = new FideliusDecryptionRequest(requester.PrivateKey, requester.Nonce, sender.PublicKey, sender.Nonce, encryptedResponse.EncryptedData);
+            var decryptionService = new FideliusDecryptionService();
+            var decryptedResponse = decryptionService.Decrypt(decryptionRequest);
+            // Display decrypted message
+            Console.WriteLine("Decrypted message: " + decryptedResponse.DecryptedData);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Encryption/decryption Utility", new
+            {
+                decryptedResponse.DecryptedData,
+                encryptedResponse.EncryptedData
+            });
+        }
+
         [HttpPost("bridge/url")]
         public async Task<ApiResponse> UpdateBridgeUrl([FromBody] UpdateBridgeUrlRequest req)
         {
