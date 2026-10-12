@@ -1932,5 +1932,16 @@ namespace HIMS.Services.AbhaIntegration
             };
         }
 
+        public virtual async Task InsertErrorLogAsync(TAbhaErrorLog obj)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+            {
+                obj.ReceivedDate = DateTime.Now;
+                _context.TAbhaErrorLogs.Add(obj);
+                await _context.SaveChangesAsync();
+                scope.Complete();
+            }
+        }
+
     }
 }

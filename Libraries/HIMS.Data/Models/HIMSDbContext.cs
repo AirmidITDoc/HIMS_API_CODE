@@ -423,6 +423,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<SsSmsConfig> SsSmsConfigs { get; set; } = null!;
         public virtual DbSet<StockLog> StockLogs { get; set; } = null!;
         public virtual DbSet<TAbhaCallbackformation> TAbhaCallbackformations { get; set; } = null!;
+        public virtual DbSet<TAbhaErrorLog> TAbhaErrorLogs { get; set; } = null!;
         public virtual DbSet<TAbhaLinkTokenCallback> TAbhaLinkTokenCallbacks { get; set; } = null!;
         public virtual DbSet<TAbhaOnDiscover> TAbhaOnDiscovers { get; set; } = null!;
         public virtual DbSet<TAbill> TAbills { get; set; } = null!;
@@ -11972,6 +11973,21 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Status).HasMaxLength(50);
 
                 entity.Property(e => e.TransactionId).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<TAbhaErrorLog>(entity =>
+            {
+                entity.ToTable("T_AbhaErrorLogs");
+
+                entity.Property(e => e.ErrorId).HasMaxLength(250);
+
+                entity.Property(e => e.FacilityId).HasMaxLength(50);
+
+                entity.Property(e => e.ReceivedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RequestId).HasMaxLength(250);
+
+                entity.Property(e => e.TimeStamp).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TAbhaLinkTokenCallback>(entity =>

@@ -305,5 +305,12 @@ namespace HIMS.API.Controllers.AbhaIntegration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, ex.Message);
             }
         }
+        [HttpPost("AbhaErrorLog")]
+        public async Task<ApiResponse> InsertErrorLog(AbhaErroLog obj)
+        {
+            TAbhaErrorLog model = obj.MapTo<TAbhaErrorLog>();
+            await _abhaConnectService.InsertErrorLogAsync(model);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Error log added successfully.");
+        }
     }
 }
