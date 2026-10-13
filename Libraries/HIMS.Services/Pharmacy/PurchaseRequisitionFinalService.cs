@@ -46,7 +46,7 @@ namespace HIMS.Services.Pharmacy
                 ObjTPrheader.CreatedDate = AppTime.Now;
 
                 _context.TPrheaders.Add(ObjTPrheader);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);
 
                 if (objPurchaseRequisitionHeader != null && objPurchaseRequisitionHeader.Any())
                 {
@@ -63,8 +63,9 @@ namespace HIMS.Services.Pharmacy
                 }
 
                 scope.Complete();
-            }         
+            }
         }
+       
 
         public virtual async Task<IPagedList<PurchaseRequisitionFinalHeaderListDto>> PurchaseRequisitionFinalHeaderListAsync(GridRequestModel model)
         {

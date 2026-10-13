@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.ABHA.Models.M2;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.AbhaIntegration;
@@ -311,6 +312,103 @@ namespace HIMS.API.Controllers.AbhaIntegration
             TAbhaErrorLog model = obj.MapTo<TAbhaErrorLog>();
             await _abhaConnectService.InsertErrorLogAsync(model);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Error log added successfully.");
+        }
+
+
+        [HttpPost("UploadReportFiles")]
+        [Consumes("multipart/form-data")]
+        public async Task<ApiResponse> UploadReportFiles(string patientRegistrationNumber,string visitNumber,long opipType,[FromForm] List<IFormFile> files)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(patientRegistrationNumber) || string.IsNullOrWhiteSpace(visitNumber))
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest,"patientRegistrationNumber and visitNumber are required.");
+
+                if (files == null || files.Count == 0 || files.All(f => f.Length == 0))
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest,"Please select at least one file.");
+
+                // Fresh JWT, same way your encounter API does it
+                var authResult = await _abhaConnectService.AuthenticateUserAsync();
+                var authObj = JsonSerializer.Deserialize<JsonElement>(JsonSerializer.Serialize(authResult));
+                string jwtToken = authObj.GetProperty("ResponseData").GetProperty("jwttoken").ToString();
+
+                var uploadUrl = _configuration["ABDMIntegration:KanaadUploadUrl"];
+                var hipId = _configuration["ABDMIntegration:HipId"];
+                using var client = new HttpClient();
+                using var request = new HttpRequestMessage(HttpMethod.Post, uploadUrl);
+                request.Headers.Add("Authorization", jwtToken);
+                request.Headers.Add("X-HIP-ID", hipId);
+
+                var content = new MultipartFormDataContent();
+                content.Add(new StringContent(patientRegistrationNumber), "patientRegistrationNumber");
+                content.Add(new StringContent(visitNumber), "visitNumber");
+
+                foreach (var file in files.Where(f => f.Length > 0))
+                {
+                    using var ms = new MemoryStream();
+                    await file.CopyToAsync(ms);          // read this file fully, one at a time
+                    var bytes = ms.ToArray();
+
+                    var fileContent = new ByteArrayContent(bytes);
+                    if (!string.IsNullOrEmpty(file.ContentType))
+                        fileContent.Headers.ContentType =
+                            new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
+
+                    content.Add(fileContent, "files", Path.GetFileName(file.FileName));
+                }
+
+                request.Content = content;
+
+                var response = await client.SendAsync(request);
+                var responseText = await response.Content.ReadAsStringAsync();
+
+                JsonElement data;
+                try
+                {
+                    data = JsonSerializer.Deserialize<JsonElement>(responseText);
+                }
+                catch
+                {
+                    return ApiResponseHelper.GenerateResponse( (ApiStatusCode)(int)response.StatusCode,"Kanaad upload failed.",responseText);
+                }
+
+                // Return error without inserting database rows
+                if (!response.IsSuccessStatusCode || data.ValueKind != JsonValueKind.Object ||!data.TryGetProperty("success", out var successElement) ||successElement.ValueKind != JsonValueKind.True)
+                {
+                    return ApiResponseHelper.GenerateResponse((ApiStatusCode)(int)response.StatusCode, "Kanaad upload failed.", data);
+                }
+
+                // Get uploaded file names returned by Kanaad
+                if (!data.TryGetProperty("fileNames", out var fileNamesElement) || fileNamesElement.ValueKind != JsonValueKind.Array)
+                {
+                    return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status500InternalServerError, "Kanaad reported success but returned no valid fileNames.",data);
+                }
+
+                var fileNames = fileNamesElement.EnumerateArray().Where(x => x.ValueKind == JsonValueKind.String).Select(x => x.GetString()).Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+
+                if (fileNames.Count == 0)
+                {
+                    return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status500InternalServerError,"Kanaad reported success but returned no file names.",data);
+                }
+
+                // Insert one database row for each returned file name
+                var uploadRecords = fileNames.Select(fileName => new TAbhaFileUpload
+                {
+                    RegNo = patientRegistrationNumber,
+                    Opipno = visitNumber,
+                    Opiptype = opipType,
+                    FileName = fileName,
+                    CreatedDate = DateTime.Now
+                }).ToList();
+
+                await _abhaConnectService.InsertAbhaFileUploadsAsync(uploadRecords);
+
+                return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK,"Files uploaded to Kanaad successfully and saved in the database.",data);
+            }
+            catch (Exception ex)
+            {
+                return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status500InternalServerError, ex.InnerException?.Message ?? ex.Message);
+            }
         }
     }
 }

@@ -59,7 +59,7 @@ namespace HIMS.Services.Pathlogy
 
                 _context.TPcpndprocesses.Add(ObjTPcpndprocess);
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);
 
                 scope.Complete();
             }
@@ -68,6 +68,8 @@ namespace HIMS.Services.Pathlogy
                 throw new Exception( ex.InnerException != null  ? ex.InnerException.Message  : ex.Message);
             }
         }
+       
+
         public virtual async Task UpdateAsync(TPcpndprocess ObjTPcpndprocess, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -83,9 +85,9 @@ namespace HIMS.Services.Pathlogy
                 if (lstAttend.Any())
                     _context.TPcpndprocessDetails.RemoveRange(lstAttend);
 
-            
+
                 //Save deletion first
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);
 
                 // Then attach and update header
                 _context.Attach(ObjTPcpndprocess);
@@ -103,7 +105,7 @@ namespace HIMS.Services.Pathlogy
                         _context.Entry(ObjTPcpndprocess).Property(column).IsModified = false;
                 }
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);
                 scope.Complete();
             }
         }

@@ -425,6 +425,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<StockLog> StockLogs { get; set; } = null!;
         public virtual DbSet<TAbhaCallbackformation> TAbhaCallbackformations { get; set; } = null!;
         public virtual DbSet<TAbhaErrorLog> TAbhaErrorLogs { get; set; } = null!;
+        public virtual DbSet<TAbhaFileUpload> TAbhaFileUploads { get; set; } = null!;
         public virtual DbSet<TAbhaLinkTokenCallback> TAbhaLinkTokenCallbacks { get; set; } = null!;
         public virtual DbSet<TAbhaOnDiscover> TAbhaOnDiscovers { get; set; } = null!;
         public virtual DbSet<TAbill> TAbills { get; set; } = null!;
@@ -12016,6 +12017,19 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RequestId).HasMaxLength(250);
 
                 entity.Property(e => e.TimeStamp).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TAbhaFileUpload>(entity =>
+            {
+                entity.HasKey(e => e.FileId);
+
+                entity.ToTable("T_AbhaFileUploads");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipno).HasColumnName("OPIPNo");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
             });
 
             modelBuilder.Entity<TAbhaLinkTokenCallback>(entity =>
