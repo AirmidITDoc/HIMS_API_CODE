@@ -676,6 +676,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TempPkCurrStkReceivedQty> TempPkCurrStkReceivedQties { get; set; } = null!;
         public virtual DbSet<TempPkCurrStkSale> TempPkCurrStkSales { get; set; } = null!;
         public virtual DbSet<TempPkCurrStkSales1> TempPkCurrStkSales1s { get; set; } = null!;
+        public virtual DbSet<TempSalesId> TempSalesIds { get; set; } = null!;
         public virtual DbSet<TempStrId> TempStrIds { get; set; } = null!;
         public virtual DbSet<TempSulpId> TempSulpIds { get; set; } = null!;
         public virtual DbSet<TemppkCurrstkNegativeBalQty> TemppkCurrstkNegativeBalQties { get; set; } = null!;
@@ -20140,6 +20141,13 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PurRateWf).HasColumnType("money");
 
                 entity.Property(e => e.StkId).HasColumnName("StkID");
+            });
+
+            modelBuilder.Entity<TempSalesId>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Temp_SalesId");
             });
 
             modelBuilder.Entity<TempStrId>(entity =>

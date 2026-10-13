@@ -1,4 +1,5 @@
 using FluentValidation;
+using HIMS.API.Models.Inventory;
 
 namespace HIMS.API.Models.Pharmacy
 {
@@ -366,4 +367,16 @@ namespace HIMS.API.Models.Pharmacy
         public List<CurrentStockUpdateModels> CurrentStockUpdate { get; set; }
 
     }
+    public class TempSalesheaderentryModel
+    {
+        public long? SalesId { get; set; }
+
+    }
+
+    public class TempSalesheaderentry
+    {
+        public List<TempSalesheaderentryModel> tempSalesheaderentry { get; set; }
+
+    }
+
 }

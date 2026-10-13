@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.Inventory;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Models.Pharmacy;
@@ -545,6 +546,21 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated successfully.");
         }
 
+        [HttpPost("TempSalesheaderInsert")]
+       // [Permission]
+        public async Task<ApiResponse> Insert(TempSalesheaderentry obj)
+        {
+            List<TempSalesId> model = obj.tempSalesheaderentry.MapTo<List<TempSalesId>>();
+
+            if (model.Count > 0)
+            {
+                await _ISalesService.InsertSalesheadertentry(model, CurrentUserId, CurrentUserName);
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+        }
 
     }
 

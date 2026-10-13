@@ -63,6 +63,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TNursingOrygenVentilator, NursingOrygenVentilatorModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TNursingPainAssessment, NursingPainAssessmentModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TNursingWeight, TNursingWeightModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TempSalesId, TempSalesheaderentryModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TNursingVital, NursingVitalsDeleteModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TNursingSugarLevel, NursingSugarDeleteModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
@@ -90,7 +91,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIpMrdDiagnosisInfoDetail, MrdDiagnosisInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MOtBillTemplate, BillTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MOtBillTemplateHeader, BillTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-            CreateMap<MOtBillTemplateDetail, BillTemplateDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+     //       CreateMap<MOtBillTemplateDetail, BillTemplateDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TVaccineInformation, VaccineInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 

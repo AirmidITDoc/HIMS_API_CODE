@@ -1403,6 +1403,44 @@ namespace HIMS.Services.Users
                 await transaction.RollbackAsync();
                 throw;
             }
+
+
+
         }
+
+        public virtual async Task InsertSalesheadertentry(List<TempSalesId> ObjTempSalesId, int CurrentUserId, string CurrentUserName)
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
+                odal.ExecuteNonQuery("m_truncate_Temp_SalesId", CommandType.StoredProcedure);
+               await _context.LogProcedureExecution(new Dictionary<string, object>(), "m_truncate_Temp_SalesId", 0, Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
+
+                foreach (var item in ObjTempSalesId)
+                {
+                    var entity = item.ToDictionary();
+
+                    odal.ExecuteNonQuery("m_Insert_Temp_SalesId", CommandType.StoredProcedure, entity);
+
+                   await _context.LogProcedureExecution(entity, nameof(TempPathReportId), item.SalesId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+
+                }
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+
+                // ✅ Commit
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                // ❌ Rollback
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+
     }
 }
