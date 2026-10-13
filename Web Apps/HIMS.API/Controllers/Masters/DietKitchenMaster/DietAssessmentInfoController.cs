@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             _assessmentService = assessmentService;
         }
         [HttpPost("List")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<DietAssessmentInfoDtoList> list = await _assessmentService.GetListAsync(objGrid);

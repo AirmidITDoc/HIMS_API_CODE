@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             _dietPlanScheduleService = dietPlanScheduleService;
         }
         [HttpPost("List")]
-        //[Permission]
+        [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<DietPlanScheduleListDto> list = await _dietPlanScheduleService.GetListAsync(objGrid);
@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpGet("{id?}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Get(long id)
         {
             if (id == 0)
@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPost("Insert")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Post(DietPlanScheduleModel obj)
         {
             TDietPlanSchedule model = obj.MapTo<TDietPlanSchedule>();
@@ -87,7 +87,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpDelete]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Delete(long id)
         {
             TDietPlanSchedule model = await _repository.GetById(x => x.DietPlanId == id);
