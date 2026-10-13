@@ -312,5 +312,67 @@ namespace HIMS.API.Controllers.AbhaIntegration
             await _abhaConnectService.InsertErrorLogAsync(model);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Error log added successfully.");
         }
+
+
+        [HttpPost("UploadReportFiles")]
+        [Consumes("multipart/form-data")]
+        public async Task<ApiResponse> UploadReportFiles(string patientRegistrationNumber,string visitNumber,[FromForm] List<IFormFile> files)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(patientRegistrationNumber) || string.IsNullOrWhiteSpace(visitNumber))
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest,
+                        "patientRegistrationNumber and visitNumber are required.");
+
+                if (files == null || files.Count == 0 || files.All(f => f.Length == 0))
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest,
+                        "Please select at least one file.");
+
+                // Fresh JWT, same way your encounter API does it
+                var authResult = await _abhaConnectService.AuthenticateUserAsync();
+                var authObj = JsonSerializer.Deserialize<JsonElement>(JsonSerializer.Serialize(authResult));
+                string jwtToken = authObj.GetProperty("ResponseData").GetProperty("jwttoken").ToString();
+
+                //var uploadUrl = _configuration["ABDMIntegration:KanaadUploadUrl"];
+                //var hipId = _configuration["ABDMIntegration:HipId"];
+                var uploadUrl = "https://kanaad.co.in/wrapper/hospital/report/upload";
+                var hipId = "AIRMIDABHA";
+                using var client = new HttpClient();
+                using var request = new HttpRequestMessage(HttpMethod.Post, uploadUrl);
+                request.Headers.Add("Authorization", jwtToken);
+                request.Headers.Add("X-HIP-ID", hipId);
+
+                var content = new MultipartFormDataContent();
+                content.Add(new StringContent(patientRegistrationNumber), "patientRegistrationNumber");
+                content.Add(new StringContent(visitNumber), "visitNumber");
+
+                foreach (var file in files.Where(f => f.Length > 0))
+                {
+                    var fileContent = new StreamContent(file.OpenReadStream());
+                    if (!string.IsNullOrEmpty(file.ContentType))
+                        fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
+
+                    // same field name "files" repeated = multiple files
+                    content.Add(fileContent, "files", Path.GetFileName(file.FileName));
+                }
+
+                request.Content = content;
+
+                var response = await client.SendAsync(request);
+                var responseText = await response.Content.ReadAsStringAsync();
+
+                // Return Kanaad's response as-is (JSON if possible, otherwise raw text)
+                object data;
+                try { data = JsonSerializer.Deserialize<JsonElement>(responseText); }
+                catch { data = responseText; }
+
+                return ApiResponseHelper.GenerateResponse(
+                    (ApiStatusCode)(int)response.StatusCode,response.IsSuccessStatusCode ? "Files uploaded to Kanaad successfully." : "Kanaad upload failed.",data);
+            }
+            catch (Exception ex)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }
