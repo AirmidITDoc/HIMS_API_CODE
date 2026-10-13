@@ -1943,5 +1943,13 @@ namespace HIMS.Services.AbhaIntegration
             }
         }
 
+        public virtual async Task InsertAbhaFileUploadsAsync( List<TAbhaFileUpload> files)
+        {
+            using var scope = new TransactionScope(TransactionScopeOption.Required,new TransactionOptions{ IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },TransactionScopeAsyncFlowOption.Enabled);
+            _context.TAbhaFileUploads.AddRange(files);
+            await _context.SaveChangesAsync();
+            scope.Complete();
+        }
+
     }
 }

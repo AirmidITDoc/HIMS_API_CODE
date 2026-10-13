@@ -425,6 +425,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<StockLog> StockLogs { get; set; } = null!;
         public virtual DbSet<TAbhaCallbackformation> TAbhaCallbackformations { get; set; } = null!;
         public virtual DbSet<TAbhaErrorLog> TAbhaErrorLogs { get; set; } = null!;
+        public virtual DbSet<TAbhaFileUpload> TAbhaFileUploads { get; set; } = null!;
         public virtual DbSet<TAbhaLinkTokenCallback> TAbhaLinkTokenCallbacks { get; set; } = null!;
         public virtual DbSet<TAbhaOnDiscover> TAbhaOnDiscovers { get; set; } = null!;
         public virtual DbSet<TAbill> TAbills { get; set; } = null!;
@@ -467,8 +468,10 @@ namespace HIMS.Data.Models
         public virtual DbSet<TCustomerPayment> TCustomerPayments { get; set; } = null!;
         public virtual DbSet<TDeathCertificate> TDeathCertificates { get; set; } = null!;
         public virtual DbSet<TDialysi> TDialyses { get; set; } = null!;
+        public virtual DbSet<TDietAssessmentInfo> TDietAssessmentInfos { get; set; } = null!;
         public virtual DbSet<TDietPatReqDetail> TDietPatReqDetails { get; set; } = null!;
         public virtual DbSet<TDietPatientRequestHeader> TDietPatientRequestHeaders { get; set; } = null!;
+        public virtual DbSet<TDietPlanSchedule> TDietPlanSchedules { get; set; } = null!;
         public virtual DbSet<TDiscApprovalDetail> TDiscApprovalDetails { get; set; } = null!;
         public virtual DbSet<TDiscCaseSheet> TDiscCaseSheets { get; set; } = null!;
         public virtual DbSet<TDiscountTransactionHistory> TDiscountTransactionHistories { get; set; } = null!;
@@ -702,7 +705,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -12016,6 +12019,19 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TimeStamp).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<TAbhaFileUpload>(entity =>
+            {
+                entity.HasKey(e => e.FileId);
+
+                entity.ToTable("T_AbhaFileUploads");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipno).HasColumnName("OPIPNo");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+            });
+
             modelBuilder.Entity<TAbhaLinkTokenCallback>(entity =>
             {
                 entity.HasKey(e => e.CallbackId)
@@ -13217,6 +13233,45 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TechinicianName).HasMaxLength(100);
             });
 
+            modelBuilder.Entity<TDietAssessmentInfo>(entity =>
+            {
+                entity.HasKey(e => e.DietAssessmentId);
+
+                entity.ToTable("T_Diet_AssessmentInfo");
+
+                entity.Property(e => e.Allergies).HasMaxLength(255);
+
+                entity.Property(e => e.AssessmentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AssessmentTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Bmi)
+                    .HasMaxLength(20)
+                    .HasColumnName("BMI");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.DietitionNotes).HasMaxLength(255);
+
+                entity.Property(e => e.Height).HasMaxLength(20);
+
+                entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPId");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.SpecialInstructions).HasMaxLength(255);
+
+                entity.Property(e => e.Weight).HasMaxLength(20);
+            });
+
             modelBuilder.Entity<TDietPatReqDetail>(entity =>
             {
                 entity.HasKey(e => e.DietReqDetId);
@@ -13271,6 +13326,37 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Time).HasColumnType("datetime");
 
                 entity.Property(e => e.UnitId).HasColumnName("UnitID");
+            });
+
+            modelBuilder.Entity<TDietPlanSchedule>(entity =>
+            {
+                entity.HasKey(e => e.DietPlanId);
+
+                entity.ToTable("T_DietPlanSchedule");
+
+                entity.Property(e => e.Comment).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Instruction).HasMaxLength(255);
+
+                entity.Property(e => e.IsCancelled).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.PlanDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PlanEndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PlanStartDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TDiscApprovalDetail>(entity =>

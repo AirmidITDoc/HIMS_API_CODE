@@ -22,5 +22,6 @@ namespace HIMS.Services.AbhaIntegration
         HiTypeValidationResult Validate(PatientVisitResponse payload);
         object ValidateHiTypesSummary(PatientVisitResponse payload);
         Task InsertErrorLogAsync(TAbhaErrorLog obj);
+        Task InsertAbhaFileUploadsAsync(List<TAbhaFileUpload> files);
     }
 }
