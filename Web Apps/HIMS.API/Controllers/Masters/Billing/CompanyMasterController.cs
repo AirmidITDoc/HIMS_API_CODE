@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPost("CompanyExecutiveInfoList")]
-        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
+        [Permission]
         public async Task<IActionResult> CompanyExecutiveInfoList(GridRequestModel objGrid)
         {
             IPagedList<CompanyExecutiveInfoListDto> CompanyExecutiveInfoList = await _CompanyMasterService.CompanyExecutiveInfoListAsync(objGrid);
@@ -188,7 +188,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPut("updatecompanywiseservicerate")]
-        //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
+        [Permission]
         public async Task<ApiResponse> Editc(List<updatecompanywiseservicerate> objs)
         {
             if (objs == null || objs.Count == 0)
@@ -207,14 +207,14 @@ namespace HIMS.API.Controllers.Masters.Billing
 
         [HttpPost("CompanyWiseServiceDiscount")]
         [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
-        public ApiResponse postc(CompanyWiseServiceModel obj)
+        public async Task <ApiResponse> postc(CompanyWiseServiceModel obj)
         {
             List<MCompanyWiseServiceDiscount> model = obj.CompanyWiseService.MapTo<List<MCompanyWiseServiceDiscount>>();
 
             if (model.Count > 0)
             {
 
-                _CompanyMasterService.Inserts(model, CurrentUserId, CurrentUserName, obj.userId);
+                await _CompanyMasterService.Inserts(model, CurrentUserId, CurrentUserName, obj.userId);
             }
 
             else

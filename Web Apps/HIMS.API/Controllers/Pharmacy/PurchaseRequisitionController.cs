@@ -109,14 +109,14 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.PurchaseRequisitionId);
         }
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Delete)]
-        public ApiResponse Cancel(PurchaseRequisitionCancel obj)
+        [Permission]
+        public async Task<ApiResponse> Cancel(PurchaseRequisitionCancel obj)
         {
             TPurchaseRequisitionHeader model = obj.MapTo<TPurchaseRequisitionHeader>();
             if (obj.PurchaseRequisitionId != 0)
             {
                 model.PurchaseRequisitionId = obj.PurchaseRequisitionId;
-                _IPurchaseRequisitionService.Cancel(model, CurrentUserId, CurrentUserName);
+                await _IPurchaseRequisitionService.Cancel(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");

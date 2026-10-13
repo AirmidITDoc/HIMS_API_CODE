@@ -81,38 +81,53 @@ namespace HIMS.Services.TrustMembershipRegistration
 
 
        
-        public virtual async Task InsertAsync( TMembershipRegistration ObjTMembershipRegistration,int UserId,string Username)
+        //public virtual async Task InsertAsync( TMembershipRegistration ObjTMembershipRegistration,int UserId,string Username)
+        //{
+        //    using var scope = new TransactionScope( TransactionScopeOption.Required,
+        //    new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.Serializable}, TransactionScopeAsyncFlowOption.Enabled);
+
+        //    // Get all MembershipNo values because MembershipNo is stored as string
+        //    var membershipNumbers = await _context.TMembershipRegistrations
+        //        .Where(x => !string.IsNullOrEmpty(x.MembershipNo))
+        //        .Select(x => x.MembershipNo)
+        //        .ToListAsync();
+
+        //    // Convert string values to integer and get the maximum number
+        //    int lastSeqNo = membershipNumbers
+        //        .Select(x => int.TryParse(x, out int number) ? number : 0)
+        //        .DefaultIfEmpty(0)
+        //        .Max();
+
+        //    // Auto Increment:
+        //    int newSeqNo = lastSeqNo + 1;
+
+        //    // MembershipNo is string, so convert number back to string
+        //    ObjTMembershipRegistration.MembershipNo = newSeqNo.ToString();
+
+        //    ObjTMembershipRegistration.CreatedBy = UserId;
+        //    ObjTMembershipRegistration.CreatedDate = AppTime.Now;
+
+        //    _context.TMembershipRegistrations.Add(ObjTMembershipRegistration);
+
+        //    await _context.SaveChangesAsync(UserId, Username);       // fixed
+
+        //    scope.Complete();
+        //}
+        public virtual async Task InsertAsync(TMembershipRegistration ObjTMembershipRegistration, int UserId, string Username)
         {
-            using var scope = new TransactionScope( TransactionScopeOption.Required,
-            new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.Serializable}, TransactionScopeAsyncFlowOption.Enabled);
-
-            // Get all MembershipNo values because MembershipNo is stored as string
-            var membershipNumbers = await _context.TMembershipRegistrations
-                .Where(x => !string.IsNullOrEmpty(x.MembershipNo))
-                .Select(x => x.MembershipNo)
-                .ToListAsync();
-
-            // Convert string values to integer and get the maximum number
-            int lastSeqNo = membershipNumbers
-                .Select(x => int.TryParse(x, out int number) ? number : 0)
-                .DefaultIfEmpty(0)
-                .Max();
-
-            // Auto Increment:
-            int newSeqNo = lastSeqNo + 1;
-
-            // MembershipNo is string, so convert number back to string
-            ObjTMembershipRegistration.MembershipNo = newSeqNo.ToString();
+            using var scope = new TransactionScope(TransactionScopeOption.Required,
+            new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.Serializable }, TransactionScopeAsyncFlowOption.Enabled);
 
             ObjTMembershipRegistration.CreatedBy = UserId;
             ObjTMembershipRegistration.CreatedDate = AppTime.Now;
 
             _context.TMembershipRegistrations.Add(ObjTMembershipRegistration);
 
-            await _context.SaveChangesAsync(UserId, Username);       // fixed
+            await _context.SaveChangesAsync(UserId, Username);
 
             scope.Complete();
         }
+
         public virtual async Task UpdateAsync(TMembershipRegistration ObjTMembershipRegistration, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

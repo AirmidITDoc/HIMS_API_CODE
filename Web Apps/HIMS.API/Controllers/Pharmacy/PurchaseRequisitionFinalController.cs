@@ -35,8 +35,7 @@ namespace HIMS.API.Controllers.Pharmacy
             TPrheader model = obj.MapTo<TPrheader>();
             List<TPurchaseRequisitionHeader> objPurchaseRequisitionHeader = obj.Tpr.Select(x => new TPurchaseRequisitionHeader
             {
-                PurchaseRequisitionId = (long)x.PrrequestHeaderId,
-            }).ToList();
+                PurchaseRequisitionId = (long)x.PrrequestHeaderId,}).ToList();
             if (obj.Prid == 0)
             {
                 model.CreatedDate = AppTime.Now;
