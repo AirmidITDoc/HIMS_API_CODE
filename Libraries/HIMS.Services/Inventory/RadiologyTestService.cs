@@ -81,7 +81,8 @@ namespace HIMS.Services.Inventory
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 _context.MRadiologyTestMasters.Add(objRadio);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);
+
 
                 scope.Complete();
             }
@@ -110,7 +111,7 @@ namespace HIMS.Services.Inventory
                     _context.MRadiologyTemplateDetails.RemoveRange(lst);
                 }
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);
 
                 scope.Complete();
             }
@@ -126,7 +127,7 @@ namespace HIMS.Services.Inventory
                 objRadiology.ModifiedBy = objRadio.ModifiedBy;
                 _context.MRadiologyTestMasters.Update(objRadiology);
                 _context.Entry(objRadiology).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
 
                 scope.Complete();
             }

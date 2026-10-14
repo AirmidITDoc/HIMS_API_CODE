@@ -119,6 +119,10 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<ISubspecialityService, SubspecialityService>();
             services.AddScoped<IVaccineInformationService, VaccineInformationService>();
             services.AddScoped<IImmunizatoinInfoService, ImmunizatoinInfoService>();
+            services.AddScoped<IDietAssessmentInfoService, DietAssessmentInfoService>();
+            services.AddScoped<IDietPlanScheduleService, DietPlanScheduleService>();
+
+
 
 
 

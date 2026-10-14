@@ -8,9 +8,11 @@ using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.ComponentModel.Design;
 using System.Data;
 using System.Transactions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 
@@ -87,31 +89,48 @@ namespace HIMS.Services.Inventory
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             var existing = await _context.ServiceDetails.FirstOrDefaultAsync(x => x.ServiceId == objServiceDetail.ServiceId && x.TariffId == objServiceDetail.TariffId && x.ClassId == objServiceDetail.ClassId);
 
-
-
-            //  Update only the required fields
+           //  Update only the required fields
             existing.ClassRate = objServiceDetail.ClassRate;
             existing.DiscountAmount = objServiceDetail.DiscountAmount;
             existing.DiscountPercentage = objServiceDetail.DiscountPercentage;
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
             scope.Complete();
         }
-        public virtual void Inserts(List<MCompanyWiseServiceDiscount> objCompanyWiseServiceDiscount, int UserId, string UserName, long? userId)
+        public virtual async Task Inserts(List<MCompanyWiseServiceDiscount> objCompanyWiseServiceDiscount, int CurrentUserId, string CurrentUserName, long? userId)
         {
-            DatabaseHelper odal = new();
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
-            foreach (var item in objCompanyWiseServiceDiscount)
+            try
             {
-                string[] Entity = { "CreatedBy", "CreatedDate", "ModifiedBy", "ModifiedDate", "CompServiceDetailId" };
-                var entity = item.ToDictionary();
-                foreach (var rProperty in Entity)
-                {
-                    entity.Remove(rProperty);
-                }
-                entity["userId"] = userId;
-                odal.ExecuteNonQuery("ps_insert_update_CompanyWiseServiceDiscount", CommandType.StoredProcedure, entity);
+                // OLD CODE With SP
+                DatabaseHelper odal = new();
 
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
+                foreach (var item in objCompanyWiseServiceDiscount)
+                {
+                    string[] Entity = { "IsGroupOrSubGroup", "ServiceId", "TariffId", "ClassId", "DiscountAmount", "DiscountPercentage", "userId" };
+                    var entity = item.ToDictionary();
+                    foreach (var rProperty in entity.Keys.ToList())
+                    {
+                        if (!Entity.Contains(rProperty))
+                            entity.Remove(rProperty);
+                    }
+                    entity["userId"] = userId;
+                    odal.ExecuteNonQuery("ps_insert_update_CompanyWiseServiceDiscount", CommandType.StoredProcedure, entity);
+                    await _context.LogProcedureExecution(entity.ToDictionary(), nameof(MCompanyWiseServiceDiscount), (int?)item.CompServiceDetailId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                }
+
+                // Save & Commit
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
             }
         }
 
@@ -120,8 +139,7 @@ namespace HIMS.Services.Inventory
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 _context.CompanyMasters.Add(objCompanyMaster);
-                await _context.SaveChangesAsync();
-
+                await _context.SaveChangesAsync(UserId, Username);
                 scope.Complete();
             }
         }
@@ -137,8 +155,7 @@ namespace HIMS.Services.Inventory
                 _context.CompanyMasters.Attach(objCompanyMaster);
                 _context.Entry(objCompanyMaster).State = EntityState.Modified;
 
-                await _context.SaveChangesAsync();
-
+                await _context.SaveChangesAsync(UserId, Username);
                 scope.Complete();
             }
         }

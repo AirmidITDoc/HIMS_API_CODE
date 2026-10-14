@@ -1,19 +1,21 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
+using HIMS.Services.Utilities;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using HIMS.Data.DataProviders;
-using System.Data;
-using HIMS.Services.Utilities;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.Pathology;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 
@@ -65,11 +67,13 @@ namespace HIMS.Services.Pharmacy
                 ObjTPurchaseRequisitionHeader.CreatedDate = AppTime.Now;
 
                 _context.TPurchaseRequisitionHeaders.Add(ObjTPurchaseRequisitionHeader);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);
 
                 scope.Complete();
             }
         }
+      
+
         public virtual async Task UpdateAsync(TPurchaseRequisitionHeader ObjTPurchaseRequisitionHeader, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -83,9 +87,9 @@ namespace HIMS.Services.Pharmacy
                 if (lstAttend.Any())
                     _context.TPurchaseRequisitionDetails.RemoveRange(lstAttend);
 
-              
+
                 // Save deletion first
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);
 
                 // Then attach and update header
                 _context.Attach(ObjTPurchaseRequisitionHeader);
@@ -104,22 +108,42 @@ namespace HIMS.Services.Pharmacy
                         _context.Entry(ObjTPurchaseRequisitionHeader).Property(column).IsModified = false;
                 }
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);
                 scope.Complete();
              }
         }
-        public virtual async Task Cancel(TPurchaseRequisitionHeader ObjTPurchaseRequisitionHeader, int UserId, string Username)
+
+
+        public virtual async Task Cancel(TPurchaseRequisitionHeader ObjTPurchaseRequisitionHeader, int CurrentUserId, string CurrentUserName)
         {
-            //throw new NotImplementedException();
-            DatabaseHelper odal = new();
-            string[] Entity = { "PurchaseRequisitionId", "IsCancelledBy" };
-            var entity = ObjTPurchaseRequisitionHeader.ToDictionary();
-            foreach (var rProperty in entity.Keys.ToList())
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-                if (!Entity.Contains(rProperty))
-                    entity.Remove(rProperty);
+                // OLD CODE With SP
+                DatabaseHelper odal = new();
+
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+                                                                         //throw new NotImplementedException();
+                string[] Entity = { "PurchaseRequisitionId", "IsCancelledBy" };
+                var entity = ObjTPurchaseRequisitionHeader.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!Entity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+                odal.ExecuteNonQuery("PS_Cancel_PurchaseRequisition", CommandType.StoredProcedure, entity);
+                await _context.LogProcedureExecution(entity.ToDictionary(), nameof(MCompanyWiseServiceDiscount), (int?)ObjTPurchaseRequisitionHeader.PurchaseRequisitionId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+                // Save & Commit
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                await transaction.CommitAsync();
             }
-            odal.ExecuteNonQuery("PS_Cancel_PurchaseRequisition", CommandType.StoredProcedure, entity);
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
         public virtual async Task VerifyAsync(TPurchaseRequisitionHeader ObjTPurchaseRequisitionHeader, int UserId, string Username)
         {
@@ -132,7 +156,7 @@ namespace HIMS.Services.Pharmacy
                 objPur.IsInchargeVerifyDate = ObjTPurchaseRequisitionHeader.IsInchargeVerifyDate;
                 _context.TPurchaseRequisitionHeaders.Update(objPur);
                 _context.Entry(objPur).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);
 
                 scope.Complete();
             }
