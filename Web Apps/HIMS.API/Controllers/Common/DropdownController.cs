@@ -141,6 +141,7 @@ namespace HIMS.API.Controllers.Common
 
 
 
+
         public DropdownController(IGenericService<MAreaMaster> areaservice, IGenericService<DbPrefixMaster> iPrefixService, IGenericService<DbGenderMaster> iGenderService, IGenericService<MRelationshipMaster> iRelationshipMaster,
                                   IGenericService<MMaritalStatusMaster> iMaritalStatusMaster, IGenericService<MReligionMaster> iMreligionMaster, IGenericService<PatientTypeMaster> iPatientTypeMaster, IGenericService<TariffMaster> tariffMaster,
                                   IGenericService<MDepartmentMaster> iMDepartmentMaster, IGenericService<DoctorMaster> iDoctorMaster, IGenericService<DbPurposeMaster> iMDoPurposeMaster, IGenericService<MCityMaster> iMDoCityMaster
@@ -582,6 +583,8 @@ namespace HIMS.API.Controllers.Common
                 "TypesOfFoodItemUnits" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TypesOfFoodItemUnits")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "TypesOfSeverity" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "TypesOfSeverity")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "Route" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "Route")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "Nutritional_Status" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "Nutritional_Status")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
                 "Vaccineinformation" => (await _TVaccineInformation.GetAll(x => x.VaccineStatus.Value)).ToList().ToDropDown(nameof(TVaccineInformation.VaccineId), nameof(TVaccineInformation.VaccineName)),
 
                 _ => new List<SelectListItem>()

@@ -79,27 +79,27 @@
                 </tr>
 
                 <tr style="font-size:13px;">
-                    <td style="border: 1px solid black;font-weight:bold;text-align:center;vertical-align: middle;padding:5px 5px;width:6%;">Sr No.</td>
-                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 38%;">Product Name</td>
-                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 8%;">Qty</td>
-                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 14%;">Batch No.</td>
-                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 12%;">ExpDate</td>
-                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">MRP</td>
-                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 12%;">Amount</td>
+                    <td style="border: 1px solid black;font-weight:bold;text-align:center;vertical-align: middle;padding:5px 5px;width:5%;">Sr No.</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 30%;">Product Name</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 5%;">Qty</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">Batch No.</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 15%;">ExpDate</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 20%;">MRP</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 20%;">Amount</td>
                 </tr>
             </tbody>
 
             <!-- ── ITEMS_SP1 template row (one per result row from SP) ── -->
             <tbody id="billRows">
                 <!--ITEMS_SP1-->
-                <tr class="bill-row" style="font-size:14px;">
-                    <td class="sr" style="border: 1px solid black; padding: 4px; text-align:center;"></td>
-                    <td style="border: 1px solid black; padding: 4px 8px; text-align:left;">{{ItemName}}</td>
-                    <td style="border: 1px solid black; padding: 4px; text-align:center;">{{Qty}}</td>
-                    <td style="border: 1px solid black; padding: 4px; text-align:center;">{{BatchNo}}</td>
-                    <td style="border: 1px solid black; padding: 4px; text-align:center;">{{BatchExpDate}}</td>
-                    <td class="n2" style="border: 1px solid black; padding: 4px; text-align:right;">{{UnitMRP}}</td>
-                    <td class="n2" style="border: 1px solid black; padding: 4px; text-align:right;">{{TotalAmount}}</td>
+                <tr class="bill-row" style="font-size:15px;">
+                    <td class="sr" style="border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center"></td>
+                    <td style="border-left:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: left;padding-left:10px;">{{ItemName}}</td>
+                    <td style="border-left:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: left;padding-left:10px;">{{Qty}}</td>
+                    <td style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{BatchNo}}</td>
+                    <td style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{BatchExpDate}}</td>
+                    <td class="n2" style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{UnitMRP}}</td>
+                    <td class="n2" style="border-left:1px solid #000;border-right:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: center;">{{TotalAmount}}</td>
                 </tr>
                 <!--/ITEMS_SP1-->
             </tbody>
@@ -107,49 +107,51 @@
             <tbody>
                 <tr>
                     <td colspan="4" style="border: 1px solid black;vertical-align: top; padding: 0 10px 10px;">
-                        <div style="font-weight: 400;">Terms &amp; Conditions</div>
-                        <pre style="margin: 5px 0 0 0; font-size: 10px; font-family: inherit; white-space: pre-wrap; font-weight: 400;">{{TermsAndCondition}}</pre>
+                        <div style="font-weight: 400; font-size: 20px;">Terms &amp; Conditions</div>
+                        <pre style="margin: 5px 0 0 0; font-size: 10px; font-weight: 400;">{{TermsAndCondition}}</pre>
                     </td>
-                    <td colspan="3" style="border: 1px solid black;vertical-align: top; padding: 0 10px 10px;font-size:14px;">
-                        <div style="display:flex;align-items: center;">
-                            <span style="width:90px;display:inline-block;">Sub Total</span>
-                            <span style="margin:0 5px">:</span>
-                            <span>{{CurrSymbol}} <span class="n2">{{HTotalAmount}}</span></span>
-                        </div>
-                        <div style="display:flex;align-items: center;">
-                            <span style="width:90px;display:inline-block;">Discount</span>
-                            <span style="margin:0 5px">:</span>
-                            <span>{{CurrSymbol}} <span class="n2">{{DiscAmount}}</span></span>
-                        </div>
-                        <div style="display:flex;align-items: center;">
-                            <span style="width:90px;display:inline-block;">Round off</span>
-                            <span style="margin:0 5px">:</span>
-                            <span>{{CurrSymbol}} <span class="n2">{{RoundOff}}</span></span>
-                        </div>
-                        <div style="display:flex;align-items: center;">
-                            <span style="width:90px;display:inline-block;">Grand Total</span>
-                            <span style="margin:0 5px">:</span>
-                            <span>{{CurrSymbol}} <span class="n2">{{NetAmount}}</span></span>
-                        </div>
-                        <div id="paidRow" style="display:flex;align-items:center;">
-                            <span style="width:90px;display:inline-block;">Paid Amount</span>
-                            <span style="margin:0 5px">:</span>
-                            <span>{{CurrSymbol}} <span id="paidVal" class="n2">{{PaidAmount}}</span></span>
-                        </div>
-                        <div id="balRow" style="display:flex;align-items:center;">
-                            <span style="width:90px;display:inline-block;">Bal Amount</span>
-                            <span style="margin:0 5px">:</span>
-                            <span>{{CurrSymbol}} <span id="balVal" class="n2">{{BalanceAmount}}</span></span>
+                    <td colspan="3" style="border: 1px solid black;vertical-align: top; padding: 0 10px 10px;font-size:16px;">
+                        <div style="width:240px;margin-left:auto;">
+                            <div style="display:flex;align-items: center;">
+                                <span style="width:100px;display:inline-block;">Sub Total</span>
+                                <span style="margin:0 5px">:</span>
+                                <span>{{CurrSymbol}} <span class="n2">{{HTotalAmount}}</span></span>
+                            </div>
+                            <div style="display:flex;align-items: center;">
+                                <span style="width:100px;display:inline-block;">Discount</span>
+                                <span style="margin:0 5px">:</span>
+                                <span>{{CurrSymbol}} <span class="n2">{{DiscAmount}}</span></span>
+                            </div>
+                            <div style="display:flex;align-items: center;">
+                                <span style="width:100px;display:inline-block;">Round off</span>
+                                <span style="margin:0 5px">:</span>
+                                <span>{{CurrSymbol}} <span class="n2">{{RoundOff}}</span></span>
+                            </div>
+                            <div style="display:flex;align-items: center;font-weight:bold;">
+                                <span style="width:100px;display:inline-block;">Grand Total</span>
+                                <span style="margin:0 5px">:</span>
+                                <span>{{CurrSymbol}} <span class="n2">{{NetAmount}}</span></span>
+                            </div>
+                            <div id="paidRow" style="display:flex;align-items:center;">
+                                <span style="width:100px;display:inline-block;">Paid Amount</span>
+                                <span style="margin:0 5px">:</span>
+                                <span>{{CurrSymbol}} <span id="paidVal" class="n2">{{PaidAmount}}</span></span>
+                            </div>
+                            <div id="balRow" style="display:flex;align-items:center;">
+                                <span style="width:100px;display:inline-block;">Bal Amount</span>
+                                <span style="margin:0 5px">:</span>
+                                <span>{{CurrSymbol}} <span id="balVal" class="n2">{{BalanceAmount}}</span></span>
+                            </div>
                         </div>
                     </td>
                 </tr>
-                <tr style="font-size: 14px;">
+                <tr style="font-size: 16px;">
                     <td colspan="3">Billed By: {{UserName}}</td>
                     <td colspan="4" style="text-align: right;">
                         This is Computer generated invoice hence doesn’t require signature
                     </td>
                 </tr>
-                <tr style="font-size: 14px;">
+                <tr style="font-size: 16px;">
                     <td colspan="7" style="text-align: right;">
                         <span style="display:inline-block; text-align:center;">
                             {{StoreName}}<br>
@@ -168,7 +170,6 @@
             for (var i = 0; i < rows.length; i++) {
                 rows[i].querySelector('.sr').textContent = i + 1;
             }
-            // 2-decimal formatting
             var n2 = document.querySelectorAll('.n2');
             for (var j = 0; j < n2.length; j++) {
                 var v = parseFloat(n2[j].textContent);
