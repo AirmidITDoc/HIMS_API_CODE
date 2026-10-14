@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             _assessmentService = assessmentService;
         }
         [HttpPost("List")]
-        [Permission]
+        //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<DietAssessmentInfoDtoList> list = await _assessmentService.GetListAsync(objGrid);
@@ -37,7 +37,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpGet("{id?}")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Get(long id)
         {
             if (id == 0)
@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPost("Insert")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Post(DietAssessmentInfoModel obj)
         {
             TDietAssessmentInfo model = obj.MapTo<TDietAssessmentInfo>();
@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Edit(DietAssessmentInfoModel obj)
         {
             TDietAssessmentInfo model = obj.MapTo<TDietAssessmentInfo>();
@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpDelete]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Delete(long id)
         {
             TDietAssessmentInfo model = await _repository.GetById(x => x.DietAssessmentId == id);

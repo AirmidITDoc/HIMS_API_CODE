@@ -69,7 +69,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Edit(DietPlanScheduleModel obj)
         {
             TDietPlanSchedule model = obj.MapTo<TDietPlanSchedule>();

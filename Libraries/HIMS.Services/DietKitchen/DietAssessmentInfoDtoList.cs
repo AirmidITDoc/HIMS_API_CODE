@@ -8,6 +8,7 @@ namespace HIMS.Data.DTO.DietKitchen
         public DateTime AssessmentDate { get; set; }
         public DateTime AssessmentTime { get; set; }
         public long AssessmentById { get; set; }
+        public string? AssessByName { get; set; }
         public long FoodPerferenceId { get; set; }
         public long? NutritionStatus { get; set; }
         public string? Allergies { get; set; }
@@ -16,13 +17,17 @@ namespace HIMS.Data.DTO.DietKitchen
         public string? Height { get; set; }
         public string? Weight { get; set; }
         public string? Bmi { get; set; }
+        public long? RegId { get; set; }
+        public string? RegNo { get; set; }
+        public long? AdmissionId { get; set; }
+        public string? AdmissionTime { get; set; }
         public string? PatientName { get; set; }
         public string? AgeGender { get; set; }
         public byte OPIPType { get; set; }
         public long OPIPId { get; set; }
         public long? NutritionRiskId { get; set; }
-        public int? AgeYear { get; set; }
-        public int? AgeMonth { get; set; }
-        public int? AgeDay { get; set; }
+        public string? AgeYear { get; set; }
+        public string? AgeMonth { get; set; }
+        public string? AgeDay { get; set; }
     }
 }
