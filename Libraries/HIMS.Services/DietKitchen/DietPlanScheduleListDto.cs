@@ -15,6 +15,8 @@ namespace HIMS.Services.DietKitchen
         public long DietMenuId { get; set; }
         public string? Instruction { get; set; }
         public string? Comment { get; set; }
+        public string? CreatedByName { get; set; }
+
         public string? PatientName { get; set; }
         public string? AgeGender { get; set; }
         public string? AgeYear { get; set; }
