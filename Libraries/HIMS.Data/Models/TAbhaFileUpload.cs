@@ -8,9 +8,9 @@ namespace HIMS.Data.Models
         public long FileId { get; set; }
         public string? RegNo { get; set; }
         public string? Opipno { get; set; }
+        public long? Opipid { get; set; }
         public long? Opiptype { get; set; }
         public string? FileName { get; set; }
-        public long? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
     }
 }

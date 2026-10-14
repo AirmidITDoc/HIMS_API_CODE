@@ -1,4 +1,5 @@
-﻿using HIMS.Data.DTO.AbhaIntegration;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DTO.AbhaIntegration;
 using HIMS.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -23,5 +24,6 @@ namespace HIMS.Services.AbhaIntegration
         object ValidateHiTypesSummary(PatientVisitResponse payload);
         Task InsertErrorLogAsync(TAbhaErrorLog obj);
         Task InsertAbhaFileUploadsAsync(List<TAbhaFileUpload> files);
+        Task<IPagedList<AbhaFileUploadListDto>> GetAbhaFileUploadListAsync(GridRequestModel model);
     }
 }

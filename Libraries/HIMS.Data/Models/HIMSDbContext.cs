@@ -12028,6 +12028,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
                 entity.Property(e => e.Opipno).HasColumnName("OPIPNo");
 
                 entity.Property(e => e.Opiptype).HasColumnName("OPIPType");

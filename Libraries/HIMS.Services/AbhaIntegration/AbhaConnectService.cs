@@ -1,6 +1,8 @@
-﻿using HIMS.Data;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.AbhaIntegration;
+using HIMS.Data.DTO.Nursing.IPEMR;
 using HIMS.Data.Models;
 using HIMS.Services.AbhaIntegration;
 using HIMS.Services.Common;
@@ -1949,6 +1951,11 @@ namespace HIMS.Services.AbhaIntegration
             _context.TAbhaFileUploads.AddRange(files);
             await _context.SaveChangesAsync();
             scope.Complete();
+        }
+
+        public virtual async Task<IPagedList<AbhaFileUploadListDto>> GetAbhaFileUploadListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<AbhaFileUploadListDto>(model, "ps_GetAbhaFileUploadList");
         }
 
     }
