@@ -17,9 +17,9 @@ namespace HIMS.Services.DietKitchen
         public string? Comment { get; set; }
         public string? PatientName { get; set; }
         public string? AgeGender { get; set; }
-        public int? AgeYear { get; set; }
-        public int? AgeMonth { get; set; }
-        public int? AgeDay { get; set; }
+        public string? AgeYear { get; set; }
+        public string? AgeMonth { get; set; }
+        public string? AgeDay { get; set; }
 
     }
 }

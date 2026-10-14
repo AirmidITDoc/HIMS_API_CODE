@@ -21,8 +21,8 @@ namespace HIMS.Data.DTO.DietKitchen
         public byte OPIPType { get; set; }
         public long OPIPId { get; set; }
         public long? NutritionRiskId { get; set; }
-        public int? AgeYear { get; set; }
-        public int? AgeMonth { get; set; }
-        public int? AgeDay { get; set; }
+        public string? AgeYear { get; set; }
+        public string? AgeMonth { get; set; }
+        public string? AgeDay { get; set; }
     }
 }
