@@ -28,12 +28,24 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             _repository = repository;
             _assessmentService = assessmentService;
         }
-        [HttpPost("List")]
+        [HttpPost("DietassesmentList")]
         //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<DietAssessmentInfoDtoList> list = await _assessmentService.GetListAsync(objGrid);
             return Ok(list.ToGridResponse(objGrid, "DietAssessmentInfo List"));
+        }
+
+
+
+
+
+        [HttpPost("PatientAssessmentList")]
+        //[Permission]
+        public async Task<IActionResult> PatientAssessmentList(GridRequestModel objGrid)
+        {
+            IPagedList<PatientAssessmentListDto> list = await _assessmentService.PatientAssessmentList(objGrid);
+            return Ok(list.ToGridResponse(objGrid, "PatientAssessment List"));
         }
 
         [HttpGet("{id?}")]

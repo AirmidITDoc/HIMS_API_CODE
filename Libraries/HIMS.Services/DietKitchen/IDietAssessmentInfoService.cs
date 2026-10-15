@@ -7,8 +7,10 @@ namespace HIMS.Services.DietKitchen
 {
     public interface IDietAssessmentInfoService
     {
-        
+
         Task<IPagedList<DietAssessmentInfoDtoList>> GetListAsync(GridRequestModel model);
-       
+
+        Task<IPagedList<PatientAssessmentListDto>> PatientAssessmentList(GridRequestModel model);
+
     }
 }
