@@ -19,7 +19,10 @@ namespace HIMS.Services.Administration
         {
             _context = HIMSDbContext;
         }
-
+        public virtual async Task<IPagedList<BrowsePharmacyTPaymentReceiptListDto>> GetTPayListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<BrowsePharmacyTPaymentReceiptListDto>(model, "ps_Rtrv_BrowsePharmacyTPayReceipt1");
+        }
         public virtual async Task<IPagedList<BrowseOPDPaymentReceiptListDto>> GetListAsync1(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<BrowseOPDPaymentReceiptListDto>(model, "Retrieve_BrowseOPDPaymentReceipt");
@@ -41,23 +44,12 @@ namespace HIMS.Services.Administration
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 _context.PaymentPharmacies.Add(objPaymentPharmacy);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);
 
                 scope.Complete();
             }
+      
         }
-        //public virtual async Task UpdateAsync(PaymentPharmacy objPaymentPharmacy, int UserId, string Username)
-        //{
-        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-        //    {
-        //        // Update header & detail table records
-        //        _context.PaymentPharmacies.Update(objPaymentPharmacy);
-        //        _context.Entry(objPaymentPharmacy).State = EntityState.Modified;
-        //        await _context.SaveChangesAsync();
-
-        //        scope.Complete();
-        //    }
-        //}
         public virtual async Task UpdateAsync(PaymentPharmacy objPaymentPharmacy, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -81,7 +73,7 @@ namespace HIMS.Services.Administration
                 }
             }
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(UserId, Username);
             scope.Complete();
         }
         public virtual async Task NewUpdateAsync(PaymentPharmacy objPaymentPharmacy, int type, int UserId, string Username, string[]? ignoreColumns = null)
@@ -118,7 +110,7 @@ namespace HIMS.Services.Administration
                 UpdateEntity(existing, mapped, ignoreColumns);
             }
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(UserId, Username);
             scope.Complete();
         }
 
@@ -158,7 +150,13 @@ namespace HIMS.Services.Administration
       
         public virtual async Task UpdateAsyncDate(PaymentPharmacy ObjPaymentPharmacy, int CurrentUserId, string CurrentUserName)
         {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
             string[] AEntity = { "PaymentDate", "PaymentTime", "PaymentId" };
             var Rentity = ObjPaymentPharmacy.ToDictionary();
 
@@ -170,7 +168,17 @@ namespace HIMS.Services.Administration
 
             odal.ExecuteNonQuery("ps_paymentpharmacy", CommandType.StoredProcedure, Rentity);
             await _context.LogProcedureExecution(Rentity, nameof(PaymentPharmacy), ObjPaymentPharmacy.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
+            // Save Log
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            await transaction.CommitAsync();
 
+            }
+            catch (Exception)
+            {
+                // Rollback Transaction
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         public virtual async Task GlobalDiscountUpdate(List<TSalesHeader> ObjTSalesHeader, int CurrentUserId, string CurrentUserName)
@@ -200,7 +208,6 @@ namespace HIMS.Services.Administration
             }
             // Save Log
             await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
-            // Commit Transaction
             await transaction.CommitAsync();
 
             }
@@ -213,9 +220,6 @@ namespace HIMS.Services.Administration
         }
 
        
-        public virtual async Task<IPagedList<BrowsePharmacyTPaymentReceiptListDto>> GetTPayListAsync(GridRequestModel model)
-        {
-            return await DatabaseHelper.GetGridDataBySp<BrowsePharmacyTPaymentReceiptListDto>(model, "ps_Rtrv_BrowsePharmacyTPayReceipt1");
-        }
+       
     }
 }

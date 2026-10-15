@@ -6,8 +6,10 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using System.Transactions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HIMS.Services.Administration
 {
@@ -60,31 +62,52 @@ namespace HIMS.Services.Administration
                 }
             }
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(UserId, Username);
             scope.Complete();
         }
         public virtual async Task PaymentUpdateAsync(List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
         {
-            DatabaseHelper odal = new();
-            foreach (var item in ObjTPayment)
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-
-                string[] AEntity = { "PaymentId", "BillNo", "PayMode", "TranNo", "BankName" };
-                var Rentity = item.ToDictionary();
-
-                foreach (var rProperty in Rentity.Keys.ToList())
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+                foreach (var item in ObjTPayment)
                 {
-                    if (!AEntity.Contains(rProperty))
-                        Rentity.Remove(rProperty);
-                }
-                odal.ExecuteNonQuery("ps_Update_PaymentMode", CommandType.StoredProcedure, Rentity);
-                await _context.LogProcedureExecution(Rentity, nameof(TPayment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
+                    string[] AEntity = { "PaymentId", "BillNo", "PayMode", "TranNo", "BankName" };
+                    var Rentity = item.ToDictionary();
+
+                    foreach (var rProperty in Rentity.Keys.ToList())
+                    {
+                        if (!AEntity.Contains(rProperty))
+                            Rentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("ps_Update_PaymentMode", CommandType.StoredProcedure, Rentity);
+                    await _context.LogProcedureExecution(Rentity, nameof(TPayment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                    // Save & Commit
+                    await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                    await transaction.CommitAsync();
+                }
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
             }
         }
+        
         public virtual async Task NewPaymentUpdateAsync(List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
             foreach (var item in ObjTPayment)
             {
 
@@ -98,9 +121,18 @@ namespace HIMS.Services.Administration
                 }
                 odal.ExecuteNonQuery("ps_NewSaveUpdate_Payment", CommandType.StoredProcedure, Rentity);
                 await _context.LogProcedureExecution(Rentity, nameof(TPayment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
+                // Save & Commit
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                await transaction.CommitAsync();
+                 }
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
             }
         }
+        
         public virtual async Task NewUpdateAsync(PaymentPharmacy objPaymentPharmacy, int type, int UserId, string Username, string[]? ignoreColumns = null)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -154,29 +186,53 @@ namespace HIMS.Services.Administration
             }
         }
 
+
         public virtual async Task PaymentPharmacyUpdateAsync(List<TPaymentPharmacy> ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName)
         {
-            DatabaseHelper odal = new();
-            foreach (var item in ObjTPaymentPharmacy)
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-
-                string[] AEntity = { "PaymentId", "BillNo", "PayMode", "TranNo", "BankName" };
-                var Rentity = item.ToDictionary();
-
-                foreach (var rProperty in Rentity.Keys.ToList())
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+                odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+                foreach (var item in ObjTPaymentPharmacy)
                 {
-                    if (!AEntity.Contains(rProperty))
-                        Rentity.Remove(rProperty);
-                }
-                odal.ExecuteNonQuery("ps_Update_PaymentPharmacyMode", CommandType.StoredProcedure, Rentity);
-                await _context.LogProcedureExecution(Rentity, nameof(TPayment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
 
+                    string[] AEntity = { "PaymentId", "BillNo", "PayMode", "TranNo", "BankName" };
+                    var Rentity = item.ToDictionary();
+
+                    foreach (var rProperty in Rentity.Keys.ToList())
+                    {
+                        if (!AEntity.Contains(rProperty))
+                            Rentity.Remove(rProperty);
+                    }
+                    odal.ExecuteNonQuery("ps_Update_PaymentPharmacyMode", CommandType.StoredProcedure, Rentity);
+                    await _context.LogProcedureExecution(Rentity, nameof(TPayment), item.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                }
+
+                // Save & Commit
+                await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
             }
         }
+
+
         public virtual async Task Cancel(TPayment ObjTPayment, int UserId, string Username)
         {
-            //throw new NotImplementedException();
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
             DatabaseHelper odal = new();
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] rDetailEntity = { "PaymentId", "IsCancelledBy" };
             var CAdvanceEntity = ObjTPayment.ToDictionary();
             foreach (var rProperty in CAdvanceEntity.Keys.ToList())
@@ -185,6 +241,16 @@ namespace HIMS.Services.Administration
                     CAdvanceEntity.Remove(rProperty);
             }
             odal.ExecuteNonQuery("PS_Cancel_T_Payment", CommandType.StoredProcedure, CAdvanceEntity);
+            await _context.LogProcedureExecution(CAdvanceEntity, nameof(TPayment), ObjTPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Delete, UserId, Username);
+            // Save & Commit
+            await _context.SaveChangesAsync(UserId, Username);
+            await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
     }

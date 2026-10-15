@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Nursing.IPEMR;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,11 @@ namespace HIMS.Services.OTManagment
         {
             return await DatabaseHelper.GetGridDataBySp<OtBillTemplateListDto>(model, "ps_ot_billTempleHeaderlist");
         }
+        public virtual async Task<IPagedList<OtBillTemplateDetailDto>> GetListAsyncDetail(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OtBillTemplateDetailDto>(model, "ps_OT_billTemplatedet");
+        }
+
         public virtual async Task InsertAsync(MOtBillTemplateHeader ObjMOtBillTemplateHeader, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

@@ -55,6 +55,7 @@ namespace HIMS.Data.Models
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public bool? IsPhlebotomist { get; set; }
 
         public virtual ICollection<TLoginAccessDetail> TLoginAccessDetails { get; set; }
         public virtual ICollection<TLoginCashCounterDetail> TLoginCashCounterDetails { get; set; }

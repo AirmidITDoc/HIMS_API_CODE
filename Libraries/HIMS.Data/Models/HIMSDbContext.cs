@@ -676,6 +676,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TempPkCurrStkReceivedQty> TempPkCurrStkReceivedQties { get; set; } = null!;
         public virtual DbSet<TempPkCurrStkSale> TempPkCurrStkSales { get; set; } = null!;
         public virtual DbSet<TempPkCurrStkSales1> TempPkCurrStkSales1s { get; set; } = null!;
+        public virtual DbSet<TempSalesId> TempSalesIds { get; set; } = null!;
         public virtual DbSet<TempStrId> TempStrIds { get; set; } = null!;
         public virtual DbSet<TempSulpId> TempSulpIds { get; set; } = null!;
         public virtual DbSet<TemppkCurrstkNegativeBalQty> TemppkCurrstkNegativeBalQties { get; set; } = null!;
@@ -705,7 +706,7 @@ namespace HIMS.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWeb_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.2.200;Initial Catalog=SSWEB_AIRMID_API;Persist Security Info=True;User ID=DEV001;Password=DEV001;MultipleActiveResultSets=True;Max Pool Size=5000;");
             }
         }
 
@@ -3684,6 +3685,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.IsGrnverify)
                     .HasColumnName("IsGRNVerify")
                     .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsPhlebotomist).HasColumnName("isPhlebotomist");
 
                 entity.Property(e => e.IsPoinchargeVerify).HasColumnName("IsPOInchargeVerify");
 
@@ -12027,6 +12030,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
                 entity.Property(e => e.Opipno).HasColumnName("OPIPNo");
 
                 entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
@@ -20140,6 +20145,13 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PurRateWf).HasColumnType("money");
 
                 entity.Property(e => e.StkId).HasColumnName("StkID");
+            });
+
+            modelBuilder.Entity<TempSalesId>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Temp_SalesId");
             });
 
             modelBuilder.Entity<TempStrId>(entity =>

@@ -41,6 +41,8 @@
         public string WebRoleName { get; set; }
         public string HospitalName { get; set; }
         public bool? IsAdminMultiview { get; set; }
+        public bool? IsPhlebotomist { get; set; }
+
 
 
 
