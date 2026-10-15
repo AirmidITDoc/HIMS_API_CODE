@@ -15,6 +15,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using SqlParameter = Microsoft.Data.SqlClient.SqlParameter;
+
 
 
 namespace HIMS.Services.Pathlogy
