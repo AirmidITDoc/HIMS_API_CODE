@@ -46,6 +46,16 @@ namespace HIMS.API.Controllers.Pathology
             var data = await _repository.GetById(x => x.HomeCollectionId == id);
             return data.ToSingleResponse<THomeCollectionRegistrationInfo, HomeCollectionModel>("THomeCollectionRegistrationInfo");
         }
+
+
+        [HttpGet("search-homecollection")]
+        public ApiResponse SearchCollection()
+        {
+            var data = _IHomeCollectionService.SearchCollection();
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Home Collection List", data);
+        }
+
+
         [HttpPost("homeCollectionDetList")]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         [Permission]
@@ -119,7 +129,7 @@ namespace HIMS.API.Controllers.Pathology
                     q.HomeCollectionId = 0;
                 }
 
-              
+
                 model.ModifiedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
                 await _IHomeCollectionService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });

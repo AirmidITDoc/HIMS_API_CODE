@@ -5,6 +5,7 @@ using HIMS.API.Extensions;
 using HIMS.API.Models.AbhaIntegration;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.MRD;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.AbhaIntegration;
@@ -317,7 +318,7 @@ namespace HIMS.API.Controllers.AbhaIntegration
 
         [HttpPost("UploadReportFiles")]
         [Consumes("multipart/form-data")]
-        public async Task<ApiResponse> UploadReportFiles(string patientRegistrationNumber,string visitNumber,long opipType,[FromForm] List<IFormFile> files)
+        public async Task<ApiResponse> UploadReportFiles(string patientRegistrationNumber,string visitNumber,long OpIpId,long opipType,[FromForm] List<IFormFile> files)
         {
             try
             {
@@ -396,6 +397,7 @@ namespace HIMS.API.Controllers.AbhaIntegration
                 {
                     RegNo = patientRegistrationNumber,
                     Opipno = visitNumber,
+                    Opipid = OpIpId,
                     Opiptype = opipType,
                     FileName = fileName,
                     CreatedDate = DateTime.Now
@@ -409,6 +411,14 @@ namespace HIMS.API.Controllers.AbhaIntegration
             {
                 return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status500InternalServerError, ex.InnerException?.Message ?? ex.Message);
             }
+        }
+
+        [HttpPost("FileUploadList")]
+        //[Permission]
+        public async Task<IActionResult> FileUploadList(GridRequestModel objGrid)
+        {
+            IPagedList<AbhaFileUploadListDto> FileUpload = await _abhaConnectService.GetAbhaFileUploadListAsync(objGrid);
+            return Ok(FileUpload.ToGridResponse(objGrid, "Abha File Upload List"));
         }
     }
 }

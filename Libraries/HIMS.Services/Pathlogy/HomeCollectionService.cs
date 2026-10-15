@@ -1,18 +1,22 @@
-﻿using HIMS.Core.Infrastructure;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Core.Infrastructure;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
+using HIMS.Services.Utilities;
+using LinqToDB.SqlQuery;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Microsoft.EntityFrameworkCore;
-using HIMS.Core.Domain.Grid;
-using HIMS.Data.DataProviders;
-using HIMS.Data.DTO.Inventory;
-using HIMS.Data.DTO.Pathology;
-using System.Data;
-using HIMS.Services.Utilities;
+using SqlParameter = Microsoft.Data.SqlClient.SqlParameter;
+
 
 
 namespace HIMS.Services.Pathlogy
@@ -38,6 +42,15 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<HomeCollectionRegistrationInfoListDto>(model, "ps_HomeCollectionRegistrationInfoList");
 
+        }
+
+
+        public List<PhlebotomistComboDto> SearchCollection()
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para = Array.Empty<SqlParameter>();
+            List<PhlebotomistComboDto> data = sql.FetchListBySP<PhlebotomistComboDto>("ps_Rtrv_PhlebotomistCombo", para);
+            return data;
         }
         public virtual async Task InsertAsync(THomeCollectionRegistrationInfo ObjTHomeCollectionRegistrationInfo, int UserId, string Username)
         {

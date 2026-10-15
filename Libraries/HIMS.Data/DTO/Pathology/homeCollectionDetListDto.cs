@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.DTO.Pathology
 {
-    public  class homeCollectionDetListDto
+    public class homeCollectionDetListDto
     {
         public long HomeCollectionId { get; set; }
         public long? UnitId { get; set; }
@@ -73,7 +73,7 @@ namespace HIMS.Data.DTO.Pathology
     }
     public class HomeCollectionPatientListDto
     {
-      
+
         public int? TotalServiceCount { get; set; }
         public decimal? TotalNetAmount { get; set; }
 
@@ -81,4 +81,9 @@ namespace HIMS.Data.DTO.Pathology
 
     }
 
+    public class PhlebotomistComboDto
+    {
+        public string? PhlebotomistName { get; set; }
+        public long PhlebotomistId { get; set; }
+    }
 }
