@@ -5,8 +5,8 @@ namespace HIMS.Data.DTO.DietKitchen
     public class PatientAssessmentListDto
     {
         public long DietAssessmentId { get; set; }
-        public DateTime AssessmentDate { get; set; }
-        public DateTime AssessmentTime { get; set; }
+        public string? AssessmentDate { get; set; }
+        public string? AssessmentTime { get; set; }
         public long AssessmentById { get; set; }
         public string? AssessByName { get; set; }
         public long FoodPerferenceId { get; set; }
