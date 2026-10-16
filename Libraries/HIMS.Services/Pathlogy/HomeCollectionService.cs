@@ -3,6 +3,7 @@ using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -45,13 +46,20 @@ namespace HIMS.Services.Pathlogy
         }
 
 
-        public List<PhlebotomistComboDto> SearchCollection()
+        public virtual async Task<List<PhlebotomistComboDto>> SearchCollection(string str)
         {
             DatabaseHelper sql = new();
-            SqlParameter[] para = Array.Empty<SqlParameter>();
-            List<PhlebotomistComboDto> data = sql.FetchListBySP<PhlebotomistComboDto>("ps_Rtrv_PhlebotomistCombo", para);
+
+
+            SqlParameter[] para = new SqlParameter[]
+            {
+        new SqlParameter("@keywoard", string.IsNullOrEmpty(str) || str == "%" ? (object)DBNull.Value : str.Trim())
+            };
+
+            var data = sql.FetchListBySP<PhlebotomistComboDto>("ps_Rtrv_PhlebotomistCombo", para);
             return data;
         }
+
         public virtual async Task InsertAsync(THomeCollectionRegistrationInfo ObjTHomeCollectionRegistrationInfo, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);

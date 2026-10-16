@@ -48,12 +48,20 @@ namespace HIMS.API.Controllers.Pathology
         }
 
 
-        [HttpGet("search-homecollection")]
-        public ApiResponse SearchCollection()
+
+        [HttpGet("PhlebotomistCombo")]
+        [Permission]
+        public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
-            var data = _IHomeCollectionService.SearchCollection();
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Home Collection List", data);
+            if (string.IsNullOrWhiteSpace(Keyword) || Keyword == "%")
+            {
+                Keyword = string.Empty;
+            }
+
+            var data = await _IHomeCollectionService.SearchCollection(Keyword);
+            return ApiResponseHelper.GenerateResponse( ApiStatusCode.Status200OK,"Phlebotomist List",data.Select(x => new {x.PhlebotomistId,x.PhlebotomistName}));
         }
+
 
 
         [HttpPost("homeCollectionDetList")]
