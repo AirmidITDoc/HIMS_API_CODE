@@ -1,10 +1,14 @@
-﻿using HIMS.Api.Models.Common;
+﻿using Asp.Versioning;
+using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.Services.Pathlogy;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.HomeCollection
 {
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    [ApiVersion("1")]
     public class HomeCollectionDashboardController : Controller
     {
         private readonly IHomeCollectionService _IHomeCollectionService;
