@@ -67,8 +67,7 @@ namespace HIMS.Data.DTO.Pathology
         public string? Hospitallongitude { get; set; }
         public string? PhlebotomistMobileNo { get; set; }
         public string? CancelReason { get; set; }
-
-
+        public long IsBilled { get; set; }
 
     }
     public class HomeCollectionPatientListDto

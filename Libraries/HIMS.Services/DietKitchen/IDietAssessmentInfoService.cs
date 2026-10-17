@@ -13,5 +13,8 @@ namespace HIMS.Services.DietKitchen
         Task<IPagedList<PatientAssessmentListDto>> PatientAssessmentList(GridRequestModel model);
         Task Cancel(TDietAssessmentInfo objAssessment, int UserId, string Username);
 
+        Task<IPagedList<PatientvitalsdetailListDto>> DietGetListAsync(GridRequestModel model);
+
+
     }
 }

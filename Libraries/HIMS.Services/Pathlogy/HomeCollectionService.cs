@@ -1,4 +1,5 @@
-﻿using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Dashboard;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
@@ -9,6 +10,7 @@ using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB.SqlQuery;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,6 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using WkHtmlToPdfDotNet;
 using SqlParameter = Microsoft.Data.SqlClient.SqlParameter;
 
 
@@ -153,6 +156,31 @@ namespace HIMS.Services.Pathlogy
             _ = Task.Run(() => _context.LogProcedureExecution(HEntity, nameof(THomeCollectionRegistrationInfo), (int)objTHomeCollectionRegistrationInfo.HomeCollectionId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
 
 
+        }
+        public async Task<HomeCollectionDashboard> GetHomeCollectionDashboard(int UnitId, int PhlebotomistId, DateTime FromDate, DateTime ToDate)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para =
+            {
+                new SqlParameter("@Unitid", SqlDbType.BigInt) { Value = UnitId },
+                new SqlParameter("@PhlebotomistId", SqlDbType.BigInt) { Value = PhlebotomistId },   
+                new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate },
+                new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate }
+            };
+
+            var data = await sql.Get4ResultsFromSp<
+                PhlebotomistCountListModel, 
+                HomeCollectionBillingStatusModel, 
+                HomeCollectionBillGroupWiseCountModel, 
+                HomeCollectionCenterWiseCountModel>("ps_homeCollectionDashboard", para);
+
+            return new HomeCollectionDashboard
+            {
+                PhlebotomistCountListModel = data.Item1 ?? new List<PhlebotomistCountListModel>(),
+                HomeCollectionBillingStatusModel = data.Item2 ?? new List<HomeCollectionBillingStatusModel>(),
+                HomeCollectionBillGroupWiseCountModel = data.Item3 ?? new List<HomeCollectionBillGroupWiseCountModel>(),
+                homeCollectionCenterWiseCountModels = data.Item4 ?? new List<HomeCollectionCenterWiseCountModel>(),
+            };
         }
     }
 }

@@ -76,4 +76,10 @@ namespace HIMS.Core.Domain.Grid
         public string? Mode { get; set; }
         public int Id { get; set; } = 0;
     }
+
+    public class MultiReportRequestModel
+    {
+        // Pratyek bill cha ek ReportRequestModel (tumcha existing JSON same format)
+        public List<ReportRequestModel> Reports { get; set; } = new();
+    }
 }

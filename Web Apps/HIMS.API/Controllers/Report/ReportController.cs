@@ -15,6 +15,7 @@ using HIMS.Services.Report;
 using HIMS.Services.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using static HIMS.Core.Domain.Grid.ListRequestModel;
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace HIMS.API.Controllers.Report
@@ -687,7 +688,7 @@ namespace HIMS.API.Controllers.Report
                     break;
             }
             // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
-        //    long UnitId = 1;
+      //     long UnitId = 1;
             long UnitId = Context.UnitId;
             model.BaseUrl = AppSettings.Settings.BaseUrl;
             model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
@@ -720,6 +721,36 @@ namespace HIMS.API.Controllers.Report
             {
                 throw;
             }
+        }
+
+
+        [HttpPost("ViewMultipleReportFromDB")]
+        public async Task<IActionResult> ViewMultipleReportFromDB([FromBody] MultiReportRequestModel request)
+        {
+            if (request?.Reports == null || request.Reports.Count == 0)
+                return BadRequest("Reports list is empty.");
+
+            if (request.Reports.Count > 50)
+                return BadRequest("Maximum 50 reports allowed at once.");
+            long UnitId = 1;
+            long StoreId = 2;
+            //long UnitId = Context.UnitId;
+            //long StoreId = Context.StoreId;
+
+            foreach (var r in request.Reports)
+            {
+                r.BaseUrl = AppSettings.Settings.BaseUrl;
+                r.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
+            }
+            var (bytes, info) = await _reportService.GetMultipleReportMergedPdf(
+                request.Reports, AppSettings.Settings.PdfFontPath, UnitId, StoreId);
+
+            if (bytes == null || bytes.Length < 100)
+                throw new Exception($"Invalid PDF generated. Size: {bytes?.Length ?? 0} bytes.");
+
+            return Ok(ApiResponseHelper.GenerateResponse(
+                ApiStatusCode.Status200OK, "Report.",
+                new { base64 = Convert.ToBase64String(bytes), debug = info }));
         }
 
         [HttpPost("get-report-html")]
