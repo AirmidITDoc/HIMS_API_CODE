@@ -36,6 +36,18 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             return Ok(list.ToGridResponse(objGrid, "DietAssessmentInfo List"));
         }
 
+
+
+        [HttpPost("PatientvitalsdetailList")]
+        //[Permission]
+        public async Task<IActionResult> Lists(GridRequestModel objGrid)
+        {
+            IPagedList<PatientvitalsdetailListDto> lists = await _assessmentService.DietGetListAsync(objGrid);
+            return Ok(lists.ToGridResponse(objGrid, "DietAssessmentInfo List"));
+        }
+
+
+
         [HttpGet("{id?}")]
         //[Permission]
         public async Task<ApiResponse> Get(long id)

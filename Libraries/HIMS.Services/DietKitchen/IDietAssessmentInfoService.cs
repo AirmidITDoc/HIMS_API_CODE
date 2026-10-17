@@ -9,6 +9,8 @@ namespace HIMS.Services.DietKitchen
     {
         
         Task<IPagedList<DietAssessmentInfoDtoList>> GetListAsync(GridRequestModel model);
-       
+        Task<IPagedList<PatientvitalsdetailListDto>> DietGetListAsync(GridRequestModel model);
+
+
     }
 }
