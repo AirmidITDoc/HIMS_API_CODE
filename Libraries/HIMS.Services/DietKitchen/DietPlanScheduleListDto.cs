@@ -16,12 +16,15 @@ namespace HIMS.Services.DietKitchen
         public string? Instruction { get; set; }
         public string? Comment { get; set; }
         public string? CreatedByName { get; set; }
-
-        public string? PatientName { get; set; }
-        public string? AgeGender { get; set; }
+        public long? AdmissionId { get; set; }
+        public long? RegId { get; set; }
+        public string? RegNo { get; set; }
+        public string? AdmissionTime { get; set; }
+        public string? Patient { get; set; } 
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
-
+        public string? DietName { get; set; }
+        public string? DietMenuName { get; set; }
     }
 }

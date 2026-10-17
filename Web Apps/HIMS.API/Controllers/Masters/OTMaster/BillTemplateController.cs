@@ -42,6 +42,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
             return data.ToSingleResponse<MOtBillTemplateHeader, BillTemplateModel>("OT Bill Template");
         }
+       
 
         [HttpPost("OtBillTemplateHeaderList")]
         //[Permission]
@@ -50,11 +51,18 @@ namespace HIMS.API.Controllers.Masters.OTMaster
             IPagedList<OtBillTemplateListDto> OtBillTemplateList = await _IBillTemplateService.GetListAsync(objGrid);
             return Ok(OtBillTemplateList.ToGridResponse(objGrid, "OtBillTemplate List"));
         }
+        [HttpPost("OtBillTemplateDetailList")]
+        //[Permission]
+        public async Task<IActionResult> OtBillTemplateDetailList(GridRequestModel objGrid)
+        {
+            IPagedList<OtBillTemplateDetailDto> OtBillTemplateDetailList = await _IBillTemplateService.GetListAsyncDetail(objGrid);
+            return Ok(OtBillTemplateDetailList.ToGridResponse(objGrid, "OtBillTemplateDetail List "));
+        }
 
 
 
         [HttpPost("Insert")]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Insert(BillTemplateModel obj)
         {
             MOtBillTemplateHeader model = obj.MapTo<MOtBillTemplateHeader>();
@@ -78,7 +86,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         }
        
           [HttpPut("Edit/{id:int}")]
-          //[Permission]
+          [Permission]
         public async Task<ApiResponse> Edit(BillTemplateModel obj)
         {
             MOtBillTemplateHeader model = obj.MapTo<MOtBillTemplateHeader>();
@@ -110,7 +118,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
         //Delete API
         [HttpDelete]
-        //[Permission]
+        [Permission]
         public async Task<ApiResponse> Delete(int Id)
         {
             MOtBillTemplate model = await _repository.GetById(x => x.TemplateId == Id);

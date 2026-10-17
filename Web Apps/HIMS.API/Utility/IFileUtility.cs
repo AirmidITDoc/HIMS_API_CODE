@@ -9,6 +9,7 @@
         Task<string> GetBase64FromFolder(string Folder, string filename);
         Task<string> UploadFileAsync(IFormFile file, string Folder);
         void RemoveFile(string FileName, string Folder);
+        string GetFolderPath(string Folder);
     }
 }
 

@@ -27,6 +27,11 @@ namespace HIMS.Services.DietKitchen
             return await DatabaseHelper.GetGridDataBySp<DietAssessmentInfoDtoList>(model, "ps_Rtrv_DietAssessmentInfo");
         }
 
+        public virtual async Task<IPagedList<PatientAssessmentListDto>> PatientAssessmentList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<PatientAssessmentListDto>(model, "ps_PatientAssessment_list");
+        }
+
         public virtual async Task<IPagedList<PatientvitalsdetailListDto>> DietGetListAsync(GridRequestModel model)
         {
             return await DatabaseHelper.GetGridDataBySp<PatientvitalsdetailListDto>(model, "ps_Patient_vitalsdetail");

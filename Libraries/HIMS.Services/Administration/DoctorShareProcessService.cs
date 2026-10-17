@@ -60,7 +60,7 @@ namespace HIMS.Services.Administration
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 _context.MDoctorPerMasters.Add(ObjMDoctorPerMaster);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);
 
                 scope.Complete();
             }
@@ -72,7 +72,7 @@ namespace HIMS.Services.Administration
                 // Update header & detail table records
                 _context.MDoctorPerMasters.Update(ObjMDoctorPerMaster);
                 _context.Entry(ObjMDoctorPerMaster).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(UserId, Username);
 
                 scope.Complete();
             }

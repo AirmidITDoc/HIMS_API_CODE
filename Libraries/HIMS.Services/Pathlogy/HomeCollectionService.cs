@@ -1,13 +1,16 @@
-﻿using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Dashboard;
+using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB.SqlQuery;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,6 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using WkHtmlToPdfDotNet;
 using SqlParameter = Microsoft.Data.SqlClient.SqlParameter;
 
 
@@ -45,13 +49,20 @@ namespace HIMS.Services.Pathlogy
         }
 
 
-        public List<PhlebotomistComboDto> SearchCollection()
+        public virtual async Task<List<PhlebotomistComboDto>> SearchCollection(string str)
         {
             DatabaseHelper sql = new();
-            SqlParameter[] para = Array.Empty<SqlParameter>();
-            List<PhlebotomistComboDto> data = sql.FetchListBySP<PhlebotomistComboDto>("ps_Rtrv_PhlebotomistCombo", para);
+
+
+            SqlParameter[] para = new SqlParameter[]
+            {
+        new SqlParameter("@keywoard", string.IsNullOrEmpty(str) || str == "%" ? (object)DBNull.Value : str.Trim())
+            };
+
+            var data = sql.FetchListBySP<PhlebotomistComboDto>("ps_Rtrv_PhlebotomistCombo", para);
             return data;
         }
+
         public virtual async Task InsertAsync(THomeCollectionRegistrationInfo ObjTHomeCollectionRegistrationInfo, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
@@ -145,6 +156,31 @@ namespace HIMS.Services.Pathlogy
             _ = Task.Run(() => _context.LogProcedureExecution(HEntity, nameof(THomeCollectionRegistrationInfo), (int)objTHomeCollectionRegistrationInfo.HomeCollectionId, Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName));
 
 
+        }
+        public async Task<HomeCollectionDashboard> GetHomeCollectionDashboard(int UnitId, int PhlebotomistId, DateTime FromDate, DateTime ToDate)
+        {
+            DatabaseHelper sql = new();
+            SqlParameter[] para =
+            {
+                new SqlParameter("@Unitid", SqlDbType.BigInt) { Value = UnitId },
+                new SqlParameter("@PhlebotomistId", SqlDbType.BigInt) { Value = PhlebotomistId },   
+                new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate },
+                new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate }
+            };
+
+            var data = await sql.Get4ResultsFromSp<
+                PhlebotomistCountListModel, 
+                HomeCollectionBillingStatusModel, 
+                HomeCollectionBillGroupWiseCountModel, 
+                HomeCollectionCenterWiseCountModel>("ps_homeCollectionDashboard", para);
+
+            return new HomeCollectionDashboard
+            {
+                PhlebotomistCountListModel = data.Item1 ?? new List<PhlebotomistCountListModel>(),
+                HomeCollectionBillingStatusModel = data.Item2 ?? new List<HomeCollectionBillingStatusModel>(),
+                HomeCollectionBillGroupWiseCountModel = data.Item3 ?? new List<HomeCollectionBillGroupWiseCountModel>(),
+                homeCollectionCenterWiseCountModels = data.Item4 ?? new List<HomeCollectionCenterWiseCountModel>(),
+            };
         }
     }
 }

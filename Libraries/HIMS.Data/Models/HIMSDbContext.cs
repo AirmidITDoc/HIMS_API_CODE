@@ -413,6 +413,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<SmsoutGoing> SmsoutGoings { get; set; } = null!;
         public virtual DbSet<SmspdfConfig> SmspdfConfigs { get; set; } = null!;
         public virtual DbSet<Sonography> Sonographies { get; set; } = null!;
+        public virtual DbSet<SsCommanModeMapping> SsCommanModeMappings { get; set; } = null!;
         public virtual DbSet<SsConfigInitiateDischarge> SsConfigInitiateDischarges { get; set; } = null!;
         public virtual DbSet<SsGstperConfig> SsGstperConfigs { get; set; } = null!;
         public virtual DbSet<SsMenuMaster> SsMenuMasters { get; set; } = null!;
@@ -3685,6 +3686,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.IsGrnverify)
                     .HasColumnName("IsGRNVerify")
                     .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsPhlebotomist).HasColumnName("isPhlebotomist");
 
                 entity.Property(e => e.IsPoinchargeVerify).HasColumnName("IsPOInchargeVerify");
 
@@ -11699,6 +11702,19 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.TranDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Uterus).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<SsCommanModeMapping>(entity =>
+            {
+                entity.HasKey(e => e.SysgetTableId);
+
+                entity.ToTable("SS_CommanModeMapping");
+
+                entity.Property(e => e.SysModeName).HasMaxLength(255);
+
+                entity.Property(e => e.SysModeType).HasMaxLength(255);
+
+                entity.Property(e => e.SysProcedureName).HasMaxLength(255);
             });
 
             modelBuilder.Entity<SsConfigInitiateDischarge>(entity =>

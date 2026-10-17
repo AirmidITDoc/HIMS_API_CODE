@@ -41,6 +41,7 @@ namespace HIMS.API.Models.Inventory
         public int? DiscApplyPer { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsAdminMultiview { get; set; }
+        public bool? IsPhlebotomist { get; set; }
 
         public List<LoginAccessDetailModel> TLoginAccessDetails { get; set; }
         public List<LoginUnitDetailModel> TLoginUnitDetails { get; set; }

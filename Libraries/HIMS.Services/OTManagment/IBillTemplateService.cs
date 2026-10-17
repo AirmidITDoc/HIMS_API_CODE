@@ -13,10 +13,15 @@ namespace HIMS.Services.OTManagment
     {
         Task<IPagedList<OtBillTemplateListDto>> GetListAsync(GridRequestModel objGrid);
         Task<MOtBillTemplateHeader> GetById(long Id);
+        Task<IPagedList<OtBillTemplateDetailDto>> GetListAsyncDetail(GridRequestModel objGrid);
+
 
         Task InsertAsync(MOtBillTemplateHeader ObjMOtBillTemplateHeader, int UserId, string Username);
         Task UpdateAsync(MOtBillTemplateHeader ObjMOtBillTemplateHeader, int UserId, string Username, string[]? ignoreColumns = null);
 
 
+
     }
+
+
 }
