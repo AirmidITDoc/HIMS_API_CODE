@@ -3,17 +3,28 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.Extensions;
 using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
+using HIMS.Data.Models;
 using System.Dynamic;
 
 namespace HIMS.Services.Common
 {
     public class CommonService : ICommonService
     {
-        public CommonService()
+        private readonly Data.Models.HIMSDbContext _context;
+        public CommonService(Data.Models.HIMSDbContext context  )
         {
+            _context = context;
         }
 
+        public string GetProcedureNameByMode(string mode)
+        {
+            if (string.IsNullOrWhiteSpace(mode))
+                return null;
+            var procedureName = _context.SsCommanModeMappings.Where(x => x.SysModeName == mode).Select(x => x.SysProcedureName).FirstOrDefault();
+            return procedureName;
+        }
 
         public dynamic GetDDLByIdWithProc(DDLRequestModel model)
         {
