@@ -377,14 +377,14 @@ namespace HIMS.API.Controllers.Common
                 "Tariff" => (await _TariffMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(TariffMaster.TariffId), nameof(TariffMaster.TariffName)),
                 "Department" => (await _IMDepartmentMaster.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(MDepartmentMaster.DepartmentId), nameof(MDepartmentMaster.DepartmentName)),
 
-                "RefDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsRefDoc.Value)).Select(x => new
+                "RefDoctor" => (await _IMDoctorMaster.GetAll(x => x.IsRefDoc.Value && x.IsActive == true)).Select(x => new
                 {
                     DoctorId = x.DoctorId,
                     FirstName = x.FirstName + " " + x.MiddleName + " " + x.LastName, Phone = x.Phone// Concatenate FirstName and LastName
                 })
                 .ToList().ToDropDown("DoctorId", "FirstName", "Phone"),
 
-                "RMODoctor" => (await _IMDoctorMaster.GetAll(x => x.IsInHouseDoctor.Value)).Select(x => new
+                "RMODoctor" => (await _IMDoctorMaster.GetAll(x => x.IsInHouseDoctor.Value && x.IsActive == true)).Select(x => new
                 {
                     DoctorId = x.DoctorId,
                     FirstName = x.FirstName + " " + x.MiddleName + " " + x.LastName // Concatenate FirstName and LastName
