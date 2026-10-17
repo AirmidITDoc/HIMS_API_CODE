@@ -30,5 +30,9 @@ namespace HIMS.Data.DTO.DietKitchen
         public string? AgeYear { get; set; }
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
+        public bool? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public string? IsCancelledByName { get; set; }
+        public DateTime? IsCancelledDate { get; set; }
     }
 }

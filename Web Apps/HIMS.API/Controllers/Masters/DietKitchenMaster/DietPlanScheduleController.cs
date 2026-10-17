@@ -49,24 +49,26 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         [HttpPost("Insert")]
         //[Permission]
-        public async Task<ApiResponse> Post(DietPlanScheduleModel obj)
+        public async Task<ApiResponse> Post(List<DietPlanScheduleModel> objList)
         {
-            TDietPlanSchedule model = obj.MapTo<TDietPlanSchedule>();
-            model.IsCancelled = false;
-            if (obj.DietPlanId == 0)
-            {
-                model.CreatedBy = CurrentUserId;
-                model.CreatedDate = AppTime.Now;
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = AppTime.Now;
-                await _repository.Add(model, CurrentUserId, CurrentUserName);
-            }
-            else
+            if (objList == null || !objList.Any())
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
+
+            var models = objList.Select(obj => {
+                var model = obj.MapTo<TDietPlanSchedule>();
+                model.PlanStartDate = Convert.ToDateTime(obj.PlanStartDate);
+                model.PlanEndDate = Convert.ToDateTime(obj.PlanEndDate);
+                model.PlanDate = Convert.ToDateTime(obj.PlanDate);
+                return model;
+            }).ToList();
+
+            await _dietPlanScheduleService.InsertAsync(models, CurrentUserId, CurrentUserName);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records added successfully.");
         }
+
 
         [HttpPut("Edit/{id:int}")]
         //[Permission]

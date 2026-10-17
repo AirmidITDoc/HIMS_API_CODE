@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using System;
+using System.Collections.Generic;
 
 namespace HIMS.API.Models.Diet
 {
@@ -16,6 +17,12 @@ namespace HIMS.API.Models.Diet
         public long DietMenuId { get; set; }
         public string? Instruction { get; set; }
         public string? Comment { get; set; }
+    }
+
+   
+    public class DietPlanScheduleBatchModel
+    {
+        public List<DietPlanScheduleModel> DietSchedules { get; set; }
     }
 
     public class DietPlanScheduleModelValidator : AbstractValidator<DietPlanScheduleModel>

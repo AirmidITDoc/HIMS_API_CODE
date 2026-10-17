@@ -119,5 +119,24 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
         }
+
+        [HttpPost("AssessmentCancel")]
+        //[Permission]
+        public async Task<ApiResponse> Cancel(DietAssessmentCancelModel obj)
+        {
+            TDietAssessmentInfo model = obj.MapTo<TDietAssessmentInfo>();
+            if (obj.DietAssessmentId != 0)
+            {
+                model.DietAssessmentId = obj.DietAssessmentId;
+                model.IsCancelledBy = CurrentUserId;
+                model.IsCancelledDate = AppTime.Now;
+                await _assessmentService.Cancel(model, CurrentUserId, CurrentUserName);
+            }
+            else
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
     }
 }

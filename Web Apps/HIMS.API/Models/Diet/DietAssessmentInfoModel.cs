@@ -22,6 +22,14 @@ namespace HIMS.API.Models.Diet
         public string? Bmi { get; set; }
     }
 
+
+    public class DietAssessmentCancelModel
+    {
+        public long DietAssessmentId { get; set; }
+        public long? IsCancelledBy { get; set; }
+        
+    }
+
     public class DietAssessmentInfoModelValidator : AbstractValidator<DietAssessmentInfoModel>
     {
         public DietAssessmentInfoModelValidator()
