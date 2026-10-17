@@ -69,5 +69,9 @@ namespace HIMS.Services.DietKitchen
             }
         }
 
+        public Task<IPagedList<PatientvitalsdetailListDto>> DietGetListAsync(GridRequestModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
