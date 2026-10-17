@@ -120,5 +120,17 @@ namespace HIMS.API.Utility
             byte[] imageArray = await System.IO.File.ReadAllBytesAsync($"{FilePath}\\{filename}");
             return "data:image/png;base64," + Convert.ToBase64String(imageArray);
         }
+        public string GetFolderPath(string Folder)
+        {
+            var DestinationPath = "";
+            //_Sales.GetFilePath();
+            if (string.IsNullOrWhiteSpace(DestinationPath))
+                DestinationPath = AppSettings.Settings.StorageBaseUrl;
+            if (!Directory.Exists(DestinationPath))
+                Directory.CreateDirectory(DestinationPath);
+            if (!Directory.Exists($"{DestinationPath.Trim('\\')}\\{Folder}"))
+                Directory.CreateDirectory($"{DestinationPath.Trim('\\')}\\{Folder}");
+            return Path.Combine(DestinationPath.Trim('\\'), Folder.Trim('\\'));
+        }
     }
 }

@@ -28,7 +28,9 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             _repository = repository;
             _assessmentService = assessmentService;
         }
-        [HttpPost("DietassesmentList")]
+
+
+        [HttpPost("List")]
         //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {

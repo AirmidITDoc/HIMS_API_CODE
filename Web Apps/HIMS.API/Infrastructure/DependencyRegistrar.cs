@@ -2,6 +2,7 @@
 using DinkToPdf.Contracts;
 using HIMS.API.Extensions;
 using HIMS.API.PaymentGateway;
+using HIMS.API.PdfUtility;
 using HIMS.API.Utility;
 using HIMS.Data;
 using HIMS.Data.Extensions;
@@ -74,7 +75,7 @@ namespace HIMS.API.Infrastructure
 
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IOPBillingReport, OPBillingReport>();
-            services.AddTransient<IPdfUtility, PdfUtility>();
+            services.AddTransient<IPdfUtility, HIMS.Services.Utilities.PdfUtility>();
             services.AddScoped<IFavouriteService, FavouriteService>();
             services.AddScoped<IDashboardService, DashboardService>();
             services.AddScoped<IIndentService, IndentService>();
@@ -292,6 +293,9 @@ namespace HIMS.API.Infrastructure
             services.AddMemoryCache(opts => opts.SizeLimit = 1024);
             services.AddScoped<IDeathCertificateService, DeathCertificateService>();
             services.AddScoped<IEMRService, EMRService>();
+
+            services.AddSingleton<IOfficeToPdfConverter, LibreOfficeConverter>();
+            services.AddScoped<ICategoryMergeService, CategoryMergeService>();
 
 
             //ABHA testing 

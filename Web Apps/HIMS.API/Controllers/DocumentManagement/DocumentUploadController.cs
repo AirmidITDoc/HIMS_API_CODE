@@ -5,6 +5,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Common;
 using HIMS.API.Models.DocumentManagement;
+using HIMS.API.PdfUtility;
 using HIMS.API.Utility;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
@@ -13,6 +14,8 @@ using HIMS.Data.DTO.DocumentManagement;
 using HIMS.Data.Models;
 using HIMS.Services.DocumentManagement;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.IsisMtt.X509;
+using static LinqToDB.Reflection.Methods.LinqToDB;
 
 namespace HIMS.API.Controllers.DocumentManagement
 {
@@ -23,10 +26,12 @@ namespace HIMS.API.Controllers.DocumentManagement
     {
         private readonly IDocumentUploadService _repository;
         private readonly IFileUtility _FileUtility;
-        public DocumentUploadController(IDocumentUploadService repository, IFileUtility fileUtility)
+        private readonly ICategoryMergeService _merge;
+        public DocumentUploadController(IDocumentUploadService repository, IFileUtility fileUtility, ICategoryMergeService categoryMergeService)
         {
             _repository = repository;
             _FileUtility = fileUtility;
+            _merge = categoryMergeService;
         }
 
         //List API
@@ -91,12 +96,30 @@ namespace HIMS.API.Controllers.DocumentManagement
         [Permission]
         public async Task<ActionResult> GetFile(string FileName)
         {
-            var data = await _FileUtility.DownloadFile("DocumentManagement\\"+FileName);
+            var data = await _FileUtility.DownloadFile("DocumentManagement\\" + FileName);
             if (data == null || data.Item1 == null || string.IsNullOrEmpty(data.Item2) || string.IsNullOrEmpty(data.Item3))
             {
                 return NotFound("File could not be downloaded.");
             }
             return File(data.Item1, data.Item2, data.Item3);
+        }
+
+        [HttpGet("merged-pdf")]
+        public async Task<IActionResult> DownloadMergedPdf(int AdmissionId,int CategoryId, CancellationToken ct = default)
+        {
+            var PatientList = await _repository.GetDocumentsByCategoryAndAdmissionId(AdmissionId, CategoryId);
+            var result = await _merge.MergeAsync(PatientList, _FileUtility.GetFolderPath("DocumentManagement"), ct);
+            if (result == null)
+                return NotFound(new { message = "No mergeable files found in this category." });
+
+            Response.Headers["X-Skipped-Count"] = result.SkippedFiles.Count.ToString();
+            Response.Headers["Access-Control-Expose-Headers"] = "X-Skipped-Count, Content-Disposition";
+
+            // DeleteOnClose removes the temp file after the response is sent
+            var stream = new FileStream(result.PdfPath, FileMode.Open, FileAccess.Read, FileShare.Read,
+                81920, FileOptions.DeleteOnClose | FileOptions.Asynchronous);
+
+            return File(stream, "application/pdf", $"category-{CategoryId}.pdf");
         }
     }
 }

@@ -8,8 +8,10 @@ using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using System.Transactions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HIMS.Services.Administration
 {
@@ -59,7 +61,14 @@ namespace HIMS.Services.Administration
 
         public virtual async Task DeleteAsync(Admission ObjAdmission, int CurrentUserId, string CurrentUserName)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
             DatabaseHelper odal = new();
+
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
             string[] AEntity = { "AdmissionId" };
             var Rentity = ObjAdmission.ToDictionary();
 
@@ -71,13 +80,29 @@ namespace HIMS.Services.Administration
 
             odal.ExecuteNonQuery("IP_DISCHARGE_CANCELLATION", CommandType.StoredProcedure, Rentity);
             await _context.LogProcedureExecution(Rentity, nameof(Admission), ObjAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
-
+                // Save & Commit
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         public virtual async Task  Update(Admission ObjAdmission, int CurrentUserId, string CurrentUserName)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
+            try
+            {
+                // OLD CODE With SP
             DatabaseHelper odal = new();
+
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] AEntity = { "AdmissionId", "AdmissionDate", "AdmissionTime", "Ipdno"};
             var Rentity = ObjAdmission.ToDictionary();
 
@@ -89,14 +114,29 @@ namespace HIMS.Services.Administration
 
             odal.ExecuteNonQuery("ps_Update_AdmissionDateTime", CommandType.StoredProcedure, Rentity);
             await _context.LogProcedureExecution(Rentity, nameof(Admission), ObjAdmission.AdmissionId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
+                // Save & Commit
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
 
         }
 
         public virtual async Task  PaymentUpdate(Payment ObjPayment, int CurrentUserId, string CurrentUserName)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
+            try
+            {
+            // OLD CODE With SP
             DatabaseHelper odal = new();
+
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
             string[] AEntity = {"PaymentId","PaymentDate", "PaymentTime" };
             var pentity = ObjPayment.ToDictionary();
             foreach (var rProperty in pentity.Keys.ToList())
@@ -107,13 +147,29 @@ namespace HIMS.Services.Administration
 
             odal.ExecuteNonQuery("Update_AdmninistartionPaymentDatetime", CommandType.StoredProcedure, pentity);
             await _context.LogProcedureExecution(pentity, nameof(Payment), ObjPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
+                // Save & Commit
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
 
         }
         public virtual async Task Update(TPayment ObjPayment, int CurrentUserId, string CurrentUserName)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
+            try
+            {
+                // OLD CODE With SP
             DatabaseHelper odal = new();
+
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
+
             string[] AEntity = { "PaymentId", "PaymentDate", "PaymentTime" };
             var pentity = ObjPayment.ToDictionary();
             foreach (var rProperty in pentity.Keys.ToList())
@@ -124,13 +180,28 @@ namespace HIMS.Services.Administration
 
             odal.ExecuteNonQuery("PS_UpdatePaymentDatetime", CommandType.StoredProcedure, pentity);
             await _context.LogProcedureExecution(pentity, nameof(TPayment), ObjPayment.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
+                // Save & Commit
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
 
         }
         public virtual async Task PaymentDateTimeUpdate(TPaymentPharmacy ObjTPaymentPharmacy, int CurrentUserId, string CurrentUserName)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
+            try
+            {
+                // OLD CODE With SP
             DatabaseHelper odal = new();
+
+            odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+            odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
             string[] AEntity = { "PaymentId", "PaymentDate", "PaymentTime" };
             var pentity = ObjTPaymentPharmacy.ToDictionary();
             foreach (var rProperty in pentity.Keys.ToList())
@@ -141,13 +212,28 @@ namespace HIMS.Services.Administration
 
             odal.ExecuteNonQuery("PS_UpdatePaymentPharmacyDatetime", CommandType.StoredProcedure, pentity);
             await _context.LogProcedureExecution(pentity, nameof(TPaymentPharmacy), ObjTPaymentPharmacy.PaymentId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
+            // Save & Commit
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
 
         }
 
         public virtual async Task BilldateUpdateAsync(Bill ObjBill, int CurrentUserId, string CurrentUserName)
         {
-            DatabaseHelper odal = new();
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+             DatabaseHelper odal = new();
+
+             odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
+             odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
             string[] AEntity = { "BillNo", "BillDate", "BillTime" };
             var Rentity = ObjBill.ToDictionary();
 
@@ -159,8 +245,16 @@ namespace HIMS.Services.Administration
 
             odal.ExecuteNonQuery("Update_Administrtaion_BillDate", CommandType.StoredProcedure, Rentity);
             await _context.LogProcedureExecution(Rentity, nameof(Bill), ObjBill.BillNo.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
-
+            // Save & Commit
+            await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
+            await transaction.CommitAsync();
         }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+}
 
 
         public virtual void Insert(List<MAutoServiceList> ObjMAutoServiceList, int UserId, string UserName)
