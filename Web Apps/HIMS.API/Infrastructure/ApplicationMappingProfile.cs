@@ -91,7 +91,7 @@ namespace HIMS.API.Infrastructure
             CreateMap<TIpMrdDiagnosisInfoDetail, MrdDiagnosisInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MOtBillTemplate, BillTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<MOtBillTemplateHeader, BillTemplateModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
-     //       CreateMap<MOtBillTemplateDetail, BillTemplateDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<MOtBillTemplateDetail, BillTemplateDetailsModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TVaccineInformation, VaccineInformationModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
