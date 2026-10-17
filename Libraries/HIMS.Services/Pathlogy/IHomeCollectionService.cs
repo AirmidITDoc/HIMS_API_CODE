@@ -1,4 +1,5 @@
-﻿using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Dashboard;
+using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Pathology;
@@ -22,11 +23,7 @@ namespace HIMS.Services.Pathlogy
         Task updatePhlebotomistAsynch(THomeCollectionRegistrationInfo objTHomeCollectionRegistrationInfo, int UserId, string Username);
         List<PhlebotomistComboDto> SearchCollection();
 
-
-
-
-
-
+        Task<HomeCollectionDashboard> GetHomeCollectionDashboard(int UnitId, int PhlebotomistId, DateTime FromDate, DateTime ToDate);
 
     }
 }
