@@ -17,7 +17,12 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using WkHtmlToPdfDotNet;
-using static LinqToDB.Common.Configuration;
+using PdfSharpCore.Pdf;
+using PdfSharpCore.Pdf.IO;
+using System.Security.Cryptography;
+using PdfSharpCore.Pdf;
+using PdfSharpCore.Pdf.IO;
+using static HIMS.Core.Domain.Grid.ListRequestModel;
 
 
 
@@ -302,6 +307,133 @@ namespace HIMS.Services.Report
                 throw;
             }
 
+        }
+
+
+
+        public async Task<(byte[] Pdf, List<object> Info)> GetMultipleReportMergedPdf(
+            List<ReportRequestModel> models,
+            string pdfFontPath = "",
+            long unitId = 1,
+            long storeId = 2)
+        {
+            if (models == null || models.Count == 0)
+                throw new Exception("No reports requested.");
+
+            if (models.Count > 50)
+                throw new Exception("Maximum 50 reports allowed at once.");
+
+            var info = new List<object>();
+
+            using var mergedPdf = new PdfDocument();
+
+            for (int index = 0; index < models.Count; index++)
+            {
+                var model = models[index];
+
+                var salesIdValue = model.SearchFields?
+                    .FirstOrDefault(x =>
+                        string.Equals(
+                            x.FieldName,
+                            "SalesID",
+                            StringComparison.OrdinalIgnoreCase))
+                    ?.FieldValue;
+
+                var opIpTypeValue = model.SearchFields?
+                    .FirstOrDefault(x =>
+                        string.Equals(
+                            x.FieldName,
+                            "OP_IP_Type",
+                            StringComparison.OrdinalIgnoreCase))
+                    ?.FieldValue;
+
+                if (!long.TryParse(salesIdValue, out long salesId))
+                {
+                    throw new Exception(
+                        $"Invalid SalesID in payload {index + 1}: {salesIdValue}");
+                }
+
+                if (!long.TryParse(opIpTypeValue, out long opIpType) ||
+                    opIpType < 0 || opIpType > 2)
+                {
+                    throw new Exception(
+                        $"Invalid OP_IP_Type in payload {index + 1}: {opIpTypeValue}");
+                }
+
+                try
+                {
+                    // Each iteration must use its own report request.
+                    var reportResult = await GetReportSetByProcDB(
+                        model,
+                        pdfFontPath,
+                        unitId,
+                        storeId);
+
+                    byte[] pdfBytes = reportResult?.Item1;
+
+                    if (pdfBytes == null || pdfBytes.Length < 100)
+                    {
+                        throw new Exception(
+                            $"PDF not generated for SalesID={salesId}.");
+                    }
+
+                    using var inputStream = new MemoryStream(pdfBytes);
+
+                    using var sourcePdf = PdfReader.Open(
+                        inputStream,
+                        PdfDocumentOpenMode.Import);
+
+                    if (sourcePdf.PageCount == 0)
+                    {
+                        throw new Exception(
+                            $"No pages generated for SalesID={salesId}.");
+                    }
+
+                    int startPage = mergedPdf.PageCount + 1;
+
+                    // Copy the current bill's pages into the final PDF.
+                    for (int page = 0; page < sourcePdf.PageCount; page++)
+                    {
+                        mergedPdf.AddPage(sourcePdf.Pages[page]);
+                    }
+
+                    info.Add(new
+                    {
+                        index = index + 1,
+                        salesId,
+                        opIpType,
+                        startPage,
+                        pagesAdded = sourcePdf.PageCount,
+                        totalMergedPages = mergedPdf.PageCount,
+                        status = "Success"
+                    });
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(
+                        $"Failed at payload {index + 1}, " +
+                        $"SalesID={salesId}, OP_IP_Type={opIpType}. " +
+                        $"Error: {ex.Message}",
+                        ex);
+                }
+            }
+
+            if (mergedPdf.PageCount == 0)
+                throw new Exception("Final PDF has no pages.");
+
+            using var outputStream = new MemoryStream();
+
+            mergedPdf.Save(outputStream, false);
+
+            byte[] finalPdfBytes = outputStream.ToArray();
+
+            info.Add(new
+            {
+                finalPdfBytes = finalPdfBytes.Length,
+                finalPageCount = mergedPdf.PageCount
+            });
+
+            return (finalPdfBytes, info);
         }
 
         public async Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1)
@@ -8680,6 +8812,11 @@ break;
                         html = html.Replace("{{TemplateDescriptionHtml}}", dt.GetColValue("TemplateDescriptionHtml"));
                         html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
                         html = html.Replace("{{DiagnosisName}}", dt.GetColValue("DiagnosisName"));
+                        html = html.Replace("{{RelativeName}}", dt.GetColValue("RelativeName"));
+                        html = html.Replace("{{RelativeAddress}}", dt.GetColValue("RelativeAddress"));
+                        html = html.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName"));
+
+                     
                         // ============================================================
                         // MULTIPLE DIAGNOSIS INFORMATION - SINGLE ROW
                         // ============================================================
@@ -8829,6 +8966,9 @@ break;
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
                         html = html.Replace("{{TemplateDescriptionHtml}}", dt.GetColValue("TemplateDescriptionHtml"));
                         html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
+                        html = html.Replace("{{RelativeName}}", dt.GetColValue("RelativeName"));
+                        html = html.Replace("{{RelativeAddress}}", dt.GetColValue("RelativeAddress"));
+                        html = html.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName"));
 
                         //html = html.Replace("{{chkSurgeryPrescriptionflag}}", length != 0 ? "table-row" : "none");
                         string chkSurgeryPrescriptionflag = (dt2.Rows.Count > 0) ? "table-row" : "none";
@@ -8946,6 +9086,9 @@ break;
                         html = html.Replace("{{AddedBy}}", dt.GetColValue("AddedBy"));
                         html = html.Replace("{{TemplateDescriptionHtml}}", dt.GetColValue("TemplateDescriptionHtml"));
                         html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
+                        html = html.Replace("{{RelativeName}}", dt.GetColValue("RelativeName"));
+                        html = html.Replace("{{RelativeAddress}}", dt.GetColValue("RelativeAddress"));
+                        html = html.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName"));
 
                         // ============================================================
                         // MULTIPLE DIAGNOSIS INFORMATION - SINGLE ROW
