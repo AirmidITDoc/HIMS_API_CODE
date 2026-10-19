@@ -665,6 +665,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TTokenNumberWithDoctorWise> TTokenNumberWithDoctorWises { get; set; } = null!;
         public virtual DbSet<TVaccineInformation> TVaccineInformations { get; set; } = null!;
         public virtual DbSet<TWhatsAppSmsOutgoing> TWhatsAppSmsOutgoings { get; set; } = null!;
+        public virtual DbSet<TWhatsAppSmsOutgoingOct2026> TWhatsAppSmsOutgoingOct2026s { get; set; } = null!;
         public virtual DbSet<TWorkOrderDetail> TWorkOrderDetails { get; set; } = null!;
         public virtual DbSet<TWorkOrderHeader> TWorkOrderHeaders { get; set; } = null!;
         public virtual DbSet<TabhaPatientEncounterCareContextDetail> TabhaPatientEncounterCareContextDetails { get; set; } = null!;
@@ -19842,6 +19843,47 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Smsflag)
                     .HasMaxLength(20)
                     .HasColumnName("SMSFlag");
+
+                entity.Property(e => e.Smsstring)
+                    .HasMaxLength(500)
+                    .HasColumnName("SMSString");
+
+                entity.Property(e => e.Smstype)
+                    .HasMaxLength(100)
+                    .HasColumnName("SMSType");
+
+                entity.Property(e => e.Smsurl)
+                    .HasMaxLength(1000)
+                    .HasColumnName("SMSurl");
+            });
+
+            modelBuilder.Entity<TWhatsAppSmsOutgoingOct2026>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("T_WhatsAppSMS_Outgoing_Oct2026");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.FilePath).HasMaxLength(500);
+
+                entity.Property(e => e.LastTry).HasColumnType("datetime");
+
+                entity.Property(e => e.MobileNumber).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.Smsdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("SMSDate");
+
+                entity.Property(e => e.Smsflag)
+                    .HasMaxLength(20)
+                    .HasColumnName("SMSFlag");
+
+                entity.Property(e => e.SmsoutGoingId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("SMSOutGoingID");
 
                 entity.Property(e => e.Smsstring)
                     .HasMaxLength(500)

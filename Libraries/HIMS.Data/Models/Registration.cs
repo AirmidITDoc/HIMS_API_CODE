@@ -70,6 +70,7 @@ namespace HIMS.Data.Models
         public string? EmailId { get; set; }
         public long? MembershipId { get; set; }
         public long? AbhaTranId { get; set; }
+        public long? DistrictId { get; set; }
 
         public virtual ICollection<TPatientAbhaInformation> TPatientAbhaInformations { get; set; }
     }
