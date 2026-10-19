@@ -77,7 +77,7 @@ namespace HIMS.Services.OPPatient
                 string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", "AgeMonth", "AgeDay",
                 "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "ReligionId", "AreaId", "IsSeniorCitizen", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo",
                 "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry",
-                "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress","EmailId", "RegId","MembershipId","tPatientAbhaInformations","AbhaTranId","IsMember" };
+                "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress","EmailId", "RegId","MembershipId","tPatientAbhaInformations","AbhaTranId","IsMember","DistrictId" };
                 var entity = objRegistration.ToDictionary();
                 foreach (var rProperty in entity.Keys.ToList())
                 {
@@ -146,7 +146,7 @@ namespace HIMS.Services.OPPatient
                 string[] rEntity = { "RegId", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "AadharCardNo", "GenderId", "DateofBirth", "Age", "AgeYear", "AgeMonth", "AgeDay", "PhoneNo", "MobileNo", "PanCardNo", "MaritalStatusId", "ReligionId", 
                     "AreaId", "CityId", "City", "StateId", "CountryId", "IsCharity", "IsSeniorCitizen", "Photo", "PinNo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", 
                     "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry", "MedTourismDateOfEntry", 
-                    "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress", "EmailId", "MembershipId" ,"tPatientAbhaInformations"};
+                    "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress", "EmailId", "MembershipId" ,"tPatientAbhaInformations","DistrictId"};
                 var entity = objRegistration.ToDictionary();
                 foreach (var rProperty in entity.Keys.ToList())
                 {

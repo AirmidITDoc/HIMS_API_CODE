@@ -70,6 +70,7 @@
         public string? AbhaFullName { get; set; } 
         public string? Gender { get; set; } 
         public DateTime? YearOfBirth { get; set; }
+        public long? DistrictId { get; set; }
     }
 
     public class RegistrationAutoCompleteDto

@@ -55,6 +55,7 @@ namespace HIMS.API.Models.OutPatient
         public long? AbhaTranId { get; set; }
         public bool? IsMember { get; set; }
         public long RegId { get; set; }
+        public long? DistrictId { get; set; }
         public List<TPatientAbhaInformationModel>? TPatientAbhaInformations { get; set; }
 
     }
@@ -142,6 +143,7 @@ namespace HIMS.API.Models.OutPatient
         public string? RegNo { get; set; }
         public string? EmailId { get; set; }
         public long? AbhaTranId { get; set; }
+        public long? DistrictId { get; set; }
 
         public List<TPatientAbhaInformationModel>? TPatientAbhaInformations { get; set; }
 
