@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Models.OutPatient;
 
 namespace HIMS.API.Models.OPPatient
 {
@@ -57,6 +58,8 @@ namespace HIMS.API.Models.OPPatient
         public OPPaymentModel? Payments { get; set; }
         public List<TPaymentModel> TPayments { get; set; }
         public TdrBillModel TdrBill { get; set; }
+       public List<AdvancesDetailModel?> Advancesupdate { get; set; }
+        public AdvancesHeaderModel? advancesHeaderupdate { get; set; }
 
 
 

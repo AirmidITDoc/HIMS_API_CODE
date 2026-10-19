@@ -15,5 +15,8 @@ namespace HIMS.Services.OutPatient
         Task<IPagedList<OPBillListSettlementListDto>> OPBillListSettlementList(GridRequestModel objGrid);
 
 
+        Task InsertAsyncSP1(Payment objpayment, Bill objBill, List<TPayment> ObjTPayment, List<AdvanceDetail> ObjadvanceDetailList, AdvanceHeader ObjadvanceHeader, int CurrentUserId, string CurrentUserName);
+
+
     }
 }

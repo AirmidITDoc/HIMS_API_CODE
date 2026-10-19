@@ -321,5 +321,45 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
+
+
+
+        [HttpPost("OPBillingInsertWithAdvance")]
+  //      [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        public async Task<ApiResponse> Inserts(OPBillIngModel obj)
+        {
+            Bill model = obj.MapTo<Bill>();
+            Payment objPayment = obj.Payments.MapTo<Payment>();
+            List<AddCharge> ObjPackagecharge = obj.Packcagecharges.MapTo<List<AddCharge>>();
+            List<TPayment> ObjTPayment = obj.TPayments.MapTo<List<TPayment>>();
+            TDrbill ObjTdrBill = obj.TdrBill.MapTo<TDrbill>();
+            List<AdvanceDetail> objAdvanceDetail = obj.Advancesupdate.MapTo<List<AdvanceDetail>>();
+            AdvanceHeader objAdvanceHeader = obj.advancesHeaderupdate.MapTo<AdvanceHeader>();
+
+
+            if (obj.BillNo == 0)
+            {
+                model.BillDate = Convert.ToDateTime(obj.BillDate);
+                model.BillTime = Convert.ToDateTime(obj.BillTime);
+                model.AddedBy = CurrentUserId;
+                model.CreatedBy = CurrentUserId;
+                model.CreatedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+                await _oPBillingService.InsertAsyncSP1(model, objPayment, ObjPackagecharge, ObjTPayment, ObjTdrBill, objAdvanceDetail, objAdvanceHeader, CurrentUserId, CurrentUserName);
+                /// set condition based on payment type=mpesa.
+                //string phone = "254723939232";
+                //var result = await _stkService.StkPushAsync(phone, obj.NetPayableAmt.Value.ToDecimal(), _config["MPesa:ConfirmationUrl"], model.BillNo.ToString());
+                //var Data = JsonConvert.DeserializeObject<MPesaResponseDto>(result);
+                //return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", new { model.BillNo, MPesaResponse = Data });
+
+                //SignalR ---  send signal
+                await _hubContext.Clients.All.SendAsync("ReceiveInvestigationDashboard", "Investigation_Bill", JsonConvert.SerializeObject(new { BillCount = 1, Amount = model.RefundAmount }));
+            }
+            else
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.BillNo);
+        }
+
     }
 }
