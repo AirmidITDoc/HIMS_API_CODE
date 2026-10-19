@@ -8813,7 +8813,7 @@ break;
                         html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
                         html = html.Replace("{{DiagnosisName}}", dt.GetColValue("DiagnosisName"));
                         html = html.Replace("{{RelativeName}}", dt.GetColValue("RelativeName"));
-                        html = html.Replace("{{RelativeAddress}}", dt.GetColValue("RelativeAddress"));
+                        html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
                         html = html.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName"));
 
                      
@@ -8967,7 +8967,7 @@ break;
                         html = html.Replace("{{TemplateDescriptionHtml}}", dt.GetColValue("TemplateDescriptionHtml"));
                         html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
                         html = html.Replace("{{RelativeName}}", dt.GetColValue("RelativeName"));
-                        html = html.Replace("{{RelativeAddress}}", dt.GetColValue("RelativeAddress"));
+                        html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
                         html = html.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName"));
 
                         //html = html.Replace("{{chkSurgeryPrescriptionflag}}", length != 0 ? "table-row" : "none");
@@ -9087,7 +9087,7 @@ break;
                         html = html.Replace("{{TemplateDescriptionHtml}}", dt.GetColValue("TemplateDescriptionHtml"));
                         html = html.Replace("{{DischargeDoctor2}}", dt.GetColValue("DiscDoctor2"));
                         html = html.Replace("{{RelativeName}}", dt.GetColValue("RelativeName"));
-                        html = html.Replace("{{RelativeAddress}}", dt.GetColValue("RelativeAddress"));
+                        html = html.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
                         html = html.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName"));
 
                         // ============================================================

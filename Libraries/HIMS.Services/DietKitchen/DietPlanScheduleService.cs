@@ -25,6 +25,11 @@ namespace HIMS.Services.DietKitchen
             return await DatabaseHelper.GetGridDataBySp<DietPlanScheduleListDto>(model, "ps_Rtrv_DietPlanSchedule");
         }
 
+        public virtual async Task<IPagedList<DietPlanDetailListDto>> DietplandetailsListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DietPlanDetailListDto>(model, "ps_Rtrv_DietPlanDetails");
+        }
+
         public virtual async Task InsertAsync(TDietPlanSchedule objDietPlanSchedule, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.Serializable }, TransactionScopeAsyncFlowOption.Enabled);

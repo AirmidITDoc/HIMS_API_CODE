@@ -491,7 +491,7 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
             htmlHeader = htmlHeader.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
             htmlHeader = htmlHeader.Replace("{{RelativeName}}", dt.GetColValue("RelativeName"));
-            htmlHeader = htmlHeader.Replace("{{RelativeAddress}}", dt.GetColValue("RelativeAddress"));
+            htmlHeader = htmlHeader.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
             htmlHeader = htmlHeader.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName"));
            
 
@@ -565,7 +565,7 @@ namespace HIMS.Services.Utilities
             htmlHeader = htmlHeader.Replace("{{RefDoctorName}}", dt.GetColValue("RefDoctorName"));
             htmlHeader = htmlHeader.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
             htmlHeader = htmlHeader.Replace("{{RelativeName}}", dt.GetColValue("RelativeName"));
-            htmlHeader = htmlHeader.Replace("{{RelativeAddress}}", dt.GetColValue("RelativeAddress"));
+            htmlHeader = htmlHeader.Replace("{{PhoneNo}}", dt.GetColValue("PhoneNo"));
             htmlHeader = htmlHeader.Replace("{{RelationshipName}}", dt.GetColValue("RelationshipName"));
 
 
