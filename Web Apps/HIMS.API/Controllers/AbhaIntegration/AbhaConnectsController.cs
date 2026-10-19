@@ -420,5 +420,32 @@ namespace HIMS.API.Controllers.AbhaIntegration
             IPagedList<AbhaFileUploadListDto> FileUpload = await _abhaConnectService.GetAbhaFileUploadListAsync(objGrid);
             return Ok(FileUpload.ToGridResponse(objGrid, "Abha File Upload List"));
         }
+        [HttpPost("AbhaAddressList")]
+        public async Task<IActionResult> AbhaAddressList([FromQuery] string abhaNumber)
+        {
+            var objGrid = new GridRequestModel
+            {
+                First = 0,
+                Rows = 1000,
+                SortField = "AbhaNumber",
+                SortOrder = 1,
+                ExportType = ExportType.JSON,
+                Columns = new List<GridColumn>(),
+                Filters = new List<SearchGrid>
+        {
+            new SearchGrid
+            {
+                FieldName = "AbhaNumber",
+                FieldValue = abhaNumber,
+                OpType = OperatorComparer.Contains
+            }
+        }
+            };
+
+            IPagedList<AbhaAddressDropdownDto> abhaAddresses =
+                await _abhaConnectService.GetAbhaAddressListAsync(objGrid);
+
+            return Ok(abhaAddresses.ToGridResponse(objGrid, "Abha Address List"));
+        }
     }
 }

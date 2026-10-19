@@ -1958,5 +1958,9 @@ namespace HIMS.Services.AbhaIntegration
             return await DatabaseHelper.GetGridDataBySp<AbhaFileUploadListDto>(model, "ps_GetAbhaFileUploadList");
         }
 
+        public virtual async Task<IPagedList<AbhaAddressDropdownDto>> GetAbhaAddressListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<AbhaAddressDropdownDto>(model, "ps_Rtrv_AbhaAddress");
+        }
     }
 }

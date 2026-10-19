@@ -17,4 +17,10 @@ namespace HIMS.Data.DTO.AbhaIntegration
             public DateTime? CreatedDate { get; set; }
         
     }
+    public class AbhaAddressDropdownDto
+    {
+        public string? AbhaAddress { get; set; }
+        public string? AbhaNumber { get; set; }
+
+    }
 }

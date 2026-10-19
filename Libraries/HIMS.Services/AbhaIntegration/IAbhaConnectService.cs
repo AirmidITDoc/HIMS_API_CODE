@@ -25,5 +25,6 @@ namespace HIMS.Services.AbhaIntegration
         Task InsertErrorLogAsync(TAbhaErrorLog obj);
         Task InsertAbhaFileUploadsAsync(List<TAbhaFileUpload> files);
         Task<IPagedList<AbhaFileUploadListDto>> GetAbhaFileUploadListAsync(GridRequestModel model);
+        Task<IPagedList<AbhaAddressDropdownDto>> GetAbhaAddressListAsync(GridRequestModel grid);
     }
 }
