@@ -69,9 +69,12 @@ namespace HIMS.Services.DietKitchen
             }
         }
 
-        public Task<IPagedList<PatientvitalsdetailListDto>> DietGetListAsync(GridRequestModel model)
+       
+
+        public virtual async Task<IPagedList<PatientvitalsdetailListDto>> DietGetListAsync(GridRequestModel model)
         {
-            throw new NotImplementedException();
+            return await DatabaseHelper.GetGridDataBySp<PatientvitalsdetailListDto>(model, "ps_Patient_vitalsdetail");
         }
+
     }
 }
