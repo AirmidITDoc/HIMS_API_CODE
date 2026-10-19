@@ -131,7 +131,7 @@ namespace HIMS.API.Controllers.Common
         private readonly IGenericService<MDietTypeMaster> _MDietTypeMaster;
         private readonly IGenericService<MDietCategoryMaster> _MDietCategoryMaster;
         private readonly IGenericService<TVaccineInformation> _TVaccineInformation;
-
+        private readonly IGenericService<LoginManager> _LoginManager;
 
 
 
@@ -214,7 +214,8 @@ namespace HIMS.API.Controllers.Common
                               IGenericService<MFoodPreferenceMaster> MFoodPreferenceMaster,
                               IGenericService<MAllergyMaster> MAllergyMaster,
                               IGenericService<MDietCategoryMaster> MDietCategoryMaster,
-                              IGenericService<TVaccineInformation> TVaccineInformation
+                              IGenericService<TVaccineInformation> TVaccineInformation,
+                              IGenericService<LoginManager> LoginManager
 
 
 
@@ -330,9 +331,10 @@ namespace HIMS.API.Controllers.Common
             _MDietMenuMaster = MDietMenuMaster;
             _MDietTypeMaster = MDietTypeMaster;
             _MDietCategoryMaster = MDietCategoryMaster;
+            _LoginManager = LoginManager;
 
 
-            
+
 
 
 
@@ -586,7 +588,7 @@ namespace HIMS.API.Controllers.Common
                 "Nutritional_Status" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "Nutritional_Status")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
                 "Vaccineinformation" => (await _TVaccineInformation.GetAll(x => x.VaccineStatus.Value)).ToList().ToDropDown(nameof(TVaccineInformation.VaccineId), nameof(TVaccineInformation.VaccineName)),
-
+                "LoginManager" => (await _LoginManager.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(LoginManager.UserId), nameof(LoginManager.UserName)),
                 _ => new List<SelectListItem>()
             };
             return Result.Select(x => new { x.Value, x.Text }).ToResponse("Get Data Successfully.");
