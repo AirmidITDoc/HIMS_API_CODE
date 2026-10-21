@@ -20,7 +20,7 @@ namespace HIMS.Data.Models
         public long? ExpectedSurgeryTime { get; set; }
         public long? PreparationTime { get; set; }
         public long? CleaningTurnaroundTime { get; set; }
-        public long? TotalDuration { get; set; }
+        public double? TotalDuration { get; set; }
         public bool? PreAnaesthesiaClearance { get; set; }
         public bool? SurgicalConsentRequired { get; set; }
         public bool? BloodArrangementRequired { get; set; }
