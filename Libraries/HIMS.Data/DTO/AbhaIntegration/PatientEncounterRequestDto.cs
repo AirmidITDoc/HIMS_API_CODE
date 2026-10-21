@@ -49,7 +49,11 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public string Gender { get; set; }
         public string Mobile { get; set; }
         public string Email { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.Never)]
         public string HealthId { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.Never)]
         public string HealthIdNumber { get; set; }
         public string DayOfBirth { get; set; }
         public string MonthOfBirth { get; set; }
