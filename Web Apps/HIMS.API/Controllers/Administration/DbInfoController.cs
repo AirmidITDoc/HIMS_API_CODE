@@ -13,20 +13,20 @@ namespace HIMS.API.Controllers.Administration
     [ApiVersion("1")]
     public class DbInfoController : BaseController
     {
-        [HttpGet("DBInformation")]
-        public async Task<ApiResponse> DBInformation()
-        {
-            //var builder = new SqlConnectionStringBuilder(EncryptionUtility.DecryptText(AppSettings.Settings.CONNECTION_STRING, SecurityKeys.EnDeKey));
-            var builder = new SqlConnectionStringBuilder(AppSettings.Settings.CONNECTION_STRING);
-            var dbInfo = new
-            {
-                Server = builder.DataSource,
-                Database = builder.InitialCatalog,
-                UserName = builder.UserID,
-                Provider = "SQL Server"
-            };
+        //[HttpGet("DBInformation")]
+        //public async Task<ApiResponse> DBInformation()
+        //{
+        //    //var builder = new SqlConnectionStringBuilder(EncryptionUtility.DecryptText(AppSettings.Settings.CONNECTION_STRING, SecurityKeys.EnDeKey));
+        //    var builder = new SqlConnectionStringBuilder(AppSettings.Settings.CONNECTION_STRING);
+        //    var dbInfo = new
+        //    {
+        //        Server = builder.DataSource,
+        //        Database = builder.InitialCatalog,
+        //        UserName = builder.UserID,
+        //        Provider = "SQL Server"
+        //    };
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Database info fetched successfully.", dbInfo);
-        }
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Database info fetched successfully.", dbInfo);
+        //}
     }
 }
