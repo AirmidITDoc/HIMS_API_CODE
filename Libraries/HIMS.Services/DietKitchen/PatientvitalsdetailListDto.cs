@@ -13,5 +13,6 @@ namespace HIMS.Services.DietKitchen
         public string? Height { get; set; }
         public string? Weight { get; set; }
         public string? Bmi { get; set; }
+        public string? CreatedDate { get; set; }
     }
 }
