@@ -1,4 +1,7 @@
-﻿using HIMS.Data.Models;
+﻿using HIMS.Core.Domain.Grid;
+using HIMS.Data.DataProviders;
+using HIMS.Data.DTO.Administration;
+using HIMS.Data.Models;
 
 namespace HIMS.Services.Masters
 {
@@ -16,7 +19,10 @@ namespace HIMS.Services.Masters
         //              select new MCityMaster() { CityId = p.CityId, CityName = p.CityName, IsActive = p.IsActive, StateName = s.StateName, StateId = p.StateId };
         //    return await qry.BuildPredicate(objGrid);
         //}
-
+        public virtual async Task<IPagedList<DistrictLGDCodeDto>> DistrictLGDCodeListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DistrictLGDCodeDto>(model, "ps_rtrv_DistrictLGDCode");
+        }
 
     }
 }

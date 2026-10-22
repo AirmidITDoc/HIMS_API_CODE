@@ -7,7 +7,10 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.Administration;
 using HIMS.Data.Models;
+using HIMS.Services.Administration;
+using HIMS.Services.Masters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Masters.Personal_Information
@@ -18,10 +21,12 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
     [ApiVersion("1")]
     public class CityMasterController : BaseController
     {
+        private readonly ICityMasterServie _ICityMasterService;
         private readonly IGenericService<MCityMaster> _repository;
-        public CityMasterController(IGenericService<MCityMaster> repository)
+        public CityMasterController(IGenericService<MCityMaster> repository, ICityMasterServie cityMasterService)
         {
             _repository = repository;
+            _ICityMasterService = cityMasterService;
         }
         //List API
         [HttpPost]
@@ -47,11 +52,17 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             var data = await _repository.GetById(x => x.CityId == id);
             return data.ToSingleResponse<MCityMaster, CityMasterModel>("CityMaster");
         }
+        //[HttpPost("DistrictLgdcode")]
+        //public async Task<IActionResult> GetByDistrictLgdcode(GridRequestModel objGrid)
+        //{
+        //    IPagedList<MCityMaster> MCityMasterList = await _repository.GetAllPagedAsync(objGrid);
+        //    return Ok(MCityMasterList.ToGridResponse(objGrid, "City List"));
+        //}
         [HttpPost("DistrictLgdcode")]
         public async Task<IActionResult> GetByDistrictLgdcode(GridRequestModel objGrid)
         {
-            IPagedList<MCityMaster> MCityMasterList = await _repository.GetAllPagedAsync(objGrid);
-            return Ok(MCityMasterList.ToGridResponse(objGrid, "City List"));
+            IPagedList<DistrictLGDCodeDto> DistrictLGDCodeList = await _ICityMasterService.DistrictLGDCodeListAsync(objGrid);
+            return Ok(DistrictLGDCodeList.ToGridResponse(objGrid, "DistrictLGDCode List "));
         }
         //Add API
         [HttpPost]
