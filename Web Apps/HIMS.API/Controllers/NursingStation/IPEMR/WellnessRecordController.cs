@@ -1,4 +1,5 @@
-﻿using HIMS.Api.Controllers;
+﻿using Asp.Versioning;
+using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.Inventory;
@@ -13,6 +14,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.NursingStation.IPEMR
 {
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    [ApiVersion("1")]
     public class WellnessRecordController : BaseController
     {
         private readonly IGenericService<TOpipWellnessRecord> _repository;
