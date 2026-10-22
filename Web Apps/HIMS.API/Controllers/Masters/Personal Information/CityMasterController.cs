@@ -47,6 +47,12 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
             var data = await _repository.GetById(x => x.CityId == id);
             return data.ToSingleResponse<MCityMaster, CityMasterModel>("CityMaster");
         }
+        [HttpPost("DistrictLgdcode")]
+        public async Task<IActionResult> GetByDistrictLgdcode(GridRequestModel objGrid)
+        {
+            IPagedList<MCityMaster> MCityMasterList = await _repository.GetAllPagedAsync(objGrid);
+            return Ok(MCityMasterList.ToGridResponse(objGrid, "City List"));
+        }
         //Add API
         [HttpPost]
         //[Permission(PageCode = "CityMaster", Permission = PagePermission.Add)]
