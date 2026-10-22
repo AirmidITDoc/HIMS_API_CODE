@@ -587,6 +587,9 @@ namespace HIMS.API.Controllers.Common
                 "Route" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "Route")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
                 "Nutritional_Status" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "Nutritional_Status")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
 
+                "ActivityLevel" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "ActivityLevel")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+                "SmokingStatus" => (await _IMConstant.GetAll(x => x.IsActive.Value && x.ConstantType == "SmokingStatus")).ToList().ToDropDown(nameof(MConstant.ConstantId), nameof(MConstant.Name)),
+
                 "Vaccineinformation" => (await _TVaccineInformation.GetAll(x => x.VaccineStatus.Value)).ToList().ToDropDown(nameof(TVaccineInformation.VaccineId), nameof(TVaccineInformation.VaccineName)),
                 "LoginManager" => (await _LoginManager.GetAll(x => x.IsActive.Value)).ToList().ToDropDown(nameof(LoginManager.UserId), nameof(LoginManager.UserName)),
                 _ => new List<SelectListItem>()

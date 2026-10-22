@@ -578,6 +578,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TOpeningTransactionDetail> TOpeningTransactionDetails { get; set; } = null!;
         public virtual DbSet<TOpeningTransactionHeader> TOpeningTransactionHeaders { get; set; } = null!;
         public virtual DbSet<TOpinvAdviceList> TOpinvAdviceLists { get; set; } = null!;
+        public virtual DbSet<TOpipWellnessRecord> TOpipWellnessRecords { get; set; } = null!;
         public virtual DbSet<TOprequestList> TOprequestLists { get; set; } = null!;
         public virtual DbSet<TOtAnesthesiaPreOpdiagnosis> TOtAnesthesiaPreOpdiagnoses { get; set; } = null!;
         public virtual DbSet<TOtAnesthesiaRecord> TOtAnesthesiaRecords { get; set; } = null!;
@@ -16829,6 +16830,41 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.Comments).HasMaxLength(100);
 
                 entity.Property(e => e.VisitId).HasColumnName("VisitID");
+            });
+
+            modelBuilder.Entity<TOpipWellnessRecord>(entity =>
+            {
+                entity.HasKey(e => e.WlsId);
+
+                entity.ToTable("T_OPIP_WellnessRecords");
+
+                entity.Property(e => e.AgeOfMenarche).HasMaxLength(50);
+
+                entity.Property(e => e.AgeOfMenopause).HasMaxLength(50);
+
+                entity.Property(e => e.BloodGlucose).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.CaloriesBurned).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DietType).HasMaxLength(250);
+
+                entity.Property(e => e.FluidIntake).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.GeneralWellbeing).HasMaxLength(250);
+
+                entity.Property(e => e.LastMenstrualPeriod).HasColumnType("datetime");
+
+                entity.Property(e => e.MentalStatus).HasMaxLength(250);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.SleepDuration).HasColumnType("decimal(10, 2)");
             });
 
             modelBuilder.Entity<TOprequestList>(entity =>
