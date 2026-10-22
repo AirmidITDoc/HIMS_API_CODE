@@ -6,7 +6,9 @@ namespace HIMS.Data.Models
     public partial class MCityMaster
     {
         public long CityId { get; set; }
+        public string? DistrictLgdcode { get; set; }
         public string? CityName { get; set; }
+        public string? StateCode { get; set; }
         public long? StateId { get; set; }
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }

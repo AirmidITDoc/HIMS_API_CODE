@@ -6,6 +6,7 @@ namespace HIMS.Data.Models
     public partial class MStateMaster
     {
         public long StateId { get; set; }
+        public string? StateCode { get; set; }
         public string? StateName { get; set; }
         public long? CountryId { get; set; }
         public long? AddedBy { get; set; }
