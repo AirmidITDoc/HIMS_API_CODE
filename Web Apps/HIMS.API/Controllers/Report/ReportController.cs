@@ -566,6 +566,7 @@ namespace HIMS.API.Controllers.Report
 
                 case "IpPaymentReceipt":
                 case "IpAdvanceRefundReceipt":
+                case "OpAdvanceRefundReceipt":      
                 case "IpBillRefundReceipt":
                 case "IpDischargeReceipt":
                 case "BedTransferReceipt":
@@ -690,8 +691,8 @@ namespace HIMS.API.Controllers.Report
                     break;
             }
             // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
-          long UnitId = 1;
-   //         long UnitId = Context.UnitId;
+      //    long UnitId = 1;
+          long UnitId = Context.UnitId;
             model.BaseUrl = AppSettings.Settings.BaseUrl;
             model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
             var byteFile = await _reportService.GetReportSetByProc(model, AppSettings.Settings.PdfFontPath, UnitId);
