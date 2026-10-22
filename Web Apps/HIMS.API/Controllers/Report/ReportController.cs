@@ -626,6 +626,8 @@ namespace HIMS.API.Controllers.Report
 
                 //Advance Page Printouts
                 case "IpAdvanceReceipt":
+                case "OpAdvanceReceipt":
+
                 case "IpAdvanceStatement":
                 case "NurIPprescriptionReport":
                 case "NurIPprescriptionReturnReport":
@@ -688,8 +690,8 @@ namespace HIMS.API.Controllers.Report
                     break;
             }
             // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
-      //     long UnitId = 1;
-            long UnitId = Context.UnitId;
+          long UnitId = 1;
+   //         long UnitId = Context.UnitId;
             model.BaseUrl = AppSettings.Settings.BaseUrl;
             model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
             var byteFile = await _reportService.GetReportSetByProc(model, AppSettings.Settings.PdfFontPath, UnitId);
@@ -724,34 +726,58 @@ namespace HIMS.API.Controllers.Report
         }
 
 
+
+
         [HttpPost("ViewMultipleReportFromDB")]
-        public async Task<IActionResult> ViewMultipleReportFromDB([FromBody] MultiReportRequestModel request)
+        public async Task<IActionResult> ViewMultipleReportFromDB( [FromBody] MultiReportRequestModel request)
         {
             if (request?.Reports == null || request.Reports.Count == 0)
                 return BadRequest("Reports list is empty.");
 
             if (request.Reports.Count > 50)
                 return BadRequest("Maximum 50 reports allowed at once.");
-            long UnitId = 1;
-            long StoreId = 2;
-            //long UnitId = Context.UnitId;
-            //long StoreId = Context.StoreId;
 
-            foreach (var r in request.Reports)
+            try
             {
-                r.BaseUrl = AppSettings.Settings.BaseUrl;
-                r.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
+
+                //long UnitId = 1;
+                //long StoreId = 2;
+                long UnitId = Context.UnitId;
+                long StoreId = Context.StoreId;
+
+                foreach (var report in request.Reports)
+                {
+                    if (report == null || string.IsNullOrWhiteSpace(report.Mode))
+                        return BadRequest("Invalid report request.");
+
+                    report.BaseUrl = AppSettings.Settings.BaseUrl;
+                    report.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
+                }
+
+                var result = await _reportService.GetMultipleReportMergedPdf(
+                    request.Reports,
+                    AppSettings.Settings.PdfFontPath,
+                    UnitId,
+                    StoreId);
+
+                if (result.Pdf == null || result.Pdf.Length < 100)
+                    throw new Exception("Invalid PDF generated.");
+
+                return Ok(ApiResponseHelper.GenerateResponse(
+                    ApiStatusCode.Status200OK,
+                    "Multiple reports generated successfully.",
+                    new
+                    {
+                        base64 = Convert.ToBase64String(result.Pdf),
+                        info = result.Info
+                    }));
             }
-            var (bytes, info) = await _reportService.GetMultipleReportMergedPdf(
-                request.Reports, AppSettings.Settings.PdfFontPath, UnitId, StoreId);
-
-            if (bytes == null || bytes.Length < 100)
-                throw new Exception($"Invalid PDF generated. Size: {bytes?.Length ?? 0} bytes.");
-
-            return Ok(ApiResponseHelper.GenerateResponse(
-                ApiStatusCode.Status200OK, "Report.",
-                new { base64 = Convert.ToBase64String(bytes), debug = info }));
+            catch (Exception)
+            {
+                throw;
+            }
         }
+
 
         [HttpPost("get-report-html")]
         //[Permission]

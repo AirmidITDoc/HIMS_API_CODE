@@ -19,9 +19,11 @@ using System.Text.RegularExpressions;
 using WkHtmlToPdfDotNet;
 using PdfSharpCore.Pdf;
 using PdfSharpCore.Pdf.IO;
+using System.IO;
 using System.Security.Cryptography;
 using PdfSharpCore.Pdf;
 using PdfSharpCore.Pdf.IO;
+using System.IO;
 using static HIMS.Core.Domain.Grid.ListRequestModel;
 
 
@@ -311,130 +313,342 @@ namespace HIMS.Services.Report
 
 
 
-        public async Task<(byte[] Pdf, List<object> Info)> GetMultipleReportMergedPdf(
-            List<ReportRequestModel> models,
-            string pdfFontPath = "",
-            long unitId = 1,
-            long storeId = 2)
+        public async Task<Tuple<byte[], string>> GetReportSetByProcDBMultipleprint(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1, long StoreId = 2)
         {
-            if (models == null || models.Count == 0)
-                throw new Exception("No reports requested.");
-
-            if (models.Count > 50)
-                throw new Exception("Maximum 50 reports allowed at once.");
-
-            var info = new List<object>();
-
-            using var mergedPdf = new PdfDocument();
-
-            for (int index = 0; index < models.Count; index++)
+            try
             {
-                var model = models[index];
 
-                var salesIdValue = model.SearchFields?
-                    .FirstOrDefault(x =>
-                        string.Equals(
-                            x.FieldName,
-                            "SalesID",
-                            StringComparison.OrdinalIgnoreCase))
-                    ?.FieldValue;
+                var tuple = new Tuple<byte[], string>(null, string.Empty);
+                string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
+                var mrMode = model.Mode;
+                var mType = await _context.MReportSetupOperationals.Where(r => r.ReportMode == mrMode).Select(r => new { mReportHtmlName = r.ReportHtmlName, mReportHeaderHtmlName = r.ReportHeaderHtmlName, mProcedureName = r.ProcedureName, mFolderName = r.FolderName, mReportFileName = r.ReportFileName, mIsDBFunction = r.IsDbfunction, mIsA5orA4Page = r.IsA5orA4page, mHeaderSpace = r.HeaderSpace }).FirstOrDefaultAsync();
 
-                var opIpTypeValue = model.SearchFields?
-                    .FirstOrDefault(x =>
-                        string.Equals(
-                            x.FieldName,
-                            "OP_IP_Type",
-                            StringComparison.OrdinalIgnoreCase))
-                    ?.FieldValue;
+                string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHtmlName);
+                string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHeaderHtmlName);
 
-                if (!long.TryParse(salesIdValue, out long salesId))
+                var header = mType.mReportHeaderHtmlName;
+
+                if (header == "PharmacyHeader.html")
                 {
-                    throw new Exception(
-                        $"Invalid SalesID in payload {index + 1}: {salesIdValue}");
+                    htmlHeaderFilePath = _pdfUtility.GetStoreHeader(htmlHeaderFilePath, StoreId);
+                }
+                else
+                {
+                    htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, UnitId);
+
                 }
 
-                if (!long.TryParse(opIpTypeValue, out long opIpType) ||
-                    opIpType < 0 || opIpType > 2)
+                string html;
+
+                if (mType.mIsDBFunction == false)
                 {
-                    throw new Exception(
-                        $"Invalid OP_IP_Type in payload {index + 1}: {opIpTypeValue}");
+                    html = GetHTMLView(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                }
+                else
+                {
+                    html = GetHTMLViewWithRender(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath);
                 }
 
-                try
+                html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+                html = html.Replace("{{PharmacyHeader}}", htmlHeaderFilePath);
+
+                html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
+
+                if (mType.mIsA5orA4Page == 1)
                 {
-                    // Each iteration must use its own report request.
-                    var reportResult = await GetReportSetByProcDB(
-                        model,
-                        pdfFontPath,
-                        unitId,
-                        storeId);
-
-                    byte[] pdfBytes = reportResult?.Item1;
-
-                    if (pdfBytes == null || pdfBytes.Length < 100)
+                    tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+                }
+                else
+                {
+                    if (mType.mHeaderSpace == 0)
                     {
-                        throw new Exception(
-                            $"PDF not generated for SalesID={salesId}.");
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsyncMultiplePrint(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
                     }
-
-                    using var inputStream = new MemoryStream(pdfBytes);
-
-                    using var sourcePdf = PdfReader.Open(
-                        inputStream,
-                        PdfDocumentOpenMode.Import);
-
-                    if (sourcePdf.PageCount == 0)
+                    else
                     {
-                        throw new Exception(
-                            $"No pages generated for SalesID={salesId}.");
+                        tuple = _pdfUtility.GeneratePdfFromHtmlNew(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait, PaperKind.A4, (long)mType.mHeaderSpace);
                     }
-
-                    int startPage = mergedPdf.PageCount + 1;
-
-                    // Copy the current bill's pages into the final PDF.
-                    for (int page = 0; page < sourcePdf.PageCount; page++)
-                    {
-                        mergedPdf.AddPage(sourcePdf.Pages[page]);
-                    }
-
-                    info.Add(new
-                    {
-                        index = index + 1,
-                        salesId,
-                        opIpType,
-                        startPage,
-                        pagesAdded = sourcePdf.PageCount,
-                        totalMergedPages = mergedPdf.PageCount,
-                        status = "Success"
-                    });
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception(
-                        $"Failed at payload {index + 1}, " +
-                        $"SalesID={salesId}, OP_IP_Type={opIpType}. " +
-                        $"Error: {ex.Message}",
-                        ex);
-                }
+                return tuple;
+
+
+                //tuple = _pdfUtility.GeneratePdfFromHtml(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
 
-            if (mergedPdf.PageCount == 0)
-                throw new Exception("Final PDF has no pages.");
-
-            using var outputStream = new MemoryStream();
-
-            mergedPdf.Save(outputStream, false);
-
-            byte[] finalPdfBytes = outputStream.ToArray();
-
-            info.Add(new
-            {
-                finalPdfBytes = finalPdfBytes.Length,
-                finalPageCount = mergedPdf.PageCount
-            });
-
-            return (finalPdfBytes, info);
         }
+
+
+
+        //public async Task<(byte[] Pdf, List<object> Info)> GetMultipleReportMergedPdf(
+        //    List<ReportRequestModel> models,
+        //    string pdfFontPath = "",
+        //    long unitId = 1,
+        //    long storeId = 2)
+        //{
+        //    if (models == null || models.Count == 0)
+        //        throw new Exception("No reports requested.");
+
+        //    if (models.Count > 50)
+        //        throw new Exception("Maximum 50 reports allowed at once.");
+
+        //    var info = new List<object>();
+
+        //    using var mergedPdf = new PdfDocument();
+
+        //    for (int index = 0; index < models.Count; index++)
+        //    {
+        //        var model = models[index];
+
+        //        var salesIdValue = model.SearchFields?
+        //            .FirstOrDefault(x =>
+        //                string.Equals(
+        //                    x.FieldName,
+        //                    "SalesID",
+        //                    StringComparison.OrdinalIgnoreCase))
+        //            ?.FieldValue;
+
+        //        var opIpTypeValue = model.SearchFields?
+        //            .FirstOrDefault(x =>
+        //                string.Equals(
+        //                    x.FieldName,
+        //                    "OP_IP_Type",
+        //                    StringComparison.OrdinalIgnoreCase))
+        //            ?.FieldValue;
+
+        //        if (!long.TryParse(salesIdValue, out long salesId))
+        //        {
+        //            throw new Exception(
+        //                $"Invalid SalesID in payload {index + 1}: {salesIdValue}");
+        //        }
+
+        //        if (!long.TryParse(opIpTypeValue, out long opIpType) ||
+        //            opIpType < 0 || opIpType > 2)
+        //        {
+        //            throw new Exception(
+        //                $"Invalid OP_IP_Type in payload {index + 1}: {opIpTypeValue}");
+        //        }
+
+        //        try
+        //        {
+        //            // Each iteration must use its own report request.
+        //            var reportResult = await GetReportSetByProcDB(
+        //                model,
+        //                pdfFontPath,
+        //                unitId,
+        //                storeId);
+
+        //            byte[] pdfBytes = reportResult?.Item1;
+
+        //            if (pdfBytes == null || pdfBytes.Length < 100)
+        //            {
+        //                throw new Exception(
+        //                    $"PDF not generated for SalesID={salesId}.");
+        //            }
+
+        //            using var inputStream = new MemoryStream(pdfBytes);
+
+        //            using var sourcePdf = PdfReader.Open(
+        //                inputStream,
+        //                PdfDocumentOpenMode.Import);
+
+        //            if (sourcePdf.PageCount == 0)
+        //            {
+        //                throw new Exception(
+        //                    $"No pages generated for SalesID={salesId}.");
+        //            }
+
+        //            int startPage = mergedPdf.PageCount + 1;
+
+        //            // Copy the current bill's pages into the final PDF.
+        //            for (int page = 0; page < sourcePdf.PageCount; page++)
+        //            {
+        //                mergedPdf.AddPage(sourcePdf.Pages[page]);
+        //            }
+
+        //            info.Add(new
+        //            {
+        //                index = index + 1,
+        //                salesId,
+        //                opIpType,
+        //                startPage,
+        //                pagesAdded = sourcePdf.PageCount,
+        //                totalMergedPages = mergedPdf.PageCount,
+        //                status = "Success"
+        //            });
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            throw new Exception(
+        //                $"Failed at payload {index + 1}, " +
+        //                $"SalesID={salesId}, OP_IP_Type={opIpType}. " +
+        //                $"Error: {ex.Message}",
+        //                ex);
+        //        }
+        //    }
+
+        //    if (mergedPdf.PageCount == 0)
+        //        throw new Exception("Final PDF has no pages.");
+
+        //    using var outputStream = new MemoryStream();
+
+        //    mergedPdf.Save(outputStream, false);
+
+        //    byte[] finalPdfBytes = outputStream.ToArray();
+
+        //    info.Add(new
+        //    {
+        //        finalPdfBytes = finalPdfBytes.Length,
+        //        finalPageCount = mergedPdf.PageCount
+        //    });
+
+        //    return (finalPdfBytes, info);
+        //}
+
+
+        // Replace the existing GetMultipleReportMergedPdf in ReportService.cs with this.
+        // Needs: using PdfSharpCore.Pdf; using PdfSharpCore.Pdf.IO;
+
+        public async Task<(byte[] Pdf, List<object> Info)> GetMultipleReportMergedPdf(List<ReportRequestModel> models, string pdfFontPath = "", long UnitId = 1,long StoreId = 2)
+        {
+            if (models == null || models.Count == 0)
+                throw new Exception("Reports list is empty.");
+
+            if (models.Count > 50)
+                throw new Exception("Maximum 50 reports allowed.");
+
+            using var mergedDocument = new PdfDocument();
+            var reportInfo = new List<object>();
+
+            // GetReportSetByProcDB saves every generated PDF to StorageBaseUrl and returns
+            // the path in Item2. Those are the "separate PDFs" - collect them so they can
+            // be removed once everything is merged into the single document.
+            var intermediateFiles = new List<string>();
+
+            try
+            {
+                for (int index = 0; index < models.Count; index++)
+                {
+                    var model = models[index];
+
+                    if (model == null || string.IsNullOrWhiteSpace(model.Mode))
+                        throw new Exception($"Invalid report mode in payload {index + 1}.");
+
+                    try
+                    {
+                        var reportResult = await GetReportSetByProcDBMultipleprint(model, pdfFontPath, UnitId, StoreId);
+
+                        if (!string.IsNullOrWhiteSpace(reportResult?.Item2))
+                            intermediateFiles.Add(reportResult.Item2);
+
+                        byte[] pdfBytes = reportResult?.Item1;
+
+                        if (pdfBytes == null || pdfBytes.Length < 100)
+                            throw new Exception("PDF generation failed.");
+
+                        int startPage = mergedDocument.PageCount + 1;
+                        int pageCount;
+
+                        using (var inputStream = new MemoryStream(pdfBytes))
+                        using (var inputDocument = PdfReader.Open(inputStream, PdfDocumentOpenMode.Import))
+                        {
+                            pageCount = inputDocument.PageCount;
+
+                            if (pageCount == 0)
+                                throw new Exception("Generated PDF has no pages.");
+
+                            // Every page of this report is appended to the one merged document.
+                            foreach (PdfPage page in inputDocument.Pages)
+                                mergedDocument.AddPage(page);
+                        }
+                        reportInfo.Add(new
+                        {
+                            Index = index + 1,
+                            Mode = model.Mode,
+                            StartPage = startPage,
+                            Pages = pageCount,
+                            Status = "Success"
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        // Tell the caller which payload failed instead of a generic error.
+                        throw new Exception(
+                            $"Failed at payload {index + 1} (Mode: {model.Mode}). {ex.Message}", ex);
+                    }
+                }
+                if (mergedDocument.PageCount == 0)
+                    throw new Exception("No PDF pages generated.");
+
+                using var outputStream = new MemoryStream();
+
+                mergedDocument.Save(outputStream, false);
+
+                byte[] finalPdf = outputStream.ToArray();
+
+                if (finalPdf == null || finalPdf.Length < 100)
+                    throw new Exception("Invalid merged PDF generated.");
+
+                // Read the configured physical storage path.
+                string storagePath = AppSettings.Settings.StorageBaseUrl;
+
+                if (string.IsNullOrWhiteSpace(storagePath))
+                    throw new Exception("StorageBaseUrl is not configured.");
+
+                // Create a separate folder for the final merged PDF.
+                string dateFolder = AppTime.Now.ToString("ddMMyyyy");
+
+                string folderPath = Path.Combine(
+                    storagePath,
+                    "PharmacySalesBills",
+                    dateFolder);
+
+                Directory.CreateDirectory(folderPath);
+
+                // Save only ONE merged PDF.
+                string filePath = Path.Combine(
+                    folderPath,
+                    $"PharmacySalesBills_Merged_{Guid.NewGuid():N}.pdf");
+
+                File.WriteAllBytes(filePath, finalPdf);
+
+                // Verify that the file was saved successfully.
+                var savedFile = new FileInfo(filePath);
+
+                if (!savedFile.Exists || savedFile.Length == 0)
+                    throw new Exception($"Merged PDF was not saved: {filePath}");
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"Merged PDF saved: {filePath}");
+
+                reportInfo.Add(new
+                {
+                    FileName = savedFile.Name,
+                    FilePath = savedFile.FullName,
+                    FileSizeBytes = savedFile.Length,
+                    Status = "Saved Successfully"
+                });
+
+                return (finalPdf, reportInfo);
+            }
+            finally
+            {
+                // Best-effort cleanup of the per-report PDFs; never fail the request over it.
+                foreach (var file in intermediateFiles)
+                {
+                    try
+                    {
+                        if (File.Exists(file))
+                            File.Delete(file);
+                    }
+                    catch { }
+                }
+            }
+        }
+
 
         public async Task<Tuple<byte[], string>> GetReportSetByProc(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1)
         {
@@ -1819,6 +2033,24 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+
+                #region :: OpAdvanceReceipt ::
+                case "OpAdvanceReceipt":
+                    {
+
+                        string[] colList = Array.Empty<string>();
+
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "OpAdvanceReceipt.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeader.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+                        var html = GetHTMLView("m_rptOPDAdvancePrint", model, htmlFilePath, htmlHeaderFilePath, colList);
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, "OpAdvanceReceipt", "OpAdvanceReceipt" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
                 #region :: IpAdvanceStatement ::
                 case "IpAdvanceStatement":
                     {
@@ -1854,6 +2086,7 @@ namespace HIMS.Services.Report
 
                     }
                 #endregion
+
 
                 #region :: IpBillRefundReceipt ::
                 case "IpBillRefundReceipt":
@@ -17831,6 +18064,83 @@ break;
 
                     break;
 
+
+
+                case "OpAdvanceReceipt":
+                    {
+
+                        html = html.Replace("{{reason}}", dt.GetColValue("reason"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{AdvanceNo}}", dt.GetColValue("AdvanceNo"));
+                        html = html.Replace("{{Addedby}}", dt.GetColValue("Addedby"));
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{Age}}", dt.GetColValue("Age"));
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{ReceiptNo}}", dt.GetColValue("ReceiptNo"));
+
+
+                        html = html.Replace("{{VisitTime}}", dt.GetColValue("VisitTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{PaymentTime}}", dt.GetColValue("PaymentTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+                        html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{AdvanceAmount}}", dt.GetColValue("AdvanceAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{Phone}}", dt.GetColValue("Phone"));
+
+                        html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
+                        html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
+                        html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
+                        html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
+                        html = html.Replace("{{Reason}}", dt.GetColValue("Reason"));
+
+
+                        html = html.Replace("{{CashPayAmount}}", dt.GetColValue("CashPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ChequePayAmount}}", dt.GetColValue("ChequePayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{ChequeNo}}", dt.GetColValue("ChequeNo").ConvertToString());
+                        html = html.Replace("{{CardPayAmount}}", dt.GetColValue("CardPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{CardBankName}}", dt.GetColValue("CardBankName").ConvertToString());
+                        html = html.Replace("{{CardNo}}", dt.GetColValue("CardNo").ConvertToString());
+                        html = html.Replace("{{BankName}}", dt.GetColValue("BankName").ConvertToString());
+                        html = html.Replace("{{NEFTPayAmount}}", dt.GetColValue("PatientType").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{NEFTNo}}", dt.GetColValue("NEFTNo").ConvertToString());
+                        html = html.Replace("{{NEFTBankMaster}}", dt.GetColValue("NEFTBankMaster").ConvertToString());
+                        html = html.Replace("{{PayTMPayAmount}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble().ToString("F2"));
+                        html = html.Replace("{{PayTMTranNo}}", dt.GetColValue("PayTMTranNo").ConvertToString());
+                        html = html.Replace("{{PayTMDate}}", dt.GetColValue("PayTMDate").ConvertToDouble().To2DecimalPlace());
+                        html = html.Replace("{{chkCompanyNameflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
+
+
+                        html = html.Replace("{{chkcashflag}}", dt.GetColValue("CashPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkcardflag}}", dt.GetColValue("CardPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkchequeflag}}", dt.GetColValue("ChequePayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkneftflag}}", dt.GetColValue("NEFTPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkOnlineAmountflag}}", dt.GetColValue("PayTMPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkPayTMTxnFlag}}", dt.GetColValue("PayTMTranNo").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkNeftTxnFlag}}", dt.GetColValue("NEFTNo").ConvertToDouble() > 0 ? "table-row " : "none");
+                        html = html.Replace("{{chkNEFTBankFlag}}", dt.GetColValue("NEFTBankMaster").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkCompanyflag}}", dt.GetColValue("CompanyName").ConvertToString() != "" ? "visible" : "none");
+                        html = html.Replace("{{chkremarkflag}}", dt.GetColValue("Remark").ConvertToDouble() != ' ' ? "table-row " : "none");
+
+                        html = html.Replace("{{chkpaytmflag}}", dt.GetColValue("PayTMAmount").ConvertToDouble() > 0 ? "table-row " : "none");
+
+                        string finalamt = conversion(dt.GetColValue("AdvanceAmount").ConvertToDouble().To2DecimalPlace().ToString());
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
+
+
+                        html = html.Replace("{{chkresonflag}}", dt.GetColValue("reason").ConvertToString() != null ? "block" : "none");
+
+                    }
+
+
+                    break;
+
                 case "IpAdvanceStatement":
                     {
 
@@ -17994,6 +18304,7 @@ break;
 
 
                     break;
+
 
 
                 case "IpBillRefundReceipt":

@@ -886,6 +886,109 @@ namespace HIMS.Services.Utilities
             }
         }
 
+        public Tuple<byte[], string> GeneratePdfFromHtmlAsyncMultiplePrint(string html, string storageBasePath, string folderName, string fileName = "", Orientation pageOrientation = Orientation.Portrait, PaperKind paperSize = PaperKind.A4)
+        {
+            string logFileName = $"htmlLogs_{DateTime.UtcNow:yyyy-MM-dd}.txt";
+            string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs", logFileName);
+
+            void Log(string message)
+            {
+                try
+                {
+                    using FileStream fs = new(logFilePath, FileMode.Append, FileAccess.Write, FileShare.Read, 4096, useAsync: true);
+                    using StreamWriter writer = new(fs, Encoding.UTF8);
+                    writer.WriteLine($"{DateTime.UtcNow:O} :: {message}");
+                }
+                catch { }
+            }
+
+            var stopwatch = Stopwatch.StartNew();
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(html))
+                    throw new ArgumentException("HTML content is empty.");
+
+                html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
+
+                string dateFolder = AppTime.Now.ToString("ddMMyyyy");
+                string folderPath = Path.Combine(storageBasePath, folderName, dateFolder);
+                Directory.CreateDirectory(folderPath);
+
+                string uniqueFileName =
+      $"{(string.IsNullOrWhiteSpace(fileName) ? "Report" : fileName)}_{Guid.NewGuid():N}";
+                string newFileName = Path.Combine(folderPath, uniqueFileName + ".pdf");
+                int[] delays = { 2000, 5000, 8000, 12000 };
+                byte[] bytes = null;
+
+                foreach (var delay in delays)
+                {
+                    var doc = new HtmlToPdfDocument()
+                    {
+                        GlobalSettings = {
+               ColorMode = ColorMode.Color,
+               Orientation = pageOrientation,
+               PaperSize = paperSize,
+               Margins = new MarginSettings { Top = 10, Bottom = 10, Left = 10, Right = 10 }
+           },
+                        Objects = {
+               new ObjectSettings {
+                   PagesCount = true,
+                   HtmlContent = html,
+                   WebSettings = { DefaultEncoding = "utf-8", LoadImages = true },
+                   UseLocalLinks = true,
+                   LoadSettings = new LoadSettings {BlockLocalFileAccess = false, JSDelay = delay, StopSlowScript = false}
+               }
+           }
+                    };
+
+                    try
+                    {
+                        converter.Error += (sender, e) => Log("wkhtmltopdf error: " + e.Message);
+                        converter.Warning += (sender, e) => Log("wkhtmltopdf warning: " + e.Message);
+
+                        bytes = converter.Convert(doc);
+
+                        if (bytes != null && bytes.Length > 0)
+                        {
+                            File.WriteAllBytes(newFileName, bytes);
+
+                            if (bytes.Length < 5000)
+                            {
+                                string snapshotFile = Path.Combine(folderPath, $"{Guid.NewGuid():N}_FailedSnapshot.html");
+                                File.WriteAllText(snapshotFile, html);
+                                Log($"* Blank/small PDF detected (size={bytes.Length}). HTML snapshot saved at {snapshotFile}");
+                            }
+
+                            return new Tuple<byte[], string>(bytes, newFileName);
+                        }
+                        else
+                        {
+                            Log($"* Empty output with JSDelay={delay} ms");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log($"* Exception with JSDelay={delay} ms: {ex.Message}");
+                    }
+                }
+
+                throw new Exception("PDF generation failed after adaptive retries.");
+            }
+            catch (Exception ex)
+            {
+                Log("Fatal error during PDF generation: " + ex);
+                throw new Exception("Error during PDF generation: " + ex.Message, ex);
+            }
+            finally
+            {
+                stopwatch.Stop();
+                if (stopwatch.ElapsedMilliseconds > 10000)
+                {
+                    Log($"* Long execution time: {stopwatch.ElapsedMilliseconds} ms");
+                }
+            }
+        }
 
 
         //public Tuple<byte[], string> GeneratePdfFromHtmlAsync(string html, string storageBasePath, string FolderName, string FileName = "", Orientation PageOrientation = Orientation.Portrait, PaperKind PaperSize = PaperKind.A4)
