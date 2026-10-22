@@ -40,6 +40,7 @@
   <ItemGroup>
     <PackageReference Include="Asp.Versioning.Mvc" Version="6.4.0" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoWrapper.core" Version="4.5.1" />
     <PackageReference Include="ClosedXML" Version="0.104.2" />
     <PackageReference Include="CsvHelper" Version="33.0.1" />
     <PackageReference Include="DinkToPdf" Version="1.0.8" />
