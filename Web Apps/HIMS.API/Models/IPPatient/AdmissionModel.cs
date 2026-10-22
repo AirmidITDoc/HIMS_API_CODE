@@ -56,6 +56,7 @@ namespace HIMS.API.Models.IPPatient
         public long? AbhaTranId { get; set; }
         public bool? IsMember { get; set; }
         public long RegId { get; set; }
+        public long? DistrictId { get; set; }
 
 
     }
