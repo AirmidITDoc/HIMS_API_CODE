@@ -626,6 +626,8 @@ namespace HIMS.API.Controllers.Report
 
                 //Advance Page Printouts
                 case "IpAdvanceReceipt":
+                case "OpAdvanceReceipt":
+
                 case "IpAdvanceStatement":
                 case "NurIPprescriptionReport":
                 case "NurIPprescriptionReturnReport":
@@ -688,8 +690,8 @@ namespace HIMS.API.Controllers.Report
                     break;
             }
             // PLEASE COMMENT THE SECOUND UNIITID DECLARATION AND UNCOMMENT THE FIRST ONE WHILE CHECKING FROM SWAGGER AND BEFORE PUSHING CODE UNDO THE CHANGES
-    //      long UnitId = 1;
-            long UnitId = Context.UnitId;
+          long UnitId = 1;
+   //         long UnitId = Context.UnitId;
             model.BaseUrl = AppSettings.Settings.BaseUrl;
             model.StorageBaseUrl = AppSettings.Settings.StorageBaseUrl;
             var byteFile = await _reportService.GetReportSetByProc(model, AppSettings.Settings.PdfFontPath, UnitId);
@@ -738,10 +740,10 @@ namespace HIMS.API.Controllers.Report
             try
             {
 
-                long UnitId = 1;
-                long StoreId = 2;
-                //long UnitId = Context.UnitId;
-                //long StoreId = Context.StoreId;
+                //long UnitId = 1;
+                //long StoreId = 2;
+                long UnitId = Context.UnitId;
+                long StoreId = Context.StoreId;
 
                 foreach (var report in request.Reports)
                 {
