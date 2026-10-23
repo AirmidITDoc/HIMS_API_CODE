@@ -1048,6 +1048,77 @@ namespace HIMS.Services.AbhaIntegration
                     });
                 }
             }
+            if (ds.Tables.Count > 2)
+            {
+                wellness.physicalActivity = new List<WellnessRecordItem>();
+
+                foreach (DataRow row in ds.Tables[2].Rows)
+                {
+                    wellness.physicalActivity.Add(new WellnessRecordItem
+                    {
+                        vitalCode = row["VitalCode"].ToString(),
+                        vitalValue = row["VitalValue"].ToString(),
+                        unit = row["Unit"].ToString(),
+                        status = row["Status"].ToString(),
+                        effectiveDate = row["EffectiveDate"].ToString(),
+                        performerId = row["PerformerId"].ToString()
+                    });
+                }
+            }
+
+            if (ds.Tables.Count > 3)
+            {
+                wellness.generalAssessment = new List<WellnessRecordItem>();
+
+                foreach (DataRow row in ds.Tables[3].Rows)
+                {
+                    wellness.generalAssessment.Add(new WellnessRecordItem
+                    {
+                        vitalCode = row["VitalCode"].ToString(),
+                        vitalValue = row["VitalValue"].ToString(),
+                        unit = row["Unit"].ToString(),
+                        status = row["Status"].ToString(),
+                        effectiveDate = row["EffectiveDate"].ToString(),
+                        performerId = row["PerformerId"].ToString()
+                    });
+                }
+            }
+
+            if (ds.Tables.Count > 4)
+            {
+                wellness.womenHealth = new List<WellnessRecordItem>();
+
+                foreach (DataRow row in ds.Tables[4].Rows)
+                {
+                    wellness.womenHealth.Add(new WellnessRecordItem
+                    {
+                        vitalCode = row["VitalCode"].ToString(),
+                        vitalValue = row["VitalValue"].ToString(),
+                        unit = row["Unit"].ToString(),
+                        status = row["Status"].ToString(),
+                        effectiveDate = row["EffectiveDate"].ToString(),
+                        performerId = row["PerformerId"].ToString()
+                    });
+                }
+            }
+
+            if (ds.Tables.Count > 5)
+            {
+                wellness.lifestyle = new List<WellnessRecordItem>();
+
+                foreach (DataRow row in ds.Tables[5].Rows)
+                {
+                    wellness.lifestyle.Add(new WellnessRecordItem
+                    {
+                        vitalCode = row["VitalCode"].ToString(),
+                        vitalValue = row["VitalValue"].ToString(),
+                        unit = row["Unit"].ToString(),
+                        status = row["Status"].ToString(),
+                        effectiveDate = row["EffectiveDate"].ToString(),
+                        performerId = row["PerformerId"].ToString()
+                    });
+                }
+            }
             if ((wellness.vitalSigns == null || wellness.vitalSigns.Count == 0) &&
                 (wellness.bodyMeasurement == null || wellness.bodyMeasurement.Count == 0) &&
                 (wellness.physicalActivity == null || wellness.physicalActivity.Count == 0) &&
@@ -1818,7 +1889,7 @@ namespace HIMS.Services.AbhaIntegration
                                                  "Procedures", "FollowUp" },
             ["PrescriptionRecord"] = new[] { "Prescriptions" },
             ["ImmunizationRecord"] = new[] { "Immunizations", "ImmunizationRecommendations" },
-            ["WellnessRecord"] = new[] { "WellnessRecord", "ObservationResult" },
+            ["WellnessRecord"] = new[] { "WellnessRecord" },
             ["HealthDocumentRecord"] = new[] { "Reports" },
             ["InvoiceRecord"] = new[] { "InvoiceRecord" },
         };
@@ -1882,13 +1953,31 @@ namespace HIMS.Services.AbhaIntegration
                 return;
             }
 
+            //foreach (var p in type.GetProperties())
+            //{
+            //    var v = p.GetValue(value);
+
+            //    // not an error when null: optional-by-design fields, and WellnessRecord sub-lists
+            //    bool optional = p.GetCustomAttribute<JsonIgnoreAttribute>()?.Condition == JsonIgnoreCondition.WhenWritingNull;
+            //    if (v == null && (optional || type == typeof(WellnessRecord))) continue;
+
+            //    Scan(path == "" ? p.Name : $"{path}.{p.Name}", v, empty);
+            //}
             foreach (var p in type.GetProperties())
             {
                 var v = p.GetValue(value);
 
-                // not an error when null: optional-by-design fields, and WellnessRecord sub-lists
+                // Wellness: "unit" is not mandatory
+                if (type == typeof(WellnessRecordItem) && p.Name == "unit")
+                    continue;
+
+                // Wellness: a block the user didn't fill (null or empty list) is ignored
+                if (type == typeof(WellnessRecord) && (v == null || (v is ICollection c && c.Count == 0)))
+                    continue;
+
+                // not an error when null: optional-by-design fields
                 bool optional = p.GetCustomAttribute<JsonIgnoreAttribute>()?.Condition == JsonIgnoreCondition.WhenWritingNull;
-                if (v == null && (optional || type == typeof(WellnessRecord))) continue;
+                if (v == null && optional) continue;
 
                 Scan(path == "" ? p.Name : $"{path}.{p.Name}", v, empty);
             }

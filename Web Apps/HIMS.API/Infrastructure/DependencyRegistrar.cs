@@ -122,7 +122,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<IImmunizatoinInfoService, ImmunizatoinInfoService>();
             services.AddScoped<IDietAssessmentInfoService, DietAssessmentInfoService>();
             services.AddScoped<IDietPlanScheduleService, DietPlanScheduleService>();
-
+            services.AddScoped<ICityMasterServie, CityMasterServie>();
 
 
 

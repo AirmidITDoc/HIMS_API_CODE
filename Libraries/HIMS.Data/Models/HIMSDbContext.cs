@@ -261,6 +261,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MItemMaster> MItemMasters { get; set; } = null!;
         public virtual DbSet<MItemTypeMaster> MItemTypeMasters { get; set; } = null!;
         public virtual DbSet<MItemWiseSupplierRate> MItemWiseSupplierRates { get; set; } = null!;
+        public virtual DbSet<MLgdGovernmentDatum> MLgdGovernmentData { get; set; } = null!;
         public virtual DbSet<MLoginAccessConfig> MLoginAccessConfigs { get; set; } = null!;
         public virtual DbSet<MLvwRetrievePathologyResultUpdateIpageWise> MLvwRetrievePathologyResultUpdateIpageWises { get; set; } = null!;
         public virtual DbSet<MLvwRetrievePathologyResultUpdateLabageWise> MLvwRetrievePathologyResultUpdateLabageWises { get; set; } = null!;
@@ -6882,7 +6883,13 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.DistrictLgdcode)
+                    .HasMaxLength(10)
+                    .HasColumnName("DistrictLGDCode");
+
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.StateCode).HasMaxLength(10);
             });
 
             modelBuilder.Entity<MClassMaster>(entity =>
@@ -8001,6 +8008,31 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.SupplierRate).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<MLgdGovernmentDatum>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("M_LGD_GovernmentData");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DistrictLgdcode).HasColumnName("DistrictLGDCode");
+
+                entity.Property(e => e.DistrictName).HasMaxLength(250);
+
+                entity.Property(e => e.DistrictNameLocal).HasMaxLength(250);
+
+                entity.Property(e => e.Hierarchy).HasMaxLength(250);
+
+                entity.Property(e => e.Lgdid).HasColumnName("LGDId");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ShortNameOfDistrict).HasMaxLength(250);
+
+                entity.Property(e => e.StateName).HasMaxLength(250);
             });
 
             modelBuilder.Entity<MLoginAccessConfig>(entity =>
@@ -9523,6 +9555,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.StateCode).HasMaxLength(10);
 
                 entity.Property(e => e.StateName).HasMaxLength(100);
             });
