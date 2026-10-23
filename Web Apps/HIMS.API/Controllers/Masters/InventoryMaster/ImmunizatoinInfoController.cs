@@ -55,11 +55,11 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
 
-            long? regId = obj.FirstOrDefault()?.RegId;
+            long? Opipid = obj.FirstOrDefault()?.Opipid;
 
-            if (regId == null || regId == 0)
+            if (Opipid == null || Opipid == 0)
             {
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "RegId is required");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Opipid is required");
             }
 
             List<TImmunizatoinInfo> models = new();
@@ -69,13 +69,13 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
                 TImmunizatoinInfo model = item.MapTo<TImmunizatoinInfo>();
 
                 model.ImmunizatoinId = 0;
-                model.RegId = regId;
+                model.Opipid = Opipid;
                 model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 models.Add(model);
             }
 
-            await _immunizationService.ImmunizationInfoAsync(models, regId.Value, CurrentUserId, CurrentUserName);
+            await _immunizationService.ImmunizationInfoAsync(models, Opipid.Value, CurrentUserId, CurrentUserName);
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Immunization info saved successfully.");
         }
