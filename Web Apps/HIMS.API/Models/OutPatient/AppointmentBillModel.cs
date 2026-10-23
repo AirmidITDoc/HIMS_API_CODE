@@ -59,7 +59,7 @@ namespace HIMS.API.Models.OutPatient
             public long? AbhaTranId { get; set; }
             public bool? IsMember { get; set; }
             public long RegId { get; set; }
-
+            public long? DistrictId { get; set; }
         }
         public class AppBillingMainModels
         {
