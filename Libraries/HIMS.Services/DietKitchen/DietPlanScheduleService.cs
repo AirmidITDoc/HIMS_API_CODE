@@ -2,9 +2,12 @@
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
+using HIMS.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -27,7 +30,7 @@ namespace HIMS.Services.DietKitchen
 
         public virtual async Task<IPagedList<DietPlanDetailListDto>> DietplandetailsListAsync(GridRequestModel model)
         {
-            return await DatabaseHelper.GetGridDataBySp<DietPlanDetailListDto>(model, "ps_Rtrv_DietPlanDetails");
+            return await DatabaseHelper.GetGridDataBySp<DietPlanDetailListDto>(model, "ps_Rtrv_DietplanDetails");
         }
 
         public virtual async Task InsertAsync(TDietPlanSchedule objDietPlanSchedule, int UserId, string Username)
@@ -71,14 +74,12 @@ namespace HIMS.Services.DietKitchen
             var newDetails = objDietPlanSchedule.TDietPlanScheduleDetails?.Cast<TDietPlanScheduleDetail>().ToList() ?? new List<TDietPlanScheduleDetail>();
             objDietPlanSchedule.TDietPlanScheduleDetails = null;
 
-            // Delete existing details first using correct DbSet name
             var lstDetails = await _context.TDietPlanScheduleDetails.Where(x => x.DietPlanId == dietPlanId).ToListAsync();
             if (lstDetails.Any())
                 _context.TDietPlanScheduleDetails.RemoveRange(lstDetails);
 
             await _context.SaveChangesAsync();
 
-            // Attach and update header
             _context.Attach(objDietPlanSchedule);
             _context.Entry(objDietPlanSchedule).State = EntityState.Modified;
 
@@ -91,10 +92,9 @@ namespace HIMS.Services.DietKitchen
                     _context.Entry(objDietPlanSchedule).Property(column).IsModified = false;
             }
 
-            // Re-insert new details with proper foreign key and audit fields
             foreach (var detail in newDetails)
             {
-                detail.DietPlanDetId = 0; 
+                detail.DietPlanDetId = 0;
                 detail.DietPlanId = dietPlanId;
                 detail.CreatedBy = UserId;
                 detail.CreatedDate = AppTime.Now;
@@ -106,6 +106,73 @@ namespace HIMS.Services.DietKitchen
 
             await _context.SaveChangesAsync();
             scope.Complete();
+        }
+
+        public virtual async Task Cancel(TDietPlanSchedule objDietPlanSchedule, int CurrentUserId, string CurrentUserName)
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection());
+                odal.SetTransaction(transaction.GetDbTransaction());
+
+                string[] Entity = { "DietPlanId", "IsCancelledBy", "IsCancelledDate" };
+                var entity = objDietPlanSchedule.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!Entity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+
+                entity["IsCancelledDate"] = DateTime.Now;
+
+                odal.ExecuteNonQueryNew("ps_DietPlanscheduleCancel", CommandType.StoredProcedure, "", entity);
+                await _context.LogProcedureExecution(entity, nameof(TDietPlanSchedule), (int)objDietPlanSchedule.DietPlanId, Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+
+        public virtual async Task CancelD(TDietPlanScheduleDetail objDietPlanScheduleDetail, int CurrentUserId, string CurrentUserName)
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection());
+                odal.SetTransaction(transaction.GetDbTransaction());
+
+               
+                string[] Entity = { "DietPlanDetId", "IsCancelledBy", "IsCancelledDate", "CancelledReason" };
+                var entity = objDietPlanScheduleDetail.ToDictionary();
+                foreach (var rProperty in entity.Keys.ToList())
+                {
+                    if (!Entity.Contains(rProperty))
+                        entity.Remove(rProperty);
+                }
+
+                entity["IsCancelledDate"] = DateTime.Now;
+
+                odal.ExecuteNonQueryNew("ps_DietPlanscheduledetailCancel", CommandType.StoredProcedure, "", entity);
+                await _context.LogProcedureExecution(entity, nameof(TDietPlanScheduleDetail), (int)objDietPlanScheduleDetail.DietPlanDetId, Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
     }
 }

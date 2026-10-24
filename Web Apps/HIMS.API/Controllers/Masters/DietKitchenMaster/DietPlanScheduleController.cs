@@ -101,7 +101,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             {
                 foreach (var q in model.TDietPlanScheduleDetails)
                 {
-                    q.DietPlanDetId = 0; 
+                    q.DietPlanDetId = 0;
                 }
             }
 
@@ -113,23 +113,42 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.DietPlanId);
         }
 
-        [HttpDelete]
+        [HttpPost("DietPlanScheduleCancel")]
         //[Permission]
-        public async Task<ApiResponse> Delete(long id)
+        public async Task<ApiResponse> Cancel(DietPlanScheduleCancelModel obj)
         {
-            TDietPlanSchedule model = await _repository.GetById(x => x.DietPlanId == id);
-            if ((model?.DietPlanId ?? 0) > 0)
+            TDietPlanSchedule model = obj.MapTo<TDietPlanSchedule>();
+            if (obj.DietPlanId != 0)
             {
-                model.IsCancelled = model.IsCancelled == true ? false : true;
+                model.DietPlanId = obj.DietPlanId;
                 model.IsCancelledBy = CurrentUserId;
                 model.IsCancelledDate = AppTime.Now;
-                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
+                await _dietPlanScheduleService.Cancel(model, CurrentUserId, CurrentUserName);
             }
             else
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+
+        [HttpPost("DietPlanScheduleDetailCancel")]
+        //[Permission]
+        public async Task<ApiResponse> CancelD(DietPlanScheduleDetailsCancelModel obj)
+        {
+            TDietPlanScheduleDetail model = obj.MapTo<TDietPlanScheduleDetail>();
+            if (obj.DietPlanDetId != 0)
+            {
+                model.DietPlanDetId = obj.DietPlanDetId;
+                model.IsCancelledBy = CurrentUserId;
+                model.IsCancelledDate = AppTime.Now;
+                await _dietPlanScheduleService.CancelD(model, CurrentUserId, CurrentUserName);
+            }
+            else
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
     }
 }

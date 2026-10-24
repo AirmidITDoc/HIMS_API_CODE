@@ -7,6 +7,7 @@ namespace HIMS.Services.DietKitchen
         public long DietPlanId { get; set; }
         public long Opipid { get; set; }
         public long Opiptype { get; set; }
+        public bool? DraftorFinal { get; set; }
         public DateTime PlanStartDate { get; set; }
         public DateTime PlanEndDate { get; set; }
         public DateTime PlanDate { get; set; }
@@ -26,23 +27,38 @@ namespace HIMS.Services.DietKitchen
         public string? AgeDay { get; set; }
         public string? DietName { get; set; }
         public string? DietMenuName { get; set; }
+        public string? Acceptuser { get; set; }
+        public string? Progressuser { get; set; }
+        public string? Deliveruser { get; set; }
+        public string? Cancleuser { get; set; }
+        public bool? IsAccepted { get; set; }
+        public bool? IsInProgress { get; set; }
+        public bool? IsDelivered { get; set; }
+        public bool? IsCancelled { get; set; }
+        public string? CancelledReason { get; set; }
     }
 
     public class DietPlanDetailListDto
     {
         public long DietPlanId { get; set; }
         public long OPIPID { get; set; }
-        public long OPIPType { get; set; }
-        public DateTime PlanStartDate { get; set; }
-        public DateTime PlanEndDate { get; set; }
         public DateTime PlanDate { get; set; }
         public string? DietName { get; set; }
         public string? MealName { get; set; }
+        public string? DietMenuName { get; set; }
         public string? Instruction { get; set; }
         public string? Comment { get; set; }
-        public long DietTypeId { get; set; }
-        public long DietMealTypeId { get; set; }
-        public long DietMenuId { get; set; }
-        public string? DietMenuName { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string? Status { get; set; }
+        public bool? IsAccepted { get; set; }
+        public long? IsInProgressBy { get; set; }
+        public bool? IsDelivered { get; set; }
+        public bool? IsCancelled { get; set; }
+        public string? CancelledReason { get; set; }
+        public string? Acceptuser { get; set; }
+        public string? Progressuser { get; set; }
+        public string? Deliveruser { get; set; }
+        public string? Cancleuser { get; set; }
+        public string? CreatedUser { get; set; }
     }
 }

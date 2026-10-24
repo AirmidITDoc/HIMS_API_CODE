@@ -166,6 +166,9 @@ namespace HIMS.API.Infrastructure
             CreateMap<TDietAssessmentInfo, DietAssessmentInfoModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TDietPlanSchedule, DietPlanScheduleModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<TDietPlanScheduleDetail, DietPlanScheduleDetailModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TDietPlanScheduleDetail, DietPlanScheduleDetailsCancelModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TDietPlanSchedule, DietPlanScheduleCancelModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
