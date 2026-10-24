@@ -87,7 +87,9 @@ namespace HIMS.API.Controllers.Pathology
         [Permission]
         public async Task<IActionResult> ListHomeCollection(GridRequestModel objGrid)
         {
-            IPagedList<HomeCollectionRegistrationInfoListDto> HomeCollectionRegistrationInfoList = await _IHomeCollectionService.HomeCollectionListAsync(objGrid);
+            long UnitId = Context.UnitId;
+            //long UnitId = 1;
+            IPagedList<HomeCollectionRegistrationInfoListDto> HomeCollectionRegistrationInfoList = await _IHomeCollectionService.HomeCollectionListAsync(objGrid, UnitId);
             return Ok(HomeCollectionRegistrationInfoList.ToGridResponse(objGrid, "HomeCollectionRegistrationInfo List"));
         }
 

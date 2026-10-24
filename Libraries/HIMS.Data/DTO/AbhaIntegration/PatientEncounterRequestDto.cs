@@ -82,7 +82,7 @@ namespace HIMS.Data.DTO.AbhaIntegration
         public List<PhysicalExam> PhysicalExams { get; set; }
         public List<InvoiceRecord> InvoiceRecord { get; set; }
         public List<MedicalHistory> MedicalHistory { get; set; }
-        public List<Referral> Referrals { get; set; }
+        public List<Referral> Referral { get; set; }
         public List<InvestigationAdvice> InvestigationAdvice { get; set; }
         public List<Procedure> Procedures { get; set; }
         public List<FamilyMedicalHistory> FamilyMedicalHistory { get; set; }
@@ -383,6 +383,7 @@ public class ObservationResult
         public CodeableConcept referralCode { get; set; }
         public string status { get; set; }
         public string intent { get; set; }
+        public string authoredOn { get; set; }
     }
 
     public class InvestigationAdvice
@@ -390,6 +391,7 @@ public class ObservationResult
         public CodeableConcept referralCode { get; set; }
         public string status { get; set; }
         public string intent { get; set; }
+        public string authoredOn { get; set; }
     }
     public class Procedure
     {

@@ -28,11 +28,11 @@ namespace HIMS.Services.Inventory
         }
 
 
-        public virtual async Task ImmunizationInfoAsync(List<TImmunizatoinInfo> models, long regId, int UserId, string Username)
+        public virtual async Task ImmunizationInfoAsync(List<TImmunizatoinInfo> models, long Opipid, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
 
-            var oldRecords = await _context.TImmunizatoinInfos.Where(x => x.RegId == regId).ToListAsync();
+            var oldRecords = await _context.TImmunizatoinInfos.Where(x => x.Opipid == Opipid).ToListAsync();
 
             _context.TImmunizatoinInfos.RemoveRange(oldRecords);
 

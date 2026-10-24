@@ -803,7 +803,7 @@ namespace HIMS.Services.AbhaIntegration
 
             response.Visits[0].MedicalHistory = GetMedicalHistory(medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 0 ? medicalHistoryDs.Tables[0] : null,model.HipId);
 
-            response.Visits[0].Referrals = GetReferrals(medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 1 ? medicalHistoryDs.Tables[1] : null,model.HipId);
+            response.Visits[0].Referral = GetReferrals(medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 1 ? medicalHistoryDs.Tables[1] : null,model.HipId);
 
             response.Visits[0].InvestigationAdvice = GetInvestigationAdvice(medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 2 ? medicalHistoryDs.Tables[2] : null,model.HipId);
 
@@ -1435,7 +1435,8 @@ namespace HIMS.Services.AbhaIntegration
                     },
 
                     status = row["Status"].ToString(),
-                    intent = row["Intent"].ToString()
+                    intent = row["Intent"].ToString(),
+                    authoredOn = row["AuthoredOn"].ToString()
                 });
             }
 
@@ -1469,7 +1470,8 @@ namespace HIMS.Services.AbhaIntegration
                     },
 
                     status = row["Status"].ToString(),
-                    intent = row["Intent"].ToString()
+                    intent = row["Intent"].ToString(),
+                    authoredOn = row["AuthoredOn"].ToString()
                 });
             }
 
@@ -1889,7 +1891,7 @@ namespace HIMS.Services.AbhaIntegration
                                                  "Procedures", "FollowUp" },
             ["PrescriptionRecord"] = new[] { "Prescriptions" },
             ["ImmunizationRecord"] = new[] { "Immunizations", "ImmunizationRecommendations" },
-            ["WellnessRecord"] = new[] { "WellnessRecord", "ObservationResult" },
+            ["WellnessRecord"] = new[] { "WellnessRecord" },
             ["HealthDocumentRecord"] = new[] { "Reports" },
             ["InvoiceRecord"] = new[] { "InvoiceRecord" },
         };
@@ -1953,13 +1955,31 @@ namespace HIMS.Services.AbhaIntegration
                 return;
             }
 
+            //foreach (var p in type.GetProperties())
+            //{
+            //    var v = p.GetValue(value);
+
+            //    // not an error when null: optional-by-design fields, and WellnessRecord sub-lists
+            //    bool optional = p.GetCustomAttribute<JsonIgnoreAttribute>()?.Condition == JsonIgnoreCondition.WhenWritingNull;
+            //    if (v == null && (optional || type == typeof(WellnessRecord))) continue;
+
+            //    Scan(path == "" ? p.Name : $"{path}.{p.Name}", v, empty);
+            //}
             foreach (var p in type.GetProperties())
             {
                 var v = p.GetValue(value);
 
-                // not an error when null: optional-by-design fields, and WellnessRecord sub-lists
+                // Wellness: "unit" is not mandatory
+                if (type == typeof(WellnessRecordItem) && p.Name == "unit")
+                    continue;
+
+                // Wellness: a block the user didn't fill (null or empty list) is ignored
+                if (type == typeof(WellnessRecord) && (v == null || (v is ICollection c && c.Count == 0)))
+                    continue;
+
+                // not an error when null: optional-by-design fields
                 bool optional = p.GetCustomAttribute<JsonIgnoreAttribute>()?.Condition == JsonIgnoreCondition.WhenWritingNull;
-                if (v == null && (optional || type == typeof(WellnessRecord))) continue;
+                if (v == null && optional) continue;
 
                 Scan(path == "" ? p.Name : $"{path}.{p.Name}", v, empty);
             }
