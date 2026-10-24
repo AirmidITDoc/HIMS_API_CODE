@@ -803,7 +803,7 @@ namespace HIMS.Services.AbhaIntegration
 
             response.Visits[0].MedicalHistory = GetMedicalHistory(medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 0 ? medicalHistoryDs.Tables[0] : null,model.HipId);
 
-            response.Visits[0].Referrals = GetReferrals(medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 1 ? medicalHistoryDs.Tables[1] : null,model.HipId);
+            response.Visits[0].Referral = GetReferrals(medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 1 ? medicalHistoryDs.Tables[1] : null,model.HipId);
 
             response.Visits[0].InvestigationAdvice = GetInvestigationAdvice(medicalHistoryDs != null && medicalHistoryDs.Tables.Count > 2 ? medicalHistoryDs.Tables[2] : null,model.HipId);
 
@@ -1435,7 +1435,8 @@ namespace HIMS.Services.AbhaIntegration
                     },
 
                     status = row["Status"].ToString(),
-                    intent = row["Intent"].ToString()
+                    intent = row["Intent"].ToString(),
+                    authoredOn = row["AuthoredOn"].ToString()
                 });
             }
 
@@ -1469,7 +1470,8 @@ namespace HIMS.Services.AbhaIntegration
                     },
 
                     status = row["Status"].ToString(),
-                    intent = row["Intent"].ToString()
+                    intent = row["Intent"].ToString(),
+                    authoredOn = row["AuthoredOn"].ToString()
                 });
             }
 
