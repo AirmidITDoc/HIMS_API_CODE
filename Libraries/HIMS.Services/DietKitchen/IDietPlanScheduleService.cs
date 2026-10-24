@@ -9,6 +9,7 @@ namespace HIMS.Services.DietKitchen
     {
         Task<IPagedList<DietPlanScheduleListDto>> GetListAsync(GridRequestModel model);
         Task<IPagedList<DietPlanDetailListDto>> DietplandetailsListAsync(GridRequestModel model);
-        Task InsertAsync(List<TDietPlanSchedule> objDietPlanSchedules, int UserId, string Username);
+        Task InsertAsync(TDietPlanSchedule objDietPlanSchedule, int UserId, string Username);
+        Task UpdateAsync(TDietPlanSchedule objDietPlanSchedule, int UserId, string Username, string[]? ignoreColumns = null);
     }
 }

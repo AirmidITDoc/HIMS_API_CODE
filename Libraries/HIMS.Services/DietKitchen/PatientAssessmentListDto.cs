@@ -30,5 +30,7 @@ namespace HIMS.Data.DTO.DietKitchen
         public string? AgeMonth { get; set; }
         public string? AgeDay { get; set; }
         public string? FoodPreferenceName { get; set; }
+        public string? NutritionStatusName { get; set; }
+
     }
 }

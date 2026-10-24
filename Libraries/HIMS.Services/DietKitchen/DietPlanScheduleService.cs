@@ -1,13 +1,13 @@
-﻿using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using HIMS.Core.Domain.Grid;
+﻿using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.DataProviders;
 using HIMS.Data.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
-using System.Collections.Generic;
-using System;
 
 namespace HIMS.Services.DietKitchen
 {
@@ -32,7 +32,9 @@ namespace HIMS.Services.DietKitchen
 
         public virtual async Task InsertAsync(TDietPlanSchedule objDietPlanSchedule, int UserId, string Username)
         {
-            using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.Serializable }, TransactionScopeAsyncFlowOption.Enabled);
+            using var scope = new TransactionScope(TransactionScopeOption.Required,
+                new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },
+                TransactionScopeAsyncFlowOption.Enabled);
 
             objDietPlanSchedule.CreatedBy = UserId;
             objDietPlanSchedule.CreatedDate = AppTime.Now;
@@ -40,35 +42,70 @@ namespace HIMS.Services.DietKitchen
             objDietPlanSchedule.ModifiedDate = AppTime.Now;
             objDietPlanSchedule.IsCancelled = false;
 
+            if (objDietPlanSchedule.TDietPlanScheduleDetails != null)
+            {
+                foreach (var detail in objDietPlanSchedule.TDietPlanScheduleDetails)
+                {
+                    detail.CreatedBy = UserId;
+                    detail.CreatedDate = AppTime.Now;
+                    detail.ModifiedBy = UserId;
+                    detail.ModifiedDate = AppTime.Now;
+                    detail.IsCancelled = false;
+                }
+            }
+
             _context.TDietPlanSchedules.Add(objDietPlanSchedule);
-            await _context.SaveChangesAsync(UserId, Username);
+            await _context.SaveChangesAsync();
 
             scope.Complete();
         }
 
-        
-        public virtual async Task InsertAsync(List<TDietPlanSchedule> objDietPlanSchedules, int UserId, string Username)
+        public virtual async Task UpdateAsync(TDietPlanSchedule objDietPlanSchedule, int UserId, string Username, string[]? ignoreColumns = null)
         {
-            using var scope = new TransactionScope(
-                TransactionScopeOption.Required,
-                new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.Serializable },
-                TransactionScopeAsyncFlowOption.Enabled
-            );
+            using var scope = new TransactionScope(TransactionScopeOption.Required,
+                new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted },
+                TransactionScopeAsyncFlowOption.Enabled);
 
-            foreach (var item in objDietPlanSchedules)
+            long dietPlanId = objDietPlanSchedule.DietPlanId;
+
+            var newDetails = objDietPlanSchedule.TDietPlanScheduleDetails?.Cast<TDietPlanScheduleDetail>().ToList() ?? new List<TDietPlanScheduleDetail>();
+            objDietPlanSchedule.TDietPlanScheduleDetails = null;
+
+            // Delete existing details first using correct DbSet name
+            var lstDetails = await _context.TDietPlanScheduleDetails.Where(x => x.DietPlanId == dietPlanId).ToListAsync();
+            if (lstDetails.Any())
+                _context.TDietPlanScheduleDetails.RemoveRange(lstDetails);
+
+            await _context.SaveChangesAsync();
+
+            // Attach and update header
+            _context.Attach(objDietPlanSchedule);
+            _context.Entry(objDietPlanSchedule).State = EntityState.Modified;
+
+            objDietPlanSchedule.ModifiedBy = UserId;
+            objDietPlanSchedule.ModifiedDate = AppTime.Now;
+
+            if (ignoreColumns?.Length > 0)
             {
-                item.CreatedBy = UserId;
-                item.CreatedDate = AppTime.Now;
-                item.ModifiedBy = UserId;
-                item.ModifiedDate = AppTime.Now;
-                item.IsCancelled = false;
-
-                _context.TDietPlanSchedules.Add(item);
+                foreach (var column in ignoreColumns)
+                    _context.Entry(objDietPlanSchedule).Property(column).IsModified = false;
             }
 
-            await _context.SaveChangesAsync(UserId, Username);
+            // Re-insert new details with proper foreign key and audit fields
+            foreach (var detail in newDetails)
+            {
+                detail.DietPlanDetId = 0; 
+                detail.DietPlanId = dietPlanId;
+                detail.CreatedBy = UserId;
+                detail.CreatedDate = AppTime.Now;
+                detail.ModifiedBy = UserId;
+                detail.ModifiedDate = AppTime.Now;
+                detail.IsCancelled = false;
+            }
+            await _context.TDietPlanScheduleDetails.AddRangeAsync(newDetails);
+
+            await _context.SaveChangesAsync();
             scope.Complete();
         }
     }
 }
-

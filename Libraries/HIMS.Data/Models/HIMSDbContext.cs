@@ -474,6 +474,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TDietPatReqDetail> TDietPatReqDetails { get; set; } = null!;
         public virtual DbSet<TDietPatientRequestHeader> TDietPatientRequestHeaders { get; set; } = null!;
         public virtual DbSet<TDietPlanSchedule> TDietPlanSchedules { get; set; } = null!;
+        public virtual DbSet<TDietPlanScheduleDetail> TDietPlanScheduleDetails { get; set; } = null!;
         public virtual DbSet<TDiscApprovalDetail> TDiscApprovalDetails { get; set; } = null!;
         public virtual DbSet<TDiscCaseSheet> TDiscCaseSheets { get; set; } = null!;
         public virtual DbSet<TDiscountTransactionHistory> TDiscountTransactionHistories { get; set; } = null!;
@@ -8012,9 +8013,11 @@ namespace HIMS.Data.Models
 
             modelBuilder.Entity<MLgdGovernmentDatum>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Lgdid);
 
                 entity.ToTable("M_LGD_GovernmentData");
+
+                entity.Property(e => e.Lgdid).HasColumnName("LGDId");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
@@ -8025,8 +8028,6 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.DistrictNameLocal).HasMaxLength(250);
 
                 entity.Property(e => e.Hierarchy).HasMaxLength(250);
-
-                entity.Property(e => e.Lgdid).HasColumnName("LGDId");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
@@ -13412,6 +13413,44 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.PlanEndDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PlanStartDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TDietPlanScheduleDetail>(entity =>
+            {
+                entity.HasKey(e => e.DietPlanDetId);
+
+                entity.ToTable("T_DietPlanScheduleDetail");
+
+                entity.Property(e => e.CancelledReason).HasMaxLength(255);
+
+                entity.Property(e => e.Comment).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Instruction).HasMaxLength(255);
+
+                entity.Property(e => e.IsAcceptedDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsDeliveredDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.IsInProgressDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.PlanDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Status).HasMaxLength(50);
+
+                entity.HasOne(d => d.DietPlan)
+                    .WithMany(p => p.TDietPlanScheduleDetails)
+                    .HasForeignKey(d => d.DietPlanId)
+                    .HasConstraintName("FK_T_DietPlanScheduleDetail_T_DietPlanSchedule");
             });
 
             modelBuilder.Entity<TDiscApprovalDetail>(entity =>
