@@ -60,5 +60,10 @@ namespace HIMS.Services.DietKitchen
         public string? Deliveruser { get; set; }
         public string? Cancleuser { get; set; }
         public string? CreatedUser { get; set; }
+        public long? MealId { get; set; }
+        public long? DietTypeId { get; set; }
+        public long? DietMealTypeId { get; set; }
+        public long? DietMenuId { get; set; }
+
     }
 }
