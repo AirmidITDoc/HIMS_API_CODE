@@ -36,6 +36,18 @@ namespace HIMS.Services.DietKitchen
         public bool? IsDelivered { get; set; }
         public bool? IsCancelled { get; set; }
         public string? CancelledReason { get; set; }
+        public int? TotalCount { get; set; }
+        public int? AcceptedCount { get; set; }
+        public int? InProgressCount { get; set; }
+        public int? DeliveredCount { get; set; }
+        public int? CancelledCount { get; set; }
+        public DateTime? LastAcceptedDateTime { get; set; }
+        public DateTime? LastDeliveredDateTime { get; set; }
+        public string? AllAccepted { get; set; }
+        public string? AllDelivered { get; set; }
+
+
+
     }
 
     public class DietPlanDetailListDto
