@@ -1589,14 +1589,90 @@ namespace HIMS.Services.AbhaIntegration
 
             return physicalExams;
         }
+        //private List<InvoiceRecord> GetInvoiceRecords(DataTable table, string hipId)
+        //{
+
+
+        //    if (table == null || table.Rows.Count == 0)
+        //        // return invoices;
+        //        return null;
+        //    List<InvoiceRecord> invoices = new();
+        //    var invoiceGroups = table.AsEnumerable()
+        //        .GroupBy(row => row["BillNo"].ToString());
+
+        //    foreach (var billGroup in invoiceGroups)
+        //    {
+        //        DataRow firstRow = billGroup.First();
+
+        //        InvoiceRecord invoice = new InvoiceRecord
+        //        {
+        //            recepient = firstRow["Recepient"].ToString(),
+        //            issuer = firstRow["Issuer"].ToString(),
+        //            issuedDate = firstRow["IssuedDate"].ToString(),
+
+        //            billIdentifier = new BillIdentifier
+        //            {
+        //                type = firstRow["BillIdentifierType"].ToString(),
+        //                value = firstRow["BillIdentifierValue"].ToString()
+        //            },
+
+        //            lineItems = new List<InvoiceLineItem>(),
+
+        //            invoiceRecordType = firstRow["InvoiceRecordType"].ToString()
+        //        };
+
+        //        foreach (DataRow row in billGroup)
+        //        {
+        //            invoice.lineItems.Add(new InvoiceLineItem
+        //            {
+        //                chargeItem = new ChargeItem
+        //                {
+        //                    chargeItemCodeableConcept = new CodeableConcept
+        //                    {
+        //                        text = row["ChargeItemText"].ToString(),
+
+        //                        code = new CodeDetails
+        //                        {
+        //                            HospitalId = hipId,
+        //                            Category = row["ChargeItemCategory"].ToString(),
+        //                            Url = row["ChargeItemUrl"].ToString(),
+        //                            Code = row["ChargeItemCode"].ToString(),
+        //                            Display = row["ChargeItemDisplay"].ToString()
+        //                        }
+        //                    }
+        //                },
+
+        //                priceComponents = new List<PriceComponent>
+        //        {
+        //            new PriceComponent
+        //            {
+        //                type = row["PriceComponentType"].ToString(),
+
+        //                amount = new PriceAmount
+        //                {
+        //                    amount = row["Amount"] == DBNull.Value
+        //                        ? 0
+        //                        : Convert.ToDecimal(row["Amount"]),
+
+        //                    currency = row["Currency"].ToString()
+        //                }
+        //            }
+        //        }
+        //            });
+        //        }
+
+        //        invoices.Add(invoice);
+        //    }
+
+        //    return invoices;
+        //}
         private List<InvoiceRecord> GetInvoiceRecords(DataTable table, string hipId)
         {
-         
-
             if (table == null || table.Rows.Count == 0)
-                // return invoices;
                 return null;
+
             List<InvoiceRecord> invoices = new();
+
             var invoiceGroups = table.AsEnumerable()
                 .GroupBy(row => row["BillNo"].ToString());
 
@@ -1609,20 +1685,20 @@ namespace HIMS.Services.AbhaIntegration
                     recepient = firstRow["Recepient"].ToString(),
                     issuer = firstRow["Issuer"].ToString(),
                     issuedDate = firstRow["IssuedDate"].ToString(),
-
                     billIdentifier = new BillIdentifier
                     {
                         type = firstRow["BillIdentifierType"].ToString(),
                         value = firstRow["BillIdentifierValue"].ToString()
                     },
-
                     lineItems = new List<InvoiceLineItem>(),
-
                     invoiceRecordType = firstRow["InvoiceRecordType"].ToString()
                 };
 
-                foreach (DataRow row in billGroup)
+                // one line item per charge; all its component rows become priceComponents
+                foreach (var chargeGroup in billGroup.GroupBy(r => r["ChargesId"].ToString()))
                 {
+                    DataRow row = chargeGroup.First();
+
                     invoice.lineItems.Add(new InvoiceLineItem
                     {
                         chargeItem = new ChargeItem
@@ -1630,7 +1706,6 @@ namespace HIMS.Services.AbhaIntegration
                             chargeItemCodeableConcept = new CodeableConcept
                             {
                                 text = row["ChargeItemText"].ToString(),
-
                                 code = new CodeDetails
                                 {
                                     HospitalId = hipId,
@@ -1641,23 +1716,15 @@ namespace HIMS.Services.AbhaIntegration
                                 }
                             }
                         },
-
-                        priceComponents = new List<PriceComponent>
-                {
-                    new PriceComponent
-                    {
-                        type = row["PriceComponentType"].ToString(),
-
-                        amount = new PriceAmount
+                        priceComponents = chargeGroup.Select(r => new PriceComponent
                         {
-                            amount = row["Amount"] == DBNull.Value
-                                ? 0
-                                : Convert.ToDecimal(row["Amount"]),
-
-                            currency = row["Currency"].ToString()
-                        }
-                    }
-                }
+                            type = r["PriceComponentType"].ToString(),
+                            amount = new PriceAmount
+                            {
+                                amount = r["Amount"] == DBNull.Value ? 0 : Convert.ToDecimal(r["Amount"]),
+                                currency = r["Currency"].ToString()
+                            }
+                        }).ToList()
                     });
                 }
 
