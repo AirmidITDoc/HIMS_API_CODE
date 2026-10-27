@@ -42,6 +42,12 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<IPPrescriptiononDischargeListDto>(objGrid, "ps_Rtrv_IP_Prescription_Discharge");
         }
+
+        public virtual async Task<IPagedList<DischargeSummaryProvisionalDiagnosisListDto>> GetListAsyncK(GridRequestModel objGrid)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DischargeSummaryProvisionalDiagnosisListDto>(objGrid, "ps_DischargeSummary_ProvisionalDiagnosis");
+        }
+
         public List<TIpAdmissionDiagnosisInformation> GetIPDiagnosis(int AdmId)
         {
             DatabaseHelper sql = new();

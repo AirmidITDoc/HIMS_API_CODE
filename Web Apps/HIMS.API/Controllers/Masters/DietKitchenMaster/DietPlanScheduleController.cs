@@ -36,7 +36,6 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             return Ok(list.ToGridResponse(objGrid, "DietPlanSchedule List"));
         }
 
-
         [HttpPost("DietplandetailsList")]
         //[Permission]
         public async Task<IActionResult> DietplandetailsList(GridRequestModel objGrid)
@@ -44,7 +43,6 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             IPagedList<DietPlanDetailListDto> list = await _dietPlanScheduleService.DietplandetailsListAsync(objGrid);
             return Ok(list.ToGridResponse(objGrid, "DietPlanDetails List"));
         }
-
 
         [HttpGet("{id?}")]
         //[Permission]
@@ -60,62 +58,97 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         [HttpPost("Insert")]
         //[Permission]
-        public async Task<ApiResponse> Post(List<DietPlanScheduleModel> objList)
+        public async Task<ApiResponse> Insert(DietPlanScheduleModel obj)
         {
-            if (objList == null || !objList.Any())
+            TDietPlanSchedule model = obj.MapTo<TDietPlanSchedule>();
+            if (obj.DietPlanId == 0)
+            {
+                if (model.TDietPlanScheduleDetails != null)
+                {
+                    foreach (var q in model.TDietPlanScheduleDetails)
+                    {
+                        q.DietPlanDetId = 0;
+                    }
+                }
+
+                model.CreatedDate = AppTime.Now;
+                model.CreatedBy = CurrentUserId;
+                model.ModifiedDate = AppTime.Now;
+                model.ModifiedBy = CurrentUserId;
+
+                await _dietPlanScheduleService.InsertAsync(model, CurrentUserId, CurrentUserName);
+            }
+            else
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
 
-            var models = objList.Select(obj => {
-                var model = obj.MapTo<TDietPlanSchedule>();
-                model.PlanStartDate = Convert.ToDateTime(obj.PlanStartDate);
-                model.PlanEndDate = Convert.ToDateTime(obj.PlanEndDate);
-                model.PlanDate = Convert.ToDateTime(obj.PlanDate);
-                return model;
-            }).ToList();
-
-            await _dietPlanScheduleService.InsertAsync(models, CurrentUserId, CurrentUserName);
-
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Records added successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.DietPlanId);
         }
-
 
         [HttpPut("Edit/{id:int}")]
         //[Permission]
         public async Task<ApiResponse> Edit(DietPlanScheduleModel obj)
         {
-            TDietPlanSchedule model = obj.MapTo<TDietPlanSchedule>();
             if (obj.DietPlanId == 0)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
-            else
+
+            TDietPlanSchedule model = obj.MapTo<TDietPlanSchedule>();
+
+            if (model.TDietPlanScheduleDetails != null)
             {
-                model.ModifiedBy = CurrentUserId;
-                model.ModifiedDate = AppTime.Now;
-                await _repository.Update(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+                foreach (var q in model.TDietPlanScheduleDetails)
+                {
+                    q.DietPlanDetId = 0;
+                }
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
+
+            model.ModifiedDate = AppTime.Now;
+            model.ModifiedBy = CurrentUserId;
+
+            await _dietPlanScheduleService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.DietPlanId);
         }
 
-        [HttpDelete]
+        [HttpPost("DietPlanScheduleCancel")]
         //[Permission]
-        public async Task<ApiResponse> Delete(long id)
+        public async Task<ApiResponse> Cancel(DietPlanScheduleCancelModel obj)
         {
-            TDietPlanSchedule model = await _repository.GetById(x => x.DietPlanId == id);
-            if ((model?.DietPlanId ?? 0) > 0)
+            TDietPlanSchedule model = obj.MapTo<TDietPlanSchedule>();
+            if (obj.DietPlanId != 0)
             {
-                model.IsCancelled = model.IsCancelled == true ? false : true;
+                model.DietPlanId = obj.DietPlanId;
                 model.IsCancelledBy = CurrentUserId;
                 model.IsCancelledDate = AppTime.Now;
-                await _repository.SoftDelete(model, CurrentUserId, CurrentUserName);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record deleted successfully.");
+                await _dietPlanScheduleService.Cancel(model, CurrentUserId, CurrentUserName);
             }
             else
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
+        }
+
+        [HttpPost("DietPlanScheduleDetailCancel")]
+        //[Permission]
+        public async Task<ApiResponse> CancelD(DietPlanScheduleDetailsCancelModel obj)
+        {
+            TDietPlanScheduleDetail model = obj.MapTo<TDietPlanScheduleDetail>();
+            if (obj.DietPlanDetId != 0)
+            {
+                model.DietPlanDetId = obj.DietPlanDetId;
+                model.IsCancelledBy = CurrentUserId;
+                model.IsCancelledDate = AppTime.Now;
+                await _dietPlanScheduleService.CancelD(model, CurrentUserId, CurrentUserName);
+            }
+            else
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
     }
 }

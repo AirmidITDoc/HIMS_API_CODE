@@ -16,13 +16,14 @@ namespace HIMS.Data.DTO.DietKitchen
         public string? DietMenuName { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string? CreatedByUser { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public bool? IsCancelled { get; set; }
-        public long? IsCancelledBy { get; set; }
-        public DateTime? IsCancelledDate { get; set; }
-        public string? UserName { get; set; }
         public string? ModifiedUser { get; set; }
+        public bool? IsCancelled { get; set; }
+        //public long? IsCancelledBy { get; set; }
+        //public DateTime? IsCancelledDate { get; set; }
+        public string? UserName { get; set; }
         public string? CancelledUser { get; set; }
         public int TotalDetailCount { get; set; }
         public int AcceptedCount { get; set; }
@@ -31,7 +32,7 @@ namespace HIMS.Data.DTO.DietKitchen
         public int NotDeliveredCount { get; set; }
         public int AllAccepted { get; set; }
         public int AllDelivered { get; set; }
-        public string? RegNo { get; set; }
+        //public string? RegNo { get; set; }
         public string? DietMenuDetails { get; set; }
 
 

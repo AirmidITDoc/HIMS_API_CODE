@@ -62,6 +62,15 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(IPDiscList.ToGridResponse(objGrid, "PatientClearanceApprovalList"));
         }
 
+
+        [HttpPost("DischargeSummaryProvisionalDiagnosisList")]
+        [Permission]
+        public async Task<IActionResult> GetListAsyncK(GridRequestModel objGrid)
+        {
+            IPagedList<DischargeSummaryProvisionalDiagnosisListDto> IPDiscList = await _IDischargeSummaryService.GetListAsyncK(objGrid);
+            return Ok(IPDiscList.ToGridResponse(objGrid, "PatientClearanceApprovalList"));
+        }
+
         [HttpGet("{id?}")]
         [Permission(PageCode = "DischargeSum", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
