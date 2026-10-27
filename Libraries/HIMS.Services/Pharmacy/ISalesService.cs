@@ -46,6 +46,7 @@ namespace HIMS.Services.Users
         Task SalesUpdate(TSalesInpatientHeader ObjTSalesHeader, List<TSalesInpatientDetail> ObjTSalesDetail, List<TCurrentStock> ObjTCurrentStock, int CurrentUserId, string CurrentUserName);
         List<ExpiryItemScrollingDataDto> GetExpiryList(string Keyword);
         Task InsertSalesheadertentry(List<TempSalesId> ObjTempSalesId, int currentUserId, string currentUserName);
+        Task<IPagedList<SalesCurrentStockItemListDto>> GetCurrStockItemList(GridRequestModel model);
 
 
 

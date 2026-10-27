@@ -1442,5 +1442,10 @@ namespace HIMS.Services.Users
             }
         }
 
+        public virtual async Task<IPagedList<SalesCurrentStockItemListDto>> GetCurrStockItemList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<SalesCurrentStockItemListDto>(model, "ps_Rtrv_CurrentStock_ItemList");
+        }
+
     }
 }

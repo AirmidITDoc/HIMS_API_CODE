@@ -25,8 +25,8 @@ namespace HIMS.API.Controllers.Pharmacy
         {
             _ISalesService = repository;
         }
-       
 
+     
         [HttpPost("SalesSummaryList")]
         [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> SalesSummaryList(GridRequestModel objGrid)
@@ -562,6 +562,13 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
 
+        [HttpPost("CurrStockItemList")]
+       // [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        public async Task<IActionResult> CurrStockItemList(GridRequestModel objGrid)
+        {
+            IPagedList<SalesCurrentStockItemListDto> PharSalesList = await _ISalesService.GetCurrStockItemList(objGrid);
+            return Ok(PharSalesList.ToGridResponse(objGrid, "Current Stock Item List"));
+        }
     }
 
 }
