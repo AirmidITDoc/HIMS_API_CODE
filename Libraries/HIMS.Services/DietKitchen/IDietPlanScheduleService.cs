@@ -15,5 +15,8 @@ namespace HIMS.Services.DietKitchen
          
         Task Cancel(TDietPlanSchedule objDietPlanSchedule, int UserId, string Username);
         Task CancelD(TDietPlanScheduleDetail objDietPlanScheduleDetail, int UserId, string Username);
+
+        Task<IPagedList<DietMainlListDto>> GetMainListAsync(GridRequestModel model);
+        Task<IPagedList<DietMainSublListDto>> GetMainSubListAsync(GridRequestModel model);
     }
 }
