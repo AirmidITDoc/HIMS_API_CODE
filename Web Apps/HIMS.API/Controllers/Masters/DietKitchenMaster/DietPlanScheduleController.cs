@@ -150,5 +150,21 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
+
+        [HttpPost("DietMainList")]
+        //[Permission]
+        public async Task<IActionResult> DietMainList(GridRequestModel objGrid)
+        {
+            IPagedList<DietMainlListDto> list = await _dietPlanScheduleService.GetMainListAsync(objGrid);
+            return Ok(list.ToGridResponse(objGrid, "DietPlanSchedule List"));
+        }
+
+        [HttpPost("DietMainSubList")]
+        //[Permission]
+        public async Task<IActionResult> DietMainSubList(GridRequestModel objGrid)
+        {
+            IPagedList<DietMainSublListDto> list = await _dietPlanScheduleService.GetMainSubListAsync(objGrid);
+            return Ok(list.ToGridResponse(objGrid, "DietPlanSchedule List"));
+        }
     }
 }

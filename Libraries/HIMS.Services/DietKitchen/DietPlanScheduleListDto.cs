@@ -78,4 +78,24 @@ namespace HIMS.Services.DietKitchen
         public long? DietMenuId { get; set; }
 
     }
+    public class DietMainlListDto
+    {
+        public DateTime? PlanDate { get; set; }
+        public long? DietPlanId { get; set; }
+        public int? PatientWiseCount { get; set; }
+        public string? Status { get; set; }
+    }
+    public class DietMainSublListDto
+    {
+        public long? DietMealTypeId { get; set; }
+        public long? DietPlanId { get; set; }
+        public DateTime? PlanDate { get; set; }
+        public string? MealName { get; set; }
+        public DateTime? DefaultTime { get; set; }
+        public int? PatientWiseCount { get; set; }
+        public string? Status { get; set; }
+        
+    }
+
+
 }

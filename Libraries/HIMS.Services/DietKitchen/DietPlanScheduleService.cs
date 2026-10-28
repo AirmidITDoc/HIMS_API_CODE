@@ -174,5 +174,13 @@ namespace HIMS.Services.DietKitchen
                 throw;
             }
         }
+        public virtual async Task<IPagedList<DietMainlListDto>> GetMainListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DietMainlListDto>(model, "ps_Rtrv_Dietschdule_mainlist");
+        }
+        public virtual async Task<IPagedList<DietMainSublListDto>> GetMainSubListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DietMainSublListDto>(model, "ps_Rtrv_Dietschdule_mainsublist");
+        }
     }
 }
