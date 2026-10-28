@@ -336,9 +336,9 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpGet("search-LabServiceListwithTraiff")]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        public ApiResponse SearchGetServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId, string SrvcName)
+        public ApiResponse SearchGetServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId,int IsPackage, string SrvcName)
         {
-            var data = _ILabPatientRegistrationService.SearchLabServiceListwithTraiff(TariffId, ClassId, GroupId, SubGroupId, SrvcName);
+            var data = _ILabPatientRegistrationService.SearchLabServiceListwithTraiff(TariffId, ClassId, GroupId, SubGroupId, IsPackage, SrvcName);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Lab Service List.", data);
         }
 
