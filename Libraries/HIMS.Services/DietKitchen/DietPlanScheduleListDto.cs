@@ -12,30 +12,17 @@ namespace HIMS.Services.DietKitchen
         public DateTime PlanEndDate { get; set; }
         public DateTime PlanDate { get; set; }
         public long DietTypeId { get; set; }
+        public string? DietName { get; set; }
         public long DietMealTypeId { get; set; }
         public long DietMenuId { get; set; }
         public string? Instruction { get; set; }
         public string? Comment { get; set; }
+        public bool? IsCancelled { get; set; }
+        public string? CancelledUser { get; set; }
         public string? CreatedByName { get; set; }
         public long? AdmissionId { get; set; }
-        public long? RegId { get; set; }
-        public string? RegNo { get; set; }
         public string? AdmissionTime { get; set; }
         public string? Patient { get; set; }
-        public string? AgeYear { get; set; }
-        public string? AgeMonth { get; set; }
-        public string? AgeDay { get; set; }
-        public string? DietName { get; set; }
-        public string? DietMenuName { get; set; }
-        public string? Acceptuser { get; set; }
-        public string? Progressuser { get; set; }
-        public string? Deliveruser { get; set; }
-        public string? Cancleuser { get; set; }
-        public bool? IsAccepted { get; set; }
-        public bool? IsInProgress { get; set; }
-        public bool? IsDelivered { get; set; }
-        public bool? IsCancelled { get; set; }
-        public string? CancelledReason { get; set; }
         public int? TotalCount { get; set; }
         public int? AcceptedCount { get; set; }
         public int? InProgressCount { get; set; }
