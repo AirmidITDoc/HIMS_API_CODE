@@ -148,6 +148,9 @@ namespace HIMS.API.Controllers.Dashboard
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Procurement DashBoard", data);
         }
 
+
+
+
         [HttpGet("DailyDashBoardOPSubModule-dashboard")]
         //[Permission(PageCode = "Dashboard", Permission = Permission.View)]
         [Permission]
@@ -156,5 +159,19 @@ namespace HIMS.API.Controllers.Dashboard
             var data = await _IDashboardService.GetDailyDashBoardOPSubModuleDashBoard(UnitId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "DailyDashBoard OP SubModule DashBoard", data); 
         }
+
+        [HttpGet("diet-dashboard")]
+        [Permission]
+        public async Task<ApiResponse> DietDashboard(DateTime FromDate, DateTime ToDate)
+        {
+            var data = await _IDashboardService.GetDietDashboard(FromDate, ToDate);
+
+            return ApiResponseHelper.GenerateResponse(
+                ApiStatusCode.Status200OK,
+                "Diet Dashboard",
+                data);
+        }
+
+
     }
 }

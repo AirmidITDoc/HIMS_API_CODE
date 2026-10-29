@@ -461,6 +461,27 @@ namespace HIMS.Services.Dashboard
             };
         }
 
+        public async Task<DietDashboard> GetDietDashboard(DateTime FromDate, DateTime ToDate)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para = new SqlParameter[2];
+
+            para[0] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
+            para[1] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+
+            var data = await sql.Get2ResultsFromSp<DietCountSummary, DietOrdersByMealType, DietOrdersByDietType, DailyDietOrderCount, TodaysDietOrder>(
+                "ps_rpt_DietDashboard", para);
+
+            return new DietDashboard()
+            {
+                CountSummary = data.Item1.FirstOrDefault() ?? new DietCountSummary(),
+                DietOrdersByMealTypes = data.Item2 ?? new List<DietOrdersByMealType>(),
+                DietOrdersByDietTypes = data.Item3 ?? new List<DietOrdersByDietType>(),
+                DailyDietOrderCounts = data.Item4 ?? new List<DailyDietOrderCount>(),
+                TodaysDietOrders = data.Item5 ?? new List<TodaysDietOrder>()
+            };
+        }
         public async Task<DailyDashBoardOpSubModule> GetDailyDashBoardOPSubModuleDashBoard(int UnitId)
         {
             DatabaseHelper sql = new();
