@@ -40,8 +40,8 @@ namespace HIMS.API.Controllers.OPPatient
         [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            // long UnitId = Context.UnitId;
-            long UnitId = 1;
+             long UnitId = Context.UnitId;
+        //    long UnitId = 1;
             IPagedList<VisitDetailListDto> AppVisitList = await _visitDetailsService.GetListAsync(objGrid, UnitId);
             return Ok(AppVisitList.ToGridResponse(objGrid, "App Visit List"));
         }
