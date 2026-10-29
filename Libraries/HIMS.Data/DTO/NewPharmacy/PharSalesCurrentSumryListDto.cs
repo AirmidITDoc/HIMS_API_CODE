@@ -32,5 +32,8 @@
         public bool? IsNarcotic { get; set; }
         public long StockId { get; set; }
         public int DiscPer { get; set; }
+        public int ExpDays { get; set; }
+        public int DaysFlag { get; set; }
+
     }
 }
