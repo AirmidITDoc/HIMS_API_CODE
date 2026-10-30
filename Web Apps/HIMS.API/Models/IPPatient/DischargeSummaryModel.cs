@@ -80,6 +80,8 @@ namespace HIMS.API.Models.IPPatient
         public bool? IsEnglishOrIsMarathi { get; set; }
         public long? StoreId { get; set; }
         public int? CreatedBy { get; set; }
+        public long? RouteId { get; set; }
+        public long? MethodId { get; set; }
     }
     public class PrescriptionDischargeModelValidator : AbstractValidator<PrescriptionDischargeModel>
     {
@@ -194,6 +196,8 @@ namespace HIMS.API.Models.IPPatient
         public bool? IsEnglishOrIsMarathi { get; set; }
         public long? StoreId { get; set; }
         public int? CreatedBy { get; set; }
+        public long? RouteId { get; set; }
+        public long? MethodId { get; set; }
     }
     public class DischargeTemplateModelValidator : AbstractValidator<DischargeTemplateModel>
     {
@@ -252,6 +256,8 @@ namespace HIMS.API.Models.IPPatient
         public bool? IsEnglishOrIsMarathi { get; set; }
         public long? StoreId { get; set; }
         public int? CreatedBy { get; set; }
+        public long? RouteId { get; set; }
+        public long? MethodId { get; set; }
     }
     public class PrescriptionTemplatUpdateValidator : AbstractValidator<PrescriptionTemplatUpdate>
     {

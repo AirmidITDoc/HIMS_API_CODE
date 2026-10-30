@@ -83,6 +83,38 @@ namespace HIMS.Services.DietKitchen
         public string? Status { get; set; }
         
     }
+    public class DietSchedulePatientListDto
+    {
+        public long DietPlanId { get; set; }
+        public long OPIPID { get; set; }
+        public long DietMealTypeId { get; set; }
+        public DateTime PlanDate { get; set; }
+        public string? MealName { get; set; }
+        public DateTime? DefaultTime { get; set; }
+        public DateTime? OrderCutoffTime { get; set; }
+        public DateTime? PreparationStartTime { get; set; }
+        public DateTime? DispatchTime { get; set; }
+        public string? PatientName { get; set; }
+        public string? Status { get; set; }
+        public bool? IsAccepted { get; set; }
+        public long? IsAcceptedBy { get; set; }
+        public DateTime? IsAcceptedDateTime { get; set; }
+        public bool? IsInProgress { get; set; }
+        public long? IsInProgressBy { get; set; }
+        public DateTime? IsInProgressDateTime { get; set; }
+        public bool? IsDelivered { get; set; }
+        public long? IsDeliveredBy { get; set; }
+        public DateTime? IsDeliveredDateTime { get; set; }
+        public bool? IsCancelled { get; set; }
+        public long? IsCancelledBy { get; set; }
+        public DateTime? IsCancelledDate { get; set; }
+        public string? CancelledReason { get; set; }
+    }
+    public class DietPlanScheduleStatusUpdateModel
+    {
+        public long DietPlanIds { get; set; }
+        public string Flag { get; set; }
+    }
 
 
 }

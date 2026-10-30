@@ -453,6 +453,7 @@ public class ObservationResult
         public string status { get; set; }
         public string effectiveDate { get; set; }
         public string performerId { get; set; }
+        public string interpretation { get; set; }
     }
 
     public class Immunization

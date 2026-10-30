@@ -1026,7 +1026,8 @@ namespace HIMS.Services.AbhaIntegration
                         unit = row["Unit"].ToString(),
                         status = row["Status"].ToString(),
                         effectiveDate = row["EffectiveDate"].ToString(),
-                        performerId = row["PerformerId"].ToString()
+                        performerId = row["PerformerId"].ToString(),
+                        interpretation = row["Interpretation"].ToString()
                     });
                 }
             }
@@ -2038,6 +2039,9 @@ namespace HIMS.Services.AbhaIntegration
 
                 // Wellness: "unit" is not mandatory
                 if (type == typeof(WellnessRecordItem) && p.Name == "unit")
+                    continue;
+                // Wellness: "interpretation" only exists for vitalSigns; null on other blocks is not an error
+                if (type == typeof(WellnessRecordItem) && p.Name == "interpretation" && v == null)
                     continue;
 
                 // Wellness: a block the user didn't fill (null or empty list) is ignored
