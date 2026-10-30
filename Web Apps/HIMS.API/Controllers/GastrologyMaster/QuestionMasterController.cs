@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.GastrologyMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "MQuestionMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "QuestionMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MQuestionMaster> MQuestionMasterList = await _repository.GetAllPagedAsync(objGrid);

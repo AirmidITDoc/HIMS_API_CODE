@@ -13437,11 +13437,15 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.IsInProgressDateTime).HasColumnType("datetime");
 
+                entity.Property(e => e.IsOrderDateTime).HasColumnType("datetime");
+
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Opipid).HasColumnName("OPIPID");
 
                 entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.OrderNo).HasMaxLength(20);
 
                 entity.Property(e => e.PlanDate).HasColumnType("datetime");
 

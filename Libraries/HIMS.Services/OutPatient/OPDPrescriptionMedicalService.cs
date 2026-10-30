@@ -160,7 +160,7 @@ namespace HIMS.Services.OutPatient
                     objTOprequestList.ForEach(x => { x.OpIpId = modelItem.OpdIpdIp; x.CreatedBy = CurrentUserId; x.ModifiedBy = CurrentUserId; });
                     objmOpcasepaperDignosisMaster.ForEach(x => { x.VisitId = modelItem.OpdIpdIp; });
 
-                    string[] rEntity = { "OpdIpdIp", "OpdIpdType", "Date", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "Instruction", "Remark", "DoseOption2", "DaysOption2", "DoseOption3", "DaysOption3", "InstructionId", "QtyPerDay", "TotalQty", "IsClosed", "IsEnglishOrIsMarathi", "ChiefComplaint", "Diagnosis", "Examination", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "StoreId", "PatientReferDocId", "Advice", "IsAddBy", "Allergy", "BloodGroup", "DepartmentId", "HistoryOfIllness", "PrescDoctorId", "DrugAllergy", "AllergyRemark" };
+                    string[] rEntity = { "OpdIpdIp", "OpdIpdType", "Date", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "Instruction", "Remark", "DoseOption2", "DaysOption2", "DoseOption3", "DaysOption3", "InstructionId", "QtyPerDay", "TotalQty", "IsClosed", "IsEnglishOrIsMarathi", "ChiefComplaint", "Diagnosis", "Examination", "Height", "Pweight", "Bmi", "Bsl", "SpO2", "Temp", "Pulse", "Bp", "StoreId", "PatientReferDocId", "Advice", "IsAddBy", "Allergy", "BloodGroup", "DepartmentId", "HistoryOfIllness", "PrescDoctorId", "DrugAllergy", "AllergyRemark", "RouteId", "MethodId" };
                     var entity = modelItem.ToDictionary();
                     foreach (var rProperty in entity.Keys.ToList())
                     {

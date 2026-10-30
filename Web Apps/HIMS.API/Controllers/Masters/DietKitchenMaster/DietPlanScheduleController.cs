@@ -166,5 +166,61 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             IPagedList<DietMainSublListDto> list = await _dietPlanScheduleService.GetMainSubListAsync(objGrid);
             return Ok(list.ToGridResponse(objGrid, "DietPlanSchedule List"));
         }
+
+        [HttpPost("DietPlanScheduleDetailList")]
+        //[Permission]
+        public async Task<IActionResult> DietPlanScheduleDetailList(GridRequestModel objGrid)
+        {
+            IPagedList<DietPlanDetailListDto> list = await _dietPlanScheduleService.DietPlanScheduleDetailListAsync(objGrid);
+            return Ok(list.ToGridResponse(objGrid, "Diet Plan Schedule Details List"));
+        }
+        [HttpPost("DietPlanSchedulePatientlList")]
+        //[Permission]
+        public async Task<IActionResult> DietPlanSchedulePatientList(GridRequestModel objGrid)
+        {
+            IPagedList<DietSchedulePatientListDto> list = await _dietPlanScheduleService.DietPlanSchedulePatientListAsync(objGrid);
+            return Ok(list.ToGridResponse(objGrid, "Diet Plan Schedule Patient List"));
+        }
+
+        [HttpPut("UpdateFinal/{id:long}")]
+        public async Task<ApiResponse> Final(long id)
+        {
+            var model = await _repository.GetById(x => x.DietPlanId == id);
+
+            if (model == null)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
+            }
+
+            model.DraftOrFinal = true;
+            model.ModifiedBy = CurrentUserId;
+            model.ModifiedDate = AppTime.Now;
+
+            await _repository.Update(model, CurrentUserId, CurrentUserName, null);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Diet Plan finalized successfully.", id);
+        }
+
+        [HttpPut("UpdateDietPlanScheduleStatus")]
+        public async Task<ApiResponse> UpdateDietPlanScheduleStatus(List<DietPlanScheduleStatusUpdateModel> obj)
+        {
+            if (obj == null || obj.Count == 0)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Invalid params");
+            }
+
+            foreach (var item in obj)
+            {
+                if (item.DietPlanIds == 0 ||
+                    !new[] { "Order", "Accepted", "Inprogress", "Delivered" }.Contains(item.Flag))
+                {
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Invalid params");
+                }
+            }
+
+            await _dietPlanScheduleService.UpdateDietPlanScheduleStatus(obj, CurrentUserId, CurrentUserName);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Diet Plan Status updated successfully.");
+        }
     }
 }

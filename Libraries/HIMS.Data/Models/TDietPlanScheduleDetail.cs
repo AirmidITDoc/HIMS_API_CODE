@@ -20,6 +20,10 @@ namespace HIMS.Data.Models
         public long? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string? Status { get; set; }
+        public string? OrderNo { get; set; }
+        public bool? IsOrder { get; set; }
+        public long? IsOrderBy { get; set; }
+        public DateTime? IsOrderDateTime { get; set; }
         public bool? IsAccepted { get; set; }
         public long? IsAcceptedBy { get; set; }
         public DateTime? IsAcceptedDateTime { get; set; }

@@ -182,5 +182,55 @@ namespace HIMS.Services.DietKitchen
         {
             return await DatabaseHelper.GetGridDataBySp<DietMainSublListDto>(model, "ps_Rtrv_Dietschdule_mainsublist");
         }
+        public virtual async Task<IPagedList<DietPlanDetailListDto>> DietPlanScheduleDetailListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DietPlanDetailListDto>(model, "ps_Rtrv_Schedule_DietplanDetails");
+        }
+        public virtual async Task<IPagedList<DietSchedulePatientListDto>> DietPlanSchedulePatientListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<DietSchedulePatientListDto>(model, "ps_Rtrv_Dietschdule_patientlist");
+        }
+        public virtual async Task UpdateDietPlanScheduleStatus(List<DietPlanScheduleStatusUpdateModel> objList, int CurrentUserId, string CurrentUserName)
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                DatabaseHelper odal = new();
+                odal.SetConnection(_context.Database.GetDbConnection());
+                odal.SetTransaction(transaction.GetDbTransaction());
+
+                foreach (var obj in objList)
+                {
+                    string[] Entity = { "DietPlanIds", "Flag" };
+
+                    var entity = obj.ToDictionary();
+
+                    foreach (var rProperty in entity.Keys.ToList())
+                    {
+                        if (!Entity.Contains(rProperty))
+                            entity.Remove(rProperty);
+                    }
+
+                    entity["DietPlanId"] = entity["DietPlanIds"];
+                    entity.Remove("DietPlanIds");
+
+                    entity["UserId"] = CurrentUserId;
+                    entity["ActionDateTime"] = AppTime.Now;
+
+                    odal.ExecuteNonQueryNew("ps_Update_DietPlanScheduleDetailStatus", CommandType.StoredProcedure, "", entity);
+
+                    await _context.LogProcedureExecution(entity, nameof(TDietPlanScheduleDetail), Convert.ToInt32(obj.DietPlanIds), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
     }
 }

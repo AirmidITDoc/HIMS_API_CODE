@@ -84,7 +84,7 @@ namespace HIMS.Services.IPPatient
             foreach (var item in ObjTIpPrescriptionDischarge)
             {
 
-                string[] DEntity = { "OpdIpdId", "OpdIpdType", "Date", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "InstructionId", "QtyPerDay", "TotalQty", "Instruction", "Remark", "IsEnglishOrIsMarathi", "StoreId", "CreatedBy" };
+                string[] DEntity = { "OpdIpdId", "OpdIpdType", "Date", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "InstructionId", "QtyPerDay", "TotalQty", "Instruction", "Remark", "IsEnglishOrIsMarathi", "StoreId", "CreatedBy" , "RouteId", "MethodId" };
                 var pentity = item.ToDictionary();
                 foreach (var rProperty in pentity.Keys.ToList())
                 {
@@ -143,7 +143,7 @@ namespace HIMS.Services.IPPatient
             foreach (var item in ObjTIpPrescriptionDischarge)
             {
 
-                string[] DEntity1 = { "OpdIpdId", "OpdIpdType", "Date", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "InstructionId", "QtyPerDay", "TotalQty", "Instruction", "Remark", "IsEnglishOrIsMarathi", "StoreId", "CreatedBy" };
+                string[] DEntity1 = { "OpdIpdId", "OpdIpdType", "Date", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "InstructionId", "QtyPerDay", "TotalQty", "Instruction", "Remark", "IsEnglishOrIsMarathi", "StoreId", "CreatedBy", "RouteId", "MethodId" };
                 var pentity1 = item.ToDictionary();
                 foreach (var rProperty in pentity1.Keys.ToList())
                 {
@@ -192,7 +192,7 @@ namespace HIMS.Services.IPPatient
 
             foreach (var item in ObjTIpPrescriptionTemplate)
             {
-                string[] DEntity = { "OpdIpdId", "OpdIpdType", "Date", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "InstructionId", "QtyPerDay", "TotalQty", "Instruction", "Remark", "IsEnglishOrIsMarathi", "StoreId", "CreatedBy" };
+                string[] DEntity = { "OpdIpdId", "OpdIpdType", "Date", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "InstructionId", "QtyPerDay", "TotalQty", "Instruction", "Remark", "IsEnglishOrIsMarathi", "StoreId", "CreatedBy", "RouteId", "MethodId" };
                 var pentity = item.ToDictionary();
                 foreach (var rProperty in pentity.Keys.ToList())
                 {
@@ -264,7 +264,7 @@ namespace HIMS.Services.IPPatient
 
             foreach (var item in ObjTIpPrescriptionTemplate)
             {
-                string[] DEntity = { "OpdIpdId", "OpdIpdType", "Date", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "InstructionId", "QtyPerDay", "TotalQty", "Instruction", "Remark", "IsEnglishOrIsMarathi", "StoreId", "CreatedBy" };
+                string[] DEntity = { "OpdIpdId", "OpdIpdType", "Date", "Ptime", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "InstructionId", "QtyPerDay", "TotalQty", "Instruction", "Remark", "IsEnglishOrIsMarathi", "StoreId", "CreatedBy", "RouteId", "MethodId" };
                 var pentity = item.ToDictionary();
                 foreach (var rProperty in pentity.Keys.ToList())
                 {

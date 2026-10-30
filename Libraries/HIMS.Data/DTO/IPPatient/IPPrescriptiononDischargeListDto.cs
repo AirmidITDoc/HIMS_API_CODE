@@ -13,6 +13,10 @@
         public string? ItemGenericName { get; set; }
         public double? QtyPerDay { get; set; }
         public double? TotalQty { get; set; }
+        public long? RouteId { get; set; }
+        public long? MethodId { get; set; }
+        public string? RouteName { get; set; }
+        public string? MethodName { get; set; }
 
 
     }

@@ -51,5 +51,7 @@ namespace HIMS.Data.Models
         public long? PrescDoctorId { get; set; }
         public string? DrugAllergy { get; set; }
         public string? AllergyRemark { get; set; }
+        public long? RouteId { get; set; }
+        public long? MethodId { get; set; }
     }
 }
