@@ -1,6 +1,7 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -35,6 +36,19 @@ namespace HIMS.Services.IPPatient
         {
             return await DatabaseHelper.GetGridDataBySp<RefundOfAdvancesListDto>(model, "ps_Rtrv_RefundOfAdvance");
         }
+
+        public virtual async Task<IPagedList<AdvanceRefundOPReceiptListDto>> RefundOfAdvbrowselist(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<AdvanceRefundOPReceiptListDto>(model, "ps_Rtrv_BrowseOPRefundAdvanceReceipt");
+        }
+
+
+        public virtual async Task<IPagedList<OPAdvanceReceiptDetailListDto>> OPDAdvanceReceiptList(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<OPAdvanceReceiptDetailListDto>(model, "ps_Rtrv_BrowseOPAdvanceList");
+        }
+
+
         //SHILPA CODE////
         public virtual async Task InsertAdvanceAsyncSP(AdvanceHeader objAdvanceHeader, AdvanceDetail objAdvanceDetail, Payment objPayment, List<TPayment> ObjTPayment, int CurrentUserId, string CurrentUserName)
         {

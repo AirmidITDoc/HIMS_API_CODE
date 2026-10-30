@@ -8,6 +8,7 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Data;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.IPPatient;
 using Microsoft.AspNetCore.Mvc;
@@ -51,6 +52,24 @@ namespace HIMS.API.Controllers.IPPatient
         {
             IPagedList<RefundOfAdvancesListDto> RefundOfAdvancesList = await _IAdvanceService.GetAdvancesListAsync(objGrid);
             return Ok(RefundOfAdvancesList.ToGridResponse(objGrid, "Patient Refund Of Advances List"));
+        }
+
+
+        [HttpPost("RefundOfAdvbrowselist")]
+        [Permission]
+        public async Task<IActionResult> RefundOfAdvbrowselist(GridRequestModel objGrid)
+        {
+            IPagedList<AdvanceRefundOPReceiptListDto> RefundOfAdvancesList = await _IAdvanceService.RefundOfAdvbrowselist(objGrid);
+            return Ok(RefundOfAdvancesList.ToGridResponse(objGrid, "Patient Refund Of OP Advances List"));
+        }
+
+
+        [HttpPost("OPDAdvanceReceiptList")]
+        [Permission]
+        public async Task<IActionResult> OPDAdvanceReceiptList(GridRequestModel objGrid)
+        {
+            IPagedList<OPAdvanceReceiptDetailListDto> RefundOfAdvancesList = await _IAdvanceService.OPDAdvanceReceiptList(objGrid);
+            return Ok(RefundOfAdvancesList.ToGridResponse(objGrid, "Patient Refund Of OP Advances List"));
         }
 
         //List API Get By Id

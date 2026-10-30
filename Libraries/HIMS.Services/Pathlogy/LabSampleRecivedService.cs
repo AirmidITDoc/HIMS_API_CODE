@@ -1,9 +1,11 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Inventory;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,7 +26,15 @@ namespace HIMS.Services.Pathlogy
         {
             return await DatabaseHelper.GetGridDataBySp<LabSampleRecivedListDto>(model, "ps_Rtrv_LabSampleReceviedList");
         }
+        public virtual async Task<IPagedList<LabSampleRecivedListDto>> LabGetListAsync(GridRequestModel model, long UnitId)
+        {
+            var extraParams = new List<SqlParameter>
+{
+    new SqlParameter("@UnitId", SqlDbType.BigInt) { Value = UnitId }
+};
 
+            return await DatabaseHelper.GetGridDataBySp<LabSampleRecivedListDto>(model, "ps_Rtrv_LabSampleReceviedList", extraParams);
+        }
 
         //public virtual async Task Update(List<TPathologyReportHeader> ObjTPathologyReportHeader, int CurrentUserId, string CurrentUserName)
         //{

@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.IPPatient;
+using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 
 namespace HIMS.Services.IPPatient
@@ -14,6 +15,10 @@ namespace HIMS.Services.IPPatient
         Task<IPagedList<PatientWiseAdvanceListDto>> PatientWiseAdvanceList(GridRequestModel objGrid);
 
         Task<IPagedList<RefundOfAdvancesListDto>> GetAdvancesListAsync(GridRequestModel objGrid);
+        Task<IPagedList<AdvanceRefundOPReceiptListDto>> RefundOfAdvbrowselist(GridRequestModel objGrid);
+        Task<IPagedList<OPAdvanceReceiptDetailListDto>> OPDAdvanceReceiptList(GridRequestModel objGrid);
+
+
         Task IPInsertSP(Refund Objrefund, AdvanceHeader ObjAdvanceHeader, List<AdvRefundDetail> ObjadvRefundDetailList, List<AdvanceDetail> ObjAdvanceDetailList, Payment ObjPayment, List<TPayment> ObjTPayment ,int UserId, string UserName);
         Task UpdateAdvance(AdvanceDetail OBJAdvanceDetail, int CurrentUserId, string CurrentUserName);
         Task Cancel(AdvanceHeader ObjAdvanceHeader, long AdvanceDetailId, int CurrentUserId, string CurrentUserName);

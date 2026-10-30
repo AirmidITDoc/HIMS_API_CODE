@@ -13,6 +13,7 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.Inventory;
 using HIMS.Data.DTO.Pathology;
 using Asp.Versioning;
+using HIMS.Data.DTO.OPPatient;
 
 namespace HIMS.API.Controllers.Pathology
 {
@@ -31,11 +32,13 @@ namespace HIMS.API.Controllers.Pathology
         [Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-            IPagedList<LabSampleRecivedListDto> LabSampleRecivedList = await _ILabSampleRecivedService.LabGetListAsync(objGrid);
+            long UnitId = Context.UnitId;
+            IPagedList<LabSampleRecivedListDto> LabSampleRecivedList = await _ILabSampleRecivedService.LabGetListAsync(objGrid,UnitId);
             return Ok(LabSampleRecivedList.ToGridResponse(objGrid, "LabSampleRecived List"));
         }
 
 
+      
         //[HttpPut("LabSampleRecivedUpdate")]
         ////[Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         //public ApiResponse Update(PathologyLabReportHeader obj)
