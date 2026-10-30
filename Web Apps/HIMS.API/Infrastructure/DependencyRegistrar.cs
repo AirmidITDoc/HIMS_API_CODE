@@ -7,6 +7,7 @@ using HIMS.Data;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Administration;
+using HIMS.Services.AIAssistant;
 using HIMS.Services.Audit;
 using HIMS.Services.Canteen;
 using HIMS.Services.Common;
@@ -107,6 +108,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<ICurrentStockService, CurrentStockService>();
             services.AddScoped<IItemWiseService, ItemWiseService>();
             services.AddScoped<IAdministrationService, AdministrationService>();
+            services.AddScoped<IAiAssistantService, AiAssistantService>();
             services.AddScoped<IReportTemplateService, ReportTemplateService>();
             services.AddScoped<IOPDPrescriptionMedicalService, OPDPrescriptionMedicalService>();
             services.AddScoped<IMenuMasterService, MenuMasterService>();
