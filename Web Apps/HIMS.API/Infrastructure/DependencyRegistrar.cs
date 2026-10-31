@@ -9,6 +9,7 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.AbhaIntegration;
 using HIMS.Services.Administration;
+using HIMS.Services.AIAssistant;
 using HIMS.Services.Audit;
 using HIMS.Services.Canteen;
 using HIMS.Services.Common;
@@ -78,6 +79,7 @@ namespace HIMS.API.Infrastructure
             services.AddTransient<IPdfUtility, HIMS.Services.Utilities.PdfUtility>();
             services.AddScoped<IFavouriteService, FavouriteService>();
             services.AddScoped<IDashboardService, DashboardService>();
+            services.AddScoped<IAiAssistantService, AiAssistantService>();
             services.AddScoped<IIndentService, IndentService>();
             services.AddScoped<IIssueToDepService, IssueToDepService>();
             //services.AddScoped<IIssueToDeptIndentService, IssueToDeptIndentService>();
