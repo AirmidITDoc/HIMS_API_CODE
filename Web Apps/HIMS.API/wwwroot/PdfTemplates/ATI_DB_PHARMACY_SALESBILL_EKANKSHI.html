@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Pharmacy Sales Bill</title>
+</head>
+<body>
+    <div style="font-family: Calibri,'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
+        <div style="display:flex; align-items: center; margin-bottom: 10px;">
+            <span style="text-transform: uppercase;font-weight: 500;margin-left:250px;width:50%;font-size:20px;font-weight:bold">
+                Invoice ({{SalesLabel}} Sales)
+            </span>
+        </div>
+
+        <table class="table" style="width: 100%;border-collapse: collapse;">
+            <tbody>
+                <tr>
+                    <td colspan="4"
+                        style="vertical-align: top; border: 1px solid black; width: 40%; padding: 0 10px 10px; font-size: 16px; font-weight: bold;">
+                        <span style="margin-top:0;margin-bottom:5px;text-transform: uppercase;font-size: 16px;">
+                            {{StoreName}}
+                        </span>
+
+                        <div>{{StoreAddress}}</div>
+
+                        <div>
+                            <a style="margin-right: 20px;">{{HospitalMobileNo}}</a>
+                            <a>{{HospitalEmailId}}</a>
+                        </div>
+                    </td>
+                    <td colspan="5" style="border: 1px solid black;vertical-align: top; padding: 0;">
+                        <table style="width: 100%;border-collapse: collapse;font-size:14px;">
+                            <tr>
+                                <td style=" vertical-align: top; padding: 0 10px 10px">
+                                    <span style="font-weight: bold;">Customer Id :</span>
+                                    <span>{{RegNo}} </span>  <br>
+                                    <span style="font-weight: bold;">Customer Name:</span>
+                                    <span style="font-weight: bold;">{{PatientName}} </span>  <br>
+                                    <span style="font-weight: bold;">Customer Address:</span>
+                                    <span>{{Address}} </span>  <br>
+                                    <span style="font-weight: bold;">Age &amp; Gen:</span>
+                                    <span>{{AgeYear}} | {{GenderName}} </span>  <br>
+                                    <span style="font-weight: bold;">Mob:</span>
+                                    <span>{{ExtMobileNo}}</span><br>
+                                    <span style="font-weight: bold;">Doctor Name:</span>
+                                    <span>{{DoctorName}} </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4"
+                        style=" vertical-align: top; border: 1px solid black; width: 40%; padding: 0 10px 10px; font-size: 14px;">
+                        <div>
+                            <span style="font-weight: bold;">GST No.</span>
+                            <span>{{GSTIN}}</span>
+                        </div>
+                        <div>
+                            <span style="font-weight: bold;">D.L.No.</span>
+                            <span>{{DL_NO}}</span>
+                        </div>
+                    </td>
+
+                    <td colspan="5" style="border: 1px solid black; vertical-align: top; padding: 0;">
+                        <table style="width: 100%;font-size:16px;">
+                            <tr>
+                                <td style="vertical-align: top;padding:0 10px 10px">
+                                    <span style="font-weight: bold;">Bill No:</span>
+                                    <span style="font-weight: bold;">{{SalesNo}}</span>
+                                    <span style="font-weight: bold; margin-left: 10px;">Bill Date:</span>
+                                    <span>{{Date}}</span><br>
+                                    <span style="font-weight: bold;">Mode of Payment :</span>
+                                    <span>{{PayMode}}</span><br>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="font-size:13px;">
+                    <td style="border: 1px solid black;font-weight:bold;text-align:center;vertical-align: middle;padding:5px 5px;width:5%;">Sr No.</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">HSN</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 30%;">Product Name</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 5%;">Pack</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 5%;">Qty</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">Batch No.</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 15%;">ExpDate</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">CGST%</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">CGSTAmt</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">SGST%</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 10%;">SGSTAmt</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 20%;">MRP</td>
+                    <td style="border: 1px solid black; font-weight: bold; text-align: center; vertical-align: middle; padding: 5px 5px; width: 20%;">Amount</td>
+                </tr>
+            </tbody>
+
+            <!-- ── ITEMS_SP1 template row (one per result row from SP) ── -->
+            <tbody id="billRows">
+                <!--ITEMS_SP1-->
+                <tr class="bill-row" style="font-size:15px;">
+                    <td class="sr" style="border-left: 1px solid black;vertical-align: top;padding: 0;height: 20px;text-align:center"></td>
+                    <td style="border-left:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: left;padding-left:10px;">{{HSNcode}}</td>
+                    <td style="border-left:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: left;padding-left:10px;">{{ItemName}}</td>
+                    <td style="border-left:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: left;padding-left:10px;">{{ConversionFactor}}</td>
+                    <td style="border-left:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: left;padding-left:10px;">{{Qty}}</td>
+                    <td style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{BatchNo}}</td>
+                    <td style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{BatchExpDate}}</td>
+                    <td style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{CGSTPer}}</td>
+                    <td style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{CGSTAmt}}</td>
+                    <td style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{SGSTPer}}</td>
+                    <td style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{SGSTAmt}}</td>
+                    <td class="n2" style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{UnitMRP}}</td>
+                    <td class="n2" style="border-left:1px solid #000;border-right:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: center;">{{TotalAmount}}</td>
+                </tr>
+                <!--/ITEMS_SP1-->
+            </tbody>
+
+            <tbody>
+                <tr>
+                    <td colspan="4" style="border: 1px solid black;vertical-align: top; padding: 0 10px 10px;">
+                        <div style="font-weight: 400; font-size: 20px;">Terms &amp; Conditions</div>
+                        <pre style="margin: 5px 0 0 0; font-size: 10px; font-weight: 400;">{{TermsAndCondition}}</pre>
+                    </td>
+                    <td colspan="5" style="border: 1px solid black;vertical-align: top; padding: 0 10px 10px;font-size:16px;">
+                        <div style="width:240px;margin-left:auto;">
+                            <div style="display:flex;align-items: center;">
+                                <span style="width:100px;display:inline-block;">Sub Total</span>
+                                <span style="margin:0 5px">:</span>
+                                <span>{{CurrSymbol}} <span class="n2">{{HTotalAmount}}</span></span>
+                            </div>
+                            <div style="display:flex;align-items: center;">
+                                <span style="width:100px;display:inline-block;">Discount</span>
+                                <span style="margin:0 5px">:</span>
+                                <span>{{CurrSymbol}} <span class="n2">{{DiscAmount}}</span></span>
+                            </div>
+                            <div style="display:flex;align-items: center;">
+                                <span style="width:100px;display:inline-block;">Round off</span>
+                                <span style="margin:0 5px">:</span>
+                                <span>{{CurrSymbol}} <span class="n2">{{RoundOff}}</span></span>
+                            </div>
+                            <div style="display:flex;align-items: center;font-weight:bold;">
+                                <span style="width:100px;display:inline-block;">Grand Total</span>
+                                <span style="margin:0 5px">:</span>
+                                <span>{{CurrSymbol}} <span class="n0">{{NetAmount}}</span></span>
+                            </div>
+                            <div id="paidRow" style="display:flex;align-items:center;">
+                                <span style="width:100px;display:inline-block;">Paid Amount</span>
+                                <span style="margin:0 5px">:</span>
+                                <span>{{CurrSymbol}} <span id="paidVal" class="n0">{{PaidAmount}}</span></span>
+                            </div>
+                            <div id="balRow" style="display:flex;align-items:center;">
+                                <span style="width:100px;display:inline-block;">Bal Amount</span>
+                                <span style="margin:0 5px">:</span>
+                                <span>{{CurrSymbol}} <span id="balVal" class="n0">{{BalanceAmount}}</span></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="font-size: 16px;">
+                    <td colspan="3">Billed By: {{UserName}}</td>
+                    <td colspan="6" style="text-align: right;">
+                        This is Computer generated invoice hence doesn’t require signature
+                    </td>
+                </tr>
+                <tr style="font-size: 16px;">
+                    <td colspan="9" style="text-align: right;">
+                        <span style="display:inline-block; text-align:center;">
+                            <br>
+                            <span style="display:block;">PHARMACIST</span>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        window.onload = function () {
+            // Sr No.
+            var n0 = document.querySelectorAll('.n0');
+            for (var k = 0; k < n0.length; k++) {
+                var w = parseFloat(n0[k].textContent);
+                if (!isNaN(w)) n0[k].textContent = Math.round(w);
+            }
+            var rows = document.querySelectorAll('#billRows tr.bill-row');
+            for (var i = 0; i < rows.length; i++) {
+                rows[i].querySelector('.sr').textContent = i + 1;
+            }
+            var n2 = document.querySelectorAll('.n2');
+            for (var j = 0; j < n2.length; j++) {
+                var v = parseFloat(n2[j].textContent);
+                if (!isNaN(v)) n2[j].textContent = v.toFixed(2);
+            }
+            // Show Paid / Balance only when > 0
+            function toggle(valId, rowId) {
+                var v = parseFloat(document.getElementById(valId).textContent);
+                document.getElementById(rowId).style.display = (!isNaN(v) && v > 0) ? 'flex' : 'none';
+            }
+            toggle('paidVal', 'paidRow');
+            toggle('balVal', 'balRow');
+        };
+    </script>
+</body>
+</html>

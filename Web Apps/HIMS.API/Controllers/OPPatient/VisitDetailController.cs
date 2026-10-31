@@ -261,7 +261,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpGet("search-GetServiceListwithTraiff")]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        [Permission]
+        //[Permission]
         public ApiResponse SearchGetServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId, string SrvcName)
         {
             var data = _visitDetailsService.SearchGetServiceListwithTraiff(TariffId, ClassId, GroupId, SubGroupId, SrvcName);

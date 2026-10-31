@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         [HttpPost("CertificateInformationList")]
         //[Permission(PageCode = "MedicalRecords", Permission = PagePermission.View)]
-        [Permission]
+        //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<CertificateInformationListDto> CertificateInformationList = await _oPBillingService.GetListAsync(objGrid);
