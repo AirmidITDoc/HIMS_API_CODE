@@ -40,5 +40,7 @@ namespace HIMS.Data.Models
         public string? HospitalLatitude { get; set; }
         public string? Hospitallongitude { get; set; }
         public string? HospitalShortCode { get; set; }
+        public long? OpdAdvanceReceiptCounterId { get; set; }
+        public long? OpdRefundOfAdvanceReceiptCounterId { get; set; }
     }
 }

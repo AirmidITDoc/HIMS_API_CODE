@@ -46,6 +46,8 @@ namespace HIMS.Data.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool? IsAllowZeroPrice { get; set; }
+        public DateTime? EndDate { get; set; }
+        public long? OfferDiscOnService { get; set; }
 
         public virtual ICollection<ServiceDetail> ServiceDetails { get; set; }
     }
