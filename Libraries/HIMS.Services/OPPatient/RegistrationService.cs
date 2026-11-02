@@ -6,6 +6,7 @@ using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
 using LinqToDB;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
@@ -25,42 +26,54 @@ namespace HIMS.Services.OPPatient
             return await DatabaseHelper.GetGridDataBySp<RegistrationListDto>(model, "ps_Rtrv_RegistrationList");
 
         }
-        public virtual async Task<List<RegistrationAutoCompleteDto>> SearchRegistration(string str)
+        //public virtual async Task<List<RegistrationAutoCompleteDto>> SearchRegistration(string str)
+        //{
+
+        //    return await this._context.Registrations
+        //        .Where(x =>
+        //            //(x.FirstName + " " + x.LastName).ToLower().StartsWith(str) || // Optional: if you want full name search
+        //            (x.FirstName + " " + (x.MiddleName ?? "") + " " + x.LastName) .ToLower() .StartsWith(str) ||
+        //            x.FirstName.ToLower().StartsWith(str) ||                     // Match first name starting with str
+        //            x.RegNo.ToLower().StartsWith(str) ||                         // Match RegNo starting with str
+        //            x.MobileNo.ToLower().Contains(str) 
+        //                                                                        // Keep full Contains() for MobileNo
+        //        )
+        //        .Take(25)
+        //        .Select(x => new RegistrationAutoCompleteDto
+        //        {
+        //            FirstName = x.FirstName,
+        //            Id = x.RegId,
+        //            LastName = x.LastName,
+        //            MiddleName = x.MiddleName,
+        //            Mobile = x.MobileNo,
+        //            RegNo = x.RegNo,
+        //            MobileNo = x.MobileNo,
+        //            AgeYear = x.AgeYear,
+        //            AgeMonth = x.AgeMonth,
+        //            AgeDay = x.AgeDay,
+        //            DateofBirth = x.DateofBirth,
+        //            EmailId =  x.EmailId,
+        //            RegId =x.RegId,
+        //            AadharCardNo= x.AadharCardNo,
+        //            GenderId = x.GenderId,
+        //            AbhaTranId = x.AbhaTranId
+
+        //        })
+        //       .OrderByDescending(x => x.RegNo == str ? 3 : x.MobileNo == str ? 2 : (x.FirstName + " " + x.LastName) == str ? 1 : 0)
+        //       .ThenBy(x => x.FirstName).ToListAsync();
+
+        //}
+        public List<RegistrationAutoCompleteDto> SearchRegistration(string str)
         {
+            DatabaseHelper sql = new();
 
-            return await this._context.Registrations
-                .Where(x =>
-                    //(x.FirstName + " " + x.LastName).ToLower().StartsWith(str) || // Optional: if you want full name search
-                    (x.FirstName + " " + (x.MiddleName ?? "") + " " + x.LastName) .ToLower() .StartsWith(str) ||
-                    x.FirstName.ToLower().StartsWith(str) ||                     // Match first name starting with str
-                    x.RegNo.ToLower().StartsWith(str) ||                         // Match RegNo starting with str
-                    x.MobileNo.ToLower().Contains(str) 
-                                                                                // Keep full Contains() for MobileNo
-                )
-                .Take(25)
-                .Select(x => new RegistrationAutoCompleteDto
-                {
-                    FirstName = x.FirstName,
-                    Id = x.RegId,
-                    LastName = x.LastName,
-                    MiddleName = x.MiddleName,
-                    Mobile = x.MobileNo,
-                    RegNo = x.RegNo,
-                    MobileNo = x.MobileNo,
-                    AgeYear = x.AgeYear,
-                    AgeMonth = x.AgeMonth,
-                    AgeDay = x.AgeDay,
-                    DateofBirth = x.DateofBirth,
-                    EmailId =  x.EmailId,
-                    RegId =x.RegId,
-                    AadharCardNo= x.AadharCardNo,
-                    GenderId = x.GenderId,
-                    AbhaTranId = x.AbhaTranId
+            SqlParameter[] para = new SqlParameter[1];
 
-                })
-               .OrderByDescending(x => x.RegNo == str ? 3 : x.MobileNo == str ? 2 : (x.FirstName + " " + x.LastName) == str ? 1 : 0)
-               .ThenBy(x => x.FirstName).ToListAsync();
+            para[0] = new SqlParameter("@SearchText", str);
 
+            List<RegistrationAutoCompleteDto> lstServiceList =sql.FetchListBySP<RegistrationAutoCompleteDto>("ps_SearchRegistration", para);
+
+            return lstServiceList;
         }
 
 
