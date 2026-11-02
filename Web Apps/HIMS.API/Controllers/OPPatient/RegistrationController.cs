@@ -111,32 +111,58 @@ namespace HIMS.API.Controllers.OPPatient
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model);
         }
-        [HttpGet("auto-complete")]
-        [Permission]
-        public async Task<ApiResponse> GetAutoComplete(string Keyword)
-        {
-            var data = await _IRegistrationService.SearchRegistration(Keyword);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration Data.", data.Select(x => new
-            {
-                //Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile,
-                Text = x.FirstName + " " + x.MiddleName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile,
-                Value = x.Id,
-                RegNo = x.RegNo,
-                MobileNo = x.MobileNo,
-                AgeYear = x.AgeYear,
-                AgeMonth = x.AgeMonth,
-                AgeDay = x.AgeDay,
-                PatientName = x.FirstName + " " + x.MiddleName + " " + x.LastName,     
-                EmailId = x.EmailId,
-                RegId =x.RegId,
-                AadharCardNo = x.AadharCardNo,
-                DateofBirth = x.DateofBirth,
-                GenderId = x.GenderId,
-                AbhaTranId = x.AbhaTranId
+        //[HttpGet("auto-complete")]
+        //[Permission]
+        //public async Task<ApiResponse> GetAutoComplete(string Keyword)
+        //{
+        //    var data = await _IRegistrationService.SearchRegistration(Keyword);
+        //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Registration Data.", data.Select(x => new
+        //    {
+        //        //Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile,
+        //        Text = x.FirstName + " " + x.MiddleName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile,
+        //        Value = x.Id,
+        //        RegNo = x.RegNo,
+        //        MobileNo = x.MobileNo,
+        //        AgeYear = x.AgeYear,
+        //        AgeMonth = x.AgeMonth,
+        //        AgeDay = x.AgeDay,
+        //        PatientName = x.FirstName + " " + x.MiddleName + " " + x.LastName,     
+        //        EmailId = x.EmailId,
+        //        RegId =x.RegId,
+        //        AadharCardNo = x.AadharCardNo,
+        //        DateofBirth = x.DateofBirth,
+        //        GenderId = x.GenderId,
+        //        AbhaTranId = x.AbhaTranId
 
-            }));
+        //    }));
+        //}
+        [HttpGet("auto-complete")]
+       // [Permission]
+        public ApiResponse GetAutoComplete(string Keyword)
+        {
+            var data = _IRegistrationService.SearchRegistration(Keyword);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Registration Data.",
+                data.Select(x => new
+                {
+                    Text = x.FirstName + " " + x.MiddleName + " " + x.LastName
+                           + " | " + x.RegNo + " | " + x.Mobile,
+                    Value = x.Id,
+                    RegNo = x.RegNo,
+                    MobileNo = x.MobileNo,
+                    AgeYear = x.AgeYear,
+                    AgeMonth = x.AgeMonth,
+                    AgeDay = x.AgeDay,
+                    PatientName = x.FirstName + " " + x.MiddleName + " " + x.LastName,
+                    EmailId = x.EmailId,
+                    RegId = x.RegId,
+                    AadharCardNo = x.AadharCardNo,
+                    DateofBirth = x.DateofBirth,
+                    GenderId = x.GenderId,
+                    AbhaTranId = x.AbhaTranId
+                })
+            );
         }
-      
         [HttpPut("UpdateReg{id:int}")]
         [Permission]
         public async Task<ApiResponse> BilldatetimeUpdate(RegistrationUpdate obj)
