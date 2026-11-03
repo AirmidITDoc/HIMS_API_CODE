@@ -3,6 +3,7 @@ using DocumentFormat.OpenXml.VariantTypes;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Hubs;
 using HIMS.API.Models.Administration;
 using HIMS.API.Models.OPPatient;
 using HIMS.API.Models.OutPatient;
@@ -16,6 +17,8 @@ using HIMS.Services.Masters;
 using HIMS.Services.OPPatient;
 using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -28,20 +31,22 @@ namespace HIMS.API.Controllers.OPPatient
         private readonly IGenericService<VisitDetail> _repository;
         private readonly IDoctorMasterService _IDoctorMasterService;
         private readonly IConsRefDoctorService _IConsRefDoctorService;
+        private readonly IHubContext<NotificationHub> _hubContext;
 
-        public VisitDetailController(IVisitDetailsService repository, IGenericService<VisitDetail> repository1, IDoctorMasterService doctorMasterService, IConsRefDoctorService repository2)
+        public VisitDetailController(IVisitDetailsService repository, IHubContext<NotificationHub> hubContext, IGenericService<VisitDetail> repository1, IDoctorMasterService doctorMasterService, IConsRefDoctorService repository2)
         {
             _visitDetailsService = repository;
             _repository = repository1;
             _IDoctorMasterService = doctorMasterService;
             _IConsRefDoctorService = repository2;
+            _hubContext = hubContext;
         }
         [HttpPost("AppVisitList")]
         [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
-             long UnitId = Context.UnitId;
-        //    long UnitId = 1;
+            long UnitId = Context.UnitId;
+            //    long UnitId = 1;
             IPagedList<VisitDetailListDto> AppVisitList = await _visitDetailsService.GetListAsync(objGrid, UnitId);
             return Ok(AppVisitList.ToGridResponse(objGrid, "App Visit List"));
         }
@@ -52,7 +57,7 @@ namespace HIMS.API.Controllers.OPPatient
             IPagedList<FollowupListDto> AppVisitList = await _visitDetailsService.FollowListAsync(objGrid);
             return Ok(AppVisitList.ToGridResponse(objGrid, "Follow up List"));
         }
-      
+
         [HttpPost("AppointmentCancelList")]
         [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<IActionResult> AppointmentCancelList(GridRequestModel objGrid)
@@ -116,7 +121,7 @@ namespace HIMS.API.Controllers.OPPatient
         public async Task<ApiResponse> DeptDoctorList(int DeptId)
         {
             var resultList = await _IDoctorMasterService.GetDoctorsByDepartment(DeptId);
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.DoctorId, text = x.FirstName + " "+x.MiddleName+ " " + x.LastName }));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor List.", resultList.Select(x => new { value = x.DoctorId, text = x.FirstName + " " + x.MiddleName + " " + x.LastName }));
         }
 
         [HttpGet("DoctorTypeDoctorList")]
@@ -162,7 +167,7 @@ namespace HIMS.API.Controllers.OPPatient
             VisitDetail objVisitDetail = obj.Visit.MapTo<VisitDetail>();
             TPatientPolicyInformation PatientPolicy = obj.PatientPolicy.MapTo<TPatientPolicyInformation>();
 
-            
+
             if (obj.Registration.RegId == 0)
             {
                 model.RegTime = Convert.ToDateTime(obj.Registration.RegTime);
@@ -174,7 +179,7 @@ namespace HIMS.API.Controllers.OPPatient
                     objVisitDetail.AddedBy = CurrentUserId;
                     objVisitDetail.UpdatedBy = CurrentUserId;
                 }
-                await _visitDetailsService.InsertAsyncSP(model, objVisitDetail, PatientPolicy ,CurrentUserId, CurrentUserName);
+                await _visitDetailsService.InsertAsyncSP(model, objVisitDetail, PatientPolicy, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -201,7 +206,7 @@ namespace HIMS.API.Controllers.OPPatient
                     objVisitDetail.AddedBy = CurrentUserId;
                     objVisitDetail.UpdatedBy = CurrentUserId;
                 }
-                await _visitDetailsService.UpdateAsyncSP(model,objVisitDetail, PatientPolicy, CurrentUserId, CurrentUserName);
+                await _visitDetailsService.UpdateAsyncSP(model, objVisitDetail, PatientPolicy, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -274,12 +279,12 @@ namespace HIMS.API.Controllers.OPPatient
         [Permission]
         public ApiResponse SearchUserWiseCashCounterList(int LoginId, string CCType)
         {
-                var data = _visitDetailsService.SearchUserWiseCashCounterList(LoginId, CCType);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service List.", data);
+            var data = _visitDetailsService.SearchUserWiseCashCounterList(LoginId, CCType);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service List.", data);
         }
 
-            //Edit EditVital
-            [HttpPut("EditVital/{id:int}")]
+        //Edit EditVital
+        [HttpPut("EditVital/{id:int}")]
         [Permission(PageCode = "Appointment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(UpdateVitalInfModel obj)
         {
@@ -304,7 +309,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.VisitTime = Convert.ToDateTime(obj.VisitTime);
 
                 model.UpdatedBy = CurrentUserId;
-               await _visitDetailsService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
+                await _visitDetailsService.InsertAsyncSP(model, CurrentUserId, CurrentUserName);
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -364,6 +369,7 @@ namespace HIMS.API.Controllers.OPPatient
             {
                 model.ConStartTime = AppTime.Now;
                 await _visitDetailsService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _hubContext.Clients.All.SendAsync("ReceiveQueue", "CheckIn", JsonConvert.SerializeObject(model));
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
@@ -411,11 +417,11 @@ namespace HIMS.API.Controllers.OPPatient
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             else
             {
-            await _visitDetailsService.VistDateTimeUpdateAsync(model, CurrentUserId, CurrentUserName);
+                await _visitDetailsService.VistDateTimeUpdateAsync(model, CurrentUserId, CurrentUserName);
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
-       
+
 
 
         [HttpPut("VisitUpdate")]
