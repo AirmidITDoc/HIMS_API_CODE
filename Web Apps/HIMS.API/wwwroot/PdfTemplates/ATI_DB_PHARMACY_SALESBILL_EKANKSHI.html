@@ -69,7 +69,7 @@
                                     <span style="font-weight: bold;">Bill No:</span>
                                     <span style="font-weight: bold;">{{SalesNo}}</span>
                                     <span style="font-weight: bold; margin-left: 10px;">Bill Date:</span>
-                                    <span>{{Date}}</span><br>
+                                    <span class="bill-dt">{{Time}}</span><br>
                                     <span style="font-weight: bold;">Mode of Payment :</span>
                                     <span>{{PayMode}}</span><br>
                                 </td>
@@ -178,6 +178,22 @@
     <script>
         window.onload = function () {
             // Sr No.
+            // Bill Date -> 03-11-2026 04:23 PM
+            var dt = document.querySelector('.bill-dt');
+            if (dt) {
+                var txt = dt.textContent.trim();
+                var d, mo, y, hh, mi;
+                var a = txt.match(/^(\d{2})-(\d{2})-(\d{4})[ T](\d{2}):(\d{2})/);   // 03-11-2026 16:23:00
+                var b = txt.match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})/);   // 2026-11-03 16:23:00.000
+                if (a) { d = a[1]; mo = a[2]; y = a[3]; hh = a[4]; mi = a[5]; }
+                else if (b) { y = b[1]; mo = b[2]; d = b[3]; hh = b[4]; mi = b[5]; }
+                if (d) {
+                    var h = parseInt(hh, 10);
+                    var ap = h >= 12 ? 'PM' : 'AM';
+                    h = h % 12 || 12;
+                    dt.textContent = d + '-' + mo + '-' + y + ' ' + ('0' + h).slice(-2) + ':' + mi + ' ' + ap;
+                }
+            }
             var n0 = document.querySelectorAll('.n0');
             for (var k = 0; k < n0.length; k++) {
                 var w = parseFloat(n0[k].textContent);
