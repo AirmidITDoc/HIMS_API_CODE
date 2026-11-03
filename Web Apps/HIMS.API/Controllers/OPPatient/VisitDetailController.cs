@@ -207,6 +207,7 @@ namespace HIMS.API.Controllers.OPPatient
                     objVisitDetail.UpdatedBy = CurrentUserId;
                 }
                 await _visitDetailsService.UpdateAsyncSP(model, objVisitDetail, PatientPolicy, CurrentUserId, CurrentUserName);
+                await _hubContext.Clients.All.SendAsync("ReceiveQueue", "Waiting", JsonConvert.SerializeObject(model));
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -444,6 +445,13 @@ namespace HIMS.API.Controllers.OPPatient
         {
             var data = _visitDetailsService.AssignUserWiseCashCounterList();
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "CashCounter List.", data);
+        }
+        [HttpGet("get-queue")]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        public ApiResponse GetQueue(int DoctorId,int VisitId)
+        {
+            var data = _visitDetailsService.GetQueue(DoctorId,VisitId);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Queue List.", data);
         }
     }
 }
