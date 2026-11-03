@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Pathology
 
         }
         [HttpGet("{id?}")]
-        [Permission]
+       // [Permission]
         public async Task<ApiResponse> Get(int id)
         {
             var data = await _repository.GetById(x => x.LabPatRegId == id);
@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpGet("GetLabPatientRegisteredMaster")]
         //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
-        [Permission]
+       // [Permission]
         public async Task<ApiResponse> GetLab(int id)
         {
             var data = await _repository1.GetById(x => x.LabPatRegId == id);
@@ -106,7 +106,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("LabBillDetailList")]
-        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
+       // [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> BillDetailList(GridRequestModel objGrid)
         {
             IPagedList<LabregBilldetailListDto> LabPatientBillList = await _ILabPatientRegistrationService.GetBillDetailListAsync(objGrid);
@@ -223,7 +223,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Edit)]
+       // [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LabPatientRegnewModel obj)
         {
             TLabPatientRegisteredMaster model = obj.LabPatientRegistrationMaster.MapTo<TLabPatientRegisteredMaster>();

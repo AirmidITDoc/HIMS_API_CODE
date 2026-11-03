@@ -3252,6 +3252,8 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.OpdAdvanceCounterId).HasColumnName("OPD_Advance_CounterId");
 
+                entity.Property(e => e.OpdAdvanceReceiptCounterId).HasColumnName("OPD_Advance_Receipt_CounterId");
+
                 entity.Property(e => e.OpdBillingCounterId).HasColumnName("OPD_Billing_CounterId");
 
                 entity.Property(e => e.OpdReceiptCounterId).HasColumnName("OPD_Receipt_CounterId");
@@ -3261,6 +3263,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpdRefundBillCounterId).HasColumnName("OPD_Refund_Bill_CounterId");
 
                 entity.Property(e => e.OpdRefundBillReceiptCounterId).HasColumnName("OPD_Refund_Bill_Receipt_CounterId");
+
+                entity.Property(e => e.OpdRefundOfAdvanceReceiptCounterId).HasColumnName("OPD_Refund_of_Advance_Receipt_CounterId");
 
                 entity.Property(e => e.Phone).HasMaxLength(50);
 
@@ -11639,6 +11643,8 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.EmgPer).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.EmgStartTime).HasColumnType("datetime");
+
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
 
                 entity.Property(e => e.IsDocEditable).HasDefaultValueSql("((0))");
 

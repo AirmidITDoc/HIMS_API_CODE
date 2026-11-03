@@ -23,7 +23,7 @@ namespace HIMS.API.Controllers.Common
             this._FileService = genericService;
         }
         [HttpGet("get-files")]
-        [Permission]
+       // [Permission]
         public async Task<ApiResponse> GetFiles(int RefId, PageNames RefType)
         {
             var result = await _FileService.GetAll(x => x.RefId == RefId && x.RefType == (int)RefType);
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Common
             return File(data.Item1, data.Item2, data.Item3);
         }
         [HttpPost("save-files")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> SaveFiles([FromForm] List<FileModel> MDoctorFiles)
         {
             List<FileMaster> Files = new();

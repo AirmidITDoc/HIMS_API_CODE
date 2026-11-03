@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.Pathology
             _repository = repository;
         }
         [HttpPost("LabPatientAddressList")]
-        [Permission]
+        //[Permission]
         public async Task<IActionResult> salesdetaillist(GridRequestModel objGrid)
         {
             IPagedList<LabPatientAddressDto> LabPatientAddressList = await _ILabPatientAddresService.GetListAsync(objGrid);
@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         //Add API
         [HttpPost]
-        [Permission]
+      //  [Permission]
         public async Task<ApiResponse> Post(LabPatientAddressModel obj)
         {
             TLabPatientAddress model = obj.MapTo<TLabPatientAddress>();
@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission]
+       // [Permission]
         public async Task<ApiResponse> Edit(LabPatientAddressModel obj)
         {
             TLabPatientAddress model = obj.MapTo<TLabPatientAddress>();
