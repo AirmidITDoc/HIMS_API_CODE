@@ -11,6 +11,7 @@ using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
+using HIMS.Data.DTO.AbhaIntegration;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Masters;
@@ -19,6 +20,7 @@ using HIMS.Services.OutPatient;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace HIMS.API.Controllers.OPPatient
 {
@@ -207,7 +209,12 @@ namespace HIMS.API.Controllers.OPPatient
                     objVisitDetail.UpdatedBy = CurrentUserId;
                 }
                 await _visitDetailsService.UpdateAsyncSP(model, objVisitDetail, PatientPolicy, CurrentUserId, CurrentUserName);
-                await _hubContext.Clients.All.SendAsync("ReceiveQueue", "Waiting", JsonConvert.SerializeObject(model));
+                var data = await _visitDetailsService.GetQueue(obj.Visit.ConsultantDocId.Value, objVisitDetail.VisitId);
+                var settings = new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                };
+                await _hubContext.Clients.All.SendAsync("ReceiveQueue", "Waiting", JsonConvert.SerializeObject(data,settings));
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
@@ -389,6 +396,7 @@ namespace HIMS.API.Controllers.OPPatient
                 model.ConEndTime = DateTime.Now;
                 model.CheckOutTime = DateTime.Now;
                 await _visitDetailsService.UpdateAsyncv(model, CurrentUserId, CurrentUserName);
+                await _hubContext.Clients.All.SendAsync("ReceiveQueue", "CheckOut", JsonConvert.SerializeObject(model));
             }
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
@@ -448,9 +456,9 @@ namespace HIMS.API.Controllers.OPPatient
         }
         [HttpGet("get-queue")]
         [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        public ApiResponse GetQueue(int DoctorId,int VisitId)
+        public async Task<ApiResponse> GetQueue(int DoctorId,int VisitId)
         {
-            var data = _visitDetailsService.GetQueue(DoctorId,VisitId);
+            var data = await _visitDetailsService.GetQueue(DoctorId,VisitId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Queue List.", data);
         }
     }

@@ -723,7 +723,7 @@ namespace HIMS.Services.OutPatient
             List<CashCounterDTO> lstUserCashCounterList = sql.FetchListBySP<CashCounterDTO>("ps_Rtrv_Assign_CashCounter", para);
             return lstUserCashCounterList;
         }
-        public virtual async Task<List<VisitDetailListDto>> GetQueue(int DoctorId, int VisitId = 0, int Count = 25)
+        public virtual async Task<List<VisitDetailListDto>> GetQueue(long DoctorId, long VisitId = 0, int Count = 100)
         {
             DatabaseHelper sql = new();
             var para = new List<SqlParameter>
