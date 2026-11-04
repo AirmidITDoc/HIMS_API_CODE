@@ -195,13 +195,23 @@
                     var fmtDate = dm ? dm[3] + '-' + dm[2] + '-' + dm[1] : dateOnly;
 
                     // Time: HH:MM(:SS) → hh:MM AM/PM
+                    // Time: supports "10:06:38 PM" (12h) and "22:06:38" / "2026-07-27 22:06:38.000" (24h)
                     var fmtTime = '';
-                    var tm = rawTime.match(/(\d{1,2}):(\d{2})/);
+                    var tm = rawTime.match(/(\d{1,2}):(\d{2})(?::\d{2})?(?:\.\d+)?\s*([AaPp][Mm])?/);
                     if (tm) {
-                        var h = parseInt(tm[1]), mn = tm[2], ap = h >= 12 ? 'PM' : 'AM';
-                        h = h % 12 || 12;
+                        var h = parseInt(tm[1], 10), mn = tm[2], ap;
+                        if (tm[3]) {
+                            // Source already carries AM/PM: trust it, normalise hour to 12h
+                            ap = tm[3].toUpperCase();
+                            h = h % 12 || 12;
+                        } else {
+                            // 24-hour source
+                            ap = h >= 12 ? 'PM' : 'AM';
+                            h = h % 12 || 12;
+                        }
                         fmtTime = (h < 10 ? '0' + h : h) + ':' + mn + ' ' + ap;
                     }
+  
 
                     var timePart = fmtTime ? ' &nbsp;|&nbsp; ' + fmtTime : '';
                     var userPart = userName ? ' &nbsp;&nbsp;|&nbsp;&nbsp; UserName : ' + userName : '';
