@@ -6,14 +6,16 @@
     <title>Indoor Case Paper</title>
 
     <style>
-        {{LoadFont}}
-
-        @page {
-            size: A4 portrait;
-            margin: 6mm;
+        @font-face {
+            font-family: 'NotoSansDevanagari';
+            src: url('http://192.168.1.10/assets/fonts/pdffonts/NotoSansDevanagari-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
         }
 
-        
+        .marathi-content {
+            font-family: 'NotoSansDevanagari', sans-serif !important;
+        }
     </style>
 
 </head>
@@ -234,12 +236,12 @@
                             <span style="display:inline-block; width:170px; border-bottom:1px solid #000; height:13px; vertical-align:bottom;"></span>
                         </div>
 
-                        <div style="font-size:13px; text-align:left; line-height:1.18;">
-                            व अटी मला मान्य असून त्याचे मी काटेकोरपणे पालन करीन. ॲडमिशन फॉर्ममधील सर्व
+                        <div class="marathi-content" style="font-size:13px; text-align:left; line-height:1.18;">
                             यांना आपल्या रुग्णालयात दाखल करण्यात आले आहे. सदर रुग्णाच्या औषधोपचारासाठी
                             जे बिल होईल ते पूर्णपणे भरण्याची जबाबदारी मी घेत आहे. तसेच रुग्णालयाचे दैनंदिन
                             बिलाप्रमाणे होणाऱ्या बिलापोटी मी वेळोवेळी ॲडव्हान्स रक्कम भरेन. सदर रुग्णाच्या
                             उपचारासाठी होणाऱ्या खर्चाला आमची पूर्ण संमती आहे. तसेच या हॉस्पिटलचे सर्व नियम
+                            व अटी मला मान्य असून त्याचे मी काटेकोरपणे पालन करीन. ॲडमिशन फॉर्ममधील सर्व
                             माहिती मी संपूर्णतः वाचलेली असून, ती मला समजली आहे व ती खरी आहे. याबद्दल
                             माझा / माझी या रुग्णालयाविरुद्ध कुठलीही आपेक्षा / तक्रार राहणार नाही.
                         </div>
