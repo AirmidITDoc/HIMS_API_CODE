@@ -15,11 +15,18 @@
         table {
             border-collapse: collapse;
             width: 100%;
-            page-break-inside: avoid;
         }
 
+        /* each row stays intact, but the table itself can flow across pages */
         tr {
             page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        /* keep summary box together */
+        .summary-block {
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
     </style>
 </head>
@@ -32,514 +39,179 @@
 
         {{PharmacyHeader}}
 
-        <table style="width:100%;line-height:inherit;text-align:left;">
-
-            <!-- ================================================= -->
-            <!-- TITLE -->
-            <!-- ================================================= -->
-
-            <tr class="title-date-row">
-                <td style="padding:6px;">
-
-                    <table style="width:100%;border-collapse:collapse;">
-
-                        <tr style="font-size:18px;">
-
-                            <td style="
-                                border-bottom:1px solid #d4c3c3;
-                                padding:2px;
-                                padding-bottom:16px;">
-
-                                <b>Sales Bill Details</b>
-
-                            </td>
-
-                            <td style="
-                                border-bottom:1px solid #d4c3c3;
-                                padding:2px;
-                                padding-bottom:16px;
-                                text-align:right;">
-
-                                <b>Print Date : {{CurrentDate}}</b>
-
-                            </td>
-
-                        </tr>
-
-                    </table>
-
-                </td>
-            </tr>
-
-            <!-- ================================================= -->
-            <!-- PATIENT DETAILS -->
-            <!-- ================================================= -->
-
-            <tr class="bill-info-row">
-
-                <td>
-
-                    <table style="
-                        width:100%;
-                        border-collapse:collapse;
-                        font-size:16px;">
-
-                        <tr>
-
-                            <td style="padding:2px;">
-                                <span style="font-weight:bold;">UHID :</span>
-                                <span>{{RegNo}}</span>
-                            </td>
-
-                            <td style="padding:2px;">
-                                <span style="font-weight:bold;">IPD No :</span>
-                                <span>{{IP_OP_Number}}</span>
-                            </td>
-
-                            <td style="padding:2px;">
-                                <span style="font-weight:bold;">Age | Gender :</span>
-                                <span>
-                                    {{AgeYear}}Y |
-                                    {{AgeMonth}} M |
-                                    {{AgeDay}}D |
-                                    {{GenderName}}
-                                </span>
-                            </td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td style="padding:2px;">
-                                <span style="font-weight:bold;">Patient Name :</span>
-                                <span>{{PatientName}}</span>
-                            </td>
-
-                            <td style="padding:2px;">
-                                <span style="font-weight:bold;">Patient Type :</span>
-                                <span>{{PatientType}}</span>
-                            </td>
-
-                            <td style="padding:2px;">
-                                <span style="font-weight:bold;">Company Name :</span>
-                                <span>{{CompanyName}}</span>
-                            </td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td style="padding:2px;">
-                                <span style="font-weight:bold;">Doctor Name :</span>
-                                <span>{{DoctorName}}</span>
-                            </td>
-
-                            <td style="padding:2px;">
-                                <span style="font-weight:bold;">Department Name :</span>
-                                <span>{{DepartmentName}}</span>
-                            </td>
-
-                            <td style="padding:2px;">
-                                <span style="font-weight:bold;">Store Name :</span>
-                                <span>{{PrintStoreName}}</span>
-                            </td>
-
-                        </tr>
-
-                    </table>
-
-                    <!-- ================================================= -->
-                    <!-- SEPARATOR -->
-                    <!-- ================================================= -->
-
-                    <table style="width:100%;border-collapse:collapse;">
-
-                        <tr>
-                            <td style="
-                                border-bottom:1px solid #d4c3c3;
-                                padding:2px;">
-                            </td>
-                        </tr>
-
-                    </table>
-
-                    <!-- ================================================= -->
-                    <!-- ITEM TABLE -->
-                    <!-- ================================================= -->
-
-                    <table class="table"
-                           style="width:100%;border-collapse:collapse;">
-
-                        <tbody>
-
-                            <tr style="
-                                font-size:18px;
-                                background-color:white;">
-
-                                <!-- SR NO -->
-                                <td style="
-                                    border:1px solid #000;
-                                    font-weight:700;
-                                    text-align:center;
-                                    vertical-align:middle;
-                                    padding:5px;
-                                    width:5%;">
-
-                                    SR.NO
-
-                                </td>
-
-                                <!-- ITEM NAME -->
-                                <td style="
-                                    border:1px solid #000;
-                                    font-weight:700;
-                                    text-align:center;
-                                    vertical-align:middle;
-                                    padding:5px;
-                                    width:25%;">
-
-                                    Item Name
-
-                                </td>
-
-                                <!-- BATCH NO -->
-                                <td style="
-                                    border:1px solid #000;
-                                    font-weight:700;
-                                    text-align:center;
-                                    vertical-align:middle;
-                                    padding:5px;
-                                    width:12%;">
-
-                                    Batch No
-
-                                </td>
-
-                                <!-- EXP DATE -->
-                                <td style="
-                                    border:1px solid #000;
-                                    font-weight:700;
-                                    text-align:center;
-                                    vertical-align:middle;
-                                    padding:5px;
-                                    width:10%;">
-
-                                    Exp Date
-
-                                </td>
-
-                                <!-- MRP -->
-                                <td style="
-                                    border:1px solid #000;
-                                    font-weight:700;
-                                    text-align:center;
-                                    vertical-align:middle;
-                                    padding:5px;
-                                    width:9%;">
-
-                                    MRP
-
-                                </td>
-
-                                <!-- QTY -->
-                                <td style="
-                                    border:1px solid #000;
-                                    font-weight:700;
-                                    text-align:center;
-                                    vertical-align:middle;
-                                    padding:5px;
-                                    width:8%;">
-
-                                    QTY
-
-                                </td>
-
-                                <!-- TOTAL AMOUNT -->
-                                <td style="
-                                    border:1px solid #000;
-                                    font-weight:700;
-                                    text-align:center;
-                                    vertical-align:middle;
-                                    padding:5px;
-                                    width:11%;">
-
-                                    Total Amt
-
-                                </td>
-
-                                <!-- DISCOUNT AMOUNT -->
-                                <td style="
-                                    border:1px solid #000;
-                                    font-weight:700;
-                                    text-align:center;
-                                    vertical-align:middle;
-                                    padding:5px;
-                                    width:10%;">
-
-                                    Disc Amt
-
-                                </td>
-
-                                <!-- NET AMOUNT -->
-                                <td style="
-                                    border:1px solid #000;
-                                    font-weight:700;
-                                    text-align:center;
-                                    vertical-align:middle;
-                                    padding:5px;
-                                    width:10%;">
-
-                                    Net Amt
-
-                                </td>
-
+        <!-- ================= TITLE ================= -->
+        <div class="title-date-row" style="padding:6px;">
+            <table style="width:100%;border-collapse:collapse;">
+                <tr style="font-size:18px;">
+                    <td style="border-bottom:1px solid #d4c3c3;padding:2px;padding-bottom:16px;">
+                        <b>Sales Bill Details</b>
+                    </td>
+                    <td style="border-bottom:1px solid #d4c3c3;padding:2px;padding-bottom:16px;text-align:right;">
+                        <b>Print Date : {{CurrentDate}}</b>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ================= PATIENT DETAILS ================= -->
+        <div class="bill-info-row">
+
+            <table style="width:100%;border-collapse:collapse;font-size:16px;">
+                <tr>
+                    <td style="padding:2px;">
+                        <span style="font-weight:bold;">UHID :</span>
+                        <span>{{RegNo}}</span>
+                    </td>
+                    <td style="padding:2px;">
+                        <span style="font-weight:bold;">IPD No :</span>
+                        <span>{{IP_OP_Number}}</span>
+                    </td>
+                    <td style="padding:2px;">
+                        <span style="font-weight:bold;">Age | Gender :</span>
+                        <span>{{AgeYear}}Y | {{AgeMonth}} M | {{AgeDay}}D | {{GenderName}}</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:2px;">
+                        <span style="font-weight:bold;">Patient Name :</span>
+                        <span>{{PatientName}}</span>
+                    </td>
+                    <td style="padding:2px;">
+                        <span style="font-weight:bold;">Patient Type :</span>
+                        <span>{{PatientType}}</span>
+                    </td>
+                    <td style="padding:2px;">
+                        <span style="font-weight:bold;">Company Name :</span>
+                        <span>{{CompanyName}}</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:2px;">
+                        <span style="font-weight:bold;">Doctor Name :</span>
+                        <span>{{DoctorName}}</span>
+                    </td>
+                    <td style="padding:2px;">
+                        <span style="font-weight:bold;">Department Name :</span>
+                        <span>{{DepartmentName}}</span>
+                    </td>
+                    <td style="padding:2px;">
+                        <span style="font-weight:bold;">Store Name :</span>
+                        <span>{{PrintStoreName}}</span>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- ================= SEPARATOR ================= -->
+            <table style="width:100%;border-collapse:collapse;">
+                <tr>
+                    <td style="border-bottom:1px solid #d4c3c3;padding:2px;"></td>
+                </tr>
+            </table>
+
+            <!-- ================= ITEM TABLE ================= -->
+            <table class="table" style="width:100%;border-collapse:collapse;">
+
+                <tbody>
+                    <tr style="font-size:18px;background-color:white;">
+                        <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px;width:5%;">SR.NO</td>
+                        <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px;width:25%;">Item Name</td>
+                        <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px;width:12%;">Batch No</td>
+                        <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px;width:10%;">Exp Date</td>
+                        <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px;width:9%;">MRP</td>
+                        <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px;width:8%;">QTY</td>
+                        <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px;width:11%;">Total Amt</td>
+                        <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px;width:10%;">Disc Amt</td>
+                        <td style="border:1px solid #000;font-weight:700;text-align:center;vertical-align:middle;padding:5px;width:10%;">Net Amt</td>
+                    </tr>
+
+                    {{Items}}
+                </tbody>
+
+            </table>
+
+            <!-- ================= SUMMARY ================= -->
+            <table class="summary-block"
+                   style="width:60%;border-collapse:collapse;font-size:15px;margin-top:10px;">
+
+                <tr>
+                    <td>
+                        <table style="width:100%;border-collapse:collapse;border:1px solid #000;">
+
+                            <tr>
+                                <td style="padding:6px;font-weight:bold;">Sales Amount</td>
+                                <td style="padding:6px;text-align:right;">{{totalSales}}</td>
                             </tr>
 
-                            {{Items}}
-
-                        </tbody>
-
-                    </table>
-
-                    <!-- ================================================= -->
-                    <!-- SUMMARY -->
-                    <!-- ================================================= -->
-
-                    <table style="
-                        width:60%;
-                        border-collapse:collapse;
-                        font-size:15px;
-                        margin-top:10px;">
-
-                        <tr>
-
-                            <td>
-
-                                <table style="
-                                    width:100%;
-                                    border-collapse:collapse;
-                                    border:1px solid #000;">
-
-                                    <!-- SALES -->
-                                    <tr>
-
-                                        <td style="
-                                            padding:6px;
-                                            font-weight:bold;">
-
-                                            Sales Amount
-
-                                        </td>
-
-                                        <td style="
-                                            padding:6px;
-                                            text-align:right;">
-
-                                            {{totalSales}}
-
-                                        </td>
-
-                                    </tr>
-
-                                    <!-- SALES RETURN -->
-                                    <tr>
-
-                                        <td style="
-                                            padding:6px;
-                                            font-weight:bold;">
-
-                                            Sales Return Amount
-
-                                        </td>
-
-                                        <td style="
-                                            padding:6px;
-                                            text-align:right;">
-
-                                            {{totalSalesReturn}}
-
-                                        </td>
-
-                                    </tr>
-
-                                    <!-- TOTAL DISCOUNT -->
-                                    <tr>
-
-                                        <td style="
-                                            padding:6px;
-                                            font-weight:bold;">
-
-                                            Total Discount Amount
-
-                                        </td>
-
-                                        <td style="
-                                            padding:6px;
-                                            text-align:right;">
-
-                                            {{totalDiscount}}
-
-                                        </td>
-
-                                    </tr>
-
-                                    <!-- NET TOTAL -->
-                                    <tr>
-
-                                        <td style="
-                                            padding:6px;
-                                            font-weight:bold;
-                                            border-top:1px solid #000;">
-
-                                            Net Total
-
-                                        </td>
-
-                                        <td style="
-                                            padding:6px;
-                                            text-align:right;
-                                            border-top:1px solid #000;">
-
-                                            {{NetTotal}}
-
-                                        </td>
-
-                                    </tr>
-
-                                </table>
-
-                            </td>
-
-                        </tr>
-
-                        <!-- SPACE -->
-
-                        <tr>
-                            <td style="height:10px;"></td>
-                        </tr>
-
-                        <!-- ================================================= -->
-                        <!-- ADVANCE -->
-                        <!-- ================================================= -->
-
-                        <tr>
-
-                            <td style="
-                                padding:6px;
-                                font-weight:bold;
-                                border-bottom:1px solid #000;">
-
-                                Advance Amount
-
-                                <span style="float:right;">
-                                    {{AdvanceAmt}}
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                        <!-- ADVANCE USED -->
-
-                        <tr>
-
-                            <td style="
-                                padding:6px;
-                                font-weight:bold;
-                                border-bottom:1px solid #000;">
-
-                                Advance Used Amount
-
-                                <span style="float:right;">
-                                    {{AdvanceusedAmt}}
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                        <!-- ADVANCE REFUND -->
-
-                        <tr>
-
-                            <td style="
-                                padding:6px;
-                                font-weight:bold;
-                                border-bottom:1px solid #000;">
-
-                                Advance Refund Amount
-
-                                <span style="float:right;">
-                                    {{AdvanceRefundAmt}}
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                        <!-- ADVANCE BALANCE -->
-
-                        <tr>
-
-                            <td style="
-                                padding:6px;
-                                font-weight:bold;
-                                border-bottom:1px solid #000;">
-
-                                Advance Bal Amount
-
-                                <span style="float:right;">
-                                    {{AdvBalanceAmount}}
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                        <!-- PAID AMOUNT -->
-
-                        <tr>
-
-                            <td style="
-                                padding:6px;
-                                font-weight:bold;
-                                border-bottom:1px solid #000;">
-
-                                Paid Amount
-
-                                <span style="float:right;">
-                                    {{PaidAmt}}
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                        <!-- FINAL AMOUNT -->
-
-                        <tr>
-
-                            <td style="
-                                padding:6px;
-                                font-weight:bold;">
-
-                                Amount
-
-                                <span style="float:right;">
-                                    {{Amount}}
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                    </table>
-
-                </td>
-
-            </tr>
-
-        </table>
+                            <tr>
+                                <td style="padding:6px;font-weight:bold;">Sales Return Amount</td>
+                                <td style="padding:6px;text-align:right;">{{totalSalesReturn}}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding:6px;font-weight:bold;">Total Discount Amount</td>
+                                <td style="padding:6px;text-align:right;">{{totalDiscount}}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding:6px;font-weight:bold;border-top:1px solid #000;">Net Total</td>
+                                <td style="padding:6px;text-align:right;border-top:1px solid #000;">{{NetTotal}}</td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="height:10px;"></td>
+                </tr>
+
+                <tr>
+                    <td style="padding:6px;font-weight:bold;border-bottom:1px solid #000;">
+                        Advance Amount
+                        <span style="float:right;">{{AdvanceAmt}}</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:6px;font-weight:bold;border-bottom:1px solid #000;">
+                        Advance Used Amount
+                        <span style="float:right;">{{AdvanceusedAmt}}</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:6px;font-weight:bold;border-bottom:1px solid #000;">
+                        Advance Refund Amount
+                        <span style="float:right;">{{AdvanceRefundAmt}}</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:6px;font-weight:bold;border-bottom:1px solid #000;">
+                        Advance Bal Amount
+                        <span style="float:right;">{{AdvBalanceAmount}}</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:6px;font-weight:bold;border-bottom:1px solid #000;">
+                        Paid Amount
+                        <span style="float:right;">{{PaidAmt}}</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:6px;font-weight:bold;">
+                        Amount
+                        <span style="float:right;">{{Amount}}</span>
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
 
     </div>
 

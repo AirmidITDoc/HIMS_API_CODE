@@ -305,7 +305,7 @@ namespace HIMS.API.Extensions
                 {
                    new("Id",EncryptionUtility.EncryptText(user.UserId.ToString(),SecurityKeys.EnDeKey)),
                    new("UserToken",EncryptionUtility.EncryptText(loginType==LoginType.Mobile?user.MobileToken: user.UserToken,SecurityKeys.EnDeKey)),
-                   new("Permissions",EncryptionUtility.EncryptText(permissions,SecurityKeys.EnDeKey)),
+                   new(PermissionClaimCodec.ClaimType,EncryptionUtility.EncryptText(PermissionClaimCodec.Encode(permissions),SecurityKeys.EnDeKey)),
                    new("RoleId", EncryptionUtility.EncryptText(user.WebRoleId.Value.ToString(),SecurityKeys.EnDeKey)),
                    new("UserName",EncryptionUtility.EncryptText(user.UserName,SecurityKeys.EnDeKey)),
                    new("FullName", EncryptionUtility.EncryptText(user.FirstName + (!string.IsNullOrEmpty(user.LastName) ? " " + user.LastName : ""),SecurityKeys.EnDeKey)),
@@ -319,9 +319,14 @@ namespace HIMS.API.Extensions
         public static bool CheckPermission(string pageCode, PagePermission permit)
         {
             ClaimsPrincipal currentUser = HttpContextAccessor.User;
-            if (currentUser.HasClaim(c => c.Type == "RoleId") && currentUser.HasClaim(c => c.Type == "Permissions"))
+            var permissionClaim = currentUser.FindFirst(PermissionClaimCodec.ClaimType) ?? currentUser.FindFirst("Permissions");
+            if (currentUser.HasClaim(c => c.Type == "RoleId") && permissionClaim != null)
             {
-                string permissions = EncryptionUtility.DecryptText(currentUser.Claims?.FirstOrDefault(c => c.Type == "Permissions")?.Value ?? "", SecurityKeys.EnDeKey);
+                string permissions = EncryptionUtility.DecryptText(permissionClaim.Value, SecurityKeys.EnDeKey);
+                if (permissionClaim.Type == PermissionClaimCodec.ClaimType)
+                {
+                    permissions = PermissionClaimCodec.Decode(permissions);
+                }
                 string[] AllPermissions = permissions.Split(',');
                 var Perms = AllPermissions.Where(x => pageCode.Split('|').Contains(x.Split('|')[0])).Select(x => new { IsAdd = x.Split('|')[1], IsEdit = x.Split('|')[2], IsDelete = x.Split('|')[3], IsView = x.Split('|')[4], IsExport = x.Split('|')[5] });
                 if (permit == PagePermission.Add)

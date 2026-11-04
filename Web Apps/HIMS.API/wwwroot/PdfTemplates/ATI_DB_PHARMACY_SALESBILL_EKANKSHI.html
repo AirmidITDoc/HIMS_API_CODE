@@ -15,7 +15,7 @@
         <table class="table" style="width: 100%;border-collapse: collapse;">
             <tbody>
                 <tr>
-                    <td colspan="4"
+                    <td colspan="6"
                         style="vertical-align: top; border: 1px solid black; width: 40%; padding: 0 10px 10px; font-size: 16px; font-weight: bold;">
                         <span style="margin-top:0;margin-bottom:5px;text-transform: uppercase;font-size: 16px;">
                             {{StoreName}}
@@ -28,7 +28,7 @@
                             <a>{{HospitalEmailId}}</a>
                         </div>
                     </td>
-                    <td colspan="5" style="border: 1px solid black;vertical-align: top; padding: 0;">
+                    <td colspan="7" style="border: 1px solid black;vertical-align: top; padding: 0;">
                         <table style="width: 100%;border-collapse: collapse;font-size:14px;">
                             <tr>
                                 <td style=" vertical-align: top; padding: 0 10px 10px">
@@ -50,7 +50,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4"
+                    <td colspan="6"
                         style=" vertical-align: top; border: 1px solid black; width: 40%; padding: 0 10px 10px; font-size: 14px;">
                         <div>
                             <span style="font-weight: bold;">GST No.</span>
@@ -62,14 +62,14 @@
                         </div>
                     </td>
 
-                    <td colspan="5" style="border: 1px solid black; vertical-align: top; padding: 0;">
+                    <td colspan="7" style="border: 1px solid black; vertical-align: top; padding: 0;">
                         <table style="width: 100%;font-size:16px;">
                             <tr>
                                 <td style="vertical-align: top;padding:0 10px 10px">
                                     <span style="font-weight: bold;">Bill No:</span>
                                     <span style="font-weight: bold;">{{SalesNo}}</span>
                                     <span style="font-weight: bold; margin-left: 10px;">Bill Date:</span>
-                                    <span>{{Date}}</span><br>
+                                    <span class="bill-dt">{{Time}}</span><br>
                                     <span style="font-weight: bold;">Mode of Payment :</span>
                                     <span>{{PayMode}}</span><br>
                                 </td>
@@ -107,9 +107,9 @@
                     <td style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{BatchNo}}</td>
                     <td style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{BatchExpDate}}</td>
                     <td style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{CGSTPer}}</td>
-                    <td style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{CGSTAmt}}</td>
+                    <td class="n2" style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{CGSTAmt}}</td>
                     <td style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{SGSTPer}}</td>
-                    <td style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{SGSTAmt}}</td>
+                    <td class="n2" style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{SGSTAmt}}</td>
                     <td class="n2" style="border-left:1px solid #000;border-right:1px solid #000;vertical-align:middle;padding:3px;height:10px;text-align:center;">{{UnitMRP}}</td>
                     <td class="n2" style="border-left:1px solid #000;border-right:1px solid #000;padding:0;height:10px;vertical-align:middle;text-align: center;">{{TotalAmount}}</td>
                 </tr>
@@ -118,11 +118,11 @@
 
             <tbody>
                 <tr>
-                    <td colspan="4" style="border: 1px solid black;vertical-align: top; padding: 0 10px 10px;">
+                    <td colspan="6" style="border: 1px solid black;vertical-align: top; padding: 0 10px 10px;">
                         <div style="font-weight: 400; font-size: 20px;">Terms &amp; Conditions</div>
                         <pre style="margin: 5px 0 0 0; font-size: 10px; font-weight: 400;">{{TermsAndCondition}}</pre>
                     </td>
-                    <td colspan="5" style="border: 1px solid black;vertical-align: top; padding: 0 10px 10px;font-size:16px;">
+                    <td colspan="7" style="border: 1px solid black;vertical-align: top; padding: 0 10px 10px;font-size:16px;">
                         <div style="width:240px;margin-left:auto;">
                             <div style="display:flex;align-items: center;">
                                 <span style="width:100px;display:inline-block;">Sub Total</span>
@@ -159,12 +159,12 @@
                 </tr>
                 <tr style="font-size: 16px;">
                     <td colspan="3">Billed By: {{UserName}}</td>
-                    <td colspan="6" style="text-align: right;">
+                    <td colspan="10" style="text-align: right;">
                         This is Computer generated invoice hence doesn’t require signature
                     </td>
                 </tr>
                 <tr style="font-size: 16px;">
-                    <td colspan="9" style="text-align: right;">
+                    <td colspan="13" style="text-align: right;">
                         <span style="display:inline-block; text-align:center;">
                             <br>
                             <span style="display:block;">PHARMACIST</span>
@@ -178,6 +178,22 @@
     <script>
         window.onload = function () {
             // Sr No.
+            // Bill Date -> 03-11-2026 04:23 PM
+            var dt = document.querySelector('.bill-dt');
+            if (dt) {
+                var txt = dt.textContent.replace(/\u00a0/g, ' ').trim();
+                var m = txt.match(/(\d{1,4})[-\/.](\d{1,2})[-\/.](\d{1,4})\D+(\d{1,2}):(\d{2})/);
+                if (m) {
+                    var d, mo, y;
+                    if (m[1].length === 4) { y = m[1]; mo = m[2]; d = m[3]; }   // 2026-11-03
+                    else { d = m[1]; mo = m[2]; y = m[3]; }                       // 03-11-2026
+                    var h = parseInt(m[4], 10);
+                    var ap = h >= 12 ? 'PM' : 'AM';
+                    h = h % 12 || 12;
+                    dt.textContent = ('0' + d).slice(-2) + '-' + ('0' + mo).slice(-2) + '-' + y + ' ' +
+                        ('0' + h).slice(-2) + ':' + m[5] + ' ' + ap;
+                }
+            }
             var n0 = document.querySelectorAll('.n0');
             for (var k = 0; k < n0.length; k++) {
                 var w = parseFloat(n0[k].textContent);

@@ -132,7 +132,7 @@ namespace HIMS.Services.OutPatient
                 odal.SetConnection(_context.Database.GetDbConnection()); // <-- Share same DbConnection
                 odal.SetTransaction(transaction.GetDbTransaction());     // <-- Share same DbTransaction
 
-                string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "ReligionId", "AreaId", "IsSeniorCitizen", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry", "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress", "RegId", "EmailId" , "MembershipId", "IsMember", "AbhaTranId", "DistrictId" };
+                string[] rEntity = { "RegDate", "RegTime", "PrefixId", "FirstName", "MiddleName", "LastName", "Address", "City", "PinNo", "DateofBirth", "Age", "GenderId", "PhoneNo", "MobileNo", "AddedBy", "AgeYear", "AgeMonth", "AgeDay", "CountryId", "StateId", "CityId", "MaritalStatusId", "IsCharity", "ReligionId", "AreaId", "IsSeniorCitizen", "AadharCardNo", "PanCardNo", "Photo", "EmgContactPersonName", "EmgRelationshipId", "EmgMobileNo", "EmgLandlineNo", "EngAddress", "EmgAadharCardNo", "EmgDrivingLicenceNo", "MedTourismPassportNo", "MedTourismVisaIssueDate", "MedTourismVisaValidityDate", "MedTourismNationalityId", "MedTourismCitizenship", "MedTourismPortOfEntry", "MedTourismDateOfEntry", "MedTourismResidentialAddress", "MedTourismOfficeWorkAddress", "RegId", "EmailId", "MembershipId", "IsMember", "AbhaTranId", "DistrictId" };
                 var entity = objRegistration.ToDictionary();
                 foreach (var rProperty in entity.Keys.ToList())
                 {
@@ -174,7 +174,7 @@ namespace HIMS.Services.OutPatient
                 {
                     VisitId = Convert.ToInt32(VisitId)
                 };
-                odal.ExecuteNonQueryNew("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure,"",tokenObj.ToDictionary());
+                odal.ExecuteNonQueryNew("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, "", tokenObj.ToDictionary());
                 await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Add, CurrentUserId, CurrentUserName);
                 //  Save & Commit 
                 await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
@@ -188,7 +188,7 @@ namespace HIMS.Services.OutPatient
             }
         }
 
-        public virtual async Task UpdateAsyncSP(Registration ObjRegistration ,VisitDetail objVisitDetail, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
+        public virtual async Task UpdateAsyncSP(Registration ObjRegistration, VisitDetail objVisitDetail, TPatientPolicyInformation ObjTPatientPolicyInformation, int CurrentUserId, string CurrentUserName)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
 
@@ -238,7 +238,7 @@ namespace HIMS.Services.OutPatient
                 {
                     VisitId = Convert.ToInt32(VisitId)
                 };
-                odal.ExecuteNonQueryNew("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure,"",  tokenObj.ToDictionary());
+                odal.ExecuteNonQueryNew("ps_Insert_TokenNumber_DoctorWise", CommandType.StoredProcedure, "", tokenObj.ToDictionary());
                 await _context.LogProcedureExecution(tokenObj.ToDictionary(), nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
                 //  Save & Commit 
                 await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
@@ -593,7 +593,7 @@ namespace HIMS.Services.OutPatient
                     if (!rEntity.Contains(rProperty))
                         entity.Remove(rProperty);
                 }
-                odal.ExecuteNonQueryNew("ps_UpdateFollowupDate", CommandType.StoredProcedure,"", entity);
+                odal.ExecuteNonQueryNew("ps_UpdateFollowupDate", CommandType.StoredProcedure, "", entity);
                 await _context.LogProcedureExecution(entity, nameof(VisitDetail), objVisitDetail.VisitId.ToInt(), Core.Domain.Logging.LogAction.Edit, CurrentUserId, CurrentUserName);
                 // SaveChanges
                 await _context.SaveChangesAsync(CurrentUserId, CurrentUserName);
@@ -718,39 +718,22 @@ namespace HIMS.Services.OutPatient
         public List<CashCounterDTO> AssignUserWiseCashCounterList()
         {
             DatabaseHelper sql = new();
-            SqlParameter[] para = new SqlParameter[0];
+            SqlParameter[] para = Array.Empty<SqlParameter>();
 
             List<CashCounterDTO> lstUserCashCounterList = sql.FetchListBySP<CashCounterDTO>("ps_Rtrv_Assign_CashCounter", para);
             return lstUserCashCounterList;
         }
+        public virtual async Task<List<VisitDetailListDto>> GetQueue(int DoctorId, int VisitId = 0, int Count = 25)
+        {
+            DatabaseHelper sql = new();
+            var para = new List<SqlParameter>
+{
+    new("@DoctorId", SqlDbType.BigInt) { Value = DoctorId },
+    new("@VisitId", SqlDbType.BigInt) { Value = VisitId },
+    new("@Count", SqlDbType.BigInt) { Value = Count }
+};
+
+            return sql.FetchListBySP<VisitDetailListDto>("GET_QUEUE", para.ToArray());
+        }
     }
 }
-        
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

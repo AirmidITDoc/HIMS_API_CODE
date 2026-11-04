@@ -40,6 +40,6 @@ namespace HIMS.Services.OutPatient
         Task VisitUpdateAsync(VisitDetail ObjVisitDetail, int UserId, string Username);
         Task FollowUpdateAsync(VisitDetail objVisitDetail, int CurrentUserId, string CurrentUserName);
         List<CashCounterDTO> AssignUserWiseCashCounterList();
-
+        Task<List<VisitDetailListDto>> GetQueue(int DoctorId, int VisitId = 0, int Count = 25);
     }
 }
