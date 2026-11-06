@@ -1280,6 +1280,52 @@ namespace HIMS.Services.Report
                 #endregion
 
 
+                #region :: IPDPatientSticker ::
+                case "IPDPatientSticker":
+                    {
+                        string[] colList = Array.Empty<string>();
+                        var dt = GetDataBySp(model, "ps_rptAppointmentIPPrint");
+                        var objTemplate = await _IBarcodeConfigService.GetConfigByCode("IPDPatientSticker");
+                        string html = objTemplate?.TemplateBody ?? "";
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("OPDNo")));
+                        html = html.Replace("{{AdmissionDate}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                        html = html.Replace("{{ConsultantDoctorName}}", dt.GetColValue("ConsultantDoctorName"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{AdmissionID}}", dt.GetColValue("AdmissionID"));
+
+                        tuple = _pdfUtility.GeneratePdfFromHtmlBarCode(html, model.StorageBaseUrl, "IPDPatientSticker", "Sticker" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+
+                #region :: PathologyStickerPrint ::
+                case "PathologyStickerPrint":
+                    {
+                        string[] colList = Array.Empty<string>();
+                        var dt = GetDataBySp(model, "ps_Rtrv_LabStickerPrintDemo");
+                        var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologyStickerPrint");
+                        string html = objTemplate?.TemplateBody ?? "";
+                        html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("TestName")));
+                        html = html.Replace("{{UHID}}", dt.GetColValue("UHID"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{ServiceName}}", dt.GetColValue("ServiceName"));
+                        html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
+                        html = html.Replace("{{SampleNo}}", dt.GetColValue("SampleNo"));
+                        html = html.Replace("{{TestName}}", dt.GetColValue("TestName"));
+                        html = html.Replace("{{SampleCollectionTime}}", dt.GetColValue("SampleCollectionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+                     
+                        tuple = _pdfUtility.GeneratePdfFromHtmlBarCode(html, model.StorageBaseUrl, "OPDStickerPrint", "Sticker" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
+
                 #region :: LabregisterBillReceipt ::
                 case "LabregisterBillReceipt":
                     {
@@ -27652,32 +27698,64 @@ break;
                 }
             }
 
-            if (model.Mode == "IPStickerPrintV1")
+
+            if (model.Mode == "PathologyStickerPrint")
+            {
+                title = "Pathology Sticker Print";
+
+                var dt = GetDataBySp(model, "ps_Rtrv_LabStickerPrintDemo");
+                var objTemplate = await _IBarcodeConfigService.GetConfigByCode("PathologyStickerPrint");
+                string template = objTemplate?.TemplateBody ?? "";
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    string rowHtml = template;
+
+                    rowHtml = rowHtml.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(row["TestName"]?.ToString()));
+                    rowHtml = rowHtml.Replace("{{UHID}}", row["UHID"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{PatientName}}", row["PatientName"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{ServiceName}}", row["ServiceName"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{DoctorName}}", row["DoctorName"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{SampleNo}}", row["SampleNo"]?.ToString());
+                    rowHtml = rowHtml.Replace("{{TestName}}", row["TestName"]?.ToString());
+                    html = html.Replace("{{SampleCollectionTime}}", dt.GetColValue("SampleCollectionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+
+
+
+                    rowHtml = rowHtml.Replace("{{TestBarCodeName}}", row["TestBarCodeName"]?.ToString());
+
+                    html += rowHtml;// + "<div style='page-break-after:always'></div>";
+                }
+            }
+
+
+            if (model.Mode == "IPDStickerPrint")
             {
                 title = "Patient Detail Sticker";
                 var dt = GetDataBySp(model, "ps_rptAppointmentIPPrint");
-                var objTemplate = await _IBarcodeConfigService.GetConfigByCode("IPPatientSticker");
+                var objTemplate = await _IBarcodeConfigService.GetConfigByCode("IPDPatientSticker");
                 html = objTemplate?.TemplateBody ?? "";
                 html = html.Replace("{{QrCode}}", Utilities.Utils.GetQrCodeBase64(dt.GetColValue("RegNo")));
-                html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
                 html = html.Replace("{{GenderName}}", dt.GetColValue("GenderName"));
                 html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
                 html = html.Replace("{{AgeYear}}", dt.GetColValue("AgeYear"));
                 html = html.Replace("{{AgeMonth}}", dt.GetColValue("AgeMonth"));
                 html = html.Replace("{{AgeDay}}", dt.GetColValue("AgeDay"));
                 html = html.Replace("{{AdmissionDate}}", dt.GetColValue("AdmissionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
-                //html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
                 html = html.Replace("{{ConsultantDoctorName}}", dt.GetColValue("ConsultantDoctorName"));
-                html = html.Replace("{{Address}}", dt.GetColValue("Address"));
-                html = html.Replace("{{Expr1}}", dt.GetColValue("Expr1"));
-                html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+                html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                html = html.Replace("{{DoctorName}}", dt.GetColValue("DoctorName"));
                 html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
                 html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                html = html.Replace("{{AdmissionID}}", dt.GetColValue("AdmissionID"));
+
+                html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+          
                 html = html.Replace("{{AdmittedDoctorName}}", dt.GetColValue("AdmittedDoctorName"));
                 html = html.Replace("{{RefDocName}}", dt.GetColValue("RefDocName"));
                 html = html.Replace("{{CompanyName}}", dt.GetColValue("CompanyName"));
                 html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
-                html = html.Replace("{{OPDNo}}", dt.GetColValue("OPDNo"));
                 html = html.Replace("{{IsMLC}}", dt.GetColValue("IsMLC"));
                 html = html.Replace("{{AdmittedDoctor2}}", dt.GetColValue("AdmittedDoctor2"));
                 html = html.Replace("{{LoginUserSurname}}", dt.GetColValue("LoginUserSurname"));
