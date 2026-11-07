@@ -2,6 +2,7 @@
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
+using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
 using HIMS.API.Models.Pathology;
 using HIMS.Core;
@@ -73,6 +74,35 @@ namespace HIMS.API.Controllers.Pathology
 
             return ApiResponseHelper.GenerateResponse(  ApiStatusCode.Status200OK,  "Record added successfully.",  model.PatientRegId);
         }
+
+
+
+        [HttpPut("UpdateHomecollection/{id:int}")]
+        // [Permission(PageCode = "MedicalRecords", Permission = PagePermission.Edit)]
+        public async Task<ApiResponse> Edit(HomeCollectionPatientRegModel obj)
+        {
+            THomeCollectionPatientRegistartion model = obj.MapTo<THomeCollectionPatientRegistartion>();
+            if (obj.PatientRegId == 0)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+            else
+            {
+           
+                foreach (var q in model.THomeCollectionPatientRegDetails)
+                {
+                    if (q.PatientRegDetId == 0)
+                    {
+                        //q.CreatedBy = CurrentUserId;
+                        //q.CreatedDate = AppTime.Now;
+                    }
+                    //q.ModifiedBy = CurrentUserId;
+                    //q.ModifiedDate = AppTime.Now;
+                    //q.IppreId = 0;
+                }
+                await _IHomeCollectionPatientRegService.UpdateAsync(model, CurrentUserId, CurrentUserName);
+            }
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
+        }
+
 
         [HttpPost("HomeCollectionPatientInsert")]
         //[Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Add)]

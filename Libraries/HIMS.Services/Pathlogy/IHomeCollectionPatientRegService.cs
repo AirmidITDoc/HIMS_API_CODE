@@ -12,9 +12,10 @@ namespace HIMS.Services.Pathlogy
 {
     public partial interface IHomeCollectionPatientRegService
     {
-        Task InsertAsync(THomeCollectionPatientRegistartion ObjTHomeCollectPatientRegistartion, int UserId, string Username);
+        Task InsertAsync(THomeCollectionPatientRegistartion THomeCollectionPatientRegistartion, int UserId, string Username);
         Task<IPagedList<HomeCollectionPatientRegistartionListDto>> GetListAsync(GridRequestModel objGrid);
 
+        Task UpdateAsync(THomeCollectionPatientRegistartion THomeCollectionPatientRegistartion, int UserId, string Username);
 
 
     }
