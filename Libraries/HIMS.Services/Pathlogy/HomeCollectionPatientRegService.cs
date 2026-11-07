@@ -4,6 +4,7 @@ using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Pharmacy;
+using LinqToDB;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -35,34 +36,50 @@ namespace HIMS.Services.Pathlogy
 
             scope.Complete();
         }
-        public virtual async Task InsertAsync(TOtReservationHeader ObjTOtReservationHeader, int UserId, string Username)
+
+
+
+
+        public virtual async Task UpdateAsync(THomeCollectionPatientRegistartion ObjTHomeCollectPatientRegistartion, int UserId, string Username)
         {
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
-
             {
-                var lastSeqNoStr = await _context.TOtReservationHeaders
-                    .OrderByDescending(x => x.OtreservationNo)
-                    .Select(x => x.OtreservationNo)
-                    .FirstOrDefaultAsync();
-
-                int lastSeqNo = 0;
-                if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
-                    lastSeqNo = parsed;
-
-                // Increment the sequence number
-                int newSeqNo = lastSeqNo + 1;
-                ObjTOtReservationHeader.OtreservationNo = newSeqNo.ToString();
-
-
-                ObjTOtReservationHeader.Createdby = UserId;
-                ObjTOtReservationHeader.CreatedDate = AppTime.Now;
-
-                _context.TOtReservationHeaders.Add(ObjTOtReservationHeader);
+                // Update header & detail table records
+                _context.THomeCollectionPatientRegistartions.Update(ObjTHomeCollectPatientRegistartion);
+                _context.Entry(ObjTHomeCollectPatientRegistartion).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
                 scope.Complete();
             }
         }
+        //public virtual async Task InsertAsync(TOtReservationHeader ObjTOtReservationHeader, int UserId, string Username)
+        //{
+        //    using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
+
+        //    {
+        //        var lastSeqNoStr = await _context.TOtReservationHeaders
+        //            .OrderByDescending(x => x.OtreservationNo)
+        //            .Select(x => x.OtreservationNo)
+        //            .FirstOrDefaultAsync();
+
+        //        int lastSeqNo = 0;
+        //        if (!string.IsNullOrEmpty(lastSeqNoStr) && int.TryParse(lastSeqNoStr, out var parsed))
+        //            lastSeqNo = parsed;
+
+        //        // Increment the sequence number
+        //        int newSeqNo = lastSeqNo + 1;
+        //        ObjTOtReservationHeader.OtreservationNo = newSeqNo.ToString();
+
+
+        //        ObjTOtReservationHeader.Createdby = UserId;
+        //        ObjTOtReservationHeader.CreatedDate = AppTime.Now;
+
+        //        _context.TOtReservationHeaders.Add(ObjTOtReservationHeader);
+        //        await _context.SaveChangesAsync();
+
+        //        scope.Complete();
+        //    }
+        //}
 
 
     }
