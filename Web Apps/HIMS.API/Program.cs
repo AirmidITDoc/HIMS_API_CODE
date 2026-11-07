@@ -214,6 +214,7 @@ builder.Services.AddCors(options =>
 
 
 var app = builder.Build();
+app.UseMiddleware<SecurityHeadersMiddleware>();
 app.UseStaticFiles();
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint(AppSettings.Settings.SwaggerUrl, "API v1"));
@@ -241,4 +242,3 @@ using (var scope = app.Services.CreateScope())
 
 
 app.Run();
-

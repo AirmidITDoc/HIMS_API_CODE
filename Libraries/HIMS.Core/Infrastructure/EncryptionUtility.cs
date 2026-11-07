@@ -11,8 +11,6 @@ namespace HIMS.Core.Infrastructure
     public class EncryptionUtility
     {
 
-        private static readonly string EncryptionKey = "airmidsoftwaredevelopmentat12345"; // Must match Angular key
-        private static readonly string IvString = "airmidsoftware12"; // Must match Angular IV
         #region Utilities
         private static ICryptoTransform CreateCryptoByType(CryptoType cryptoType, string key)
         {
@@ -111,47 +109,6 @@ namespace HIMS.Core.Infrastructure
                 decryptedText = Encoding.UTF8.GetString(plainTextBytes, INDEX_START, decryptedByteCount).TrimEnd("\0".ToCharArray());
             }
             return decryptedText;
-        }
-
-        public static string DecryptFromAngular(string cipherText)
-        {
-
-            var fullCipher = Convert.FromBase64String(cipherText);
-            var iv = Encoding.UTF8.GetBytes(IvString);
-            var cipherBytes = fullCipher;
-
-            using var aes = Aes.Create();
-            aes.Key = Encoding.UTF8.GetBytes(EncryptionKey);
-            aes.IV = iv;
-            aes.Mode = CipherMode.CBC;
-            aes.Padding = PaddingMode.PKCS7;
-
-            using var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
-            using var ms = new MemoryStream(cipherBytes);
-            using var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
-            using var sr = new StreamReader(cs);
-            return sr.ReadToEnd();
-        }
-        public static string EncryptForAngular(string plainText)
-        {
-            var iv = Encoding.UTF8.GetBytes(IvString);
-
-            using var aes = Aes.Create();
-            aes.Key = Encoding.UTF8.GetBytes(EncryptionKey);
-            aes.IV = iv;
-            aes.Mode = CipherMode.CBC;
-            aes.Padding = PaddingMode.PKCS7;
-
-            using var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
-            using var ms = new MemoryStream();
-            using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
-            {
-                using var sw = new StreamWriter(cs);
-                sw.Write(plainText);
-            }
-
-            var encryptedBytes = ms.ToArray();
-            return Convert.ToBase64String(encryptedBytes);
         }
 
         /// <summary>

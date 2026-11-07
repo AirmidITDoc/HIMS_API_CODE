@@ -98,8 +98,6 @@ namespace HIMS.API.Controllers.Login
                 }
                 else
                 {
-                    model.Username = EncryptionUtility.DecryptFromAngular(model.Username);
-                    model.Password = EncryptionUtility.DecryptFromAngular(model.Password);
                     if (string.IsNullOrWhiteSpace(model.Username))
                     {
                         return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Username is required");
@@ -170,7 +168,7 @@ namespace HIMS.API.Controllers.Login
                 status = "Ok",
                 user.UserToken,
                 user.WebRoleId,
-                Permissions = EncryptionUtility.EncryptForAngular(JsonConvert.SerializeObject(permissions)),
+                Permissions = JsonConvert.SerializeObject(permissions),
                 Token = CommonExtensions.GenerateToken(user, AppSettings.Settings.AuthenticationSettings.SecretKey, 720, permissionString, loginType),
                 UserName = user.FirstName + " " + user.LastName,
                 user.UserId,

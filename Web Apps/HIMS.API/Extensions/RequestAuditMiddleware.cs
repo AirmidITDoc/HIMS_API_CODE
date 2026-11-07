@@ -69,6 +69,11 @@ namespace HIMS.API.Extensions
                     requestBody = await reader.ReadToEndAsync();
                     context.Request.Body.Position = 0;
                 }
+                // login payload carries plaintext credentials; never persist it
+                if (context.Request.Path.Value?.EndsWith("/Login/Authenticate", StringComparison.OrdinalIgnoreCase) == true)
+                {
+                    requestBody = "[REDACTED]";
+                }
 
                 // capture response
                 var originalBodyStream = context.Response.Body;

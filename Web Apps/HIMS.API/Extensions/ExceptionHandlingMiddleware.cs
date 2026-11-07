@@ -56,7 +56,7 @@ namespace HIMS.API.Extensions
                 string param = string.Empty;
                 try
                 {
-                    if (context.Request.Method.ToLower() != "get")
+                    if (!HttpMethods.IsGet(context.Request.Method))
                     {
                         context.Request.Body.Seek(0, SeekOrigin.Begin);
                         using StreamReader stream = new(context.Request.Body, leaveOpen: true);
@@ -72,11 +72,18 @@ namespace HIMS.API.Extensions
                     param = "[Could not read request body]";
                 }
 
-                // --- 2. Log exception to file (non-blocking, never throws) ---
-                _ = LogExceptionToFileAsync(ex, context, param); // fire-and-forget
+                // --- 2. Log exception to file (safe and never throws) ---
+                await LogExceptionToFileAsync(ex, context, param);
 
-                // --- 3. Send JSON error response ---
+                // --- 3. Send JSON error response only if response is writable ---
                 HttpResponse response = context.Response;
+                if (response.HasStarted)
+                {
+                    _logger.LogWarning(ex, "ExceptionMiddleware: response already started for {Path}.", context.Request.Path.Value);
+                    return;
+                }
+
+                response.Clear();
                 response.ContentType = "application/json";
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 log.ResponseCode = "500";
