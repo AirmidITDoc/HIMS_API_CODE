@@ -253,6 +253,11 @@ namespace HIMS.Services.Report
                 var mrMode = model.Mode;
                 var mType = await _context.MReportSetupOperationals.Where(r => r.ReportMode == mrMode).Select(r => new { mReportHtmlName = r.ReportHtmlName, mReportHeaderHtmlName = r.ReportHeaderHtmlName, mProcedureName = r.ProcedureName, mFolderName = r.FolderName, mReportFileName = r.ReportFileName, mIsDBFunction = r.IsDbfunction, mIsA5orA4Page = r.IsA5orA4page, mHeaderSpace = r.HeaderSpace }).FirstOrDefaultAsync();
 
+                if (mType == null)
+                {
+                    throw new InvalidOperationException($"Report setup not found for mode '{mrMode}' in MReportSetupOperationals.");
+                }
+
                 string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHtmlName);
                 string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHeaderHtmlName);
 
