@@ -1,6 +1,29 @@
 # HIMS_API_CODE
 HIMS New Version API Code 
 
+## Empty OP bill receipts
+
+If `OpBillReceipt` renders only its header and zero totals, check
+`dbo.ps_rptBillPrint` before changing the Angular bill identifier. Duplicate
+`M_LoginAccessConfig` entries for `IsHospitalStamp` can cause SQL error 512 in
+the procedure's scalar stamp-configuration lookup, even when the bill and its
+charges exist.
+
+Run [FixOpBillReceiptStampLookup.sql](Web%20Apps/HIMS.API/DbData/FixOpBillReceiptStampLookup.sql)
+against the affected API database. It changes only that lookup from scalar
+equality to set membership, retains existing procedure customizations and
+configuration rows, and can be rerun. Unexpected definitions fail explicitly
+instead of being overwritten. Take the normal database procedure backup and
+use the normal shared-database deployment process.
+
+The SQL correction takes effect on the next report request without an API
+restart. Close and reopen an existing preview: its already-loaded PDF will
+not refresh automatically.
+
+Deploy/restart the API to enable the empty-OP-receipt guard as well: failed or
+empty receipt queries must report an error rather than generate a misleading
+zero-valued PDF. Reprint an existing bill; no new bill or payment is required.
+
 ## HTTP security headers
 
 The first middleware, `SecurityHeadersMiddleware`, adds these headers to responses

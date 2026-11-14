@@ -9640,6 +9640,9 @@ break;
         {
             var dt = GetDataBySp(model, sp_Name);
 
+            if (model.Mode == "OpBillReceipt" && (dt == null || dt.Rows.Count == 0))
+                throw new InvalidOperationException($"OP bill receipt returned no data from '{sp_Name}'. Check the bill number and report procedure before printing.");
+
             if (dt != null && dt.Rows.Count > 0)
             {
                 var log = new StringBuilder();
