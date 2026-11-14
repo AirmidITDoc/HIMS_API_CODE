@@ -18,35 +18,36 @@ using static HIMS.API.Models.DietKitchen.DietPatientRequestDetailModelValidator;
 
 namespace HIMS.API.Controllers.DietKitchen
 {
-
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-
     public class DietPatientRequestController : BaseController
     {
         private readonly IDietPatientRequestService _IDietPatientRequestService;
+
         public DietPatientRequestController(IDietPatientRequestService repository)
         {
             _IDietPatientRequestService = repository;
-
         }
+
         [HttpPost("DietPatientRequestHeaderList")]
-        [Permission]
+        //[Permission]
         public async Task<IActionResult> DietPatientRequestHeaderList(GridRequestModel objGrid)
         {
-            IPagedList<DietPatientRequestHeaderListDto> ReservationAttendingDetailList = await _IDietPatientRequestService.GetListAsync(objGrid);
-            return Ok(ReservationAttendingDetailList.ToGridResponse(objGrid, "DietPatientRequestHeader List"));
+            IPagedList<DietPatientRequestHeaderListDto> list = await _IDietPatientRequestService.GetListAsync(objGrid);
+            return Ok(list.ToGridResponse(objGrid, "DietPatientRequestHeader List"));
         }
+
         [HttpPost("DietPatientRequestDetailsList")]
-        [Permission]
+        //[Permission]
         public async Task<IActionResult> DietPatientRequestDetailsList(GridRequestModel objGrid)
         {
-            IPagedList<DietPatientRequestDetailsListDto> ReservationAttendingDetailList = await _IDietPatientRequestService.GetListDetailsAsync(objGrid);
-            return Ok(ReservationAttendingDetailList.ToGridResponse(objGrid, "DietPatientRequestDetails List"));
+            IPagedList<DietPatientRequestDetailsListDto> list = await _IDietPatientRequestService.GetListDetailsAsync(objGrid);
+            return Ok(list.ToGridResponse(objGrid, "DietPatientRequestDetails List"));
         }
+
         [HttpPost("Insert")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Insert(DietPatientRequestModel obj)
         {
             TDietPatientRequestHeader model = obj.MapTo<TDietPatientRequestHeader>();
@@ -55,12 +56,8 @@ namespace HIMS.API.Controllers.DietKitchen
                 foreach (var q in model.TDietPatReqDetails)
                 {
                     q.OrderDate = AppTime.Now;
-
                 }
-                foreach (var q in model.TDietPatReqDetails)
-                {
 
-                }
                 model.CreatedDate = AppTime.Now;
                 model.CreatedBy = CurrentUserId;
                 model.ModifiedDate = AppTime.Now;
@@ -69,13 +66,12 @@ namespace HIMS.API.Controllers.DietKitchen
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.DietReqId);
         }
 
-      
-
         [HttpPut("Edit/{id:int}")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Edit(DietPatientRequestModel obj)
         {
             if (obj.DietReqId == 0)
@@ -85,7 +81,7 @@ namespace HIMS.API.Controllers.DietKitchen
 
             foreach (var q in model.TDietPatReqDetails)
             {
-                q.DietReqDetId = 0;     
+                q.DietReqDetId = 0;
                 q.OrderDate = AppTime.Now;
             }
 
@@ -94,12 +90,11 @@ namespace HIMS.API.Controllers.DietKitchen
 
             await _IDietPatientRequestService.UpdateAsync(model, CurrentUserId, CurrentUserName, new string[2] { "CreatedBy", "CreatedDate" });
 
-
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.DietReqId);
         }
 
         [HttpPost("DietPatientReqHeaderCancel")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Cancel(DietPatientRequestCancel obj)
         {
             TDietPatientRequestHeader model = obj.MapTo<TDietPatientRequestHeader>();
@@ -110,10 +105,12 @@ namespace HIMS.API.Controllers.DietKitchen
             }
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
+
         [HttpPost("DietPatReqDetailCanel")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Cancels(DietPatientRequestDetailsCancel obj)
         {
             TDietPatReqDetail model = obj.MapTo<TDietPatReqDetail>();
@@ -123,12 +120,13 @@ namespace HIMS.API.Controllers.DietKitchen
                 await _IDietPatientRequestService.CancelD(model, CurrentUserId, CurrentUserName);
             }
             else
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
+
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
 
         [HttpPost("DietPatReqDetailAccept")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> Accepts(DietPatientRequestDetailsAccept obj)
         {
             TDietPatReqDetail model = obj.MapTo<TDietPatReqDetail>();
@@ -144,7 +142,7 @@ namespace HIMS.API.Controllers.DietKitchen
         }
 
         [HttpPost("DietPatReqDetailDelivered")]
-        [Permission]
+        //[Permission]
         public async Task<ApiResponse> deliver(DietPatientRequestDetailsdeliver obj)
         {
             TDietPatReqDetail model = obj.MapTo<TDietPatReqDetail>();
@@ -156,11 +154,7 @@ namespace HIMS.API.Controllers.DietKitchen
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Delivered successfully.");
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Delivered successfully.");
         }
     }
-
 }
-
-
-

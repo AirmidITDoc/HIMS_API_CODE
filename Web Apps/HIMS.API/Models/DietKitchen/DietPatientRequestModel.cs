@@ -8,7 +8,7 @@ namespace HIMS.API.Models.DietKitchen
     {
         public long DietReqId { get; set; }
         public DateTime? Date { get; set; }
-        public string? Time { get; set; }
+        public DateTime? Time { get; set; }
         public long? UnitId { get; set; }
         //public string? DietReqNo { get; set; }
         public long? DietMenuId { get; set; }
@@ -19,12 +19,10 @@ namespace HIMS.API.Models.DietKitchen
     {
         public DietPatientRequestModelValidator()
         {
-            RuleFor(x => x.Date).NotNull().NotEmpty().WithMessage("Date  is required");
-            RuleFor(x => x.Time).NotNull().NotEmpty().WithMessage("Time  is required");
-            RuleFor(x => x.UnitId).NotNull().NotEmpty().WithMessage("UnitId  is required");
-            RuleFor(x => x.DietMenuId).NotNull().NotEmpty().WithMessage("DietMenuId  is required");
-
-
+            RuleFor(x => x.Date).NotNull().WithMessage("Date is required");
+            RuleFor(x => x.Time).NotNull().WithMessage("Time is required");
+            RuleFor(x => x.UnitId).NotNull().WithMessage("UnitId is required");
+            RuleFor(x => x.DietMenuId).NotNull().WithMessage("DietMenuId is required");
         }
     }
     public class DietPatientRequestDetailModel
