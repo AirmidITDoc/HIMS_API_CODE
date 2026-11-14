@@ -6,23 +6,21 @@ using System.Threading.Tasks;
 
 namespace HIMS.Data.DTO.DietKitchen
 {
-    public  class DietPatientRequestHeaderListDto
+    public class DietPatientRequestHeaderListDto
     {
         public long DietReqId { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         public string? DietReqNo { get; set; }
         public long? DietMenuId { get; set; }
         public string? DietMenuCode { get; set; }
         public string? DietMenuName { get; set; }
         public int? CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
         public string? CreatedByUser { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string? ModifiedUser { get; set; }
         public bool? IsCancelled { get; set; }
-        //public long? IsCancelledBy { get; set; }
-        //public DateTime? IsCancelledDate { get; set; }
         public string? UserName { get; set; }
         public string? CancelledUser { get; set; }
         public int TotalDetailCount { get; set; }
@@ -32,16 +30,15 @@ namespace HIMS.Data.DTO.DietKitchen
         public int NotDeliveredCount { get; set; }
         public int AllAccepted { get; set; }
         public int AllDelivered { get; set; }
-        //public string? RegNo { get; set; }
         public string? DietMenuDetails { get; set; }
-
-
+        public string? Type { get; set; }
     }
+
     public class DietPatientRequestDetailsListDto
     {
         public long DietReqDetId { get; set; }
         public long DietReqId { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         public string? DietReqNo { get; set; }
         public long? DietMenuId { get; set; }
         public DateTime? OrderDate { get; set; }
@@ -63,7 +60,7 @@ namespace HIMS.Data.DTO.DietKitchen
         public string? AllergyName { get; set; }
         public string? Reaction { get; set; }
 
-        public bool IsPriority { get; set; }
+        public bool? IsPriority { get; set; }
         public string? Comments { get; set; }
         public long? Status { get; set; }
         public bool? IsAccept { get; set; }
@@ -90,7 +87,7 @@ namespace HIMS.Data.DTO.DietKitchen
         public string? PatientName { get; set; }
         public string? RoomName { get; set; }
 
-      //  Match SQL aliases exactly
+        // Match SQL aliases exactly
         public string? AcceptedUser { get; set; }
         public string? DeliverUser { get; set; }
         public string? CancelledUser { get; set; }
