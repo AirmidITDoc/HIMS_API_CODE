@@ -39,7 +39,7 @@ namespace HIMS.Services.OutPatient
             {
                 item.PresId = Convert.ToInt32(VPresId);
 
-                string[] Entity = { "PresId", "Date", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "InstructionId", "QtyPerDay", "TotalQty", "Instruction", "Remark", "IsEnglishOrIsMarathi" };
+                string[] Entity = { "PresId", "Date", "ClassId", "GenericId", "DrugId", "DoseId", "Days", "InstructionId", "QtyPerDay", "TotalQty", "Instruction", "Remark", "IsEnglishOrIsMarathi","RouteId","MethodId" };
                 var Dentity = item.ToDictionary();
                 foreach (var rProperty in Dentity.Keys.ToList())
                 {
