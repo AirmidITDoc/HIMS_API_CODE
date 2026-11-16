@@ -53,7 +53,11 @@
         public string? FollowUpDoctorName { get; set; }
         public long? FollowUpDepartmentId { get; set; }
         public long? FollowUpDoctorId { get; set; }
-
+        public long? RouteId { get; set; }
+        public long? MethodId { get; set; }
+        public string? RouteName { get; set; }
+        public string? MethodName { get; set; }
+ 
 
 
 
