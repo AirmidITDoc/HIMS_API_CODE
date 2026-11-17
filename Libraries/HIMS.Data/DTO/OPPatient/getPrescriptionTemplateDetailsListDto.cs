@@ -20,6 +20,10 @@
 
         public bool? IsEnglishOrIsMarathi { get; set; }
         public string? GenericName { get; set; }
+        public long? RouteId { get; set; }
+        public long? MethodId { get; set; }
+        public string? RouteName { get; set; }
+        public string? MethodName { get; set; }
 
 
 
