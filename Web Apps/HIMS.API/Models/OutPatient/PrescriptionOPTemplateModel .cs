@@ -37,6 +37,9 @@ namespace HIMS.API.Models.OutPatient
         public string? Instruction { get; set; }
         public string? Remark { get; set; }
         public bool? IsEnglishOrIsMarathi { get; set; }
+        public long? RouteId { get; set; }
+        public long? MethodId { get; set; }
+
     }
     public class PresTemplateDModelValidator : AbstractValidator<PresTemplateDModel>
     {

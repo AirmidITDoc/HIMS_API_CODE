@@ -243,6 +243,16 @@ namespace HIMS.Services.Report
             return await _context.MReportConfigs.FirstOrDefaultAsync(x => x.ReportMode == ReportMode && x.ReportSection == Section && x.IsActive.Value == true);
         }
 
+        private Task<MReportSetupOperational?> GetOperationalReportSetup(string reportMode, long unitId)
+        {
+            return _context.MReportSetupOperationals
+                .Where(report => report.ReportMode == reportMode
+                    && report.IsActive != false
+                    && (report.UnitId == unitId || report.UnitId == null))
+                .OrderByDescending(report => report.UnitId == unitId)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<Tuple<byte[], string>> GetReportSetByProcDB(ReportRequestModel model, string PdfFontPath = "", long UnitId = 1, long StoreId = 2)
         {
             try
@@ -251,17 +261,17 @@ namespace HIMS.Services.Report
                 var tuple = new Tuple<byte[], string>(null, string.Empty);
                 string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
                 var mrMode = model.Mode;
-                var mType = await _context.MReportSetupOperationals.Where(r => r.ReportMode == mrMode).Select(r => new { mReportHtmlName = r.ReportHtmlName, mReportHeaderHtmlName = r.ReportHeaderHtmlName, mProcedureName = r.ProcedureName, mFolderName = r.FolderName, mReportFileName = r.ReportFileName, mIsDBFunction = r.IsDbfunction, mIsA5orA4Page = r.IsA5orA4page, mHeaderSpace = r.HeaderSpace }).FirstOrDefaultAsync();
+                var mType = await GetOperationalReportSetup(mrMode, UnitId);
 
                 if (mType == null)
                 {
-                    throw new InvalidOperationException($"Report setup not found for mode '{mrMode}' in MReportSetupOperationals.");
+                    throw new InvalidOperationException($"Report setup not found for mode '{mrMode}' and unit '{UnitId}' in MReportSetupOperationals.");
                 }
 
-                string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHtmlName);
-                string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHeaderHtmlName);
+                string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.ReportHtmlName);
+                string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.ReportHeaderHtmlName);
 
-                var header = mType.mReportHeaderHtmlName;
+                var header = mType.ReportHeaderHtmlName;
 
                 if (header == "PharmacyHeader.html")
                 {
@@ -275,13 +285,13 @@ namespace HIMS.Services.Report
 
                 string html;
 
-                if (mType.mIsDBFunction == false)
+                if (mType.IsDbfunction == false)
                 {
-                    html = GetHTMLView(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                    html = GetHTMLView(mType.ProcedureName, model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                 }
                 else
                 {
-                    html = GetHTMLViewWithRender(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath);
+                    html = GetHTMLViewWithRender(mType.ProcedureName, model, htmlFilePath, htmlHeaderFilePath);
                 }
 
                 html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -289,19 +299,19 @@ namespace HIMS.Services.Report
 
                 html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
-                if (mType.mIsA5orA4Page == 1)
+                if (mType.IsA5orA4page == 1)
                 {
-                    tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+                    tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, mType.FolderName, mType.ReportFileName + vDate, Orientation.Portrait);
                 }
                 else
                 {
-                    if (mType.mHeaderSpace == 0)
+                    if (mType.HeaderSpace == 0)
                     {
-                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, mType.FolderName, mType.ReportFileName + vDate, Orientation.Portrait);
                     }
                     else
                     {
-                        tuple = _pdfUtility.GeneratePdfFromHtmlNew(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait, PaperKind.A4, (long)mType.mHeaderSpace);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlNew(html, model.StorageBaseUrl, mType.FolderName, mType.ReportFileName + vDate, Orientation.Portrait, PaperKind.A4, (long)mType.HeaderSpace);
                     }
                 }
                 return tuple;
@@ -326,12 +336,17 @@ namespace HIMS.Services.Report
                 var tuple = new Tuple<byte[], string>(null, string.Empty);
                 string vDate = AppTime.Now.ToString("_dd_MM_yyyy_hh_mm_tt");
                 var mrMode = model.Mode;
-                var mType = await _context.MReportSetupOperationals.Where(r => r.ReportMode == mrMode).Select(r => new { mReportHtmlName = r.ReportHtmlName, mReportHeaderHtmlName = r.ReportHeaderHtmlName, mProcedureName = r.ProcedureName, mFolderName = r.FolderName, mReportFileName = r.ReportFileName, mIsDBFunction = r.IsDbfunction, mIsA5orA4Page = r.IsA5orA4page, mHeaderSpace = r.HeaderSpace }).FirstOrDefaultAsync();
+                var mType = await GetOperationalReportSetup(mrMode, UnitId);
 
-                string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHtmlName);
-                string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHeaderHtmlName);
+                if (mType == null)
+                {
+                    throw new InvalidOperationException($"Report setup not found for mode '{mrMode}' and unit '{UnitId}' in MReportSetupOperationals.");
+                }
 
-                var header = mType.mReportHeaderHtmlName;
+                string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.ReportHtmlName);
+                string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.ReportHeaderHtmlName);
+
+                var header = mType.ReportHeaderHtmlName;
 
                 if (header == "PharmacyHeader.html")
                 {
@@ -345,13 +360,13 @@ namespace HIMS.Services.Report
 
                 string html;
 
-                if (mType.mIsDBFunction == false)
+                if (mType.IsDbfunction == false)
                 {
-                    html = GetHTMLView(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                    html = GetHTMLView(mType.ProcedureName, model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
                 }
                 else
                 {
-                    html = GetHTMLViewWithRender(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath);
+                    html = GetHTMLViewWithRender(mType.ProcedureName, model, htmlFilePath, htmlHeaderFilePath);
                 }
 
                 html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
@@ -359,19 +374,19 @@ namespace HIMS.Services.Report
 
                 html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
-                if (mType.mIsA5orA4Page == 1)
+                if (mType.IsA5orA4page == 1)
                 {
-                    tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+                    tuple = _pdfUtility.GeneratePdfFromHtmlA5(html, model.StorageBaseUrl, mType.FolderName, mType.ReportFileName + vDate, Orientation.Portrait);
                 }
                 else
                 {
-                    if (mType.mHeaderSpace == 0)
+                    if (mType.HeaderSpace == 0)
                     {
-                        tuple = _pdfUtility.GeneratePdfFromHtmlAsyncMultiplePrint(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlAsyncMultiplePrint(html, model.StorageBaseUrl, mType.FolderName, mType.ReportFileName + vDate, Orientation.Portrait);
                     }
                     else
                     {
-                        tuple = _pdfUtility.GeneratePdfFromHtmlNew(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait, PaperKind.A4, (long)mType.mHeaderSpace);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlNew(html, model.StorageBaseUrl, mType.FolderName, mType.ReportFileName + vDate, Orientation.Portrait, PaperKind.A4, (long)mType.HeaderSpace);
                     }
                 }
                 return tuple;
@@ -664,23 +679,28 @@ namespace HIMS.Services.Report
             try
             {
                 var mrMode = model.Mode;
-                var mType = await _context.MReportSetupOperationals.Where(r => r.ReportMode == mrMode).Select(r => new { mReportHtmlName = r.ReportHtmlName, mReportHeaderHtmlName = r.ReportHeaderHtmlName, mProcedureName = r.ProcedureName, mFolderName = r.FolderName, mReportFileName = r.ReportFileName, mIsDBFunction = r.IsDbfunction, mIsA5orA4Page = r.IsA5orA4page, mHeaderSpace = r.HeaderSpace }).FirstOrDefaultAsync();
+                var mType = await GetOperationalReportSetup(mrMode, UnitId);
 
-                if (mType.mIsDBFunction == true)
+                if (mType == null)
                 {
-                    string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHtmlName);
-                    string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.mReportHeaderHtmlName);
+                    throw new InvalidOperationException($"Report setup not found for mode '{mrMode}' and unit '{UnitId}' in MReportSetupOperationals.");
+                }
 
-                    var header = mType.mReportHeaderHtmlName;
+                if (mType.IsDbfunction == true)
+                {
+                    string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.ReportHtmlName);
+                    string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, mType.ReportHeaderHtmlName);
+
+                    var header = mType.ReportHeaderHtmlName;
                     htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath, UnitId);
 
                     string html;
-                    html = GetHTMLViewWithRender(mType.mProcedureName, model, htmlFilePath, htmlHeaderFilePath);
+                    html = GetHTMLViewWithRender(mType.ProcedureName, model, htmlFilePath, htmlHeaderFilePath);
 
                     html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
                     html = html.Replace("{{CurrSymbol}}", CurrencyHelper.CurrencySymbol);
 
-                    tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, mType.mFolderName, mType.mReportFileName + vDate, Orientation.Portrait);
+                    tuple = _pdfUtility.GeneratePdfFromHtmlAsync(html, model.StorageBaseUrl, mType.FolderName, mType.ReportFileName + vDate, Orientation.Portrait);
                     return tuple;
                 }
             }

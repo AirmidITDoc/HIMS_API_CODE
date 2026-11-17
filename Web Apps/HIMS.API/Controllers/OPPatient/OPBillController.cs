@@ -59,12 +59,13 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(OpRefundlist.ToGridResponse(objGrid, "OP Refund List"));
         }
         [HttpPost("BrowseOPDBillPagiList")]
-        [Permission]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        //[Permission]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> BrowseOPDBillPagList(GridRequestModel objGrid)
         {
 
-            long UnitId = Context.UnitId;
+            long UnitId = 1;
+            //long UnitId = Context.UnitId;
 
             IPagedList<BrowseOPDBillPagiListDto> BrowseOPDBillPagList = await _IAdministrationService.BrowseOPDBillPagiList(objGrid, UnitId);
             return Ok(BrowseOPDBillPagList.ToGridResponse(objGrid, "Browse OPD Bill Pagi App List"));
