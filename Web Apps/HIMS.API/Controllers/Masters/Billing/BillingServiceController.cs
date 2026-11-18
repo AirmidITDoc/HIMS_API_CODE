@@ -35,6 +35,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPost("BillingList")]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
@@ -51,6 +52,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpGet("PathologyServicesearch")]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public ApiResponse PathologyServicesearch(string Keyword)
         {
@@ -59,6 +61,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpGet("RadiologyServicesearch")]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public ApiResponse RadiologyServicesearch(string Keyword)
         {
@@ -143,6 +146,7 @@ namespace HIMS.API.Controllers.Masters.Billing
 
         }
         [HttpGet("GetServiceListwithGroupWise")]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetServiceListwithGroupWise(int TariffId, int ClassId, string IsPathRad, string ServiceName)
         {
             var resultList = await _BillingService.GetServiceListwithGroupWise(TariffId, ClassId, IsPathRad, ServiceName);
@@ -150,6 +154,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpGet("GetServicewithGroupWiseList")]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public ApiResponse GetServicewithGroupWiseList(int TariffId, int ClassId, string SrvcName)
         {
             var resultList = _BillingService.GetServicewithGroupWiseList(TariffId, ClassId, SrvcName);
@@ -200,6 +205,7 @@ namespace HIMS.API.Controllers.Masters.Billing
 
 
         [HttpGet("GetServiceListwithTraiff")]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetServiceListwithTraiff(int TariffId, string ServiceName)
         {
             var resultList = await _BillingService.GetServiceListwithTraiff(TariffId, ServiceName);
@@ -241,6 +247,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPost("PackageDetailList")]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
         //[Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> ListD(GridRequestModel objGrid)
         {
@@ -249,12 +256,14 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpGet("GetServicesNew")]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.View)]
         public ApiResponse GetServices(int TariffId, string ServiceName, int PageIndex, int PageSize)
         {
             var resultList = _BillingService.GetServiceListNew(TariffId, ServiceName, PageIndex, PageSize);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Get ServiceList.", resultList);
         }
         [HttpPost("save-services-new")]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> SaveServices(BillingServiceNewDto Data)
         {
             await _BillingService.SaveServicesNew(Data.TariffId, Data.Data);
@@ -262,7 +271,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPost("import-preview")]
-        [Permission]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> PreviewData([FromForm] IFormFile file, [FromForm] string mapping)
         {
             if (file == null || file.Length == 0)
@@ -343,7 +352,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPost("import-data")]
-        [Permission]
+        [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> ImportData([FromForm] IFormFile file, [FromForm] string mapping)
         {
             var data = await ExcelImportHelper.ParseExcelAsync<BillingServiceImportDto>(file, mapping, x =>

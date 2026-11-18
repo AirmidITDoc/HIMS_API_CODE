@@ -94,7 +94,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("OPRegistrationList")]
-        [Permission]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<IActionResult> OPRegistrationList(GridRequestModel objGrid)
         {
             IPagedList<OPRegistrationList> OpReglist = await _visitDetailsService.GeOPRgistrationListAsync(objGrid);
@@ -102,7 +102,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("OPBillList")]
-        [Permission]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<IActionResult> OPBillList(GridRequestModel objGrid)
         {
             IPagedList<OPBillListDto> OpBilllist = await _visitDetailsService.GetBillListAsync(objGrid);
@@ -111,7 +111,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("OPprevDoctorVisitList")]
-        [Permission]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<IActionResult> OPPrevDrVisistList(GridRequestModel objGrid)
         {
             IPagedList<PrevOPDrVisistListDto> Oplist = await _visitDetailsService.GeOPPreviousDrVisitListAsync(objGrid);
@@ -119,7 +119,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpGet("DeptDoctorList")]
-        [Permission]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> DeptDoctorList(int DeptId)
         {
             var resultList = await _IDoctorMasterService.GetDoctorsByDepartment(DeptId);
@@ -127,7 +127,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpGet("DoctorTypeDoctorList")]
-        [Permission]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> DoctorTypeDoctorList(int DocTypeId)
         {
             var resultList = await _IDoctorMasterService.GetDoctorsByDocType(DocTypeId);
@@ -135,8 +135,8 @@ namespace HIMS.API.Controllers.OPPatient
         }
         //this api not use anywhere//
         [HttpPost("AppVisitInsert")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AppVisitInsert(AppointmentReqDtovisit obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
@@ -190,8 +190,8 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("Update")]
-        [Permission]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.Add)]
+
         public async Task<ApiResponse> Update(AppointmentUpdate obj)
         {
             Registration model = obj.Registration.MapTo<Registration>();
@@ -242,7 +242,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpGet("GetServiceListwithTraiff")]
-        [Permission]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetServiceListwithTraiff(int TariffId, int ClassId, string ServiceName)
         {
             var resultList = await _visitDetailsService.GetServiceListwithTraiff(TariffId, ClassId, ServiceName);
@@ -273,6 +273,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpGet("search-GetServiceListwithTraiff")]
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         //[Permission]
         public ApiResponse SearchGetServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId, string SrvcName)
@@ -283,8 +284,8 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpGet("SearchUserWiseCashCounterList")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public ApiResponse SearchUserWiseCashCounterList(int LoginId, string CCType)
         {
             var data = _visitDetailsService.SearchUserWiseCashCounterList(LoginId, CCType);

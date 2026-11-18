@@ -49,6 +49,7 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         [HttpPut("LabBillCancel")]
+        [Permission(PageCode = "Cancellation", Permission = PagePermission.Delete)]
         //[Permission]
         public async Task<ApiResponse> LabBillCancel(OpBillCancellationModel obj)
         {

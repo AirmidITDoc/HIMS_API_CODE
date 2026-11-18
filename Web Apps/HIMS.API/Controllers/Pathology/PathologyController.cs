@@ -42,6 +42,7 @@ namespace HIMS.API.Controllers.Pathology
 
        
         [HttpGet("search-pathologistdoctor")]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public ApiResponse SearchPatientNew()
         {
             var data = _IPathlogyService.SearchPatient();
@@ -70,8 +71,8 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("PathologyDetailTestList")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<IActionResult> PathResultEntryDetList(GridRequestModel objGrid)
         {
             IPagedList<PathResultEntryDetListDto> PathResultEntryList = await _IPathlogyService.PathResultEntryDetList(objGrid);
@@ -94,8 +95,8 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpGet]
         [Route("get-DoctorNotesTemplateMaster")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown1()
         {
             var MMasterList = await _radiorepository2.GetAll();
@@ -103,8 +104,8 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpGet]
         [Route("get-NursingTemplateMaster")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown2()
         {
             var MMasterList = await _radiorepository2.GetAll();
@@ -114,8 +115,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("InsertResultEntry")]
-        [Permission]
-
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyResultModel obj)
         {
             List<TPathologyReportDetail> model = obj.PathologyResult.MapTo<List<TPathologyReportDetail>>();
@@ -148,7 +148,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("PathPrintResultentryInsert")]
-        [Permission]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathPrintResultentry obj)
         {
             List<TempPathReportId> model = obj.PathPrintResultEntry.MapTo<List<TempPathReportId>>();
@@ -164,8 +164,8 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("PathologyTemplateSave")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyTemplatesModel obj)
         {
             TPathologyReportTemplateDetail model = obj.PathologyReportTemplate.MapTo<TPathologyReportTemplateDetail>();
@@ -182,9 +182,8 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("PathResultentryrollback")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
-        [Permission]
 
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Delete(PathReportModel obj)
         {
             TPathologyReportDetail Model = obj.MapTo<TPathologyReportDetail>();
@@ -199,8 +198,8 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("Verify")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(PathologyVerifyModel obj)
         {
             TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();
@@ -217,7 +216,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpGet("search-GetServicewiseTemplate")]
-        [Permission]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         public ApiResponse SearchGetServiceWisetemplate(int ServiceId)
         {
             var data = _IPathlogyService.GetServicewisetemplate(ServiceId);
@@ -225,8 +224,8 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("PathologyUnverify")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(PathologyUnverifyModel obj)
         {
             TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();

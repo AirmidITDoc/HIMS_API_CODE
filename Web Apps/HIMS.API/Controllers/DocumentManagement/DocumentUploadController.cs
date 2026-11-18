@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.DocumentManagement
         }
 
         [HttpPost("upload-files")]
-        [Permission]
+        [Permission(PageCode = "DocumentCategory", Permission = PagePermission.Add)]
         public async Task<ApiResponse> SaveFiles([FromForm] List<DocumentFileModel> model)
         {
             List<DocumentFile> Files = new();
@@ -93,7 +93,7 @@ namespace HIMS.API.Controllers.DocumentManagement
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Category tree retrieved successfully.", PatientList);
         }
         [HttpGet("get-file")]
-        [Permission]
+        [Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
         public async Task<ActionResult> GetFile(string FileName)
         {
             var data = await _FileUtility.DownloadFile("DocumentManagement\\" + FileName);
@@ -105,6 +105,7 @@ namespace HIMS.API.Controllers.DocumentManagement
         }
 
         [HttpGet("merged-pdf")]
+        [Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
         public async Task<IActionResult> DownloadMergedPdf(int AdmissionId,int CategoryId, CancellationToken ct = default)
         {
             var PatientList = await _repository.GetDocumentsByCategoryAndAdmissionId(AdmissionId, CategoryId);

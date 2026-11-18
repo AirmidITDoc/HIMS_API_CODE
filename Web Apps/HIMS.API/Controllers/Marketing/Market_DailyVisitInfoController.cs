@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -31,6 +32,7 @@ namespace HIMS.API.Controllers.Marketing
         }
 
         [HttpPost("MarketingAppVisitSummaryList")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
@@ -38,6 +40,7 @@ namespace HIMS.API.Controllers.Marketing
             return Ok(MarketingAppVisitSummaryList.ToGridResponse(objGrid, "MarketingAppVisitSummary List"));
         }
         [HttpPost("MarketingAppFollowVisitSummary")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List1(GridRequestModel objGrid)
         {
@@ -45,6 +48,7 @@ namespace HIMS.API.Controllers.Marketing
             return Ok(MarketingAppVisitSummaryList.ToGridResponse(objGrid, "MarketingAppVisitSummary List"));
         }
         [HttpGet("{id?}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission(PageCode = "MarketingDailyVisit", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
@@ -56,6 +60,7 @@ namespace HIMS.API.Controllers.Marketing
             return data.ToSingleResponse<TMarketingDailyVisitInformation, Market_DailyVisitInfoModel>("BankMaster");
         }
         [HttpPost]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission(PageCode = "MarketingDailyVisit", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(Market_DailyVisitInfoModel obj)
         {
@@ -74,6 +79,7 @@ namespace HIMS.API.Controllers.Marketing
         }
         //Edit API
         [HttpPut("{id:int}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         //[Permission(PageCode = "MarketingDailyVisit", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(Market_DailyVisitInfoModel obj)
         {

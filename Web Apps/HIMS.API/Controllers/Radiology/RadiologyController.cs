@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -88,8 +88,8 @@ namespace HIMS.API.Controllers.Radiology
         }
 
         [HttpPost("Verify")]
-        //[Permission(PageCode = "Radiology", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "Radiology", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Verify(RadiologyVerifyModel obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();
@@ -105,8 +105,8 @@ namespace HIMS.API.Controllers.Radiology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record verify successfully.");
         }
         [HttpPost("RadiologyUnverify")]
-        //[Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UnVerify(RadiologyUnVerifyModel obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();

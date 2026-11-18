@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -62,8 +62,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         // done by Ashu Date : 20-May-2025
         [HttpPost("salesDraftlist")]
-        [Permission]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+
         public async Task<IActionResult> SalesDraftBillList(GridRequestModel objGrid)
         {
             IPagedList<SalesDraftBillListDto> SalesDraftBillList = await _ISalesService.SalesDraftBillList(objGrid);
@@ -96,8 +96,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("PharSalesSettlemet")]
-        [Permission]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+
         public async Task<IActionResult> PharSalesBillSettlemet(GridRequestModel objGrid)
         {
             IPagedList<Pharbillsettlementlist> PrescriptionDetList = await _ISalesService.PharIPBillSettlement(objGrid);
@@ -192,8 +192,8 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(ItemGenericByNameList.ToGridResponse(objGrid, "ItemGenericByName List"));
         }
         [HttpGet("ExpiryItemScrollingData")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public ApiResponse GetExpiry(string Keyword)
         {
             var data = _ISalesService.GetExpiryList(Keyword);
@@ -498,6 +498,7 @@ namespace HIMS.API.Controllers.Pharmacy
             }));
         }
         [HttpGet("NewMExternalDoctor-auto-complete")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<ApiResponse> NewSearchExtDoctor(string Keyword)
         {
@@ -547,6 +548,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("TempSalesheaderInsert")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.Add)]
        // [Permission]
         public async Task<ApiResponse> Insert(TempSalesheaderentry obj)
         {
@@ -563,6 +565,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("CurrStockItemList")]
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
        // [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> CurrStockItemList(GridRequestModel objGrid)
         {

@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
 using HIMS.Core.Domain.Grid;
@@ -21,24 +22,24 @@ namespace HIMS.API.Controllers.Pharmacy
 
         }
         [HttpPost("NonMovingItemList")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<NonMovingItemListDto> NonMovingItemList = await _IPharmacyItemSummaryService.GetListAsync(objGrid);
             return Ok(NonMovingItemList.ToGridResponse(objGrid, "NonMovingItemList "));
         }
         [HttpPost("NonMovingItemWithoutBatchNoList")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
-        [Permission]    
+
+        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public async Task<IActionResult> Lists(GridRequestModel objGrid)
         {
             IPagedList<NonMovingItemListBatchNoDto> NonMovingItemListWithoutBatchNo = await _IPharmacyItemSummaryService.GetListAsyncB(objGrid);
             return Ok(NonMovingItemListWithoutBatchNo.ToGridResponse(objGrid, "NonMovingItemWithoutBatchNoList "));
         }
         [HttpPost("ItemExpReportMonthWiseList")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public async Task<IActionResult> ListN(GridRequestModel objGrid)
         {
             IPagedList<ItemExpReportMonthWiseListDto> ItemExpReportMonthWiseList = await _IPharmacyItemSummaryService.GetListAsyncItem(objGrid);

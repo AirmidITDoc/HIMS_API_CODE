@@ -21,7 +21,7 @@ namespace HIMS.API.Controllers.NursingStation
             _IIpdDrugScheduleService = repository;
         }
         [HttpPost("Insert")]
-        [Permission]
+        [Permission(PageCode = "NursingNote", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(IpdDrugScheduleModel obj)
         {
             IpdDrugSchedule model = obj.MapTo<IpdDrugSchedule>();

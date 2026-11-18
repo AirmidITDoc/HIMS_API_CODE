@@ -32,6 +32,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //List API
         [HttpPost]
+        [Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         [Route("[action]")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -41,6 +42,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //List API Get By Id
         [HttpGet("{id?}")]
+        [Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
@@ -53,6 +55,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
        
         [HttpGet("search_MIcdDiagnosisMaster")]
+        [Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         //[Permission]
         public ApiResponse PathologyServicesearch(string Keyword)
         {
@@ -62,7 +65,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         //Add API
         [HttpPost]
-        [Permission]
+        [Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(MIcdDiagnosisMasterModel obj)
         {
             MIcdDiagnosisMaster model = obj.MapTo<MIcdDiagnosisMaster>();
@@ -81,7 +84,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission]
+        [Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(MIcdDiagnosisMasterModel obj)
         {
             MIcdDiagnosisMaster model = obj.MapTo<MIcdDiagnosisMaster>();
@@ -98,7 +101,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
         //Delete API
         [HttpDelete]
-        [Permission]
+        [Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MIcdDiagnosisMaster model = await _repository.GetById(x => x.Icdid == Id);

@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MPathSpecimenMaster> PathSpecimenMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Add API
         [HttpPost]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(PathSpecimenMasterModel obj)
         {
             MPathSpecimenMaster model = obj.MapTo<MPathSpecimenMaster>();
@@ -71,7 +71,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PathSpecimenMasterModel obj)
         {
             MPathSpecimenMaster model = obj.MapTo<MPathSpecimenMaster>();
@@ -89,7 +89,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Delete API
         [HttpDelete]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MPathSpecimenMaster model = await _repository.GetById(x => x.SpecimenId == Id);

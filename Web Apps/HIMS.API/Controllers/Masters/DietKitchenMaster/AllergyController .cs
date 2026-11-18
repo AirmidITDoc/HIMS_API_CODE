@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         // List API
         [HttpPost]
         [Route("[action]")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<AllergyListDto> list = await _AllergyMasterService.GetAllergyListAsync(objGrid);
@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Get By Id API
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Post / Insert API
         [HttpPost("Insert")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(AllergyModel obj)
         {
             MAllergyMaster model = obj.MapTo<MAllergyMaster>();
@@ -73,7 +73,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Edit / Update API
         [HttpPut("Edit/{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(AllergyModel obj)
         {
             if (obj.AllergyId == 0)
@@ -94,7 +94,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Delete API (Soft Delete / Toggle Status)
         [HttpDelete]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(long Id)
         {
             MAllergyMaster? model = await _repository.GetById(x => x.AllergyId == Id);

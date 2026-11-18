@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("IndentList")]
-        [Permission]
+        [Permission(PageCode = "Indent", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<IndentListDto> AppList = await _IIndentService.GetListAsync(objGrid);
@@ -43,7 +43,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("IndentDetailsList")]
-        [Permission]
+        [Permission(PageCode = "Indent", Permission = PagePermission.View)]
         public async Task<IActionResult> IndentDetailsList(GridRequestModel objGrid)
         {
             IPagedList<IndentItemListDto> IndentDetailsList = await _IIndentService.GetIndentItemListAsync(objGrid);
@@ -93,7 +93,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("Verify")]
-        [Permission]
+        [Permission(PageCode = "Indent", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(IndentVerifyModel obj)
         {
             TIndentHeader model = obj.MapTo<TIndentHeader>();

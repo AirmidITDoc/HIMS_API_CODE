@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
 using HIMS.Core.Domain.Grid;
@@ -31,16 +31,16 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("ClinicalQuesList")]
-        //[Permission(PageCode = "Payment", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Payment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ClinicalQuesListDto> ClinicalQuesList = await _IGastrologyEMRService.GetListAsync(objGrid);
             return Ok(ClinicalQuesList.ToGridResponse(objGrid, "ClinicalQues List"));
         }
         [HttpPost("Insert")]
-        //[Permission(PageCode = "ClinicalQuesHeader", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "ClinicalQuesHeader", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(GastrologyEMRModel obj)
         {
             ClinicalQuesHeader model = obj.MapTo<ClinicalQuesHeader>();
@@ -64,8 +64,8 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.Opipid);
         }
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "ClinicalQuesHeader", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "ClinicalQuesHeader", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(GastrologyEMRModel obj)
         {
             ClinicalQuesHeader model = obj.MapTo<ClinicalQuesHeader>();
@@ -94,8 +94,8 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.Opipid);
         }
         [HttpPost("Cancel")]
-        //[Permission(PageCode = "ClinicalQuesHeader", Permission = PagePermission.Delete)]
-        [Permission]
+
+        [Permission(PageCode = "ClinicalQuesHeader", Permission = PagePermission.Delete)]
         public ApiResponse Cancel(ClinicalQuesHeaderCancel obj)
         {
             ClinicalQuesHeader model = obj.MapTo<ClinicalQuesHeader>();

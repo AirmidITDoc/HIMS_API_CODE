@@ -4,6 +4,7 @@ using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using HIMS.Core.Infrastructure;
 using System.Transactions;
 
 namespace HIMS.Services.Inventory
@@ -46,6 +47,8 @@ namespace HIMS.Services.Inventory
         }
         public virtual async Task InsertAsync(LoginManager objLogin, int UserId, string Username)
         {
+            if (!string.IsNullOrWhiteSpace(objLogin.Password) && !PasswordHash.IsHash(objLogin.Password))
+                objLogin.Password = PasswordHash.Create(objLogin.Password);
             using var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }, TransactionScopeAsyncFlowOption.Enabled);
             {
                 _context.LoginManagers.Add(objLogin);
@@ -97,6 +100,10 @@ namespace HIMS.Services.Inventory
                     throw new Exception("Login record not found");
 
                 objLogin.AddedBy = existing.AddedBy;
+                if (string.IsNullOrWhiteSpace(objLogin.Password))
+                    objLogin.Password = existing.Password;
+                else if (!PasswordHash.IsHash(objLogin.Password))
+                    objLogin.Password = PasswordHash.Create(objLogin.Password);
 
 
                 //  Delete related records
@@ -176,7 +183,9 @@ namespace HIMS.Services.Inventory
             if (user != null)
             {
                 user.UserName = objLogin.UserName;
-                user.Password = objLogin.Password;
+                user.Password = PasswordHash.IsHash(objLogin.Password)
+                    ? objLogin.Password
+                    : PasswordHash.Create(objLogin.Password!);
 
                 user.ModifiedBy = objLogin.ModifiedBy;
                 user.ModifiedDate = objLogin.ModifiedDate;

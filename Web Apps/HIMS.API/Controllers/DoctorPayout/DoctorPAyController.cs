@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.DoctorPayout
             _IDoctorPayService = repository;
         }
         [HttpPost("DoctorPayList")]
-        [Permission]
+        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.View)]
         public async Task<IActionResult> salesdetaillist(GridRequestModel objGrid)
         {
             IPagedList<DoctorPayListDto> DoctorPayList = await _IDoctorPayService.GetList(objGrid);
@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPost("DoctorBilldetailList")]
-        [Permission]
+        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.View)]
         public async Task<IActionResult> DotorbilldetailList(GridRequestModel objGrid)
         {
             IPagedList<DoctorBilldetailListDto> DoctorList = await _IDoctorPayService.GetBillDetailList(objGrid);
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPost("DoctorPaySummaryList")]
-        [Permission]
+        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.View)]
         public async Task<IActionResult> DotorPaysummaryList(GridRequestModel objGrid)
         {
             IPagedList<DcotorpaysummaryListDto> DoctorpayList = await _IDoctorPayService.GetDoctroSummaryList(objGrid);
@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.DoctorPayout
 
 
         [HttpPost("DoctorPaymentList")]
-        [Permission]
+        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.View)]
         public async Task<IActionResult> DotorPaymentList(GridRequestModel objGrid)
         {
             IPagedList<DoctprPaymentListDo> DoctorpayList = await _IDoctorPayService.DocPaymentList(objGrid);
@@ -63,21 +63,21 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPost("DoctorsharSummarydetail")]
-        [Permission]
+        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.View)]
         public async Task<IActionResult> Dotorshresummarydetail(GridRequestModel objGrid)
         {
             IPagedList<DoctorPaysummarydetailListDto> DoctorList = await _IDoctorPayService.GetDoctorsummaryDetailList(objGrid);
             return Ok(DoctorList.ToGridResponse(objGrid, "Doctor Pay Summary detail"));
         }
         [HttpPost("DoctorshareBillList")]
-        [Permission]
+        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.View)]
         public async Task<IActionResult> DotorshrebillList(GridRequestModel objGrid)
         {
             IPagedList<DoctorShareListDto> DoctorList = await _IDoctorPayService.GetLists(objGrid);
             return Ok(DoctorList.ToGridResponse(objGrid, "DoctorShareList"));
         }
         [HttpPost("DoctorshareListByName")]
-        [Permission]
+        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Add)]
         public async Task<IActionResult> DotorshreListbyname(GridRequestModel objGrid)
         {
             IPagedList<DoctorShareLbyNameListDto> DoctorList = await _IDoctorPayService.GetList1(objGrid);
@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPost("Insert")]
-        [Permission]
+        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSPD(DoctorPayModel obj)
         {
             TAdditionalDocPay model = obj.MapTo<TAdditionalDocPay>();
@@ -101,7 +101,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPut("ShareDocAddCharges")]
-        [Permission]
+        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> GSTUpdate(ShareDoctAddCharges obj)
         {
             List<AddCharge> model = obj.ShareDoctAddCharge.MapTo<List<AddCharge>>();
@@ -117,7 +117,7 @@ namespace HIMS.API.Controllers.DoctorPayout
       
 
         [HttpPost("DoctorPayoutProcess")]
-        [Permission]
+        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Add)]
         public ApiResponse InsertSP(DoctorPayoutModel obj)
         {
             TDoctorPayoutProcessHeader model = obj.DoctorPayoutProcess.MapTo<TDoctorPayoutProcessHeader>();
@@ -134,8 +134,8 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPost("DoctorShrCalcAsPerReferDocVisitBillWise")]
-        [Permission]
-        //[Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Add)]
+        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Add)]
+
 
         public async Task<ApiResponse> InsertSP(CalcAsPerReferDocVisitBillWiseModel obj)
         {
@@ -151,8 +151,8 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPost("DoctorProcessedList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> getDoctorprocessedlist(GridRequestModel objGrid)
         {
             IPagedList<DoctorShareprocessListDto> DoctorProcessList = await _IDoctorPayService.GetDoctorProcessList(objGrid);
@@ -160,7 +160,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPost("TDoctorpaymentInsert")]
-        [Permission]
+        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(DoctorPaymwntModel obj)
         {
             List<TPaymentDoctor> model = obj.DoctorPayyModel.MapTo<List<TPaymentDoctor>>();
@@ -176,7 +176,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPut("TDoctorPaymentUpdate")]
-        [Permission]
+        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(DoctorPaymwntModel obj)
         {
             List<TPaymentDoctor> model = obj.DoctorPayyModel.MapTo<List<TPaymentDoctor>>();
@@ -190,7 +190,7 @@ namespace HIMS.API.Controllers.DoctorPayout
         }
 
         [HttpPut("DoctorPayoutUnprocess")]
-        [Permission]
+        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> DoctorPayoutUnprocess(DoctorUnprocessModel obj)
         {
             TDoctorPayoutProcessHeader model = obj.MapTo<TDoctorPayoutProcessHeader>();

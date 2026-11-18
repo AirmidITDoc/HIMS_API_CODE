@@ -1,3 +1,4 @@
+using HIMS.API.Security;
 using AutoMapper;
 using ClosedXML.Excel;
 using CsvHelper;
@@ -295,62 +296,42 @@ namespace HIMS.API.Extensions
             return dynamicDt;
         }
 
-        public static string GenerateToken(LoginManager user, string Secret, int Minutes, string permissions, LoginType loginType)
+        public static string GenerateToken(LoginManager user, LoginV2Key signingKey, int Minutes, LoginType loginType,
+            string? issuer = null, string? audience = null)
         {
             JwtSecurityTokenHandler tokenHandler = new();
-            byte[] key = Encoding.ASCII.GetBytes(Secret);
+            var rsaKey = new RsaSecurityKey(signingKey.Rsa) { KeyId = signingKey.Kid };
             SecurityTokenDescriptor tokenDescriptor = new()
             {
+                Issuer = issuer,
+                Audience = audience,
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                    new("Id",EncryptionUtility.EncryptText(user.UserId.ToString(),SecurityKeys.EnDeKey)),
                    new("UserToken",EncryptionUtility.EncryptText(loginType==LoginType.Mobile?user.MobileToken: user.UserToken,SecurityKeys.EnDeKey)),
-                   new(PermissionClaimCodec.ClaimType,EncryptionUtility.EncryptText(PermissionClaimCodec.Encode(permissions),SecurityKeys.EnDeKey)),
                    new("RoleId", EncryptionUtility.EncryptText(user.WebRoleId.Value.ToString(),SecurityKeys.EnDeKey)),
                    new("UserName",EncryptionUtility.EncryptText(user.UserName,SecurityKeys.EnDeKey)),
                    new("FullName", EncryptionUtility.EncryptText(user.FirstName + (!string.IsNullOrEmpty(user.LastName) ? " " + user.LastName : ""),SecurityKeys.EnDeKey)),
                    new("LoginType",EncryptionUtility.EncryptText(loginType.ToString(),SecurityKeys.EnDeKey))
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(Minutes <= 0 ? 30 : Minutes),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(rsaKey, SecurityAlgorithms.RsaSha256)
             };
             return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
         }
-        public static bool CheckPermission(string pageCode, PagePermission permit)
+        public static bool CheckPermission(IEnumerable<PageMasterDto> permissions, string pageCode, PagePermission permit)
         {
-            ClaimsPrincipal currentUser = HttpContextAccessor.User;
-            var permissionClaim = currentUser.FindFirst(PermissionClaimCodec.ClaimType) ?? currentUser.FindFirst("Permissions");
-            if (currentUser.HasClaim(c => c.Type == "RoleId") && permissionClaim != null)
+            string[] requestedPages = pageCode.Split('|');
+            var matching = permissions.Where(x => requestedPages.Contains(x.PageCode));
+            return permit switch
             {
-                string permissions = EncryptionUtility.DecryptText(permissionClaim.Value, SecurityKeys.EnDeKey);
-                if (permissionClaim.Type == PermissionClaimCodec.ClaimType)
-                {
-                    permissions = PermissionClaimCodec.Decode(permissions);
-                }
-                string[] AllPermissions = permissions.Split(',');
-                var Perms = AllPermissions.Where(x => pageCode.Split('|').Contains(x.Split('|')[0])).Select(x => new { IsAdd = x.Split('|')[1], IsEdit = x.Split('|')[2], IsDelete = x.Split('|')[3], IsView = x.Split('|')[4], IsExport = x.Split('|')[5] });
-                if (permit == PagePermission.Add)
-                {
-                    return Perms.Any(x => x.IsAdd == "1");
-                }
-                else if (permit == PagePermission.Edit)
-                {
-                    return Perms.Any(x => x.IsEdit == "1");
-                }
-                else if (permit == PagePermission.Delete)
-                {
-                    return Perms.Any(x => x.IsDelete == "1");
-                }
-                else if (permit == PagePermission.View)
-                {
-                    return Perms.Any(x => x.IsView == "1");
-                }
-                else if (permit == PagePermission.Export)
-                {
-                    return Perms.Any(x => x.IsExport == "1");
-                }
-            }
-            return false;
+                PagePermission.Add => matching.Any(x => x.IsAdd == true),
+                PagePermission.Edit => matching.Any(x => x.IsEdit == true),
+                PagePermission.Delete => matching.Any(x => x.IsDelete == true),
+                PagePermission.View => matching.Any(x => x.IsView == true),
+                PagePermission.Export => matching.Any(x => x.IsExport == true),
+                _ => false
+            };
         }
 
         #region :: Export Functions ::

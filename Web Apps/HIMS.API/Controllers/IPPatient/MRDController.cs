@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
 using HIMS.Core.Domain.Grid;
@@ -23,6 +24,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("MRDList")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> GetMRDDetailList(GridRequestModel objGrid)
         {

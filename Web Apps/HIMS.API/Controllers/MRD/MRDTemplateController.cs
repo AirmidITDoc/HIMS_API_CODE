@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Masters.MRD
         // List API
         [HttpPost]
         [Route("[action]")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TMrdtemplate> list = await _repository.GetAllPagedAsync(objGrid);
@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Masters.MRD
 
         // Get By Id API
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.Masters.MRD
 
         [HttpGet]
         [Route("get-Mrdtemplate")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown2()
         {
             var MMasterList = await _repository.GetAll();
@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.Masters.MRD
 
         // Post / Insert API
         [HttpPost]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(MRDTemplateModel obj)
         {
             TMrdtemplate model = obj.MapTo<TMrdtemplate>();
@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.Masters.MRD
 
         // Edit / Update API
         [HttpPut("{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(MRDTemplateModel obj)
         {
             TMrdtemplate model = obj.MapTo<TMrdtemplate>();
@@ -103,7 +103,7 @@ namespace HIMS.API.Controllers.Masters.MRD
 
         // Delete API (Soft Delete / Toggle Status)
         [HttpDelete]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(long Id)
         {
             TMrdtemplate? model = await _repository.GetById(x => x.TemplateId == Id);

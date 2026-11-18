@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.NursingStation
 
         }
         [HttpGet("GetMConsentMasterList")]
-        [Permission]
+        [Permission(PageCode = "NursingConsent", Permission = PagePermission.View)]
         public ApiResponse GetMConsentMasterList(string? ConsentTypeName)
         {
             var data = _NursingConsentService.GetConsentAsync(ConsentTypeName);
@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpGet("DeptConsentList")]
-        [Permission]
+        [Permission(PageCode = "NursingConsent", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ConsentDeptListDto> SupplierList = await _NursingConsentService.GetListAsync(objGrid);

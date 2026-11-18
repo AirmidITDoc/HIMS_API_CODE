@@ -23,6 +23,7 @@ namespace HIMS.API.Controllers.IPPatient
             _IBedTransferService = repository;
         }
         [HttpPost("BedTransferDetailsList")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission(PageCode = "BedTransfer", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
@@ -30,6 +31,7 @@ namespace HIMS.API.Controllers.IPPatient
             return Ok(BedTransferDetailList.ToGridResponse(objGrid, "BedTransferDetail  List"));
         }
         [HttpPost("BedTransferInformationList")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission(PageCode = "BedTransfer", Permission = PagePermission.View)]
         public async Task<IActionResult> BedList(GridRequestModel objGrid)
         {
@@ -38,6 +40,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("InsertSP")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission]
         //[Permission(PageCode = "BedTransfer", Permission = PagePermission.Add)]
         public ApiResponse Insert(BTransferModel obj)

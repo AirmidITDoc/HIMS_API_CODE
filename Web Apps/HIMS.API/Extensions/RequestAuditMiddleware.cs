@@ -69,8 +69,8 @@ namespace HIMS.API.Extensions
                     requestBody = await reader.ReadToEndAsync();
                     context.Request.Body.Position = 0;
                 }
-                // login payload carries plaintext credentials; never persist it
-                if (context.Request.Path.Value?.EndsWith("/Login/Authenticate", StringComparison.OrdinalIgnoreCase) == true)
+                bool isLoginEndpoint = context.Request.Path.Value?.Contains("/Login/", StringComparison.OrdinalIgnoreCase) == true;
+                if (isLoginEndpoint)
                 {
                     requestBody = "[REDACTED]";
                 }
@@ -90,6 +90,12 @@ namespace HIMS.API.Extensions
                 }
                 context.Response.Body.Seek(0, SeekOrigin.Begin);
 
+                if (isLoginEndpoint)
+                    responseText = "[REDACTED]";
+                var headers = context.Request.Headers
+                    .Where(h => !string.Equals(h.Key, "Authorization", StringComparison.OrdinalIgnoreCase) &&
+                                !string.Equals(h.Key, "Cookie", StringComparison.OrdinalIgnoreCase))
+                    .ToDictionary(h => h.Key, h => h.Value.ToString());
                 // write response back to original stream
                 await responseBody.CopyToAsync(originalBodyStream);
 
@@ -112,7 +118,7 @@ namespace HIMS.API.Extensions
                         QueryString = context.Request.QueryString.ToString(),
                         RequestBody = requestBody,
                         ResponseBody = responseText,
-                        Headers = context.Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString())
+                        Headers = headers
                     })
                 };
 

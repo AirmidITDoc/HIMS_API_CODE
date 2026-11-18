@@ -32,14 +32,14 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AdmissionList")]
-        [Permission]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<AdmissionListDto> AdmissionListList = await _IAdmissionService.GetAdmissionListAsync(objGrid);
             return Ok(AdmissionListList.ToGridResponse(objGrid, "Admission List"));
         }
         [HttpPost("AdmissionCancelList")]
-        [Permission]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<IActionResult> AdmissionList(GridRequestModel objGrid)
         {
             IPagedList<AdmissionCancelListDto> AdmissionListList = await _IAdmissionService.CancelAdmissionListAsync(objGrid);
@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("AdmissionDischargeList")]
-        [Permission]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<IActionResult> AdmDiscList(GridRequestModel objGrid)
         {
             IPagedList<AdmissionListDto> AdmissionDischargeList = await _IAdmissionService.GetAdmissionDischargeListAsync(objGrid);
@@ -63,6 +63,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpGet("{id?}")]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> Get(int id)
         {
@@ -71,6 +72,7 @@ namespace HIMS.API.Controllers.IPPatient
             return data.ToSingleResponse<Admission, ADMISSIONModel>("Admission");
         }
         [HttpGet("BedList")]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetBedmaster(int RoomId)
         {
             var resultList = await _IAdmissionService.GetBedmaster(RoomId);
@@ -140,7 +142,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpGet("search-patient")]
-        [Permission]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> SearchPatient(string Keyword)
         {
             var data = await _IAdmissionService.PatientAdmittedListSearch(Keyword);
@@ -187,6 +189,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
         [HttpPost("IPprevDoctorVisitList")]
+        [Permission(PageCode = "Admission", Permission = PagePermission.View)]
         public async Task<IActionResult> IPPrevDrVisistList(GridRequestModel objGrid)
         {
             IPagedList<PreviousAdmissionDetails> Oplist = await _IAdmissionService.GeIPPreviousDrVisitListAsync(objGrid);

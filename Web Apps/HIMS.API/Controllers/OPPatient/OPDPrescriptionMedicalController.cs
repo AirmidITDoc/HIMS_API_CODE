@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers.OPPatient
             return Ok(RequestListFromEMRD.ToGridResponse(objGrid, "OPRequestListFromEMR "));
         }
         [HttpPost("GetPrevVisitDiagnosisList")]
-        [Permission]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
         public async Task<IActionResult> ListG(GridRequestModel objGrid)
         {
             IPagedList<GetPrevVisitDiagnosisListDto> GetPrevVisitDiagnosisList = await _OPDPrescriptionService.VGetListAsync(objGrid);
@@ -86,8 +86,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("PrescriptionDetailsVisitList")]
-        [Permission]
-
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
         public async Task<IActionResult> ListP(GridRequestModel objGrid)
         {
             IPagedList<PrescriptionDetailsVisitWiseListDto> GetVisitList = await _OPDPrescriptionService.GetListAsyncL(objGrid);
@@ -95,7 +94,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("getlabifnormationList")]
-        [Permission]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
         public async Task<IActionResult> ListL(GridRequestModel objGrid)
         {
             IPagedList<GetLabInformationListDto> getlabifnormationList = await _OPDPrescriptionService.GetListAsynL(objGrid);
@@ -104,7 +103,7 @@ namespace HIMS.API.Controllers.OPPatient
         //List API
         [HttpGet]
         [Route("get-Service")]
-        [Permission]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown()
         {
             var MServicetMasterList = await _serviceMasterrepository.GetAll(x => x.IsActive.Value);
@@ -114,7 +113,7 @@ namespace HIMS.API.Controllers.OPPatient
         //List API
         [HttpGet]
         [Route("get-Dignosis")]
-        [Permission]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDignosDropdown()
         {
             var MDignosMasterList = await _Dignos.GetAll();
@@ -122,7 +121,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("GetDignosisList")]
-        [Permission]
+        [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<IActionResult> DignsisList(GridRequestModel objGrid)
         {
             IPagedList<MOpcasepaperDignosisMaster> GetVisitList = await _OPDPrescriptionService.GetDignosisListAsync(objGrid);
@@ -130,8 +129,8 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("OPRtrvDignosisList")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<IActionResult> OPDignosisList(GridRequestModel objGrid)
         {
             IPagedList<OPrtrvDignosisListDto> List = await _OPDPrescriptionService.TDignosisrRtrvList(objGrid);
@@ -140,8 +139,8 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpGet("GetDiagnosisList")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDiagnosisList(string descriptionType)
         {
             var result = await _OPDPrescriptionService.GetDignosisListAsync(descriptionType);
@@ -149,8 +148,8 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpGet("GetTemplatePrescriptionList")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetPrescriptionDiagnosisList(string TemplateCategory)
         {
             var result = await _OPDPrescriptionService.GetPrescriptionDignosisListAsync(TemplateCategory);
@@ -159,8 +158,8 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("OPPrescriptionTemplateList")]
-        //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<IActionResult> PrescriptionTemplateDetailsList(GridRequestModel objGrid)
         {
             IPagedList<getPrescriptionTemplateDetailsListDto> List = await _OPDPrescriptionService.TemplateDetailsList(objGrid);
@@ -188,8 +187,8 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("OPRequestList")]
-        //[Permission(PageCode = "Prescription", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Prescription", Permission = PagePermission.View)]
         public async Task<IActionResult> OPRequestList(GridRequestModel objGrid)
         {
             IPagedList<OPRequestListDto> List = await _OPDPrescriptionService.TOprequestList(objGrid);
@@ -281,8 +280,8 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("NewOPTemplateInsert")]
-        //[Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "Prescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PrescriptionTemplateModels obj)
         {
             MPresTemplateH model = obj.MapTo<MPresTemplateH>();
@@ -302,8 +301,8 @@ namespace HIMS.API.Controllers.OPPatient
         //Delete API
         [HttpDelete("OPTemplateDelete")]
 
-        //[Permission(PageCode = "StateMaster", Permission = PagePermission.Delete)]
-        [Permission]
+
+        [Permission(PageCode = "StateMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MPresTemplateH model = await _MPresTemplateH.GetById(x => x.PresId == Id);

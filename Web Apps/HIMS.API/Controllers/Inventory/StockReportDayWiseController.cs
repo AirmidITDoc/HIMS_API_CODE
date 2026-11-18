@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
 using HIMS.Core.Domain.Grid;
@@ -19,8 +20,8 @@ namespace HIMS.API.Controllers.Inventory
             _IStockReportDayWiseService = repository;
         }
         [HttpPost("StockReportDayWiseList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<StockReportDayWiseListDto> StockReportDayWiseList = await _IStockReportDayWiseService.StockReportDayWiseList(objGrid);

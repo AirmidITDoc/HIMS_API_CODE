@@ -1,4 +1,6 @@
 ﻿using Asp.Versioning;
+using HIMS.API.Extensions;
+using HIMS.Core;
 using DocumentFormat.OpenXml.Vml;
 using DocumentFormat.OpenXml.Wordprocessing;
 using HIMS.Api.Models.Common;
@@ -22,6 +24,7 @@ namespace HIMS.API.Controllers.License
     {
         public LicenseController() { }
         [HttpGet]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public ApiResponse Get()
         {
             DataTable dt = new();
@@ -57,11 +60,13 @@ namespace HIMS.API.Controllers.License
             return new ApiResponse() { Data = licenseRequests, Message = "License list", StatusCode = 200, StatusText = "Ok" };
         }
         [HttpGet("get-license/{id}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public ApiResponse GetLicense(int Id)
         {
             return new ApiResponse() { Data = GetLicenseData(Id), Message = "License list", StatusCode = 200, StatusText = "Ok" };
         }
         [HttpPost]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public ApiResponse Post([FromBody] LicenseRequest obj)
         {
             string validationMsg = ValidateData(obj.Id, obj.Code, obj.Mac);
@@ -115,6 +120,7 @@ namespace HIMS.API.Controllers.License
                 return new ApiResponse() { Data = obj, Message = validationMsg, StatusCode = 400, StatusText = "Bad Request" };
         }
         [HttpPost]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         [Route("generate-new-license")]
         public ApiResponse NewLicense([FromBody] int Id)
         {
@@ -136,6 +142,7 @@ namespace HIMS.API.Controllers.License
             return new ApiResponse() { Data = license, Message = "License request received", StatusCode = 200, StatusText = "Ok" };
         }
         [HttpPost("download-license")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public IActionResult GenerateLicense([FromBody] int Id)
         {
             LicenseRequest license = GetLicenseData(Id);

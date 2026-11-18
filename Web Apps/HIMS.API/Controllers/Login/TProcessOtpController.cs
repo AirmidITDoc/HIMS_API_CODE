@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -27,6 +28,7 @@ namespace HIMS.API.Controllers.Login
         }
         //Add API
         [HttpPost]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(TProcessOtpModel obj)
         {
@@ -46,6 +48,7 @@ namespace HIMS.API.Controllers.Login
         }
         //Edit API
         [HttpPut("{id:int}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(TProcessOtpModel obj)
         {

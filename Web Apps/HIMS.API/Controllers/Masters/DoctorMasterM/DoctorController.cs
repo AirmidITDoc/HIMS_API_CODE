@@ -106,6 +106,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpPost("DoctorList")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
@@ -131,6 +132,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpGet("RefdoctorComboList")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public ApiResponse RefdoctorComboList(string? keywoard)
         {
             var data = _IDoctorMasterService.RefdoctorComboList(keywoard);
@@ -162,6 +164,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpPost("InsertSP")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(DoctorModel obj)
         {
@@ -272,6 +275,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpPut("Edit/{id:int}")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
         //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DoctorModel obj)
 
@@ -399,6 +403,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor dropdown", List.Select(x => new { value = x.DoctorId, text = x.FirstName + " " + x.MiddleName + " " + x.LastName, x.DeptNames }));
         }
         [HttpGet("get-file")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)]
         public ApiResponse DownloadFiles(string FileName)
         {
             var data = _FileUtility.GetBase64FromFolder("Doctors\\Signature", FileName);
@@ -406,6 +411,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpPost("DoctorExecutiveLinkInfo")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(DoctorExecutiveModel obj)
         {
@@ -425,6 +431,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
 
         [HttpPut("DoctorExecutiveLinkInfo/{id:int}")]
+        [Permission(PageCode = "DoctorMaster", Permission = PagePermission.Edit)]
 
         //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> UpdateSP(DoctorExecutiveUpdateModel obj)

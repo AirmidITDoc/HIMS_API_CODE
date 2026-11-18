@@ -30,32 +30,32 @@ namespace HIMS.API.Controllers.NursingStation
             _ICanteenRequestService = repository;
         }
         [HttpPost("DoctorNoteList")]
-        //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> DoctorNoteList(GridRequestModel objGrid)
         {
             IPagedList<DoctorNoteListDto> DoctorNoteList = await _ICanteenRequestService.DoctorNoteList(objGrid);
             return Ok(DoctorNoteList.ToGridResponse(objGrid, "DoctorNote App List"));
         }
         [HttpPost("TDoctorPatientHandoverList")]
-        //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> TDoctorPatientHandoverList(GridRequestModel objGrid)
         {
             IPagedList<TDoctorPatientHandoverListDto> TDoctorPatientHandoverList = await _ICanteenRequestService.TDoctorPatientHandoverList(objGrid);
             return Ok(TDoctorPatientHandoverList.ToGridResponse(objGrid, "TDoctorPatientHandover App List"));
         }
         [HttpPost("CanteenRequestList")]
-        //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<CanteenRequestListDto> CanteenRequestList = await _ICanteenRequestService.CanteenRequestsList(objGrid);
             return Ok(CanteenRequestList.ToGridResponse(objGrid, "CanteenRequest App List"));
         }
         [HttpPost("CanteenRequestHeaderList")]
-        //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> HeaderList(GridRequestModel objGrid)
         {
             IPagedList<CanteenRequestHeaderListDto> CanteenRequestHeaderList = await _ICanteenRequestService.CanteenRequestHeaderList(objGrid);
@@ -63,9 +63,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.Add)]
-        [Permission]
 
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(CanteenRequestModel obj)
         {
             TCanteenRequestHeader model = obj.MapTo<TCanteenRequestHeader>();
@@ -85,8 +84,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("CanteenRequestCancel")]
-        //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.Delete)]
-        [Permission]
+
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> PrescCancel(CanteenRequestCancel obj)
         {
             TCanteenRequestDetail model = new();
@@ -102,7 +101,7 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpGet("GetItemListforCanteen")]
-        [Permission]
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetCanteenItemList(string ItemName)
         {
             var resultList = await _ICanteenRequestService.GetItemListForCanteen(ItemName);
@@ -111,8 +110,8 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("CanteenItemList")]
-        //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> ItemList(GridRequestModel objGrid)
         {
             IPagedList<CanteenItemListDto> CanteenItemList = await _ICanteenRequestService.CanteenItemList(objGrid);

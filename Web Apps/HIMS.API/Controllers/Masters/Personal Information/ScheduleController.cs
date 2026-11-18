@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -22,16 +23,16 @@ namespace HIMS.API.Controllers.Masters
         }
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "Schedule", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Schedule", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ScheduleMaster> ScheduleList = await _repository.GetAllPagedAsync(objGrid);
             return Ok(ScheduleList.ToGridResponse(objGrid, "Schedule List"));
         }
         [HttpGet("{ScheduleName}")]
-        //[Permission(PageCode = "Schedule", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Schedule", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(string ScheduleName)
         {
             ScheduleName = (string.IsNullOrWhiteSpace(ScheduleName) ? "" : ScheduleName);
@@ -39,8 +40,8 @@ namespace HIMS.API.Controllers.Masters
             return new ApiResponse { StatusCode = 200, Data = data };
         }
         [HttpPost]
-        //[Permission(PageCode = "Schedule", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "Schedule", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ScheduleModel obj)
         {
             ScheduleMaster model = obj.MapTo<ScheduleMaster>();
@@ -56,8 +57,8 @@ namespace HIMS.API.Controllers.Masters
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Schedule added successfully.");
         }
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "Schedule", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "Schedule", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ScheduleModel obj)
         {
             ScheduleMaster model = obj.MapTo<ScheduleMaster>();
@@ -71,8 +72,8 @@ namespace HIMS.API.Controllers.Masters
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Schedule updated successfully.");
         }
         [HttpDelete]
-        //[Permission(PageCode = "Schedule", Permission = PagePermission.Delete)]
-        [Permission]
+
+        [Permission(PageCode = "Schedule", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             ScheduleMaster model = await _repository.GetById(x => x.Id == Id);

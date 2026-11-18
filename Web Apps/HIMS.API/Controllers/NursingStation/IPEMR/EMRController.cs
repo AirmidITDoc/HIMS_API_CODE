@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         [HttpPost("DiagnosisInfoList")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> DiagnosisinfoList(GridRequestModel objGrid)
         {
             IPagedList<IPEMRDiagnosisInfoListDto> IPEMRDiagnosisInfoListDto = await _EmrService.GetIPEMRDiagnosisInfoAsync(objGrid);
@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         [HttpPost("DignosisHistoryList")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> DiagnosisHistoryList(GridRequestModel objGrid)
         {
             IPagedList<IPEMRDignosisHistoryListDto> IPEMRDignosisHistoryListDto = await _EmrService.GetIPEMRDignosisHistoryAsync(objGrid);
@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         [HttpPost("FamilyMedicalHistoryList")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> FamilyMedicalHistoryList(GridRequestModel objGrid)
         {
             IPagedList<IPEMRFamilyMedicalHistoryListDto> IPEMRFamilyMedicalHistoryListDto = await _EmrService.GetIPEMRFamilyMedicalHistoryAsync(objGrid);
@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
 
 
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(long id)
         {
             if (id == 0) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
@@ -71,6 +71,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
        
 
         [HttpPost("Insert")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<ApiResponse> Insert(EMRModel obj)
         {
@@ -115,6 +116,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         [HttpPut("Edit/{id:int}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
        // [Permission]
         public async Task<ApiResponse> Edit(EMRModel obj)
         {
@@ -247,6 +249,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
        //     return Ok(FamilyMedicalHistoryList.ToGridResponse(objGrid, "Family Medical History List "));
        // }
         [HttpPost("SaveFamilyHistory")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> SaveFamilyHistory(List<EMRFamilyMedicalHistoryModel> obj)
         {
             if (obj == null || obj.Count == 0)

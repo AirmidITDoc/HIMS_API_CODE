@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             var data = await _repository.GetById(x => x.RegId == id);
@@ -92,8 +92,8 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("RegistrationUpdate")]
-        [Permission]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Registration", Permission = PagePermission.Add)]
+
         public async Task<ApiResponse> Update(RegistrationModel obj)
         {
             Registration model = obj.MapTo<Registration>();
@@ -137,6 +137,7 @@ namespace HIMS.API.Controllers.OPPatient
         //    }));
         //}
         [HttpGet("auto-complete")]
+        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
        // [Permission]
         public ApiResponse GetAutoComplete(string Keyword)
         {
@@ -164,7 +165,7 @@ namespace HIMS.API.Controllers.OPPatient
             );
         }
         [HttpPut("UpdateReg{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Registration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> BilldatetimeUpdate(RegistrationUpdate obj)
         {
             Registration model = obj.MapTo<Registration>();
@@ -180,7 +181,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         // Create  by Ashutosh 12 Jun 2025
         [HttpGet("get-file")]
-        [Permission]
+        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public ApiResponse DownloadFiles(string FileName)
         {
             var data = _FileUtility.GetBase64FromFolder("Persons\\Photo", FileName);

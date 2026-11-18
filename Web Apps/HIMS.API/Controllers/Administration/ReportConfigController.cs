@@ -30,6 +30,7 @@ namespace HIMS.API.Controllers.Administration
         }
         //List API
         [HttpPost]
+        [Permission(PageCode = "ReportConfig", Permission = PagePermission.View)]
         [Route("[action]")]
         //[Permission(PageCode = "ReportConfig", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)

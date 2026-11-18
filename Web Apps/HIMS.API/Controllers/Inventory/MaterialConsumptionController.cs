@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -24,8 +24,8 @@ namespace HIMS.API.Controllers.Inventory
             _IMaterialConsumption = repository;
         }
         [HttpPost("MaterialConsumptionList")]
-        [Permission]
-        //[Permission(PageCode = "MaterialConsumption", Permission = PagePermission.View)]
+        [Permission(PageCode = "MaterialConsumption", Permission = PagePermission.View)]
+
 
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
@@ -33,8 +33,8 @@ namespace HIMS.API.Controllers.Inventory
             return Ok(MaterialConsumptionList.ToGridResponse(objGrid, "MaterialConsumption App List"));
         }
         [HttpPost("MaterialConsumptionDetailsList")]
-        //[Permission(PageCode = "MaterialConsumption", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "MaterialConsumption", Permission = PagePermission.View)]
         public async Task<IActionResult> MaterialConsumptionDetailList(GridRequestModel objGrid)
         {
             IPagedList<MaterialConsumDetailListDto> MaterialConsumptionList = await _IMaterialConsumption.MaterialConsumptiondetailList(objGrid);
@@ -43,9 +43,8 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("InsertEDMX")]
-        //[Permission(PageCode = "MaterialConsumption", Permission = PagePermission.Add)]
-        [Permission]
 
+        [Permission(PageCode = "MaterialConsumption", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(MaterialConsumptionHeader obj)
         {
             TMaterialConsumptionHeader model = obj.MaterialConsumption.MapTo<TMaterialConsumptionHeader>();

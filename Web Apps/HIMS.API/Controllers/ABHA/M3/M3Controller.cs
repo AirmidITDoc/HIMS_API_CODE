@@ -1,4 +1,6 @@
 ﻿using Asp.Versioning;
+using HIMS.API.Extensions;
+using HIMS.Core;
 using HIMS.ABHA.Interface;
 using HIMS.ABHA.Models.M2;
 using HIMS.ABHA.Models.M3;
@@ -19,6 +21,7 @@ namespace HIMS.API.Controllers.ABHA.M3
             _m3Service = m3Service;
         }
         [HttpPatch("bridge/url")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<IActionResult> UpdateBridgeUrl([FromBody] UpdateBridgeUrlRequest request, [FromHeader(Name = "X-CM-ID")] string cmId = "sbx")
         {
             if (request == null || string.IsNullOrWhiteSpace(request.Url))
@@ -27,6 +30,7 @@ namespace HIMS.API.Controllers.ABHA.M3
             return Ok(result);
         }
         [HttpGet("bridge-service/serviceId/{serviceId}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> FindBridgeServiceByServiceId(string serviceId, [FromHeader(Name = "X-CM-ID")] string cmId = "sbx")
         {
             if (string.IsNullOrWhiteSpace(serviceId))
@@ -35,6 +39,7 @@ namespace HIMS.API.Controllers.ABHA.M3
             return Ok(result);
         }
         [HttpGet("bridge-services")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> FindServicesByBridgeId([FromHeader(Name = "X-CM-ID")] string cmId = "sbx")
         {
             var result = await _m3Service.FindServicesByBridgeIdAsync(cmId);
@@ -42,6 +47,7 @@ namespace HIMS.API.Controllers.ABHA.M3
         }
 
         [HttpGet("certs")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> GetCerts([FromHeader(Name = "X-CM-ID")] string cmId = "sbx")
         {
             var result = await _m3Service.GetCertsAsync(cmId);
@@ -49,12 +55,14 @@ namespace HIMS.API.Controllers.ABHA.M3
         }
 
         [HttpGet("openid-configuration")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> GetOpenIdConfiguration([FromHeader(Name = "X-CM-ID")] string cmId = "sbx")
         {
             var result = await _m3Service.GetOpenIdConfigurationAsync(cmId);
             return Ok(result);
         }
         [HttpPost("consent/request/init")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> ConsentInitRequestAsync([FromBody] ConsentInitRequest request, [FromHeader(Name = "X-CM-ID")] string cmId = "sbx")
         {
             if (request?.Consent == null)
@@ -63,6 +71,7 @@ namespace HIMS.API.Controllers.ABHA.M3
             return Accepted(result);
         }
         [HttpPost("consent/request/status")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> ConsentRequestStatus([FromBody] ConsentRequestStatusRequest request, [FromHeader(Name = "X-CM-ID")] string cmId = "sbx", [FromHeader(Name = "X-HIU-ID")] string hiuId = null)
         {
             if (request == null || string.IsNullOrWhiteSpace(request.ConsentRequestId))
@@ -71,6 +80,7 @@ namespace HIMS.API.Controllers.ABHA.M3
             return Accepted(result);
         }
         [HttpPost("consent/request/hiu/on-notify")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> ConsentHiuOnNotify([FromBody] ConsentHiuOnNotifyRequest request, [FromHeader(Name = "X-CM-ID")] string cmId = "sbx")
         {
             if (request == null)
@@ -79,6 +89,7 @@ namespace HIMS.API.Controllers.ABHA.M3
             return Ok(result);
         }
         [HttpPost("consent/fetch")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> ConsentFetch([FromBody] ConsentFetchRequest request, [FromHeader(Name = "X-CM-ID")] string cmId = "sbx", [FromHeader(Name = "X-HIU-ID")] string hiuId = null)
         {
             if (request == null || string.IsNullOrWhiteSpace(request.ConsentId))
@@ -87,6 +98,7 @@ namespace HIMS.API.Controllers.ABHA.M3
             return Accepted(result);
         }
         [HttpPost("health-information/request")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> HiuHealthInformationRequest([FromBody] HiuHealthInformationRequest request, [FromHeader(Name = "X-CM-ID")] string cmId = "sbx", [FromHeader(Name = "X-HIU-ID")] string hiuId = null)
         {
             if (request?.HiRequest == null)
@@ -95,6 +107,7 @@ namespace HIMS.API.Controllers.ABHA.M3
             return Accepted(result);
         }
         [HttpPost("health-information/notify")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> DataFlowNotification([FromBody] DataFlowNotificationRequest request, [FromHeader(Name = "X-CM-ID")] string cmId = "sbx")
         {
             if (request?.Notification == null)

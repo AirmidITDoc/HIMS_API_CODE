@@ -39,6 +39,7 @@ namespace HIMS.API.Controllers.Administration
 
         //List API
         [HttpPost]
+        [Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
         [Route("[action]")]
         //[Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -104,6 +105,7 @@ namespace HIMS.API.Controllers.Administration
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
         [HttpGet("GetDischargeTemplateList")]
+        [Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
         //[Permission(PageCode = "TemplateDescription", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDischargeTemplateList(string CategoryName)
         {

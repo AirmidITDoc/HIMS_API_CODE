@@ -1,4 +1,6 @@
 ﻿using Asp.Versioning;
+using HIMS.API.Extensions;
+using HIMS.Core;
 using HIMS.ABHA.Helper;
 using HIMS.ABHA.Interface;
 using HIMS.ABHA.Models.M2;
@@ -20,6 +22,7 @@ namespace HIMS.API.Controllers.ABHA.M2
             _abhaService = abhaService;
         }
         [HttpPost("on-discover")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OnDiscover([FromBody] OnDiscoverRequestDto req)
         {
             var result = await _abhaService.OnDiscoverAsync(req.transactionId,"","");
@@ -30,6 +33,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         }
 
         [HttpPost("link/on-init")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OnLinkInit([FromBody] LinkOnInitRequest req,
             [FromHeader(Name = "X-CM-ID")] string xCmId)
         {
@@ -41,6 +45,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         }
 
         [HttpPost("link/on-confirm")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> OnLinkConfirm([FromBody] LinkOnConfirmRequest req,
             [FromHeader(Name = "X-CM-ID")] string xCmId)
         {

@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -25,8 +26,8 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MPathSpecimenCollectionMaster> PathSpecimenCollectionMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -36,8 +37,8 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -52,8 +53,8 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(PathSpecimenCollectionMasterModel obj)
         {
             MPathSpecimenCollectionMaster model = obj.MapTo<MPathSpecimenCollectionMaster>();
@@ -73,8 +74,8 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PathSpecimenCollectionMasterModel obj)
         {
             MPathSpecimenCollectionMaster model = obj.MapTo<MPathSpecimenCollectionMaster>();
@@ -92,8 +93,8 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.Delete)]
-        [Permission]
+
+        [Permission(PageCode = "PathSpecimenCollectionMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MPathSpecimenCollectionMaster model = await _repository.GetById(x => x.SpecimenCollectionId == Id);

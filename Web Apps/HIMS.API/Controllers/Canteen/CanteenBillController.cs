@@ -30,6 +30,7 @@ namespace HIMS.API.Controllers.Canteen
         }
 
         [HttpPost("CanteenBillList")]
+        [Permission(PageCode = "CanteenBill", Permission = PagePermission.View)]
         //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> CaneenBillList(GridRequestModel objGrid)
         {
@@ -39,6 +40,7 @@ namespace HIMS.API.Controllers.Canteen
 
 
         [HttpPost("CanteenBilldetailList")]
+        [Permission(PageCode = "CanteenBill", Permission = PagePermission.View)]
         //[Permission(PageCode = "CanteenRequest", Permission = PagePermission.View)]
         public async Task<IActionResult> BilldetailList(GridRequestModel objGrid)
         {

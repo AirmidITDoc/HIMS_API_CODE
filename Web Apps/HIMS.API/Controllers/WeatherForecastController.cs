@@ -1,4 +1,5 @@
 using HIMS.API.Extensions;
+using HIMS.Core;
 using HIMS.Core.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,7 @@ namespace HIMS.API.Controllers
         }
 
         [HttpGet]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast

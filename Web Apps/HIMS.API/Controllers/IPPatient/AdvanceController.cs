@@ -30,8 +30,8 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("PatientWiseAdvanceList")]
-        [Permission]
-        //[Permission(PageCode = "Advance", Permission = PagePermission.View)]
+        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
+
         public async Task<IActionResult> PatientWiseAdvanceList(GridRequestModel objGrid)
         {
             IPagedList<PatientWiseAdvanceListDto> PatientWiseAdvanceList = await _IAdvanceService.PatientWiseAdvanceList(objGrid);
@@ -40,14 +40,14 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("BrowseAdvanceList")]
-        [Permission]
+        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> AdvanceList(GridRequestModel objGrid)
         {
             IPagedList<AdvanceListDto> AdvanceList = await _IAdvanceService.GetAdvanceListAsync(objGrid);
             return Ok(AdvanceList.ToGridResponse(objGrid, "Advance List"));
         }
         [HttpPost("PatientRefundOfAdvancesList")]
-        [Permission]
+        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> RefundOfAdvancesList(GridRequestModel objGrid)
         {
             IPagedList<RefundOfAdvancesListDto> RefundOfAdvancesList = await _IAdvanceService.GetAdvancesListAsync(objGrid);
@@ -56,7 +56,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("RefundOfAdvbrowselist")]
-        [Permission]
+        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> RefundOfAdvbrowselist(GridRequestModel objGrid)
         {
             IPagedList<AdvanceRefundOPReceiptListDto> RefundOfAdvancesList = await _IAdvanceService.RefundOfAdvbrowselist(objGrid);
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("OPDAdvanceReceiptList")]
-        [Permission]
+        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> OPDAdvanceReceiptList(GridRequestModel objGrid)
         {
             IPagedList<OPAdvanceReceiptDetailListDto> RefundOfAdvancesList = await _IAdvanceService.OPDAdvanceReceiptList(objGrid);
@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("BrowseRefundOfAdvanceList")]
-        [Permission]
+        [Permission(PageCode = "Advance", Permission = PagePermission.View)]
         public async Task<IActionResult> RefundAdvanceList(GridRequestModel objGrid)
         {
             IPagedList<RefundOfAdvanceListDto> RefundAdvanceList = await _IAdvanceService.GetRefundOfAdvanceListAsync(objGrid);
@@ -94,8 +94,8 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("InsertSP")]
-        [Permission]
-    //    [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+    [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+
         public async Task<ApiResponse> Insert(ModelAdvance1 obj)
         {
             AdvanceHeader model = obj.Advance.MapTo<AdvanceHeader>();
@@ -120,8 +120,8 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", objpayment.AdvanceId);
         }
         [HttpPut("Edit")]
-        [Permission]
-    //    [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+    [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+
         public async Task<ApiResponse> Update(UpdateAdvance obj)
         {
             AdvanceHeader model = obj.Advance.MapTo<AdvanceHeader>();
@@ -148,8 +148,8 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("IPRefundofAdvanceInsert")]
-        [Permission]
-      //  [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+      [Permission(PageCode = "Advance", Permission = PagePermission.Add)]
+
         public async Task<ApiResponse> IPInsertAsyncSP(RefundsModel obj)
 
         {

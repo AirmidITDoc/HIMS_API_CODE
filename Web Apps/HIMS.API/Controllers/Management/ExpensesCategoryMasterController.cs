@@ -1,4 +1,5 @@
 ﻿using HIMS.Api.Controllers;
+using HIMS.Core;
 using HIMS.API.Models.Administration;
 using HIMS.Api.Models.Common;
 using HIMS.Core.Domain.Grid;
@@ -24,6 +25,7 @@ namespace HIMS.API.Controllers.Management
         }
         //List API
         [HttpPost]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         [Route("[action]")]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -33,6 +35,7 @@ namespace HIMS.API.Controllers.Management
         }
         //List API Get By Id
         [HttpGet("{id?}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
@@ -45,6 +48,7 @@ namespace HIMS.API.Controllers.Management
         }
         //Add API
         [HttpPost]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ExpensesCategoryMasterMode obj)
         {
@@ -65,6 +69,7 @@ namespace HIMS.API.Controllers.Management
         }
         //Edit API
         [HttpPut("{id:int}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ExpensesCategoryMasterMode obj)
         {
@@ -83,6 +88,7 @@ namespace HIMS.API.Controllers.Management
         }
         //Delete API
         [HttpDelete]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {

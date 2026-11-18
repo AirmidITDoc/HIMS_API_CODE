@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.AbhaIntegration;
@@ -20,6 +21,7 @@ namespace HIMS.API.Controllers.AbhaIntegration
         }
 
         [HttpPost("async/error")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertErrorLog(AbhaErroLog obj)
         {
             TAbhaErrorLog model = obj.MapTo<TAbhaErrorLog>();

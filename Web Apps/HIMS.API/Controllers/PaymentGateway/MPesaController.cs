@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -31,6 +32,7 @@ namespace HIMS.API.Controllers.Login
             _mPesaService = genericService;
         }
         [HttpPost("validation")]
+        [Permission(PageCode = "StateMaster", Permission = PagePermission.Add)]
         public IActionResult Validate([FromBody] JsonElement payload)
         {
             string path = "C:\\PaymentDataLogs\\";
@@ -43,8 +45,8 @@ namespace HIMS.API.Controllers.Login
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TMpesaResponse> pesaResponseList = await _mPesaService.GetAllPagedAsync(objGrid);
@@ -52,7 +54,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("confirmation")]
-        [Permission]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<IActionResult> ConfirmAsync([FromBody] JsonElement payload)
         {
             string path = "C:\\PaymentDataLogs\\";
@@ -79,7 +81,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("pay")]
-        [Permission]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Pay([FromBody] PaymentRequestDto objRequest)
         {
             //var result = await _stkService.RegisterUrls();
@@ -92,13 +94,14 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("register-urls")]
+        [Permission(PageCode = "StateMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> RegisterUrl()
         {
             var result = await _stkService.RegisterUrls();
             return new ApiResponse() { StatusCode = 200, StatusText = "Ok", Message = "Payment Done" };
         }
         [HttpGet("check-payment")]
-        [Permission]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<ApiResponse> CheckPayment(string MerchantRequestID, string CheckoutRequestID)
         {
             var result = (await _mPesaService.GetAll(x => x.CheckoutRequestId == CheckoutRequestID && x.MerchantRequestId == MerchantRequestID))?.FirstOrDefault() ?? new TMpesaResponse();

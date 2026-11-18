@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -35,8 +35,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "WardMaster", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "WardMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<RoomMaster> RoomMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -44,8 +44,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
 
         [HttpPost("WardMasterList")]
-        //[Permission(PageCode = "WardMaster", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "WardMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List1(GridRequestModel objGrid)
         {
             IPagedList<WardMasterListDto> WardMasterList = await _IWardMasterService.GetListAsyncH(objGrid);
@@ -54,8 +54,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "WardMaster", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "WardMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -67,8 +67,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "WardMaster", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "WardMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(WardMasterModel obj)
         {
             RoomMaster model = obj.MapTo<RoomMaster>();
@@ -85,8 +85,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "WardMaster", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "WardMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(WardMasterModel obj)
         {
             RoomMaster model = obj.MapTo<RoomMaster>();
@@ -103,8 +103,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "WardMaster", Permission = PagePermission.Delete)]
-        [Permission]
+
+        [Permission(PageCode = "WardMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             RoomMaster model = await _repository.GetById(x => x.RoomId == Id);
@@ -122,8 +122,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         [HttpGet]
         [Route("get-WardClass")]
-        //[Permission(PageCode = "WardMaster", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "WardMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown()
         {
             var WardClassWiseList = await _repository.GetAll(x => x.IsActive.Value);

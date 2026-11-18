@@ -29,13 +29,14 @@ namespace HIMS.API.Controllers.Common
 
 
         [HttpPost("BrowseIPBillList")]
-        [Permission]
+        [Permission(PageCode = "Billing", Permission = PagePermission.Add)]
         public async Task<IActionResult> GetIPBillListAsync1(GridRequestModel objGrid)
         {
             IPagedList<IPBillListDto> IPDBillList = await _IPBillService.GetIPBillListAsync1(objGrid);
             return Ok(IPDBillList.ToGridResponse(objGrid, "Browse IP Bill List "));
         }
         [HttpPost("BrowseIPPaymentList")]
+        [Permission(PageCode = "Billing", Permission = PagePermission.View)]
         //[Permission(PageCode = "Billing", Permission = PagePermission.View)]
         public async Task<IActionResult> PaymentList(GridRequestModel objGrid)
         {
@@ -43,14 +44,15 @@ namespace HIMS.API.Controllers.Common
             return Ok(IPPaymentList.ToGridResponse(objGrid, "Browse IP Payment List"));
         }
         [HttpPost("BrowseIPRefundlist")]
-        [Permission]
-        //[Permission(PageCode = "Billing", Permission = PagePermission.View)]
+        [Permission(PageCode = "Billing", Permission = PagePermission.View)]
+
         public async Task<IActionResult> RefundBillList(GridRequestModel objGrid)
         {
             IPagedList<BrowseIPRefundListDto> IPRefundlist = await _IPBillService.GetIPRefundBillListListAsync(objGrid);
             return Ok(IPRefundlist.ToGridResponse(objGrid, " Browse IP Refund list "));
         }
         [HttpPost("ServiceClassdetaillList")]
+        [Permission(PageCode = "Billing", Permission = PagePermission.View)]
         //[Permission(PageCode = "Billing", Permission = PagePermission.View)]
         public async Task<IActionResult> ServiceDetaillList(GridRequestModel objGrid)
         {
@@ -59,7 +61,7 @@ namespace HIMS.API.Controllers.Common
         }
 
         [HttpPut("UpdateRefund")]
-        [Permission]
+        [Permission(PageCode = "Billing", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(UpdateRefundModel obj)
         {
             Refund model = obj.MapTo<Refund>();
@@ -79,4 +81,3 @@ namespace HIMS.API.Controllers.Common
 
     }
 }
-

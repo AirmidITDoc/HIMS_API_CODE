@@ -30,6 +30,7 @@ namespace HIMS.API.Controllers.ABHA.M2
             _TAbhaLinkTokenCallback = TAbhaLinkTokenCallback;
         }
         [HttpPost("token/generate")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> GenerateLinkToken([FromBody] LinkTokenRequest req)
         {
             var result = await _abhaService.GenerateLinkTokenAsync(req);
@@ -52,6 +53,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         }
 
         [HttpGet("{id?}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(string id, string abhaAddress)
         {
             if (id == "")
@@ -63,6 +65,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         }
 
         [HttpPost("link/carecontext")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> LinkCareContext([FromBody] LinkCareContextRequest req)
         {
             var result = await _abhaService.LinkCareContextAsync(req);
@@ -73,6 +76,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         }
 
         [HttpPost("link/context/notify")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> LinkContextNotify([FromBody] object req, string hipId, string linkToken, string xCmId)
         {
             var result = await _abhaService.LinkContextNotifyAsync(req, hipId, linkToken, xCmId);

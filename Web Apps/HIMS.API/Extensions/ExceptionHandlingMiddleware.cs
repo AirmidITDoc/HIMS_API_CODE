@@ -71,6 +71,8 @@ namespace HIMS.API.Extensions
                 {
                     param = "[Could not read request body]";
                 }
+                if (context.Request.Path.Value?.Contains("/Login/", StringComparison.OrdinalIgnoreCase) == true)
+                    param = "[REDACTED]";
 
                 // --- 2. Log exception to file (safe and never throws) ---
                 await LogExceptionToFileAsync(ex, context, param);
@@ -90,7 +92,7 @@ namespace HIMS.API.Extensions
 
                 string errorJson = JsonSerializer.Serialize(new
                 {
-                    Error = ex.Message,
+                    Error = "An unexpected server error occurred.",
                     ApiUrl = context.Request.Path.Value
                 });
 

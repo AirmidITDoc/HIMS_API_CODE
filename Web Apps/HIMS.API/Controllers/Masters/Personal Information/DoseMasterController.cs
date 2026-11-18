@@ -50,6 +50,7 @@ namespace HIMS.API.Controllers
         }
 
         [HttpGet("GetDoseMasterList")]
+        [Permission(PageCode = "DoseMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetItemListForPrescription( string DoseName)
         {
             var resultList = await _IDoseMasterService.GetDoseMasterList(DoseName);

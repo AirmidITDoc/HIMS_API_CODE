@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Data.Models;
 using HIMS.Data;
@@ -32,8 +32,8 @@ namespace HIMS.API.Controllers.GastrologyMaster
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "MSubQuestionMaster", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "MSubQuestionMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MSubQuestionMaster> MSubQuestionMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -41,9 +41,8 @@ namespace HIMS.API.Controllers.GastrologyMaster
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "MQuestionMaster", Permission = PagePermission.View)]
-        [Permission]
 
+        [Permission(PageCode = "MQuestionMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -55,8 +54,8 @@ namespace HIMS.API.Controllers.GastrologyMaster
         }
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "MQuestionMaster", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "MQuestionMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(MSubQuestionMasterModel obj)
         {
             MSubQuestionMaster model = obj.MapTo<MSubQuestionMaster>();
@@ -83,8 +82,8 @@ namespace HIMS.API.Controllers.GastrologyMaster
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "MQuestionMaster", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "MQuestionMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(MSubQuestionMasterModel obj)
         {
             MSubQuestionMaster model = obj.MapTo<MSubQuestionMaster>();
@@ -118,8 +117,8 @@ namespace HIMS.API.Controllers.GastrologyMaster
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "MSubQuestionMaster", Permission = PagePermission.Delete)]
-        [Permission]
+
+        [Permission(PageCode = "MSubQuestionMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MSubQuestionMaster model = await _repository.GetById(x => x.SubQuestionId == Id);

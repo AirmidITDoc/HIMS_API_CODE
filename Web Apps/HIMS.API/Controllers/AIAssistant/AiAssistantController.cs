@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -22,7 +23,7 @@ namespace HIMS.API.Controllers.AIAssistant
         }
 
         [HttpGet("capabilities")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> Capabilities()
         {
             var requestId = HttpContext.TraceIdentifier;
@@ -39,7 +40,7 @@ namespace HIMS.API.Controllers.AIAssistant
         }
 
         [HttpPost("chat")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> Chat([FromBody] AiAssistantChatRequest request)
         {
             var requestId = HttpContext.TraceIdentifier;

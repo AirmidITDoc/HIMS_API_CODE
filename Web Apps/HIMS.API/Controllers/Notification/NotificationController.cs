@@ -19,7 +19,7 @@ namespace HIMS.API.Controllers.Notification
         }
         [HttpGet]
         [Route("[action]")]
-        [Permission]
+        [SharedAuthenticated]
         public async Task<ApiResponse> List()
         {
             var List = await _repository.GetNotificationByUser(CurrentUserId, 10);
@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Notification
         }
         [HttpPost]
         [Route("read")]
-        [Permission]
+        [SharedAuthenticated]
         public async Task<ApiResponse> ReadNotification([FromBody] long Id)
         {
             await _repository.ReadNotification(Id);

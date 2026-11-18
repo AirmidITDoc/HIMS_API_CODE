@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.MRD
 
 
         [HttpPost("CertificateList")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> CertificateList(GridRequestModel objGrid)
         {
             IPagedList<CertifiCateListDto> CertificateList = await _IDeathCertificateService.CertificateListAsync(objGrid);
@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.MRD
         // 2. GET BY ID API 
         [HttpGet]
         [Route("[action]/{id}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetById(int id)
         {
             if (id <= 0)
@@ -65,8 +65,7 @@ namespace HIMS.API.Controllers.MRD
         // 3. INSERT (CREATE) API
         [HttpPost]
         [Route("[action]")]
-        [Permission]
-
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(DeathCertificateModel obj)
         {
             if (obj == null || obj.CertificateId != 0)
@@ -88,7 +87,7 @@ namespace HIMS.API.Controllers.MRD
         // 4. UPDATE API 
         [HttpPut]
         [Route("[action]/{id}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(int id, DeathCertificateModel obj)
         {
             if (id <= 0 || obj == null)

@@ -32,14 +32,14 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpPost("ApprovalList")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ApprovalListDto> ApprovalList = await _IApprovalService.GetListAsync(objGrid);
             return Ok(ApprovalList.ToGridResponse(objGrid, "Approval List"));
         }
         [HttpPost("UserApprovalNamelist")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> UserApprovalNamelist(GridRequestModel objGrid)
         {
             IPagedList<UserApprovalNamelistDto> ApprovalList = await _IApprovalService.NewGetListAsync(objGrid);
@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.Inventory
 
         //Add API
         [HttpPost]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ApprovalHeaderModel obj)
         {
             TApprovalHeader model = obj.MapTo<TApprovalHeader>();
@@ -66,7 +66,7 @@ namespace HIMS.API.Controllers.Inventory
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
         [HttpPut("{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(ApprovalHeaderUpdateModel obj)
         {
             TApprovalHeader model = obj.MapTo<TApprovalHeader>();

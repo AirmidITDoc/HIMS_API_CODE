@@ -5,7 +5,37 @@ namespace HIMS.Core.Infrastructure
 {
     public class SecurityKeys
     {
-        public const string EnDeKey = "wbugadmincomnetindiadevelopments";
+        public static string EnDeKey { get; private set; } = string.Empty;
+
+        public static void Configure(string? key)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+                throw new InvalidOperationException("Encryption key must be supplied from secure configuration.");
+
+            EnDeKey = NormalizeKey(key);
+        }
+
+        private static string NormalizeKey(string key)
+        {
+            try
+            {
+                byte[] candidate = Convert.FromBase64String(key);
+                if (IsValidAesKeyLength(candidate.Length))
+                    return key;
+            }
+            catch (FormatException)
+            {
+                // key is plain text; derive a 32-byte key below
+            }
+
+            byte[] derived = SHA256.HashData(Encoding.UTF8.GetBytes(key));
+            return Convert.ToBase64String(derived);
+        }
+
+        private static bool IsValidAesKeyLength(int keyLength)
+        {
+            return keyLength == 16 || keyLength == 24 || keyLength == 32;
+        }
     }
 
     public class EncryptionUtility

@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.MRD
         }
 
         [HttpPost("MRDDiagnosisInfoList")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MrdDiagnosisInfoListDto> MRDDiagnosisInfoList = await _IMrdDiagnosisInfoService.GetListAsync(objGrid);
@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.MRD
 
 
         [HttpPost("MRDDiagnosisInformationList")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> DiagnosisList(GridRequestModel objGrid)
         {
             IPagedList<MRDDiagnosisinformationDto> MRDDiagnosisInformationList = await _IMrdDiagnosisInfoService.GetdiagnosislistAsync(objGrid);
@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.MRD
 
 
         [HttpPost("Insert")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(MrdDiagnosisInfo obj)
 
         {
@@ -68,7 +68,7 @@ namespace HIMS.API.Controllers.MRD
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(MrdDiagnosisInfoUpdate obj)
         {
             TIpMrdDiagnosisInfoHeader model = obj.MrdDiagnosisInfoHeader.MapTo<TIpMrdDiagnosisInfoHeader>();

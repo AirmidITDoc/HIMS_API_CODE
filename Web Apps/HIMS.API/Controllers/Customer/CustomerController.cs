@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -26,7 +27,7 @@ namespace HIMS.API.Controllers.Customer
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ACustomerInformation> CustomerInformationList = await _repository.GetAllPagedAsync(objGrid);
@@ -34,7 +35,7 @@ namespace HIMS.API.Controllers.Customer
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -46,7 +47,7 @@ namespace HIMS.API.Controllers.Customer
         }
         //Add API
         [HttpPost]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(CustomerInformationModel obj)
         {
             ACustomerInformation model = obj.MapTo<ACustomerInformation>();
@@ -63,7 +64,7 @@ namespace HIMS.API.Controllers.Customer
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(CustomerInformationModel obj)
         {
             ACustomerInformation model = obj.MapTo<ACustomerInformation>();
@@ -80,7 +81,7 @@ namespace HIMS.API.Controllers.Customer
         }
         //Delete API
         [HttpDelete]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             ACustomerInformation model = await _repository.GetById(x => x.CustomerId == Id);

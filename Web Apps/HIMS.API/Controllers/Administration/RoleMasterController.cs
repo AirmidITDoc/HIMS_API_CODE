@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -101,12 +101,14 @@ namespace HIMS.API.Controllers.Administration
         }
         [HttpGet]
         [Route("get-permissions")]
+        [Permission(PageCode = "RoleTemplateMaster", Permission = PagePermission.View)]
         public ApiResponse GetPermission(int RoleId)
         {
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Fetch Permission successfully.", _IRoleService.GetPermisison(RoleId));
         }
         [HttpPost]
         [Route("save-permission")]
+        [Permission(PageCode = "RoleTemplateMaster", Permission = PagePermission.Edit)]
         public ApiResponse PostPermission(List<PermissionModel> obj)
         {
             _IRoleService.SavePermission(obj);

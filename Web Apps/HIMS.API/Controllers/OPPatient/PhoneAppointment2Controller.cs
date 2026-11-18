@@ -142,6 +142,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpGet("auto-complete")]
+        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
         //[Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
@@ -182,4 +183,3 @@ namespace HIMS.API.Controllers.OPPatient
         }
     }
 }
-

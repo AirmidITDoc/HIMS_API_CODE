@@ -31,6 +31,7 @@ namespace HIMS.API.Controllers.Pathology
             _repository = repository;
         }
         [HttpPost("LabPatientAddressList")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> salesdetaillist(GridRequestModel objGrid)
         {
@@ -40,7 +41,7 @@ namespace HIMS.API.Controllers.Pathology
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -52,6 +53,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         //Add API
         [HttpPost]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Add)]
       //  [Permission]
         public async Task<ApiResponse> Post(LabPatientAddressModel obj)
         {
@@ -71,6 +73,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         //Edit API
         [HttpPut("{id:int}")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Edit)]
        // [Permission]
         public async Task<ApiResponse> Edit(LabPatientAddressModel obj)
         {
@@ -88,7 +91,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         //Delete API
         [HttpDelete]
-        [Permission]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             TLabPatientAddress model = await _repository.GetById(x => x.AddressId == Id);

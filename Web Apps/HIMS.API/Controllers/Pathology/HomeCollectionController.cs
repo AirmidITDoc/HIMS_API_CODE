@@ -35,6 +35,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         //List API Get By Id
         [HttpGet("{id?}")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
        // [Permission]
         public async Task<ApiResponse> Get(int id)
@@ -50,7 +51,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpGet("PhlebotomistCombo")]
-        [Permission]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
             if (string.IsNullOrWhiteSpace(Keyword) || Keyword == "%")
@@ -65,6 +66,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("homeCollectionDetList")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -74,6 +76,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("homeCollectionPatientCountList")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
        // [Permission]
         public async Task<IActionResult> PatientList(GridRequestModel objGrid)
@@ -83,6 +86,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("HomeCollectionRegistrationInfoList")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Add)]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
       //  [Permission]
         public async Task<IActionResult> ListHomeCollection(GridRequestModel objGrid)
@@ -94,6 +98,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("Insert")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Add)]
         //[Permission]
         //[Permission]
         public async Task<ApiResponse> Insert(HomeCollectionModel obj)
@@ -119,6 +124,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPut("Edit/{id:int}")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Edit)]
         //[Permission]
         public async Task<ApiResponse> Edit(HomeCollectionModel obj)
         {
@@ -148,6 +154,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.HomeCollectionId);
         }
         [HttpPost("Cancel")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Delete)]
        // [Permission]
         public ApiResponse Cancel(HomeCollectionCancel obj)
         {
@@ -162,7 +169,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
         [HttpPut("updatePhlebotomist{id:int}")]
-        [Permission]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Edit)]
         public ApiResponse Update(HomeCollectionupdatePhlebotomistModel obj)
         {
             THomeCollectionRegistrationInfo model = obj.MapTo<THomeCollectionRegistrationInfo>();

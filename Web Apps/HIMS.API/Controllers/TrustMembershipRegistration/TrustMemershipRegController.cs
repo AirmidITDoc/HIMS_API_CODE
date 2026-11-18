@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
         }
 
         [HttpPost("TrustMembershipRegList")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TrustMembershipRegDTO> SupplierList = await _ITrustMembershipRegService.GetListAsync(objGrid);
@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
         }
        
         [HttpGet("search_TruestMembership")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public ApiResponse PathologyServicesearch(string Keyword)
         {
             var data = _ITrustMembershipRegService.searchTruestMembership(Keyword);
@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
 
 
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
             return data.ToSingleResponse<TMembershipRegistration, TrustMembershipRegModel>("Doctor Master");
         }
         [HttpGet("auto-complete")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
             var data = await _ITrustMembershipRegService.SearchTrust(Keyword);
@@ -91,7 +91,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
 
 
         [HttpPost("Insert")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(TrustMembershipRegModel obj)
         {
             TMembershipRegistration model = obj.MapTo<TMembershipRegistration>();
@@ -136,7 +136,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
         }
        
         [HttpPut("Edit/{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(TrustMembershipRegModel obj)
         {
             try
@@ -203,7 +203,7 @@ namespace HIMS.API.Controllers.TrustMembershipRegistration
         }
         //Delete API
         [HttpDelete]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             TMembershipRegistration model = await _repository.GetById(x => x.MembershipId == Id);

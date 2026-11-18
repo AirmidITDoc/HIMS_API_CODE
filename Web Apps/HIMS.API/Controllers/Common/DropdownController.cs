@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
 using HIMS.Core.Infrastructure;
@@ -353,6 +354,7 @@ namespace HIMS.API.Controllers.Common
         }
 
         [HttpGet]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         [Route("[action]")]
         //[Permission]
         public async Task<ActionResult> GetBindDropDown(string mode, int? Id)

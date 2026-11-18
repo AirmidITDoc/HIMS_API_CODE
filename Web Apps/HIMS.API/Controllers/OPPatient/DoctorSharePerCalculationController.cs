@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -21,7 +22,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         [HttpPut("OPDoctorSharePerCalculation")]
         //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]/
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public ApiResponse UpdateAsyncOP(DoctorSharePerCalculationModel obj)
         {
             Bill model = obj.MapTo<Bill>();
@@ -34,8 +35,8 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OPDoctorSharePerCalculation updated successfully.");
         }
         [HttpPut("IPDoctorSharePerCalculation")]
-        //[Permission(PageCode = "Indent", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "Indent", Permission = PagePermission.Add)]
         public ApiResponse UpdateAsyncIP(DoctorSharePerCalculationModel obj)
         {
             Bill model = obj.MapTo<Bill>();

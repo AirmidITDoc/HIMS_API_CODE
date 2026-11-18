@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -25,24 +25,24 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("SalesReturnSummaryList")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> SalesSummaryList(GridRequestModel objGrid)
         {
             IPagedList<SalesRetrunCurrentSumryListDto> PharSalesList = await _ISalesReturnService.SalesReturnSummaryList(objGrid);
             return Ok(PharSalesList.ToGridResponse(objGrid, "Sales Return Summary   List"));
         }
         [HttpPost("IPPrescriptionReturnHList")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> PrescriptionReturnHList(GridRequestModel objGrid)
         {
             IPagedList<PrescriptionReturnHListDto> IPPrescriptionReturnHList = await _ISalesReturnService.IPPrescriptionReturnHList(objGrid);
             return Ok(IPPrescriptionReturnHList.ToGridResponse(objGrid, "IPPrescriptionReturnH List"));
         }
         [HttpPost("IPPrescriptionReturnDetailsList")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> PrescriptionReturnDList(GridRequestModel objGrid)
         {
             IPagedList<PrescriptionReturnDetailsListDto> IPPrescriptionReturnHList = await _ISalesReturnService.IPPrescriptionReturnDList(objGrid);
@@ -50,16 +50,16 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("SalesReturnDetailsList")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> SalesReturnDetailsList(GridRequestModel objGrid)
         {
             IPagedList<SalesRetrunLCurrentDetListDto> SalesDetailsList = await _ISalesReturnService.SalesReturnDetailsList(objGrid);
             return Ok(SalesDetailsList.ToGridResponse(objGrid, "Sales Return Details  List"));
         }
         [HttpPost("SalesReturnBrowseList")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> salesreturnlist(GridRequestModel objGrid)
         {
             IPagedList<SalesReturnBillListDto> salesreturnlist = await _ISalesReturnService.salesreturnlist(objGrid);
@@ -67,8 +67,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("salesReturnBrowseDetaillist")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> salesreturndetaillist(GridRequestModel objGrid)
         {
             IPagedList<SalesReturnDetailsListDto> SalesDetailsList = await _ISalesReturnService.salesreturndetaillist(objGrid);
@@ -76,8 +76,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("salesbilllist")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> BrowseSalesBillList(GridRequestModel objGrid)
         {
             IPagedList<BrowseSalesBillListDto> salesbilllist = await _ISalesReturnService.BrowseSalesBillList(objGrid);
@@ -85,24 +85,24 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("salesbillwithcash")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> SalesBillReturnCashList(GridRequestModel objGrid)
         {
             IPagedList<SalesBillReturnCashListDto> salesbillwithcash = await _ISalesReturnService.SalesBillReturnCashList(objGrid);
             return Ok(salesbillwithcash.ToGridResponse(objGrid, "salesbillwithcash  List"));
         }
         [HttpPost("salesbillwithcredit")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> SalesBillReturnCreditList(GridRequestModel objGrid)
         {
             IPagedList<SalesBillReturnCreditListDto> salesbillwithcredit = await _ISalesReturnService.SalesBillReturnCreditList(objGrid);
             return Ok(salesbillwithcredit.ToGridResponse(objGrid, "salesbillwithcredit  List"));
         }
         [HttpPost("SalesReturnWithCash")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSP(SalesReturnsModel obj)
 
         {
@@ -127,8 +127,8 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("SalesReturnWithCredit")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertSPC(SalesReturnsModel obj)
 
         {
@@ -149,8 +149,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("SalesReturnInPatient")]
-        //[Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "SalesReturn", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(SalesReturnsModels obj)
 
         {

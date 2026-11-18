@@ -31,6 +31,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         
         //List API
         [HttpPost]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         [Route("[action]")]
         //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -39,6 +40,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             return Ok(MHsncodeMasterList.ToGridResponse(objGrid, "MHsncodeMaster List"));
         }
         [HttpGet("search-HSNCode")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission]
         public ApiResponse SearchPatientNew()
         {
@@ -47,6 +49,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //List API Get By Id
         [HttpGet("{id?}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
@@ -59,6 +62,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //Add API
         [HttpPost]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<ApiResponse> Post(HSNCodeMasterModel obj)
         {
@@ -78,6 +82,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //Edit API
         [HttpPut("{id:int}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         //[Permission]
         public async Task<ApiResponse> Edit(HSNCodeMasterModel obj)
         {
@@ -95,6 +100,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //Delete API
         [HttpDelete]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         //[Permission]
         public async Task<ApiResponse> Delete(int Id)
         {

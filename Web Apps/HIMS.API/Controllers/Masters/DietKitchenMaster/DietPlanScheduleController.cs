@@ -29,6 +29,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPost("List")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
@@ -37,6 +38,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPost("DietplandetailsList")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> DietplandetailsList(GridRequestModel objGrid)
         {
@@ -45,6 +47,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpGet("{id?}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> Get(long id)
         {
@@ -57,6 +60,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPost("Insert")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<ApiResponse> Insert(DietPlanScheduleModel obj)
         {
@@ -87,6 +91,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPut("Edit/{id:int}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         //[Permission]
         public async Task<ApiResponse> Edit(DietPlanScheduleModel obj)
         {
@@ -114,6 +119,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPost("DietPlanScheduleCancel")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         //[Permission]
         public async Task<ApiResponse> Cancel(DietPlanScheduleCancelModel obj)
         {
@@ -133,6 +139,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPost("DietPlanScheduleDetailCancel")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         //[Permission]
         public async Task<ApiResponse> CancelD(DietPlanScheduleDetailsCancelModel obj)
         {
@@ -152,6 +159,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPost("DietMainList")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> DietMainList(GridRequestModel objGrid)
         {
@@ -160,6 +168,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPost("DietMainSubList")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> DietMainSubList(GridRequestModel objGrid)
         {
@@ -168,6 +177,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPost("DietPlanScheduleDetailList")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> DietPlanScheduleDetailList(GridRequestModel objGrid)
         {
@@ -175,6 +185,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             return Ok(list.ToGridResponse(objGrid, "Diet Plan Schedule Details List"));
         }
         [HttpPost("DietPlanSchedulePatientlList")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> DietPlanSchedulePatientList(GridRequestModel objGrid)
         {
@@ -183,6 +194,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPut("UpdateFinal/{id:long}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Final(long id)
         {
             var model = await _repository.GetById(x => x.DietPlanId == id);
@@ -202,6 +214,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPut("UpdateDietPlanScheduleStatus")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UpdateDietPlanScheduleStatus(List<DietPlanScheduleStatusUpdateModel> obj)
         {
             if (obj == null || obj.Count == 0)

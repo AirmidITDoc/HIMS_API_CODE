@@ -49,6 +49,8 @@ namespace HIMS.ScheduleJobs
                 // ✅ ADD THIS - DB CONTEXT REGISTRATION
                 // services.AddDbContext<HIMSDbContext>(options => options.UseSqlServer(configuration.GetValue<string>("CONNECTION_STRING")));
                 AppSettings.Initialize(configuration);
+                SecurityKeys.Configure(Environment.GetEnvironmentVariable("HIMS_ENCRYPTION_KEY") ??
+                    configuration["EncryptionKey"]);
                 services.AddDbContextPool<HIMSDbContext>((provider, options) =>
                 {
                     options.UseSqlServer(AppSettings.Settings.CONNECTION_STRING);

@@ -33,14 +33,14 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
         }
         [HttpPost("ConstantsList")]
-        [Permission]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ConstantsListDto> ConstantsList = await _IConstantService.GetListAsync(objGrid);
             return Ok(ConstantsList.ToGridResponse(objGrid, "Constants List "));
         }
         [HttpGet("search-ConstantsType")]
-        [Permission]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public ApiResponse SearchConstants(string Keyword)
         {
             var data = _IConstantService.SearchConstants(Keyword);
@@ -67,9 +67,8 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         //[Permission]
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
-        [Permission]
 
+        [Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ConstantModel obj)
         {
             MConstant model = obj.MapTo<MConstant>();
@@ -88,7 +87,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         }
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ConstantModel obj)
         {
             MConstant model = obj.MapTo<MConstant>();
@@ -105,7 +104,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         }
         //Delete API
         [HttpDelete]
-        [Permission]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MConstant model = await _repository.GetById(x => x.ConstantId == Id);

@@ -24,14 +24,14 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         [HttpGet]
         [Route("[action]")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> List()
         {
             List<FavouriteModel> FavouriteList = await _favouriteService.GetFavouriteModules(CurrentRoleId, CurrentUserId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", FavouriteList.Select(x => new { x.MenuId, x.Icon, x.LinkName, x.LinkAction, x.IsFavourite }));
         }
         [HttpPost]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(FavouriteDtoModel obj)
         {
             TFavouriteUserList model = obj.MapTo<TFavouriteUserList>();

@@ -49,6 +49,7 @@ namespace HIMS.API.Controllers.Pathology
 
         //List API Get By Id
         [HttpGet("{id?}")]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
@@ -61,6 +62,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("Insert")]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<ApiResponse> Insert(PathDispatchReportHistoryModel obj)
         {
@@ -84,6 +86,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.DispatchId);
         }
         [HttpPut("Edit/{id:int}")]
+        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
         //[Permission]
         public async Task<ApiResponse> Edit(PathDispatchReportHistoryModel obj)
         {

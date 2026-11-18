@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.MRD
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -50,7 +50,7 @@ namespace HIMS.API.Controllers.MRD
 
         //Add API
         [HttpPost]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(MedicolegalCertificateModel obj)
         {
             TMedicolegalCertificate model = obj.MapTo<TMedicolegalCertificate>();
@@ -83,7 +83,7 @@ namespace HIMS.API.Controllers.MRD
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model);
         //}
         [HttpPut("{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(MedicolegalCertificateUpdateModel obj)
 
         {

@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
         [HttpGet("{id?}")]
         //[Permission(PageCode = "DoctorMaster", Permission = PagePermission.View)
-        [Permission]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -45,24 +45,24 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("PurchaseRequisitionHeaderList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<PurchaseRequitionListDto> PurchaseRequisitionHeaderList = await _IPurchaseRequisitionService.GetListAsync(objGrid);
             return Ok(PurchaseRequisitionHeaderList.ToGridResponse(objGrid, "PurchaseRequisitionHeader List"));
         }
         [HttpPost("PurRequisiionItemList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> ListItem(GridRequestModel objGrid)
         {
             IPagedList<PurRequisiionItemListDto> PurRequisiionItemList = await _IPurchaseRequisitionService.GetListItemAsync(objGrid);
             return Ok(PurRequisiionItemList.ToGridResponse(objGrid, "PurchaseRequisitionHeader List"));
         }
         [HttpPost("PurchaseRequisitionDetailList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> Listp(GridRequestModel objGrid)
         {
             IPagedList<PurchaseRequisitionDetailListDto> PurchaseRequisitionDetailList = await _IPurchaseRequisitionService.GetListAsyncPurchase(objGrid);
@@ -71,8 +71,8 @@ namespace HIMS.API.Controllers.Pharmacy
       
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PurchaseRequisitionModel obj)
         {
             TPurchaseRequisitionHeader model = obj.MapTo<TPurchaseRequisitionHeader>();
@@ -92,8 +92,8 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.PurchaseRequisitionId);
         }
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PurchaseRequisitionModel obj)
         {
             TPurchaseRequisitionHeader model = obj.MapTo<TPurchaseRequisitionHeader>();
@@ -109,7 +109,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.", model.PurchaseRequisitionId);
         }
         [HttpPost("Cancel")]
-        [Permission]
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(PurchaseRequisitionCancel obj)
         {
             TPurchaseRequisitionHeader model = obj.MapTo<TPurchaseRequisitionHeader>();
@@ -123,8 +123,8 @@ namespace HIMS.API.Controllers.Pharmacy
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Canceled successfully.");
         }
         [HttpPost("Verify")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(PurchaseRequisitionVarifyModel obj)
         {
             TPurchaseRequisitionHeader model = obj.MapTo<TPurchaseRequisitionHeader>();
