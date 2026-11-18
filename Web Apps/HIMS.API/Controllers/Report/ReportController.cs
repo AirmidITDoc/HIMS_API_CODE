@@ -646,7 +646,7 @@ namespace HIMS.API.Controllers.Report
                 case "WorkOrder":
                 case "MaterialReceivedByDept":
                 case "GRNStickerPrint":
-                case "OPDStickerPrint":
+                case "OPDPatientSticker":
                 case "IPDPatientSticker":
                 case "PathologyStickerPrint":
 

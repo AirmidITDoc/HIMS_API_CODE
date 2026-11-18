@@ -1282,8 +1282,8 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
-                #region :: OPDStickerPrint ::
-                case "OPDStickerPrint":
+                #region :: OPDPatientSticker ::
+                case "OPDPatientSticker":
                     {
                         string[] colList = Array.Empty<string>();
                         var dt = GetDataBySp(model, "ps_rpt_AppointmentOPPrint");
@@ -1345,7 +1345,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{SampleCollectionTime}}", dt.GetColValue("SampleCollectionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
 
                      
-                        tuple = _pdfUtility.GeneratePdfFromHtmlBarCode(html, model.StorageBaseUrl, "OPDStickerPrint", "Sticker" + vDate, Orientation.Portrait);
+                        tuple = _pdfUtility.GeneratePdfFromHtmlBarCode(html, model.StorageBaseUrl, "PathologyStickerPrint", "Sticker" + vDate, Orientation.Portrait);
                         break;
                     }
                 #endregion
@@ -27746,7 +27746,7 @@ break;
                     rowHtml = rowHtml.Replace("{{DoctorName}}", row["DoctorName"]?.ToString());
                     rowHtml = rowHtml.Replace("{{SampleNo}}", row["SampleNo"]?.ToString());
                     rowHtml = rowHtml.Replace("{{TestName}}", row["TestName"]?.ToString());
-                    html = html.Replace("{{SampleCollectionTime}}", dt.GetColValue("SampleCollectionTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
+                    rowHtml = rowHtml.Replace("{{SampleCollectionTime}}", row["SampleCollectionTime"] == DBNull.Value? "": Convert.ToDateTime(row["SampleCollectionTime"]).ToString("dd/MM/yyyy | hh:mm tt"));
 
 
 
@@ -27757,7 +27757,7 @@ break;
             }
 
 
-            if (model.Mode == "IPDStickerPrint")
+            if (model.Mode == "IPDPatientSticker")
             {
                 title = "Patient Detail Sticker";
                 var dt = GetDataBySp(model, "ps_rptAppointmentIPPrint");
@@ -27789,7 +27789,7 @@ break;
                 html = html.Replace("{{LoginUserSurname}}", dt.GetColValue("LoginUserSurname"));
             }
 
-            if (model.Mode == "OPDStickerPrint")
+            if (model.Mode == "OPDPatientSticker")
             {
                 title = "Patient Detail Sticker";
                 var dt = GetDataBySp(model, "ps_rpt_AppointmentOPPrint");
