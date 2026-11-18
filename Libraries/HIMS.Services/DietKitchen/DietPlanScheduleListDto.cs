@@ -81,7 +81,9 @@ namespace HIMS.Services.DietKitchen
         public DateTime? DefaultTime { get; set; }
         public int? PatientWiseCount { get; set; }
         public string? Status { get; set; }
-        
+        public string? OrderCutoffTime { get; set; }
+        public string? DispatchTime { get; set; }
+
     }
     public class DietSchedulePatientListDto
     {

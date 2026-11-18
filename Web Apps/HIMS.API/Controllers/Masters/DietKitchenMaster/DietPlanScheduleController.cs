@@ -122,7 +122,6 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             {
                 model.DietPlanId = obj.DietPlanId;
                 model.IsCancelledBy = CurrentUserId;
-                model.IsCancelledDate = AppTime.Now;
                 await _dietPlanScheduleService.Cancel(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -141,7 +140,6 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             {
                 model.DietPlanDetId = obj.DietPlanDetId;
                 model.IsCancelledBy = CurrentUserId;
-                model.IsCancelledDate = AppTime.Now;
                 await _dietPlanScheduleService.CancelD(model, CurrentUserId, CurrentUserName);
             }
             else
@@ -223,4 +221,8 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Diet Plan Status updated successfully.");
         }
     }
+
+
+
+
 }

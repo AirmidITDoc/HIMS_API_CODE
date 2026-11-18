@@ -82,6 +82,9 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
             model.IsCancelled = false;
             if (obj.DietAssessmentId == 0)
             {
+                var userId = CurrentUserId;
+
+                model.AssessmentById = userId;
                 model.CreatedBy = CurrentUserId;
                 model.CreatedDate = AppTime.Now;
                 model.ModifiedBy = CurrentUserId;
