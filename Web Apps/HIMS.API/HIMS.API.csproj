@@ -76,13 +76,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DbData\" />
     <Folder Include="Models\Masters\NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Update="wwwroot\PdfTemplates\SalesTaxReceipt - Copy.html">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <None Remove="DbData\HIMS_Secure_Login_V2.sql" />
+    <Content Include="DbData\HIMS_Secure_Login_V2.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>

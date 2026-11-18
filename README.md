@@ -113,19 +113,22 @@ requirements. Apply this checklist in deployment order.
      - Set `HIMS_ENCRYPTION_KEY` (preferred) or `EncryptionKey` config value.
      - Startup now fails if encryption key is missing.
    - **JWT issuer/audience (required)**
-     - Set `AuthenticationSettings:Issuer`
-     - Set `AuthenticationSettings:Audience`
-   - **Login V2 RSA key material (required in non-development)**
-     - Configure either environment variables or `LoginV2` settings:
-       - `HIMS_LOGIN_V2_KID`
-       - one of:
-         - `HIMS_LOGIN_V2_PRIVATE_KEY_PKCS8_BASE64`
-         - `HIMS_LOGIN_V2_PRIVATE_KEY_PEM`
-         - `HIMS_LOGIN_V2_PRIVATE_KEY_PATH`
+     - Set `AuthenticationSettings:Issuer` and `AuthenticationSettings:Audience`.
+   - **Login V2 RSA key material (required in production)**
+     - Set `HIMS_LOGIN_V2_KID` and exactly one private-key input:
+       - `HIMS_LOGIN_V2_PRIVATE_KEY_PKCS8_BASE64` (preferred, unencrypted PKCS#8 DER encoded as Base64), or
+       - `HIMS_LOGIN_V2_PRIVATE_KEY_PEM`, or
+       - `HIMS_LOGIN_V2_PRIVATE_KEY_PATH` (the IIS application-pool identity must have read access).
+     - The RSA key must be at least 2048 bits. The key `kid` must match an active
+       signing/validation key and remain identical on every API instance.
      - Optional multi-key rotation uses `LoginV2:Keys[]` + `LoginV2:CurrentKid`.
    - **Rate limit and transport switches**
      - `LoginSecurity:RequestsPerMinute` (default `60`)
-     - `LoginSecurity:AllowHttpDevelopment` should remain `false` in production.
+     - `LoginSecurity:AllowHttpDevelopment` must remain `false` in production.
+   - For IIS, provision these as **system-level environment variables** (or an
+     approved deployment secret store), recycle the application pool, and do not
+     store private keys in the checked-in JSON files. User-level variables are
+     not reliably visible to the IIS worker process.
 
 3. **Infrastructure/proxy requirements**
    - Login endpoints now enforce HTTPS and return `426 Upgrade Required` on HTTP.
@@ -139,10 +142,21 @@ requirements. Apply this checklist in deployment order.
    - Have users sign out/sign in to refresh tokens under new signing/validation.
 
 5. **Post-deployment verification**
+   - Open `/swagger/index.html` in a browser to confirm the API starts.
    - `GET /api/Login/Challenge?loginType=Web` should return `200` with
      `kid`, `publicKey`, `challengeId`, `nonce`, `context`, and captcha image.
    - `POST /api/Login/AuthenticateV2` should reject reused/expired challenge IDs.
    - Repeated login bursts should eventually return `429 Too Many Requests`.
+   - If IIS returns `500.30` or `500.31`, verify the .NET 6 Hosting Bundle/runtime
+     first, then run Event Viewer > Windows Logs > Application and inspect
+     ASP.NET Core Module/`IIS AspNetCore Module V2` entries.
+   - For the current login update, a startup error containing `Login V2 is not
+     configured` or `Program.cs:line 157` means the RSA key environment variables
+     were not visible to the IIS application-pool process. Set them at system
+     scope, then recycle the pool.
+   - If logs do not show the exception, temporarily set `stdoutLogEnabled="true"`
+     in the deployed `web.config`, ensure the `logs\stdout` directory is writable
+     by the pool identity, reproduce once, then disable stdout logging again.
    - Run the regression utility:
 
 ```powershell
