@@ -92,5 +92,17 @@ namespace HIMS.Data.DTO.DietKitchen
         public string? DeliverUser { get; set; }
         public string? CancelledUser { get; set; }
         public string? TimeRequired { get; set; }
+
+        public DateTime? PlanStartDate { get; set; }
+        public DateTime? PlanEndDate { get; set; }
+        public DateTime? PlanDate { get; set; }
+        public bool? DraftOrFinal { get; set; }
+        public string? Instruction { get; set; }
+        public string? OrderNo { get; set; }
+        public bool? IsOrder { get; set; }
+        public bool? IsInProgress { get; set; }
+        public string? OrderedUser { get; set; }
+        public string? InProgressUser { get; set; }
+        public string? ScheduleStatus { get; set; }
     }
 }

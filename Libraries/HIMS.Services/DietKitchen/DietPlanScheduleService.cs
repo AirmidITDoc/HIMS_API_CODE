@@ -118,6 +118,7 @@ namespace HIMS.Services.DietKitchen
                 odal.SetConnection(_context.Database.GetDbConnection());
                 odal.SetTransaction(transaction.GetDbTransaction());
 
+                // FIX: Cancel procedure la lagnare exact parameters (CancelledReason kadhila)
                 string[] Entity = { "DietPlanId", "IsCancelledBy", "IsCancelledDate" };
                 var entity = objDietPlanSchedule.ToDictionary();
                 foreach (var rProperty in entity.Keys.ToList())
@@ -126,7 +127,7 @@ namespace HIMS.Services.DietKitchen
                         entity.Remove(rProperty);
                 }
 
-                entity["IsCancelledDate"] = DateTime.Now;
+                entity["IsCancelledDate"] = AppTime.Now;
 
                 odal.ExecuteNonQueryNew("ps_DietPlanscheduleCancel", CommandType.StoredProcedure, "", entity);
                 await _context.LogProcedureExecution(entity, nameof(TDietPlanSchedule), (int)objDietPlanSchedule.DietPlanId, Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
@@ -151,7 +152,7 @@ namespace HIMS.Services.DietKitchen
                 odal.SetConnection(_context.Database.GetDbConnection());
                 odal.SetTransaction(transaction.GetDbTransaction());
 
-               
+             
                 string[] Entity = { "DietPlanDetId", "IsCancelledBy", "IsCancelledDate", "CancelledReason" };
                 var entity = objDietPlanScheduleDetail.ToDictionary();
                 foreach (var rProperty in entity.Keys.ToList())
@@ -160,7 +161,8 @@ namespace HIMS.Services.DietKitchen
                         entity.Remove(rProperty);
                 }
 
-                entity["IsCancelledDate"] = DateTime.Now;
+            
+                entity["IsCancelledDate"] = AppTime.Now;
 
                 odal.ExecuteNonQueryNew("ps_DietPlanscheduledetailCancel", CommandType.StoredProcedure, "", entity);
                 await _context.LogProcedureExecution(entity, nameof(TDietPlanScheduleDetail), (int)objDietPlanScheduleDetail.DietPlanDetId, Core.Domain.Logging.LogAction.Delete, CurrentUserId, CurrentUserName);
