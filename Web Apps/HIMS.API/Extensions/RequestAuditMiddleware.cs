@@ -26,6 +26,13 @@ namespace HIMS.API.Extensions
                 return;
             }
 
+            if (context.Request.Path.StartsWithSegments("/api") &&
+                context.Request.Path.Value?.Contains("/Login/", StringComparison.OrdinalIgnoreCase) == true)
+            {
+                await _next(context);
+                return;
+            }
+
             // only capture request/response bodies for write operations
             if (!HttpMethods.IsPost(context.Request.Method)
                 && !HttpMethods.IsPut(context.Request.Method)
@@ -77,27 +84,32 @@ namespace HIMS.API.Extensions
 
                 // capture response
                 var originalBodyStream = context.Response.Body;
-                using var responseBody = new MemoryStream();
-                context.Response.Body = responseBody;
-
-                await _next(context);
-
-                context.Response.Body.Seek(0, SeekOrigin.Begin);
                 string responseText = string.Empty;
-                using (var reader = new StreamReader(context.Response.Body, Encoding.UTF8, leaveOpen: true))
+                using var responseBody = new MemoryStream();
+                try
                 {
-                    responseText = await reader.ReadToEndAsync();
-                }
-                context.Response.Body.Seek(0, SeekOrigin.Begin);
+                    context.Response.Body = responseBody;
+                    await _next(context);
 
-                if (isLoginEndpoint)
-                    responseText = "[REDACTED]";
+                    responseBody.Seek(0, SeekOrigin.Begin);
+                    using (var reader = new StreamReader(responseBody, Encoding.UTF8, leaveOpen: true))
+                    {
+                        responseText = await reader.ReadToEndAsync();
+                    }
+
+                    if (isLoginEndpoint)
+                        responseText = "[REDACTED]";
+                    responseBody.Seek(0, SeekOrigin.Begin);
+                    await responseBody.CopyToAsync(originalBodyStream);
+                }
+                finally
+                {
+                    context.Response.Body = originalBodyStream;
+                }
                 var headers = context.Request.Headers
                     .Where(h => !string.Equals(h.Key, "Authorization", StringComparison.OrdinalIgnoreCase) &&
                                 !string.Equals(h.Key, "Cookie", StringComparison.OrdinalIgnoreCase))
                     .ToDictionary(h => h.Key, h => h.Value.ToString());
-                // write response back to original stream
-                await responseBody.CopyToAsync(originalBodyStream);
 
                 // create audit log entry
                 var audit = new AuditLog

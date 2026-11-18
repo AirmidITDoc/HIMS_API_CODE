@@ -31,8 +31,20 @@ using System.Security.Cryptography;
 using WkHtmlToPdfDotNet;
 using WkHtmlToPdfDotNet.Contracts;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    Args = args,
+    ContentRootPath = AppContext.BaseDirectory
+});
 builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
+
+string? connectionString = builder.Configuration["CONNECTION_STRING"]
+    ?? builder.Configuration.GetConnectionString("Hims");
+if (string.IsNullOrWhiteSpace(connectionString))
+    throw new InvalidOperationException(
+        $"CONNECTION_STRING is not configured. Expected appsettings.json in '{builder.Environment.ContentRootPath}' " +
+        "or the CONNECTION_STRING/ConnectionStrings__Hims environment variable.");
+builder.Configuration["CONNECTION_STRING"] = connectionString;
 
 AppSettings.Initialize(builder.Configuration);
 string? encryptionKey = Environment.GetEnvironmentVariable("HIMS_ENCRYPTION_KEY") ??
