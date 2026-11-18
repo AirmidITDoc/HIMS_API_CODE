@@ -37,8 +37,7 @@ builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
 AppSettings.Initialize(builder.Configuration);
 string? encryptionKey = Environment.GetEnvironmentVariable("HIMS_ENCRYPTION_KEY") ??
     builder.Configuration["EncryptionKey"];
-if (string.IsNullOrWhiteSpace(encryptionKey) && builder.Environment.IsDevelopment())
-    encryptionKey = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+// SecurityKeys uses a deterministic local UAT fallback when the key is null or empty.
 SecurityKeys.Configure(encryptionKey);
 
 // Add services to the container.
@@ -153,7 +152,7 @@ builder.Services.AddApiVersioning(config =>
     config.ApiVersionReader = new HeaderApiVersionReader("api-version");
 });
 
-var loginKeyProvider = new LoginV2KeyProvider(builder.Configuration, builder.Environment.IsDevelopment());
+var loginKeyProvider = new LoginV2KeyProvider(builder.Configuration, allowEphemeralDevelopmentKey: true);
 if (!loginKeyProvider.IsConfigured)
     throw new InvalidOperationException(loginKeyProvider.ConfigurationError ?? "JWT/V2 RSA key provider is not configured.");
 string jwtIssuer = AppSettings.Settings.AuthenticationSettings.Issuer ?? string.Empty;

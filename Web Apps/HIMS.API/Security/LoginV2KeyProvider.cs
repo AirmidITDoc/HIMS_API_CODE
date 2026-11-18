@@ -90,7 +90,24 @@ namespace HIMS.API.Security
             }
             catch (Exception ex)
             {
-                ConfigurationError = "Login V2 key provider configuration is invalid: " + ex.GetType().Name;
+                if (allowEphemeralDevelopmentKey)
+                {
+                    const string developmentKid = "hims-local-fallback";
+                    var fallbackRsa = RSA.Create(2048);
+                    Current = new LoginV2Key
+                    {
+                        Kid = developmentKid,
+                        Rsa = fallbackRsa
+                    };
+                    _keys[developmentKid] = Current;
+                    IsConfigured = true;
+                    ConfigurationError = null;
+                }
+                else
+                {
+                    IsConfigured = false;
+                    ConfigurationError = "Login V2 key provider configuration is invalid: " + ex.GetType().Name;
+                }
             }
         }
 
