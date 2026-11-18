@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Polly;
@@ -133,7 +134,7 @@ builder.Services.Configure<IISServerOptions>(options =>
     options.AllowSynchronousIO = true;
 });
 
-MapperConfiguration mapperConfiguration = new(configure => configure.AddProfile<ApplicationMappingProfile>());
+MapperConfiguration mapperConfiguration = new(configure => configure.AddProfile<ApplicationMappingProfile>(), NullLoggerFactory.Instance);
 mapperConfiguration.CreateMapper().InitializeMapper();
 
 builder.Services.AddMvc().AddJsonOptions(jsonOptions =>
