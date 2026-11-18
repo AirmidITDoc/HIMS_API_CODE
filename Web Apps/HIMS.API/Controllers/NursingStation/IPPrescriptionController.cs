@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -69,8 +69,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("LabRadRequestList")]
-        //[Permission(PageCode = "RequestforLab", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "RequestforLab", Permission = PagePermission.View)]
         public async Task<IActionResult> LabRequestList(GridRequestModel objGrid)
         {
             IPagedList<LabRequestListDto> LabRequestList = await _ILabRequestService.GetListAsync(objGrid);
@@ -78,8 +78,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("LabRadRequestDetailList")]
-        //[Permission(PageCode = "RequestforLab", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "RequestforLab", Permission = PagePermission.View)]
         public async Task<IActionResult> LabRequestDetailsList(GridRequestModel objGrid)
         {
             IPagedList<LabRequestDetailsListDto> LabRequestDetailsListDto = await _ILabRequestService.SPGetListAsync(objGrid);
@@ -88,8 +88,8 @@ namespace HIMS.API.Controllers.NursingStation
 
 
         [HttpPost("LabRequestInsert")]
-        //[Permission(PageCode = "NursingPrescription", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "NursingPrescription", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(IPLabRequestModel obj)
         {
             THlabRequest model = obj.MapTo<THlabRequest>();
@@ -124,9 +124,8 @@ namespace HIMS.API.Controllers.NursingStation
         }
 
         [HttpPost("LabRequestCancel")]
-        //[Permission(PageCode = "NursingPrescription", Permission = PagePermission.Delete)]
-        [Permission]
 
+        [Permission(PageCode = "NursingPrescription", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(LabRequestCancel obj)
         {
             THlabRequest model = new();

@@ -1,5 +1,6 @@
 ﻿using HIMS.Data;
 using HIMS.Data.Models;
+using HIMS.Core.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace HIMS.Services.Users
@@ -17,7 +18,15 @@ namespace HIMS.Services.Users
         //}
         public virtual async Task<LoginManager> CheckLogin(string UserName, string Password)
         {
-            var objUser = await _context.LoginManagers.FirstOrDefaultAsync(x => x.UserName.ToLower() == UserName.ToLower() && x.Password == Password && x.IsActive == true);
+            var objUser = await _context.LoginManagers.FirstOrDefaultAsync(
+                x => x.UserName != null && x.UserName.ToLower() == UserName.ToLower() && x.IsActive == true);
+            if (objUser == null || !PasswordHash.Verify(Password ?? string.Empty, objUser.Password))
+                return null!;
+            if (PasswordHash.NeedsUpgrade(objUser.Password))
+            {
+                objUser.Password = PasswordHash.Create(Password!);
+                await _context.SaveChangesAsync();
+            }
             if ((objUser?.UserId ?? 0) > 0)
             {
                 var qry = from d in _context.TLoginStoreDetails
@@ -44,7 +53,29 @@ namespace HIMS.Services.Users
         }
         public virtual async Task<LoginManager> GetById(int Id)
         {
-            return await _context.LoginManagers.FirstOrDefaultAsync(x => x.UserId == Id);
+            var objUser = await _context.LoginManagers.FirstOrDefaultAsync(x => x.UserId == Id);
+            if ((objUser?.UserId ?? 0) == 0)
+                return objUser!;
+
+            objUser.TLoginStoreDetails = await (
+                from detail in _context.TLoginStoreDetails
+                join store in _context.MStoreMasters on detail.StoreId equals store.StoreId
+                where detail.LoginId == objUser.UserId
+                select new TLoginStoreDetail
+                {
+                    LoginId = detail.LoginId, StoreId = detail.StoreId,
+                    StoreName = store.StoreName, LoginStoreDetId = detail.LoginStoreDetId
+                }).ToListAsync();
+            objUser.TLoginUnitDetails = await (
+                from detail in _context.TLoginUnitDetails
+                join unit in _context.HospitalMasters on detail.UnitId equals unit.HospitalId
+                where detail.LoginId == objUser.UserId
+                select new TLoginUnitDetail
+                {
+                    LoginId = detail.LoginId, UnitId = detail.UnitId,
+                    UnitName = unit.HospitalName, LoginUnitDetId = detail.LoginUnitDetId
+                }).ToListAsync();
+            return objUser;
         }
         public virtual async Task UpdateAsync(LoginManager user, int UserId, string Username)
         {

@@ -1,4 +1,4 @@
-﻿using HIMS.Api.Controllers;
+using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
 using HIMS.Api.Models.Common;
 using HIMS.API.Models.Masters;
@@ -27,8 +27,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "MAdmissionType", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "MAdmissionType", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MAdmissionType> MAdmissionTypeList = await _repository.GetAllPagedAsync(objGrid);
@@ -36,8 +36,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
 
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "MAdmissionType", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "MAdmissionType", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -49,8 +49,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "MAdmissionType", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "MAdmissionType", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(AdmissionTypeModel obj)
         {
             MAdmissionType model = obj.MapTo<MAdmissionType>();
@@ -68,8 +68,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "MAdmissionType", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "MAdmissionType", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(AdmissionTypeModel obj)
         {
             MAdmissionType model = obj.MapTo<MAdmissionType>();
@@ -87,8 +87,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "MAdmissionType", Permission = PagePermission.Delete)]
-        [Permission]
+
+        [Permission(PageCode = "MAdmissionType", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MAdmissionType model = await _repository.GetById(x => x.AdmissiontypeId == Id);

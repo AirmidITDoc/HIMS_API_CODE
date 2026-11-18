@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using DocumentFormat.OpenXml.Wordprocessing;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
@@ -50,6 +51,7 @@ namespace HIMS.API.Controllers.Report
 
 
         [HttpPost("ReportList")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> ReportList(GridRequestModel objGrid)
@@ -59,6 +61,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpPost("NewList")]
+        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
         //   [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> MReportListDto(GridRequestModel objGrid)
@@ -69,6 +72,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("UserList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetUserListAutoComplete(string Keyword)
@@ -81,6 +85,7 @@ namespace HIMS.API.Controllers.Report
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "User Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.UserId }));
         }
         [HttpGet("DoctorList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetDoctorListAutoComplete(string Keyword)
@@ -89,6 +94,7 @@ namespace HIMS.API.Controllers.Report
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.DoctorId }));
         }
         [HttpGet("RefDoctorList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetDoctorListAutoCompletes(string Keyword)
@@ -101,6 +107,7 @@ namespace HIMS.API.Controllers.Report
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Doctor Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName, Value = x.DoctorId }));
         }
         [HttpGet("ServiceList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetServiceListAutoComplete(string Keyword)
@@ -109,6 +116,7 @@ namespace HIMS.API.Controllers.Report
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Service Data.", data.Select(x => new { Text = x.ServiceName, Value = x.ServiceId }));
         }
         [HttpGet("DepartmentList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetDepartmentListAutoComplete(string Keyword)
@@ -117,6 +125,7 @@ namespace HIMS.API.Controllers.Report
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Department Data.", data.Select(x => new { Text = x.DepartmentName, Value = x.DepartmentId }));
         }
         [HttpGet("CashCounterList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetCashCounterListAutoComplete(string Keyword)
@@ -126,6 +135,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("WardList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetWardListAutoComplete(string Keyword)
@@ -141,6 +151,7 @@ namespace HIMS.API.Controllers.Report
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "SearchAdmission Data.", data.Select(x => new { Text = x.Admissions, Value = x.AdmissionId }));
         //}
         [HttpGet("CompanyList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetCompanyListAutoComplete(string Keyword)
@@ -154,6 +165,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("DischargeTypeList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetDischargeTypeListAutoComplete(string Keyword)
@@ -163,6 +175,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("GroupMasterList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetGroupMasterListAutoComplete(string Keyword)
@@ -172,6 +185,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("ClassMasterList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetClassMasterListAutoComplete(string Keyword)
@@ -181,6 +195,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("MStoreMasterList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetMStoreMasterListAutoComplete(string Keyword)
@@ -190,6 +205,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("MSupplierMasterList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetMSupplierMasterListAutoComplete(string Keyword)
@@ -200,6 +216,7 @@ namespace HIMS.API.Controllers.Report
 
 
         [HttpGet("MItemDrugTypeMasterList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetMItemDrugTypeMasterListAutoComplete(string Keyword)
@@ -209,6 +226,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("MCreditReasonMasterList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.Edit)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetMCreditReasonMasterListAutoComplete(string Keyword)
@@ -219,6 +237,7 @@ namespace HIMS.API.Controllers.Report
 
 
         [HttpGet("MItemMasterList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetMItemMasterListAutoComplete(string Keyword)
@@ -228,6 +247,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("MItemMasterList/auto-complete-by-content")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetMItemMasterListAutoCompleteByContent(string Keyword)
         {
@@ -236,6 +256,7 @@ namespace HIMS.API.Controllers.Report
             );
         }
         [HttpGet("Expensesheadmaster/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetExpensesheadmasterAutoComplete(string Keyword)
@@ -245,8 +266,8 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("MExpensesCategoryMaster/auto-complete")]
-        //[Permission(PageCode = "Report", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetMExpensesCategoryMasterAutoComplete(string Keyword)
         {
             var data = await _reportService.SearchMExpensesCategoryMaster(Keyword);
@@ -254,6 +275,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("MModeOfPaymentList/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetMModeofpaymentListAutoComplete(string Keyword)
@@ -264,6 +286,7 @@ namespace HIMS.API.Controllers.Report
 
 
         [HttpGet("HospitalMaster/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetHospitalMasterAutoComplete(string Keyword)
@@ -277,6 +300,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("MCompanyEmployeInfo/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetCompanyEmployeInfoAutoComplete(string Keyword)
@@ -291,6 +315,7 @@ namespace HIMS.API.Controllers.Report
 
 
         [HttpGet("MItemCategorymaster/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetMItemCategorymasterAutoComplete(string Keyword)
@@ -307,6 +332,7 @@ namespace HIMS.API.Controllers.Report
 
 
         [HttpGet("LoginUser/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> SearchLoginUser(string Keyword)
@@ -321,6 +347,7 @@ namespace HIMS.API.Controllers.Report
 
 
         [HttpGet("SearchPatient/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> SearchPatient(string Keyword)
@@ -334,6 +361,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("SearchRegNo/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> SearchRegNo(string Keyword)
@@ -347,6 +375,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         [Route("get-MItemGenericNameMaster")]
         //[Permission]
         public async Task<ApiResponse> GetDropdown()
@@ -356,6 +385,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("PatientTypeMaster/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> SearchPatientType(string Keyword)
@@ -369,6 +399,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("LabReportStatus/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> SearchLabReportStatus(string keyword)
         {
@@ -387,6 +418,7 @@ namespace HIMS.API.Controllers.Report
 
 
         [HttpGet("PatientStatus/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> SearchReportStatus(string keyword)
         {
@@ -404,6 +436,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpGet("Paymentmode/auto-complete")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> SearchPaymentmode(string keyword)
         {
@@ -422,6 +455,7 @@ namespace HIMS.API.Controllers.Report
 
 
         [HttpGet("{mode?}")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> Get(string mode)
@@ -435,6 +469,7 @@ namespace HIMS.API.Controllers.Report
             return sdata.ToSingleResponse<MReportConfig, MReportConfig>("Report");
         }
         [HttpPost("ViewReport")]
+        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<IActionResult> ViewReport(ReportRequestModel model)
         {
@@ -705,6 +740,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpPost("ViewReportFromDB")]
+        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<IActionResult> ViewReportFromDB(ReportRequestModel model)
         {
@@ -735,6 +771,7 @@ namespace HIMS.API.Controllers.Report
 
 
         [HttpPost("ViewMultipleReportFromDB")]
+        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
         public async Task<IActionResult> ViewMultipleReportFromDB( [FromBody] MultiReportRequestModel request)
         {
             if (request?.Reports == null || request.Reports.Count == 0)
@@ -786,6 +823,7 @@ namespace HIMS.API.Controllers.Report
 
 
         [HttpPost("get-report-html")]
+        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<ApiResponse> GetBarcodeHtml(ReportRequestModel model)
         {
@@ -794,6 +832,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpPost("NewViewReport")]
+        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<IActionResult> NewViewReport(NewReportRequestDto request)
         {
@@ -837,6 +876,7 @@ namespace HIMS.API.Controllers.Report
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
         [HttpPost("NewExportExcelReport")]
+        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<IActionResult> NewExcelReport(NewReportRequestDto request)
         {
@@ -885,6 +925,7 @@ namespace HIMS.API.Controllers.Report
 
 
         [HttpGet("view-AdmissionTemplate")]
+        [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public IActionResult viewAdmissionTemplate(int AdmissionId)
         {
@@ -911,6 +952,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpPost("new-vimal-html-pdf")]
+        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<IActionResult> NewVimalHtmlPdf()
         {
@@ -928,6 +970,7 @@ namespace HIMS.API.Controllers.Report
         //}
 
         [HttpPost("NewMultiReport")]
+        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<IActionResult> NewMultiReport(ReportRequestModel model)
         {
@@ -951,6 +994,7 @@ namespace HIMS.API.Controllers.Report
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
         [HttpPost("GetReportPlaceholders")]
+        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<IActionResult> GetReportPlaceholders(ReportRequestModel model)
         {

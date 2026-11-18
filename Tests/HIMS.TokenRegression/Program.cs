@@ -1,75 +1,129 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using HIMS.Api.Models.Login;
 using HIMS.API.Extensions;
+using HIMS.API.Security;
 using HIMS.Core;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
+
+SecurityKeys.Configure(Convert.ToBase64String(Enumerable.Range(0, 32).Select(i => (byte)i).ToArray()));
 
 static void Require(bool condition, string message)
 {
-    if (!condition)
-        throw new InvalidOperationException(message);
+    if (!condition) throw new InvalidOperationException(message);
 }
 
-foreach (var value in new[] { "", "PAGE|1|0|1|0|1,", "Unicode-\u0915|0|1|0|1|0," })
-    Require(PermissionClaimCodec.Decode(PermissionClaimCodec.Encode(value)) == value, "Permission round trip failed.");
-
-var permissions = string.Concat(Enumerable.Range(0, 500)
-    .Select(i => $"PAGE{i:D4}|{i % 2}|{(i / 2) % 2}|{(i / 4) % 2}|{(i / 8) % 2}|{(i / 16) % 2},"));
+const string issuer = "hims-api-test";
+const string audience = "hims-clients-test";
+using var currentRsa = RSA.Create(2048);
+using var oldRsa = RSA.Create(2048);
+var oldKey = new LoginV2Key { Kid = "old-key", Rsa = oldRsa };
+var currentKey = new LoginV2Key { Kid = "current-key", Rsa = currentRsa };
+var publicKeys = new[]
+{
+    new RsaSecurityKey(oldRsa.ExportParameters(false)) { KeyId = oldKey.Kid },
+    new RsaSecurityKey(currentRsa.ExportParameters(false)) { KeyId = currentKey.Kid }
+};
 var user = new LoginManager
 {
-    UserId = 1, WebRoleId = 2, UserName = "regression", FirstName = "Regression",
-    UserToken = Guid.NewGuid().ToString(), MobileToken = Guid.NewGuid().ToString()
+    UserId = 1,
+    WebRoleId = 2,
+    UserName = "regression",
+    FirstName = "Regression",
+    UserToken = Guid.NewGuid().ToString(),
+    MobileToken = Guid.NewGuid().ToString()
 };
-var secret = new string('x', 64);
 var handler = new JwtSecurityTokenHandler();
-var accessor = new HttpContextAccessor { HttpContext = new DefaultHttpContext() };
 
 foreach (var loginType in new[] { LoginType.Web, LoginType.Mobile })
 {
-    var token = CommonExtensions.GenerateToken(user, secret, 30, permissions, loginType);
-    Require(Encoding.UTF8.GetByteCount("Bearer " + token) < 8192, "Bearer token exceeds the 8 KB regression budget.");
+    string token = CommonExtensions.GenerateToken(user, currentKey, 30, loginType, issuer, audience);
+    string overlapToken = CommonExtensions.GenerateToken(user, oldKey, 30, loginType, issuer, audience);
+    var parsed = handler.ReadJwtToken(token);
+    Require(parsed.Header.Kid == currentKey.Kid, "JWT kid is missing or incorrect.");
+    Require(parsed.Header.Alg == SecurityAlgorithms.RsaSha256, "JWT did not use RS256.");
+    Require(Encoding.UTF8.GetByteCount("Bearer " + token) < 8192, "Bearer token exceeds 8 KB.");
+
     var principal = handler.ValidateToken(token, new TokenValidationParameters
     {
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)),
+        ValidateIssuer = true,
+        ValidIssuer = issuer,
+        ValidateAudience = true,
+        ValidAudience = audience,
         ValidateIssuerSigningKey = true,
+        IssuerSigningKeys = publicKeys,
+        ValidAlgorithms = new[] { SecurityAlgorithms.RsaSha256 },
         ValidateLifetime = true,
+        RequireExpirationTime = true,
+        RequireSignedTokens = true,
         ClockSkew = TimeSpan.Zero
     }, out _);
-    var claim = principal.FindFirst(PermissionClaimCodec.ClaimType);
-    Require(claim != null, "Compressed permission claim missing.");
-    Require(PermissionClaimCodec.Decode(EncryptionUtility.DecryptText(claim!.Value, SecurityKeys.EnDeKey)) == permissions,
-        "Token permissions were changed.");
-
-    foreach (var legacy in new[] { false, true })
+    Require(principal.HasClaim(x => x.Type == "RoleId"), "RoleId claim missing.");
+    Require(!principal.HasClaim(x => x.Type == PermissionClaimCodec.ClaimType), "Permissions must not be trusted from JWT.");
+    handler.ValidateToken(overlapToken, new TokenValidationParameters
     {
-        accessor.HttpContext.User = legacy
-            ? new ClaimsPrincipal(new ClaimsIdentity(new[]
-            {
-                new Claim("RoleId", "2"),
-                new Claim("Permissions", EncryptionUtility.EncryptText(permissions, SecurityKeys.EnDeKey))
-            }, "test"))
-            : principal;
-        for (var i = 0; i < 500; i++)
+        ValidateIssuer = true, ValidIssuer = issuer,
+        ValidateAudience = true, ValidAudience = audience,
+        ValidateIssuerSigningKey = true, IssuerSigningKeys = publicKeys,
+        ValidAlgorithms = new[] { SecurityAlgorithms.RsaSha256 },
+        ValidateLifetime = true, RequireExpirationTime = true,
+        ClockSkew = TimeSpan.Zero
+    }, out _);
+
+    foreach (var invalid in new[]
+    {
+        new TokenValidationParameters
         {
-            foreach (var permission in Enum.GetValues<PagePermission>())
-            {
-                var expected = (i / (1 << ((int)permission - 1))) % 2 == 1;
-                Require(CommonExtensions.CheckPermission($"PAGE{i:D4}", permission) == expected,
-                    $"Permission mismatch: legacy={legacy}, page={i}, permission={permission}");
-            }
+            ValidateIssuerSigningKey = true, IssuerSigningKeys = publicKeys,
+            ValidAlgorithms = new[] { SecurityAlgorithms.RsaSha256 },
+            ValidateIssuer = true, ValidIssuer = "wrong-issuer",
+            ValidateAudience = true, ValidAudience = audience,
+            ValidateLifetime = true
+        },
+        new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Enumerable.Repeat((byte)1, 64).ToArray()),
+            ValidAlgorithms = new[] { SecurityAlgorithms.HmacSha256 },
+            ValidateIssuer = true, ValidIssuer = issuer,
+            ValidateAudience = true, ValidAudience = audience,
+            ValidateLifetime = true
         }
-        Require(!CommonExtensions.CheckPermission("MISSING", PagePermission.View), "Unknown page was allowed.");
-        Require(CommonExtensions.CheckPermission("MISSING|PAGE0008", PagePermission.View), "Multi-page matching failed.");
+    })
+    {
+        try
+        {
+            handler.ValidateToken(token, invalid, out _);
+            throw new InvalidOperationException("Invalid JWT validation parameters accepted token.");
+        }
+        catch (SecurityTokenException) { }
     }
-    Console.WriteLine($"{loginType}: signed token {Encoding.UTF8.GetByteCount(token)} bytes; legacy and compressed authorization checks passed.");
+
+    Console.WriteLine($"{loginType}: RS256 token, kid, issuer/audience/algorithm and key overlap validation passed.");
 }
-accessor.HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity());
-Require(!CommonExtensions.CheckPermission("PAGE0008", PagePermission.View), "Missing permission claim was allowed.");
-Console.WriteLine("All token regression checks passed.");
+
+var serverPermissions = new List<PageMasterDto>
+{
+    new() { PageCode = "PAGE1", IsView = true, IsEdit = false },
+    new() { PageCode = "PAGE2", IsView = false, IsEdit = true }
+};
+Require(CommonExtensions.CheckPermission(serverPermissions, "PAGE1", PagePermission.View),
+    "Server permission allow failed.");
+Require(!CommonExtensions.CheckPermission(serverPermissions, "PAGE1", PagePermission.Edit),
+    "Denied server permission was allowed.");
+Require(!CommonExtensions.CheckPermission(serverPermissions, "MISSING", PagePermission.View),
+    "Unknown page permission was allowed.");
+Require(CommonExtensions.CheckPermission(serverPermissions, "MISSING|PAGE2", PagePermission.Edit),
+    "Multi-page server permission failed.");
+
+using var decoded = RSA.Create();
+decoded.ImportSubjectPublicKeyInfo(Convert.FromBase64String(currentKey.PublicKey), out int bytesRead);
+Require(bytesRead > 0 && decoded.KeySize >= 2048, "Challenge public key is not Flutter-compatible SPKI DER base64.");
+Require(JsonSerializer.Serialize(new { version = 1 }).Contains("\"version\":1"),
+    "Challenge version must be a JSON number.");
+
+Console.WriteLine("All asymmetric token, server-authoritative permission, SPKI and numeric-version regressions passed.");

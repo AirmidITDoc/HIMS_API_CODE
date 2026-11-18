@@ -52,6 +52,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("ItemListBYSupplierName")]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
         //[Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> ItemListBysupplierNameAsync(GridRequestModel objGrid)
         {
@@ -59,6 +60,7 @@ namespace HIMS.API.Controllers.Pharmacy
             return Ok(List1.ToGridResponse(objGrid, "ItemListBYSupplierName"));
         }
         [HttpPost("getGRNReturnWithoutGRNBySupplierID")]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         //[Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GRNReturnWithoutGRNBySupplierIDList(GridRequestModel objGrid)
         {
@@ -110,6 +112,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
        // [Permission(PageCode = "GRNReturn", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> VerifyAsync(GRNReturnVerifyModel obj)
         {

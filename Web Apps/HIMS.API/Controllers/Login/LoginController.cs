@@ -1,17 +1,21 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.Api.Models.Login;
 using HIMS.API.Extensions;
+using HIMS.API.Security;
 using HIMS.API.Utility;
 using HIMS.Core.Domain.Common;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.Models;
 using HIMS.Services.Permissions;
 using HIMS.Services.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace HIMS.API.Controllers.Login
@@ -72,14 +76,21 @@ namespace HIMS.API.Controllers.Login
         protected readonly IUserService _userService;
         private readonly IPermissionService _IPermissionService;
         private readonly IMenuService _IMenuService;
+        private readonly ILoginV2KeyProvider _loginKeyProvider;
+        private readonly ILoginV2Store _loginStore;
+        private readonly IConfiguration _configuration;
         private const int WebTokenValidityMinutes = 720;
         private const int MobileTokenValidityMinutes = 90 * 24 * 60;
 
-        public LoginController(IUserService userService, IPermissionService permission, IMenuService iMenuService)
+        public LoginController(IUserService userService, IPermissionService permission, IMenuService iMenuService,
+            ILoginV2KeyProvider loginKeyProvider, ILoginV2Store loginStore, IConfiguration configuration)
         {
             _userService = userService;
             _IPermissionService = permission;
             _IMenuService = iMenuService;
+            _loginKeyProvider = loginKeyProvider;
+            _loginStore = loginStore;
+            _configuration = configuration;
         }
 
         [NonAction]
@@ -97,9 +108,12 @@ namespace HIMS.API.Controllers.Login
 
         [HttpPost]
         [Route("[action]")]
-        [SwaggerOperation(Description = "for get CaptchaCode & CaptchaToken call GetCaptcha (Next) API.")]
+        [AllowAnonymous]
+        [SwaggerOperation(Description = "LEGACY V1 COMPATIBILITY (HTTPS required): new clients must use Challenge/AuthenticateV2.")]
         public async Task<ApiResponse> Authenticate([FromBody] AuthenticateModel model)
         {
+            ApiResponse? transportError = RequireHttps();
+            if (transportError != null) return transportError;
             //string id = Guid.NewGuid().ToString();
             //string secret = ApiKeyUtility.EncryptString(id + "|" + AppTime.Now.AddYears(1).ToString("yyyy-MM-dd"));
             //string secret = ConfigurationHelper.config.GetSection("Licence:ApiSecret").Value ?? "";
@@ -119,7 +133,7 @@ namespace HIMS.API.Controllers.Login
                     }
                     else
                     {
-                        if (VerifyCaptcha(model.CaptchaCode, model.CaptchaToken) || model.Password.Trim().Length == 0)
+                        if (VerifyCaptcha(model.CaptchaCode, model.CaptchaToken) && !string.IsNullOrWhiteSpace(model.Password))
                         {
                             LoginManager user = await _userService.CheckLogin(model.Username, model.Password);
                             if (user == null)
@@ -128,8 +142,7 @@ namespace HIMS.API.Controllers.Login
                             }
                             else if (HasActiveSession(user, model.LoginType))
                             {
-                                string encrToken = EncryptionUtility.EncryptText(user.UserName + "|" + user.Password + "|" + AppTime.Now.ToString("yyyy-MM-dd HH:mm"), SecurityKeys.EnDeKey);
-                                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { token = encrToken, status = "Already Active", Msg = "There is another session is already active. Do you want to continue?" });
+                                return await AlreadyActive(user, model.LoginType);
                             }
                             else
                             {
@@ -150,9 +163,12 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("mobile-authenticate")]
+        [AllowAnonymous]
         [SwaggerOperation(Description = "Mobile-only authentication endpoint with long session validity.")]
         public async Task<ApiResponse> MobileAuthenticate([FromBody] AuthenticateModel model)
         {
+            ApiResponse? transportError = RequireHttps();
+            if (transportError != null) return transportError;
             if (string.IsNullOrWhiteSpace(model.Username))
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Username is required");
@@ -166,8 +182,7 @@ namespace HIMS.API.Controllers.Login
 
             if (HasActiveSession(user, LoginType.Mobile))
             {
-                string encrToken = EncryptionUtility.EncryptText(user.UserName + "|" + user.Password + "|" + AppTime.Now.ToString("yyyy-MM-dd HH:mm"), SecurityKeys.EnDeKey);
-                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { token = encrToken, status = "Already Active", Msg = "There is another session is already active. Do you want to continue?" });
+                return await AlreadyActive(user, LoginType.Mobile);
             }
 
             return await AfterLogin(user, LoginType.Mobile);
@@ -175,30 +190,143 @@ namespace HIMS.API.Controllers.Login
 
         [HttpPost]
         [Route("[action]")]
+        [AllowAnonymous]
         [SwaggerOperation(Description = "for get CaptchaCode & CaptchaToken call GetCaptcha (Next) API.")]
         public async Task<ApiResponse> ConfirmAuthenticate([FromBody] ADAuthenticateModel model)
         {
+            ApiResponse? transportError = RequireHttps();
+            if (transportError != null) return transportError;
+            if (string.IsNullOrWhiteSpace(model.Token))
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Confirmation token is required.");
+            var consumed = await _loginStore.ConsumeConfirmationAsync(model.Token, model.LoginType, DateTimeOffset.UtcNow);
+            if (consumed == null)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Confirmation token is invalid, expired, or already used.");
 
-            string[] decrypt = EncryptionUtility.DecryptText(model.Token, SecurityKeys.EnDeKey).Split('|');
-            if (Convert.ToDateTime(decrypt[2]).AddMinutes(10) >= AppTime.Now)
-            {
-                LoginManager user = await _userService.CheckLogin(decrypt[0], decrypt[1]);
-                if (user == null)
-                {
-                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Authentication Failed! Invalid username or password.");
-                }
-                else if (HasActiveSession(user, model.LoginType))
-                {
-                    string encrToken = EncryptionUtility.EncryptText(user.UserName + "|" + user.Password + "|" + AppTime.Now.ToString("yyyy-MM-dd HH:mm"), SecurityKeys.EnDeKey);
-                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { token = encrToken, status = "Already Active", Msg = "There is another session is already active. Do you want to continue?" });
-                }
-                else
-                {
-                    return await AfterLogin(user, model.LoginType);
-                }
-            }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Token is expired.");
+            LoginManager user = await _userService.GetById(checked((int)consumed.Value.UserId));
+            if (user == null)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status401Unauthorized, "Authentication Failed.");
+            return await AfterLogin(user, consumed.Value.LoginType);
         }
+
+        [HttpGet("Challenge")]
+        [AllowAnonymous]
+        [SwaggerOperation(Description = "Secure login V2 RSA public key and one-time challenge.")]
+        public async Task<ApiResponse> Challenge([FromQuery] LoginType loginType)
+        {
+            ApiResponse? transportError = RequireHttps();
+            if (transportError != null) return transportError;
+            if (!_loginKeyProvider.IsConfigured)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status503ServiceUnavailable,
+                    _loginKeyProvider.ConfigurationError ?? "Login V2 is not configured.");
+            if (!Enum.IsDefined(typeof(LoginType), loginType))
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Invalid loginType.");
+
+            string captchaCode = Captcha.GenerateCaptchaCode();
+            CaptchaResult captcha = Captcha.GenerateCaptchaImage(200, 60, captchaCode);
+            string challengeId = Convert.ToHexString(RandomNumberGenerator.GetBytes(16));
+            string nonce = Convert.ToBase64String(RandomNumberGenerator.GetBytes(12));
+            var expiresAt = DateTimeOffset.UtcNow.AddMinutes(_configuration.GetValue("LoginV2:ChallengeMinutes", 5));
+            LoginV2Key key = _loginKeyProvider.Current;
+            string context = GetV2Context(key);
+            var challenge = new LoginV2Challenge
+            {
+                Id = challengeId, Kid = key.Kid, Context = context, Nonce = nonce,
+                LoginType = loginType, ExpiresAt = expiresAt,
+                CaptchaHash = SHA256.HashData(Encoding.UTF8.GetBytes(captchaCode))
+            };
+            try
+            {
+                await _loginStore.CreateChallengeAsync(challenge);
+            }
+            catch (Exception)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status503ServiceUnavailable,
+                    "Login V2 transaction storage is unavailable. Verify the HimsLoginChallenge database migration.");
+            }
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Challenge created.", new
+            {
+                version = 1,
+                kid = key.Kid,
+                algorithm = "RSA-OAEP-256",
+                publicKey = key.PublicKey,
+                challengeId,
+                nonce,
+                expiresAt,
+                captchaId = challengeId,
+                img = captcha.CaptchBase64Data,
+                context
+            });
+        }
+
+        [HttpPost("AuthenticateV2")]
+        [AllowAnonymous]
+        [SwaggerOperation(Description = "Secure login V2. The challenge is atomically consumed before credential validation.")]
+        public async Task<ApiResponse> AuthenticateV2([FromBody] LoginV2Envelope envelope)
+        {
+            ApiResponse? transportError = RequireHttps();
+            if (transportError != null) return transportError;
+            if (!_loginKeyProvider.IsConfigured)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status503ServiceUnavailable,
+                    _loginKeyProvider.ConfigurationError ?? "Login V2 is not configured.");
+            if (envelope.Version != 1 || string.IsNullOrWhiteSpace(envelope.ChallengeId))
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Invalid login V2 envelope.");
+
+            LoginV2Challenge? challenge = await _loginStore.ConsumeChallengeAsync(envelope.ChallengeId, DateTimeOffset.UtcNow);
+            if (challenge == null)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Challenge is invalid, expired, or already used.");
+            if (string.IsNullOrWhiteSpace(envelope.Kid) ||
+                !_loginKeyProvider.TryGet(envelope.Kid, out LoginV2Key key))
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status409Conflict,
+                    "Login key is no longer supported. Request a new challenge.",
+                    new { code = "LOGIN_KEY_UNSUPPORTED", requestedKid = envelope.Kid });
+            if (envelope.Kid != challenge.Kid || envelope.LoginType != challenge.LoginType)
+                return InvalidV2();
+
+            LoginV2Plaintext plaintext;
+            try
+            {
+                plaintext = LoginV2Crypto.Decrypt(envelope, challenge, key);
+            }
+            catch (Exception ex) when (ex is CryptographicException or FormatException or System.Text.Json.JsonException)
+            {
+                return InvalidV2();
+            }
+
+            byte[] suppliedCaptcha = SHA256.HashData(Encoding.UTF8.GetBytes(plaintext.CaptchaCode ?? string.Empty));
+            if (!CryptographicOperations.FixedTimeEquals(suppliedCaptcha, challenge.CaptchaHash) ||
+                plaintext.LoginType != challenge.LoginType ||
+                string.IsNullOrWhiteSpace(plaintext.Username) ||
+                string.IsNullOrWhiteSpace(plaintext.Password))
+                return InvalidV2();
+
+            LoginManager user = await _userService.CheckLogin(plaintext.Username, plaintext.Password);
+            if (user == null)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status401Unauthorized,
+                    "Authentication Failed! Invalid username, password, or captcha.");
+            return HasActiveSession(user, plaintext.LoginType)
+                ? await AlreadyActive(user, plaintext.LoginType)
+                : await AfterLogin(user, plaintext.LoginType);
+        }
+
+        [HttpPost("ConfirmAuthenticateV2")]
+        [AllowAnonymous]
+        public async Task<ApiResponse> ConfirmAuthenticateV2([FromBody] ConfirmAuthenticateV2Model model)
+        {
+            ApiResponse? transportError = RequireHttps();
+            if (transportError != null) return transportError;
+            if (string.IsNullOrWhiteSpace(model.Token))
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Confirmation token is required.");
+            var consumed = await _loginStore.ConsumeConfirmationAsync(model.Token, model.LoginType, DateTimeOffset.UtcNow);
+            if (consumed == null)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status401Unauthorized,
+                    "Confirmation token is invalid, expired, or already used.");
+            LoginManager user = await _userService.GetById(checked((int)consumed.Value.UserId));
+            if (user == null)
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status401Unauthorized, "Authentication Failed.");
+            return await AfterLogin(user, consumed.Value.LoginType);
+        }
+
         [NonAction]
         private async Task<ApiResponse> AfterLogin(LoginManager user, LoginType loginType)
         {
@@ -214,7 +342,10 @@ namespace HIMS.API.Controllers.Login
                 user.UserToken,
                 user.WebRoleId,
                 Permissions = JsonConvert.SerializeObject(permissions),
-                Token = CommonExtensions.GenerateToken(user, AppSettings.Settings.AuthenticationSettings.SecretKey, GetTokenValidityMinutes(loginType), permissionString, loginType),
+                Token = CommonExtensions.GenerateToken(user, _loginKeyProvider.Current,
+                    GetTokenValidityMinutes(loginType), loginType,
+                    AppSettings.Settings.AuthenticationSettings.Issuer,
+                    AppSettings.Settings.AuthenticationSettings.Audience),
                 UserName = user.FirstName + " " + user.LastName,
                 user.UserId,
                 RefreshToken = loginType == LoginType.Mobile ? user.MobileToken : null,
@@ -225,8 +356,6 @@ namespace HIMS.API.Controllers.Login
                     user.LastName,
                     user.FirstName,
                     user.UserName,
-                    user.Password,
-
                     user.MobileNo,
                     user.IsBillReview,
                     user.IsAdminMultiview,
@@ -248,6 +377,44 @@ namespace HIMS.API.Controllers.Login
                 }
             });
         }
+
+        [NonAction]
+        private async Task<ApiResponse> AlreadyActive(LoginManager user, LoginType loginType)
+        {
+            string token = await _loginStore.CreateConfirmationAsync(user.UserId, loginType, DateTimeOffset.UtcNow.AddMinutes(10));
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, string.Empty, new
+            {
+                token,
+                status = "Already Active",
+                msg = "There is another session is already active. Do you want to continue?"
+            });
+        }
+
+        [NonAction]
+        private ApiResponse? RequireHttps()
+        {
+            bool allowDevelopmentHttp = _configuration.GetValue("LoginSecurity:AllowHttpDevelopment", false);
+            bool isAllowed = Request.IsHttps || (allowDevelopmentHttp && Request.HttpContext.RequestServices
+                       .GetRequiredService<IWebHostEnvironment>().IsDevelopment())
+                ;
+            if (isAllowed) return null;
+            Response.StatusCode = StatusCodes.Status426UpgradeRequired;
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status426UpgradeRequired, "Login endpoints require HTTPS.");
+        }
+
+        [NonAction]
+        private string GetV2Context(LoginV2Key key)
+        {
+            string configured = _configuration["LoginV2:Context"] ?? string.Empty;
+            if (!string.IsNullOrWhiteSpace(configured)) return configured;
+            byte[] digest = SHA256.HashData(Convert.FromBase64String(key.PublicKey));
+            return "hims-" + Convert.ToHexString(digest.AsSpan(0, 12));
+        }
+
+        [NonAction]
+        private static ApiResponse InvalidV2() =>
+            ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Invalid login V2 envelope.");
+
         [NonAction]
         public async Task<(string menuHideString, List<PageMasterDto> permissions)> GetPermissions(long RoleId)
         {
@@ -261,9 +428,12 @@ namespace HIMS.API.Controllers.Login
         }
         [HttpGet]
         [Route("[action]")]
+        [AllowAnonymous]
         [SwaggerOperation(Description = "for see actual captcha open <a target='_blank' href='https://codebeautify.org/base64-to-image-converter'>Link</a> and then paste string in textbox, so you can see actual captcha.")]
         public ApiResponse GetCaptcha()
         {
+            ApiResponse? transportError = RequireHttps();
+            if (transportError != null) return transportError;
             string[] keys = ApiKeyUtility.DecryptString(AppSettings.Settings.Licence.ApiSecret).Split('|');
             const int width = 200;
             const int height = 60;
@@ -286,12 +456,23 @@ namespace HIMS.API.Controllers.Login
                 return false;
             }
 
-            string[] decrypt = EncryptionUtility.DecryptText(CaptchaToken, SecurityKeys.EnDeKey).Split('|');
-            return CaptchaCode == decrypt[0] && Convert.ToDateTime(decrypt[1]).AddMinutes(2) >= AppTime.Now;
+            try
+            {
+                string[] decrypt = EncryptionUtility.DecryptText(CaptchaToken, SecurityKeys.EnDeKey).Split('|');
+                return decrypt.Length == 2 &&
+                    CryptographicOperations.FixedTimeEquals(
+                        Encoding.UTF8.GetBytes(CaptchaCode), Encoding.UTF8.GetBytes(decrypt[0])) &&
+                    Convert.ToDateTime(decrypt[1]).AddMinutes(2) >= AppTime.Now;
+            }
+            catch (Exception ex) when (ex is FormatException or CryptographicException or ArgumentException)
+            {
+                return false;
+            }
         }
 
 
         [HttpGet]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         [Route("get-menus")]
         //[Permission]
         public ApiResponse GetMenus()
@@ -300,7 +481,7 @@ namespace HIMS.API.Controllers.Login
             //return Ok(_IMenuService.GetMenus(CurrentRoleId, true));
         }
         [HttpPost("logout")]
-        [Permission]
+        [SharedAuthenticated]
         public async Task<IActionResult> LogoutAsync()
         {
             string? authHeader = Request.Headers["Authorization"];
@@ -328,6 +509,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("RefreshToken")]
+        [AllowAnonymous]
         public async Task<ApiResponse> RefreshToken([FromBody] RefreshAuthenticateModel model)
         {
             int UserId = EncryptionUtility.DecryptText(model.UserId.ToString(), SecurityKeys.EnDeKey).ToInt();

@@ -24,6 +24,7 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
         }
         //List API
         [HttpPost]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         [Route("[action]")]
         //[Permission(PageCode = "CityMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -33,6 +34,7 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
         }
 
         [HttpGet("{id?}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission(PageCode = "CityMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
@@ -45,6 +47,7 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
         }
         //Add API
         [HttpPost]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission(PageCode = "CityMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(DriverModel obj)
         {
@@ -65,6 +68,7 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
 
         //Edit API
         [HttpPut("{id:int}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         //[Permission(PageCode = "CityMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(DriverModel obj)
         {
@@ -82,6 +86,7 @@ namespace HIMS.API.Controllers.Masters.AmbulanceMaster
         }
         //Delete API
         [HttpDelete]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         //[Permission(PageCode = "CityMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {

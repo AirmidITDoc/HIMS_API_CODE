@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.Administration
 
         }
         [HttpPost("OPBillListForPaymentModeChangeList")]
-        [Permission]
+        [Permission(PageCode = "Payment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<OPBillListForPaymentModeChangeListDto> OPBillListForPaymentModeChangeList = await _IPaymentModeService.GetListAsync(objGrid);
@@ -39,6 +39,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("OPBillListForPaymentModeChangeListBillNoWise")]
+        [Permission(PageCode = "Payment", Permission = PagePermission.View)]
         //[Permission(PageCode = "Payment", Permission = PagePermission.View)]
         public async Task<IActionResult> BillNoWiseList(GridRequestModel objGrid)
         {
@@ -64,7 +65,7 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  updated successfully.");
         }
         [HttpPut("PaymentMode{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Payment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> PaymentdatetimeUpdate(paymentUpdateModel obj)
         {
             if (obj == null || obj.TpaymentUpdate == null || !obj.TpaymentUpdate.Any())
@@ -86,7 +87,7 @@ namespace HIMS.API.Controllers.Administration
         }
        
         [HttpPut("NewPaymentMode{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Payment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> PaymentUpdate(NewPaymentModel obj)
         {
             if (obj == null || obj.PaymentModel == null || !obj.PaymentModel.Any())
@@ -130,7 +131,7 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         [HttpPut("PaymentModeChange/{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Payment", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(paymentpharmacyUpdateModel obj)
         {
             PaymentPharmacy model = obj.MapTo<PaymentPharmacy>();
@@ -147,7 +148,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("Cancel")]
-        [Permission]
+        [Permission(PageCode = "Payment", Permission = PagePermission.Delete)]
         public ApiResponse Cancel(PaymentCancel obj)
         {
             TPayment model = obj.MapTo<TPayment>();

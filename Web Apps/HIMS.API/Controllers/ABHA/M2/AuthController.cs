@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using DocumentFormat.OpenXml.Drawing;
 using HIMS.ABHA.Helper;
 using HIMS.ABHA.Interface;
@@ -40,6 +41,7 @@ namespace HIMS.API.Controllers.ABHA.M2
             _userLinkingService = userLinkingService;
         }
         [HttpGet("test/vimal")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UpdateBridgeUrl(string msg)
         {
             var keyPairGen = new FideliusKeyPairGeneration();
@@ -62,6 +64,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         }
 
         [HttpPost("bridge/url")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UpdateBridgeUrl([FromBody] UpdateBridgeUrlRequest req)
         {
             var result = await _abhaService.UpdateBridgeUrlAsync(req);
@@ -71,6 +74,7 @@ namespace HIMS.API.Controllers.ABHA.M2
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
         [HttpPost("~/api/v3/hip/token/on-generate-token")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> OnGenerateToken([FromBody] LinkTokenCallbackPayload payload)
         {
             string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
@@ -125,6 +129,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         }
 
         [HttpPost("~/api/v3/link/on_carecontext")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> OnCareContextToken([FromBody] LinkTokenCallbackPayload payload)
         {
             string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
@@ -171,6 +176,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         }
 
         [HttpPost("~/api/v3/consent/request/hip/notify")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> OnConsentNotification([FromBody] ConsentNotificationPayload payload)
         {
             string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
@@ -196,6 +202,7 @@ namespace HIMS.API.Controllers.ABHA.M2
             return Ok();
         }
         [HttpPost("~/api/v3/links/context/on-notify")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> OnNotify([FromBody] OnNotifyResponse payload)
         {
             string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
@@ -215,6 +222,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         }
 
         [HttpPost("~/api/v3/hip/patient/care-context/discover")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> onCareContextDiscoverRequest([FromBody] Rootobject payload)
         {
             string path = _configuration["ExceptionLogging:Directory"].ToString().Trim('\\') + "\\M2Callback";
@@ -284,6 +292,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         }
 
         [HttpPost("bridge/register")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> RegisterBridgeServices([FromBody] RegisterBridgeRequest req)
         {
             var result = await _abhaService.RegisterBridgeServicesAsync(req);
@@ -294,6 +303,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         }
 
         [HttpGet("bridge-service/{serviceId}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> FindByServiceId(string serviceId)
         {
             var result = await _abhaService.FindServiceByServiceIdAsync(serviceId);
@@ -304,6 +314,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         }
 
         [HttpGet("bridge-services")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> FindServicesByBridge()
         {
             var result = await _abhaService.FindServicesByBridgeIdAsync();

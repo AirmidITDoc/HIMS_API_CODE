@@ -33,6 +33,7 @@ namespace HIMS.API.Controllers.Masters.Billing
 
         //List API
         [HttpPost]
+        [Permission(PageCode = "ClassMaster", Permission = PagePermission.View)]
         [Route("[action]")]
         //[Permission(PageCode = "ClassMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -72,6 +73,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         //}
        
         [HttpPost("classApplyToAllService")]
+        [Permission(PageCode = "ClassMaster", Permission = PagePermission.Add)]
         // [Permission(PageCode = "BillingServiceMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(ApplytoAllServiceModel obj)
         {

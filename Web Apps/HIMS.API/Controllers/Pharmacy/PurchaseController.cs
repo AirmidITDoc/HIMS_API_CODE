@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -30,16 +30,16 @@ namespace HIMS.API.Controllers.Pharmacy
 
         }
         [HttpPost("PurchaseOrderList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetPurchaseorderListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseListDto> List = await _IPurchaseService.GetPurchaseListAsync(objGrid);
             return Ok(List.ToGridResponse(objGrid, "Purchase Order List"));
         }
         [HttpPost("PurchaseOrderListGetBYId")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetPurchaseorderAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseListDto> List = await _IPurchaseService.GetPurchaseAsync(objGrid);
@@ -48,8 +48,8 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("PurchaseItemList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetPurchaseDetailListAsync(objGrid);
@@ -57,8 +57,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("OldPurchaseOrderList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetOldPurchaseItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<PurchaseDetailListDto> List1 = await _IPurchaseService.GetOldPurchaseorderAsync(objGrid);
@@ -66,9 +66,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("LastThreeItemList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        [Permission]
 
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GetLastThreeItemListAsync(GridRequestModel objGrid)
         {
             IPagedList<LastthreeItemListDto> List1 = await _IPurchaseService.GetLastthreeItemListAsync(objGrid);
@@ -76,8 +75,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("SupplierrateList")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.View)]
         public async Task<IActionResult> GeSupplierrateListAsync(GridRequestModel objGrid)
         {
             IPagedList<SupplierRatelistDto> List1 = await _IPurchaseService.GetSupplierRatetAsync(objGrid);
@@ -86,8 +85,8 @@ namespace HIMS.API.Controllers.Pharmacy
 
 
         [HttpPost("Insert")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
@@ -110,8 +109,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PurchaseModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();
@@ -130,8 +129,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("Verify")]
-        //[Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "PurchaseOrder", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(PurchaseVerifyModel obj)
         {
             TPurchaseHeader model = obj.MapTo<TPurchaseHeader>();

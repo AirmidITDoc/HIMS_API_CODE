@@ -42,6 +42,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("PaymentModeList")]
+        [Permission(PageCode = "RoleTemplateMaster", Permission = PagePermission.View)]
         //[Permission(PageCode = "Sales", Administration = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
@@ -49,6 +50,7 @@ namespace HIMS.API.Controllers.Administration
             return Ok(PaymentModeList.ToGridResponse(objGrid, "PaymentMode App List"));
         }
         [HttpPost("BrowseIPAdvPayPharReceiptList1")]
+        [Permission(PageCode = "RoleTemplateMaster", Permission = PagePermission.View)]
         //[Permission(PageCode = "Sales", Administration = PagePermission.View)]
         public async Task<IActionResult> BrowseIPAdvPayPharReceiptList(GridRequestModel objGrid)
         {
@@ -107,7 +109,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPut("UpdatePaymentdatetime{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public ApiResponse PaymentdatetimeUpdate(PaymenntModel obj)
         {
             Payment model = obj.MapTo<Payment>();
@@ -138,6 +140,7 @@ namespace HIMS.API.Controllers.Administration
 
      
         [HttpPost("AutoServiceListInsert")]
+        [Permission(PageCode = "RoleTemplateMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(List<AutoServiceModel> objList)
         {
             if (objList == null || !objList.Any())
@@ -162,7 +165,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPut("TPaymentdatetime{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public ApiResponse Update(PaymenntModel obj)
         {
             TPayment model = obj.MapTo<TPayment>();

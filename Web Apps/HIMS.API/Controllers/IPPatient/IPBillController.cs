@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         //List API Get By Id
         [HttpGet("RegID/{id?}")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetByRegId(int id)
         {
             if (id == 0)
@@ -52,14 +52,14 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("IPPreviousBillList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> GetIPPreviousBillAsync(GridRequestModel objGrid)
         {
             IPagedList<IPPreviousBillListDto> IPPreviousBillList = await _IPBillService.GetIPPreviousBillAsync(objGrid);
             return Ok(IPPreviousBillList.ToGridResponse(objGrid, "IPPreviousBill List"));
         }
         [HttpPost("IPAddchargesList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> GetIPAddchargesAsync(GridRequestModel objGrid)
         {
             IPagedList<IPAddchargesListDto> IPAddchargesList = await _IPBillService.GetIPAddchargesAsync(objGrid);
@@ -67,28 +67,28 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("IPBillList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> GetIPBillListAsync(GridRequestModel objGrid)
         {
             IPagedList<BrowseIPDBillListDto> IPBill = await _IPBillService.GetIPBillListAsync(objGrid);
             return Ok(IPBill.ToGridResponse(objGrid, "IPBill List"));
         }
         [HttpPost("PreviousBillDetailList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> GetPreviousBillListAsync(GridRequestModel objGrid)
         {
             IPagedList<PreviousBillListDto> IPBill = await _IPBillService.GetPreviousBillListAsync(objGrid);
             return Ok(IPBill.ToGridResponse(objGrid, "PreviousBill List"));
         }
         [HttpPost("PathRadRequestList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> PathRadRequestListAsync(GridRequestModel objGrid)
         {
             IPagedList<PathRadRequestListDto> RequestList = await _IPBillService.PathRadRequestListAsync(objGrid);
             return Ok(RequestList.ToGridResponse(objGrid, "Path Rad Request List"));
         }
         [HttpPost("IpPackageDetailsList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> IPPackageDetailsListAsync(GridRequestModel objGrid)
         {
             IPagedList<IPPackageDetailsListDto> IPPackageDetailsList = await _IPBillService.IPPackageDetailsListAsync(objGrid);
@@ -96,7 +96,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("Addpackagelist")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> Addpackagelist(GridRequestModel objGrid)
         {
             IPagedList<PackageDetailsListDto> IPPackageDetailsList = await _IPBillService.Addpackagelist(objGrid);
@@ -104,7 +104,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("Retrivepackagedetaillist")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> Retrivepackagedetaillist(GridRequestModel objGrid)
         {
             IPagedList<PackagedetListDto> PackageDetailsList = await _IPBillService.Retrivepackagedetaillist(objGrid);
@@ -112,14 +112,14 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("BillChargeDetailsList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> BillChargeDetailsList(GridRequestModel objGrid)
         {
             IPagedList<BillChargeDetailsListDto> BillChargeDetailsList = await _IPBillService.BillChargeDetailsList(objGrid);
             return Ok(BillChargeDetailsList.ToGridResponse(objGrid, "Bill Charge Details List"));
         }
         [HttpPost("GetPharmacyDetailsList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> GetPharmacyDetailsList(GridRequestModel objGrid)
         {
             IPagedList<PharmacyDetailsListDto> PharmacyDetailsListDto = await _IPBillService.GetPharmacyDetailsList(objGrid);
@@ -127,7 +127,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("DiscountTransactionHistoryList")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
         public async Task<IActionResult> DiscountTransactionHistoryList(GridRequestModel objGrid)
         {
             IPagedList<DiscountTransactionHistoryListDto> DiscountTransactionHistoryListDto = await _IPBillService.DiscountTransactionHistoryList(objGrid);
@@ -137,8 +137,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("AddChargeInsert")]
-        [Permission]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(AddChargesModel obj)
         {
             AddCharge model = obj.MapTo<AddCharge>();
@@ -180,8 +179,7 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.PaymentId);
         }
         [HttpPost("PaymentMultipleSettelment")]
-        [Permission]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertMultiple(ModelPaymentMultiple obj)
         {
             List<Payment> model = obj.Payment.MapTo<List<Payment>>();
@@ -260,8 +258,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("IPInterimBillInsertWithCashCounter")]
-        [Permission]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task <ApiResponse> IPInterimBillCashCounterAsyncSp(IPBillModel obj)
         {
             AddCharge AddChargeModel = obj.AddChargeM.MapTo<AddCharge>();
@@ -292,8 +289,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("InsertIPDraftBill")]
-        [Permission]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task <ApiResponse> InsertIP(TDrbillingModel obj)
         {
 
@@ -407,7 +403,7 @@ namespace HIMS.API.Controllers.IPPatient
 
        
         [HttpPost("BillUpdate")]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task <ApiResponse> BillUpdate(BillUpdate obj)
         {
             List<AddCharge> model = obj.IPAddChargesBill.MapTo<List<AddCharge>>();
@@ -501,8 +497,7 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("BillDiscountAfter")]
-        [Permission]
-        //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertCreditsSP(BillDiscountAfterModel obj)
         {
 

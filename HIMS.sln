@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HIMS.ABHA", "Libraries\HIMS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HIMS.ABHA.Security", "Libraries\HIMS.ABHA.Security\HIMS.ABHA.Security.csproj", "{CAF9DC5E-49E7-4CAD-B216-6B7F3774A039}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HIMS.AuthorizationRegression", "Tests\HIMS.AuthorizationRegression\HIMS.AuthorizationRegression.csproj", "{E6925650-C197-45CE-80A5-9453D106C302}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +59,10 @@ Global
 		{CAF9DC5E-49E7-4CAD-B216-6B7F3774A039}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAF9DC5E-49E7-4CAD-B216-6B7F3774A039}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAF9DC5E-49E7-4CAD-B216-6B7F3774A039}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6925650-C197-45CE-80A5-9453D106C302}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6925650-C197-45CE-80A5-9453D106C302}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6925650-C197-45CE-80A5-9453D106C302}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6925650-C197-45CE-80A5-9453D106C302}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +75,7 @@ Global
 		{084F66B0-FA8F-4C60-73E8-867323B5D9DE} = {D4037634-9497-4C88-BCE6-35A6EA327A86}
 		{CF79B683-FBB1-478E-AD22-53072B0D73D7} = {F442657B-3942-4057-A661-890CB15A8F19}
 		{CAF9DC5E-49E7-4CAD-B216-6B7F3774A039} = {F442657B-3942-4057-A661-890CB15A8F19}
+		{E6925650-C197-45CE-80A5-9453D106C302} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {961543C5-50BE-4E73-8A26-10257A14092D}

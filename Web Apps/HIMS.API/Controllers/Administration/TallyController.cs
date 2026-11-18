@@ -22,6 +22,7 @@ namespace HIMS.API.Controllers.Administration
 
         }
         [HttpPost("DaywisePharmacySalesOPDList")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> DaywisePharmacySalesOPDList(GridRequestModel objGrid)
         {
@@ -29,6 +30,7 @@ namespace HIMS.API.Controllers.Administration
             return Ok(DaywisePharmacySalesOPDList.ToGridResponse(objGrid, "DaywisePharmacySalesOPD List "));
         }
         [HttpPost("DaywisePharmacySalesReturnOPDList")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> DaywisePharmacySalesReturnOPDList(GridRequestModel objGrid)
         {
@@ -37,6 +39,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("IPSalesAndSalesReturnPaymentDateWiseList")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> IPSalesAndSalesReturnPaymentDateWiseList(GridRequestModel objGrid)
         {
@@ -45,6 +48,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("TallyDayWisePharmacyUPICardCollection")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> TallyDayWisePharmacyUPICardCollection(GridRequestModel objGrid)
         {
@@ -166,6 +170,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("TallyIPBillListMediforte")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
 
         public async Task<IActionResult> TallyIPBillListMediforte(GridRequestModel objGrid)
@@ -175,6 +180,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("TallyIPBillDetailListMediforte")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
 
         public async Task<IActionResult> TallyIPBillDetailListMediforte(GridRequestModel objGrid)
@@ -184,6 +190,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("TallyOPBillListMediforte")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
 
         public async Task<IActionResult> TallyOPBillListMediforte(GridRequestModel objGrid)
@@ -193,6 +200,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("TallyOPBillDetailListMediforte")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
 
         public async Task<IActionResult> TallyOPBillDetailListMediforte(GridRequestModel objGrid)
@@ -202,6 +210,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("TallyIPBillRefundPaymentListMediforte")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
 
         public async Task<IActionResult> TallyIPBillRefundListMediforte(GridRequestModel objGrid)
@@ -212,6 +221,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("TallyIPAdvancePaymentListMediforte")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
 
         public async Task<IActionResult> TallyIPAdvancePaymentListMediforte(GridRequestModel objGrid)
@@ -222,6 +232,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("TallyIPAdvanceRefundPaymentListMediforte")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
 
         public async Task<IActionResult> TallyIPAdvanceRefundPaymentListMediforte(GridRequestModel objGrid)
@@ -232,6 +243,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("TallyIPBillPaymentListMediforte")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
 
         public async Task<IActionResult> TallyIPBillPaymentListMediforte(GridRequestModel objGrid)
@@ -243,6 +255,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("TallyPharmacyOPIPSalesDetailListMediforte")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
 
         public async Task<IActionResult> TallyOPIPSalesDetailListMediforte(GridRequestModel objGrid)
@@ -254,6 +267,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("TallyPharmacyOPIPSalesReturnDetailListMediforte")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
 
         public async Task<IActionResult> TallyPharmacyOPIPSalesReturnDetailListMediforte(GridRequestModel objGrid)
@@ -265,6 +279,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("TallyPharmacyOPIPSalesPaymentListMediforte")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
 
         public async Task<IActionResult> TallyPharmacyOPIPSalesPaymentDetailListMediforte(GridRequestModel objGrid)
@@ -278,6 +293,7 @@ namespace HIMS.API.Controllers.Administration
         //-----------
 
         [HttpPost("TallyOPPaymentMediforte")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> TallyOPPaymentMediforte(GridRequestModel objGrid)
         {
@@ -287,6 +303,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("TallyOPBillRefundPaymentMediforte")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> TallyOPBillRefundPaymentMediforte(GridRequestModel objGrid)
         {
@@ -296,6 +313,7 @@ namespace HIMS.API.Controllers.Administration
 
 
         [HttpPost("TallyDayWisePharmacyCollection")]
+        [Permission(PageCode = "TallyInterface", Permission = PagePermission.Add)]
         //[Permission(PageCode = "TallyInterface", Permission = PagePermission.View)]
         public async Task<IActionResult> TallyDayWisePharmacyCollection(GridRequestModel objGrid)
         {

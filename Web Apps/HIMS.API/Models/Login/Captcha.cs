@@ -1,6 +1,7 @@
 using HIMS.Core.Infrastructure;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace HIMS.Api.Models.Login
@@ -10,14 +11,10 @@ namespace HIMS.Api.Models.Login
         private const string Letters = "0123456789";
         public static string GenerateCaptchaCode()
         {
-            Random rand = new();
-            int maxRand = Letters.Length - 1;
-
             StringBuilder sb = new();
-
             for (int i = 0; i < 4; i++)
             {
-                int index = rand.Next(maxRand);
+                int index = RandomNumberGenerator.GetInt32(Letters.Length);
                 sb.Append(Letters[index]);
             }
 

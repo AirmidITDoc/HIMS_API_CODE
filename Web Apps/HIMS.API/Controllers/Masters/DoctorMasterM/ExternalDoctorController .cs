@@ -33,6 +33,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
 
         }
         [HttpPost("List")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission(PageCode = "SupplierMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
@@ -40,6 +41,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
             return Ok(ExternalDoctorMasterList.ToGridResponse(objGrid, "External DoctorMaster List"));
         }
         [HttpGet("{id?}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
          //    [Permission(PageCode = "AreaMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
@@ -53,6 +55,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
 
 
         [HttpPost]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
       //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ExternalDoctorModel obj)
         {
@@ -70,6 +73,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
         //Edit API
         [HttpPut("{id:int}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
       //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ExternalDoctorModel obj)
         {
@@ -87,6 +91,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
         }
         //Delete API
         [HttpDelete]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
       //  [Permission(PageCode = "AreaMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {

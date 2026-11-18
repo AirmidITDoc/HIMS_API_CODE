@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.IPPatient
 
         }
         [HttpPost("IPDischargeSummaryData")]
-        [Permission]
+        [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
         public async Task<IActionResult> List1(GridRequestModel objGrid)
         {
             IPagedList<DischrageSummaryListDTo> IPDiscList = await _IDischargeSummaryService.IPDischargesummaryList(objGrid);
@@ -41,21 +41,21 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
         [HttpPost("IPPrescriptionDischargeData")]
-        [Permission]
+        [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
         public async Task<IActionResult> IPPrescriptionDisc(GridRequestModel objGrid)
         {
             IPagedList<IPPrescriptiononDischargeListDto> IPPRDiscList = await _IDischargeSummaryService.IPPrescriptionDischargesummaryList(objGrid);
             return Ok(IPPRDiscList.ToGridResponse(objGrid, "IP Prescription On Dischareg  Data  "));
         }
         [HttpPost("PatientClearanceAprovViewList")]
-        [Permission]
+        [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
         public async Task<IActionResult> GetListAsync(GridRequestModel objGrid)
         {
             IPagedList<PatientClearanceAprovViewListDto> IPDiscList = await _IDischargeSummaryService.GetListAsync(objGrid);
             return Ok(IPDiscList.ToGridResponse(objGrid, "PatientClearanceAprovViewList "));
         }
         [HttpPost("PatientClearanceApprovalList")]
-        [Permission]
+        [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
         public async Task<IActionResult> GetListAsyncP(GridRequestModel objGrid)
         {
             IPagedList<PatientClearanceApprovalListDto> IPDiscList = await _IDischargeSummaryService.GetListAsyncP(objGrid);
@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("DischargeSummaryProvisionalDiagnosisList")]
-        [Permission]
+        [Permission(PageCode = "DischargeSum", Permission = PagePermission.Add)]
         public async Task<IActionResult> GetListAsyncK(GridRequestModel objGrid)
         {
             IPagedList<DischargeSummaryProvisionalDiagnosisListDto> IPDiscList = await _IDischargeSummaryService.GetListAsyncK(objGrid);
@@ -94,6 +94,7 @@ namespace HIMS.API.Controllers.IPPatient
         //}
         // List API Get By Id
         [HttpGet("IpAdmissionDiagnosisInformation/{id?}")]
+        [Permission(PageCode = "DischargeSum", Permission = PagePermission.View)]
         public async Task<ApiResponse> IPGet(int id)
         {
             if (id == 0)

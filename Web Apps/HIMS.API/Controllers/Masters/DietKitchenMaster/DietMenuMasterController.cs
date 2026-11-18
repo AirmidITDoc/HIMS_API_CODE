@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
 
         [HttpPost("DietmenumasterList")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> ListAsync(GridRequestModel objGrid)
         {
             IPagedList<DietmenumasterListDto> List1 = await _DietMenuMasterService.GetDietmenumasterList(objGrid);
@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
         }
 
         [HttpPost("DietmenumasterDetailsList")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> ListAsync1(GridRequestModel objGrid)
         {
             IPagedList<DietmenuDetailmasterListDto> List1 = await _DietMenuMasterService.GetDietmenumasterDetailsList(objGrid);
@@ -56,7 +56,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
        
         [HttpPost("Insert")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(DietmenumasterModels obj)
 
         {
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
        
         [HttpPut("Edit/{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(int id, DietmenumasterUpdateModels obj)
         {
             MDietMenuMaster model = obj.Dietmenumaster.MapTo<MDietMenuMaster>();

@@ -1,4 +1,6 @@
 ﻿using Asp.Versioning;
+using HIMS.API.Extensions;
+using HIMS.Core;
 using HIMS.ABHA.Helper;
 using HIMS.ABHA.Interface;
 using HIMS.ABHA.Models;
@@ -22,6 +24,7 @@ namespace HIMS.API.Controllers.ABHA.M1
 
         // ===== Aadhaar flow =====
         [HttpPost("aadhaar/request-otp")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> RequestAadhaarOtp([FromBody] AadhaarReqOtpDto dto)
         {
             if (string.IsNullOrWhiteSpace(dto.AadhaarNumber) || dto.AadhaarNumber.Length != 12)
@@ -35,6 +38,7 @@ namespace HIMS.API.Controllers.ABHA.M1
         }
 
         [HttpPost("aadhaar/verify-otp")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> VerifyAadhaarOtp([FromBody] VerifyOtpDto dto)
         {
             var result = await _abhaService.VerifyAadhaarOtpAsync(dto.TxnId, dto.Otp, dto.Mobile);
@@ -46,6 +50,7 @@ namespace HIMS.API.Controllers.ABHA.M1
 
         // ===== Existing ABHA =====
         [HttpPost("existing/request-abha-otp")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> RequestAbhaOtp([FromBody] AbhaAddresOtpDto dto)
         {
             List<string> scope = new();
@@ -88,6 +93,7 @@ namespace HIMS.API.Controllers.ABHA.M1
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
         [HttpPost("existing/request-aadhar-otp")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> RequestOtp([FromBody] AadhaarOtpDto dto)
         {
             var result = await _abhaService.RequestOtpAsync(dto.AadhaarNumber, new List<string> { "abha-login", "aadhaar-verify" }, "aadhaar", "aadhaar");
@@ -97,6 +103,7 @@ namespace HIMS.API.Controllers.ABHA.M1
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
         [HttpPost("existing/mobile-otp")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> RequestMobileOtp([FromBody] AadhaarOtpDto dto)
         {
             var result = await _abhaService.RequestOtpAsync(dto.AadhaarNumber, new List<string> { "abha-login", "mobile-verify" }, "mobile", "abdm");
@@ -108,6 +115,7 @@ namespace HIMS.API.Controllers.ABHA.M1
 
 
         [HttpPost("existing/verify-abha-otp")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> VerifyAbhaOtpOtp([FromBody] VerifyOtpDto dto)
         {
             List<string> scope = new();
@@ -141,6 +149,7 @@ namespace HIMS.API.Controllers.ABHA.M1
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
         [HttpPost("existing/verify-aadhar-otp")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> VerifyAadharOtpOtp([FromBody] VerifyOtpDto dto)
         {
             var result = await _abhaService.VerifyOtpAsync(dto.TxnId, dto.Otp, new List<string> { "abha-login", "aadhaar-verify" });
@@ -150,6 +159,7 @@ namespace HIMS.API.Controllers.ABHA.M1
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
         [HttpPost("existing/verify-mobile-otp")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> VerifyMobileOtp([FromBody] VerifyOtpDto dto)
         {
             var result = await _abhaService.VerifyOtpAsync(dto.TxnId, dto.Otp, new List<string> { "abha-login", "mobile-verify" });
@@ -159,6 +169,7 @@ namespace HIMS.API.Controllers.ABHA.M1
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
         [HttpPost("existing/verify-user")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> VerifyUser([FromBody] VerifyUserRequest obj)
         {
             var result = await _abhaService.VerifyUser(obj);
@@ -170,6 +181,7 @@ namespace HIMS.API.Controllers.ABHA.M1
 
         // ===== ABHA address =====
         [HttpGet("address/suggestions/{txnId}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetSuggestions(string txnId)
         {
             var result = await _abhaService.GetAbhaAddressSuggestionsAsync(txnId);
@@ -180,6 +192,7 @@ namespace HIMS.API.Controllers.ABHA.M1
         }
 
         [HttpPost("address/create")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> CreateAddress([FromBody] CreateAddressDto dto)
         {
             var result = await _abhaService.CreateAbhaAddressAsync(dto.TxnId, dto.AbhaAddress);
@@ -193,6 +206,7 @@ namespace HIMS.API.Controllers.ABHA.M1
         // ===== ABHA address with Mobile =====
         // 1. Search Abha with Mobile
         [HttpPost("address/findAbha")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> FindAbha(FindAbhaMobileDto dto)
         {
             var result = await _abhaService.FindAbhaMobileAsync(dto.Mobile);
@@ -202,6 +216,7 @@ namespace HIMS.API.Controllers.ABHA.M1
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
         [HttpPost("address/request-abhafind-otp")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> RequestAbhaFindOtp([FromBody] AbhaFindRequestOtpDto dto)
         {
             List<string> scope = new();
@@ -225,6 +240,7 @@ namespace HIMS.API.Controllers.ABHA.M1
 
         //=========Abha Address Search Api
         [HttpPost("address/AbhaAddressSearch")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> AbhaAddressSearch(FindAbhaMobileDto dto)
         {
             var result = await _abhaService.AbhaAddressSearchAsync(dto.Mobile);
@@ -235,6 +251,7 @@ namespace HIMS.API.Controllers.ABHA.M1
         }
         // ===== Profile / Card / QR =====
         [HttpPost("aadhaar/profile")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> GetProfile([FromBody] ProfileRequestDto dto)
         {
             var result = await _abhaService.GetAbhaProfileAsync(dto.Token, dto.IsAddress);
@@ -245,6 +262,7 @@ namespace HIMS.API.Controllers.ABHA.M1
         }
 
         [HttpPost("aadhaar/card")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> GetCard([FromBody] ProfileRequestDto dto)
         {
             var result = await _abhaService.GetAbhaCardAsync(dto.Token);
@@ -260,6 +278,7 @@ namespace HIMS.API.Controllers.ABHA.M1
         }
 
         [HttpPost("aadhaar/qr")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> GetQr([FromBody] ProfileRequestDto dto)
         {
             var result = await _abhaService.GetAbhaQrCodeAsync(dto.Token, dto.IsAddress);

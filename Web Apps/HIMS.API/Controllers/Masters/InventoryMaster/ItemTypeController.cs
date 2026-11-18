@@ -80,6 +80,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //Delete API
         [HttpDelete]
+        [Permission(PageCode = "ItemTypeMaster", Permission = PagePermission.Delete)]
         //[Permission(PageCode = "ItemTypeMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {

@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -33,7 +34,7 @@ namespace HIMS.API.Controllers.RIS
         // ──────────────────────────────────────────────────
 
         [HttpPost("radiology-order")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> CreateRadiologyOrder([FromBody] CreateRadiologyOrderRequest request)
         {
             if (!ModelState.IsValid)
@@ -75,7 +76,7 @@ namespace HIMS.API.Controllers.RIS
         // ──────────────────────────────────────────────────
 
         [HttpPut("radiology-order/{checkId}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<IActionResult> UpdateRadiologyOrder([FromRoute] string checkId, [FromBody] UpdateRadiologyOrderRequest request)
         {
             if (string.IsNullOrWhiteSpace(checkId))
@@ -108,7 +109,7 @@ namespace HIMS.API.Controllers.RIS
         // ──────────────────────────────────────────────────
 
         [HttpDelete("radiology-order")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         public async Task<IActionResult> DeleteRadiologyOrder([FromBody] DeleteRadiologyOrderRequest request)
         {
             if (!ModelState.IsValid)
@@ -139,7 +140,7 @@ namespace HIMS.API.Controllers.RIS
         // ──────────────────────────────────────────────────
 
         [HttpPost("patient-history")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> SendPatientHistory([FromBody] PatientHistoryRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.ExternalId))

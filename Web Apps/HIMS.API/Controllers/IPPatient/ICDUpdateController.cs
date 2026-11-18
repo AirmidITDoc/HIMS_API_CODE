@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -26,6 +27,7 @@ namespace HIMS.API.Controllers.IPPatient
 
 
         [HttpPost("InsertICD")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //   [Permission]
         //[Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertICD(ICDupdateModel obj)

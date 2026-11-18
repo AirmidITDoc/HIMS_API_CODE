@@ -326,6 +326,7 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpPost("OPBillingInsertWithAdvance")]
+        [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
   //      [Permission(PageCode = "Bill", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Inserts(OPBillIngModel obj)
         {

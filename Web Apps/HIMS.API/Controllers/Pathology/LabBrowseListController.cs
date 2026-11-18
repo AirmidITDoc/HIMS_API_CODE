@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
 using HIMS.Core.Domain.Grid;
@@ -27,16 +28,16 @@ namespace HIMS.API.Controllers.Pathology
 
       
         [HttpPost("LabBillList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LabBrowsListDto> LabBillList = await _ILabBrowseList.GetLabListListAsync(objGrid);
             return Ok(LabBillList.ToGridResponse(objGrid, "LabBill List"));
         }
         [HttpPost("LabPaymentList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> PaymentList(GridRequestModel objGrid)
         {
             IPagedList<LabBrowsePaymentListDto> LabBillList = await _ILabBrowseList.GetLabPaymentListListAsync(objGrid);
@@ -44,8 +45,8 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("LabRefundList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> RefundList(GridRequestModel objGrid)
         {
             IPagedList<LabBrowseRefundListDto> LabBillList = await _ILabBrowseList.GetLabRefundListListAsync(objGrid);

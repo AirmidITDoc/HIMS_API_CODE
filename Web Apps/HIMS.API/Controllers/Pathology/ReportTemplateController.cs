@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -26,8 +27,8 @@ namespace HIMS.API.Controllers.Pathology
             _repository = repository1;
         }
         [HttpPost("ReportTemplateList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ReportTemplateListDto> ReportTemplateList = await _IReportTemplateService.ReportTemplateList(objGrid);
@@ -35,8 +36,8 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpGet("{id?}")]
-        // [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
 
@@ -46,8 +47,8 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpGet]
         [Route("get-Templates")]
-        //[Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "StateMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown()
         {
             var MMasterList = await _repository.GetAll();

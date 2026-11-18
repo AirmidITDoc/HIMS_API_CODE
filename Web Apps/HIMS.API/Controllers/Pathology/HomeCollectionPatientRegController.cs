@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -33,6 +33,7 @@ namespace HIMS.API.Controllers.Pathology
             _repository = repository1;
         }
         [HttpPost("HomeCollectionPatientRegistartionList")]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
         //[Permission(PageCode = "InPatient", Permission = PagePermission.View)]
       //  [Permission]
         public async Task<IActionResult> salesbrowselist(GridRequestModel objGrid)
@@ -42,6 +43,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         //List API Get By Id
         [HttpGet("{id?}")]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
         //[Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
       //  [Permission]
         public async Task<ApiResponse> Get(int id)
@@ -56,6 +58,7 @@ namespace HIMS.API.Controllers.Pathology
 
       
         [HttpPost("Insert")]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Add)]
         //[Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Add)]
         //[Permission]
 
@@ -78,6 +81,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPut("UpdateHomecollection/{id:int}")]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Edit)]
         // [Permission(PageCode = "MedicalRecords", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(HomeCollectionPatientRegModel obj)
         {
@@ -105,8 +109,8 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("HomeCollectionPatientInsert")]
-        //[Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> HomeInsert(HomeCollectionPatientRegistrationModel obj)
         {
             THomeCollectionPatientRegistartion model = obj.MapTo<THomeCollectionPatientRegistartion>();

@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         // List API
         [HttpPost]
         [Route("[action]")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<VaccineInformationListDto> list = await _vaccineInformationService.GetVaccineInformationListAsync(objGrid);
@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
         // Get By Id API
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(long id)
         {
             if (id == 0) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
         // Post / Insert API
         [HttpPost("Insert")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(VaccineInformationModel obj)
         {
             TVaccineInformation model = obj.MapTo<TVaccineInformation>();
@@ -74,7 +74,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
         // Edit / Update API
         [HttpPut("Edit/{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(VaccineInformationModel obj)
         {
             if (obj.VaccineId == 0)

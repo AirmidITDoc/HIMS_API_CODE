@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -25,7 +26,7 @@ namespace HIMS.API.Controllers.Employee
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MEmployeeDepartmentMaster> EmployeeDepartmentMasterList  = await _repository.GetAllPagedAsync(objGrid);
@@ -36,7 +37,7 @@ namespace HIMS.API.Controllers.Employee
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -49,7 +50,7 @@ namespace HIMS.API.Controllers.Employee
 
         //Add API
         [HttpPost]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(EmployeeDepartmentModel obj)
         {
             MEmployeeDepartmentMaster model = obj.MapTo<MEmployeeDepartmentMaster>();
@@ -69,7 +70,7 @@ namespace HIMS.API.Controllers.Employee
 
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(EmployeeDepartmentModel obj)
         {
             MEmployeeDepartmentMaster model = obj.MapTo<MEmployeeDepartmentMaster>();
@@ -87,7 +88,7 @@ namespace HIMS.API.Controllers.Employee
 
         //Delete API
         [HttpDelete]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MEmployeeDepartmentMaster model = await _repository.GetById(x => x.EmpDepartmentId == Id);

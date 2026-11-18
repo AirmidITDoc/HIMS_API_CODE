@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -23,8 +24,8 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("InsertSettlement")]
 
-        [Permission]
-        //[Permission(PageCode = "CompanySettlement", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CompanySettlement", Permission = PagePermission.Add)]
+
         public async Task<ApiResponse> InsertSP(OPSettlementModel obj)
         {
             Payment model = obj.OPCreditPayment.MapTo<Payment>();
@@ -50,9 +51,8 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("InsertSettlementMultiple")]
-        //[Permission(PageCode = "CompanySettlement", Permission = PagePermission.Add)]
-        [Permission]
 
+        [Permission(PageCode = "CompanySettlement", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OPSettlementMultipleModel obj)
 
         {
@@ -72,6 +72,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record Added successfully.", model.FirstOrDefault()?.PaymentId);
         }
         [HttpPost("InsertSettlementWithAdvance")]
+        [Permission(PageCode = "CompanySettlement", Permission = PagePermission.Add)]
 
 //        [Permission]
         //[Permission(PageCode = "CompanySettlement", Permission = PagePermission.Add)]

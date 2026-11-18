@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
        
         [HttpPost]
         [Route("[action]")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<FeedingRouteListDto> list = await _FeedingRouteMasterService.GetFeedingRouteListAsync(objGrid);
@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Get By Id API
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Post / Insert API
         [HttpPost("Insert")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(FeedingRouteModel obj)
         {
             MFeedingRouteMaster model = obj.MapTo<MFeedingRouteMaster>();
@@ -74,7 +74,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Edit / Update API
         [HttpPut("Edit/{id:int}")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(FeedingRouteModel obj)
         {
             if (obj.FeedingRouteId == 0)
@@ -95,7 +95,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Delete API (Soft Delete / Toggle Status)
         [HttpDelete]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(long Id)
         {
             MFeedingRouteMaster? model = await _repository.GetById(x => x.FeedingRouteId == Id);

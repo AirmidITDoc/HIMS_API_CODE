@@ -27,8 +27,8 @@ namespace HIMS.API.Controllers.Masters
         }
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "Prefix", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Prefix", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             //var sessionId = Context.StoreId;
@@ -37,7 +37,7 @@ namespace HIMS.API.Controllers.Masters
             return Ok(DocList.ToGridResponse(objGrid, "Prefix List"));
         }
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "Prefix", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -49,8 +49,8 @@ namespace HIMS.API.Controllers.Masters
         }
 
         [HttpPost]
-        //[Permission(PageCode = "Prefix", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "Prefix", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(PrefixModel obj)
         {
             DbPrefixMaster model = obj.MapTo<DbPrefixMaster>();
@@ -67,8 +67,8 @@ namespace HIMS.API.Controllers.Masters
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "Prefix", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "Prefix", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PrefixModel obj)
         {
             DbPrefixMaster model = obj.MapTo<DbPrefixMaster>();
@@ -85,8 +85,8 @@ namespace HIMS.API.Controllers.Masters
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         [HttpDelete]
-        //[Permission(PageCode = "Prefix", Permission = PagePermission.Delete)]
-        [Permission]
+
+        [Permission(PageCode = "Prefix", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             DbPrefixMaster model = await _repository.GetById(x => x.PrefixId == Id);
@@ -102,6 +102,7 @@ namespace HIMS.API.Controllers.Masters
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
         }
         [HttpGet]
+        [Permission(PageCode = "Prefix", Permission = PagePermission.View)]
         [Route("get-prefixs")]
         //[Permission(PageCode = "Prefix", Permission = PagePermission.View)]
        // [Permission]
@@ -112,7 +113,7 @@ namespace HIMS.API.Controllers.Masters
         }
 
         [HttpGet("test-multiple-data")]
-        [Permission]
+        [Permission(PageCode = "Prefix", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetTest()
         {
 

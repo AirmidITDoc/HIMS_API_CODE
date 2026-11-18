@@ -30,6 +30,7 @@ namespace HIMS.API.Controllers.Administration
 
         }
         [HttpPost("ComplaintList")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission(PageCode = "Sales", Administration = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
@@ -38,6 +39,7 @@ namespace HIMS.API.Controllers.Administration
         }
         //Add API
         [HttpPost]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<ApiResponse> Post(HelpdeskPatientComplaintModel obj)
         {
@@ -56,6 +58,7 @@ namespace HIMS.API.Controllers.Administration
         }
         //Edit API
         [HttpPut("{id:int}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         //[Permission]
         public async Task<ApiResponse> Edit(HelpdeskPatientComplaintModel obj)
         {
@@ -72,6 +75,7 @@ namespace HIMS.API.Controllers.Administration
         }
         //Delete API
         [HttpDelete]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         //[Permission(PageCode = "PatientType", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {

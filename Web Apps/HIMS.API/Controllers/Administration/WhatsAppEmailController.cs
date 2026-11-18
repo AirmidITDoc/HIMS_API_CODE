@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.API.Models.Administration;
 using HIMS.Api.Models.Common;
@@ -22,6 +23,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("Insert")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<ApiResponse> Posts(WhatsAppModel obj)
         {
@@ -38,6 +40,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("EmailInsert")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<ApiResponse> EmailInsert(EmailModel obj)
         {

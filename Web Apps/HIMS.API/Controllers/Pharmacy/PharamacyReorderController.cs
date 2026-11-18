@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
 using HIMS.Core.Domain.Grid;
@@ -22,8 +23,8 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("ItemReorderList")]
-        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public async Task<IActionResult> ListM(GridRequestModel objGrid)
         {
             IPagedList<ItemReorderListDto> ItemReorderList = await _IPharmacyReorderService.GetListAsync(objGrid);

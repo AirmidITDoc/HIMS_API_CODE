@@ -41,6 +41,7 @@ namespace HIMS.API.Controllers.Login
             return Ok(LoginManagerList.ToGridResponse(objGrid, "User List"));
         }
         [HttpPost("loginAccessDetailsList")]
+        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
         //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> Listl(GridRequestModel objGrid)
         {
@@ -49,6 +50,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("LoginStoreUserWiseList")]
+        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
         //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> ListC(GridRequestModel objGrid)
         {
@@ -57,6 +59,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("LoginCashCounterUserWiseList")]
+        [Permission(PageCode = "Login", Permission = PagePermission.View)]
         //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> ListCashCounter(GridRequestModel objGrid)
         {
@@ -64,6 +67,7 @@ namespace HIMS.API.Controllers.Login
             return Ok(LoginStoreUserWiseList.ToGridResponse(objGrid, "Login CashCounter UserWise List "));
         }
         [HttpPost("LoginAccessConfigList")]
+        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
         //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> ListA(GridRequestModel objGrid)
         {
@@ -72,6 +76,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("LoginUnitUserWiseList")]
+        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
         //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> ListU(GridRequestModel objGrid)
         {

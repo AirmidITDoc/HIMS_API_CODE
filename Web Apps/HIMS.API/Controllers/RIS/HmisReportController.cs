@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
 using HIMS.API.Models;
@@ -31,7 +32,7 @@ namespace HIMS.API.Controllers.RIS
         // ──────────────────────────────────────────────────
 
         [HttpPost("report")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public IActionResult ReceiveReport([FromBody] ReportDetailsRequest request)
         {
             if (request == null)
@@ -58,7 +59,7 @@ namespace HIMS.API.Controllers.RIS
         // ──────────────────────────────────────────────────
 
         [HttpPost("report/share-status")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public IActionResult ReceiveReportShareStatus([FromBody] ReportShareStatusRequest request)
         {
             if (request == null)

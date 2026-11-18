@@ -32,7 +32,8 @@ namespace HIMS.Core.Domain.Common
     }
     public class AuthenticationSettings
     {
-        public string SecretKey { get; set; }
+        public string Issuer { get; set; } = string.Empty;
+        public string Audience { get; set; } = string.Empty;
     }
     public class AESSecurityKeys
     {

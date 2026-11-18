@@ -104,6 +104,7 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         }
         [HttpPut("NewPaymentPharmacy/{id:int}")]
+        [Permission(PageCode = "Paymentmodechanges", Permission = PagePermission.Edit)]
         //[Permission(PageCode = "PaymentPharmacy", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(paymentpharmacyUpdateModel obj)
         {

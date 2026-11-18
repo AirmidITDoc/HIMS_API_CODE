@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -25,8 +26,8 @@ namespace HIMS.API.Controllers.OTManagement
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "PatientType", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MOtnotesTemplateMaster> MOtnotesTemplateList = await _repository.GetAllPagedAsync(objGrid);
@@ -34,8 +35,8 @@ namespace HIMS.API.Controllers.OTManagement
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "PatientType", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(OTNotesTemplateModel obj)
         {
             MOtnotesTemplateMaster model = obj.MapTo<MOtnotesTemplateMaster>();
@@ -54,8 +55,8 @@ namespace HIMS.API.Controllers.OTManagement
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "PatientType", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(OTNotesTemplateModel obj)
         {
             MOtnotesTemplateMaster model = obj.MapTo<MOtnotesTemplateMaster>();

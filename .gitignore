@@ -2,6 +2,7 @@
 project.lock.json
 project.fragment.lock.json
 artifacts/
+.artifacts-*/
 
 .vs/*
 .vscode/*
@@ -12,3 +13,4 @@ bin
 obj
 *.user
 *.suo
+appsettings.Local.json

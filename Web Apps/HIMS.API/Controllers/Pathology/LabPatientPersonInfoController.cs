@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -25,8 +26,8 @@ namespace HIMS.API.Controllers.Pathology
   
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "LabPatientPersonInfo", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "LabPatientPersonInfo", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TLabPatientPersonInfo> LabPatientPersonInfoList = await _repository.GetAllPagedAsync(objGrid);
@@ -35,8 +36,8 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "LabPatientPersonInfo", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "LabPatientPersonInfo", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -49,8 +50,8 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost]
-        //[Permission(PageCode = "LabPatientPersonInfo", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "LabPatientPersonInfo", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(LabPatientPersonInfoModel obj)
         {
             TLabPatientPersonInfo model = obj.MapTo<TLabPatientPersonInfo>();
@@ -69,8 +70,8 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "LabPatientPersonInfo", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "LabPatientPersonInfo", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LabPatientPersonInfoModel obj)
         {
             TLabPatientPersonInfo model = obj.MapTo<TLabPatientPersonInfo>();

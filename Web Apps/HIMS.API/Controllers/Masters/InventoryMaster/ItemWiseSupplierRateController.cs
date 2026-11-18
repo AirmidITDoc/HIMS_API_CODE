@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
         }
         [HttpPost("ItemWiseSupplierRateList")]
-        [Permission]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ItemWiseSupplierRateDto> ItemWiseSupplierRateList = await _IItemWiseSupplierRateService.GetListAsync(objGrid);
@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
         //List API Get By Id
             [HttpGet("{id?}")]
-            [Permission]
+            [Permission(PageCode = "Administration", Permission = PagePermission.View)]
             public async Task<ApiResponse> Get(int id)
             {
                 if (id == 0)
@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             }
             //Add API
             [HttpPost]
-            [Permission]
+            [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
             public async Task<ApiResponse> Post(ItemWiseSupplierRateModel obj)
             {
             MItemWiseSupplierRate model = obj.MapTo<MItemWiseSupplierRate>();
@@ -72,7 +72,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             }
             //Edit API
             [HttpPut("{id:int}")]
-            [Permission]
+            [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
             public async Task<ApiResponse> Edit(ItemWiseSupplierRateModel obj)
             {
             MItemWiseSupplierRate model = obj.MapTo<MItemWiseSupplierRate>();
@@ -89,7 +89,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
             }
             //Delete API
             [HttpDelete]
-            [Permission]
+            [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
             public async Task<ApiResponse> Delete(int Id)
             {
             MItemWiseSupplierRate model = await _repository.GetById(x => x.DefId == Id);

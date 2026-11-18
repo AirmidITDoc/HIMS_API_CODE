@@ -47,6 +47,7 @@ namespace HIMS.API.Controllers.Pathology
 
         }
         [HttpGet("{id?}")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
        // [Permission]
         public async Task<ApiResponse> Get(int id)
         {
@@ -54,6 +55,7 @@ namespace HIMS.API.Controllers.Pathology
             return data.ToSingleResponse<TLabPatientRegistration, TLabPatientRegistrationModel>("LabPatientRegistration");
         }
         [HttpGet("GetLabPatientRegisteredMaster")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
        // [Permission]
         public async Task<ApiResponse> GetLab(int id)
@@ -62,14 +64,14 @@ namespace HIMS.API.Controllers.Pathology
             return data.ToSingleResponse<TLabPatientRegisteredMaster, LabPatientRegistrationMasterModels>("TLabPatientRegisteredMaster");
         }
         [HttpGet("GetMConstant")]
-        [Permission]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetMConstant(string ConstantType)
         {
             var data = await _ILabPatientRegistrationService.GetMConstant(ConstantType);
             return new ApiResponse { Data = data, StatusCode = 200, Message = "MConstant" };
         }
         [HttpPost("PrevLabDoctorVisitList")]
-        [Permission]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> OPPrevDrVisistList(GridRequestModel objGrid)
         {
             IPagedList<PrevDrVisistListDto> Oplist = await _ILabPatientRegistrationService.GeOPPreviousDrVisitListAsync(objGrid);
@@ -78,9 +80,8 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("List")]
         //[Permission]
-        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
-        [Permission]
 
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LabPatientRegistrationListDto> LabPatientRegistrationList = await _ILabPatientRegistrationService.GetListAsync(objGrid);
@@ -88,8 +89,8 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("LabSampleCollectionList")]
-        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> LabSamColList(GridRequestModel objGrid)
         {
             IPagedList<LabSampleCollectionListDto> LabSampleCollectionList = await _ILabPatientRegistrationService.GetSamColListAsync(objGrid);
@@ -97,8 +98,8 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("LabSampleCollectionDetailList")]
-        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> LabSamColDetailList(GridRequestModel objGrid)
         {
             IPagedList<LabSampleCollectionDetailListDto> LabSampleCollectionDetailList = await _ILabPatientRegistrationService.GetSamColListDetailAsync(objGrid);
@@ -106,6 +107,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("LabBillDetailList")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
        // [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> BillDetailList(GridRequestModel objGrid)
         {
@@ -114,14 +116,15 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("LabResultList")]
-        //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> LabResultList(GridRequestModel objGrid)
         {
             IPagedList<LabResultListDto> LabResultList = await _ILabPatientRegistrationService.LabResultListAsync(objGrid);
             return Ok(LabResultList.ToGridResponse(objGrid, " Lab Result List "));
         }
         [HttpPost("LabResultDetailsList")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> LabResultDetailsList(GridRequestModel objGrid)
         {
@@ -130,13 +133,14 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("LabResultPrintedList")]
-        [Permission]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> LabResultPrintedList(GridRequestModel objGrid)
         {
             IPagedList<LabResultPrintedListDto> LabResultPrintedList = await _ILabPatientRegistrationService.LabResultPrintedListAsync(objGrid);
             return Ok(LabResultPrintedList.ToGridResponse(objGrid, " Lab Result Printed List "));
         }
         [HttpPost("LabSamcollectionTestwiseList")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> LabSamcollectionTestwiseList(GridRequestModel objGrid)
         {
@@ -150,6 +154,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpGet("CompanyComboList")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission]
         public ApiResponse CompanyComboList(string? keywoard)
         {
@@ -223,6 +228,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPut("Edit/{id:int}")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Edit)]
        // [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LabPatientRegnewModel obj)
         {
@@ -244,6 +250,7 @@ namespace HIMS.API.Controllers.Pathology
        
 
         [HttpGet("search-patient-1")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission]
         public ApiResponse SearchPatientNew( [FromQuery] long UnitId,  [FromQuery] string Keyword)
         {
@@ -253,6 +260,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpGet("Labauto-complete")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetAutoComplete(string Keyword)
         {
@@ -272,6 +280,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("LabPatientWhatsappSendoutList")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> LabPaienWhatsappList(GridRequestModel objGrid)
         {
@@ -280,6 +289,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("LabPatientEmailOutgoingList")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> LabPatientemailList(GridRequestModel objGrid)
         {
@@ -288,6 +298,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("LabApprovaltList")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> LabApprovalResultList(GridRequestModel objGrid)
         {
@@ -297,6 +308,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("LabDiscountDetailList")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
        // [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> LabDiscountDetailList(GridRequestModel objGrid)
         {
@@ -305,6 +317,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("LabPaymentDetailList")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> LabPaymentDetailList(GridRequestModel objGrid)
         {
@@ -313,6 +326,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("LabCreditDetailList")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Edit)]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         public async Task<IActionResult> LabCreditDetailList(GridRequestModel objGrid)
         {
@@ -321,6 +335,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("DiscApprovalDetails")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertDiscApprovalDetails(DiscApprovalDetailsModel obj)
         {
@@ -335,6 +350,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.");
         }
         [HttpGet("search-LabServiceListwithTraiff")]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public ApiResponse SearchGetServiceListwithTraiff(int TariffId, int ClassId, int GroupId, int SubGroupId,int IsPackage, string SrvcName)
         {

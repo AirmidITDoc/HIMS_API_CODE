@@ -1,4 +1,6 @@
 ﻿using Asp.Versioning;
+using HIMS.API.Extensions;
+using HIMS.Core;
 using HIMS.ABHA.Helper;
 using HIMS.ABHA.Interface;
 using HIMS.ABHA.Models.M2;
@@ -20,6 +22,7 @@ namespace HIMS.API.Controllers.ABHA.M2
             _abhaService = abhaService;
         }
         [HttpPost("consent/hip/on-notify")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> ConsentHipOnNotify([FromBody] ConsentHipOnNotifyRequest req)
         {
             var result = await _abhaService.ConsentHipOnNotifyAsync(req);
@@ -31,6 +34,7 @@ namespace HIMS.API.Controllers.ABHA.M2
         }
 
         [HttpPost("hip/hi/on-request")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> HipHiOnRequest([FromBody] HipHiOnRequestRequest req)
         {
             var result = await _abhaService.HipHiOnRequestAsync(req);
@@ -40,6 +44,7 @@ namespace HIMS.API.Controllers.ABHA.M2
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { TxnId = "", Message = AbhaHelper.GetErrorMessage(result.Error) });
         }
         [HttpPost("hi/notify")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> HiFlowNotify([FromBody] HiFlowNotifyRequest req)
         {
             var result = await _abhaService.HiFlowNotifyAsync(req);

@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
 
         //List API Get By Id
         [HttpGet("PathReportId /{id?}")]
-        [Permission]
+        [Permission(PageCode = "TemplateMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetByPathReportId(int id)
         {
             if (id == 0)

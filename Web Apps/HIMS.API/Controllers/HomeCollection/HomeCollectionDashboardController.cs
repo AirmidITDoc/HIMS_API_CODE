@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.Services.Pathlogy;
@@ -19,6 +20,7 @@ namespace HIMS.API.Controllers.HomeCollection
         }
 
         [HttpGet("HomeCollectionDashBoard")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> HomeCollectionDashboard(int UnitId, int PhlebotomistId, DateTime FromDate, DateTime ToDate)
         {

@@ -42,6 +42,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
        
         [HttpGet("CompanyRepresentativeList")]
+        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
         public ApiResponse CompanyRepresentativeList(long CompanyId)
         {
             var data = _CompanyMasterService.CompanyRepresentativeList(CompanyId);
@@ -59,6 +60,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         //}
 
         [HttpPost("CompanyMasterList")]
+        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
         //[Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> GetList(GridRequestModel objGrid)
         {
@@ -83,7 +85,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPost("CompanyExecutiveInfoList")]
-        [Permission]
+        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> CompanyExecutiveInfoList(GridRequestModel objGrid)
         {
             IPagedList<CompanyExecutiveInfoListDto> CompanyExecutiveInfoList = await _CompanyMasterService.CompanyExecutiveInfoListAsync(objGrid);
@@ -93,7 +95,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         
 
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -188,7 +190,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
 
         [HttpPut("updatecompanywiseservicerate")]
-        [Permission]
+        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Editc(List<updatecompanywiseservicerate> objs)
         {
             if (objs == null || objs.Count == 0)

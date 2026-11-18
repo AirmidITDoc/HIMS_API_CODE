@@ -22,7 +22,7 @@ namespace HIMS.API.Controllers.QzTray
         }
 
         [HttpPost("sign-message")]
-        [Permission]
+        [SharedAuthenticated]
         public IActionResult SignMessage([FromBody] SignRequestModel model)
         {
             if (string.IsNullOrWhiteSpace(model?.Request))

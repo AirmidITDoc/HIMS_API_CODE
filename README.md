@@ -95,3 +95,59 @@ dotnet run --project "Tests\HIMS.TokenRegression\HIMS.TokenRegression.csproj"
 It verifies signed web/mobile tokens remain below 8 KB for 500 permission entries,
 lossless permission round trips, legacy-token compatibility, all five permission
 flags, multi-page matching, and denial for unknown pages or missing claims.
+
+## Secure Login V2 deployment and configuration (support handoff)
+
+These uncommitted login changes introduce V2 challenge-based authentication,
+RSA-signed JWT validation, password hashing upgrades, and stricter transport
+requirements. Apply this checklist in deployment order.
+
+1. **Database update (required before API rollout)**
+   - Execute once per environment:
+     [HIMS_Secure_Login_V2.sql](Web%20Apps/HIMS.API/DbData/HIMS_Secure_Login_V2.sql)
+   - The script creates `dbo.HimsLoginChallenge` and `dbo.HimsLoginConfirmation`
+     plus expiry indexes. Without it, V2 login challenge/confirm endpoints fail.
+
+2. **Set required secrets/configuration**
+   - **API and ScheduleJobs encryption key**
+     - Set `HIMS_ENCRYPTION_KEY` (preferred) or `EncryptionKey` config value.
+     - Startup now fails if encryption key is missing.
+   - **JWT issuer/audience (required)**
+     - Set `AuthenticationSettings:Issuer`
+     - Set `AuthenticationSettings:Audience`
+   - **Login V2 RSA key material (required in non-development)**
+     - Configure either environment variables or `LoginV2` settings:
+       - `HIMS_LOGIN_V2_KID`
+       - one of:
+         - `HIMS_LOGIN_V2_PRIVATE_KEY_PKCS8_BASE64`
+         - `HIMS_LOGIN_V2_PRIVATE_KEY_PEM`
+         - `HIMS_LOGIN_V2_PRIVATE_KEY_PATH`
+     - Optional multi-key rotation uses `LoginV2:Keys[]` + `LoginV2:CurrentKid`.
+   - **Rate limit and transport switches**
+     - `LoginSecurity:RequestsPerMinute` (default `60`)
+     - `LoginSecurity:AllowHttpDevelopment` should remain `false` in production.
+
+3. **Infrastructure/proxy requirements**
+   - Login endpoints now enforce HTTPS and return `426 Upgrade Required` on HTTP.
+   - If TLS terminates at a proxy/load balancer, pass trusted
+     `X-Forwarded-Proto`/`X-Forwarded-For` headers so HTTPS is detected correctly.
+
+4. **Rollout sequencing**
+   - Run SQL script first.
+   - Deploy API update to all instances.
+   - Restart ScheduleJobs with the same encryption key setup.
+   - Have users sign out/sign in to refresh tokens under new signing/validation.
+
+5. **Post-deployment verification**
+   - `GET /api/Login/Challenge?loginType=Web` should return `200` with
+     `kid`, `publicKey`, `challengeId`, `nonce`, `context`, and captcha image.
+   - `POST /api/Login/AuthenticateV2` should reject reused/expired challenge IDs.
+   - Repeated login bursts should eventually return `429 Too Many Requests`.
+   - Run the regression utility:
+
+```powershell
+dotnet run --project "Tests\HIMS.LoginV2Regression\HIMS.LoginV2Regression.csproj"
+```
+
+It validates V2 envelope encryption/decryption, AAD/tamper rejection, loginType
+JSON contract, and password-hash behavior.

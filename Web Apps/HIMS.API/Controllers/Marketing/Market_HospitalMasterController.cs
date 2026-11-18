@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -25,6 +26,7 @@ namespace HIMS.API.Controllers.Marketing
 
         //List API
         [HttpPost]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         [Route("[action]")]
         //[Permission(PageCode = "MarketingDailyVisit", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -33,6 +35,7 @@ namespace HIMS.API.Controllers.Marketing
             return Ok(MarketingHospitalList.ToGridResponse(objGrid, "Marketing Hospital Master List"));
         }
         [HttpGet("{id?}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         //[Permission(PageCode = "MarketingDailyVisit", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
@@ -44,6 +47,7 @@ namespace HIMS.API.Controllers.Marketing
             return data.ToSingleResponse<MMarketingHospitalMaster, MarketHospitalMasterModel>("MarketingHospitalMaster");
         }
         [HttpPost]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission(PageCode = "MarketingDailyVisit", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(MarketHospitalMasterModel obj)
         {
@@ -63,6 +67,7 @@ namespace HIMS.API.Controllers.Marketing
         }
         //Edit API
         [HttpPut("{id:int}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         //[Permission(PageCode = "MarketingDailyVisit", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(MarketHospitalMasterModel obj)
         {
@@ -80,6 +85,7 @@ namespace HIMS.API.Controllers.Marketing
         }
         //Delete API
         [HttpDelete]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         //[Permission(PageCode = "MarketingDailyVisit", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {

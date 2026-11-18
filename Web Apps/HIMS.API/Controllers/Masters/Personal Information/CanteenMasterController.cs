@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -33,8 +33,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MCanItemMaster> CanItemMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -44,8 +44,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "BedMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int ItemId)
         {
             if (ItemId == 0)
@@ -58,8 +58,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "BedMaster", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "BedMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(CanItemMasterModel obj)
         {
             MCanItemMaster model = obj.MapTo<MCanItemMaster>();
@@ -76,8 +76,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
         }
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "BedMaster", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "BedMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(CanItemMasterModel obj)
         {
             MCanItemMaster model = obj.MapTo<MCanItemMaster>();
@@ -95,8 +95,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "BedMaster", Permission = PagePermission.Delete)]
-        [Permission]
+
+        [Permission(PageCode = "BedMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MCanItemMaster? model = await _repository.GetById(x => x.ItemId == Id);

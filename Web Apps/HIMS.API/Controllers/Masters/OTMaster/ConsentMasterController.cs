@@ -33,8 +33,8 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ConsentMasterDto> ConsentMasterList = await _IConsentMasterService.ConsentMasterListAsync(objGrid);
@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         }
 
         [HttpGet("{id?}")]
-        [Permission]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         }
         //Insert API
         [HttpPost]
-        [Permission]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ConsentMasterModel obj)
         {
             MConsentMaster model = obj.MapTo<MConsentMaster>();
@@ -72,7 +72,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ConsentMasterModel obj)
         {
             MConsentMaster model = obj.MapTo<MConsentMaster>();
@@ -93,7 +93,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
         //Delete API
         [HttpDelete]
-        [Permission]
+        [Permission(PageCode = "OTManagement", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MConsentMaster? model = await _repository.GetById(x => x.ConsentId == Id);

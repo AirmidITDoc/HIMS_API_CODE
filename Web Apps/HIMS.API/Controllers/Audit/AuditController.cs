@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
 using HIMS.Core;
@@ -22,8 +22,8 @@ namespace HIMS.API.Controllers.Audit
         }
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "Audit", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Audit", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             //var sessionId = Context.StoreId;

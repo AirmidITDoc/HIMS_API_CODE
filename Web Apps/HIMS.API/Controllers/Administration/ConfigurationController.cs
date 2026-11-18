@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -141,8 +141,8 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("AuditLogList")]
-        [Permission]
-        //[Permission(PageCode = "Configuration", Permission = PagePermission.View)]
+        [Permission(PageCode = "Configuration", Permission = PagePermission.View)]
+
         public async Task<IActionResult> AuditlogList(GridRequestModel objGrid)
         {
             IPagedList<AuditlogDtoList> List = await _IConfigService.GetAuditlog(objGrid);

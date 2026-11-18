@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using HIMS.Api.Controllers;
 using HIMS.API.Extensions;
 using HIMS.Core.Domain.Grid;
@@ -27,8 +27,8 @@ namespace HIMS.API.Controllers.OPPatient
         //List API
         [HttpPost]
         [Route("[action]")]
-        //[Permission(PageCode = "PatientPolicy", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "PatientPolicy", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TPatientPolicyInformation> PatientPolicyList = await _repository.GetAllPagedAsync(objGrid);
@@ -37,8 +37,8 @@ namespace HIMS.API.Controllers.OPPatient
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "PatientPolicy", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "PatientPolicy", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -50,8 +50,8 @@ namespace HIMS.API.Controllers.OPPatient
         }
         //Add API
         [HttpPost]
-        //[Permission(PageCode = "PatientPolicy", Permission = PagePermission.Add)]
-        [Permission]
+
+        [Permission(PageCode = "PatientPolicy", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(PatientPolicyModel obj)
         {
             TPatientPolicyInformation model = obj.MapTo<TPatientPolicyInformation>();
@@ -69,8 +69,8 @@ namespace HIMS.API.Controllers.OPPatient
 
         //Edit API
         [HttpPut("{id:int}")]
-        //[Permission(PageCode = "PatientPolicy", Permission = PagePermission.Edit)]
-        [Permission]
+
+        [Permission(PageCode = "PatientPolicy", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PatientPolicyModel obj)
         {
             TPatientPolicyInformation model = obj.MapTo<TPatientPolicyInformation>();
@@ -87,8 +87,8 @@ namespace HIMS.API.Controllers.OPPatient
         }
         //Delete API
         [HttpDelete]
-        //[Permission(PageCode = "PatientPolicy", Permission = PagePermission.Delete)]
-        [Permission]
+
+        [Permission(PageCode = "PatientPolicy", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             TPatientPolicyInformation model = await _repository.GetById(x => x.PatientPolicyId == Id);

@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -21,6 +22,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("DoctorShareProcess")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public ApiResponse Insert(DoctorShareProcessModel obj)
         {
@@ -40,6 +42,7 @@ namespace HIMS.API.Controllers.Administration
         }
 
         [HttpPost("InsertDoctorPerMaster")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertEDMX(MDoctorPerMasterModel obj)
         {
@@ -54,6 +57,7 @@ namespace HIMS.API.Controllers.Administration
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record  added successfully.");
         }
         [HttpPut("UpdateDoctorPerMaster Edit/{id:int}")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         //[Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(MDoctorPerMasterModel obj)
         {

@@ -8,13 +8,16 @@ using HIMS.ABHA.Services;
 using HIMS.API.Extensions;
 using HIMS.API.Hubs;
 using HIMS.API.Infrastructure;
+using HIMS.API.Security;
 using HIMS.Core;
 using HIMS.Core.Domain.Common;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -23,6 +26,7 @@ using Polly.Extensions.Http;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Security.Cryptography;
 using WkHtmlToPdfDotNet;
 using WkHtmlToPdfDotNet.Contracts;
 
@@ -30,6 +34,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
 
 AppSettings.Initialize(builder.Configuration);
+string? encryptionKey = Environment.GetEnvironmentVariable("HIMS_ENCRYPTION_KEY") ??
+    builder.Configuration["EncryptionKey"];
+if (string.IsNullOrWhiteSpace(encryptionKey) && builder.Environment.IsDevelopment())
+    encryptionKey = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+SecurityKeys.Configure(encryptionKey);
 
 // Add services to the container.
 ConfigurationManager Configuration = builder.Configuration;
@@ -92,6 +101,14 @@ using (var serviceProvider = builder.Services.BuildServiceProvider())
 using (var scope = serviceProvider.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<HIMSDbContext>();
+    if (builder.Environment.IsDevelopment())
+    {
+        string loginV2Migration = Path.Combine(builder.Environment.ContentRootPath,
+            "DbData", "HIMS_Secure_Login_V2.sql");
+        if (!File.Exists(loginV2Migration))
+            throw new FileNotFoundException("Development login V2 migration was not found.", loginV2Migration);
+        db.Database.ExecuteSqlRaw(File.ReadAllText(loginV2Migration));
+    }
 
     var offsetMinutes = db.AppSettings.FirstOrDefault(x => x.SettingKey == "TimeOffsetMinutes")?.SettingValue.ToInt() ?? 0;
     string CurrencySymbol = db.MSystemConfigs.FirstOrDefault(x => x.SystemName == "CurrencySymbol")?.SystemInputValue ?? "$";
@@ -103,6 +120,7 @@ builder.Services.AddMvc(opt =>
 {
     opt.EnableEndpointRouting = false;
     opt.Filters.Add(typeof(ValidateModelStateAttribute));
+    opt.Filters.Add(typeof(RequestScopeActionFilter));
 }).AddFluentValidation(fvc => fvc.RegisterValidatorsFromAssemblyContaining<Program>());
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -134,9 +152,13 @@ builder.Services.AddApiVersioning(config =>
     config.ApiVersionReader = new HeaderApiVersionReader("api-version");
 });
 
-//Configure JWT Token Authentication
-//AuthenticationSettings config = builder.Configuration.GetSection("AuthenticationSettings").Get<AuthenticationSettings>();
-byte[] secretKey = Encoding.ASCII.GetBytes(AppSettings.Settings.AuthenticationSettings.SecretKey);
+var loginKeyProvider = new LoginV2KeyProvider(builder.Configuration, builder.Environment.IsDevelopment());
+if (!loginKeyProvider.IsConfigured)
+    throw new InvalidOperationException(loginKeyProvider.ConfigurationError ?? "JWT/V2 RSA key provider is not configured.");
+string jwtIssuer = AppSettings.Settings.AuthenticationSettings.Issuer ?? string.Empty;
+string jwtAudience = AppSettings.Settings.AuthenticationSettings.Audience ?? string.Empty;
+if (string.IsNullOrWhiteSpace(jwtIssuer) || string.IsNullOrWhiteSpace(jwtAudience))
+    throw new InvalidOperationException("AuthenticationSettings Issuer and Audience must be configured.");
 builder.Services.AddAuthentication(auth =>
 {
     auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -144,17 +166,36 @@ builder.Services.AddAuthentication(auth =>
 })
 .AddJwtBearer(x =>
 {
-    x.RequireHttpsMetadata = false;
+    x.RequireHttpsMetadata = true;
     x.SaveToken = true;
     x.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(secretKey),
-        ValidateIssuer = false,
-        ValidateAudience = false
+        IssuerSigningKeys = loginKeyProvider.All.Select(key => new RsaSecurityKey(key.Rsa.ExportParameters(false))
+        {
+            KeyId = key.Kid
+        }),
+        ValidateIssuer = true,
+        ValidIssuer = jwtIssuer,
+        ValidateAudience = true,
+        ValidAudience = jwtAudience,
+        ValidateLifetime = true,
+        RequireExpirationTime = true,
+        RequireSignedTokens = true,
+        ValidAlgorithms = new[] { SecurityAlgorithms.RsaSha256 },
+        ClockSkew = TimeSpan.FromMinutes(1)
     };
 });
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
 builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+builder.Services.AddSingleton<ILoginV2KeyProvider>(loginKeyProvider);
+builder.Services.AddScoped<ILoginV2Store, DbLoginV2Store>();
+builder.Services.AddSingleton<LoginRateLimiter>();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API.Project", Version = "v1" });
@@ -214,20 +255,25 @@ builder.Services.AddCors(options =>
 
 
 var app = builder.Build();
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 app.UseMiddleware<SecurityHeadersMiddleware>();
 app.UseStaticFiles();
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint(AppSettings.Settings.SwaggerUrl, "API v1"));
 
-app.UseAuthentication();
+app.UseMiddleware<LoginRateLimitMiddleware>();
 app.UseCors("CorsPolicy");
 //app.UseWebSockets();
 app.MapHub<NotificationHub>("/himshub");
 // register exception, request-context and audit middleware before routing/endpoints
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseRouting();
+app.UseAuthentication();
 app.UseMiddleware<RequestContextMiddleware>();
 app.UseMiddleware<RequestAuditMiddleware>();
-app.UseRouting();
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {

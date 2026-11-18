@@ -35,8 +35,8 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("EstimateList")]
-        //[Permission(PageCode = "EstimateList", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "EstimateList", Permission = PagePermission.View)]
         public async Task<IActionResult> EstimateList(GridRequestModel objGrid)
         {
             IPagedList<PatientEstimateListDto> EstimateList = await _IEstimasteService.EstimateListAsync(objGrid);
@@ -44,8 +44,8 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("EstimateDetailsList")]
-        //[Permission(PageCode = "EstimateDetailsList", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "EstimateDetailsList", Permission = PagePermission.View)]
         public async Task<IActionResult> EstimateDetailsList(GridRequestModel objGrid)
         {
             IPagedList<PatientEstimateDetailsListDto> EstimateDetailsList = await _IEstimasteService.EstimateDetailsListAsync(objGrid);
@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.Pathology
        
         //Add API
         [HttpPost("Insert")]
-        [Permission]
+        [Permission(PageCode = "EstimateList", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(EstimateModel obj)
         {
             TEstimateHeader model = obj.MapTo<TEstimateHeader>();
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Pathology
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.EstimateId);
         }
         [HttpPut("Edit/{id:int}")]
-        [Permission]
+        [Permission(PageCode = "EstimateList", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(EstimateModel obj)
         {
             TEstimateHeader model = obj.MapTo<TEstimateHeader>();

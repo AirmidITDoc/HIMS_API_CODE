@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using HIMS.Core;
 using HIMS.Api.Controllers;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
@@ -26,8 +27,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("supplierPaymentList")]
-        //[Permission(PageCode = "Sales", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<SupplierNamelistDto> SupplierNamelist = await _SupplierPaymentStatusService.SupplierNamelist(objGrid);
@@ -35,8 +36,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("ItemListBYSupplierName")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GeSupplierrateListAsync(GridRequestModel objGrid)
         {
             IPagedList<ItemListBysupplierNameDto> List1 = await _SupplierPaymentStatusService.GetItemListbysuppliernameAsync(objGrid);
@@ -44,8 +45,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("GetSupplierPaymentStatusList")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GetSupplierPaymentStatusList(GridRequestModel objGrid)
         {
             IPagedList<SupplierPaymentStatusListDto> List1 = await _SupplierPaymentStatusService.GetSupplierPaymentStatusList(objGrid);
@@ -53,8 +54,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("GetSupplierPaymentList")]
-        //[Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
-        [Permission]
+
+        [Permission(PageCode = "GRNReturn", Permission = PagePermission.View)]
         public async Task<IActionResult> GetSupplierPaymentList(GridRequestModel objGrid)
         {
             IPagedList<GetSupplierPaymentListDto> List1 = await _SupplierPaymentStatusService.GetSupplierPaymentList(objGrid);
@@ -62,7 +63,7 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpPost("Insert")]
-         [Permission]
+         [Permission(PageCode = "GRNReturn", Permission = PagePermission.Add)]
         public ApiResponse Insert(TGRNSupPayment obj)
         {
             TGrnsupPayment model = obj.GrnsupPayment.MapTo<TGrnsupPayment>();

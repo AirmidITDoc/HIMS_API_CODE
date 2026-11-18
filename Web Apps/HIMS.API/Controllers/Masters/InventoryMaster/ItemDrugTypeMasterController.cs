@@ -26,6 +26,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //List API
         [HttpPost]
+        [Permission(PageCode = "MItemDrugTypeMaster", Permission = PagePermission.View)]
         [Route("[action]")]
         //[Permission(PageCode = "MItemDrugTypeMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
@@ -35,6 +36,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //List API Get By Id
         [HttpGet("{id?}")]
+        [Permission(PageCode = "MItemDrugTypeMaster", Permission = PagePermission.View)]
         //[Permission(PageCode = "MItemDrugTypeMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
@@ -47,6 +49,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //Add API
         [HttpPost]
+        [Permission(PageCode = "MItemDrugTypeMaster", Permission = PagePermission.Add)]
         //[Permission(PageCode = "MItemDrugTypeMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ItemDrugTypeMasterModel obj)
         {
@@ -66,6 +69,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //Edit API
         [HttpPut("{id:int}")]
+        [Permission(PageCode = "MItemDrugTypeMaster", Permission = PagePermission.Edit)]
         //[Permission(PageCode = "MItemDrugTypeMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(ItemDrugTypeMasterModel obj)
         {
@@ -84,6 +88,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
         //Delete API
         [HttpDelete]
+        [Permission(PageCode = "MItemDrugTypeMaster", Permission = PagePermission.Delete)]
         //[Permission(PageCode = "MItemDrugTypeMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
@@ -101,6 +106,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
 
         [HttpGet]
+        [Permission(PageCode = "MItemDrugTypeMaster", Permission = PagePermission.View)]
         [Route("get-ItemDrugType")] 
         public async Task<ApiResponse> GetDropdown()
         {
