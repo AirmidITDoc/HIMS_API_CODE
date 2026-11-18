@@ -62,19 +62,19 @@ namespace HIMS.Api.Controllers
                 if (CurrentUser != null && CurrentUser.HasClaim(c => c.Type == "LoginType"))
                 {
                     var decryptedValue = EncryptionUtility.DecryptText(CurrentUser.Claims.FirstOrDefault(c => c.Type == "LoginType").Value, SecurityKeys.EnDeKey);
-                    if (int.TryParse(decryptedValue, out int loginTypeInt))
+
+                    if (Enum.TryParse<LoginType>(decryptedValue, true, out var loginType))
+                    {
+                        return loginType;
+                    }
+
+                    if (int.TryParse(decryptedValue, out int loginTypeInt) && Enum.IsDefined(typeof(LoginType), loginTypeInt))
                     {
                         return (LoginType)loginTypeInt;
                     }
-                    else
-                    {
-                        return LoginType.Web;
-                    }
                 }
-                else
-                {
-                    return LoginType.Web;
-                }
+
+                return LoginType.Web;
             }
         }
         protected RequestContext Context =>

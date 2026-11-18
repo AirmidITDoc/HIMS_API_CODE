@@ -72,6 +72,9 @@ namespace HIMS.API.Controllers.Login
         protected readonly IUserService _userService;
         private readonly IPermissionService _IPermissionService;
         private readonly IMenuService _IMenuService;
+        private const int WebTokenValidityMinutes = 720;
+        private const int MobileTokenValidityMinutes = 90 * 24 * 60;
+
         public LoginController(IUserService userService, IPermissionService permission, IMenuService iMenuService)
         {
             _userService = userService;
@@ -79,6 +82,18 @@ namespace HIMS.API.Controllers.Login
             _IMenuService = iMenuService;
         }
 
+        [NonAction]
+        private static bool HasActiveSession(LoginManager user, LoginType loginType)
+        {
+            string? activeToken = loginType == LoginType.Mobile ? user.MobileToken : user.UserToken;
+            return !string.IsNullOrWhiteSpace(activeToken) && user.UserId > 0;
+        }
+
+        [NonAction]
+        private static int GetTokenValidityMinutes(LoginType loginType)
+        {
+            return loginType == LoginType.Mobile ? MobileTokenValidityMinutes : WebTokenValidityMinutes;
+        }
 
         [HttpPost]
         [Route("[action]")]
@@ -111,7 +126,7 @@ namespace HIMS.API.Controllers.Login
                             {
                                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Authentication Failed! Invalid username or password.");
                             }
-                            else if (!string.IsNullOrWhiteSpace(user.UserToken) && user.UserId > 0)
+                            else if (HasActiveSession(user, model.LoginType))
                             {
                                 string encrToken = EncryptionUtility.EncryptText(user.UserName + "|" + user.Password + "|" + AppTime.Now.ToString("yyyy-MM-dd HH:mm"), SecurityKeys.EnDeKey);
                                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { token = encrToken, status = "Already Active", Msg = "There is another session is already active. Do you want to continue?" });
@@ -133,6 +148,31 @@ namespace HIMS.API.Controllers.Login
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "API product key expired.");
             }
         }
+
+        [HttpPost("mobile-authenticate")]
+        [SwaggerOperation(Description = "Mobile-only authentication endpoint with long session validity.")]
+        public async Task<ApiResponse> MobileAuthenticate([FromBody] AuthenticateModel model)
+        {
+            if (string.IsNullOrWhiteSpace(model.Username))
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Username is required");
+            }
+
+            LoginManager user = await _userService.CheckLogin(model.Username, model.Password);
+            if (user == null)
+            {
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Authentication Failed! Invalid username or password.");
+            }
+
+            if (HasActiveSession(user, LoginType.Mobile))
+            {
+                string encrToken = EncryptionUtility.EncryptText(user.UserName + "|" + user.Password + "|" + AppTime.Now.ToString("yyyy-MM-dd HH:mm"), SecurityKeys.EnDeKey);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { token = encrToken, status = "Already Active", Msg = "There is another session is already active. Do you want to continue?" });
+            }
+
+            return await AfterLogin(user, LoginType.Mobile);
+        }
+
         [HttpPost]
         [Route("[action]")]
         [SwaggerOperation(Description = "for get CaptchaCode & CaptchaToken call GetCaptcha (Next) API.")]
@@ -146,6 +186,11 @@ namespace HIMS.API.Controllers.Login
                 if (user == null)
                 {
                     return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "Authentication Failed! Invalid username or password.");
+                }
+                else if (HasActiveSession(user, model.LoginType))
+                {
+                    string encrToken = EncryptionUtility.EncryptText(user.UserName + "|" + user.Password + "|" + AppTime.Now.ToString("yyyy-MM-dd HH:mm"), SecurityKeys.EnDeKey);
+                    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", new { token = encrToken, status = "Already Active", Msg = "There is another session is already active. Do you want to continue?" });
                 }
                 else
                 {
@@ -169,7 +214,7 @@ namespace HIMS.API.Controllers.Login
                 user.UserToken,
                 user.WebRoleId,
                 Permissions = JsonConvert.SerializeObject(permissions),
-                Token = CommonExtensions.GenerateToken(user, AppSettings.Settings.AuthenticationSettings.SecretKey, 720, permissionString, loginType),
+                Token = CommonExtensions.GenerateToken(user, AppSettings.Settings.AuthenticationSettings.SecretKey, GetTokenValidityMinutes(loginType), permissionString, loginType),
                 UserName = user.FirstName + " " + user.LastName,
                 user.UserId,
                 RefreshToken = loginType == LoginType.Mobile ? user.MobileToken : null,
@@ -271,7 +316,11 @@ namespace HIMS.API.Controllers.Login
                 }
                 else
                 {
-                    user.UserToken = null;
+                    if (CurrentLoginType == LoginType.Mobile)
+                        user.MobileToken = null;
+                    else
+                        user.UserToken = null;
+
                     await _userService.UpdateAsync(user, CurrentUserId, CurrentUserName);
                 }
             }
