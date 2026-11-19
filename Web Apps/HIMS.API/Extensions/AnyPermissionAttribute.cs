@@ -1,4 +1,5 @@
 using HIMS.Api.Models.Common;
+using HIMS.Core;
 using HIMS.Data.Models;
 using HIMS.Services.Permissions;
 using HIMS.Services.Users;
@@ -55,7 +56,7 @@ namespace HIMS.API.Extensions
                 WriteForbidden(context);
         }
 
-        private static bool HasPermission(HIMS.Data.DTO.PageMasterDto permission, PagePermission required)
+        private static bool HasPermission(PageMasterDto permission, PagePermission required)
         {
             return required switch
             {
