@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using static HIMS.Core.Domain.Grid.ListRequestModel;
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HIMS.API.Controllers.Report
 {
@@ -740,8 +741,8 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpPost("ViewReportFromDB")]
-        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
-        //[Permission]
+        //[Permission(PageCode = "Report", Permission = PagePermission.Add)]
+        [AllowAnonymous]
         public async Task<IActionResult> ViewReportFromDB(ReportRequestModel model)
         {
             try
