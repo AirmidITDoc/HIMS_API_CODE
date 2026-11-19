@@ -140,7 +140,7 @@ namespace HIMS.API.Controllers.Common
         }
 
         [HttpPost]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public ApiResponse GetByProc(ListRequestModel model)
         {
             if (model == null)
@@ -159,7 +159,7 @@ namespace HIMS.API.Controllers.Common
         }
         [Route("get-daily-dashboard-data")]
         [HttpPost]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public ApiResponse GetListByProc(ListRequestModel model)
         {
             string pDashboardId = model?.SearchFields?.FirstOrDefault(x => x.FieldName == "pDashboardId")?.FieldValue ?? "";
@@ -175,7 +175,7 @@ namespace HIMS.API.Controllers.Common
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "invalid data");
         }
         [HttpPost]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         [Route("get-data-table-by-proc")]
         public ApiResponse GetDataTableByProc(ListRequestModel model)
         {
