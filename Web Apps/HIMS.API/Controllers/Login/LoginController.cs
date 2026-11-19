@@ -394,9 +394,15 @@ namespace HIMS.API.Controllers.Login
         private ApiResponse? RequireHttps()
         {
             bool allowDevelopmentHttp = _configuration.GetValue("LoginSecurity:AllowHttpDevelopment", false);
-            bool isAllowed = Request.IsHttps || (allowDevelopmentHttp && Request.HttpContext.RequestServices
-                       .GetRequiredService<IWebHostEnvironment>().IsDevelopment())
-                ;
+            bool allowLocalNetworkHttp = _configuration.GetValue("LoginSecurity:AllowHttpLocalNetwork", false);
+            bool isLocalConnection = 
+                LocalNetworkPolicy.IsLoopbackOrPrivate(Request.HttpContext.Connection.RemoteIpAddress) &&
+                LocalNetworkPolicy.IsLoopbackOrPrivateHost(Request.Host.Host);
+            bool isDevelopmentHttp = allowDevelopmentHttp &&
+                Request.HttpContext.RequestServices.GetRequiredService<IWebHostEnvironment>().IsDevelopment() &&
+                isLocalConnection;
+            bool isLocalNetworkHttp = allowLocalNetworkHttp && isLocalConnection;
+            bool isAllowed = Request.IsHttps || isDevelopmentHttp || isLocalNetworkHttp;
             if (isAllowed) return null;
             Response.StatusCode = StatusCodes.Status426UpgradeRequired;
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status426UpgradeRequired, "Login endpoints require HTTPS.");

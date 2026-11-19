@@ -164,7 +164,8 @@ builder.Services.AddApiVersioning(config =>
     config.ApiVersionReader = new HeaderApiVersionReader("api-version");
 });
 
-var loginKeyProvider = new LoginV2KeyProvider(builder.Configuration, allowEphemeralDevelopmentKey: true);
+var loginKeyProvider = new LoginV2KeyProvider(builder.Configuration,
+    allowEphemeralDevelopmentKey: builder.Environment.IsDevelopment());
 if (!loginKeyProvider.IsConfigured)
     throw new InvalidOperationException(loginKeyProvider.ConfigurationError ?? "JWT/V2 RSA key provider is not configured.");
 string jwtIssuer = AppSettings.Settings.AuthenticationSettings.Issuer ?? string.Empty;
@@ -178,7 +179,7 @@ builder.Services.AddAuthentication(auth =>
 })
 .AddJwtBearer(x =>
 {
-    x.RequireHttpsMetadata = true;
+    x.RequireHttpsMetadata = builder.Environment.IsProduction();
     x.SaveToken = true;
     x.TokenValidationParameters = new TokenValidationParameters
     {
@@ -249,7 +250,9 @@ builder.Services.AddCors(options =>
                 try
                 {
                     var uri = new Uri(origin);
-                    if (uri.Host == "localhost")
+                    bool allowPrivateOrigins = builder.Environment.IsDevelopment() &&
+                        builder.Configuration.GetValue("LoginSecurity:AllowPrivateNetworkOrigins", true);
+                    if (LocalNetworkPolicy.IsLoopbackOrPrivateHost(uri.Host) && allowPrivateOrigins)
                         return true;
                     return CorsAllowUrls.Contains(origin);
                 }
