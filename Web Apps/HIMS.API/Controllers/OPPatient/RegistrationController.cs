@@ -41,7 +41,8 @@ namespace HIMS.API.Controllers.OPPatient
 
 
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        [Permission]
+        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             var data = await _repository.GetById(x => x.RegId == id);
