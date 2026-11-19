@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string? UnitofMeasurementName { get; set; }
     }
 
-    public class UnitOfMeasurementModelValidator : AbstractValidator<UnitOfMeasurementModel>
+    public class UnitOfMeasurementModelValidator : CommonDynamicValidator<UnitOfMeasurementModel>
     {
         public UnitOfMeasurementModelValidator()
         {

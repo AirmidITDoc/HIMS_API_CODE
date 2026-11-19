@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string? BankName { get; set; }
 
     }
-    public class BankMasterModelValidator : AbstractValidator<BankMasterModel>
+    public class BankMasterModelValidator : CommonDynamicValidator<BankMasterModel>
     {
         public BankMasterModelValidator()
         {

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -7,7 +8,7 @@ namespace HIMS.API.Models.Masters
         public long ConcessionId { get; set; }
         public string? ConcessionReason { get; set; }
 
-        public class ConcessionReasonMasterModelValidator : AbstractValidator<ConcessionReasonMasterModel>
+        public class ConcessionReasonMasterModelValidator : CommonDynamicValidator<ConcessionReasonMasterModel>
         {
             public ConcessionReasonMasterModelValidator()
             {

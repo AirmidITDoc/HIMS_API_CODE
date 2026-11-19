@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -15,7 +16,7 @@ namespace HIMS.API.Models.Masters
         public string? TableNames { get; set; }
 
     }
-    public class MenuMasterModelValidator : AbstractValidator<MenuMasterModel>
+    public class MenuMasterModelValidator : CommonDynamicValidator<MenuMasterModel>
     {
         public MenuMasterModelValidator()
         {

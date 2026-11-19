@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -10,7 +11,7 @@ namespace HIMS.API.Models.Masters
         public bool? IsAvailible { get; set; }
     }
 
-    public class BedMasterModelValidator : AbstractValidator<BedMasterModel>
+    public class BedMasterModelValidator : CommonDynamicValidator<BedMasterModel>
     {
         public BedMasterModelValidator()
         {

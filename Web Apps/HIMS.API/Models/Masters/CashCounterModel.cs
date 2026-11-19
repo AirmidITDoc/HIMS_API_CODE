@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -10,7 +11,7 @@ namespace HIMS.API.Models.Masters
         public long? BillNo { get; set; }
 
     }
-    public class CashCounterModelValidator : AbstractValidator<CashCounterModel>
+    public class CashCounterModelValidator : CommonDynamicValidator<CashCounterModel>
     {
         public CashCounterModelValidator()
         {

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -12,7 +13,7 @@ namespace HIMS.API.Models.Masters
         public DateTime? IsCancelledDateTime { get; set; }
 
     }
-    public class SiteDescriptionModelValidator : AbstractValidator<SiteDescriptionModel>
+    public class SiteDescriptionModelValidator : CommonDynamicValidator<SiteDescriptionModel>
     {
         public SiteDescriptionModelValidator()
         {

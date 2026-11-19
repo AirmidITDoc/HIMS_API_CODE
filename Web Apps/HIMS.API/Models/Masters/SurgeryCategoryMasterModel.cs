@@ -1,4 +1,5 @@
 using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -7,7 +8,7 @@ namespace HIMS.API.Models.Masters
         public long SurgeryCategoryId { get; set; }
         public string? SurgeryCategoryName { get; set; }
     }
-    public class SurgeryCategoryMasterModelValidator : AbstractValidator<SurgeryCategoryMasterModel>
+    public class SurgeryCategoryMasterModelValidator : CommonDynamicValidator<SurgeryCategoryMasterModel>
     {
         public SurgeryCategoryMasterModelValidator()
         {

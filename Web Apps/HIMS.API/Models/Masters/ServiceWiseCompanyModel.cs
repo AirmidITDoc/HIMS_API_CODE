@@ -1,3 +1,6 @@
+using FluentValidation;
+using HIMS.API.Validator;
+
 namespace HIMS.API.Models.Masters
 {
     public class ServiceWiseCompanyModel
@@ -10,7 +13,13 @@ namespace HIMS.API.Models.Masters
 
 
     }
-
+    public class ServiceWiseCompanyModelValidator : CommonDynamicValidator<ServiceWiseCompanyModel>
+    {
+        public ServiceWiseCompanyModelValidator()
+        {
+           
+        }
+    }
 
 
     public class ServiceWiseModel

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -14,7 +15,7 @@ namespace HIMS.API.Models.Masters
         public DateTime EffectiveFrom { get; set; }
         public DateTime EffectiveTo { get; set; }
     }
-    public class HSNCodeMasterModelValidator : AbstractValidator<HSNCodeMasterModel>
+    public class HSNCodeMasterModelValidator : CommonDynamicValidator<HSNCodeMasterModel>
     {
         public HSNCodeMasterModelValidator()
         {

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -15,7 +16,7 @@ namespace HIMS.API.Models.Masters
         public DateTime? ApprovedDateTime { get; set; }
         public string? Comment { get; set; }
     }
-    public class ApprovalHeaderModelValidator : AbstractValidator<ApprovalHeaderModel>
+    public class ApprovalHeaderModelValidator : CommonDynamicValidator<ApprovalHeaderModel>
     {
         public ApprovalHeaderModelValidator()
         {
@@ -38,7 +39,7 @@ namespace HIMS.API.Models.Masters
         public string? StageStatus { get; set; }
 
     }
-    public class ApprovalHeaderUpdateModelValidator : AbstractValidator<ApprovalHeaderUpdateModel>
+    public class ApprovalHeaderUpdateModelValidator : CommonDynamicValidator<ApprovalHeaderUpdateModel>
     {
         public ApprovalHeaderUpdateModelValidator()
         {

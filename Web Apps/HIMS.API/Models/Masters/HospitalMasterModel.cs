@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -34,7 +35,7 @@ namespace HIMS.API.Models.Masters
         public long? OpdAdvanceReceiptCounterId { get; set; }
         public long? OpdRefundOfAdvanceReceiptCounterId { get; set; }
     }
-    public class HospitalMasterModelModelValidator : AbstractValidator<HospitalMasterModel>
+    public class HospitalMasterModelModelValidator : CommonDynamicValidator<HospitalMasterModel>
     {
         public HospitalMasterModelModelValidator()
         {

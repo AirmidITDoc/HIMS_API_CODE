@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -7,7 +8,7 @@ namespace HIMS.API.Models.Masters
         public long RoleId { get; set; }
         public string? RoleName { get; set; }
     }
-    public class RoleTemplateModelValidator : AbstractValidator<RoleTemplateModel>
+    public class RoleTemplateModelValidator : CommonDynamicValidator<RoleTemplateModel>
     {
         public RoleTemplateModelValidator()
         {

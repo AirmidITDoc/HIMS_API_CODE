@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string? ModeOfPayment { get; set; }
         public bool IsActive { get; set; }
     }
-    public class ModeOfPaymentModelValidator : AbstractValidator<ModeOfPaymentModel>
+    public class ModeOfPaymentModelValidator : CommonDynamicValidator<ModeOfPaymentModel>
     {
         public ModeOfPaymentModelValidator()
         {

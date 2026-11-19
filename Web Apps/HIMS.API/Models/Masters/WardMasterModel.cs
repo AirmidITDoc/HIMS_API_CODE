@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -12,7 +13,7 @@ namespace HIMS.API.Models.Masters
         public long? ClassId { get; set; }
     }
 
-    public class WardMasterModelValidator : AbstractValidator<WardMasterModel>
+    public class WardMasterModelValidator : CommonDynamicValidator<WardMasterModel>
     {
         public WardMasterModelValidator()
         {

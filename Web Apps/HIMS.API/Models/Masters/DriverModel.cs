@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -15,7 +16,7 @@ namespace HIMS.API.Models.Masters
         public string? LicenceNo { get; set; }
         public string? CityName { get; set; }
     }
-    public class DriverModelValidator : AbstractValidator<DriverModel>
+    public class DriverModelValidator : CommonDynamicValidator<DriverModel>
     {
         public DriverModelValidator()
         {

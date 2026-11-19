@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string? DrugTypeName { get; set; }
        
     }
-    public class ItemDrugTypeMasterModelValidator : AbstractValidator<ItemDrugTypeMasterModel>
+    public class ItemDrugTypeMasterModelValidator : CommonDynamicValidator<ItemDrugTypeMasterModel>
     {
         public ItemDrugTypeMasterModelValidator()
         {

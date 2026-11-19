@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string? TalukaName { get; set; }
         public long? CityId { get; set; }
     }
-    public class TalukaMasterModelModelValidator : AbstractValidator<TalukaMasterModel>
+    public class TalukaMasterModelModelValidator : CommonDynamicValidator<TalukaMasterModel>
     {
         public TalukaMasterModelModelValidator()
         {

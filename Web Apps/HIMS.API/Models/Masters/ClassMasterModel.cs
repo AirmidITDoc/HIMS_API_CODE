@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string? ClassName { get; set; }
         public double? ClassRate { get; set; }
     }
-    public class ClassMasterModelValidator : AbstractValidator<ClassMasterModel>
+    public class ClassMasterModelValidator : CommonDynamicValidator<ClassMasterModel>
     {
         public ClassMasterModelValidator()
         {

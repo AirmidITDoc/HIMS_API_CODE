@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public long? CompanyId { get; set; }
         public long? EmployeId { get; set; }
     }
-    public class CompanyExecutiveInfoModelValidator : AbstractValidator<CompanyExecutiveInfoModel>
+    public class CompanyExecutiveInfoModelValidator : CommonDynamicValidator<CompanyExecutiveInfoModel>
     {
         public CompanyExecutiveInfoModelValidator()
         {

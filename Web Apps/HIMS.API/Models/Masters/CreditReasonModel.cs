@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -9,7 +10,7 @@ namespace HIMS.API.Models.Masters
         public bool? IsActive { get; set; }
     }
 
-    public class CreditReasonModelValidator : AbstractValidator<CreditReasonModel>
+    public class CreditReasonModelValidator : CommonDynamicValidator<CreditReasonModel>
     {
         public CreditReasonModelValidator()
         {

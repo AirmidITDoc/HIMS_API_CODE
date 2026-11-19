@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -10,7 +11,7 @@ namespace HIMS.API.Models.Masters
         public string? DoseNameInMarathi { get; set; }
         public double? DoseQtyPerDay { get; set; }
     }
-    public class DoseMasterModelValidator : AbstractValidator<DoseMasterModel>
+    public class DoseMasterModelValidator : CommonDynamicValidator<DoseMasterModel>
     {
         public DoseMasterModelValidator()
         {

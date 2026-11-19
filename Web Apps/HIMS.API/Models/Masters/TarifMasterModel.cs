@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string? TariffName { get; set; }
         public bool? IsActive { get; set; }
     }
-    public class TarifMasterModelValidator : AbstractValidator<TarifMasterModel>
+    public class TarifMasterModelValidator : CommonDynamicValidator<TarifMasterModel>
     {
         public TarifMasterModelValidator()
         {

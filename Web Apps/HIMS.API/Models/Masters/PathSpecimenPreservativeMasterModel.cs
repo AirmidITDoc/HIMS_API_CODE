@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Masters
@@ -9,7 +10,7 @@ namespace HIMS.API.Models.Masters
         public string? PreservativeUsed { get; set; }
         public long? UnitId { get; set; }
     }
-    public class PathSpecimenPreservativeMasterModellValidator : AbstractValidator<MPathSpecimenPreservativeMaster>
+    public class PathSpecimenPreservativeMasterModellValidator : CommonDynamicValidator<MPathSpecimenPreservativeMaster>
     {
         public PathSpecimenPreservativeMasterModellValidator()
         {

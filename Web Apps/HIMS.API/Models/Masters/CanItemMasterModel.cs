@@ -1,4 +1,5 @@
 using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -22,7 +23,7 @@ namespace HIMS.API.Models.Masters
         public decimal? EmpPrice { get; set; }
     }
 
-    public class CanItemMasterModelValidator : AbstractValidator<CanItemMasterModel>
+    public class CanItemMasterModelValidator : CommonDynamicValidator<CanItemMasterModel>
     {
         public CanItemMasterModelValidator()
         {

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -35,7 +36,7 @@ namespace HIMS.API.Models.Masters
         public string? PanCardNo { get; set; }
         public string? AadharCardNo { get; set; }
     }
-    public class DoctoreMasterModelValidator : AbstractValidator<DoctoreMasterModel>
+    public class DoctoreMasterModelValidator : CommonDynamicValidator<DoctoreMasterModel>
     {
         public DoctoreMasterModelValidator()
         {

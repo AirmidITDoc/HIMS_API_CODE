@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -21,7 +22,7 @@ namespace HIMS.API.Models.Masters
         public List<MParameterDescriptiveMasterModel>? MParameterDescriptiveMasters { get; set; }
         public List<MPathParaRangeWithAgeMasterModel>? MPathParaRangeWithAgeMasters { get; set; }
     }
-    public class ParameterMasterModelValidator : AbstractValidator<ParameterMasterModel>
+    public class ParameterMasterModelValidator : CommonDynamicValidator<ParameterMasterModel>
     {
         public ParameterMasterModelValidator()
         {
@@ -42,7 +43,7 @@ namespace HIMS.API.Models.Masters
         public long? AddedBy { get; set; }
         public long? UpdatedBy { get; set; }
     }
-    public class MParameterDescriptiveMasterModelValidator : AbstractValidator<MParameterDescriptiveMasterModel>
+    public class MParameterDescriptiveMasterModelValidator : CommonDynamicValidator<MParameterDescriptiveMasterModel>
     {
         public MParameterDescriptiveMasterModelValidator()
         {
@@ -65,7 +66,7 @@ namespace HIMS.API.Models.Masters
         public long? Addedby { get; set; }
         public long? Updatedby { get; set; }
     }
-    public class MPathParaRangeWithAgeMasterModelValidator : AbstractValidator<MPathParaRangeWithAgeMasterModel>
+    public class MPathParaRangeWithAgeMasterModelValidator : CommonDynamicValidator<MPathParaRangeWithAgeMasterModel>
     {
         public MPathParaRangeWithAgeMasterModelValidator()
         {
@@ -82,5 +83,11 @@ namespace HIMS.API.Models.Masters
     {
         public long ParameterId { get; set; }
         public string? Formula { get; set; }
+    }
+    public class UpdateParameterFormulaModelValidator : CommonDynamicValidator<UpdateParameterFormulaModel>
+    {
+        public UpdateParameterFormulaModelValidator()
+        {
+        }
     }
 }

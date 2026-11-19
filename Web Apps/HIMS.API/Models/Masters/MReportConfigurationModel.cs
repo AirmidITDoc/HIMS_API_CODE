@@ -1,4 +1,5 @@
 using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string? ReportSection { get; set; }
         public string? ReportName { get; set; }
     }
-    public class MReportConfigurationModelValidator : AbstractValidator<MReportConfigurationModel>
+    public class MReportConfigurationModelValidator : CommonDynamicValidator<MReportConfigurationModel>
     {
         public MReportConfigurationModelValidator()
         {
