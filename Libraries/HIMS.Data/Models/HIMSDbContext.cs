@@ -79,6 +79,8 @@ namespace HIMS.Data.Models
         public virtual DbSet<GetSalesDraftBillItemDet> GetSalesDraftBillItemDets { get; set; } = null!;
         public virtual DbSet<GroupMaster> GroupMasters { get; set; } = null!;
         public virtual DbSet<HelpdeskPatientComplaint> HelpdeskPatientComplaints { get; set; } = null!;
+        public virtual DbSet<HimsLoginChallenge> HimsLoginChallenges { get; set; } = null!;
+        public virtual DbSet<HimsLoginConfirmation> HimsLoginConfirmations { get; set; } = null!;
         public virtual DbSet<HmsLog> HmsLogs { get; set; } = null!;
         public virtual DbSet<HospitalMaster> HospitalMasters { get; set; } = null!;
         public virtual DbSet<IndentDetial> IndentDetials { get; set; } = null!;
@@ -479,6 +481,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<TDiscCaseSheet> TDiscCaseSheets { get; set; } = null!;
         public virtual DbSet<TDiscountTransactionHistory> TDiscountTransactionHistories { get; set; } = null!;
         public virtual DbSet<TDlabRequest> TDlabRequests { get; set; } = null!;
+        public virtual DbSet<TDoctorAppointmentSlot> TDoctorAppointmentSlots { get; set; } = null!;
         public virtual DbSet<TDoctorPatientHandover> TDoctorPatientHandovers { get; set; } = null!;
         public virtual DbSet<TDoctorPayoutProcessDetail> TDoctorPayoutProcessDetails { get; set; } = null!;
         public virtual DbSet<TDoctorPayoutProcessHeader> TDoctorPayoutProcessHeaders { get; set; } = null!;
@@ -3193,6 +3196,42 @@ namespace HIMS.Data.Models
                     .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("regId");
+            });
+
+            modelBuilder.Entity<HimsLoginChallenge>(entity =>
+            {
+                entity.HasKey(e => e.ChallengeId);
+
+                entity.ToTable("HimsLoginChallenge");
+
+                entity.HasIndex(e => e.ExpiresAtUtc, "IX_HimsLoginChallenge_ExpiresAtUtc");
+
+                entity.Property(e => e.ChallengeId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CaptchaHash).HasMaxLength(32);
+
+                entity.Property(e => e.ContextValue).HasMaxLength(500);
+
+                entity.Property(e => e.Kid).HasMaxLength(100);
+
+                entity.Property(e => e.Nonce)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<HimsLoginConfirmation>(entity =>
+            {
+                entity.HasKey(e => e.ConfirmationId);
+
+                entity.ToTable("HimsLoginConfirmation");
+
+                entity.HasIndex(e => e.ExpiresAtUtc, "IX_HimsLoginConfirmation_ExpiresAtUtc");
+
+                entity.Property(e => e.ConfirmationId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<HmsLog>(entity =>
@@ -11093,8 +11132,6 @@ namespace HIMS.Data.Models
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
-                entity.Property(e => e.PinNo).HasMaxLength(10);
-
                 entity.Property(e => e.RationCardNo)
                     .HasMaxLength(20)
                     .IsUnicode(false)
@@ -13577,6 +13614,26 @@ namespace HIMS.Data.Models
                     .WithMany(p => p.TDlabRequests)
                     .HasForeignKey(d => d.RequestId)
                     .HasConstraintName("FK_T_DLabRequest_T_HLabRequest");
+            });
+
+            modelBuilder.Entity<TDoctorAppointmentSlot>(entity =>
+            {
+                entity.HasKey(e => e.SlotId)
+                    .HasName("PK__T_Doctor__0A124AAFB5DEA4A0");
+
+                entity.ToTable("T_DoctorAppointmentSlot");
+
+                entity.Property(e => e.AppointmentDate).HasColumnType("date");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsCancelledDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SlotStatus)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TDoctorPatientHandover>(entity =>
