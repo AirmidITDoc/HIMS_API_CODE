@@ -165,7 +165,8 @@ builder.Services.AddApiVersioning(config =>
 });
 
 var loginKeyProvider = new LoginV2KeyProvider(builder.Configuration,
-    allowEphemeralDevelopmentKey: builder.Environment.IsDevelopment());
+    allowEphemeralDevelopmentKey: builder.Environment.IsDevelopment() ||
+        builder.Configuration.GetValue<bool>("LoginV2:AllowEphemeralKey"));
 if (!loginKeyProvider.IsConfigured)
     throw new InvalidOperationException(loginKeyProvider.ConfigurationError ?? "JWT/V2 RSA key provider is not configured.");
 string jwtIssuer = AppSettings.Settings.AuthenticationSettings.Issuer ?? string.Empty;
