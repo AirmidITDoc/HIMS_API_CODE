@@ -89,6 +89,16 @@ var expectedPublic = new HashSet<string>
 };
 Require(expectedPublic.SetEquals(allowlist), $"Unexpected public allowlist: {string.Join(", ", allowlist)}");
 
+var reportController = apiAssembly.GetType("HIMS.API.Controllers.Report.ReportController")!;
+foreach (string methodName in new[] { "ViewReport", "ViewReportFromDB", "ViewMultipleReportFromDB", "NewViewReport", "NewMultiReport" })
+{
+    var method = reportController.GetMethod(methodName)!;
+    Require(method.GetCustomAttribute<AnyPermissionAttribute>()?.Permission == PagePermission.View,
+        $"Shared report method {methodName} does not use authenticated view-capability authorization.");
+    Require(method.GetCustomAttribute<AllowAnonymousAttribute>() == null,
+        $"Shared report method {methodName} is anonymous.");
+}
+
 var bareUser = new LoginManager { UserId = 17, IsActive = true, WebRoleId = 4 };
 var bareContext = FilterContext(true, new FakeUserService(bareUser),
     new FakePermissionService(new List<PageMasterDto>()));
@@ -124,6 +134,21 @@ await new PermissionAttribute { PageCode = "UnknownPage", Permission = PagePermi
 Require(unknownContext.HttpContext.Response.StatusCode == StatusCodes.Status403Forbidden,
     "Unknown page mapping did not fail closed.");
 
+var deniedAnyContext = FilterContext(true, sessionUser, deniedPermission);
+await new AnyPermissionAttribute { Permission = PagePermission.View }
+    .OnAuthorizationAsync(deniedAnyContext);
+Require(deniedAnyContext.HttpContext.Response.StatusCode == StatusCodes.Status403Forbidden,
+    "Shared action was allowed without any matching permission.");
+var allowedAnyContext = FilterContext(true, sessionUser,
+    new FakePermissionService(new List<PageMasterDto>
+    {
+        new() { PageCode = "Bill", IsView = true }
+    }));
+await new AnyPermissionAttribute { Permission = PagePermission.View }
+    .OnAuthorizationAsync(allowedAnyContext);
+Require(allowedAnyContext.Result == null,
+    "Shared action rejected a user with a valid view permission.");
+
 var shared = actions.Where(action => action.GetCustomAttribute<SharedAuthenticatedAttribute>() != null)
     .Select(action => $"{action.DeclaringType?.Name}.{action.Name}")
     .OrderBy(name => name).ToList();
@@ -143,6 +168,7 @@ Require(!actions.Any(action => action.GetCustomAttributes()
     "Domain controller action retained the general Authenticated attribute.");
 var unpermissionedDomainActions = actions
     .Where(action => action.GetCustomAttribute<PermissionAttribute>() == null &&
+                     action.GetCustomAttribute<AnyPermissionAttribute>() == null &&
                      action.GetCustomAttribute<SharedAuthenticatedAttribute>() == null &&
                      action.GetCustomAttribute<AllowAnonymousAttribute>() == null)
     .Select(action => $"{action.DeclaringType?.Name}.{action.Name}")

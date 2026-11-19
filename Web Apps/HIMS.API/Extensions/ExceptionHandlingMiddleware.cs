@@ -52,6 +52,8 @@ namespace HIMS.API.Extensions
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Unhandled exception while processing {Method} {Path}.",
+                    context.Request.Method, context.Request.Path.Value);
                 // --- 1. Read request body for logging ---
                 string param = string.Empty;
                 try

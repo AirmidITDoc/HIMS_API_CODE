@@ -62,7 +62,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpPost("NewList")]
-        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.View)]
         //   [Permission(PageCode = "Report", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> MReportListDto(GridRequestModel objGrid)
@@ -470,7 +470,7 @@ namespace HIMS.API.Controllers.Report
             return sdata.ToSingleResponse<MReportConfig, MReportConfig>("Report");
         }
         [HttpPost("ViewReport")]
-        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> ViewReport(ReportRequestModel model)
         {
@@ -741,8 +741,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpPost("ViewReportFromDB")]
-        //[Permission(PageCode = "Report", Permission = PagePermission.Add)]
-        [AllowAnonymous]
+        [AnyPermission(Permission = PagePermission.View)]
         public async Task<IActionResult> ViewReportFromDB(ReportRequestModel model)
         {
             try
@@ -772,7 +771,7 @@ namespace HIMS.API.Controllers.Report
 
 
         [HttpPost("ViewMultipleReportFromDB")]
-        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.View)]
         public async Task<IActionResult> ViewMultipleReportFromDB( [FromBody] MultiReportRequestModel request)
         {
             if (request?.Reports == null || request.Reports.Count == 0)
@@ -824,7 +823,7 @@ namespace HIMS.API.Controllers.Report
 
 
         [HttpPost("get-report-html")]
-        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> GetBarcodeHtml(ReportRequestModel model)
         {
@@ -833,7 +832,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpPost("NewViewReport")]
-        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> NewViewReport(NewReportRequestDto request)
         {
@@ -877,7 +876,7 @@ namespace HIMS.API.Controllers.Report
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
         [HttpPost("NewExportExcelReport")]
-        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.Export)]
         //[Permission]
         public async Task<IActionResult> NewExcelReport(NewReportRequestDto request)
         {
@@ -953,7 +952,7 @@ namespace HIMS.API.Controllers.Report
         }
 
         [HttpPost("new-vimal-html-pdf")]
-        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> NewVimalHtmlPdf()
         {
@@ -971,7 +970,7 @@ namespace HIMS.API.Controllers.Report
         //}
 
         [HttpPost("NewMultiReport")]
-        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> NewMultiReport(ReportRequestModel model)
         {
@@ -995,7 +994,7 @@ namespace HIMS.API.Controllers.Report
             return Ok(ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Report.", new { base64 = byteFile }));
         }
         [HttpPost("GetReportPlaceholders")]
-        [Permission(PageCode = "Report", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> GetReportPlaceholders(ReportRequestModel model)
         {

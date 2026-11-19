@@ -24,7 +24,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("InsertSettlement")]
 
-        [Permission(PageCode = "CompanySettlement", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CompanySettlement|Bill|LabPatientRegistration|ExternalInvestigation|SalesBillSettlement|Settlement|EmgSettlement", Permission = PagePermission.Add)]
 
         public async Task<ApiResponse> InsertSP(OPSettlementModel obj)
         {
@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.OPPatient
 
         [HttpPost("InsertSettlementMultiple")]
 
-        [Permission(PageCode = "CompanySettlement", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CompanySettlement|Bill|LabPatientRegistration|ExternalInvestigation|SalesBillSettlement|Settlement|EmgSettlement", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OPSettlementMultipleModel obj)
 
         {
@@ -72,7 +72,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, " Record Added successfully.", model.FirstOrDefault()?.PaymentId);
         }
         [HttpPost("InsertSettlementWithAdvance")]
-        [Permission(PageCode = "CompanySettlement", Permission = PagePermission.Add)]
+        [Permission(PageCode = "CompanySettlement|Bill|LabPatientRegistration|ExternalInvestigation|SalesBillSettlement|Settlement|EmgSettlement", Permission = PagePermission.Add)]
 
 //        [Permission]
         //[Permission(PageCode = "CompanySettlement", Permission = PagePermission.Add)]
