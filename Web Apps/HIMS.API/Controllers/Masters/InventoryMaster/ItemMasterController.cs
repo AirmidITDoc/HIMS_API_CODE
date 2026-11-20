@@ -148,7 +148,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpGet("GetItemListForPrescriptionSearch")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public  ApiResponse GetItemListForPrescriptionSearch(string ItemName, int StoreId)
         {
             var resultList =  _ItemMasterServices.GetItemListForPrescriptionSearch( ItemName, StoreId);
@@ -157,7 +158,8 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpGet("GetItemListForPrescriptionReturn")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public ApiResponse GetItemListForPrescriptionReturn(int StoreId,  int IPAdmID, string ItemName)
         {
             var resultList = _ItemMasterServices.GetItemListForPrescriptionretrun(StoreId,  IPAdmID, ItemName);
@@ -166,7 +168,8 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpGet("GetItemListForGRNOrPO")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetItemListForGRNOrPO(int StoreId, string ItemName)
         {
             var resultList = await _ItemMasterServices.GetItemListForGRNOrPO(StoreId, ItemName);
@@ -174,7 +177,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpGet("NewGetItemListForGRNOrPO")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetItemListGRN(int StoreId, string ItemName)
         {
            var resultList = await _ItemMasterServices.GetItemListGRN(StoreId, ItemName);
@@ -183,7 +187,8 @@ namespace HIMS.API.Controllers.Inventory
 
 
         [HttpGet("search-GetItemListForIndent")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public ApiResponse ItemListForIndent(int StoreId, string ItemName)
         {
             var data = _ItemMasterServices.ItemListForIndent(StoreId, ItemName);
@@ -191,7 +196,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpGet("GetItemListForSalesBatchPop")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetItemListForSalesBatchPop(int StoreId, int ItemId)
         {
             var resultList = await _ItemMasterServices.GetItemListForSalesBatchPop(StoreId, ItemId);
@@ -199,7 +205,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpGet("NewGetItemListForSalesBatchPop")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> NewGetItemListForSalesBatchPop(int StoreId, int ItemId)
         {
             var resultList = await _ItemMasterServices.NewGetItemListForSalesBatchPop(StoreId, ItemId);
@@ -207,14 +214,16 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpGet("search-GetItemListForSalesBatchPop")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public ApiResponse ItemListForBatch(int StoreId, int ItemId, int PatientTypeId)
         {
             var data = _ItemMasterServices.ItemListForBatch(StoreId, ItemId, PatientTypeId);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pharmacy Item Wise Batch List.", data);
         }
         [HttpGet("GetProsearch-GetItemListForSalesBatchPop")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public ApiResponse GetItemListForBatch(int StoreId, int ItemId)
         {
             var data = _ItemMasterServices.GetItemListForBatch(StoreId, ItemId);
@@ -222,7 +231,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpGet("GetItemListforSalesPage")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetItemListforSalesPage(int StoreId, string ItemName)
         {
             var resultList = await _ItemMasterServices.GetItemListForSalesPage(StoreId, ItemName);
@@ -230,7 +240,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpGet("NewGetItemListforSalesPage")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> NewGetItemListforSalesPage(int StoreId, string ItemName)
         {
             var resultList = await _ItemMasterServices.NewGetItemListForSalesPage(StoreId, ItemName);
@@ -238,7 +249,8 @@ namespace HIMS.API.Controllers.Inventory
         }
 
         [HttpGet("GetItemListByGenericName")]
-        [Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "ItemMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetItemListByGenericName(string ItemGenericNameId,string ItemName, int StoreId)
         {
             var resultList = _ItemMasterServices.GetItemListByGenericName(ItemGenericNameId, ItemName, StoreId);
