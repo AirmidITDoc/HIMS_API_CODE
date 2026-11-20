@@ -1,17 +1,18 @@
 ﻿using Asp.Versioning;
-using HIMS.Core;
 using HIMS.ABHA.Models.M2;
 using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.AbhaIntegration;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.MRD;
+using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.AbhaIntegration;
 using HIMS.Data.Models;
 using HIMS.Services.AbhaIntegration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -63,7 +64,8 @@ namespace HIMS.API.Controllers.AbhaIntegration
 
         [HttpPost("AbhaCallback")]
         //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
-        [AnyPermission(Permission = PagePermission.View)]
+        //[AnyPermission(Permission = PagePermission.View)]
+        [AllowAnonymous]
         public async Task<ApiResponse> Insert(AbhaCallbackModel obj)
         {
             TAbhaCallbackformation model = obj.MapTo<TAbhaCallbackformation>();
@@ -330,7 +332,8 @@ namespace HIMS.API.Controllers.AbhaIntegration
         }
         [HttpPost("AbhaErrorLog")]
         // [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
-        [AnyPermission(Permission = PagePermission.Add)]
+        //[AnyPermission(Permission = PagePermission.Add)]
+        [AllowAnonymous]
         public async Task<ApiResponse> InsertErrorLog(AbhaErroLog obj)
         {
             TAbhaErrorLog model = obj.MapTo<TAbhaErrorLog>();
