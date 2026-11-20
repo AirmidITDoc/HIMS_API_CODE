@@ -24,8 +24,9 @@ namespace HIMS.API.Controllers.Common
             this._FileService = genericService;
         }
         [HttpGet("get-files")]
-        [Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
-       // [Permission]
+        //[Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        // [Permission]
         public async Task<ApiResponse> GetFiles(int RefId, PageNames RefType)
         {
             var result = await _FileService.GetAll(x => x.RefId == RefId && x.RefType == (int)RefType);
@@ -42,7 +43,8 @@ namespace HIMS.API.Controllers.Common
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "", bList);
         }
         [HttpGet("get-file")]
-        [Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
+        //[Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
         public async Task<ActionResult> GetFile(int Id)
         {
             var result = await _FileService.GetById(x => x.Id == Id);
@@ -67,7 +69,8 @@ namespace HIMS.API.Controllers.Common
             return File(data.Item1, data.Item2, data.Item3);
         }
         [HttpPost("save-files")]
-        [Permission(PageCode = "DocumentCategory", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "DocumentCategory", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> SaveFiles([FromForm] List<FileModel> MDoctorFiles)
         {
@@ -108,7 +111,8 @@ namespace HIMS.API.Controllers.Common
         }
 
         [HttpPost("save-signature")]
-        [Permission(PageCode = "DocumentCategory", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "DocumentCategory", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.View)]
         public async Task<ApiResponse> SaveSignature([FromForm] FileModel objSignature)
         {
             FileMaster obj = new();
@@ -132,7 +136,8 @@ namespace HIMS.API.Controllers.Common
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Files are saved successfully.", obj);
         }
         [HttpGet("get-signature")]
-        [Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
+        //[Permission(PageCode = "DocumentCategory", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
         public async Task<ApiResponse> GetSignature(int RefId, PageNames RefType)
         {
             var result = (await _FileService.GetAll(x => x.RefId == RefId && x.IsDelete == false && x.RefType == (int)RefType)).FirstOrDefault();
