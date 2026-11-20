@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using HIMS.API.Models.Inventory;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -13,7 +14,7 @@ namespace HIMS.API.Models.OutPatient
         public string? LastName { get; set; }
         public string? Address { get; set; }
         public string? City { get; set; }
-        public string? PinNo { get; set; }
+        public long? PinNo { get; set; }
         public DateTime? DateofBirth { get; set; }
         public string? Age { get; set; }
         public long? GenderId { get; set; }
@@ -60,20 +61,20 @@ namespace HIMS.API.Models.OutPatient
 
     }
 
-    public class RegistrationModelValidator : AbstractValidator<RegistrationModel>
+    public class RegistrationModelValidator : CommonDynamicValidator<RegistrationModel> //AbstractValidator<RegistrationModel>
     {
         public RegistrationModelValidator()
         {
-            RuleFor(x => x.PrefixId).NotNull().NotEmpty().WithMessage("Prefix is required");
-            RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage("FirstName is required");
-            //RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("LastName is required");
-            RuleFor(x => x.GenderId).NotNull().NotEmpty().WithMessage("Gender is required");
-            RuleFor(x => x.CityId).NotNull().NotEmpty().WithMessage("City is required");
-            RuleFor(x => x.StateId).NotNull().NotEmpty().WithMessage("State is required");
-            RuleFor(x => x.CountryId).NotNull().NotEmpty().WithMessage("Country is required");
-            RuleFor(x => x.RegDate).NotNull().NotEmpty().WithMessage("RegDate is required");
-            RuleFor(x => x.RegTime).NotNull().NotEmpty().WithMessage("RegTime is required");
-            RuleFor(x => x.DateofBirth).NotNull().NotEmpty().WithMessage("DateofBirth is required");
+            //RuleFor(x => x.PrefixId).NotNull().NotEmpty().WithMessage("Prefix is required");
+            //RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage("FirstName is required");
+            ////RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("LastName is required");
+            //RuleFor(x => x.GenderId).NotNull().NotEmpty().WithMessage("Gender is required");
+            //RuleFor(x => x.CityId).NotNull().NotEmpty().WithMessage("City is required");
+            //RuleFor(x => x.StateId).NotNull().NotEmpty().WithMessage("State is required");
+            //RuleFor(x => x.CountryId).NotNull().NotEmpty().WithMessage("Country is required");
+            //RuleFor(x => x.RegDate).NotNull().NotEmpty().WithMessage("RegDate is required");
+            //RuleFor(x => x.RegTime).NotNull().NotEmpty().WithMessage("RegTime is required");
+            //RuleFor(x => x.DateofBirth).NotNull().NotEmpty().WithMessage("DateofBirth is required");
 
         }
     }

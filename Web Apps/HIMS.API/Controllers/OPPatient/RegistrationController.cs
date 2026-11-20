@@ -137,8 +137,9 @@ namespace HIMS.API.Controllers.OPPatient
         //    }));
         //}
         [HttpGet("auto-complete")]
-        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
-       // [Permission]
+        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        // [Permission]
         public ApiResponse GetAutoComplete(string Keyword)
         {
             var data = _IRegistrationService.SearchRegistration(Keyword);
@@ -181,7 +182,8 @@ namespace HIMS.API.Controllers.OPPatient
 
         // Create  by Ashutosh 12 Jun 2025
         [HttpGet("get-file")]
-        [Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Registration", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
         public ApiResponse DownloadFiles(string FileName)
         {
             var data = _FileUtility.GetBase64FromFolder("Persons\\Photo", FileName);
