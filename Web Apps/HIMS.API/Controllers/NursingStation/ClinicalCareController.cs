@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.NursingStation
 
         [HttpPost("AdmisionListNursingList")]
 
-        [Permission(PageCode = "Dialysis", Permission = PagePermission.View)]
+        [Permission(PageCode = "Dialysis|Admission", Permission = PagePermission.View)]
         public async Task<IActionResult> PrescriptionReturnList(GridRequestModel objGrid)
         {
             IPagedList<AdmisionListNursingListDto> AdmisionListNursingList = await _ClinicalCareService.GetListAsync(objGrid);

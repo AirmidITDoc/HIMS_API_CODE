@@ -41,7 +41,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
         // Get By Id API
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "Appointment|Admission", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(long id)
         {
             if (id == 0) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
