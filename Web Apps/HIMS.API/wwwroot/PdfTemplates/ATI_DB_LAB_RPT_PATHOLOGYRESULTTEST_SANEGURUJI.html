@@ -4,10 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Laboratory Report</title>
+    <style>
+        @media print {
+            html, body {
+                margin: 0;
+                padding: 0;
+                height: auto;
+            }
+
+            table {
+                page-break-inside: auto;
+            }
+
+            tr {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
 </head>
 
-<body style="margin: 0; height: 100%; font-family: Verdana, Arial, sans-serif; color: #000; display: flex; flex-direction: column; min-height: 100vh; margin-left: 12px;">
-    <div style="flex: 1; padding: 10px; box-sizing: border-box; margin-left: 12px;">
+<body style="margin:0; font-family:Verdana,Arial,sans-serif; color:#000; margin-left:12px;">
+    <div style="padding:5px; box-sizing:border-box; margin-left:5px;">
         <table style="width:100%; border-collapse:collapse; font-size:12px;">
             <tr>
                 {{NewHeader}}
@@ -19,7 +36,7 @@
                             <td style="width: 100%; font-weight: bold; font-size: 20px; text-align: center;">
                                 Department of Pathology
                             </td>
-                       
+
                         </tr>
                     </table>
                 </td>
@@ -58,11 +75,11 @@
                                         <td style="font-size:14px; font-weight:normal;">OP/IP NO</td>
                                         <td style="font-size:14px; font-weight:normal;">: <strong>{{OP_IP_Number}}</strong></td>
                                     </tr>
-                                    <tr style="display:{{chkRoomNameflag}};">
-                                        <td style="font-size:14px; font-weight:normal;">ROOM/WARD </td>
-                                        <td style="font-size:14px; font-weight:normal;">: <strong>{{RoomName}}</strong></td>
-                                        <td style="font-size:14px; font-weight:normal;">BED NAME</td>
-                                        <td style="font-size:14px; font-weight:normal;">: <strong>{{BedName}}</strong></td>
+                                    <tr style="display:{{chkRoomNameflag}}; page-break-inside:avoid;">
+                                        <td style="font-size:12px; padding:2px 4px; white-space:nowrap;">ROOM/WARD</td>
+                                        <td style="font-size:12px; padding:2px 4px; white-space:nowrap;">: <strong>{{RoomName}}</strong></td>
+                                        <td style="font-size:12px; padding:2px 4px; white-space:nowrap;">BED</td>
+                                        <td style="font-size:12px; padding:2px 4px; white-space:nowrap;">: <strong>{{BedName}}</strong></td>
                                     </tr>
                                 </table>
                             </td>
@@ -97,7 +114,6 @@
                                 Biological Reference Interval
                             </td>
                             <td style="padding: 6px; font-size: 14px; font-weight: bold; border-top: 1px solid #000; border-bottom: 1px solid #000; border-right: 1px solid #000; border-top-right-radius: 30px; border-bottom-right-radius: 30px; background: #f0f0f0;">
-                                
                             </td>
                         </tr>
 

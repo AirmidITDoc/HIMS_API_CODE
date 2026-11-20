@@ -3581,6 +3581,10 @@ namespace HIMS.Services.Report
                             "{{ReportMonth}}",
                             reportDate.ToString("MMM-yy")
                         );
+                        html = html.Replace(
+                              "{{CurrentDate}}", 
+                             DateTime.Now.ToString("dd-MM-yyyy hh:mm tt")
+                             );
                     }
                     break;
                     case "IPDMonthlyDepartmentGender.html":
