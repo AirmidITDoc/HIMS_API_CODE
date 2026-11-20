@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using HIMS.API.Models.OutPatient;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.IPPatient
 {
@@ -60,7 +61,7 @@ namespace HIMS.API.Models.IPPatient
 
 
     }
-    public class AdmissionRegModelValidator : AbstractValidator<AdmissionRegModel>
+    public class AdmissionRegModelValidator : CommonDynamicValidator<AdmissionRegModel>
     {
         public AdmissionRegModelValidator()
         {
@@ -121,7 +122,7 @@ namespace HIMS.API.Models.IPPatient
 
 
     }
-    public class AdmissModelValidator : AbstractValidator<ADMISSIONModel>
+    public class AdmissModelValidator : CommonDynamicValidator<ADMISSIONModel>
     {
         public AdmissModelValidator()
         {

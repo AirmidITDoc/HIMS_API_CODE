@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.OutPatient
 {
@@ -56,7 +57,7 @@ namespace HIMS.API.Models.OutPatient
         public long RegId { get; set; }
         public long? DistrictId { get; set; }
     }
-    public class AppReistrationModelValidator : AbstractValidator<AppReistrationModel>
+    public class AppReistrationModelValidator : CommonDynamicValidator<AppReistrationModel>
     {
         public AppReistrationModelValidator()
         {
@@ -107,7 +108,7 @@ namespace HIMS.API.Models.OutPatient
         public long VisitId { get; set; }
 
     }
-    public class AppVisitDetailModelValidator : AbstractValidator<AppVisitDetailModel>
+    public class AppVisitDetailModelValidator : CommonDynamicValidator<AppVisitDetailModel>
     {
         public AppVisitDetailModelValidator()
         {
