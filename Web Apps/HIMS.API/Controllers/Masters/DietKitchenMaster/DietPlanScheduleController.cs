@@ -235,7 +235,4 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
     }
 
-
-
-
 }
