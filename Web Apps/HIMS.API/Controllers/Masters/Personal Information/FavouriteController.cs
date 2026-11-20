@@ -24,7 +24,8 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         [HttpGet]
         [Route("[action]")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
         public async Task<ApiResponse> List()
         {
             List<FavouriteModel> FavouriteList = await _favouriteService.GetFavouriteModules(CurrentRoleId, CurrentUserId);

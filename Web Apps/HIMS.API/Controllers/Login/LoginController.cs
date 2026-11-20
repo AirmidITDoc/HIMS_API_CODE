@@ -478,8 +478,9 @@ namespace HIMS.API.Controllers.Login
 
 
         [HttpGet]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.View)]
         [Route("get-menus")]
+        [AnyPermission(Permission = PagePermission.View)]
         //[Permission]
         public ApiResponse GetMenus()
         {

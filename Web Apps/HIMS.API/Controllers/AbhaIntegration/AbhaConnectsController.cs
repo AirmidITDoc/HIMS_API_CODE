@@ -41,7 +41,8 @@ namespace HIMS.API.Controllers.AbhaIntegration
         }
 
         [HttpPost("InitiateClient")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        // [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.Add)]
         public async Task<ApiResponse> InitiateClient(InitiateClientModel model)
         {
             var result = await _abhaConnectService.InitiateClient(model);
@@ -61,7 +62,8 @@ namespace HIMS.API.Controllers.AbhaIntegration
         }
 
         [HttpPost("AbhaCallback")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(AbhaCallbackModel obj)
         {
             TAbhaCallbackformation model = obj.MapTo<TAbhaCallbackformation>();
@@ -70,7 +72,8 @@ namespace HIMS.API.Controllers.AbhaIntegration
         }
 
         [HttpPost("authenticateUser")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+       // [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.Add)]
         public async Task<ApiResponse> authenticateUser()
         {
             var result = await _abhaConnectService.AuthenticateUserAsync();
@@ -85,7 +88,8 @@ namespace HIMS.API.Controllers.AbhaIntegration
             );
         }
         [HttpPost("linkCareContext")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+       // [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.Add)]
         public async Task<ApiResponse> LinkCareContext(Data.DTO.AbhaIntegration.CareContextModel model)
         {
             try
@@ -133,7 +137,8 @@ namespace HIMS.API.Controllers.AbhaIntegration
         }
 
 [HttpPost("GetPatientEncounterDetailsTest")]
-[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.Add)]
         public async Task<ApiResponse> GetPatientVisitss(PatientVisitRequest model)
         {
             try
@@ -155,7 +160,8 @@ namespace HIMS.API.Controllers.AbhaIntegration
 
 
         [HttpPost("GetPatientEncounterDetails")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        // [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.Add)]
         public async Task<ApiResponse> GetPatientVisits(PatientVisitRequest model)
         {
             try
@@ -261,14 +267,16 @@ namespace HIMS.API.Controllers.AbhaIntegration
         }
 
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        // [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(string id)
         {
             var data = await _repository.GetById(x => x.TransactionId == id);
             return data.ToSingleResponse<TAbhaCallbackformation, AbhaCallbackModel>("Callbackformation");
         }
         [HttpGet("Encounter/{id?}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        // [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
         public async Task<ApiResponse> GetEncounter(int id)
         {
             var data = await _repository1.GetById(x => x.Peccid == id);
@@ -276,7 +284,8 @@ namespace HIMS.API.Controllers.AbhaIntegration
         }
 
         [HttpPost("ValidateHiTypes")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.Add)]
         public async Task<ApiResponse> ValidateHiTypes(PatientVisitRequest model)
         {
             try
@@ -298,7 +307,8 @@ namespace HIMS.API.Controllers.AbhaIntegration
         }
 
         [HttpPost("ValidateHiTypesSummary")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.Add)]
         public async Task<ApiResponse> ValidateHiTypesSummary(PatientVisitRequest model)
         {
             try
@@ -319,7 +329,8 @@ namespace HIMS.API.Controllers.AbhaIntegration
             }
         }
         [HttpPost("AbhaErrorLog")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        // [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertErrorLog(AbhaErroLog obj)
         {
             TAbhaErrorLog model = obj.MapTo<TAbhaErrorLog>();
@@ -329,7 +340,8 @@ namespace HIMS.API.Controllers.AbhaIntegration
 
 
         [HttpPost("UploadReportFiles")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        // [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.Add)]
         [Consumes("multipart/form-data")]
         public async Task<ApiResponse> UploadReportFiles(string patientRegistrationNumber,string visitNumber,long OpIpId,long opipType,[FromForm] List<IFormFile> files)
         {
@@ -427,7 +439,8 @@ namespace HIMS.API.Controllers.AbhaIntegration
         }
 
         [HttpPost("FileUploadList")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> FileUploadList(GridRequestModel objGrid)
         {
@@ -435,7 +448,8 @@ namespace HIMS.API.Controllers.AbhaIntegration
             return Ok(FileUpload.ToGridResponse(objGrid, "Abha File Upload List"));
         }
         [HttpPost("AbhaAddressList")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
         public async Task<IActionResult> AbhaAddressList([FromQuery] string abhaNumber)
         {
             var objGrid = new GridRequestModel
