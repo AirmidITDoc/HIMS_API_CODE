@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -26,7 +27,7 @@ namespace HIMS.API.Models.Masters
         public string? PreviousDesignation { get; set; }
         public bool? IsRepresentative { get; set; }
     }
-    public class CompanyEmployeInfoModelValidator : AbstractValidator<CompanyEmployeInfoModel>
+    public class CompanyEmployeInfoModelValidator : CommonDynamicValidator<CompanyEmployeInfoModel>
     {
         public CompanyEmployeInfoModelValidator()
         {

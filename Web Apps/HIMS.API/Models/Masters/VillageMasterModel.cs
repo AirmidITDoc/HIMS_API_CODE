@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string? VillageName { get; set; }
         public string? TalukaName { get; set; }
     }
-    public class VillageMasterModelValidator : AbstractValidator<VillageMasterModel>
+    public class VillageMasterModelValidator : CommonDynamicValidator<VillageMasterModel>
     {
         public VillageMasterModelValidator()
         {

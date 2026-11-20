@@ -1,4 +1,5 @@
 using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -11,7 +12,7 @@ namespace HIMS.API.Models.Masters
   
 
     }
-    public class ExternalDoctorModelValidator : AbstractValidator<ExternalDoctorModel>
+    public class ExternalDoctorModelValidator : CommonDynamicValidator<ExternalDoctorModel>
     {
         public ExternalDoctorModelValidator()
         {

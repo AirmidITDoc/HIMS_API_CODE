@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string? CurrencyName { get; set; }
 
     }
-    public class CurrencyMasterModelValidator : AbstractValidator<CurrencyMasterModel>
+    public class CurrencyMasterModelValidator : CommonDynamicValidator<CurrencyMasterModel>
     {
         public CurrencyMasterModelValidator()
         {

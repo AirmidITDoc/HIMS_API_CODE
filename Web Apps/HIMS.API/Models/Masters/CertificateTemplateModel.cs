@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -7,7 +8,7 @@ namespace HIMS.API.Models.Masters
         public long TemplateId { get; set; }
         public string? TemplateDesc { get; set; }
     }
-    public class CertificateTemplateModelValidator : AbstractValidator<CertificateTemplateModel>
+    public class CertificateTemplateModelValidator : CommonDynamicValidator<CertificateTemplateModel>
     {
         public CertificateTemplateModelValidator()
         {

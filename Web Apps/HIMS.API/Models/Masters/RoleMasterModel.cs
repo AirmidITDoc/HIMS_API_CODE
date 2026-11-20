@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string RoleName { get; set; } = null!;
         public bool IsActive { get; set; }
     }
-    public class RoleMasterModelModelValidator : AbstractValidator<RoleMasterModel>
+    public class RoleMasterModelModelValidator : CommonDynamicValidator<RoleMasterModel>
     {
         public RoleMasterModelModelValidator()
         {

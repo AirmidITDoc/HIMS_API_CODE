@@ -19,7 +19,7 @@ namespace HIMS.Data.Models
         public string? LastName { get; set; }
         public string? Address { get; set; }
         public string? City { get; set; }
-        public string? PinNo { get; set; }
+        public long? PinNo { get; set; }
         public DateTime? DateofBirth { get; set; }
         public string? Age { get; set; }
         public long? GenderId { get; set; }

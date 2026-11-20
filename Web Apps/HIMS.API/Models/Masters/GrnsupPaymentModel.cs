@@ -1,3 +1,6 @@
+using FluentValidation;
+using HIMS.API.Validator;
+
 namespace HIMS.API.Models.Masters
 {
     public class GrnsupPaymentModel
@@ -33,7 +36,13 @@ namespace HIMS.API.Models.Masters
 
 
     }
-
+    public class GrnsupPaymentModelValidator : CommonDynamicValidator<GrnsupPaymentModel>
+    {
+        public GrnsupPaymentModelValidator()
+        {
+           
+        }
+    }
     public class GRNModels
     {
         public long Grnid { get; set; }

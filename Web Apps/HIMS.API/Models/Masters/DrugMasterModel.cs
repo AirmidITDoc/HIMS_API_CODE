@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -9,7 +10,7 @@ namespace HIMS.API.Models.Masters
         public long? GenericId { get; set; }
         public long? ClassId { get; set; }
     }
-    public class DrugMasterModelValidator : AbstractValidator<DrugMasterModel>
+    public class DrugMasterModelValidator : CommonDynamicValidator<DrugMasterModel>
     {
         public DrugMasterModelValidator()
         {

@@ -1,71 +1,61 @@
 ﻿
 using FluentValidation;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace HIMS.API.Validator
 {
-public abstract class CommonDynamicValidator<T> : AbstractValidator<T>
-{
-    protected CommonDynamicValidator()
+    public abstract class CommonDynamicValidator<T> : AbstractValidator<T>
     {
-        var properties = typeof(T).GetProperties();
-
-        foreach (var property in properties)
+        protected CommonDynamicValidator(params string[] ignoreProperties)
         {
-            // String validation
-            if (property.PropertyType == typeof(string))
-            {
-                AddStringValidation(property);
-            }
+            var properties = typeof(T).GetProperties();
+            var nullabilityContext = new NullabilityInfoContext();
 
-            // Integer validation
-            else if (property.PropertyType == typeof(int))
+            foreach (var property in properties)
             {
-                AddIntValidation(property);
-            }
+                if (ignoreProperties.Contains(property.Name))
+                    continue;
 
-            // Nullable Integer validation
-            else if (property.PropertyType == typeof(int?))
-            {
-                AddNullableIntValidation(property);
+                // String validation
+                if (property.PropertyType == typeof(string))
+                {
+                    var isNullable = nullabilityContext.Create(property).WriteState
+                                     == NullabilityState.Nullable;
+
+                    AddStringValidation(property, isNullable);
+                }
             }
         }
+
+        private void AddStringValidation(PropertyInfo property, bool isNullable)
+        {
+            var parameter = Expression.Parameter(typeof(T), "x");
+            var member = Expression.Property(parameter, property);
+            var lambda = Expression.Lambda<Func<T, string>>(member, parameter);
+
+            var rule = RuleFor(lambda);
+
+            if (!isNullable)
+            {
+                rule.NotNull()
+                    .WithMessage($"{property.Name} is required");
+            }
+
+            rule.Must(value =>
+                    value == null ||
+                    !Regex.IsMatch(value,
+                        @"<|>|javascript\s*:|<script",
+                        RegexOptions.IgnoreCase))
+                .WithMessage($"{property.Name} contains invalid input");
+        }
+
+        protected void IgnoreValidation(params string[] propertyNames)
+        {
+            // Properties passed to the base constructor are ignored.
+        }
     }
-
-    private void AddStringValidation(PropertyInfo property)
-    {
-        var parameter = Expression.Parameter(typeof(T), "x");
-        var member = Expression.Property(parameter, property);
-        var lambda = Expression.Lambda<Func<T, string>>(member, parameter);
-
-        RuleFor(lambda)
-            .NotEmpty()
-            .WithMessage($"{property.Name} is required");
-    }
-
-    private void AddIntValidation(PropertyInfo property)
-    {
-        var parameter = Expression.Parameter(typeof(T), "x");
-        var member = Expression.Property(parameter, property);
-        var lambda = Expression.Lambda<Func<T, int>>(member, parameter);
-
-        RuleFor(lambda)
-            .GreaterThan(0)
-            .WithMessage($"{property.Name} is required");
-    }
-
-    private void AddNullableIntValidation(PropertyInfo property)
-    {
-        var parameter = Expression.Parameter(typeof(T), "x");
-        var member = Expression.Property(parameter, property);
-        var lambda = Expression.Lambda<Func<T, int?>>(member, parameter);
-
-        RuleFor(lambda)
-            .NotNull()
-            .GreaterThan(0)
-            .WithMessage($"{property.Name} is required");
-    }
-}
 }

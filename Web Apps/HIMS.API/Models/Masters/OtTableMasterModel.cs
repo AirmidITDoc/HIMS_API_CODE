@@ -1,4 +1,5 @@
 using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -9,7 +10,7 @@ namespace HIMS.API.Models.Masters
         public long? LocationId { get; set; }
 
     }
-    public class OtTableMasterModelValidator : AbstractValidator<OtTableMasterModel>
+    public class OtTableMasterModelValidator : CommonDynamicValidator<OtTableMasterModel>
     {
         public OtTableMasterModelValidator()
         {

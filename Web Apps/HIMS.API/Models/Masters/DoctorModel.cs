@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -45,7 +46,7 @@ namespace HIMS.API.Models.Masters
         public List<DoctorLeaveDetailsModel> MDoctorLeaveDetails { get; set; }
         public List<DoctorSignPageDetailModel> MDoctorSignPageDetails { get; set; }
     }
-    public class DoctorModelValidator : AbstractValidator<DoctorModel>
+    public class DoctorModelValidator : CommonDynamicValidator<DoctorModel>
     {
         public DoctorModelValidator()
         {
@@ -60,7 +61,7 @@ namespace HIMS.API.Models.Masters
         public long? DoctorId { get; set; }
         public long? DepartmentId { get; set; }
     }
-    public class MDoctorDepartmentDetValidator : AbstractValidator<MDoctorDepartmentDetModel>
+    public class MDoctorDepartmentDetValidator : CommonDynamicValidator<MDoctorDepartmentDetModel>
     {
         public MDoctorDepartmentDetValidator()
         {
@@ -79,7 +80,7 @@ namespace HIMS.API.Models.Masters
         public long? CountryId { get; set; }
 
     }
-    public class DoctorQualificationDetailModelValidator : AbstractValidator<DoctorQualificationDetailModel>
+    public class DoctorQualificationDetailModelValidator : CommonDynamicValidator<DoctorQualificationDetailModel>
     {
         public DoctorQualificationDetailModelValidator()
         {
@@ -97,6 +98,13 @@ namespace HIMS.API.Models.Masters
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
     }
+    public class DoctorExperienceDetailsModelValidator : CommonDynamicValidator<DoctorExperienceDetailsModel>
+    {
+        public DoctorExperienceDetailsModelValidator()
+        {
+
+        }
+    }
     public class MDoctorScheduleDetailModel
     {
         public long DocSchedId { get; set; }
@@ -105,6 +113,13 @@ namespace HIMS.API.Models.Masters
         public string? StartTime { get; set; }
         public string? EndTime { get; set; }
         public int? Slot { get; set; }
+    }
+    public class MDoctorScheduleDetailModelValidator : CommonDynamicValidator<MDoctorScheduleDetailModel>
+    {
+        public MDoctorScheduleDetailModelValidator()
+        {
+
+        }
     }
     public class MDoctorChargesDetailModel
     {
@@ -117,6 +132,7 @@ namespace HIMS.API.Models.Masters
         public int? Days { get; set; }
 
     }
+
     public class DoctorLeaveDetailsModel
     {
         public long DocLeaveId { get; set; }
@@ -128,6 +144,13 @@ namespace HIMS.API.Models.Masters
         public string? Reason { get; set; }
 
 
+    }
+    public class DoctorLeaveDetailsModelValidator : CommonDynamicValidator<DoctorLeaveDetailsModel>
+    {
+        public DoctorLeaveDetailsModelValidator()
+        {
+
+        }
     }
     public class DoctorSignPageDetailModel
     {

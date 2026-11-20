@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string PatientType { get; set; }
 
     }
-    public class PatientTypeModelValidator : AbstractValidator<PatientTypeModel>
+    public class PatientTypeModelValidator : CommonDynamicValidator<PatientTypeModel>
     {
         public PatientTypeModelValidator()
         {

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -7,7 +8,7 @@ namespace HIMS.API.Models.Masters
         public long GenderId { get; set; }
         public string? GenderName { get; set; }
     }
-    public class GenderModelValidator : AbstractValidator<GenderModel>
+    public class GenderModelValidator : CommonDynamicValidator<GenderModel>
     {
         public GenderModelValidator()
         {

@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.Masters.OtTableMaster
         // List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
+        [Permission(PageCode = "SetupOtManagment", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LvwOttableMasterList> list = await _listRepository.GetAllPagedAsync(objGrid);
@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.Masters.OtTableMaster
         }
 
         [HttpGet("{id?}")]
-        [Permission(PageCode = "OTManagement", Permission = PagePermission.View)]
+        [Permission(PageCode = "SetupOtManagment", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)

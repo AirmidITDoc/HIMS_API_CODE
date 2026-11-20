@@ -26,8 +26,12 @@ namespace HIMS.API.Security
         {
             try
             {
-                var configuredKeys = configuration.GetSection("LoginV2:Keys").Get<LoginV2KeyConfiguration[]>() ??
-                    Array.Empty<LoginV2KeyConfiguration>();
+                var configuredKeys = configuration.GetSection("LoginV2:Keys").GetChildren()
+                    .Where(section => !string.IsNullOrWhiteSpace(section["Kid"]))
+                    .Select(section => section.Get<LoginV2KeyConfiguration>())
+                    .Where(key => key != null)
+                    .Cast<LoginV2KeyConfiguration>()
+                    .ToArray();
                 var envKey = new LoginV2KeyConfiguration
                 {
                     Kid = Environment.GetEnvironmentVariable("HIMS_LOGIN_V2_KID") ??

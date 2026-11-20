@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -72,7 +73,7 @@ namespace HIMS.API.Models.Masters
         public string? GIpprintName { get; set; }
         public string? GIppaperName { get; set; }
     }
-    public class ConfigurationModelValidator : AbstractValidator<ConfigurationModel>
+    public class ConfigurationModelValidator : CommonDynamicValidator<ConfigurationModel>
     {
         public ConfigurationModelValidator()
         {

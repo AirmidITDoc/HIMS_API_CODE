@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Masters
@@ -9,7 +10,7 @@ namespace HIMS.API.Models.Masters
         public string? ContainerType { get; set; }
         public long? UnitId { get; set; }
     }
-    public class PathSpecimenContainerMasterModelValidator : AbstractValidator<MPathSpecimenContainerMaster>
+    public class PathSpecimenContainerMasterModelValidator : CommonDynamicValidator<MPathSpecimenContainerMaster>
     {
         public PathSpecimenContainerMasterModelValidator()
         {

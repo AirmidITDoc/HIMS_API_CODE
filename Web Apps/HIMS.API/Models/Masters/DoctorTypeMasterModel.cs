@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -7,7 +8,7 @@ namespace HIMS.API.Models.Masters
         public long Id { get; set; }
         public string? DoctorType { get; set; }
     }
-    public class DoctorTypeMasterModelValidator : AbstractValidator<DoctorTypeMasterModel>
+    public class DoctorTypeMasterModelValidator : CommonDynamicValidator<DoctorTypeMasterModel>
     {
         public DoctorTypeMasterModelValidator()
         {

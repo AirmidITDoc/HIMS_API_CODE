@@ -61,5 +61,6 @@ namespace HIMS.Data.Models
         public string? FollowUpDescription { get; set; }
         public long? FollowUpDepartmentId { get; set; }
         public long? FollowUpDoctorId { get; set; }
+        public long? SlotId { get; set; }
     }
 }

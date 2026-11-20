@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -10,7 +11,7 @@ namespace HIMS.API.Models.Masters
         public long? MobileNo { get; set; }
         public string? Address { get; set; }
     }
-    public class OutSourcelabMasterModelValidator : AbstractValidator<OutSourcelabMasterModel>
+    public class OutSourcelabMasterModelValidator : CommonDynamicValidator<OutSourcelabMasterModel>
     {
         public OutSourcelabMasterModelValidator()
         {

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -19,7 +20,7 @@ namespace HIMS.API.Models.Masters
     {
         Daily = 1, Weekly = 2, Monthly = 3, Custom = 4
     }
-    public class ScheduleModelValidator : AbstractValidator<ScheduleModel>
+    public class ScheduleModelValidator : CommonDynamicValidator<ScheduleModel>
     {
         public ScheduleModelValidator()
         {
@@ -37,7 +38,7 @@ namespace HIMS.API.Models.Masters
         public int UserId { get; set; }
         public int MenuId { get; set; }
     }
-    public class FavouriteDtoModelValidator : AbstractValidator<FavouriteDtoModel>
+    public class FavouriteDtoModelValidator : CommonDynamicValidator<FavouriteDtoModel>
     {
         public FavouriteDtoModelValidator()
         {

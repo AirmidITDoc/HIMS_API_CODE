@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string? InstructionDescription { get; set; }
         public string? InstructioninMarathi { get; set; }
     }
-    public class InstructionMasterModelValidator : AbstractValidator<InstructionMasterModel>
+    public class InstructionMasterModelValidator : CommonDynamicValidator<InstructionMasterModel>
     {
         public InstructionMasterModelValidator()
         {

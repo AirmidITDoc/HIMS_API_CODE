@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -9,7 +10,7 @@ namespace HIMS.API.Models.Masters
         public List<BillTemplateDetailsModel> MOtBillTemplateDetails { get; set; }
 
     }
-    public class BillTemplateModelValidator : AbstractValidator<BillTemplateModel>
+    public class BillTemplateModelValidator : CommonDynamicValidator<BillTemplateModel>
     {
         public BillTemplateModelValidator()
         {
@@ -23,7 +24,7 @@ namespace HIMS.API.Models.Masters
           public long ServiceId { get; set; }
           public double? Percentage { get; set; }
         }
-    public class BillTemplateDetailsModelValidator : AbstractValidator<BillTemplateDetailsModel>
+    public class BillTemplateDetailsModelValidator : CommonDynamicValidator<BillTemplateDetailsModel>
     {
         public BillTemplateDetailsModelValidator()
         {

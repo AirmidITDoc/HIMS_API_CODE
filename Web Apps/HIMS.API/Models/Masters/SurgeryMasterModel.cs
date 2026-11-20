@@ -1,4 +1,5 @@
 using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -28,7 +29,7 @@ namespace HIMS.API.Models.Masters
         public long? PreferredOtroom { get; set; }
 
     }
-    public class SurgeryMasterModelValidator : AbstractValidator<SurgeryMasterModel>
+    public class SurgeryMasterModelValidator : CommonDynamicValidator<SurgeryMasterModel>
     {
         public SurgeryMasterModelValidator()
         {
@@ -61,5 +62,11 @@ namespace HIMS.API.Models.Masters
         public string? SurgeryName { get; set; }
         public long? SiteDescId { get; set; }
         public bool? IsActive { get; set; }
+    }
+    public class SurgeryModelValidator : CommonDynamicValidator<SurgeryModel>
+    {
+        public SurgeryModelValidator()
+        {
+        }
     }
 }

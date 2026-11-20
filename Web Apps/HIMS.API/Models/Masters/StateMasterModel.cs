@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -8,7 +9,7 @@ namespace HIMS.API.Models.Masters
         public string? StateName { get; set; }
         public long? CountryId { get; set; }
     }
-    public class StateMasterModel1Validator : AbstractValidator<StateMasterModel>
+    public class StateMasterModel1Validator : CommonDynamicValidator<StateMasterModel>
     {
         public StateMasterModel1Validator()
         {

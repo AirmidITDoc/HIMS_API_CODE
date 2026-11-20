@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -7,7 +8,7 @@ namespace HIMS.API.Models.Masters
         public long ItemManufactureId { get; set; }
         public string? ManufactureName { get; set; }
     }
-    public class ItemManufactureModelValidator : AbstractValidator<ItemManufactureModel>
+    public class ItemManufactureModelValidator : CommonDynamicValidator<ItemManufactureModel>
     {
         public ItemManufactureModelValidator()
         {

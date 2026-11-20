@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -7,7 +8,7 @@ namespace HIMS.API.Models.Masters
         public long UnitId { get; set; }
         public string? UnitName { get; set; }
     }
-    public class PathUnitMasterModelValidator : AbstractValidator<PathUnitMasterModel>
+    public class PathUnitMasterModelValidator : CommonDynamicValidator<PathUnitMasterModel>
     {
         public PathUnitMasterModelValidator()
         {

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -7,7 +8,7 @@ namespace HIMS.API.Models.Masters
         public long LocationId { get; set; }
         public string? LocationName { get; set; }
     }
-    public class LocationMasterModelValidator : AbstractValidator<LocationMasterModel>
+    public class LocationMasterModelValidator : CommonDynamicValidator<LocationMasterModel>
     {
         public LocationMasterModelValidator()
         {

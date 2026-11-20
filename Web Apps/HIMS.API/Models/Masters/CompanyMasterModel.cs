@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using HIMS.API.Models.Nursing;
+using HIMS.API.Validator;
 using HIMS.Data.Models;
 
 namespace HIMS.API.Models.Masters
@@ -36,7 +37,7 @@ namespace HIMS.API.Models.Masters
 
 
     }
-    public class CompanyMasterModelValidator : AbstractValidator<CompanyMasterModel>
+    public class CompanyMasterModelValidator : CommonDynamicValidator<CompanyMasterModel>
     {
         public CompanyMasterModelValidator()
         {

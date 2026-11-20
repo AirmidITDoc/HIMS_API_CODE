@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -9,7 +10,7 @@ namespace HIMS.API.Models.Masters
         public string? SubGroupName { get; set; }
     }
 
-    public class SubGroupMasterModelValidator : AbstractValidator<SubGroupMasterModel>
+    public class SubGroupMasterModelValidator : CommonDynamicValidator<SubGroupMasterModel>
     {
         public SubGroupMasterModelValidator()
         {

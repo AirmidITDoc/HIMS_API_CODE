@@ -1,4 +1,5 @@
 using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.Masters
 {
@@ -14,7 +15,7 @@ namespace HIMS.API.Models.Masters
         // public DateTime? CreatedDate { get; set; }
 
     }
-    public class MPathTestFormulaModelValidator : AbstractValidator<MPathTestFormulaModel>
+    public class MPathTestFormulaModelValidator : CommonDynamicValidator<MPathTestFormulaModel>
     {
         public MPathTestFormulaModelValidator()
         {
