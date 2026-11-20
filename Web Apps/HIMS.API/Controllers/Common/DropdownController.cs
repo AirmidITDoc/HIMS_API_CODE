@@ -354,7 +354,8 @@ namespace HIMS.API.Controllers.Common
         }
 
         [HttpGet]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
         [Route("[action]")]
         //[Permission]
         public async Task<ActionResult> GetBindDropDown(string mode, int? Id)

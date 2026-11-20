@@ -31,8 +31,7 @@ namespace HIMS.API.Controllers.Masters.Personal_Information
 
         }
         [HttpGet("search_AreaMaster")]
-
-        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "Appointment|ABHAList", Permission = PagePermission.View)]
         public ApiResponse PathologyServicesearch(string Keyword)
         {
             var data = _IAreaMasterService.searchAreaMaster(Keyword);

@@ -63,7 +63,7 @@ namespace HIMS.API.Controllers.AbhaIntegration
 
         [HttpPost("AbhaCallback")]
         //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
-        [AnyPermission(Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.View)]
         public async Task<ApiResponse> Insert(AbhaCallbackModel obj)
         {
             TAbhaCallbackformation model = obj.MapTo<TAbhaCallbackformation>();
