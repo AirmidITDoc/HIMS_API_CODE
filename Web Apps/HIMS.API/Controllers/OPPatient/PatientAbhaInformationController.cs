@@ -33,7 +33,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "ABHAList|Appointment|Registration", Permission = PagePermission.View)]
         [AnyPermission(Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpGet("ByAbhaNumber/{AbhaNumber?}")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "ABHAList|Appointment|Registration", Permission = PagePermission.View)]
         [AnyPermission(Permission = PagePermission.View)]
         public async Task<ApiResponse> GetListByAbhaNumber(string AbhaNumber)
         {
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.OPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Data found.",result);
         }
         [HttpPost("Insert")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        //[Permission(PageCode = "ABHAList|Appointment|Registration", Permission = PagePermission.Add)]
         [AnyPermission(Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PatientAbhaInformationModel obj)
         {
@@ -99,7 +99,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
        
         [HttpPut("Edit/{id:int}")]
-        //[Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        //[Permission(PageCode = "ABHAList|Appointment|Registration", Permission = PagePermission.Edit)]
         [AnyPermission(Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PatientAbhaInformationUpdateModel obj)
         {
