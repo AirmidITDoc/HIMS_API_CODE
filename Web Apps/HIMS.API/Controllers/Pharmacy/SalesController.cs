@@ -96,7 +96,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("PharSalesSettlemet")]
-        [Permission(PageCode = "Sales|SalesBillSettlement", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales|SalesBillSettlement|Admission", Permission = PagePermission.View)]
 
         public async Task<IActionResult> PharSalesBillSettlemet(GridRequestModel objGrid)
         {
