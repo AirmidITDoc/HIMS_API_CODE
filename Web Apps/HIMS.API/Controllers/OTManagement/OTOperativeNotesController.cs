@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.OTManagement
 
         [HttpPost("Insert")]
 
-        [Permission(PageCode = "TOtOperativeNote", Permission = PagePermission.Add)]
+        [Permission(PageCode = "TOtOperativeNote|OTManagement|OTRequest", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(OTOperativeNotesModel obj)
         {
             TOtOperativeNote model = obj.MapTo<TOtOperativeNote>();
@@ -48,8 +48,7 @@ namespace HIMS.API.Controllers.OTManagement
         }
         //Edit API
         [HttpPut("{id:int}")]
-
-        [Permission(PageCode = "TOtOperativeNote", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "TOtOperativeNote|OTManagement|OTRequest", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(OTOperativeNotesModel obj)
         {
             TOtOperativeNote model = obj.MapTo<TOtOperativeNote>();
@@ -66,8 +65,7 @@ namespace HIMS.API.Controllers.OTManagement
         }
 
         [HttpGet("{id?}")]
-
-        [Permission(PageCode = "TOtOperativeNote", Permission = PagePermission.View)]
+        [Permission(PageCode = "TOtOperativeNote|OTManagement|OTRequest", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
