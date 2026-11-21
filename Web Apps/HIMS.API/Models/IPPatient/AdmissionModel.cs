@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using HIMS.API.Models.OutPatient;
 using HIMS.API.Validator;
+using System.Text.RegularExpressions;
 
 namespace HIMS.API.Models.IPPatient
 {
@@ -71,6 +72,14 @@ namespace HIMS.API.Models.IPPatient
             RuleFor(x => x.CityId).NotNull().NotEmpty().WithMessage("City is required");
             RuleFor(x => x.StateId).NotNull().NotEmpty().WithMessage("State is required");
             RuleFor(x => x.CountryId).NotNull().NotEmpty().WithMessage("Country is required");
+
+            RuleFor(x => x.Age).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.Age)).WithMessage("Age must contain numbers only");
+            RuleFor(x => x.PhoneNo).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.PhoneNo)).WithMessage("PhoneNo must contain numbers only");
+            RuleFor(x => x.MobileNo).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.MobileNo)).WithMessage("MobileNo must contain numbers only");
+            RuleFor(x => x.AgeYear).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.AgeYear)).WithMessage("AgeYear must contain numbers only");
+            RuleFor(x => x.AgeMonth).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.AgeMonth)).WithMessage("AgeMonth must contain numbers only");
+            RuleFor(x => x.AgeDay).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.AgeDay)).WithMessage("AgeDay must contain numbers only");
+
         }
     }
     public class ADMISSIONModel
