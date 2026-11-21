@@ -183,9 +183,7 @@ namespace HIMS.Services.Inventory
             if (user != null)
             {
                 user.UserName = objLogin.UserName;
-                user.Password = PasswordHash.IsHash(objLogin.Password)
-                    ? objLogin.Password
-                    : PasswordHash.Create(objLogin.Password!);
+                user.Password = PasswordHash.Create(objLogin.Password!);
 
                 user.ModifiedBy = objLogin.ModifiedBy;
                 user.ModifiedDate = objLogin.ModifiedDate;
