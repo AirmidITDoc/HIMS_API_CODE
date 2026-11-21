@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("SampleCollectionPatientList")]
 
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "SamplecollectionList", Permission = PagePermission.View)]
         public async Task<IActionResult> SampleCollectionList(GridRequestModel objGrid)
         {
             IPagedList<SampleCollectionPatientListDto> SampleCollectionList = await _IPathlogySampleCollectionService.GetListAsync(objGrid);
@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("SampleCollectionTestList")]
 
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "SamplecollectionList", Permission = PagePermission.View)]
         public async Task<IActionResult> SampleCollectionTestList(GridRequestModel objGrid)
         {
             IPagedList<SampleCollectionTestListDto> SampleCollectionTestList = await _IPathlogySampleCollectionService.GetListAsyn(objGrid);
@@ -44,7 +44,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("LabOrRadRequestPatientList")]
 
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "SamplecollectionList", Permission = PagePermission.View)]
         public async Task<IActionResult> LabOrRadRequestList(GridRequestModel objGrid)
         {
             IPagedList<LabOrRadRequestListDto> LabOrRadRequestList = await _IPathlogySampleCollectionService.LGetListAsync(objGrid);
@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("LabOrRadRequestDetailList")]
 
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "SamplecollectionList", Permission = PagePermission.View)]
         public async Task<IActionResult> LabOrRadRequestDetailList(GridRequestModel objGrid)
         {
             IPagedList<LabOrRadRequestDetailListDto> LabOrRadRequestList = await _IPathlogySampleCollectionService.LGetListAsync1(objGrid);
@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPost("PathRadServiceList")]
 
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "SamplecollectionList", Permission = PagePermission.View)]
         public async Task<IActionResult> PathRadServiceList(GridRequestModel objGrid)
         {
             IPagedList<PathRadServiceListDto> PathRadServiceList = await _IPathlogySampleCollectionService.GetListAsync1(objGrid);
@@ -68,7 +68,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPut("Update")]
 
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Pathology|SamplecollectionList", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(PathlogySampleCollectionsModel obj)
         {
             List<TPathologyReportHeader> model = obj.PathlogySampleCollection.MapTo<List<TPathologyReportHeader>>();
@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("UpdateSamplecollectionDatetime")]
 
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Pathology|SamplecollectionList", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(PathologyUpdateDateTimeModel obj)
         {
             TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();
@@ -100,7 +100,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("PathSampleCollectionCancel")]
 
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Pathology|SamplecollectionList", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Delete(PathlogySampleCollectionCancelModel obj)
         {
             if (obj.PathReportId != 0)

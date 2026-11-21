@@ -76,8 +76,9 @@ namespace HIMS.API.Controllers.OPPatient
             var data1 = await _repository.GetById(x => x.VisitId == id);
             return data1.ToSingleResponse<VisitDetail, VisitDetailModel>("VisitDetails");
         }
+
         [HttpGet("search-patient")]
-        [Permission]
+        [AnyPermission(Permission = PagePermission.View)]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public async Task<ApiResponse> SearchPatient(string Keyword)
         {
@@ -86,7 +87,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpGet("search-patient-1")]
-        [Permission]
+        [AnyPermission(Permission = PagePermission.View)]
         //[Permission(PageCode = "Appointment", Permission = PagePermission.View)]
         public ApiResponse SearchPatientNew(string Keyword)
         {

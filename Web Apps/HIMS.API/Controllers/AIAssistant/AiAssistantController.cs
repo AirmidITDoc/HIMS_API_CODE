@@ -23,7 +23,8 @@ namespace HIMS.API.Controllers.AIAssistant
         }
 
         [HttpGet("capabilities")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> Capabilities()
         {
             var requestId = HttpContext.TraceIdentifier;
@@ -40,7 +41,8 @@ namespace HIMS.API.Controllers.AIAssistant
         }
 
         [HttpPost("chat")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.Add)]
+      //  [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
         public async Task<IActionResult> Chat([FromBody] AiAssistantChatRequest request)
         {
             var requestId = HttpContext.TraceIdentifier;

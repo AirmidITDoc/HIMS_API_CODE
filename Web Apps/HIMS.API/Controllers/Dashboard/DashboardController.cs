@@ -58,8 +58,8 @@ namespace HIMS.API.Controllers.Dashboard
         }
 
         [HttpGet("pathology-dashboard")]
-
-        [Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+       // [Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
         public async Task<ApiResponse> Pathology(int UnitId, DateTime FromDate, DateTime ToDate)
         {
           //  int UnitId = Context.UnitId;
@@ -87,8 +87,8 @@ namespace HIMS.API.Controllers.Dashboard
         }
 
         [HttpGet("radiology-dashboard")]
-
-        [Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
         public async Task<ApiResponse> Radiology(int UnitId, DateTime FromDate, DateTime ToDate)
         {
            // int UnitId = Context.UnitId;

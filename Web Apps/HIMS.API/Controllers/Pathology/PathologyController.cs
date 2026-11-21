@@ -115,7 +115,8 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("InsertResultEntry")]
-        [Permission(PageCode = "Pathology|PathologyResultlist|PathologyResultPendinglist|ExternalInvestigation|LabPatientRegistration", Permission = PagePermission.Add)]
+        [AnyPermission(Permission = PagePermission.View)]
+        //[Permission(PageCode = "Pathology|PathologyResultlist|PathologyResultPendinglist|ExternalInvestigation|LabPatientRegistration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathologyResultModel obj)
         {
             List<TPathologyReportDetail> model = obj.PathologyResult.MapTo<List<TPathologyReportDetail>>();

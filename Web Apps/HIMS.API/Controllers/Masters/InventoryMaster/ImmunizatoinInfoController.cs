@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
 
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "Appointment|Admission|MedicalRecords", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(long id)
         {
             if (id == 0) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         }
 
         [HttpPost("ImmunizationList")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "Appointment|Admission|MedicalRecords", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
@@ -48,7 +48,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
 
 
         [HttpPost("SaveImmunizationInfo")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Appointment|Admission|MedicalRecords", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<ApiResponse> SaveImmunizationInfo(List<ImmunizatoinInfoModel> obj)
         {

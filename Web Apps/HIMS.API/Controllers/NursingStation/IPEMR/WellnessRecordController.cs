@@ -26,7 +26,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
 
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "Appointment|Admission|MedicalRecords", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -38,7 +38,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
         //Add API
         [HttpPost("Insert")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Appointment|Admission|MedicalRecords", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(WellnessRecordModel obj)
         {
             TOpipWellnessRecord model = obj.MapTo<TOpipWellnessRecord>();
@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers.NursingStation.IPEMR
         }
         //Edit API
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Appointment|Admission|MedicalRecords", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(WellnessRecordModel obj)
         {
             TOpipWellnessRecord model = obj.MapTo<TOpipWellnessRecord>();
