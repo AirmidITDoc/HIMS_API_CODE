@@ -105,7 +105,7 @@ namespace HIMS.API.Controllers.Pharmacy
         }
 
         [HttpPost("BrowseIPPharAdvanceReceiptList")]
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales|SalesIpAdvance", Permission = PagePermission.View)]
         public async Task<IActionResult> BrowseIPPharAdvanceReceiptList(GridRequestModel objGrid)
         {
             IPagedList<BrowseIPPharAdvanceReceiptListDto> PrescriptionDetList = await _ISalesService.BrowseIPPharAdvanceReceiptList(objGrid);
