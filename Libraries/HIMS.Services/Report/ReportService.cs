@@ -3582,29 +3582,39 @@ namespace HIMS.Services.Report
                             reportDate.ToString("MMM-yy")
                         );
                         html = html.Replace(
-                              "{{CurrentDate}}", 
-                             DateTime.Now.ToString("dd-MM-yyyy hh:mm tt")
-                             );
+                            "{{FromDate}}",
+                            FromDate.ToString("dd-MM-yy")
+                        );
+
+                        html = html.Replace(
+                            "{{ToDate}}",
+                            ToDate.ToString("dd-MM-yy")
+                        );
+
+                        html = html.Replace(
+                            "{{CurrentDate}}",
+                            DateTime.Now.ToString("dd-MM-yyyy hh:mm tt")
+                        );
                     }
                     break;
-                    case "IPDMonthlyDepartmentGender.html":
-{
-    string reportTable = CreateIPDMonthlyDepartmentGenderReport(
-        dt,
-        colList,
-        headerList
-    );
+                case "IPDMonthlyDepartmentGender.html":
+                    {
+                        string reportTable = CreateIPDMonthlyDepartmentGenderReport(
+                            dt,
+                            colList,
+                            headerList
+                        );
 
-    html = html.Replace("{{ReportTable}}", reportTable);
+                        html = html.Replace("{{ReportTable}}", reportTable);
 
-    DateTime reportDate = FromDate;
+                        html = html.Replace("{{FromDate}}", FromDate.ToString("dd-MM-yy"));
 
-    html = html.Replace(
-        "{{ReportMonth}}",
-        reportDate.ToString("MMM-yy")
-    );
-}
-break;
+                        html = html.Replace("{{ToDate}}", ToDate.ToString("dd-MM-yy"));
+
+                        html = html.Replace("{{CurrentDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                    }
+                    break;
+                    break;
                 case "CPWiseDetailReport.html":
                     {
                         string prevCP = "";

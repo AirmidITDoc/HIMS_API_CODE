@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("HomeCollectionRegistrationInfoList")]
-        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
         //[Permission(PageCode = "LabPatientRegistration", Permission = PagePermission.View)]
       //  [Permission]
         public async Task<IActionResult> ListHomeCollection(GridRequestModel objGrid)

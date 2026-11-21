@@ -106,7 +106,7 @@ namespace HIMS.API.Controllers.Radiology
         }
         [HttpPost("RadiologyUnverify")]
 
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Pathology|Radiology", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UnVerify(RadiologyUnVerifyModel obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();

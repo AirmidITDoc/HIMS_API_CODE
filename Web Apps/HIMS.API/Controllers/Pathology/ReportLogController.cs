@@ -27,7 +27,7 @@ namespace HIMS.API.Controllers.Pathology
         [HttpPost]
         [Route("[action]")]
 
-        [Permission(PageCode = "ReportLog", Permission = PagePermission.View)]
+        [Permission(PageCode = "ReportLog|ReportConfig", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<TReportLog> ReportLogList = await _repository.GetAllPagedAsync(objGrid);
@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost]
 
-        [Permission(PageCode = "ReportLog", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ReportLog|ReportConfig", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(ReportLogModel obj)
         {
             TReportLog model = obj.MapTo<TReportLog>();

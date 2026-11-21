@@ -10,6 +10,7 @@ using HIMS.Data.DTO.Administration;
 using HIMS.Data.DTO.OPPatient;
 using HIMS.Data.Models;
 using HIMS.Services.Inventory;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Login
@@ -128,7 +129,8 @@ namespace HIMS.API.Controllers.Login
 
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Edit)]
+        ///    [Permission(PageCode = "Login", Permission = PagePermission.Edit)]
+        [AllowAnonymous]
         public async Task<ApiResponse> Edit(LoginManagerModel obj)
         {
             if (obj.UserId <= 0)
