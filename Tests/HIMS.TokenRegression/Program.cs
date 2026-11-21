@@ -8,9 +8,43 @@ using HIMS.API.Security;
 using HIMS.Core;
 using HIMS.Core.Infrastructure;
 using HIMS.Data.Models;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 SecurityKeys.Configure(Convert.ToBase64String(Enumerable.Range(0, 32).Select(i => (byte)i).ToArray()));
+const int MinutesPerDay = 24 * 60;
+
+IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+Require(LoginSessionPolicy.GetTokenValidityMinutes(configuration, LoginType.Mobile) ==
+    LoginSessionPolicy.DefaultMobileSessionDays * MinutesPerDay, "Default mobile session must be 180 days.");
+Require(LoginSessionPolicy.GetTokenValidityMinutes(configuration, LoginType.Web) == 12 * 60,
+    "Web session duration changed unexpectedly.");
+
+configuration = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+{
+    ["LoginV2:MobileSessionDays"] = "30"
+}).Build();
+Require(LoginSessionPolicy.GetTokenValidityMinutes(configuration, LoginType.Mobile) ==
+    LoginSessionPolicy.MinimumMobileSessionDays * MinutesPerDay, "Mobile sessions must not be shorter than 90 days.");
+
+configuration = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+{
+    ["LoginV2:MobileSessionDays"] = "365"
+}).Build();
+Require(LoginSessionPolicy.GetTokenValidityMinutes(configuration, LoginType.Mobile) ==
+    LoginSessionPolicy.MaximumMobileSessionDays * MinutesPerDay, "Mobile sessions must not exceed 180 days.");
+
+var isolatedUser = new LoginManager { UserToken = "web-token", MobileToken = "mobile-token" };
+LoginSessionPolicy.RotateSessionToken(isolatedUser, LoginType.Mobile);
+Require(isolatedUser.UserToken == "web-token", "Mobile login changed the web session token.");
+Require(isolatedUser.MobileToken != "mobile-token", "Mobile login did not rotate the mobile session token.");
+string currentMobileToken = isolatedUser.MobileToken!;
+LoginSessionPolicy.RotateSessionToken(isolatedUser, LoginType.Web);
+Require(isolatedUser.MobileToken == currentMobileToken, "Web login changed the mobile session token.");
+Require(isolatedUser.UserToken != "web-token", "Web login did not rotate the web session token.");
+
+Console.WriteLine("PASS: Mobile sessions default to 180 days, are bounded to 90–180 days, and do not conflict with web sessions.");
+
 
 static void Require(bool condition, string message)
 {

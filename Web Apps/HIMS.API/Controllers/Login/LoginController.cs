@@ -79,8 +79,6 @@ namespace HIMS.API.Controllers.Login
         private readonly ILoginV2KeyProvider _loginKeyProvider;
         private readonly ILoginV2Store _loginStore;
         private readonly IConfiguration _configuration;
-        private const int WebTokenValidityMinutes = 720;
-        private const int MobileTokenValidityMinutes = 90 * 24 * 60;
 
         public LoginController(IUserService userService, IPermissionService permission, IMenuService iMenuService,
             ILoginV2KeyProvider loginKeyProvider, ILoginV2Store loginStore, IConfiguration configuration)
@@ -98,12 +96,6 @@ namespace HIMS.API.Controllers.Login
         {
             string? activeToken = loginType == LoginType.Mobile ? user.MobileToken : user.UserToken;
             return !string.IsNullOrWhiteSpace(activeToken) && user.UserId > 0;
-        }
-
-        [NonAction]
-        private static int GetTokenValidityMinutes(LoginType loginType)
-        {
-            return loginType == LoginType.Mobile ? MobileTokenValidityMinutes : WebTokenValidityMinutes;
         }
 
         [HttpPost]
@@ -330,10 +322,7 @@ namespace HIMS.API.Controllers.Login
         [NonAction]
         private async Task<ApiResponse> AfterLogin(LoginManager user, LoginType loginType)
         {
-            if (loginType == LoginType.Mobile)
-                user.MobileToken = Guid.NewGuid().ToString();
-            else
-                user.UserToken = Guid.NewGuid().ToString();
+            LoginSessionPolicy.RotateSessionToken(user, loginType);
             await _userService.UpdateAsync(user, 0, "");
             (var permissionString, var permissions) = await GetPermissions(user.WebRoleId.Value);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Login Successfully.", new
@@ -343,7 +332,7 @@ namespace HIMS.API.Controllers.Login
                 user.WebRoleId,
                 Permissions = JsonConvert.SerializeObject(permissions),
                 Token = CommonExtensions.GenerateToken(user, _loginKeyProvider.Current,
-                    GetTokenValidityMinutes(loginType), loginType,
+                    LoginSessionPolicy.GetTokenValidityMinutes(_configuration, loginType), loginType,
                     AppSettings.Settings.AuthenticationSettings.Issuer,
                     AppSettings.Settings.AuthenticationSettings.Audience),
                 UserName = user.FirstName + " " + user.LastName,
@@ -525,11 +514,13 @@ namespace HIMS.API.Controllers.Login
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status401Unauthorized, "Invalid token");
             }
             LoginManager user = await _userService.GetById(UserId);
-            if (user != null && user.MobileToken == model.RefreshToken)
+            if (user == null || string.IsNullOrWhiteSpace(user.MobileToken) ||
+                !string.Equals(user.MobileToken, model.RefreshToken, StringComparison.Ordinal))
             {
-                return await AfterLogin(user, LoginType.Mobile);
+                return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status401Unauthorized, "Invalid token,Login failed.");
             }
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status401Unauthorized, "Invalid token,Login failed.");
+
+            return await AfterLogin(user, LoginType.Mobile);
         }
 
     }
