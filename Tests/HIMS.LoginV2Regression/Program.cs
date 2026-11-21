@@ -19,6 +19,19 @@ Require(!PasswordHash.Verify("wrong", hash), "Wrong password accepted.");
 Require(!PasswordHash.NeedsUpgrade(hash), "Fresh hash incorrectly needs upgrade.");
 Require(PasswordHash.Verify(password, password), "Legacy password migration compatibility failed.");
 
+byte[] legacyHash = SHA256.HashData(Encoding.UTF8.GetBytes(password));
+string legacyPassword = Convert.ToHexString(legacyHash).ToLowerInvariant();
+Require(PasswordHash.Verify(password, legacyPassword), "Legacy SHA-256 password verification failed.");
+Require(!PasswordHash.Verify("wrong", legacyPassword), "Wrong legacy password accepted.");
+Require(PasswordHash.NeedsUpgrade(legacyPassword), "Legacy SHA-256 password did not require upgrade.");
+
+string sha256Uppercase = legacyPassword.ToUpperInvariant();
+Require(PasswordHash.Verify(password, sha256Uppercase), "Uppercase legacy SHA-256 password verification failed.");
+
+string passwordAfterUpdate = PasswordHash.Create(password);
+Require(PasswordHash.Verify(password, passwordAfterUpdate), "Password update did not store a working hash.");
+Require(!PasswordHash.Verify(legacyPassword, passwordAfterUpdate), "Encrypted password text was accepted as plaintext.");
+
 using var rsa = RSA.Create(2048);
 var key = new LoginV2Key { Kid = "test-key", Rsa = rsa };
 var nonce = RandomNumberGenerator.GetBytes(12);

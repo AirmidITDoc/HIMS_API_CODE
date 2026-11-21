@@ -29,7 +29,15 @@ namespace HIMS.Core.Infrastructure
                 return false;
 
             if (!IsHash(stored))
+            {
+                // Support passwords stored by the legacy SHA-256 implementation.
+                if (IsLegacySha256(stored))
+                    return FixedTimeEquals(
+                        Encoding.ASCII.GetBytes(stored.ToLowerInvariant()),
+                        CreateLegacySha256(password));
+
                 return FixedTimeEquals(Encoding.UTF8.GetBytes(stored), Encoding.UTF8.GetBytes(password));
+            }
 
             string[] parts = stored.Split('$');
             if (parts.Length != 4 ||
@@ -58,6 +66,29 @@ namespace HIMS.Core.Infrastructure
 
             string[] parts = stored!.Split('$');
             return parts.Length != 4 || !int.TryParse(parts[1], out int iterations) || iterations < Iterations;
+        }
+
+        private static bool IsLegacySha256(string value)
+        {
+            if (value.Length != 64)
+                return false;
+
+            foreach (char c in value)
+            {
+                if (!((c >= '0' && c <= '9') ||
+                      (c >= 'a' && c <= 'f') ||
+                      (c >= 'A' && c <= 'F')))
+                    return false;
+            }
+            return true;
+        }
+
+        private static byte[] CreateLegacySha256(string password)
+        {
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+            byte[] hash = SHA256.HashData(passwordBytes);
+            string hex = Convert.ToHexString(hash).ToLowerInvariant();
+            return Encoding.ASCII.GetBytes(hex);
         }
 
         private static byte[] Pbkdf2(string password, byte[] salt, int iterations)
