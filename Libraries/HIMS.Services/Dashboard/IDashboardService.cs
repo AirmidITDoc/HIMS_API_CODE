@@ -21,6 +21,7 @@ namespace HIMS.Services.Dashboard
         Task<DailyDashBoardIPSubModule> GetDailyDashBoardIPSubModuleDashBoard(int UnitId);
         Task<DailyDashBoardOpSubModule> GetDailyDashBoardOPSubModuleDashBoard(int UnitId);
         Task<DietDashboard> GetDietDashboard(DateTime FromDate, DateTime ToDate);
+        Task<MobileFinancialDashboard> GetFinancialDashboard(int UnitId, DateTime FromDate, DateTime ToDate, int OPIPType);
 
 
     }

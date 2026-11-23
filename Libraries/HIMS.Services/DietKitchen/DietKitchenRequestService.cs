@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 using HIMS.Data.Extensions;
 using HIMS.Services.Utilities;
 
-namespace HIMS.Services.Canteen
+namespace HIMS.Services.DietKitchen
 {
-    public class CanteenService : ICanteenService
+    public class DietKitchenRequestService : IDietKitchenRequestService
     {
         private readonly HIMSDbContext _context;
 
-        public CanteenService(HIMSDbContext context)
+        public DietKitchenRequestService(HIMSDbContext context)
         {
             _context = context;
         }

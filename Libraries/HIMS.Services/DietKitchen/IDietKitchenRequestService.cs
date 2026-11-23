@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using HIMS.Data.Models;
 
-namespace HIMS.Services.Canteen
+namespace HIMS.Services.DietKitchen
 {
-    public interface ICanteenService
+    public interface IDietKitchenRequestService
     {
         Task UpdateDietPlanScheduleStatus(List<TDietPlanScheduleDetail> objList,string Flag,int CurrentUserId,string CurrentUserName);
         Task UpdateDietPlanDateStatus(DateTime PlanDate, string Flag, int CurrentUserId, string CurrentUserName);

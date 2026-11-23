@@ -5,28 +5,27 @@ using HIMS.API.Extensions;
 using HIMS.Core;
 using HIMS.Data;
 using HIMS.Data.Models;
-using HIMS.Services.Canteen;
 using HIMS.Services.DietKitchen;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static HIMS.API.Models.Canteen.CanteenModel;
+using static HIMS.API.Models.DietKitchen.DietKitchenRequestModel;
 
-namespace HIMS.API.Controllers.Canteen
+namespace HIMS.API.Controllers.DietKitchen
 {
     
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1")]
-    public class CanteenController : BaseController
+    public class DietKitchenRequestController : BaseController
     {
-        private readonly ICanteenService _canteenService;
-        public CanteenController(ICanteenService canteenService)
+        private readonly IDietKitchenRequestService _canteenService;
+        public DietKitchenRequestController(IDietKitchenRequestService canteenService)
         {
             _canteenService = canteenService;
         }
 
         [HttpPut("UpdateDietPlanScheduleStatus")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "DietRequest", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UpdateDietPlanScheduleStatus(List<CanteenDietPlanScheduleStatusUpdateModel> obj)
         {
             if (obj == null || obj.Count == 0)
@@ -53,7 +52,7 @@ namespace HIMS.API.Controllers.Canteen
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Diet Plan Status updated successfully.");
         }
         [HttpPut("UpdateDietPlanDateStatus")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "DietRequest", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UpdateDietPlanDateStatus(CanteenDietPlanDateStatusUpdateModel obj)
         {
             if (obj == null || obj.PlanDate == default ||

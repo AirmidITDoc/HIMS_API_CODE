@@ -1,7 +1,7 @@
-﻿namespace HIMS.API.Models.Canteen
+﻿namespace HIMS.API.Models.DietKitchen
 
 {
-    public class CanteenModel
+    public class DietKitchenRequestModel
     {
         public class CanteenDietPlanScheduleStatusUpdateModel
         {

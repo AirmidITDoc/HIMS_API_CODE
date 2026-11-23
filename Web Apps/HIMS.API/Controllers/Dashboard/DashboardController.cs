@@ -6,6 +6,7 @@ using HIMS.API.Extensions;
 using HIMS.Data.DTO;
 using HIMS.Services.Dashboard;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HIMS.API.Controllers.Dashboard
 {
@@ -123,7 +124,7 @@ namespace HIMS.API.Controllers.Dashboard
         }
 
         [HttpGet("Lab-Financial-Dashboard")]
-        [Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [Permission(PageCode = "Dashboard|ExternalInvestigation", Permission = PagePermission.View)]
         public async Task<ApiResponse> LabFinancialDashboard(int UnitId, DateTime FromDate, DateTime ToDate)
         {
             var data = await _IDashboardService.GetLabFinancialDashboard(UnitId, FromDate, ToDate);
@@ -131,7 +132,7 @@ namespace HIMS.API.Controllers.Dashboard
         }
 
         [HttpGet("Lab-Financial-Department-Summary")]
-        [Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [Permission(PageCode = "Dashboard|ExternalInvestigation", Permission = PagePermission.View)]
         public async Task<ApiResponse> LabFinancialDepartmentSummary(int UnitId, int GroupId, DateTime FromDate, DateTime ToDate)
         {
             var data = await _IDashboardService.GetLabFinancialDepartmentSummary(UnitId, GroupId, FromDate, ToDate);
@@ -161,7 +162,7 @@ namespace HIMS.API.Controllers.Dashboard
         }
 
         [HttpGet("diet-dashboard")]
-        [Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [Permission(PageCode = "Dashboard|DietDashboard", Permission = PagePermission.View)]
         public async Task<ApiResponse> DietDashboard(DateTime FromDate, DateTime ToDate)
         {
             var data = await _IDashboardService.GetDietDashboard(FromDate, ToDate);
@@ -172,6 +173,16 @@ namespace HIMS.API.Controllers.Dashboard
                 data);
         }
 
+        [HttpGet("Mobile-Financial-Dashboard")]
+        [AllowAnonymous]
+       // [Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        public async Task<ApiResponse> FinancialDashboard(int UnitId, DateTime FromDate, DateTime ToDate, int OPIPType = 2)
+        {
+            var data = await _IDashboardService.GetFinancialDashboard(UnitId, FromDate, ToDate, OPIPType);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Financial Dashboard", data
+            );
+        }
 
     }
 }

@@ -8,6 +8,7 @@ using HIMS.Services.Masters;
 using LinqToDB;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using static HIMS.Core.Domain.Dashboard.MobileFinancialDashboard;
 using static LinqToDB.Common.Configuration;
 
 namespace HIMS.Services.Dashboard
@@ -515,5 +516,43 @@ namespace HIMS.Services.Dashboard
                 OpRevenueTrendModel = data.Item10 ?? new List<OpRevenueTrendModel>() 
             };
         }
+
+
+        public async Task<MobileFinancialDashboard> GetFinancialDashboard(int UnitId, DateTime FromDate, DateTime ToDate, int OPIPType)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para = new SqlParameter[4];
+            para[0] = new SqlParameter("@UnitId", SqlDbType.BigInt) { Value = UnitId };
+            para[1] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
+            para[2] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+            para[3] = new SqlParameter("@OPIPType", SqlDbType.Int) { Value = OPIPType };
+
+            var data = await sql.Get9ResultsFromSp<
+                ServiceWiseCharges,
+                PaymentModeSummary,
+                ReceiptAdvanceSummary,
+                DoctorWiseBusiness,
+                GroupWiseCollection,
+                PharmacySaleSummary,
+                MobilePackagePatientCount,
+                OutstandingSummary,
+                UnadjustedAdvanceSummary
+            >("ps_rtrv_FinancialDashBoard_V2", para);
+
+            return new MobileFinancialDashboard
+            {
+                ServiceWiseCharges = data.Item1 ?? new List<ServiceWiseCharges>(),
+                PaymentModeSummary = data.Item2?.FirstOrDefault() ?? new PaymentModeSummary(),
+                ReceiptAdvanceSummary = data.Item3?.FirstOrDefault() ?? new ReceiptAdvanceSummary(),
+                DoctorWiseBusiness = data.Item4 ?? new List<DoctorWiseBusiness>(),
+                GroupWiseCollection = data.Item5 ?? new List<GroupWiseCollection>(),
+                PharmacySaleSummary = data.Item6?.FirstOrDefault() ?? new PharmacySaleSummary(),
+                PackagePatientCount = data.Item7 ?? new List<MobilePackagePatientCount>(),
+                OutstandingSummary = data.Item8?.FirstOrDefault() ?? new OutstandingSummary(),
+                UnadjustedAdvanceSummary = data.Item9?.FirstOrDefault() ?? new UnadjustedAdvanceSummary()
+            };
+        }
+
     }
 }
