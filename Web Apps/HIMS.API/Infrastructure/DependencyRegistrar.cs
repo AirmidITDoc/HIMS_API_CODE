@@ -298,6 +298,7 @@ namespace HIMS.API.Infrastructure
 
             services.AddSingleton<IOfficeToPdfConverter, LibreOfficeConverter>();
             services.AddScoped<ICategoryMergeService, CategoryMergeService>();
+            services.AddScoped<ICanteenService, CanteenService>();
 
 
             //ABHA testing 
