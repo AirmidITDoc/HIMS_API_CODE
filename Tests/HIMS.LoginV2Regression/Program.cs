@@ -1,4 +1,5 @@
 using HIMS.Api.Models.Login;
+using HIMS.API.Models.Login;
 using HIMS.API.Security;
 using HIMS.Core.Infrastructure;
 using System.Security.Cryptography;
@@ -87,4 +88,14 @@ Require(JsonSerializer.Deserialize<LoginV2Plaintext>(
     "{\"username\":\"u\",\"password\":\"p\",\"captchaCode\":\"1234\",\"loginType\":\"Web\"}", jsonOptions)!
     .LoginType == LoginType.Web, "String loginType contract failed.");
 
-Console.WriteLine("PASS: V2 hybrid encryption/AAD, tamper rejection, loginType JSON, and password hashing.");
+var sendRequest = JsonSerializer.Deserialize<SendPatientOtpRequest>(
+    "{\"mobile_number\":\"9876543210\",\"hospital_id\":\"123\"}", jsonOptions)!;
+Require(sendRequest.MobileNumber == "9876543210", "Patient OTP mobile_number contract failed.");
+Require(sendRequest.HospitalId == "123", "Patient OTP hospital_id contract failed.");
+
+var verifyRequest = JsonSerializer.Deserialize<VerifyPatientOtpRequest>(
+    "{\"mobile_number\":\"9876543210\",\"otp\":\"123456\",\"reference_id\":\"req-12345\"}", jsonOptions)!;
+Require(verifyRequest.Otp == "123456", "Patient OTP otp contract failed.");
+Require(verifyRequest.ReferenceId == "req-12345", "Patient OTP reference_id contract failed.");
+
+Console.WriteLine("PASS: V2 hybrid encryption/AAD, tamper rejection, loginType JSON, password hashing, and patient OTP JSON contracts.");
