@@ -35,7 +35,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         //List API Get By Id
         [HttpGet("{id?}")]
-        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.Pathology
             return Ok(LabAppointmentList.ToGridResponse(objGrid, "LabAppointment List"));
         }
         [HttpPost("LabAppointmentDetailList")]
-        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
 
         public async Task<IActionResult> DetailList(GridRequestModel objGrid)
         {
@@ -64,7 +64,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Add)]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LabAppointmentModel obj)
         {
             TLabAppointment model = obj.MapTo<TLabAppointment>();
@@ -91,7 +91,7 @@ namespace HIMS.API.Controllers.Pathology
 
       
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LabAppointmentModel obj)
         {
             TLabAppointment model = obj.MapTo<TLabAppointment>();
@@ -123,7 +123,7 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPut("RescheduleLabAppointment")]
-        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(LabAppointmentUpdate obj)
         {
             if (obj.LabAppId == 0)
@@ -139,7 +139,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpGet("get-Labappoinments")]
-        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
 
         public async Task<ApiResponse> GetLabAppoinments(int DocId, DateTime FromDate, DateTime ToDate, int CategoryId)
         {
@@ -177,7 +177,7 @@ namespace HIMS.API.Controllers.Pathology
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "PhoneApp Data.", data.Select(x => new { Text = x.FirstName + " " + x.LastName + " | " + x.RegNo + " | " + x.Mobile, Value = x.Id, RegId = x.RegNo, LabAppId = x.AppId, DoctorId = x.DoctorId, DepartmentId = x.DepartmentId }));
         //}
         [HttpDelete("Cancel")]
-        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Delete)]
 
         public async Task<ApiResponse> Cancel(int Id)
         {

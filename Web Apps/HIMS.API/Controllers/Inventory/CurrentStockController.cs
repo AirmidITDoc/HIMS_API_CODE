@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.Inventory
         }
         [HttpPost("ItemWiseSalesSummaryList")]
 
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales|CurrentStock", Permission = PagePermission.View)]
         public async Task<IActionResult> IList(GridRequestModel objGrid)
         {
             IPagedList<ItemWiseSalesSummaryDto> ItemWiseSalesSummaryList = await _ICurrentStockService.ItemWiseSalesList(objGrid);

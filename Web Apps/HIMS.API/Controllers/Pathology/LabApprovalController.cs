@@ -22,14 +22,14 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("LabResultCompletedList")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LabResultCompletedListDto> LabResultCompletedList = await _ILabApprovalService.GetListAsync(objGrid);
             return Ok(LabResultCompletedList.ToGridResponse(objGrid, "LabResultCompleted List"));
         }
         [HttpPost("LabResultCompletedInvestigationList")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.View)]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
         public async Task<IActionResult> InvestigationList(GridRequestModel objGrid)
         {
             IPagedList<LabResultCompletedInvestigationListDto> LabResultCompletedList = await _ILabApprovalService.InvestigationGetListAsync(objGrid);

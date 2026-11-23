@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.Employee
         //List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "EmployeeDesignation", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MEmployeeDesignationMaster> MEmployeeDesignationMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Employee
 
         //List API Get By Id
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "EmployeeDesignation", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.Employee
 
         //Add API
         [HttpPost]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "EmployeeDesignation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(EmployeeDesignationModel obj)
         {
             MEmployeeDesignationMaster model = obj.MapTo<MEmployeeDesignationMaster>();
@@ -69,7 +69,7 @@ namespace HIMS.API.Controllers.Employee
 
         //Edit API
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "EmployeeDesignation", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(EmployeeDesignationModel obj)
         {
             MEmployeeDesignationMaster model = obj.MapTo<MEmployeeDesignationMaster>();
@@ -87,7 +87,7 @@ namespace HIMS.API.Controllers.Employee
 
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "EmployeeDesignation", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MEmployeeDesignationMaster model = await _repository.GetById(x => x.EmpDesignationId == Id);

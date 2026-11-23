@@ -29,7 +29,7 @@ namespace HIMS.API.Controllers.Pathology
             _ILabSampleRecivedService = repository;
         }
         [HttpPost("LabSampleRecivedList")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             long UnitId = Context.UnitId;
@@ -53,7 +53,7 @@ namespace HIMS.API.Controllers.Pathology
         //    return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record updated successfully.");
         //}
         [HttpPut("LabSampleRecivedUpdate")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Edit)]
         public ApiResponse Update(PathologyLabReportHeader obj)
         {
             if (obj?.PathologyLabReport == null || !obj.PathologyLabReport.Any())
@@ -69,7 +69,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("Cancel")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(PathologyReportHeaderCancel obj)
         {
             TPathologyReportHeader Model = obj.MapTo<TPathologyReportHeader>();

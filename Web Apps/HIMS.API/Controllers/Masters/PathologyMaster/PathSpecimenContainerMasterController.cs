@@ -28,7 +28,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         [HttpPost]
         [Route("[action]")]
 
-        [Permission(PageCode = "PathSpecimenContainerMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "SpecimenMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MPathSpecimenContainerMaster> PathSpecimenContainerMasterList = await _repository.GetAllPagedAsync(objGrid);
@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //List API Get By Id
         [HttpGet("{id?}")]
 
-        [Permission(PageCode = "PathSpecimenContainerMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "SpecimenMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -55,7 +55,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //Add API
         [HttpPost]
 
-        [Permission(PageCode = "PathSpecimenContainerMaster", Permission = PagePermission.Add)]
+        [Permission(PageCode = "SpecimenMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(PathSpecimenContainerMasterModel obj)
         {
             MPathSpecimenContainerMaster model = obj.MapTo<MPathSpecimenContainerMaster>();
@@ -76,7 +76,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //Edit API
         [HttpPut("{id:int}")]
 
-        [Permission(PageCode = "PathSpecimenContainerMaster", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "SpecimenMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(PathSpecimenContainerMasterModel obj)
         {
             MPathSpecimenContainerMaster model = obj.MapTo<MPathSpecimenContainerMaster>();
@@ -95,7 +95,7 @@ namespace HIMS.API.Controllers.Masters.PathologyMaster
         //Delete API
         [HttpDelete]
 
-        [Permission(PageCode = "PathSpecimenContainerMaster", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "SpecimenMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MPathSpecimenContainerMaster model = await _repository.GetById(x => x.SpecimenContainerId == Id);

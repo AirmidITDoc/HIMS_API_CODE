@@ -32,7 +32,7 @@ namespace HIMS.API.Controllers.Masters.InventoryMaster
         // List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "Administration|VaccineEntry", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<VaccineInformationListDto> list = await _vaccineInformationService.GetVaccineInformationListAsync(objGrid);

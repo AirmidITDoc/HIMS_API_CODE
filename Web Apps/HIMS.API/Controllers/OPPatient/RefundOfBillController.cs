@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
         [HttpPost("OPBillservicedetailList")]
 
-        [Permission(PageCode = "Refund", Permission = PagePermission.View)]
+        [Permission(PageCode = "Refund|ExternalInvestigation", Permission = PagePermission.View)]
         public async Task<IActionResult> OPbillservicedetail(GridRequestModel objGrid)
         {
             IPagedList<OPBillservicedetailListDto> Servicelist = await _IRefundOfBillService.GetBillservicedetailListAsync(objGrid);
@@ -175,7 +175,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPut("UpdateRefundApproval{id:int}")]
-        [Permission(PageCode = "Refund", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Refund|ExternalInvestigation", Permission = PagePermission.Edit)]
         public async Task <ApiResponse> UpdateRefundApproval(RefundUpdateModel obj)
         {
             Refund model = obj.MapTo<Refund>();

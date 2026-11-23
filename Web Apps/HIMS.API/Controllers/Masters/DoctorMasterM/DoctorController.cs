@@ -139,7 +139,7 @@ namespace HIMS.API.Controllers.Masters.DoctorMasterm
 
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Refdoctor Combo List", data);
         }
-
+        
         //List API
         [HttpPost]
         [Route("[action]")]

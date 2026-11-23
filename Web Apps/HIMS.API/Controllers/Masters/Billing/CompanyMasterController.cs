@@ -42,7 +42,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         }
        
         [HttpGet("CompanyRepresentativeList")]
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CompanyMaster|ExternalInvestigation", Permission = PagePermission.View)]
         public ApiResponse CompanyRepresentativeList(long CompanyId)
         {
             var data = _CompanyMasterService.CompanyRepresentativeList(CompanyId);

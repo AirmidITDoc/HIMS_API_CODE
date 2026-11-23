@@ -20,7 +20,7 @@ namespace HIMS.API.Controllers.HomeCollection
         }
 
         [HttpGet("HomeCollectionDashBoard")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
         //[Permission]
         public async Task<ApiResponse> HomeCollectionDashboard(int UnitId, int PhlebotomistId, DateTime FromDate, DateTime ToDate)
         {
