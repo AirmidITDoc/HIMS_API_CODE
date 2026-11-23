@@ -88,7 +88,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpPost("OPBillListSettlementList")]
-        [Permission(PageCode = "Bill", Permission = PagePermission.View)]
+        [Permission(PageCode = "Bill|ExternalInvestigation", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<OPBillListSettlementListDto> OPBillListSettlementList = await _IOPSettlementService.OPBillListSettlementList(objGrid);

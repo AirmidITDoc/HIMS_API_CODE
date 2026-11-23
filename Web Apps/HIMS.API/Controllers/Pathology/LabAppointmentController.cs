@@ -47,7 +47,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("LabAppointmentList")]
-        [Permission(PageCode = "PhoneAppointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.View)]
 
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {

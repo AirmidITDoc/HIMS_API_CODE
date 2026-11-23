@@ -9,6 +9,7 @@ using HIMS.Core.Infrastructure;
 using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Radiology;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Radiology
@@ -52,7 +53,7 @@ namespace HIMS.API.Controllers.Radiology
         }
 
         [HttpPut("RadiologyUpdate/{id:int}")]
-        [Permission(PageCode = "Radiology", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Radiology|ExternalInvestigation", Permission = PagePermission.Edit)]
         //[Permission]
         public async Task <ApiResponse> Update(TRadiologyReportModel obj)
         {
@@ -89,7 +90,7 @@ namespace HIMS.API.Controllers.Radiology
 
         [HttpPost("Verify")]
 
-        [Permission(PageCode = "Radiology", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Radiology|ExternalInvestigation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Verify(RadiologyVerifyModel obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();
@@ -106,7 +107,7 @@ namespace HIMS.API.Controllers.Radiology
         }
         [HttpPost("RadiologyUnverify")]
 
-        [Permission(PageCode = "Pathology|Radiology", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Pathology|Radiology|ExternalInvestigation", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UnVerify(RadiologyUnVerifyModel obj)
         {
             TRadiologyReportHeader model = obj.MapTo<TRadiologyReportHeader>();

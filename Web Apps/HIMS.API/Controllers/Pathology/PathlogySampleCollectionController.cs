@@ -68,7 +68,7 @@ namespace HIMS.API.Controllers.Pathology
         }
         [HttpPut("Update")]
 
-        [Permission(PageCode = "Pathology|SamplecollectionList", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Pathology|SamplecollectionList|ExternalInvestigation", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Update(PathlogySampleCollectionsModel obj)
         {
             List<TPathologyReportHeader> model = obj.PathlogySampleCollection.MapTo<List<TPathologyReportHeader>>();
@@ -85,7 +85,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("UpdateSamplecollectionDatetime")]
 
-        [Permission(PageCode = "Pathology|SamplecollectionList", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Pathology|SamplecollectionList|ExternalInvestigation", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(PathologyUpdateDateTimeModel obj)
         {
             TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();
@@ -100,7 +100,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("PathSampleCollectionCancel")]
 
-        [Permission(PageCode = "Pathology|SamplecollectionList", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Pathology|SamplecollectionList|ExternalInvestigation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Delete(PathlogySampleCollectionCancelModel obj)
         {
             if (obj.PathReportId != 0)

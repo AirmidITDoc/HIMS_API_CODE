@@ -184,7 +184,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("PathResultentryrollback")]
 
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Pathology|ExternalInvestigation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Delete(PathReportModel obj)
         {
             TPathologyReportDetail Model = obj.MapTo<TPathologyReportDetail>();
@@ -200,7 +200,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("Verify")]
 
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Pathology|ExternalInvestigation", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(PathologyVerifyModel obj)
         {
             TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();
@@ -226,7 +226,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("PathologyUnverify")]
 
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Pathology|ExternalInvestigation", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Verify(PathologyUnverifyModel obj)
         {
             TPathologyReportHeader model = obj.MapTo<TPathologyReportHeader>();

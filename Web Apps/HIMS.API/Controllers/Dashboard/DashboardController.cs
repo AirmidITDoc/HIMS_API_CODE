@@ -174,8 +174,7 @@ namespace HIMS.API.Controllers.Dashboard
         }
 
         [HttpGet("Mobile-Financial-Dashboard")]
-        [AllowAnonymous]
-       // [Permission(PageCode = "Dashboard", Permission = PagePermission.View)]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         public async Task<ApiResponse> FinancialDashboard(int UnitId, DateTime FromDate, DateTime ToDate, int OPIPType = 2)
         {
             var data = await _IDashboardService.GetFinancialDashboard(UnitId, FromDate, ToDate, OPIPType);

@@ -41,6 +41,13 @@ namespace HIMS.Core.Domain.Dashboard
 
         public class ReceiptAdvanceSummary
         {
+        public decimal TotalCollection { get; set; }
+        public decimal DiscAmount { get; set; }
+        public decimal TotalRevenue { get; set; }
+        public decimal PaidAmount { get; set; }
+        public decimal CreditAmount { get; set; }
+        public decimal AdvusedAmount { get; set; }
+        public decimal AdvRefundAmount { get; set; }
         public decimal Receipt { get; set; }
         public decimal Advance { get; set; }
         public decimal Refund { get; set; }

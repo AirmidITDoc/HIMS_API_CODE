@@ -21,7 +21,7 @@ namespace HIMS.API.Controllers.Inventory
         }
         [HttpPost("ItemMovementList")]
 
-        [Permission(PageCode = "Sales", Permission = PagePermission.View)]
+        [Permission(PageCode = "Sales|ItemMovemnent", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<ItemMovementListDto> ItemMovementList = await _IItemMovementService.ItemMovementList(objGrid);
