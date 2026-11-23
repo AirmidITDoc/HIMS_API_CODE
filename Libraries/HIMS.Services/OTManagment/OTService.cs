@@ -233,8 +233,68 @@ namespace HIMS.Services.IPPatient
             odal.ExecuteNonQuery("ps_Update_OT_ReservationHeader", CommandType.StoredProcedure, entity);
         }
 
+        public virtual async Task<List<OtCalendarDto>> GetAppoinments(int OtTable, DateTime FromDate, DateTime ToDate)
+        {
+            var from = FromDate.Date;
+            var to = ToDate.Date.AddDays(1);
 
+            var reservations = _context.TOtReservationHeaders
+                .AsNoTracking()
+                .Where(r => r.Ottable == OtTable
+                            && r.IsCancelled != true
+                            && r.SurgeryDate >= from
+                            && r.SurgeryDate < to);
 
+            // OPD (OPIPType = 0): OPIPID -> VisitDetails.VisitId -> Registration
+            var opd = await (
+                from r in reservations
+                where r.Opiptype == 0
+                join v in _context.VisitDetails on r.Opipid equals v.VisitId
+                join g in _context.Registrations on v.RegId equals g.RegId
+                select new
+                {
+                    r.OtreservationId,
+                    r.SurgeryDate,
+                    r.EstimateTime,
+                    g.FirstName,
+                    g.LastName,
+                    g.MobileNo
+                }).ToListAsync();
+
+            // IPD (OPIPType = 1): OPIPID -> Admission.AdmissionID -> Registration
+            var ipd = await (
+                from r in reservations
+                where r.Opiptype == 1
+                join a in _context.Admissions on r.Opipid equals a.AdmissionId
+                join g in _context.Registrations on a.RegId equals g.RegId
+                select new
+                {
+                    r.OtreservationId,
+                    r.SurgeryDate,
+                    r.EstimateTime,
+                    g.FirstName,
+                    g.LastName,
+                    g.MobileNo
+                }).ToListAsync();
+
+            return opd.Concat(ipd)
+                .Select(x =>
+                {
+                    var start = x.SurgeryDate.Value;
+                    var hours = x.EstimateTime > 0 ? x.EstimateTime : 1;   // assuming hours
+
+                    return new OtCalendarDto
+                    {
+                        OtreservationId = (int)x.OtreservationId,
+                        Start = start,
+                        End = start.AddHours((double)hours),
+                        PatientName = $"{x.FirstName} {x.LastName}".Trim(),
+                        MobileNo = x.MobileNo
+                    };
+                })
+                .OrderBy(x => x.Start)
+                .ToList();
+        }
 
         public virtual async Task InsertAsync(TOtReservationCheckInOut objTOtReservationCheckInOut, int UserId, string Username)
         {

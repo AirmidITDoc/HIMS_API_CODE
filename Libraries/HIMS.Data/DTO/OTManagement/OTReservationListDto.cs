@@ -113,4 +113,13 @@ namespace HIMS.Data.DTO.OTManagement
 
     }
 
+    public class OtCalendarDto
+    {
+        public int OtreservationId { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+        public string PatientName { get; set; }
+        public string MobileNo { get; set; }
+    }
+
 }

@@ -13,7 +13,7 @@ namespace HIMS.Services.OTManagment
         Task InsertAsync(TOtReservation OBJTOtbooking, int UserId, string Username);
         void InsertSP(TOtReservationHeader ObjTOtReservation, int UserId, string Username);
         Task UpdateSP(TOtReservationHeader ObjTOtReservation, int UserId, string Username);
-
+        Task<List<OtCalendarDto>> GetAppoinments(int OtTable, DateTime FromDate, DateTime ToDate);
         Task UpdateAsync(TOtReservation OBJTOtbooking, int UserId, string Username);
         void Cancel(TOtReservationHeader objTOtReservation, int UserId, string Username);
         Task<TOtReservation?> GetByIdAsync(int id);
