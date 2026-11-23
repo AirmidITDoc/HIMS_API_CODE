@@ -114,8 +114,9 @@
 
         <!-- MR / OPD / IPD / BED -->
         <table style="width:100%;
-                      border-collapse:collapse;
-                      margin-bottom:6px"
+              border-collapse:collapse;
+              font-size:18px;
+              line-height:1.25"
                width="100%">
 
             <tr>
@@ -156,12 +157,20 @@
 
             <!-- NAME / AGE -->
             <tr>
-                <td style="width:62%; padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
-                    <span style="font-weight:bold">Name of Patient :</span>
+                <td style="width:62%;
+                           padding:2px 8px 10px 0;
+                           vertical-align:top;
+                           white-space:normal;
+                           overflow-wrap:anywhere;">
+                    <span style="font-weight:bold">Name of Patient:</span>
                     <span style="color:#1a3fa0; font-weight:bold; margin-left:4px">{{PatientName}}</span>
                 </td>
 
-                <td style="width:38%; padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td style="width:38%;
+                           padding:2px 0 10px 8px;
+                           vertical-align:top;
+                           white-space:normal;
+                           overflow-wrap:anywhere;">
                     <span style="font-weight:bold">Age :</span>
                     <span style="margin-left:4px">{{Age}} Yr {{AgeMonth}} M {{AgeDay}} Days</span>
                 </td>
@@ -169,12 +178,12 @@
 
             <!-- SEX / OCCUPATION -->
             <tr>
-                <td style="padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td style="padding:2px 8px 10px 0; vertical-align:top; white-space:normal; overflow-wrap:anywhere;">
                     <span style="font-weight:bold">Sex :</span>
                     <span style="margin-left:4px">{{GenderName}}</span>
                 </td>
 
-                <td style="padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td style="padding:2px 0 10px 8px; vertical-align:top; white-space:normal; overflow-wrap:anywhere;">
                     <span style="font-weight:bold">Occupation :</span>
                     <span style="margin-left:4px">{{Occupation}}</span>
                 </td>
@@ -182,12 +191,12 @@
 
             <!-- EDUCATION / MOBILE -->
             <tr>
-                <td style="padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td style="padding:2px 8px 10px 0; vertical-align:top; white-space:normal; overflow-wrap:anywhere;">
                     <span style="font-weight:bold">Education :</span>
                     <span style="margin-left:4px">{{Education}}</span>
                 </td>
 
-                <td style="padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td style="padding:2px 0 10px 8px; vertical-align:top; white-space:nowrap">
                     <span style="font-weight:bold">Patient Mob. No. :</span>
                     <span style="margin-left:4px">{{MobileNo}}</span>
                 </td>
@@ -195,7 +204,7 @@
 
             <!-- ADDRESS -->
             <tr>
-                <td colspan="2" style="padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td colspan="2" style="padding:2px 0 10px 0; vertical-align:top; white-space:normal; overflow-wrap:anywhere;">
                     <span style="font-weight:bold">Address :</span>
                     <span style="margin-left:4px">{{Address}}, {{City}}</span>
                 </td>
@@ -203,12 +212,12 @@
 
             <!-- HUSBAND / RELATIVE MOBILE -->
             <tr>
-                <td style="padding:2px 0 10px 0; vertical-align:top">
+                <td style="padding:2px 8px 10px 0; vertical-align:top; white-space:normal; overflow-wrap:anywhere;">
                     <span style="font-weight:bold">Name Husband/<br>Wife/ Father :</span>
                     <span style="margin-left:4px">{{RelativeName}}</span>
                 </td>
 
-                <td style="padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td style="padding:2px 0 10px 8px; vertical-align:top; white-space:nowrap">
                     <span style="font-weight:bold">Relative Mob No :</span>
                     <span style="margin-left:4px">{{RelativePhoneNo}}</span>
                 </td>
@@ -216,37 +225,47 @@
 
             <!-- PATIENT ADMITTED BY / SIGNATURE -->
             <tr>
-                <td style="padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td style="padding:2px 8px 10px 0; vertical-align:top; white-space:normal; overflow-wrap:anywhere;">
                     <span style="font-weight:bold">Patient Admitted By :</span>
                     <span style="margin-left:4px">{{RelativeName}}</span>
                 </td>
 
-                <td style="padding:2px 0 10px 0; vertical-align:top">
+                <td style="padding:2px 0 10px 8px; vertical-align:top">
                     <span style="font-weight:bold">Signature of<br>Admitting Person :</span>
                 </td>
             </tr>
 
             <!-- RELATION / DOCTOR -->
             <tr>
-                <td style="padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td style="width:60%;
+               padding:2px 8px 10px 0;
+               vertical-align:top;
+               white-space:normal;
+               overflow-wrap:anywhere;">
                     <span style="font-weight:bold">Relation With Patient :</span>
                     <span style="margin-left:4px">{{RelationshipName}}</span>
                 </td>
 
-                <td style="padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td style="width:40%;
+               padding:2px 0 10px 8px;
+               vertical-align:top;
+               white-space:normal;
+               overflow-wrap:anywhere;">
                     <span style="font-weight:bold">Doctor's Name :</span>
-                    <span style="margin-left:4px">{{AdmittedDoctorName}}</span>
+                    <span style="margin-left:4px">
+                        {{AdmittedDoctorName}}
+                    </span>
                 </td>
             </tr>
 
             <!-- SISTER / DISCHARGE DATE -->
             <tr>
-                <td style="padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td style="padding:2px 8px 10px 0; vertical-align:top; white-space:normal; overflow-wrap:anywhere;">
                     <span style="font-weight:bold">Sister's/Clerk Name :</span>
                     <span style="margin-left:4px">{{LoginUserName}} {{LoginUserSurname}}</span>
                 </td>
 
-                <td style="padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td style="padding:2px 0 10px 8px; vertical-align:top; white-space:nowrap">
                     <span style="font-weight:bold">Discharge Date :</span>
                     <span style="margin-left:4px">{{DischargeDate}}</span>
                 </td>
@@ -254,12 +273,12 @@
 
             <!-- ADMISSION DATE / TIME / ADVANCE -->
             <tr>
-                <td style="padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td style="padding:2px 8px 10px 0; vertical-align:top; white-space:nowrap">
                     <span style="font-weight:bold">Admission Date :</span>
                     <span style="margin-left:4px">{{DOA}}</span>
                 </td>
 
-                <td style="padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td style="padding:2px 0 10px 8px; vertical-align:top; white-space:nowrap">
                     <span style="font-weight:bold">Time:</span>
                     <span style="margin-left:4px">{{DOT}}</span>
 
@@ -281,7 +300,7 @@
 
             <!-- REMARK -->
             <tr>
-                <td colspan="2" style="padding:2px 0 10px 0; vertical-align:top; white-space:nowrap">
+                <td colspan="2" style="padding:2px 0 10px 0; vertical-align:top; white-space:normal; overflow-wrap:anywhere;">
                     <span style="font-weight:bold">Remark, If Any, on Discharge :</span>
                     <span style="margin-left:4px">{{DischargeRemark}}</span>
                 </td>

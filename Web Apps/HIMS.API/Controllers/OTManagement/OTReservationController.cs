@@ -4,6 +4,7 @@ using HIMS.Api.Models.Common;
 using HIMS.API.Extensions;
 using HIMS.API.Models.IPPatient;
 using HIMS.API.Models.Masters;
+using HIMS.API.Models.OTManagement;
 using HIMS.Core;
 using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
@@ -11,6 +12,7 @@ using HIMS.Data;
 using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 using HIMS.Services.OTManagment;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static HIMS.API.Models.IPPatient.OtbookingModelValidator;
 
@@ -298,5 +300,24 @@ namespace HIMS.API.Controllers.IPPatient
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record Updated successfully.");
         }
 
+
+        [HttpGet("get-Reservation")]
+        [Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        public async Task<ApiResponse> GetAppoinments(int OtTable, DateTime FromDate, DateTime ToDate)
+        {
+            var data = await _OTService.GetAppoinments(OtTable, FromDate, ToDate);
+
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OT Reservation Data.",
+                data.Select(x => new
+                {
+                    Start = x.Start,
+                    Id = x.OtreservationId,
+                    End = x.End,
+                    Title = x.PatientName + " (" + x.MobileNo + ")",
+                    resizable = new { beforeStart = true, afterEnd = true },
+                    draggable = true,
+                    color = new { primary = "#ad2121", secondary = "#FAE3E3" }
+                }));
+        }
     }
 }
