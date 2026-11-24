@@ -59,6 +59,22 @@ namespace HIMS.Services.DietKitchen
 
             _context.TDietPlanSchedules.Add(objDietPlanSchedule);
             await _context.SaveChangesAsync();
+            if (objDietPlanSchedule.DraftOrFinal == true && objDietPlanSchedule.TDietPlanScheduleDetails != null)
+            {
+                long OrderNo = _context.TDietPlanScheduleDetails.AsEnumerable().Select(x => long.TryParse(x.OrderNo, out long n) ? n : 0).DefaultIfEmpty(0).Max();
+
+                foreach (var detail in objDietPlanSchedule.TDietPlanScheduleDetails)
+                {
+                    OrderNo++;
+                    detail.Status = "Ordered";
+                    detail.OrderNo = OrderNo.ToString();
+                    detail.IsOrder = true;
+                    detail.IsOrderBy = UserId;
+                    detail.IsOrderDateTime = AppTime.Now;
+                }
+
+                await _context.SaveChangesAsync();
+            }
 
             scope.Complete();
         }

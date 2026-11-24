@@ -75,11 +75,12 @@ namespace HIMS.API.Models.IPPatient
 
             RuleFor(x => x.Age).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.Age)).WithMessage("Age must contain numbers only");
             RuleFor(x => x.PhoneNo).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.PhoneNo)).WithMessage("PhoneNo must contain numbers only");
-            RuleFor(x => x.MobileNo).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.MobileNo)).WithMessage("MobileNo must contain numbers only");
+            RuleFor(x => x.MobileNo).Matches(@"^[0-9]{10}$").When(x => !string.IsNullOrWhiteSpace(x.MobileNo)).WithMessage("MobileNo must contain exactly 10 digits");
             RuleFor(x => x.AgeYear).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.AgeYear)).WithMessage("AgeYear must contain numbers only");
             RuleFor(x => x.AgeMonth).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.AgeMonth)).WithMessage("AgeMonth must contain numbers only");
             RuleFor(x => x.AgeDay).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.AgeDay)).WithMessage("AgeDay must contain numbers only");
-
+            RuleFor(x => x.EmgMobileNo).Matches(@"^[0-9]{10}$").When(x => !string.IsNullOrWhiteSpace(x.EmgMobileNo)).WithMessage("EmgMobileNo must contain exactly 10 digits");
+            RuleFor(x => x.EmgLandlineNo).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.EmgLandlineNo)).WithMessage("EmgLandlineNo must contain numbers only");
         }
     }
     public class ADMISSIONModel
@@ -138,6 +139,8 @@ namespace HIMS.API.Models.IPPatient
             RuleFor(x => x.AdmissionDate).NotNull().NotEmpty().WithMessage("AdmissionDate is required");
             RuleFor(x => x.AdmissionTime).NotNull().NotEmpty().WithMessage("AdmissionTime is required");
 
+            RuleFor(x => x.PhoneNo).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.PhoneNo)).WithMessage("PhoneNo must contain numbers only");
+            RuleFor(x => x.MobileNo).Matches(@"^[0-9]{10}$").When(x => !string.IsNullOrWhiteSpace(x.MobileNo)).WithMessage("MobileNo must contain exactly 10 digits");
         }
     }
     public class BedModel
@@ -152,12 +155,27 @@ namespace HIMS.API.Models.IPPatient
 
 
     }
+    public class NewAdmissionValidator : AbstractValidator<NewAdmission>
+    {
+        public NewAdmissionValidator()
+        {
+            RuleFor(x => x.AdmissionReg).SetValidator(new AdmissionRegModelValidator());
+            RuleFor(x => x.Admission).SetValidator(new AdmissModelValidator());
+        }
+    }
     public class AdmissionRegistered
     {
         //public AdmissionRegModel AdmissionReg { get; set; }
         public ADMISSIONModel Admission { get; set; }
         public PatientPolicyModels PatientPolicy { get; set; }
 
+    }
+    public class AdmissionRegisteredValidator : AbstractValidator<AdmissionRegistered>
+    {
+        public AdmissionRegisteredValidator()
+        {
+            RuleFor(x => x.Admission).SetValidator(new AdmissModelValidator());
+        }
     }
     public class BedMaster
     {
@@ -200,6 +218,13 @@ namespace HIMS.API.Models.IPPatient
         public bool? Ischarity { get; set; }
         public bool? IsReimbursement { get; set; }
 
+    }
+    public class AdmissionUpdateValidator : CommonDynamicValidator<AdmissionUpdate>
+    {
+        public AdmissionUpdateValidator()
+        {
+            RuleFor(x => x.PhoneNo).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.PhoneNo)).WithMessage("PhoneNo must contain numbers only");
+        }
     }
 }
 

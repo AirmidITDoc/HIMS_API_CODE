@@ -77,11 +77,12 @@ namespace HIMS.API.Models.OutPatient
 
             RuleFor(x => x.Age).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.Age)).WithMessage("Age must contain numbers only");
             RuleFor(x => x.PhoneNo).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.PhoneNo)).WithMessage("PhoneNo must contain numbers only");
-            RuleFor(x => x.MobileNo).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.MobileNo)).WithMessage("MobileNo must contain numbers only");
+            RuleFor(x => x.MobileNo).Matches(@"^[0-9]{10}$").When(x => !string.IsNullOrWhiteSpace(x.MobileNo)).WithMessage("MobileNo must contain exactly 10 digits");
             RuleFor(x => x.AgeYear).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.AgeYear)).WithMessage("AgeYear must contain numbers only");
             RuleFor(x => x.AgeMonth).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.AgeMonth)).WithMessage("AgeMonth must contain numbers only");
             RuleFor(x => x.AgeDay).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.AgeDay)).WithMessage("AgeDay must contain numbers only");
-
+            RuleFor(x => x.EmgMobileNo).Matches(@"^[0-9]{10}$").When(x => !string.IsNullOrWhiteSpace(x.EmgMobileNo)).WithMessage("EmgMobileNo must contain exactly 10 digits");
+            RuleFor(x => x.EmgLandlineNo).Must(x => Regex.IsMatch(x, @"^[0-9]+$")).When(x => !string.IsNullOrWhiteSpace(x.EmgLandlineNo)).WithMessage("EmgLandlineNo must contain numbers only");
         }
     }
 
@@ -198,6 +199,14 @@ namespace HIMS.API.Models.OutPatient
         public PatientPolicyModels PatientPolicy { get; set; }
 
 
+    }
+    public class AppointmentReqDtovisitValidator : AbstractValidator<AppointmentReqDtovisit>
+    {
+        public AppointmentReqDtovisitValidator()
+        {
+            RuleFor(x => x.Registration).SetValidator(new AppReistrationModelValidator());
+            RuleFor(x => x.Visit).SetValidator(new AppVisitDetailModelValidator());
+        }
     }
     public class AppointmentUpdate
     {
