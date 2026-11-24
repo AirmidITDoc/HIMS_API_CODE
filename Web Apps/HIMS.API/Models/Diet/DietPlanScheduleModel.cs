@@ -42,7 +42,7 @@ namespace HIMS.API.Models.Diet
     public class DietPlanScheduleCancelModel
     {
         public long DietPlanId { get; set; }
-        public long? IsCancelledBy { get; set; }
+        //public long? IsCancelledBy { get; set; }
        
     }
 
@@ -50,7 +50,7 @@ namespace HIMS.API.Models.Diet
     public class DietPlanScheduleDetailsCancelModel
     {
         public long DietPlanDetId { get; set; }
-        public long? IsCancelledBy { get; set; }
+        //public long? IsCancelledBy { get; set; }
         
         public string? CancelledReason { get; set; }
     }
