@@ -106,6 +106,15 @@ namespace HIMS.API.Controllers.Dashboard
                     var data = await _IDashboardService.GetPharmacyDashboard(UnitId, FromDate, ToDate);
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Pharmacy Dashboard", data);
         }
+
+        [HttpGet("Mobile-pharmacy-dashboard")]
+        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        public async Task<ApiResponse> MobilePharmacyDashboard(DateTime FromDate, DateTime ToDate, int Storeid, int OPIPType)
+        {
+            // int UnitId = Context.UnitId;
+            var data = await _IDashboardService.GetMobilePharmacyDashboard(FromDate, ToDate, Storeid, OPIPType);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Mobile Pharmacy Dashboard", data);
+        }
         [HttpGet("Daily-Dashboard")]
         [SharedAuthenticated]
         public async Task<ApiResponse> DailyDashboard(int UnitId, DateTime FromDate, DateTime ToDate)

@@ -9,6 +9,7 @@ using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
 using HIMS.Services.DietKitchen;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -195,20 +196,13 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Final(long id)
         {
-            var model = await _repository.GetById(x => x.DietPlanId == id);
+            var result = await _dietPlanScheduleService.FinalAsync(id, CurrentUserId);
 
-            if (model == null)
+            if (!result)
             {
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
             }
-
-            model.DraftOrFinal = true;
-            model.ModifiedBy = CurrentUserId;
-            model.ModifiedDate = AppTime.Now;
-
-            await _repository.Update(model, CurrentUserId, CurrentUserName, null);
-
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Diet Plan finalized successfully.", id);
+            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Diet Plan finalized successfully.", id);
         }
 
         [HttpPut("UpdateDietPlanScheduleStatus")]
