@@ -9,6 +9,7 @@ using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.Models;
 using HIMS.Services.DietKitchen;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -121,6 +122,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         [HttpPost("DietPlanScheduleCancel")]
         [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
         //[Permission]
+        
         public async Task<ApiResponse> Cancel(DietPlanScheduleCancelModel obj)
         {
             TDietPlanSchedule model = obj.MapTo<TDietPlanSchedule>();
@@ -139,6 +141,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         [HttpPost("DietPlanScheduleDetailCancel")]
         [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
+       
         //[Permission]
         public async Task<ApiResponse> CancelD(DietPlanScheduleDetailsCancelModel obj)
         {
@@ -184,6 +187,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
         [HttpPost("DietPlanSchedulePatientlList")]
         [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        
         //[Permission]
         public async Task<IActionResult> DietPlanSchedulePatientList(GridRequestModel objGrid)
         {
