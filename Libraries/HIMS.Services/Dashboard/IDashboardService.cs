@@ -20,7 +20,7 @@ namespace HIMS.Services.Dashboard
         Task<ProcurementDashboard> GetProcurementDashboard(int UnitId);
         Task<DailyDashBoardIPSubModule> GetDailyDashBoardIPSubModuleDashBoard(int UnitId);
         Task<DailyDashBoardOpSubModule> GetDailyDashBoardOPSubModuleDashBoard(int UnitId);
-        Task<DietDashboard> GetDietDashboard(DateTime FromDate, DateTime ToDate);
+        Task<DietDashboard> GetDietDashboard(DateTime FromDate,DateTime ToDate,string SearchText = null,int? WardId = null,int? DietTypeId = null);
         Task<MobileFinancialDashboard> GetFinancialDashboard(int UnitId, DateTime FromDate, DateTime ToDate, int OPIPType);
         Task<PharmacyDashboard> GetMobilePharmacyDashboard(DateTime FromDate, DateTime ToDate, int Storeid, int OPIPType);
 

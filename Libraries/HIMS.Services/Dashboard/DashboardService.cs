@@ -483,14 +483,17 @@ namespace HIMS.Services.Dashboard
             };
         }
 
-        public async Task<DietDashboard> GetDietDashboard(DateTime FromDate, DateTime ToDate)
+        public async Task<DietDashboard> GetDietDashboard(DateTime FromDate,DateTime ToDate,string SearchText, int? WardId, int? DietTypeId )
         {
             DatabaseHelper sql = new();
 
-            SqlParameter[] para = new SqlParameter[2];
+            SqlParameter[] para = new SqlParameter[5];
 
             para[0] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
             para[1] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+            para[2] = new SqlParameter("@SearchText", SqlDbType.NVarChar, 100) { Value = (object)SearchText ?? DBNull.Value };
+            para[3] = new SqlParameter("@WardId", SqlDbType.Int) { Value = (object)WardId ?? DBNull.Value };
+            para[4] = new SqlParameter("@DietTypeId", SqlDbType.Int) { Value = (object)DietTypeId ?? DBNull.Value };
 
             var data = await sql.Get2ResultsFromSp<DietCountSummary, DietOrdersByMealType, DietOrdersByDietType, DailyDietOrderCount, TodaysDietOrder>(
                 "ps_rpt_DietDashboard", para);
@@ -504,6 +507,7 @@ namespace HIMS.Services.Dashboard
                 TodaysDietOrders = data.Item5 ?? new List<TodaysDietOrder>()
             };
         }
+
         public async Task<DailyDashBoardOpSubModule> GetDailyDashBoardOPSubModuleDashBoard(int UnitId)
         {
             DatabaseHelper sql = new();
