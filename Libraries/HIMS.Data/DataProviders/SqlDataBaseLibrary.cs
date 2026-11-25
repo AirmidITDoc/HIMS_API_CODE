@@ -957,6 +957,72 @@ namespace HIMS.Data.DataProviders
 
             return result;
         }
+
+
+
+        public async Task<(List<T>, List<T1>,List<T2>, List<T3>,List<T4>,List<T5>,List<T6>)> Get7ResultsFromSp<T, T1, T2, T3, T4, T5, T6>(string Spname,SqlParameter[] para)where T : new()where T1 : new()where T2 : new()where T3 : new()where T4 : new()where T5 : new()where T6 : new()
+        {
+            Command.CommandType = CommandType.StoredProcedure;
+            Command.Parameters.AddRange(para);
+            Command.CommandText = Spname;
+
+            try
+            {
+                objConnection.Open();
+
+                using var reader = await Command.ExecuteReaderAsync();
+
+                // Result Set 1
+                var item1 = reader.MapToList<T>();
+
+                // Result Set 2
+                await reader.NextResultAsync();
+                var item2 = reader.MapToList<T1>();
+
+                // Result Set 3
+                await reader.NextResultAsync();
+                var item3 = reader.MapToList<T2>();
+
+                // Result Set 4
+                await reader.NextResultAsync();
+                var item4 = reader.MapToList<T3>();
+
+                // Result Set 5
+                await reader.NextResultAsync();
+                var item5 = reader.MapToList<T4>();
+
+                // Result Set 6
+                await reader.NextResultAsync();
+                var item6 = reader.MapToList<T5>();
+
+                // Result Set 7
+                await reader.NextResultAsync();
+                var item7 = reader.MapToList<T6>();
+
+                return (
+                    item1,
+                    item2,
+                    item3,
+                    item4,
+                    item5,
+                    item6,
+                    item7
+                );
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex, Spname);
+                throw;
+            }
+            finally
+            {
+                if (Command.Transaction == null)
+                {
+                    objConnection.Close();
+                }
+            }
+        }
+
         public async Task<(List<T>, List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>)> Get2ResultsFromSp<T, T1, T2, T3, T4, T5, T6, T7>(string Spname, SqlParameter[] para) where T : new() where T1 : new() where T2 : new() where T3 : new() where T4 : new() where T5 : new() where T6 : new() where T7 : new()
         {
             Command.CommandType = CommandType.StoredProcedure; Command.Parameters.AddRange(para); Command.CommandText = Spname;
@@ -1991,6 +2057,11 @@ namespace HIMS.Data.DataProviders
         }
 
         public async Task Get10ResultsFromSp<T>(string v, SqlParameter[] para)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task Get2ResultsFromSp<T1, T2, T3, T4, T5, T6, T7>(string v, SqlParameter[] para)
         {
             throw new NotImplementedException();
         }

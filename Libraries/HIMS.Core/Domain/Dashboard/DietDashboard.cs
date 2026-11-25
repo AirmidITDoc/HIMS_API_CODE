@@ -10,6 +10,10 @@ namespace HIMS.Core.Domain.Dashboard
         public List<DietOrdersByDietType> DietOrdersByDietTypes { get; set; }
         public List<DailyDietOrderCount> DailyDietOrderCounts { get; set; }
         public List<TodaysDietOrder> TodaysDietOrders { get; set; }
+        public List<FoodPreferenceDistributionDto> FoodPreferenceDistributions { get; set; }
+
+        public List<MealPreparationStatusDto> MealPreparationStatuses { get; set; }
+
     }
 
     public class DietCountSummary
@@ -53,4 +57,24 @@ namespace HIMS.Core.Domain.Dashboard
         public string DeliveryStatus { get; set; }
         public string CancellationStatus { get; set; }
     }
+
+
+    public class FoodPreferenceDistributionDto
+    {
+        public string? FoodPreference { get; set; }
+        public int Total { get; set; }
+    }
+
+
+    public class MealPreparationStatusDto
+    {
+        public string? MealName { get; set; }
+        public int TotalOrders { get; set; }
+        public int Cancelled { get; set; }
+        public int Delivered { get; set; }
+        public int InProgress { get; set; }
+        public int Accepted { get; set; }
+        public int Pending { get; set; }
+    }
+
 }
