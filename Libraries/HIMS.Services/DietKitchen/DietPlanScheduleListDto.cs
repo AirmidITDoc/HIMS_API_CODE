@@ -88,6 +88,7 @@ namespace HIMS.Services.DietKitchen
     public class DietSchedulePatientListDto
     {
         public long DietPlanId { get; set; }
+        public long DietPlanDetId { get; set; }
         public long OPIPID { get; set; }
         public long DietMealTypeId { get; set; }
         public DateTime PlanDate { get; set; }

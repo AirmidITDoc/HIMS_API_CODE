@@ -188,6 +188,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         [HttpPost("DietPlanSchedulePatientlList")]
         [Permission(PageCode = "Administration", Permission = PagePermission.View)]
         
+        
         //[Permission]
         public async Task<IActionResult> DietPlanSchedulePatientList(GridRequestModel objGrid)
         {
