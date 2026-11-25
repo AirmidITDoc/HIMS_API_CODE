@@ -35,18 +35,16 @@ namespace HIMS.API.Controllers.Login
         [HttpPost("send-otp")]
         public async Task<IActionResult> SendOtp([FromBody] SendPatientOtpRequest request)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || string.IsNullOrWhiteSpace(request.MobileNumber))
                 return BadRequest(new PatientOtpStatusResponse { Status = "error", Message = "Invalid request." });
 
             long mobile;
             if (!long.TryParse(request.MobileNumber, out mobile))
                 return BadRequest(new PatientOtpStatusResponse { Status = "error", Message = "Invalid mobile number." });
 
-            var patient = await _db.SsMobileAppLogins
-                .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.CustomerMobileNo == request.MobileNumber);
+            bool isRegisteredPatient = await IsRegisteredPatientAsync(request.MobileNumber);
 
-            if (patient == null)
+            if (!isRegisteredPatient)
                 return NotFound(new PatientOtpStatusResponse
                 {
                     Status = "error",
@@ -146,22 +144,31 @@ namespace HIMS.API.Controllers.Login
             if (!ModelState.IsValid)
                 return BadRequest(new PatientOtpStatusResponse { Status = "error", Message = "Invalid OTP or OTP expired" });
 
-            if (!long.TryParse(request.ReferenceId.StartsWith("req-") ? request.ReferenceId.Substring(4) : "0", out long msgId) ||
-                !long.TryParse(request.MobileNumber, out long mobile))
+            if (!long.TryParse(request.MobileNumber, out long mobile))
                 return BadRequest(new PatientOtpStatusResponse { Status = "error", Message = "Invalid OTP or OTP expired" });
 
             int otpExpiryMinutes = _configuration.GetValue("PatientOtp:OtpExpiryMinutes", 5);
             if (otpExpiryMinutes < 1) otpExpiryMinutes = 5;
             DateTime expiresAfter = DateTime.Now.AddMinutes(-otpExpiryMinutes);
+            long? msgId = ParseReferenceId(request.ReferenceId);
             var otpRecord = await _db.TProcessOtps
-                .FirstOrDefaultAsync(x => x.MsgId == msgId &&
-                                          x.MobileNo == mobile &&
-                                          x.Otpno == request.Otp &&
-                                          x.IsVerified != true &&
-                                          x.CreatedDate >= expiresAfter);
+                .OrderByDescending(x => x.MsgId)
+                .FirstOrDefaultAsync(x => (!msgId.HasValue || x.MsgId == msgId.Value) &&
+                                           x.MobileNo == mobile &&
+                                           x.Otpno == request.Otp &&
+                                           x.IsVerified != true &&
+                                           x.CreatedDate >= expiresAfter);
 
             if (otpRecord == null)
                 return BadRequest(new PatientOtpStatusResponse { Status = "error", Message = "Invalid OTP or OTP expired" });
+
+            bool isRegisteredPatient = await IsRegisteredPatientAsync(request.MobileNumber);
+
+            if (!isRegisteredPatient)
+            {
+                await _db.SaveChangesAsync();
+                return BadRequest(new PatientOtpStatusResponse { Status = "error", Message = "Patient not found. Please sign up." });
+            }
 
             otpRecord.IsVerified = true;
             otpRecord.ModifiedDate = DateTime.Now;
@@ -170,30 +177,59 @@ namespace HIMS.API.Controllers.Login
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.CustomerMobileNo == request.MobileNumber);
 
+            var homeCollectionPatient = await _db.THomeCollectionPatientRegistartions
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.MobileNo == request.MobileNumber);
+
+            var labPatient = await _db.TLabPatientRegistrations
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.MobileNo == request.MobileNumber);
+
             var registration = await _db.VwPatientRegistrationInfos
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.MobileNo == request.MobileNumber);
 
             await _db.SaveChangesAsync();
 
-            if (patient == null)
-                return BadRequest(new PatientOtpStatusResponse { Status = "error", Message = "Invalid OTP or OTP expired" });
+            string homeCollectionPatientName = string.Join(" ", new[]
+            {
+                homeCollectionPatient?.FirstName,
+                homeCollectionPatient?.MiddleName,
+                homeCollectionPatient?.LastName
+            }.Where(x => !string.IsNullOrWhiteSpace(x))).Trim();
+
+            string labPatientName = string.Join(" ", new[]
+            {
+                labPatient?.FirstName,
+                labPatient?.MiddleName,
+                labPatient?.LastName
+            }.Where(x => !string.IsNullOrWhiteSpace(x))).Trim();
+
+            long customerId = patient?.CustomerId
+                ?? homeCollectionPatient?.PatientRegId
+                ?? labPatient?.LabPatientId
+                ?? registration?.RegId
+                ?? 0;
+
+            string customerName = registration?.PatientName
+                ?? patient?.CustomerName
+                ?? (string.IsNullOrWhiteSpace(homeCollectionPatientName) ? labPatientName : homeCollectionPatientName);
 
             var profile = new
             {
-                customerId = patient.CustomerId,
-                customerName = registration?.PatientName ?? patient.CustomerName,
-                mobileNumber = patient.CustomerMobileNo,
-                address = registration?.Address ?? patient.CustomerAddress,
-                email = registration?.EmailId,
-                regId = registration?.RegId,
+                customerId,
+                customerName,
+                mobileNumber = request.MobileNumber,
+                address = registration?.Address ?? patient?.CustomerAddress ?? homeCollectionPatient?.Address ?? labPatient?.Address,
+                email = registration?.EmailId ?? labPatient?.EmailId,
+                regId = registration?.RegId ?? customerId,
                 regNo = registration?.RegNo,
-                dateOfBirth = registration?.DateofBirth,
+                dateOfBirth = registration?.DateofBirth ?? homeCollectionPatient?.DateofBirth?.ToString("yyyy-MM-dd") ?? labPatient?.DateofBirth?.ToString("yyyy-MM-dd"),
                 gender = registration?.GenderName,
                 pinCode = registration?.PinNo
             };
 
-            string token = GeneratePatientToken(patient, profile);
+            string token = GeneratePatientToken(customerId, request.MobileNumber, customerName);
             return Ok(new PatientOtpStatusResponse
             {
                 Status = "success",
@@ -203,7 +239,7 @@ namespace HIMS.API.Controllers.Login
             });
         }
 
-        private string GeneratePatientToken(SsMobileAppLogin patient, object profile)
+        private string GeneratePatientToken(long customerId, string mobileNumber, string customerName)
         {
             if (!_loginKeyProvider.IsConfigured)
                 throw new InvalidOperationException(_loginKeyProvider.ConfigurationError ?? "Patient OTP JWT is not configured.");
@@ -211,18 +247,23 @@ namespace HIMS.API.Controllers.Login
             LoginV2Key key = _loginKeyProvider.Current;
             string issuer = _configuration["AuthenticationSettings:Issuer"] ?? string.Empty;
             string audience = _configuration["AuthenticationSettings:Audience"] ?? string.Empty;
-            int configuredDays = _configuration.GetValue("LoginV2:MobileSessionDays", 90);
-            int mobileSessionDays = Math.Clamp(configuredDays, 90, 180);
+            int configuredDays = _configuration.GetValue(
+                "LoginV2:MobileSessionDays",
+                LoginSessionPolicy.DefaultMobileSessionDays);
+            int mobileSessionDays = Math.Clamp(
+                configuredDays,
+                LoginSessionPolicy.MinimumMobileSessionDays,
+                LoginSessionPolicy.MaximumMobileSessionDays);
             int minutes = mobileSessionDays * 24 * 60;
 
             var rsaKey = new RsaSecurityKey(key.Rsa) { KeyId = key.Kid };
             var claims = new[]
             {
-                new Claim("sub", patient.CustomerId.ToString()),
-                new Claim("patientId", patient.CustomerId.ToString()),
-                new Claim("mobile", patient.CustomerMobileNo),
+                new Claim("sub", customerId.ToString()),
+                new Claim("patientId", customerId.ToString()),
+                new Claim("mobile", mobileNumber),
                 new Claim("authType", "PatientOtp"),
-                new Claim("name", patient.CustomerName)
+                new Claim("name", customerName)
             };
 
             var descriptor = new SecurityTokenDescriptor
@@ -236,6 +277,31 @@ namespace HIMS.API.Controllers.Login
 
             var handler = new JwtSecurityTokenHandler();
             return handler.WriteToken(handler.CreateToken(descriptor));
+        }
+
+        private async Task<bool> IsRegisteredPatientAsync(string mobileNumber)
+        {
+            bool existsInHomeCollection = await _db.THomeCollectionPatientRegistartions
+                .AsNoTracking()
+                .AnyAsync(x => x.MobileNo == mobileNumber);
+
+            if (existsInHomeCollection)
+                return true;
+
+            return await _db.TLabPatientRegistrations
+                .AsNoTracking()
+                .AnyAsync(x => x.MobileNo == mobileNumber);
+        }
+
+        private static long? ParseReferenceId(string? referenceId)
+        {
+            if (string.IsNullOrWhiteSpace(referenceId))
+                return null;
+
+            string id = referenceId.StartsWith("req-", StringComparison.OrdinalIgnoreCase)
+                ? referenceId.Substring(4)
+                : referenceId;
+            return long.TryParse(id, out long parsedId) ? parsedId : -1;
         }
 
         private async Task<(bool SmsEnabled, bool WhatsAppEnabled)> ResolveOtpDeliveryAsync()

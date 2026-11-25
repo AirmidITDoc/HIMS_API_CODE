@@ -13,6 +13,7 @@ using HIMS.Data.DTO.Pathology;
 using HIMS.Data.Models;
 using HIMS.Services.Pathlogy;
 using HIMS.Services.Pharmacy;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.Pathology
@@ -109,7 +110,6 @@ namespace HIMS.API.Controllers.Pathology
 
 
         [HttpPost("HomeCollectionPatientInsert")]
-
         [Permission(PageCode = "ExternalInvestigation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> HomeInsert(HomeCollectionPatientRegistrationModel obj)
         {
@@ -126,6 +126,24 @@ namespace HIMS.API.Controllers.Pathology
             else
                 return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status500InternalServerError, "Invalid params");
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "Record added successfully.", model.PatientRegId);
+        }
+
+        [HttpPost("/api/v{version:apiVersion}/Patient/patientDummyDataInsert")]
+        [AllowAnonymous]
+        public async Task<ApiResponse> MobilePatientRegistration(HomeCollectionPatientRegistrationModel obj)
+        {
+            THomeCollectionPatientRegistartion model =
+                obj.MapTo<THomeCollectionPatientRegistartion>();
+            if (obj.PatientRegId != 0)
+                return ApiResponseHelper.GenerateResponse(
+                    ApiStatusCode.Status500InternalServerError,
+                    "Invalid params");
+
+            await _IHomeCollectionPatientRegService.InsertAsync(model, 0, "Mobile Patient");
+            return ApiResponseHelper.GenerateResponse(
+                ApiStatusCode.Status200OK,
+                "Patient registered successfully",
+                model.PatientRegId);
         }
     }
 }

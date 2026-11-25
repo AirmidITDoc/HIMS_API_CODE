@@ -37,7 +37,8 @@ namespace HIMS.API.Models.Pathology
         public string? MobileNo { get; set; }
         public string? Address { get; set; }
         public long? PatRegId { get; set; }
-        public List<HomeCollectionPatientRegDetailModel> THomeCollectionPatientRegDetails { get; set; }
+        public List<HomeCollectionPatientRegDetailModel> THomeCollectionPatientRegDetails { get; set; } =
+            new();
 
     }
     public  class HomeCollectionPatientRegDetailModel
