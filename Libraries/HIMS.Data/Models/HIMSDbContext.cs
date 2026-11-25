@@ -353,6 +353,7 @@ namespace HIMS.Data.Models
         public virtual DbSet<MUploadCategoryMaster> MUploadCategoryMasters { get; set; } = null!;
         public virtual DbSet<MVehicleMaster> MVehicleMasters { get; set; } = null!;
         public virtual DbSet<MVillage> MVillages { get; set; } = null!;
+        public virtual DbSet<MWorkFlowInfo> MWorkFlowInfos { get; set; } = null!;
         public virtual DbSet<Mdimenu> Mdimenus { get; set; } = null!;
         public virtual DbSet<MedicalRecordConfig> MedicalRecordConfigs { get; set; } = null!;
         public virtual DbSet<MenuMaster> MenuMasters { get; set; } = null!;
@@ -585,8 +586,10 @@ namespace HIMS.Data.Models
         public virtual DbSet<TOpinvAdviceList> TOpinvAdviceLists { get; set; } = null!;
         public virtual DbSet<TOpipWellnessRecord> TOpipWellnessRecords { get; set; } = null!;
         public virtual DbSet<TOprequestList> TOprequestLists { get; set; } = null!;
+        public virtual DbSet<TOtAnaesthesiaClearance> TOtAnaesthesiaClearances { get; set; } = null!;
         public virtual DbSet<TOtAnesthesiaPreOpdiagnosis> TOtAnesthesiaPreOpdiagnoses { get; set; } = null!;
         public virtual DbSet<TOtAnesthesiaRecord> TOtAnesthesiaRecords { get; set; } = null!;
+        public virtual DbSet<TOtCheckList> TOtCheckLists { get; set; } = null!;
         public virtual DbSet<TOtInOperationAttendingDetail> TOtInOperationAttendingDetails { get; set; } = null!;
         public virtual DbSet<TOtInOperationDiagnosis> TOtInOperationDiagnoses { get; set; } = null!;
         public virtual DbSet<TOtInOperationHeader> TOtInOperationHeaders { get; set; } = null!;
@@ -10000,6 +10003,24 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.VillageName).HasMaxLength(100);
             });
 
+            modelBuilder.Entity<MWorkFlowInfo>(entity =>
+            {
+                entity.HasKey(e => e.WorkflowId)
+                    .HasName("PK_M_OTWorkFlow");
+
+                entity.ToTable("M_WorkFlowInfo");
+
+                entity.Property(e => e.Wfmode)
+                    .HasMaxLength(50)
+                    .HasColumnName("WFMode");
+
+                entity.Property(e => e.Wfurl)
+                    .HasMaxLength(200)
+                    .HasColumnName("WFUrl");
+
+                entity.Property(e => e.WorkFlowName).HasMaxLength(100);
+            });
+
             modelBuilder.Entity<Mdimenu>(entity =>
             {
                 entity.HasKey(e => e.MenuId)
@@ -17020,6 +17041,31 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.OpIpId).HasColumnName("OP_IP_ID");
             });
 
+            modelBuilder.Entity<TOtAnaesthesiaClearance>(entity =>
+            {
+                entity.HasKey(e => e.AnaesthesiaClearanceId);
+
+                entity.ToTable("T_OT_AnaesthesiaClearance");
+
+                entity.Property(e => e.AnaesthesiaClearanceId).ValueGeneratedNever();
+
+                entity.Property(e => e.Asagrade).HasColumnName("ASAGrade");
+
+                entity.Property(e => e.ClearanceDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.MedicalHistory).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.Remarks).HasMaxLength(255);
+            });
+
             modelBuilder.Entity<TOtAnesthesiaPreOpdiagnosis>(entity =>
             {
                 entity.HasKey(e => e.OtanesthesiaPreOpdiagnosisId);
@@ -17081,6 +17127,29 @@ namespace HIMS.Data.Models
                 entity.Property(e => e.RecoveryStartDate).HasColumnType("datetime");
 
                 entity.Property(e => e.RecoveryStartTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TOtCheckList>(entity =>
+            {
+                entity.HasKey(e => e.OtcheckListId);
+
+                entity.ToTable("T_OT_CheckList");
+
+                entity.Property(e => e.OtcheckListId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("OTCheckListId");
+
+                entity.Property(e => e.CheckListDescription).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Opipid).HasColumnName("OPIPID");
+
+                entity.Property(e => e.Opiptype).HasColumnName("OPIPType");
+
+                entity.Property(e => e.Remark).HasMaxLength(255);
             });
 
             modelBuilder.Entity<TOtInOperationAttendingDetail>(entity =>
