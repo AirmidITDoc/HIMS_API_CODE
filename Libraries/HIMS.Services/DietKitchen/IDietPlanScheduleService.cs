@@ -19,5 +19,6 @@ namespace HIMS.Services.DietKitchen
         Task<IPagedList<DietPlanDetailListDto>> DietPlanScheduleDetailListAsync(GridRequestModel model);
         Task<IPagedList<DietSchedulePatientListDto>> DietPlanSchedulePatientListAsync(GridRequestModel model);
         Task UpdateDietPlanScheduleStatus(List<DietPlanScheduleStatusUpdateModel> objList, int CurrentUserId, string CurrentUserName);
+        Task<bool> FinalAsync(long id, int UserId);
     }
 }

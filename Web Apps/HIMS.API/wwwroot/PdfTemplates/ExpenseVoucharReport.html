@@ -91,7 +91,7 @@
                                         </table>
                                     </td>
                                 </tr>
-                                <tr style="border-bottom: 1px solid #d4c3c3";>
+                                <tr style="border-bottom: 1px solid #d4c3c3" ;>
                                     <th style=" text-align: left;">
                                         <h4 style="margin: 1px 0px;font-size: 20px;">
                                             Payment Info:-
@@ -128,9 +128,46 @@
                                             <span>{{PayTMTranNo}}</span>
                                         </td>
                                     </tr>
+                                    <tr colspan="2">
+                                        <td style="padding: 2px;">
+                                            <span><b>Amount in Words:</b></span>
+                                            <span>{{finalamt}}</span>
+                                        </td>
 
+                                    </tr>
 
                                 </table>
+
+                                <tr style="display: {{chkIsApprovalflag}};">
+                                    <td>
+                                        <table style="width:100%; border-collapse:collapse; font-size:20px;">
+                                            <tr style="border-bottom:1px solid #d4c3c3;">
+                                                <th style="text-align:left;">
+                                                    <h4 style="margin:1px 0px;font-size:20px;">
+                                                        Approval Info:
+                                                    </h4>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:6px; border-bottom:1px solid #d4c3c3;">
+                                                    <table style="width:100%; border-collapse:collapse; font-size:20px;">
+                                                        <tr>
+                                                            <td style="padding:2px;">
+                                                                <b>Approved By:</b>
+                                                                {{ApprovalBy}}
+                                                            </td>
+                                                            <td style="padding:2px;">
+                                                                <b>Approval Date:</b>
+                                                                {{ApprovalDate}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
                             </table>
                         </div>
                     </div>
@@ -144,11 +181,14 @@
 <table style="width: 100%; border-collapse: collapse; margin-top: 50px; font-size: 20px; text-align:right; font-family: Calibri, 'Helvetica Neue', Helvetica, Arial, sans-serif;">
     <tr style="border-bottom: 1px solid #d4c3c3;">
         <td style="padding: 2px;">
-            <span style="font-weight:bold;">Added Name</span>
+            <span style="font-weight:bold;">AddedBy & Date</span>
             <br />
             <span>{{AddedName}}</span>
+            <br />
+            <span>{{CreatedDate}}</span>
         </td>
     </tr>
+
 </table>
 
 

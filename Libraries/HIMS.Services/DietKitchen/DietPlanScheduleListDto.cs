@@ -108,8 +108,8 @@ namespace HIMS.Services.DietKitchen
         public long? IsDeliveredBy { get; set; }
         public DateTime? IsDeliveredDateTime { get; set; }
         public bool? IsCancelled { get; set; }
-        public long? IsCancelledBy { get; set; }
-        public DateTime? IsCancelledDate { get; set; }
+        public string? IsCancelledBy { get; set; }
+        //public DateTime? IsCancelledDate { get; set; }
         public string? CancelledReason { get; set; }
     }
     public class DietPlanScheduleStatusUpdateModel

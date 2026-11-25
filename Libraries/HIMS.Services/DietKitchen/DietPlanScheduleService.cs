@@ -250,5 +250,49 @@ namespace HIMS.Services.DietKitchen
                 throw;
             }
         }
+
+        public async Task<bool> FinalAsync(long id, int UserId)
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var model = await _context.TDietPlanSchedules.Include(x => x.TDietPlanScheduleDetails).FirstOrDefaultAsync(x => x.DietPlanId == id);
+
+                if (model == null)
+                    return false;
+
+                var now = AppTime.Now;
+
+                long orderNo = _context.TDietPlanScheduleDetails.AsEnumerable().Select(x => long.TryParse(x.OrderNo, out long n) ? n : 0).DefaultIfEmpty(0).Max();
+
+                model.DraftOrFinal = true;
+                model.ModifiedBy = UserId;
+                model.ModifiedDate = now;
+
+                // Update detail records
+                foreach (var detail in model.TDietPlanScheduleDetails)
+                {
+                    orderNo++;
+                    detail.Status = "Ordered";
+                    detail.OrderNo = orderNo.ToString();
+                    detail.IsOrder = true;
+                    detail.IsOrderBy = UserId;
+                    detail.IsOrderDateTime = now;
+                    detail.ModifiedBy = UserId;
+                    detail.ModifiedDate = now;
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return true;
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+
     }
 }

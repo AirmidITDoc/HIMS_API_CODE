@@ -149,7 +149,7 @@ namespace HIMS.API.Controllers.Pathology
         }
 
         [HttpPost("PathPrintResultentryInsert")]
-        [Permission(PageCode = "Pathology", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Pathology|ExternalInvestigation", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(PathPrintResultentry obj)
         {
             List<TempPathReportId> model = obj.PathPrintResultEntry.MapTo<List<TempPathReportId>>();
