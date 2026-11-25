@@ -26,8 +26,31 @@ namespace HIMS.API.Extensions
             }
 
             if (context.User.Identity?.IsAuthenticated != true ||
-                context.User.Identity is not ClaimsIdentity identity ||
-                !SessionAuthorization.TryGetClaim(identity, "Id", out int userId))
+                context.User.Identity is not ClaimsIdentity identity)
+            {
+                await _next(context);
+                return;
+            }
+
+            if (SessionAuthorization.IsValidPatient(identity))
+            {
+                if (!TryResolveHeader(context, "X-Store-Id", out int? patientStore) ||
+                    !TryResolveHeader(context, "X-Unit-Id", out int? patientUnit))
+                {
+                    await Reject(context, "Patient unit scope is missing or invalid.");
+                    return;
+                }
+
+                context.Items["RequestContext"] = new RequestContext
+                {
+                    StoreId = patientStore ?? 0,
+                    UnitId = patientUnit ?? 1
+                };
+                await _next(context);
+                return;
+            }
+
+            if (!SessionAuthorization.TryGetClaim(identity, "Id", out int userId))
             {
                 await _next(context);
                 return;

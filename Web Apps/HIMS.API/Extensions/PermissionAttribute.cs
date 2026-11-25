@@ -34,6 +34,10 @@ namespace HIMS.API.Extensions
                 return;
             }
 
+            if (context.HttpContext.User.Identity is System.Security.Claims.ClaimsIdentity identity &&
+                SessionAuthorization.IsValidPatient(identity))
+                return;
+
             if (string.IsNullOrWhiteSpace(PageCode) || !_permissionSpecified ||
                 !Enum.IsDefined(typeof(PagePermission), _permission))
             {
@@ -41,8 +45,8 @@ namespace HIMS.API.Extensions
                 return;
             }
 
-            var identity = (System.Security.Claims.ClaimsIdentity)context.HttpContext.User.Identity!;
-            SessionAuthorization.TryGetClaim(identity, "Id", out int userId);
+            var staffIdentity = (System.Security.Claims.ClaimsIdentity)context.HttpContext.User.Identity!;
+            SessionAuthorization.TryGetClaim(staffIdentity, "Id", out int userId);
             IUserService userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
             IPermissionService permissionService = context.HttpContext.RequestServices.GetRequiredService<IPermissionService>();
             var currentUser = await userService.GetById(userId);

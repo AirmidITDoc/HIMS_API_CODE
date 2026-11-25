@@ -42,6 +42,9 @@ namespace HIMS.API.Extensions
             if (user.Identity?.IsAuthenticated != true || user.Identity is not ClaimsIdentity identity)
                 return false;
 
+            if (IsValidPatient(identity))
+                return true;
+
             if (!TryGetClaim(identity, "Id", out int userId) ||
                 !TryGetClaimText(identity, "UserToken", out string userToken) ||
                 !TryGetClaimText(identity, "LoginType", out string loginType))
@@ -53,6 +56,17 @@ namespace HIMS.API.Extensions
 
             var currentUser = await userService.GetById(userId);
             return currentUser?.IsActive == true;
+        }
+
+        internal static bool IsValidPatient(ClaimsIdentity identity)
+        {
+            string authType = identity.FindFirst("authType")?.Value ?? string.Empty;
+            string patientId = identity.FindFirst("patientId")?.Value ?? string.Empty;
+            string mobile = identity.FindFirst("mobile")?.Value ?? string.Empty;
+            return string.Equals(authType, "PatientOtp", StringComparison.OrdinalIgnoreCase) &&
+                   long.TryParse(patientId, out long parsedPatientId) &&
+                   parsedPatientId > 0 &&
+                   !string.IsNullOrWhiteSpace(mobile);
         }
 
         internal static bool TryGetClaim(ClaimsIdentity identity, string claimType, out int value)
