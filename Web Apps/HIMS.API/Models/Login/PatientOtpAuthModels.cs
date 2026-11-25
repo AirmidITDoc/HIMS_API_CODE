@@ -5,31 +5,43 @@ namespace HIMS.Api.Models.Login
 {
     public sealed class SendPatientOtpRequest
     {
-        [Required]
+        [RegularExpression(@"^[0-9]{10,15}$")]
+        [JsonPropertyName("mobileNo")]
+        public string? MobileNo { get; set; }
+
+        [JsonPropertyName("hospital_id")]
+        public string? HospitalId { get; set; }
+
         [RegularExpression(@"^[0-9]{10,15}$")]
         [JsonPropertyName("mobile_number")]
-        public string MobileNumber { get; set; } = string.Empty;
+        public string? LegacyMobileNumber { get; set; }
 
-        [Required]
-        [JsonPropertyName("hospital_id")]
-        public string HospitalId { get; set; } = string.Empty;
+        [JsonIgnore]
+        public string MobileNumber =>
+            !string.IsNullOrWhiteSpace(MobileNo) ? MobileNo : LegacyMobileNumber ?? string.Empty;
     }
 
     public sealed class VerifyPatientOtpRequest
     {
-        [Required]
         [RegularExpression(@"^[0-9]{10,15}$")]
-        [JsonPropertyName("mobile_number")]
-        public string MobileNumber { get; set; } = string.Empty;
+        [JsonPropertyName("mobileNo")]
+        public string? MobileNo { get; set; }
 
         [Required]
         [RegularExpression(@"^[0-9]{4,10}$")]
         [JsonPropertyName("otp")]
         public string Otp { get; set; } = string.Empty;
 
-        [Required]
         [JsonPropertyName("reference_id")]
-        public string ReferenceId { get; set; } = string.Empty;
+        public string? ReferenceId { get; set; }
+
+        [RegularExpression(@"^[0-9]{10,15}$")]
+        [JsonPropertyName("mobile_number")]
+        public string? LegacyMobileNumber { get; set; }
+
+        [JsonIgnore]
+        public string MobileNumber =>
+            !string.IsNullOrWhiteSpace(MobileNo) ? MobileNo : LegacyMobileNumber ?? string.Empty;
     }
 
     public sealed class PatientOtpStatusResponse

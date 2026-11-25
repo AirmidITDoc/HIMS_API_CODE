@@ -334,6 +334,27 @@ namespace HIMS.Services.Dashboard
                 ExpiringMedicines = data.Item6 ?? new List<ExpiringMedicines>(),
             };
         }
+        public async Task<PharmacyDashboard> GetMobilePharmacyDashboard(DateTime FromDate, DateTime ToDate,int Storeid,int OPIPType)
+        {
+            DatabaseHelper sql = new();
+
+            SqlParameter[] para = new SqlParameter[4];
+            para[0] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
+            para[1] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+            para[2] = new SqlParameter("@Storeid", SqlDbType.Int) { Value = Storeid };
+            para[3] = new SqlParameter("@OPIPType", SqlDbType.Int) { Value = OPIPType };
+
+            var data = await sql.Get2ResultsFromSp<TodaysCollectionSummary, TodaysPaymentSummary, CurrentStockSummary, TopSellingMedicines, ExpiringMedicines>("ps_rtrv_Mobile_PharmacyDashBoard", para);
+
+            return new PharmacyDashboard()
+            {
+                CollectionCountSummary = data.Item1.FirstOrDefault() ?? new TodaysCollectionSummary(),
+                PaymentCountSummary = data.Item2.FirstOrDefault() ?? new TodaysPaymentSummary(),
+                CurrentStockSummary = data.Item3.FirstOrDefault() ?? new CurrentStockSummary(),
+                TopSellingMedicines = data.Item4 ?? new List<TopSellingMedicines>(),
+                ExpiringMedicines = data.Item5 ?? new List<ExpiringMedicines>(),
+            };
+        }
         public async Task<DailyDashboard> GetDailyDashboard(int UnitId, DateTime FromDate, DateTime ToDate)
         {
             DatabaseHelper sql = new();
@@ -462,14 +483,17 @@ namespace HIMS.Services.Dashboard
             };
         }
 
-        public async Task<DietDashboard> GetDietDashboard(DateTime FromDate, DateTime ToDate)
+        public async Task<DietDashboard> GetDietDashboard(DateTime FromDate,DateTime ToDate,string SearchText, int? WardId, int? DietTypeId )
         {
             DatabaseHelper sql = new();
 
-            SqlParameter[] para = new SqlParameter[2];
+            SqlParameter[] para = new SqlParameter[5];
 
             para[0] = new SqlParameter("@FromDate", SqlDbType.DateTime) { Value = FromDate };
             para[1] = new SqlParameter("@ToDate", SqlDbType.DateTime) { Value = ToDate };
+            para[2] = new SqlParameter("@SearchText", SqlDbType.NVarChar, 100) { Value = (object)SearchText ?? DBNull.Value };
+            para[3] = new SqlParameter("@WardId", SqlDbType.Int) { Value = (object)WardId ?? DBNull.Value };
+            para[4] = new SqlParameter("@DietTypeId", SqlDbType.Int) { Value = (object)DietTypeId ?? DBNull.Value };
 
             var data = await sql.Get2ResultsFromSp<DietCountSummary, DietOrdersByMealType, DietOrdersByDietType, DailyDietOrderCount, TodaysDietOrder>(
                 "ps_rpt_DietDashboard", para);
@@ -483,6 +507,7 @@ namespace HIMS.Services.Dashboard
                 TodaysDietOrders = data.Item5 ?? new List<TodaysDietOrder>()
             };
         }
+
         public async Task<DailyDashBoardOpSubModule> GetDailyDashBoardOPSubModuleDashBoard(int UnitId)
         {
             DatabaseHelper sql = new();

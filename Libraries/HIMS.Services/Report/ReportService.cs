@@ -22309,7 +22309,7 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{OnlineAmount}}", dt.GetColValue("OnlineAmount"));
 
 
-
+                        html = html.Replace("{{CreatedDate}}", dt.GetColValue("CreatedDate").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
                         html = html.Replace("{{ExpDate}}", dt.GetColValue("ExpTime").ConvertToDateString("dd/MM/yyyy | hh:mm tt"));
 
                         html = html.Replace("{{chkcashflag}}", dt.GetColValue("CashPayAmount").ConvertToDouble() > 0 ? "table-row " : "none");
@@ -22324,7 +22324,8 @@ namespace HIMS.Services.Report
 
 
                         html = html.Replace("{{Items}}", items.ToString());
-
+                        string finalamt = conversion(dt.GetColValue("ExpAmount").ToString());
+                        html = html.Replace("{{finalamt}}", finalamt.ToString().ToUpper());
 
                         return html;
                     }
