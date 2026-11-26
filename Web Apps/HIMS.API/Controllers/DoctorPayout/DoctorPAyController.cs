@@ -70,7 +70,7 @@ namespace HIMS.API.Controllers.DoctorPayout
             return Ok(DoctorList.ToGridResponse(objGrid, "Doctor Pay Summary detail"));
         }
         [HttpPost("DoctorshareBillList")]
-        [Permission(PageCode = "TAdditionalDocPay", Permission = PagePermission.View)]
+        [Permission(PageCode = "TAdditionalDocPay|Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> DotorshrebillList(GridRequestModel objGrid)
         {
             IPagedList<DoctorShareListDto> DoctorList = await _IDoctorPayService.GetLists(objGrid);
