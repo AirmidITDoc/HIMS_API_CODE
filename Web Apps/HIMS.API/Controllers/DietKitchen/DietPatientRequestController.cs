@@ -31,7 +31,7 @@ namespace HIMS.API.Controllers.DietKitchen
         }
 
         [HttpPost("DietPatientRequestHeaderList")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "DietRequest|DietAddOnRequest", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> DietPatientRequestHeaderList(GridRequestModel objGrid)
         {
@@ -40,7 +40,7 @@ namespace HIMS.API.Controllers.DietKitchen
         }
 
         [HttpPost("DietPatientRequestDetailsList")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "DietRequest|DietAddOnRequest", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> DietPatientRequestDetailsList(GridRequestModel objGrid)
         {
@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.DietKitchen
         }
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DietRequest|DietAddOnRequest", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<ApiResponse> Insert(DietPatientRequestModel obj)
         {
@@ -74,7 +74,7 @@ namespace HIMS.API.Controllers.DietKitchen
         }
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "DietRequest|DietAddOnRequest", Permission = PagePermission.Edit)]
         //[Permission]
         public async Task<ApiResponse> Edit(DietPatientRequestModel obj)
         {
@@ -98,7 +98,7 @@ namespace HIMS.API.Controllers.DietKitchen
         }
 
         [HttpPost("DietPatientReqHeaderCancel")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "DietRequest|DietAddOnRequest", Permission = PagePermission.Delete)]
         //[Permission]
         public async Task<ApiResponse> Cancel(DietPatientRequestCancel obj)
         {
@@ -115,7 +115,7 @@ namespace HIMS.API.Controllers.DietKitchen
         }
 
         [HttpPost("DietPatReqDetailCanel")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "DietRequest|DietAddOnRequest", Permission = PagePermission.Delete)]
         //[Permission]
         public async Task<ApiResponse> Cancels(DietPatientRequestDetailsCancel obj)
         {
@@ -132,7 +132,7 @@ namespace HIMS.API.Controllers.DietKitchen
         }
 
         [HttpPost("DietPatReqDetailAccept")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DietRequest|DietAddOnRequest", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<ApiResponse> Accepts(DietPatientRequestDetailsAccept obj)
         {
@@ -149,7 +149,7 @@ namespace HIMS.API.Controllers.DietKitchen
         }
 
         [HttpPost("DietPatReqDetailDelivered")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "DietRequest|DietAddOnRequest", Permission = PagePermission.Add)]
         //[Permission]
         public async Task<ApiResponse> deliver(DietPatientRequestDetailsdeliver obj)
         {

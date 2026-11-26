@@ -123,7 +123,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpDelete]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Administration|DietAssessment", Permission = PagePermission.Delete)]
         //[Permission]
         public async Task<ApiResponse> Delete(long id)
         {
@@ -143,7 +143,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         }
 
         [HttpPost("AssessmentCancel")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Administration|DietAssessment", Permission = PagePermission.Delete)]
         //[Permission]
         public async Task<ApiResponse> Cancel(DietAssessmentCancelModel obj)
         {
