@@ -36,7 +36,7 @@ namespace HIMS.Core.Domain.Dashboard
         public decimal CardPay { get; set; }
         public decimal NEFT { get; set; }
         public decimal UPI { get; set; }
-        public decimal UsedAdvance { get; set; }
+        public decimal TotalAmount { get; set; }
     }
 
         public class ReceiptAdvanceSummary
@@ -45,13 +45,15 @@ namespace HIMS.Core.Domain.Dashboard
         public decimal DiscAmount { get; set; }
         public decimal TotalRevenue { get; set; }
         public decimal PaidAmount { get; set; }
+        public decimal PendingReceived { get; set; }
         public decimal CreditAmount { get; set; }
-        public decimal AdvusedAmount { get; set; }
+        public decimal UsedAdvance { get; set; }
         public decimal AdvRefundAmount { get; set; }
         public decimal Receipt { get; set; }
         public decimal Advance { get; set; }
         public decimal Refund { get; set; }
         public decimal PharmacyReturn { get; set; }
+        public decimal UnusedAdvance { get; set; }
     }
 
         public class DoctorWiseBusiness

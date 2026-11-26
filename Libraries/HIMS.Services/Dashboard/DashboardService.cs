@@ -334,7 +334,7 @@ namespace HIMS.Services.Dashboard
                 ExpiringMedicines = data.Item6 ?? new List<ExpiringMedicines>(),
             };
         }
-        public async Task<PharmacyDashboard> GetMobilePharmacyDashboard(DateTime FromDate, DateTime ToDate,int Storeid,int OPIPType)
+        public async Task<MobilePharmacyDashboard> GetMobilePharmacyDashboard(DateTime FromDate, DateTime ToDate,int Storeid,int OPIPType)
         {
             DatabaseHelper sql = new();
 
@@ -344,15 +344,15 @@ namespace HIMS.Services.Dashboard
             para[2] = new SqlParameter("@Storeid", SqlDbType.Int) { Value = Storeid };
             para[3] = new SqlParameter("@OPIPType", SqlDbType.Int) { Value = OPIPType };
 
-            var data = await sql.Get2ResultsFromSp<TodaysCollectionSummary, TodaysPaymentSummary, CurrentStockSummary, TopSellingMedicines, ExpiringMedicines>("ps_rtrv_Mobile_PharmacyDashBoard", para);
+            var data = await sql.Get2ResultsFromSp<MobileTodaysCollectionSummary, MobileTodaysPaymentSummary, MobileCurrentStockSummary, MobileTopSellingMedicines, MobileExpiringMedicines>("ps_rtrv_Mobile_PharmacyDashBoard", para);
 
-            return new PharmacyDashboard()
+            return new MobilePharmacyDashboard()
             {
-                CollectionCountSummary = data.Item1.FirstOrDefault() ?? new TodaysCollectionSummary(),
-                PaymentCountSummary = data.Item2.FirstOrDefault() ?? new TodaysPaymentSummary(),
-                CurrentStockSummary = data.Item3.FirstOrDefault() ?? new CurrentStockSummary(),
-                TopSellingMedicines = data.Item4 ?? new List<TopSellingMedicines>(),
-                ExpiringMedicines = data.Item5 ?? new List<ExpiringMedicines>(),
+                CollectionCountSummary = data.Item1.FirstOrDefault() ?? new MobileTodaysCollectionSummary(),
+                PaymentCountSummary = data.Item2.FirstOrDefault() ?? new MobileTodaysPaymentSummary(),
+                CurrentStockSummary = data.Item3.FirstOrDefault() ?? new MobileCurrentStockSummary(),
+                TopSellingMedicines = data.Item4 ?? new List<MobileTopSellingMedicines>(),
+                ExpiringMedicines = data.Item5 ?? new List<MobileExpiringMedicines>(),
             };
         }
         public async Task<DailyDashboard> GetDailyDashboard(int UnitId, DateTime FromDate, DateTime ToDate)
@@ -579,7 +579,7 @@ namespace HIMS.Services.Dashboard
                 PharmacySaleSummary,
                 MobilePackagePatientCount,
                 OutstandingSummary,
-                UnadjustedAdvanceSummary
+                InsuranceSummary
             >("ps_rtrv_FinancialDashBoard_V2", para);
 
             return new MobileFinancialDashboard
@@ -592,7 +592,7 @@ namespace HIMS.Services.Dashboard
                 PharmacySaleSummary = data.Item6?.FirstOrDefault() ?? new PharmacySaleSummary(),
                 PackagePatientCount = data.Item7 ?? new List<MobilePackagePatientCount>(),
                 OutstandingSummary = data.Item8?.FirstOrDefault() ?? new OutstandingSummary(),
-                UnadjustedAdvanceSummary = data.Item9?.FirstOrDefault() ?? new UnadjustedAdvanceSummary()
+                InsuranceSummary = data.Item9?.FirstOrDefault() ?? new InsuranceSummary()
             };
         }
 
