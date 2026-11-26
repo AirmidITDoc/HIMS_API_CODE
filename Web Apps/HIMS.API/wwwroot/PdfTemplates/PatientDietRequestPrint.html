@@ -1,0 +1,106 @@
+﻿<div>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Patient Diet Request</title>
+    </head>
+
+    <body>
+        <div class="main-content-wrapper">
+            <div class="invoice-box" style="font-size: 14px; line-height: 20px; font-family: Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif; color: #101828;">
+
+                <table style="width: 100%; line-height: inherit; text-align: left;">
+                    {{NewHeader}}
+
+                    <tr>
+                        <td style="padding: 6px; text-align: center; border-bottom: 1px solid #d4c3c3;">
+                            <b style="font-size: 18px;">PATIENT DIET REQUEST</b>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 6px;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <td style="padding: 4px;">
+                                        <b>Diet Request No :</b> {{DietReqNo}}
+                                    </td>
+                                    <td style="padding: 4px; text-align: right;">
+                                        <b>Request Date :</b> {{OrderDate}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding: 4px;">
+                                        <b>UHID :</b> {{RegNo}}
+                                    </td>
+                                    <td style="padding: 4px;">
+                                        <b>Patient Name :</b> {{PatientName}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding: 4px;">
+                                        <b>Meal :</b> {{MealName}}
+                                    </td>
+                                    <td style="padding: 4px;">
+                                        <b>Diet Type :</b> {{DietName}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding: 4px;">
+                                        <b>Order Time :</b> {{OrderTime}}
+                                    </td>
+                                    <td style="padding: 4px;">
+                                        <b>Menu :</b> {{DietMenuName}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 6px;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr>
+                                        <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Sr.No</th>
+                                        <th style="border: 1px solid #d4c3c3; text-align: left; padding: 6px;">Food Item</th>
+                                        <th style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">Quantity</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <!--ITEMS_SP1-->
+                                    <tr>
+                                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">{{#}}</td>
+                                        <td style="border: 1px solid #d4c3c3; padding: 6px;">{{FoodName}}</td>
+                                        <td style="border: 1px solid #d4c3c3; text-align: center; padding: 6px;">{{Quantity}}</td>
+                                    </tr>
+                                    <!--/ITEMS_SP1-->
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 6px;">
+                            <b>Comments / Instructions :</b> {{Comments}}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 6px; font-size: 12px;">
+                            This is a computer-generated diet request.
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
+</div>
