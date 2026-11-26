@@ -25,7 +25,7 @@ namespace HIMS.API.Controllers.DietKitchen
         }
 
         [HttpPut("UpdateDietPlanScheduleStatus")]
-        [Permission(PageCode = "DietRequest", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "DietRequest|DietAddOnRequest|DietSchedule", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UpdateDietPlanScheduleStatus(List<CanteenDietPlanScheduleStatusUpdateModel> obj)
         {
             if (obj == null || obj.Count == 0)
@@ -52,7 +52,7 @@ namespace HIMS.API.Controllers.DietKitchen
             return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK,"Diet Plan Status updated successfully.");
         }
         [HttpPut("UpdateDietPlanDateStatus")]
-        [Permission(PageCode = "DietRequest", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "DietRequest|DietAddOnRequest|DietSchedule", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UpdateDietPlanDateStatus(CanteenDietPlanDateStatusUpdateModel obj)
         {
             if (obj == null || obj.PlanDate == default ||

@@ -171,7 +171,7 @@ namespace HIMS.API.Controllers.Dashboard
         }
 
         [HttpGet("diet-dashboard")]
-        [Permission(PageCode = "Dashboard|DietDashboard", Permission = PagePermission.View)]
+        [Permission(PageCode = "Dashboard|DietDashboard|Diet", Permission = PagePermission.View)]
         
 
         public async Task<ApiResponse> DietDashboard(DateTime FromDate, DateTime ToDate, string? SearchText, int? WardId, int? DietTypeId)
