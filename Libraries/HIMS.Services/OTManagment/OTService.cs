@@ -233,6 +233,7 @@ namespace HIMS.Services.IPPatient
             odal.ExecuteNonQuery("ps_Update_OT_ReservationHeader", CommandType.StoredProcedure, entity);
         }
 
+
         public virtual async Task<List<OtCalendarDto>> GetAppoinments(int OtTable, DateTime FromDate, DateTime ToDate)
         {
             var from = FromDate.Date;
@@ -245,51 +246,95 @@ namespace HIMS.Services.IPPatient
                             && r.SurgeryDate >= from
                             && r.SurgeryDate < to);
 
-            // OPD (OPIPType = 0): OPIPID -> VisitDetails.VisitId -> Registration
+            // OPD Appointments
             var opd = await (
                 from r in reservations
                 where r.Opiptype == 0
-                join v in _context.VisitDetails on r.Opipid equals v.VisitId
-                join g in _context.Registrations on v.RegId equals g.RegId
+
+                join v in _context.VisitDetails
+                    on r.Opipid equals v.VisitId
+
+                join g in _context.Registrations
+                    on v.RegId equals g.RegId
+
+                join d in _context.TOtReservationSurgeryDetails
+                    on r.OtreservationId equals d.OtreservationId
+
+                join s in _context.MOtSurgeryMasters
+                    on d.SurgeryId equals s.SurgeryId
+
+                join ot in _context.MOttableMasters
+                    on r.Ottable equals ot.OttableId
+
                 select new
                 {
                     r.OtreservationId,
-                    r.SurgeryDate,
-                    r.EstimateTime,
+                    r.Opiptype,
+                    d.SurgeryFromTime,
+                    d.SurgeryEndTime,
                     g.FirstName,
                     g.LastName,
-                    g.MobileNo
+                    g.MobileNo,
+                    s.SurgeryName,
+                    ot.OttableId,
+                    ot.OttableName
                 }).ToListAsync();
 
-            // IPD (OPIPType = 1): OPIPID -> Admission.AdmissionID -> Registration
+            // IPD Appointments
             var ipd = await (
                 from r in reservations
                 where r.Opiptype == 1
-                join a in _context.Admissions on r.Opipid equals a.AdmissionId
-                join g in _context.Registrations on a.RegId equals g.RegId
+
+                join a in _context.Admissions
+                    on r.Opipid equals a.AdmissionId
+
+                join g in _context.Registrations
+                    on a.RegId equals g.RegId
+
+                join d in _context.TOtReservationSurgeryDetails
+                    on r.OtreservationId equals d.OtreservationId
+
+                join s in _context.MOtSurgeryMasters
+                    on d.SurgeryId equals s.SurgeryId
+
+                join ot in _context.MOttableMasters
+                    on r.Ottable equals ot.OttableId
+
                 select new
                 {
                     r.OtreservationId,
-                    r.SurgeryDate,
-                    r.EstimateTime,
+                    r.Opiptype,
+                    d.SurgeryFromTime,
+                    d.SurgeryEndTime,
                     g.FirstName,
                     g.LastName,
-                    g.MobileNo
+                    g.MobileNo,
+                    s.SurgeryName,
+                    ot.OttableId,
+                    ot.OttableName
                 }).ToListAsync();
 
             return opd.Concat(ipd)
                 .Select(x =>
                 {
-                    var start = x.SurgeryDate.Value;
-                    var hours = x.EstimateTime > 0 ? x.EstimateTime : 1;   // assuming hours
+                    var patientName = $"{x.FirstName} {x.LastName}".Trim();
 
                     return new OtCalendarDto
                     {
                         OtreservationId = (int)x.OtreservationId,
-                        Start = start,
-                        End = start.AddHours((double)hours),
-                        PatientName = $"{x.FirstName} {x.LastName}".Trim(),
-                        MobileNo = x.MobileNo
+
+                        OtTableId = (int)x.OttableId,
+                        OtTableName = x.OttableName,
+
+                        Start = x.SurgeryFromTime ?? DateTime.MinValue,
+                        End = x.SurgeryEndTime ?? DateTime.MinValue,
+
+                        Title = $"{(x.Opiptype == 0 ? "OP" : "IP")} {patientName}",
+
+                        PatientName = patientName,
+                        SurgeryName = x.SurgeryName,
+
+                        Status = "Scheduled"
                     };
                 })
                 .OrderBy(x => x.Start)

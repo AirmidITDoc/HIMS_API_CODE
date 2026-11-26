@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
         // List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "FoodPreferenceMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MFoodPreferenceMaster> list = await _repository.GetAllPagedAsync(objGrid);
@@ -39,7 +39,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Get By Id API
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "FoodPreferenceMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0) return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status400BadRequest, "No data found.");
@@ -49,7 +49,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Post / Insert API
         [HttpPost("Insert")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "FoodPreferenceMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(FoodPreferenceModel obj)
         {
             MFoodPreferenceMaster model = obj.MapTo<MFoodPreferenceMaster>();
@@ -72,7 +72,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Edit / Update API
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "FoodPreferenceMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UpdateAsync(FoodPreferenceModel obj)
         {
             if (obj.FoodPreferenceId == 0)
@@ -93,7 +93,7 @@ namespace HIMS.API.Controllers.Masters.DietKitchenMaster
 
         // Delete API (Soft Delete / Toggle Status)
         [HttpDelete]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "FoodPreferenceMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(long Id)
         {
             MFoodPreferenceMaster? model = await _repository.GetById(x => x.FoodPreferenceId == Id);

@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Pathology
 
         [HttpPost("EstimateList")]
 
-        [Permission(PageCode = "EstimateList", Permission = PagePermission.View)]
+        [Permission(PageCode = "EstimateList|ExternalInvestigation", Permission = PagePermission.View)]
         public async Task<IActionResult> EstimateList(GridRequestModel objGrid)
         {
             IPagedList<PatientEstimateListDto> EstimateList = await _IEstimasteService.EstimateListAsync(objGrid);

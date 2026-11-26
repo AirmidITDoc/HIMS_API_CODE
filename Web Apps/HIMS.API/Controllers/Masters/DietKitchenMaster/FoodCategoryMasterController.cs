@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
         // List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "FoodCategoryMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MFoodCategoryMaster> list = await _repository.GetAllPagedAsync(objGrid);
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
         // Get By Id API
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "FoodCategoryMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
         //}
         // Post / Insert API
         [HttpPost("Insert")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "FoodCategoryMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertAsync(FoodCategorymasterModel obj)
         {
             MFoodCategoryMaster model = obj.MapTo<MFoodCategoryMaster>();
@@ -99,7 +99,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "FoodCategoryMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UpdateAsync(FoodCategorymasterModel obj)
         {
             if (obj.FoodCategoryId == 0)
@@ -140,7 +140,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
 
         [HttpDelete]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "FoodCategoryMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(long Id)
         {
             MFoodCategoryMaster? model = await _repository.GetById(x => x.FoodCategoryId == Id);
