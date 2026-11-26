@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,117 +8,89 @@
 <body>
     <div class="main-content-wrapper">
         <div class="invoice-box" style="font-size: 14px; line-height: 20px; font-family: Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif; color: #101828;">
-            <table style="width: 100%; line-height: inherit; text-align: left;">
+            <table style="width: 100%; line-height: inherit; text-align: left; border-collapse: collapse;">
                 {{NewHeader}}
 
                 <tr>
-                    <td style="padding: 6px; text-align: center; border-bottom: 1px solid #d4c3c3;">
+                    <td colspan="2" style="padding: 6px; text-align: center; border-bottom: 1px solid #d4c3c3;">
                         <b style="font-size: 18px;">DIET ASSESSMENT</b>
                     </td>
                 </tr>
 
                 <tr>
-                    <td style="padding: 6px;">
-                        <b>Patient Name:</b> {{PatientName}}
+                    <td style="padding: 6px; width: 50%;">
+                        <b>Patient Name :</b> {{PatientName}}
+                    </td>
+                    <td style="padding: 6px; width: 50%; text-align: right;">
+                        <b>Assessment Date :</b> {{AssessmentDate}}
                     </td>
                 </tr>
 
                 <tr>
                     <td style="padding: 6px;">
-                        <b>UHID:</b> {{RegNo}}
+                        <b>Age / Gender :</b> {{AgeGender}}
+                    </td>
+                    <td style="padding: 6px;">
+                        <b>Mobile No :</b> {{MobileNo}}
                     </td>
                 </tr>
 
                 <tr>
                     <td style="padding: 6px;">
-                        <b>Age / Gender:</b> {{AgeGender}}
+                        <b>IPD No :</b> {{IPDNo}}
+                    </td>
+                    <td style="padding: 6px;">
+                        <b>Patient Type :</b> {{PatientType}}
                     </td>
                 </tr>
 
                 <tr>
                     <td style="padding: 6px;">
-                        <b>Mobile No:</b> {{MobileNo}}
+                        <b>Department :</b> {{DepartmentName}}
+                    </td>
+                    <td style="padding: 6px;">
+                        <b>Room :</b> {{RoomName}}
                     </td>
                 </tr>
 
                 <tr>
                     <td style="padding: 6px;">
-                        <b>IPD No:</b> {{IPDNo}}
+                        <b>Admission Date :</b> {{AdmissionDate}}
+                    </td>
+                    <td style="padding: 6px;">
+                        <b>Food Preference :</b> {{FoodPreferenceName}}
                     </td>
                 </tr>
 
                 <tr>
                     <td style="padding: 6px;">
-                        <b>Patient Type:</b> {{PatientType}}
+                        <b>Height :</b> {{Height}} cm
                     </td>
-                </tr>
-
-                <tr>
                     <td style="padding: 6px;">
-                        <b>Department:</b> {{DepartmentName}}
+                        <b>Weight :</b> {{Weight}} kg
                     </td>
                 </tr>
 
                 <tr>
-                    <td style="padding: 6px;">
-                        <b>Room:</b> {{RoomName}} &nbsp;&nbsp;
-                        <b>Bed:</b> {{BedName}}
+                    <td colspan="2" style="padding: 6px; border-top: 1px solid #d4c3c3;">
+                        <b>Allergies :</b> {{Allergies}}
                     </td>
                 </tr>
 
                 <tr>
-                    <td style="padding: 6px;">
-                        <b>Admission Date:</b> {{AdmissionDate}}
+                    <td colspan="2" style="padding: 6px;">
+                        <b>Special Instructions :</b> {{SpecialInstructions}}
                     </td>
                 </tr>
 
                 <tr>
-                    <td style="padding: 6px; border-top: 1px solid #d4c3c3;">
-                        <b>Assessment Date:</b> {{AssessmentDate}}
+                    <td colspan="2" style="padding: 6px;">
+                        <b>Dietitian Notes :</b> {{DietitionNotes}}
                     </td>
                 </tr>
 
                 <tr>
-                    <td style="padding: 6px;">
-                        <b>Height:</b> {{Height}} cm
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="padding: 6px;">
-                        <b>Weight:</b> {{Weight}} kg
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="padding: 6px;">
-                        <b>Food Preference:</b> {{FoodPreferenceName}}
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="padding: 6px; border-top: 1px solid #d4c3c3;">
-                        <b>Allergies:</b><br>
-                        {{Allergies}}
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="padding: 6px;">
-                        <b>Special Instructions:</b><br>
-                        {{SpecialInstructions}}
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="padding: 6px;">
-                        <b>Dietitian Notes:</b><br>
-                        {{DietitionNotes}}
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="padding: 6px; font-size: 12px;">
+                    <td colspan="2" style="padding: 6px; font-size: 12px;">
                         This is a computer-generated diet assessment.
                     </td>
                 </tr>
