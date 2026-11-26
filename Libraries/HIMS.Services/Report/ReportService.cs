@@ -1067,6 +1067,21 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+                #region :: DietAssessmentPrint ::
+                case "DietAssessmentPrint":
+                    {
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "DietAssessmentPrint.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeaderThermal.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+
+                        var html = GetHTMLView("ps_rpt_DietAssessmentPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtmlThermal(html, model.StorageBaseUrl, "DietAssessmentPrint", "DietAssessmentPrint" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
                 #region :: EstimatePrint ::
                 case "EstimatePrint":
                     {
@@ -11577,6 +11592,30 @@ namespace HIMS.Services.Report
                             html = html.Remove(startIndex, endIndex - startIndex)
                                         .Insert(startIndex, items.ToString());
                         }
+
+                        return html;
+                    }
+                    break;
+
+
+                case "DietAssessmentPrint":
+                    {
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{AssessmentDate}}", dt.GetColValue("AssessmentDate"));
+                        html = html.Replace("{{Allergies}}", dt.GetColValue("Allergies"));
+                        html = html.Replace("{{SpecialInstructions}}", dt.GetColValue("SpecialInstructions"));
+                        html = html.Replace("{{DietitionNotes}}", dt.GetColValue("DietitionNotes"));
+                        html = html.Replace("{{Height}}", dt.GetColValue("Height"));
+                        html = html.Replace("{{Weight}}", dt.GetColValue("Weight"));
+                        html = html.Replace("{{AgeGender}}", dt.GetColValue("AgeGender"));
+                        html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+                        html = html.Replace("{{BedName}}", dt.GetColValue("BedName"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{AdmissionDate}}", dt.GetColValue("AdmissionDate"));
+                        html = html.Replace("{{PatientType}}", dt.GetColValue("PatientType"));
+                        html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
+                        html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
+                        html = html.Replace("{{FoodPreferenceName}}", dt.GetColValue("FoodPreferenceName"));
 
                         return html;
                     }
