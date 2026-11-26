@@ -17047,8 +17047,6 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_OT_AnaesthesiaClearance");
 
-                entity.Property(e => e.AnaesthesiaClearanceId).ValueGeneratedNever();
-
                 entity.Property(e => e.Asagrade).HasColumnName("ASAGrade");
 
                 entity.Property(e => e.ClearanceDate).HasColumnType("datetime");
@@ -17135,9 +17133,7 @@ namespace HIMS.Data.Models
 
                 entity.ToTable("T_OT_CheckList");
 
-                entity.Property(e => e.OtcheckListId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("OTCheckListId");
+                entity.Property(e => e.OtcheckListId).HasColumnName("OTCheckListId");
 
                 entity.Property(e => e.CheckListDescription).HasMaxLength(255);
 

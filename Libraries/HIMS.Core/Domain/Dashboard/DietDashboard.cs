@@ -56,13 +56,13 @@ namespace HIMS.Core.Domain.Dashboard
         public string AcceptanceStatus { get; set; }
         public string DeliveryStatus { get; set; }
         public string CancellationStatus { get; set; }
-        public long UHID { get; set; }
-        public long IPDNo { get; set; }
+        public string UHID { get; set; }
+        public string IPDNo { get; set; }
         public string PatientName { get; set; }
         public string DepartmentName { get; set; }
         public string RoomName { get; set; }
-        public long BedName { get; set; }
-    
+        public string BedName { get; set; }
+
     }
 
 
