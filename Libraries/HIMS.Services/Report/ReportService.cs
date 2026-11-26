@@ -1050,6 +1050,23 @@ namespace HIMS.Services.Report
                         break;
                     }
                 #endregion
+
+
+                #region :: PatientDietRequestPrint ::
+                case "PatientDietRequestPrint":
+                    {
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "PatientDietRequestPrint.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeaderThermal.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+
+                        var html = GetHTMLView("ps_rpt_PatientDietRequestPrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtmlThermal(html, model.StorageBaseUrl, "PatientDietRequestPrint", "PatientDietRequestPrint" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
                 #region :: EstimatePrint ::
                 case "EstimatePrint":
                     {
@@ -11521,6 +11538,50 @@ namespace HIMS.Services.Report
 
                     }
                     break;
+
+
+
+
+                case "PatientDietRequestPrint":
+                    {
+                        int i = 0;
+
+                        html = html.Replace("{{DietReqNo}}", dt.GetColValue("DietReqNo"));
+                        html = html.Replace("{{OrderDate}}", dt.GetColValue("OrderDate"));
+                        html = html.Replace("{{RegNo}}", dt.GetColValue("RegNo"));
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{MealName}}", dt.GetColValue("MealName"));
+                        html = html.Replace("{{DietName}}", dt.GetColValue("DietName"));
+                        html = html.Replace("{{OrderTime}}", dt.GetColValue("OrderTime"));
+                        html = html.Replace("{{DietMenuName}}", dt.GetColValue("DietMenuName"));
+                        html = html.Replace("{{Comments}}", dt.GetColValue("Comments"));
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            i++;
+
+                            items.Append("<tr>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(i).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; padding: 6px;\">").Append(dr["FoodName"].ConvertToString()).Append("</td>");
+                            items.Append("<td style=\"border: 1px solid #d4c3c3; text-align: center; padding: 6px;\">").Append(dr["Quantity"].ConvertToString()).Append("</td>");
+                            items.Append("</tr>");
+                        }
+
+                        int startIndex = html.IndexOf("<!--ITEMS-->");
+                        int endIndex = html.IndexOf("<!--/ITEMS-->");
+
+                        if (startIndex >= 0 && endIndex > startIndex)
+                        {
+                            startIndex += "<!--ITEMS-->".Length;
+
+                            html = html.Remove(startIndex, endIndex - startIndex)
+                                        .Insert(startIndex, items.ToString());
+                        }
+
+                        return html;
+                    }
+                    break;
+
 
                 case "OpDraftBillReceipt":
                     {
