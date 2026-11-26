@@ -36,7 +36,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
         // List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "MealTypeMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<MMealTypeMaster> list = await _repository.GetAllPagedAsync(objGrid);
@@ -45,7 +45,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
         // Get By Id API
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "MealTypeMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -58,7 +58,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
         }
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "MealTypeMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> InsertAsync(MealTypeMasterModel obj)
         {
             MMealTypeMaster model = obj.MapTo<MMealTypeMaster>();
@@ -79,7 +79,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
 
         [HttpPut("{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "MealTypeMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UpdateAsync(MealTypeMasterModel obj)
         {
             if (obj.MealId == 0)
@@ -101,7 +101,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
 
         [HttpDelete]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "MealTypeMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(long Id)
         {
             MMealTypeMaster? model = await _repository.GetById(x => x.MealId == Id);

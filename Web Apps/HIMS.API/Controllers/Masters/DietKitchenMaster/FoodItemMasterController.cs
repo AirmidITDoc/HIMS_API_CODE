@@ -34,7 +34,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
         // List API
         [HttpPost]
         [Route("[action]")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "FoodItemMaster", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<FoodItemListDto> list = await _FoodItemmasterService.GetFoodItemListAsync(objGrid);
@@ -43,7 +43,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
         // Get By Id API
         [HttpGet("{id?}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "FoodItemMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
@@ -57,7 +57,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
         // Post / Insert API
         [HttpPost("Insert")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Add)]
+        [Permission(PageCode = "FoodItemMaster", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Post(FoodItemMasterModel obj)
         {
             MFoodItemMaster model = obj.MapTo<MFoodItemMaster>();
@@ -78,7 +78,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "FoodItemMaster", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> UpdateAsync(FoodItemMasterModel obj)
         {
             if (obj.FoodItemId == 0)
@@ -101,7 +101,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
         // Delete API (Soft Delete / Toggle Status)
         [HttpDelete]
-         [Permission(PageCode = "Administration", Permission = PagePermission.Delete)]
+         [Permission(PageCode = "FoodItemMaster", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(long Id)
         {
             MFoodItemMaster? model = await _repository.GetById(x => x.FoodItemId == Id);
@@ -121,7 +121,7 @@ namespace HIMS.API.Controllers.Masters.DietMaster
 
         [HttpGet]
         [Route("get-FoodItemMaster")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [Permission(PageCode = "FoodItemMaster", Permission = PagePermission.View)]
         public async Task<ApiResponse> GetDropdown2()
         {
             var MMasterList = await _repository.GetAll();
