@@ -1,87 +1,120 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diet Plan Schedule</title>
-</head>
-<body>
-    <div class="main-content-wrapper">
-        <div class="invoice-box" style="font-size: 14px; line-height: 20px; font-family: Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif; color: #101828;">
-            <table style="width: 100%; line-height: inherit; text-align: left; border-collapse: collapse;">
-                {{NewHeader}}
+﻿<div>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Diet Plan Schedule</title>
+    </head>
 
-                <tr>
-                    <td colspan="2" style="padding: 6px; text-align: center; border-bottom: 1px solid #d4c3c3;">
-                        <b style="font-size: 18px;">DIET PLAN SCHEDULE</b>
-                    </td>
-                </tr>
+    <body>
+        <div class="main-content-wrapper">
+            <div class="invoice-box" style="font-size: 14px; line-height: 20px; font-family: Calibri,'Helvetica Neue',Helvetica,Arial,sans-serif; color: #101828;">
 
-                <tr>
-                    <td style="padding: 6px; width: 50%;">
-                        <b>Patient Name :</b> {{PatientName}}
-                    </td>
-                    <td style="padding: 6px; width: 50%;">
-                        <b>Reg No :</b> {{RegID}}
-                    </td>
-                </tr>
+                <table style="width: 100%; line-height: inherit; text-align: left;">
+                    {{NewHeader}}
 
-                <tr>
-                    <td style="padding: 6px;">
-                        <b>Age / Gender :</b> {{AgeGender}}
-                    </td>
-                    <td style="padding: 6px;">
-                        <b>Mobile No :</b> {{MobileNo}}
-                    </td>
-                </tr>
+                    <tr>
+                        <td style="padding: 0;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr><td style="padding: 10px 6px; text-align: center; border-top: 1px solid #b7b7b7; border-bottom: 1px solid #b7b7b7;"><b style="font-size: 20px; letter-spacing: 1px;">DIET PLAN SCHEDULE</b></td></tr>
+                            </table>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td style="padding: 6px;">
-                        <b>Room :</b> {{RoomName}}
-                    </td>
-                    <td style="padding: 6px;">
-                        <b>Plan Date :</b> {{PlanDate}}
-                    </td>
-                </tr>
+                    <tr>
+                        <td style="padding: 0;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr><td style="padding: 8px 8px; background-color: #f2f4f7; border-top: 1px solid #d0d5dd; border-bottom: 1px solid #d0d5dd;"><b style="font-size: 13px; letter-spacing: 0.5px;">PATIENT INFORMATION</b></td></tr>
+                            </table>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td style="padding: 6px;">
-                        <b>Plan Start Date :</b> {{PlanStartDate}}
-                    </td>
-                    <td style="padding: 6px;">
-                        <b>Plan End Date :</b> {{PlanEndDate}}
-                    </td>
-                </tr>
+                    <tr>
+                        <td style="padding: 0;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <td style="padding: 7px 8px; width: 50%; border-bottom: 1px solid #e0e0e0;"><b>Patient Name :</b> {{PatientName}}</td>
+                                    <td style="padding: 7px 8px; width: 50%; border-bottom: 1px solid #e0e0e0;"><b>Reg No :</b> {{RegID}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 7px 8px; width: 50%; border-bottom: 1px solid #e0e0e0;"><b>Age / Gender :</b> {{AgeGender}}</td>
+                                    <td style="padding: 7px 8px; width: 50%; border-bottom: 1px solid #e0e0e0;"><b>Mobile No :</b> {{MobileNo}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 7px 8px; width: 50%; border-bottom: 1px solid #e0e0e0;"><b>Room :</b> {{RoomName}}</td>
+                                    <td style="padding: 7px 8px; width: 50%; border-bottom: 1px solid #e0e0e0;"><b>Diet :</b> {{DietName}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td style="padding: 6px;">
-                        <b>Meal :</b> {{MealTypeCode}}
-                    </td>
-                    <td style="padding: 6px;">
-                        <b>Diet :</b> {{DietName}}
-                    </td>
-                </tr>
+                    <tr>
+                        <td style="padding: 0;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr><td style="padding: 8px 8px; background-color: #f2f4f7; border-top: 1px solid #d0d5dd; border-bottom: 1px solid #d0d5dd;"><b style="font-size: 13px; letter-spacing: 0.5px;">PLAN DETAILS</b></td></tr>
+                            </table>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td colspan="2" style="padding: 6px;">
-                        <b>Diet Menu :</b> {{DietMenuName}}
-                    </td>
-                </tr>
+                    <tr>
+                        <td style="padding: 0;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <td style="padding: 7px 8px; width: 50%; border-bottom: 1px solid #e0e0e0;"><b>Plan Date :</b> {{PlanDate}}</td>
+                                    <td style="padding: 7px 8px; width: 50%; border-bottom: 1px solid #e0e0e0;"><b>Meal :</b> {{MealTypeCode}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 7px 8px; width: 50%; border-bottom: 1px solid #e0e0e0;"><b>Plan Start Date :</b> {{PlanStartDate}}</td>
+                                    <td style="padding: 7px 8px; width: 50%; border-bottom: 1px solid #e0e0e0;"><b>Plan End Date :</b> {{PlanEndDate}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td colspan="2" style="padding: 6px; border-top: 1px solid #d4c3c3;">
-                        <b>Instruction :</b> {{Instruction}}
-                    </td>
-                </tr>
+                    <tr>
+                        <td style="padding: 0;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr><td style="padding: 8px 8px; background-color: #f2f4f7; border-top: 1px solid #d0d5dd; border-bottom: 1px solid #d0d5dd;"><b style="font-size: 13px; letter-spacing: 0.5px;">MENU &amp; INSTRUCTIONS</b></td></tr>
+                            </table>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td colspan="2" style="padding: 6px;">
-                        <b>Comment :</b> {{Comment}}
-                    </td>
-                </tr>
+                    <tr>
+                        <td style="padding: 0;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr><td style="padding: 8px; border-bottom: 1px solid #e0e0e0;"><b>Diet Menu :</b> {{DietMenuName}}</td></tr>
+                            </table>
+                        </td>
+                    </tr>
 
-            </table>
+                    <tr>
+                        <td style="padding: 0;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr><td style="padding: 8px; border-bottom: 1px solid #e0e0e0;"><b>Instruction :</b> {{Instruction}}</td></tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 0;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr><td style="padding: 8px; border-bottom: 1px solid #e0e0e0;"><b>Comment :</b> {{Comment}}</td></tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 0;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr><td style="padding: 12px 6px; font-size: 12px; text-align: center;">This is a computer-generated diet plan schedule.</td></tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
+</div>
