@@ -95,7 +95,7 @@ namespace HIMS.API.Controllers.Masters.Billing
         
 
         [HttpGet("{id?}")]
-        [Permission(PageCode = "CompanyMaster", Permission = PagePermission.View)]
+        [Permission(PageCode = "CompanyMaster|ExternalInvestigation", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
             if (id == 0)
