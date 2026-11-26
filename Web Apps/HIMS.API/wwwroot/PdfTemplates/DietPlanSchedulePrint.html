@@ -1,0 +1,120 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Diet Plan Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            margin: 5px;
+        }
+
+        .section {
+            margin-bottom: 10px;
+        }
+
+        .row {
+            margin-bottom: 5px;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        .line {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 3px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 4px 2px;
+            vertical-align: top;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+    {{NewHeader}}
+
+    <div class="title">DIET PLAN SCHEDULE</div>
+
+    <div class="section">
+        <div class="row">
+            <span class="label">Patient Name:</span> {{PatientName}}
+        </div>
+
+        <div class="row">
+            <span class="label">Reg No:</span> {{RegID}}
+        </div>
+
+        <div class="row">
+            <span class="label">Age / Gender:</span> {{AgeGender}}
+        </div>
+
+        <div class="row">
+            <span class="label">Mobile No:</span> {{MobileNo}}
+        </div>
+
+        <div class="row">
+            <span class="label">Room:</span> {{RoomName}}
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="section">
+        <div class="row">
+            <span class="label">Plan Date:</span> {{PlanDate}}
+        </div>
+
+        <div class="row">
+            <span class="label">Plan Start Date:</span> {{PlanStartDate}}
+        </div>
+
+        <div class="row">
+            <span class="label">Plan End Date:</span> {{PlanEndDate}}
+        </div>
+
+        <div class="row">
+            <span class="label">Meal:</span> {{MealTypeCode}}
+        </div>
+
+        <div class="row">
+            <span class="label">Diet:</span> {{DietName}}
+        </div>
+
+        <div class="row">
+            <span class="label">Diet Menu:</span> {{DietMenuName}}
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="section">
+        <div class="row">
+            <span class="label">Instruction:</span>
+            {{Instruction}}
+        </div>
+
+        <div class="row">
+            <span class="label">Comment:</span>
+            {{Comment}}
+        </div>
+    </div>
+
+</body>
+</html>

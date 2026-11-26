@@ -1067,6 +1067,22 @@ namespace HIMS.Services.Report
                     }
                 #endregion
 
+
+                #region :: DietPlanSchedulePrint ::
+                case "DietPlanSchedulePrint":
+                    {
+                        string htmlFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "DietPlanSchedulePrint.html");
+                        string htmlHeaderFilePath = Path.Combine(AppSettings.Settings.PdfTemplatePath, "NewHeaderThermal.html");
+                        htmlHeaderFilePath = _pdfUtility.GetHeader(htmlHeaderFilePath);
+
+                        var html = GetHTMLView("ps_rpt_DietPlanSchedulePrint", model, htmlFilePath, htmlHeaderFilePath, Array.Empty<string>());
+                        html = html.Replace("{{NewHeader}}", htmlHeaderFilePath);
+
+                        tuple = _pdfUtility.GeneratePdfFromHtmlThermal(html, model.StorageBaseUrl, "DietPlanSchedulePrint", "DietPlanSchedulePrint" + vDate, Orientation.Portrait);
+                        break;
+                    }
+                #endregion
+
                 #region :: DietAssessmentPrint ::
                 case "DietAssessmentPrint":
                     {
@@ -11616,6 +11632,27 @@ namespace HIMS.Services.Report
                         html = html.Replace("{{IPDNo}}", dt.GetColValue("IPDNo"));
                         html = html.Replace("{{DepartmentName}}", dt.GetColValue("DepartmentName"));
                         html = html.Replace("{{FoodPreferenceName}}", dt.GetColValue("FoodPreferenceName"));
+
+                        return html;
+                    }
+                    break;
+
+
+                case "DietPlanSchedulePrint":
+                    {
+                        html = html.Replace("{{PatientName}}", dt.GetColValue("PatientName"));
+                        html = html.Replace("{{RegID}}", dt.GetColValue("RegID"));
+                        html = html.Replace("{{AgeGender}}", dt.GetColValue("AgeGender"));
+                        html = html.Replace("{{MobileNo}}", dt.GetColValue("MobileNo"));
+                        html = html.Replace("{{RoomName}}", dt.GetColValue("RoomName"));
+                        html = html.Replace("{{PlanDate}}", dt.GetColValue("PlanDate"));
+                        html = html.Replace("{{PlanStartDate}}", dt.GetColValue("PlanStartDate"));
+                        html = html.Replace("{{PlanEndDate}}", dt.GetColValue("PlanEndDate"));
+                        html = html.Replace("{{MealTypeCode}}", dt.GetColValue("MealTypeCode"));
+                        html = html.Replace("{{DietName}}", dt.GetColValue("DietName"));
+                        html = html.Replace("{{DietMenuName}}", dt.GetColValue("DietMenuName"));
+                        html = html.Replace("{{Instruction}}", dt.GetColValue("Instruction"));
+                        html = html.Replace("{{Comment}}", dt.GetColValue("Comment"));
 
                         return html;
                     }
