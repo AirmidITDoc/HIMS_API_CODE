@@ -129,8 +129,8 @@ namespace HIMS.API.Controllers.Login
 
 
         [HttpPut("Edit/{id:int}")]
-        ///    [Permission(PageCode = "Login", Permission = PagePermission.Edit)]
-        [AllowAnonymous]
+        [Permission(PageCode = "Login", Permission = PagePermission.Edit)]
+
         public async Task<ApiResponse> Edit(LoginManagerModel obj)
         {
             if (obj.UserId <= 0)

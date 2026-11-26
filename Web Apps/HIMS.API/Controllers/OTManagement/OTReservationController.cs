@@ -301,23 +301,47 @@ namespace HIMS.API.Controllers.IPPatient
         }
 
 
+
         [HttpGet("get-Reservation")]
         [Permission(PageCode = "OTReservation", Permission = PagePermission.View)]
+        
         public async Task<ApiResponse> GetAppoinments(int OtTable, DateTime FromDate, DateTime ToDate)
         {
             var data = await _OTService.GetAppoinments(OtTable, FromDate, ToDate);
 
-            return ApiResponseHelper.GenerateResponse(ApiStatusCode.Status200OK, "OT Reservation Data.",
+            return ApiResponseHelper.GenerateResponse(
+                ApiStatusCode.Status200OK,
+                "OT Reservation Data.",
                 data.Select(x => new
                 {
-                    Start = x.Start,
                     Id = x.OtreservationId,
+                    OtTableId = x.OtTableId,
+                    OtTableName = x.OtTableName,
+
+                    Start = x.Start,
                     End = x.End,
-                    Title = x.PatientName + " (" + x.MobileNo + ")",
-                    resizable = new { beforeStart = true, afterEnd = true },
-                    draggable = true,
-                    color = new { primary = "#ad2121", secondary = "#FAE3E3" }
-                }));
+
+                    Title = $"{x.PatientName} ({x.MobileNo})",
+                    PatientName = x.PatientName,
+                    SurgeryName = x.SurgeryName,
+
+                    Status = x.Status,
+
+                    Resizable = new
+                    {
+                        BeforeStart = true,
+                        AfterEnd = true
+                    },
+
+                    Draggable = true,
+
+                    Color = new
+                    {
+                        Primary = "#ad2121",
+                        Secondary = "#FAE3E3"
+                    }
+                })
+            );
         }
     }
 }
