@@ -170,6 +170,8 @@ namespace HIMS.API.Infrastructure
             CreateMap<TDietPlanSchedule, DietPlanScheduleCancelModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<TOtAnaesthesiaClearance, OTAnaesthesiaClearanceModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<TOtCheckList, OTCheckListModel>().ReverseMap().IgnoreAllPropertiesWithAnInaccessibleSetter();
+
 
 
 
