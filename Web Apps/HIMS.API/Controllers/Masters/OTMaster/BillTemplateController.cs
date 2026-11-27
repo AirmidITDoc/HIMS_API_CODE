@@ -30,7 +30,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         }
         // Get By Id API
         [HttpGet("{id?}")]
-        [Permission(PageCode = "OtBillTemplate", Permission = PagePermission.View)]
+        [Permission(PageCode = "OtBillTemplate|OTRequest|OTReservation|OTNotes", Permission = PagePermission.View)]
         //[Permission(PageCode = "OtBillTemplate", Permission = PagePermission.View)]
         public async Task<ApiResponse> Get(int id)
         {
@@ -46,7 +46,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
        
 
         [HttpPost("OtBillTemplateHeaderList")]
-        [Permission(PageCode = "OtBillTemplate", Permission = PagePermission.View)]
+        [Permission(PageCode = "OtBillTemplate|OTRequest|OTReservation|OTNotes|OTBilling", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> OtBillTemplateList(GridRequestModel objGrid)
         {
@@ -54,7 +54,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
             return Ok(OtBillTemplateList.ToGridResponse(objGrid, "OtBillTemplate List"));
         }
         [HttpPost("OtBillTemplateDetailList")]
-        [Permission(PageCode = "OtBillTemplate", Permission = PagePermission.View)]
+        [Permission(PageCode = "OtBillTemplate|OTRequest|OTReservation|OTNotes|OTBilling", Permission = PagePermission.View)]
         //[Permission]
         public async Task<IActionResult> OtBillTemplateDetailList(GridRequestModel objGrid)
         {
@@ -65,7 +65,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "OtBillTemplate", Permission = PagePermission.Add)]
+        [Permission(PageCode = "OtBillTemplate|OTRequest|OTReservation|OTNotes|OTBilling", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(BillTemplateModel obj)
         {
             MOtBillTemplateHeader model = obj.MapTo<MOtBillTemplateHeader>();
@@ -89,7 +89,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
         }
        
           [HttpPut("Edit/{id:int}")]
-          [Permission(PageCode = "OtBillTemplate", Permission = PagePermission.Edit)]
+          [Permission(PageCode = "OtBillTemplate|OTRequest|OTReservation|OTNotes|OTBilling", Permission = PagePermission.Edit)]
         public async Task<ApiResponse> Edit(BillTemplateModel obj)
         {
             MOtBillTemplateHeader model = obj.MapTo<MOtBillTemplateHeader>();
@@ -121,7 +121,7 @@ namespace HIMS.API.Controllers.Masters.OTMaster
 
         //Delete API
         [HttpDelete]
-        [Permission(PageCode = "OtBillTemplate", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "OtBillTemplate|OTRequest|OTReservation|OTNotes|OTBilling", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Delete(int Id)
         {
             MOtBillTemplate model = await _repository.GetById(x => x.TemplateId == Id);
