@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HIMS.API.Validator;
 
 namespace HIMS.API.Models.OTManagement
 {
@@ -18,7 +19,7 @@ namespace HIMS.API.Models.OTManagement
 
 
     }
-    public class OTAnaesthesiaClearanceModelValidator : AbstractValidator<OTAnaesthesiaClearanceModel>
+    public class OTAnaesthesiaClearanceModelValidator : CommonDynamicValidator<OTAnaesthesiaClearanceModel>
     {
         public OTAnaesthesiaClearanceModelValidator()
         {
@@ -28,7 +29,7 @@ namespace HIMS.API.Models.OTManagement
             RuleFor(x => x.AnaesthesiaTypeId).NotNull().NotEmpty().WithMessage("AnaesthesiaTypeId is required");
             RuleFor(x => x.ClearanceStatus).NotNull().NotEmpty().WithMessage("ClearanceStatus is required");
             RuleFor(x => x.ClearanceDate).NotNull().NotEmpty().WithMessage("ClearanceDate is required");
-
+            RuleFor(x => x.Opiptype).NotNull().NotEmpty().WithMessage("Opiptype is required");
         }
     }
 }

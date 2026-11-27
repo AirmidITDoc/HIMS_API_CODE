@@ -254,7 +254,7 @@ namespace HIMS.API.Infrastructure
             services.AddScoped<ILabPatientAddresService, LabPatientAddresService>();
             services.AddScoped<IDietPatientRequestService, DietPatientRequestService>();
 
-
+            services.AddScoped<IDoctorAppointmentSlotsService, DoctorAppointmentSlotsService>();
 
 
 
