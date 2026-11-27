@@ -239,12 +239,19 @@ namespace HIMS.Services.IPPatient
             var from = FromDate.Date;
             var to = ToDate.Date.AddDays(1);
 
+            //var reservations = _context.TOtReservationHeaders
+            //    .AsNoTracking()
+            //    .Where(r => r.Ottable == OtTable
+            //                && r.IsCancelled != true
+            //                && r.SurgeryDate >= from
+            //                && r.SurgeryDate < to);
+
             var reservations = _context.TOtReservationHeaders
-                .AsNoTracking()
-                .Where(r => r.Ottable == OtTable
-                            && r.IsCancelled != true
-                            && r.SurgeryDate >= from
-                            && r.SurgeryDate < to);
+    .AsNoTracking()
+    .Where(r => (OtTable == 0 || r.Ottable == OtTable)
+                && r.IsCancelled != true
+                && r.SurgeryDate >= from
+                && r.SurgeryDate < to);
 
             // OPD Appointments
             var opd = await (
