@@ -108,7 +108,8 @@ namespace HIMS.API.Controllers.Dashboard
         }
 
         [HttpGet("Mobile-pharmacy-dashboard")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [AllowAnonymous]
         public async Task<ApiResponse> MobilePharmacyDashboard(DateTime FromDate, DateTime ToDate, int Storeid, int OPIPType)
         {
             // int UnitId = Context.UnitId;
@@ -187,7 +188,8 @@ namespace HIMS.API.Controllers.Dashboard
 
 
         [HttpGet("Mobile-Financial-Dashboard")]
-        [Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        //[Permission(PageCode = "Administration", Permission = PagePermission.View)]
+        [AllowAnonymous]
         public async Task<ApiResponse> FinancialDashboard(int UnitId, DateTime FromDate, DateTime ToDate, int OPIPType = 2)
         {
             var data = await _IDashboardService.GetFinancialDashboard(UnitId, FromDate, ToDate, OPIPType);
