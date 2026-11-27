@@ -2,6 +2,7 @@
 using HIMS.Data;
 using HIMS.Data.DataProviders;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Extensions;
 using HIMS.Data.Models;
 using HIMS.Services.Utilities;
@@ -71,9 +72,16 @@ namespace HIMS.Services.OPPatient
 
             para[0] = new SqlParameter("@SearchText", str);
 
-            List<RegistrationAutoCompleteDto> lstServiceList =sql.FetchListBySP<RegistrationAutoCompleteDto>("ps_SearchRegistration", para);
+            List<RegistrationAutoCompleteDto> lstServiceList = sql.FetchListBySP<RegistrationAutoCompleteDto>("ps_SearchRegistration", para);
 
             return lstServiceList;
+        }
+
+
+        public virtual async Task<IPagedList<WorkflowInfoListDTO>> GetWorkflowInfoListAsync(GridRequestModel model)
+        {
+            return await DatabaseHelper.GetGridDataBySp<WorkflowInfoListDTO>(model, "ps_WorkflowInfo");
+
         }
 
 

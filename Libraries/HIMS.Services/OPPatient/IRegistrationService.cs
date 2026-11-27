@@ -1,5 +1,6 @@
 ﻿using HIMS.Core.Domain.Grid;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 
 namespace HIMS.Services.OPPatient
@@ -7,6 +8,7 @@ namespace HIMS.Services.OPPatient
     public partial interface IRegistrationService
     {
         Task<IPagedList<RegistrationListDto>> GetListAsync(GridRequestModel objGrid);
+        Task<IPagedList<WorkflowInfoListDTO>> GetWorkflowInfoListAsync(GridRequestModel objGrid);
         Task InsertAsyncSP(Registration objRegistration, int CurrentUserId, string CurrentUserName);
         Task UpdateAsyncSP(Registration objRegistration, int CurrentUserId, string CurrentUserName);
         Task InsertAsync(Registration Registration, int UserId, string Username);

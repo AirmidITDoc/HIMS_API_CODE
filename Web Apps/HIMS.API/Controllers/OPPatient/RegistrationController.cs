@@ -9,8 +9,10 @@ using HIMS.Core.Domain.Grid;
 using HIMS.Core.Infrastructure;
 using HIMS.Data;
 using HIMS.Data.DTO.OPPatient;
+using HIMS.Data.DTO.OTManagement;
 using HIMS.Data.Models;
 using HIMS.Services.OPPatient;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HIMS.API.Controllers.OPPatient
@@ -38,6 +40,19 @@ namespace HIMS.API.Controllers.OPPatient
             IPagedList<RegistrationListDto> RegistrationList = await _IRegistrationService.GetListAsync(objGrid);
             return Ok(RegistrationList.ToGridResponse(objGrid, "Registration List"));
         }
+
+
+        [HttpPost("WorkflowInfoList")]
+        [Permission(PageCode = "Registration|OTReservation", Permission = PagePermission.View)]
+        
+        public async Task<IActionResult> WorkflowInfoList(GridRequestModel objGrid)
+        {
+            IPagedList<WorkflowInfoListDTO> WorkflowInfoList = await _IRegistrationService.GetWorkflowInfoListAsync(objGrid);
+            return Ok(WorkflowInfoList.ToGridResponse(objGrid, "Workflow Info List"));
+        }
+
+
+
 
 
         [HttpGet("{id?}")]
