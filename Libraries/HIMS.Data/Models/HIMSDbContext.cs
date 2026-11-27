@@ -13652,9 +13652,9 @@ namespace HIMS.Data.Models
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.SlotStatus)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
+                entity.Property(e => e.SessionType).HasMaxLength(20);
+
+                entity.Property(e => e.SlotStatus).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TDoctorPatientHandover>(entity =>

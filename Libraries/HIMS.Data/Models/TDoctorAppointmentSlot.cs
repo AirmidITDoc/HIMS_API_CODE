@@ -12,6 +12,7 @@ namespace HIMS.Data.Models
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public string SlotStatus { get; set; } = null!;
+        public string? SessionType { get; set; }
         public long? AppointmentId { get; set; }
         public long CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }

@@ -60,9 +60,10 @@ namespace HIMS.Data.DTO.OTManagement
         public bool? IsAnaesthetistPaid { get; set; }
         public bool? IsMaterialReplacement { get; set; }
         public int? AnesthesiaType { get; set; }
-
+        public string SurgeryFromTime { get; set; }
+        public string SurgeryEndTime { get; set; }
         public long ConsentId { get; set; }
-        
+       
 
     }
 
