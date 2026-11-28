@@ -451,7 +451,7 @@ namespace HIMS.API.Controllers.OPPatient
         }
 
         [HttpGet("AssignUserWiseCashCounterList")]
-        [Permission(PageCode = "Appointment", Permission = PagePermission.View)]
+        [Permission(PageCode = "Appointment|Administration|ExternalInvestigation", Permission = PagePermission.View)]
         public ApiResponse AssignUserWiseCashCounterList()
         {
             var data = _visitDetailsService.AssignUserWiseCashCounterList();
