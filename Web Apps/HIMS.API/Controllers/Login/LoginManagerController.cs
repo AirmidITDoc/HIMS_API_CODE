@@ -28,21 +28,21 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("GetUserData")]
-        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        [Permission(PageCode = "Login|Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> Listg(GridRequestModel objGrid)
         {
             IPagedList<LoginGetMobileDto> LoginGetMobile = await _ILoginService.GetListAsyncg(objGrid);
             return Ok(LoginGetMobile.ToGridResponse(objGrid, "LoginGetMobile"));
         }
         [HttpPost("LoginList")]
-        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        [Permission(PageCode = "Login|Administration", Permission = PagePermission.View)]
         public async Task<IActionResult> List(GridRequestModel objGrid)
         {
             IPagedList<LoginManagerListDto> LoginManagerList = await _ILoginService.GetListAsync(objGrid);
             return Ok(LoginManagerList.ToGridResponse(objGrid, "User List"));
         }
         [HttpPost("loginAccessDetailsList")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Login|Administration", Permission = PagePermission.Add)]
         //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> Listl(GridRequestModel objGrid)
         {
@@ -51,7 +51,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("LoginStoreUserWiseList")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Login|Administration", Permission = PagePermission.Add)]
         //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> ListC(GridRequestModel objGrid)
         {
@@ -60,7 +60,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("LoginCashCounterUserWiseList")]
-        [Permission(PageCode = "Login", Permission = PagePermission.View)]
+        [Permission(PageCode = "Login|Administration", Permission = PagePermission.View)]
         //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> ListCashCounter(GridRequestModel objGrid)
         {
@@ -68,7 +68,7 @@ namespace HIMS.API.Controllers.Login
             return Ok(LoginStoreUserWiseList.ToGridResponse(objGrid, "Login CashCounter UserWise List "));
         }
         [HttpPost("LoginAccessConfigList")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Login|Administration", Permission = PagePermission.Add)]
         //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> ListA(GridRequestModel objGrid)
         {
@@ -77,7 +77,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("LoginUnitUserWiseList")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Login|Administration", Permission = PagePermission.Add)]
         //[Permission(PageCode = "Login", Permission = PagePermission.View)]
         public async Task<IActionResult> ListU(GridRequestModel objGrid)
         {
@@ -86,7 +86,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("Insert")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Login|Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> Insert(LoginManagerModel obj)
         {
             LoginManager model = obj.MapTo<LoginManager>();
@@ -129,7 +129,7 @@ namespace HIMS.API.Controllers.Login
 
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Edit)]
+        [Permission(PageCode = "Login|Administration", Permission = PagePermission.Edit)]
 
         public async Task<ApiResponse> Edit(LoginManagerModel obj)
         {
@@ -196,7 +196,7 @@ namespace HIMS.API.Controllers.Login
 
 
         [HttpPost("LoginCanceled")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Delete)]
+        [Permission(PageCode = "Login|Administration", Permission = PagePermission.Delete)]
         public async Task<ApiResponse> Cancel(loginCancel obj)
         {
             LoginManager model = new();
@@ -213,7 +213,7 @@ namespace HIMS.API.Controllers.Login
         }
 
         [HttpPost("Updatepassword")]
-        [Permission(PageCode = "Login", Permission = PagePermission.Add)]
+        [Permission(PageCode = "Login|Administration", Permission = PagePermission.Add)]
         public async Task<ApiResponse> UpdatepassAsync(ChangePassword obj)
         {
             if (obj.UserId == 0 || string.IsNullOrWhiteSpace(obj.UserName) || string.IsNullOrWhiteSpace(obj.Password))
