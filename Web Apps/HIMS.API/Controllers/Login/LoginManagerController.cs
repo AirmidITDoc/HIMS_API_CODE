@@ -129,7 +129,7 @@ namespace HIMS.API.Controllers.Login
 
 
         [HttpPut("Edit/{id:int}")]
-        [Permission(PageCode = "Login|Administration", Permission = PagePermission.Edit)]
+        [AnyPermission(Permission = PagePermission.View)]
 
         public async Task<ApiResponse> Edit(LoginManagerModel obj)
         {
